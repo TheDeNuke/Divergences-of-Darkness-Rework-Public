@@ -1,0 +1,8064 @@
+######################
+###	New PLC events ###
+######################
+
+country_event = { 
+	id = 222423
+	title = "PLC1.T" #Setup modifier 
+	desc = "PLC1.D"
+	
+	trigger = { 
+	tag = PLC 
+	NOT = { has_country_flag = golden_PLC }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "PLC1.A"
+	set_country_flag = golden_PLC
+	add_country_modifier = { 
+		name = PLC_golden_liberty
+		duration = -1 
+	}
+	add_country_modifier = { 
+		name = PLC_inevitable_sejm
+		duration = -1 
+	}
+	}
+}
+
+country_event = { 
+	id = 222424
+	title = "PLC2.T" #Death of Maximilian III
+	desc = "PLC2.D"
+	
+	trigger = { 
+	tag = PLC 
+	year = 1838 
+	has_global_flag = SMO_students
+	NOT = { has_country_flag = Sejm_1839 }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 4
+	}
+	
+	option = { 
+	name = "PLC2.A"
+	set_country_flag = Sejm_1839 
+	set_global_flag = SMO_kingdead
+	}
+}
+
+country_event = { 
+	id = 222425
+	title = "PLC3.T" #The Sejm convenes
+	desc = "PLC3.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Sejm_1839
+	NOT = { has_country_flag = Sejm_not_king}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 12
+		modifier = {
+			factor = 0.1
+			year = 1839
+	    }
+    }
+	
+	option = { 
+	name = "PLC3.A"
+	remove_country_modifier = PLC_inevitable_sejm
+	set_country_flag = Sejm_not_king
+	any_pop = { 
+	consciousness = 1 
+		}
+	prestige = -1
+	}
+}
+
+country_event = { 
+	id = 222426
+	title = "PLC4.T" #Black procession 
+	desc = "PLC4.D"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Sejm_not_king
+	NOT = { has_country_flag = Sejm_black }
+	} 
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 10
+	}
+	
+	option = { 
+	name = "PLC4.A"
+	set_country_flag = Sejm_black
+	}
+}
+
+country_event = { 
+	id = 222445
+	title = "PLC23.T" #THE EAST HAS LEFT THE COMMONWEALTH
+	desc = "PLC23.D" 
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC
+	has_global_flag = SMO_confirms
+	has_country_flag = Sejm_black
+	NOT = { has_global_flag = PLC_EASTERN_COLLAPSE }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC23.A"
+	prestige_factor = -0.1
+	clr_global_flag = SMO_confirms
+	set_global_flag = PLC_EASTERN_COLLAPSE
+	release_vassal = SMO
+	release_vassal = ZAZ
+	release_vassal = KHK
+	SMO = {
+	any_owned = { 
+	    limit = { 
+		is_core = PLC
+			}
+		remove_core = PLC
+    }
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	ZAZ = {
+	any_owned = { 
+	    limit = { 
+		is_core = PLC
+			}
+		remove_core = PLC
+    }
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	KHK = {
+	any_owned = { 
+	    limit = { 
+		is_core = PLC
+			}
+		remove_core = PLC
+    }
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	}
+}
+
+country_event = { 
+	id = 222427
+	title = "PLC5.T" #Choosing the candidate
+	desc = "PLC5.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC
+	has_global_flag = PLC_EASTERN_COLLAPSE
+	NOT = { 
+		OR = { 
+		has_country_flag = Habsburg_authorized
+		has_country_flag = Habsburg_refused
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+	days = 5 
+	}
+	
+	option = { 
+	name = "PLC5.B"
+	set_country_flag = Habsburg_refused
+	ai_chance = { 
+	factor = 80
+		}
+	}
+	
+	option = { 
+	name = "PLC5.A"
+	set_country_flag = Habsburg_authorized 
+	relation = { 
+	who = BOH value = -100
+		}
+	relation = { 
+	who = SCA value = -100
+		}
+	ai_chance = { 
+	factor = 20
+		}
+	}
+}
+	
+
+country_event = { 
+	id = 222428
+	title = "PLC6.T" #Stanisław I elected 
+	desc = "PLC6.Des"
+	picture = "electoral_sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Habsburg_authorized
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "PLC6.A"
+	} 
+	
+	option = { 
+	name = "PLC6.B"
+	}
+	option = { 
+	name = "PLC6.C"
+	}
+	option = { 
+	name = "PLC6.D"
+	}
+}
+
+country_event = { 
+	id = 222429
+	title = "PLC7.T" #Stanisław I not elected 
+	desc = "PLC7.D"
+	picture = "electoral_sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Habsburg_refused
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "PLC7.A" #Wiśniowiecki -BOH choice 
+	relation = { 
+	who = BOH value = 100
+		}
+	relation = { 
+	who = SCA value = -50
+		}
+	ai_chance = { 
+	factor = 40
+		}
+	} 
+	
+	option = { 
+	name = "PLC7.B" #Wettin -SCA choice
+	relation = { 
+	who = SCA value = 100
+		}
+	relation = { 
+	who = BOH value = -50
+		}
+	ai_chance = { 
+	factor = 30
+		}
+	}
+	option = { 
+	name = "PLC7.C" #neutral Wittelsbach
+	prestige = 1 
+	relation = { 
+	who = BAV value = 100
+		}
+	relation = { 
+	who = SCA value = -25
+		}
+	relation = { 
+	who = BOH value = -25
+		}
+	ai_chance = { 
+	factor = 30
+		}
+	}
+}
+
+country_event = { 
+	id = 222430
+	title = "PLC8.T" #Conjuration
+	desc = "PLC8.D"
+
+	major = yes 
+	
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Habsburg_refused
+	has_global_flag = liberal_revolutions_should_now_fire
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	
+	option = { 
+	name = "PLC8.A"
+	prestige = -5
+	any_pop = { 
+	limit = { 
+		OR = { 
+			pop_type = bureaucrats
+			pop_type = officers 
+			pop_type = soldiers
+				}
+			}
+	ideology = {
+			value = conservative
+			factor = 0.15
+				}
+			
+	}
+	
+    capital_scope = { any_pop = { ideology = { factor = -0.25 value = liberal } } }	
+	
+	any_pop = {
+			limit = { pop_majority_ideology = liberal }
+			random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } 
+	    }
+	MUS = { set_country_flag = hapsburg_general }
+	}
+}
+
+country_event = { 
+	id = 222431
+	title = "PLC9.T" #First Sejm
+	desc = "PLC9.D"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Habsburg_authorized
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 30 
+	}
+	
+	option = { 
+	name = "PLC9.A"
+	set_country_flag = 1_sejm_HAB
+	}
+}
+country_event = { 
+	id = 222432
+	title = "PLC10.T" #Crowds calmed
+	desc = "PLC10.D"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = 1_sejm_HAB
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 10 
+	}
+	
+	option = { 
+	name = "PLC10.A"
+	prestige = -1 
+	}
+}
+
+country_event = { 
+	id = 222433
+	title = "PLC11.T" #Sejm of 1845
+	desc = "PLC11.D"
+	
+	trigger = { 
+	tag = PLC 
+	year = 1845
+	has_country_flag = 1_sejm_HAB
+	NOT = { has_country_flag = 2_sejm_HAB }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	option = { 
+	name = "PLC11.A"
+	set_country_flag = 2_sejm_HAB
+	}
+	
+}
+
+country_event = { 
+	id = 222434
+	title = "PLC12.T" #March Constitution
+	desc = "PLC12.D" 
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = 2_sejm_HAB
+	NOT = { has_country_flag = march_revolution }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	any_country = {
+			limit = { 
+			tag = RUS
+			exists = RUS
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = NGF
+			exists = NGF
+			owns = 549
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			exists = BOH
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = CAE
+			exists = CAE
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = SCA
+			exists = SCA
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = HLR
+			exists = HLR
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	name = "PLC12.A"
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE
+	set_country_flag = march_revolution
+	government = hms_government
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	political_reform = federalism
+	political_reform = all_voting_pops
+	political_reform = debtors_prisons
+	inherit = LIT
+	any_country = {
+	limit = {
+	tag = DZG
+	is_substate = yes
+	}
+	country_event = 11101
+	}
+	any_pop = { 
+	limit = { pop_type = aristocrats }
+		ideology = {
+			value = reactionary
+			factor = 0.4
+				}
+		}
+	any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 10
+			}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 4 
+			}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = -5
+				}
+		}
+	}
+}
+
+country_event = { 
+	id = 222444
+	title = "PLC22.T" #PRU leaves
+	desc = "PLC22.D" 
+	
+	trigger = { 
+	tag = PLC
+	has_country_flag = march_revolution
+	PRU = { substate_of = THIS }
+	NOT = { has_country_flag = march_PRU }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC22.A"
+	set_country_flag = march_PRU
+	release_vassal = PRU
+	PRU = {
+	any_owned = { 
+	    limit = { 
+		is_core = PLC
+			}
+		remove_core = PLC
+    }
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	}
+}
+
+country_event = { 
+	id = 222435
+	title = "PLC13.T" #RUT leaves
+	desc = "PLC13.D" 
+	
+	trigger = { 
+	tag = PLC
+	has_country_flag = march_revolution
+	NOT = { has_country_flag = march_RUT }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7 
+	}
+	
+	option = { 
+	name = "PLC13.A"
+	set_country_flag = march_RUT
+	set_country_flag = march_PRU
+	release_vassal = KIE
+	KIE = {
+	any_owned = { 
+	limit = { 
+		is_core = PLC	
+			}
+		remove_core = PLC
+	}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	KIE = { country_event = 222436 }
+	}
+}
+
+country_event = { 
+	id = 222436
+	title = "PLC14.T"
+	desc = "PLC14.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC14.A"
+	prestige = 10
+    add_country_modifier = {
+		name = neutrality
+		duration = 18250
+    }
+	change_tag = UKR
+	}
+}
+
+country_event = { 
+	id = 222437
+	title = "PLC15.T"
+	desc = "PLC15.D"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = march_RUT 
+	NOT = { has_country_flag = bar_conf }
+	}
+	
+	mean_time_to_happen = { 
+	days = 25 
+	}
+	
+	option = { 
+	name = "PLC15.A"
+	set_country_flag = bar_conf
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			}
+    country_event = 222438 
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			}
+    country_event = 222438 
+		}
+	}
+}
+	
+country_event = { 
+	id = 222438
+	title = "PLC16.T" #BOH/HLR intervention
+	desc = "PLC16.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC16.A"
+	set_global_flag = PLC_confederacy
+	FROM = { country_event = 222439 }
+	casus_belli = { 
+				target = FROM 
+				type = cut_down_to_size
+				months = 12
+			}
+	war = {
+		target = FROM
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+		    }
+	badboy = 8
+	
+	ai_chance = { 
+	factor = 99 
+		}
+	}
+	
+	option = { 
+	name = "PLC16.B"
+	FROM = { country_event = 222440 }
+		ai_chance = { 
+			factor = 1
+			modifier = { 
+				factor = 90
+				truce_with = FROM
+				}
+		}
+	}
+}
+	
+country_event = { 
+	id = 222439
+	title = "PLC17.T"
+	desc = "PLC17.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC17.A"
+	}
+}
+
+country_event = { 
+	id = 222440
+	title = "PLC18.T"
+	desc = "PLC18.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC18.A"
+	prestige = 40	
+	set_country_flag = treaty_hadiach
+	add_accepted_culture = lithuanian
+	add_accepted_culture = ruthenian
+	add_accepted_culture = belarusian
+	add_accepted_culture = galician
+	country_event = { id = 222305 days = 1 }
+	}
+}
+
+country_event = { 
+	id = 222441
+	title = "PLC19.T" #SCA interv
+	desc = "PLC19.D"	
+	
+	trigger = { 
+	tag = SCA 
+	has_global_flag = PLC_confederacy
+	war = no 
+	PLC = { exists = yes war = yes }
+	OR = { 
+	BOH = { exists = yes war = yes }
+	HLR = { exists = yes war = yes }
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	option = { 
+	name = "PLC19.A"
+	PLC = { country_event = 222439 }
+	casus_belli = { 
+				target = PLC 
+				type = cut_down_to_size
+				months = 12
+			}
+	badboy = 9
+	war = {
+		target = PLC
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+		    }
+		ai_chance = { 
+		factor = 70 
+		}
+	}
+	
+	option = { 
+	name = "PLC19.B"
+	prestige = -3 
+	relation = { who = PLC value = 150 }
+	ai_chance = { 
+	factor = 30 
+		}
+	}
+}
+
+country_event = { 
+	id = 222442
+	title = "PLC20.T" # PLC victory
+	desc = "PLC20.D"	
+	
+	major = yes 
+	
+	trigger = { 
+	tag = PLC 
+	has_global_flag = PLC_confederacy
+	war = no 
+	is_disarmed = no 
+	} 
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "PLC20.A"
+	prestige = 40
+	set_country_flag = treaty_hadiach
+	add_accepted_culture = lithuanian
+	add_accepted_culture = ruthenian
+	add_accepted_culture = belarusian
+	add_accepted_culture = galician
+	clr_global_flag = PLC_confederacy
+	country_event = { id = 222305 days = 1 } 
+	UKR = {
+	remove_country_modifier = neutrality
+	any_owned = { 
+	   limit = { 
+	   is_core = UKR	
+	   }
+	   add_core = PLC
+	   }
+	}
+	any_country = { 
+	   limit = {
+	      exists = yes
+	      tag = MUS
+		  NOT = { year = 1850 }
+	      NOT = { has_global_flag = RUS_TRIGGERMAN }
+		  NOT = { has_global_flag = RUS_ANARCHY }
+	      NOT = { has_global_flag = RUS_STAGE_ONE }
+	   }
+	   country_event = { id = 222566 days = 1 }
+	}
+	any_country = { 
+	   limit = {
+	      exists = yes
+	      tag = TVE
+		  NOT = { exists = MUS }
+		  NOT = { year = 1850 }
+	      NOT = { has_global_flag = RUS_TRIGGERMAN }
+		  NOT = { has_global_flag = RUS_ANARCHY }
+	      NOT = { has_global_flag = RUS_STAGE_ONE }
+	   }
+	   country_event = { id = 222566 days = 1 }
+	}  	
+	}
+}
+
+country_event = { 
+	id = 222443
+	title = "PLC21.T" # PLC failure
+	desc = "PLC21.D"	
+	
+	major = yes 
+	
+	trigger = { 
+	tag = PLC 
+	has_global_flag = PLC_confederacy
+	#war = no 
+	is_disarmed = yes
+	} 
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "PLC21.A"
+	end_war = BOH
+	end_war = SCA
+	political_reform = unitary
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+	set_global_flag = final_partition
+	set_global_flag = PLC_broken_early
+    set_country_flag = PLC_has_departed
+	clr_global_flag = PLC_confederacy
+	prestige = -100
+	change_tag = POL	
+	UKR = { remove_country_modifier = neutrality all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_owned = { 
+		limit = {
+		is_core = UKR
+		NOT = { is_core = GLM }
+		}
+		remove_core = POL
+        secede_province = UKR
+	}
+	any_owned = { 
+		limit = {
+		is_core = SAM
+		}
+		remove_core = POL
+        secede_province = LIT
+	}	
+	any_owned = { 
+		limit = {
+		is_core = LIT
+		}
+		remove_core = POL
+        secede_province = LIT
+	}
+	any_owned = { 
+		limit = {
+		is_core = BLR
+		}
+		remove_core = POL
+        secede_province = LIT
+	}
+	any_owned = { 
+		limit = {
+		is_core = PRU
+		NOT = { is_core = PML }
+		}
+		remove_core = POL
+        secede_province = PRU
+	}
+	release_vassal = DZG
+	release_vassal = PRU
+	release_vassal = KIE
+	release_vassal = LIT	
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}		 
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_owned = { 
+	limit = { 
+	is_core = CRI
+	      }
+	secede_province = CRI
+	}
+    country_event = { id = 222479 days = 31 } 
+	}
+}
+
+###########################
+###	New Sejm PLC events ###
+###########################
+
+### 222446+
+
+country_event = { 
+	id = 222446
+	title = "PLC24.T" #Death of the King - Second Sejm Trigger
+	desc = "PLC24.D"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Habsburg_refused
+	year = 1878 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	name = "PLC2.A"
+	set_country_flag = Sejm_1880s
+	}
+}
+
+#### The Good Sejm - No Russia ####
+
+### The Stuart, The Italian and the Pole ###
+
+country_event = { 
+	id = 222447
+	title = "PLC25.T" #The Sejm convenes
+	desc = "PLC25.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Sejm_1880s
+	NOT = { exists = RUS }
+	NOT = { has_country_flag = THE_SECOND_SEJM }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 10
+	}
+	
+	option = { 
+	name = "PLC25.A"
+	set_country_flag = THE_SECOND_SEJM
+	set_country_flag = you_are_winner
+	any_pop = { 
+	consciousness = 1 
+		}
+	prestige = -1
+	}
+}
+
+country_event = { 
+	id = 222448
+	title = "PLC26.T" #THE GOOD SECOND SEJM
+	desc = "PLC26.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = you_are_winner
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	# Stuart
+	
+	option = { 
+	name = "PLC26.A"
+	clr_country_flag = you_are_winner
+    set_country_flag = blame_game_begins
+	relation = { who = SCA value = 50 }
+	relation = { who = SCO value = 100 }
+	relation = { who = DEN value = 100 }
+	}
+	
+	# Italian
+	
+	option = { 
+	name = "PLC26.B"
+	clr_country_flag = you_are_winner
+    set_country_flag = blame_game_begins
+	relation = { who = ITA value = 50 }
+	relation = { who = VEN value = 100 }
+	}
+	
+	# Hungarian
+
+	option = { 
+	name = "PLC26.C"
+	clr_country_flag = you_are_winner
+    set_country_flag = blame_game_begins
+	relation = { who = HUN value = 100 }
+	}
+}
+
+# The Bohemian Conspiracy
+
+country_event = { 
+	id = 222449
+	title = "PLC27.T" 
+	desc = "PLC27.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = blame_game_begins
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "PLC27.A"
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = 2
+		militancy = 2
+		ideology = { factor = 0.5 value = separatist } 
+	}    
+	relation = { who = BOH value = -50 }
+	relation = { who = CAE value = -50 }
+	relation = { who = HLR value = -50 }
+	clr_country_flag = blame_game_begins
+	set_country_flag = the_szlactha_purge
+	}
+}
+
+# The Szlactha Purge - MAJOR
+
+country_event = { 
+	id = 222450
+	title = "PLC28.T" 
+	desc = "PLC28.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = the_szlactha_purge
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC28.A"
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		reduce_pop = 0.5
+		consciousness = 3
+		militancy = 3 
+	}   
+	relation = { who = BOH value = -400 }
+	relation = { who = CAE value = -400 }
+	relation = { who = HLR value = -400 }
+    BOH	= { diplomatic_influence = { who = THIS value = -400 } }
+	CAE	= { diplomatic_influence = { who = THIS value = -400 } }			
+	HLR	= { diplomatic_influence = { who = THIS value = -400 } }						
+	clr_country_flag = the_szlactha_purge
+	set_country_flag = the_new_PLC_good_sejm
+	}
+}
+
+# The Constitution of $YEAR$
+
+country_event = { 
+	id = 222451
+	title = "PLC29.T" 
+	desc = "PLC29.D"
+	picture = "sejm"
+
+	trigger = { 
+	tag = PLC 
+	has_country_flag = the_new_PLC_good_sejm
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLC29.A"
+	prestige = 10
+	clr_country_flag = the_new_PLC_good_sejm
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = all_trade_unions
+	political_reform = secret_ballots 		
+	any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+			}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 1
+			}
+		scaled_militancy = { 
+				ideology = socialist 
+				factor = -6
+			}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = -8
+			}
+		scaled_militancy = { 
+				ideology = communist
+				factor = -10
+			}
+		scaled_militancy = { 
+				ideology = anarcho_liberal 
+				factor = -10
+			}
+	    }			
+	}
+}
+
+#### The Bad Sejm - Russia Exists ####
+
+### The Hohenzollern Radical, The Polish Nationalist and the Corrupt Saxon ###
+
+country_event = { 
+	id = 222452
+	title = "PLC30.T" #The Sejm convenes
+	desc = "PLC30.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = Sejm_1880s
+	exists = RUS
+	NOT = { has_country_flag = THE_SECOND_SEJM }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 10
+	}
+	
+	option = { 
+	name = "PLC30.A"
+	set_country_flag = THE_SECOND_SEJM
+	set_country_flag = a_bad_time_PLC
+	any_pop = { 
+	   consciousness = 3
+	   militancy = 3
+    }
+	prestige = -10
+	}
+}
+
+country_event = { 
+	id = 222453
+	title = "PLC31.T" #THE BAD SECOND SEJM
+	desc = "PLC31.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = a_bad_time_PLC
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	
+	# Corrupt Saxon
+
+	option = { 
+	  name = "PLC31.C"
+	  prestige = -10
+      any_pop = { 
+	     consciousness = 2
+	     militancy = 2
+      }
+	  clr_country_flag = a_bad_time_PLC
+      set_country_flag = bad_second_sejm_SQ
+	  relation = { who = SAX value = 200 }
+	  relation = { who = BOH value = 50 }
+	  relation = { who = CAE value = 50 }
+	  relation = { who = HLR value = 50 }
+      relation = { who = RUS value = 50 }	
+	  ai_chance = {
+		 factor = 70
+	  }
+   }
+	
+	# Hohenzollern Radical
+	
+	option = { 
+	  name = "PLC31.A"
+	   prestige = 10
+	   remove_country_modifier = PLC_golden_liberty
+	   any_pop = { 
+		 limit = { 
+		 pop_type = aristocrats
+	     }
+		 consciousness = 8
+		 militancy = 8
+		 ideology = { factor = 0.5 value = separatist } 
+	   }
+       any_pop = { 
+	     consciousness = -2
+	     militancy = -2
+       }
+	   clr_country_flag = a_bad_time_PLC
+       set_country_flag = bad_second_sejm_RAD
+	   any_country = {
+			limit = { 
+			tag = RUS
+			exists = RUS
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+       diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   any_country = {
+			limit = { 
+			tag = NGF
+			exists = NGF
+			owns = 549
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   any_country = {
+			limit = { 
+			tag = BOH
+			exists = BOH
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   any_country = {
+			limit = { 
+			tag = CAE
+			exists = CAE
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   any_country = {
+			limit = { 
+			tag = SCA
+			exists = SCA
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   any_country = {
+			limit = { 
+			tag = HLR
+			exists = HLR
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	   }
+	   ai_chance = {
+			factor = 15
+	   }
+	}
+	
+	# Polish Nationalist
+	
+	option = { 
+	   name = "PLC31.B"
+	   prestige = -5
+	   remove_country_modifier = PLC_golden_liberty
+       any_pop = { 
+	     consciousness = 1
+	     militancy = 1
+       }
+	   clr_country_flag = a_bad_time_PLC
+       set_country_flag = bad_second_sejm_PN
+	   relation = { who = BOH value = 10 }
+	   relation = { who = CAE value = 10 }
+	   relation = { who = HLR value = 10 }
+       relation = { who = RUS value = 10 }
+	   relation = { who = LIT value = -100 }
+	   relation = { who = KIE value = -100 }
+	   relation = { who = PRU value = -100 }
+       relation = { who = DZG value = -100 }	   
+	   ai_chance = {
+			factor = 15
+	   }
+	}
+}
+
+### Polish Nationalist Chain ###
+
+country_event = { 
+	id = 222454
+	title = "PLC32.T" #The Concept of a Polish Nation State
+	desc = "PLC32.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = bad_second_sejm_PN
+	NOT = { has_country_flag = BSS_PN_One }
+	NOT = { has_country_flag = BSS_PN_Collapse }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC32.A"
+	set_country_flag = BSS_PN_One
+    any_pop = { 
+	   consciousness = -1
+	   militancy = -1
+    }
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+	    culture = polish
+		}
+		consciousness = -8
+		militancy = -8
+	}    
+	}
+}
+
+country_event = { 
+	id = 222455
+	title = "PLC33.T" #Abolishing the Lithuanian Veto
+	desc = "PLC33.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = BSS_PN_One
+	NOT = { has_country_flag = BSS_PN_Two }
+	NOT = { has_country_flag = BSS_PN_Collapse }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC33.A"
+	set_country_flag = BSS_PN_Two
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+	    culture = lithuanian
+		}
+		consciousness = 4
+		militancy = 4
+	}
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+	    culture = belarusian
+		}
+		consciousness = 4
+		militancy = 4
+	}
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+	    culture = polish
+		}
+		consciousness = 2
+		militancy = 2
+	}    
+	}
+}
+
+country_event = { 
+	id = 2224560
+	title = "PLC34.T" #Abolishing the Lithuanian Veto - Forced through
+	desc = "PLC34.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = BSS_PN_Two
+	NOT = { has_country_flag = BSS_PN_Three }
+	NOT = { has_country_flag = BSS_PN_Collapse }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC34.A"
+	set_country_flag = BSS_PN_Three
+	prestige = -1
+	any_pop = { 
+		limit = { 
+	    culture = lithuanian
+		}
+		consciousness = 4
+		militancy = 4
+	}
+	any_pop = { 
+		limit = { 
+	    culture = belarusian
+		}
+		consciousness = 4
+		militancy = 4
+	}
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+	    culture = polish
+		}
+		consciousness = -4
+		militancy = 4
+	}    
+	}
+}
+
+country_event = { 
+	id = 2224561
+	title = "PLC35.T" #The Polonization Legislation
+	desc = "PLC35.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = BSS_PN_Three
+	NOT = { has_country_flag = BSS_PN_Four }
+	NOT = { has_country_flag = BSS_PN_Collapse }
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLC35.A"
+	set_country_flag = BSS_PN_Four
+	prestige = 1
+	any_pop = { 
+		limit = { 
+	    NOT = { culture = polish }
+		}
+		consciousness = 5
+		militancy = 5
+	}    
+	any_pop = { 
+		limit = { 
+	    culture = polish
+		}
+		consciousness = -8
+		militancy = -8
+	}
+	}
+}
+
+country_event = { 
+	id = 222456
+	title = "PLC340.T" #The Collapse Begins - Grand Duchy of Lithuania Proclaimed
+	desc = "PLC340.D"
+	picture = "vilnus"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = BSS_PN_Four
+	NOT = { has_country_flag = BSS_PN_Collapse }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "PLC340.A"
+	prestige_factor = -0.2
+	clr_country_flag = BSS_PN_Three
+	clr_country_flag = BSS_PN_Two
+	clr_country_flag = BSS_PN_One	
+    clr_country_flag = BSS_PN_Four
+	set_country_flag = BSS_PN_Collapse
+	}
+}
+
+country_event = { 
+	id = 222457
+	title = "PLC350.T" #The Warsaw Speech - End of the PLC
+	desc = "PLC350.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = BSS_PN_Collapse
+	NOT = { has_country_flag = BSS_PN_Collapse_FALL }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC350.A"
+	set_country_flag = nationalist_poland
+	political_reform = unitary
+	prestige_factor = -0.5
+	set_country_flag = BSS_PN_Collapse_FALL
+	set_country_flag = VOL_WAR_INEVITABLE 
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+	set_global_flag = final_partition
+	set_global_flag = PLC_broken_early
+    set_country_flag = PLC_has_departed
+	release_vassal = DZG
+	release_vassal = PRU
+	release_vassal = KIE
+	release_vassal = LIT
+	relation = { who = LIT value = -400 }
+	leave_alliance = LIT
+	change_tag = POL	
+	UKR = { all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	any_owned = { 
+	   limit = { is_core = PRU NOT = { is_core = PML } }
+	   secede_province = PRU
+	}
+	any_owned = { 
+	   limit = { is_core = SAM }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = BLR }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = LIT }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = VOL NOT = { province_id = 704 } }
+	   secede_province = VOL
+	}
+	any_owned = { 
+	   limit = { is_core = UKR NOT = { province_id = 704 } }
+	   secede_province = KIE
+	}
+	VOL = { 
+		 add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+		 }
+	    government = democracy
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	}
+	}
+}
+
+#### Polish Nationalist Chain - The Volhynia War ####
+
+country_event = { 
+	id = 222458
+	title = "PLC36.T" #The Treason of Volhynia
+	desc = "PLC36.D"
+	picture = "sejm"
+
+	trigger = { 
+	tag = POL 
+	has_country_flag = VOL_WAR_INEVITABLE 
+	NOT = { has_country_flag = VOL_WAR_TIME }
+	NOT = { has_country_flag = VOL_WAR }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC36.A"
+	VOL = { relation = { who = POL value = -400 } relation = { who = KIE value = 400 } create_alliance = KIE }
+	KIE = { relation = { who = POL value = -400 } leave_alliance = POL }
+	set_country_flag = VOL_WAR_TIME
+	}
+}
+
+country_event = { 
+	id = 222459
+	title = "PLC37.T" #Volhynia War Begins!
+	desc = "PLC37.D"
+	picture = "sejm"
+	
+	major = yes
+
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR_TIME
+	NOT = { has_country_flag = VOL_WAR }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC37.A"
+	clr_country_flag = VOL_WAR_INEVITABLE 
+	clr_country_flag = VOL_WAR_TIME
+	set_country_flag = VOL_WAR
+	VOL = { all_core = { add_core = POL } }
+	war = {
+		target = VOL
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	}
+	}
+}
+	
+country_event = { 
+	id = 222460
+	title = "PLC38.T" #Volhynia War - KIE Wins
+	desc = "PLC38.D"
+	picture = "sejm"
+
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR
+	war = no
+	exists = VOL
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC38.A"
+	clr_country_flag = VOL_WAR
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE
+	any_owned = { 
+	   limit = { is_core = UKR }
+	   secede_province = VOL
+	}
+	VOL = { all_core = { remove_core = POL } }
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}
+	prestige = -50
+	government = democracy
+	ruling_party_ideology = socialist
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = proportional_representation
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	set_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	set_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	KIE = { country_event = 222461 }
+	}
+}
+
+country_event = { 
+	id = 222461
+	title = "PLC39.T" #Volhynia War - KIE Wins - Ukraine Formation
+	desc = "PLC39.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLC39.A"
+	prestige = 20
+	inherit = VOL
+	change_tag = UKR
+	}
+}
+
+country_event = { 
+	id = 222462
+	title = "PLC40.T" #Volhynia War - POL Wins
+	desc = "PLC40.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR
+	war = no
+	NOT = { exists = VOL }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC40.A"
+	prestige = 20
+	clr_country_flag = VOL_WAR
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	set_country_flag = POL_is_great
+	VOL = { all_core = { add_core = POL } }
+	}
+}	
+	
+### Radical Chain ###
+
+country_event = { 
+	id = 222463
+	title = "PLC41.T" #The Great Proclamation - The Hohenzollern outs the conspiracy to the general public and the most of the nobility including his own supporters run away to Kiev. He enacts radical reforms and establishes a Civilian Ran Sejm.
+	desc = "PLC41.D"
+	picture = "sejm"
+	
+	major = yes
+
+	trigger = { 
+	tag = PLC
+	has_country_flag = bad_second_sejm_RAD
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC41.A"
+	clr_country_flag = bad_second_sejm_RAD
+	set_country_flag = we_fucking_refuse_RAD
+	badboy = 3
+	prestige = 5
+	inherit = LIT
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	political_reform = federalism
+	political_reform = all_voting_pops
+	political_reform = debtors_prisons
+	any_pop = { 
+	limit = { pop_type = aristocrats }
+		ideology = {
+			value = reactionary
+			factor = 0.6
+		}
+		reduce_pop = 0.4
+		consciousness = 3
+		militancy = 3 
+	}
+	any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 10
+			}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 5 
+			}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = -5
+				}
+		scaled_militancy = { 
+				ideology = socialist
+				factor = -5
+				}
+		scaled_militancy = { 
+				ideology = anarcho_liberal
+				factor = -10
+				}
+		}
+	}
+}
+
+country_event = { 
+	id = 222464
+	title = "PLC42.T" #PRU shits itself and refuses to cooperate
+	desc = "PLC42.D" 
+	
+	trigger = { 
+	tag = PLC
+	has_country_flag = we_fucking_refuse_RAD
+	PRU = { substate_of = THIS }
+	NOT = { has_country_flag = PRU_out_RAD }
+	NOT = { has_global_flag = PLC_RAD_War }
+	NOT = { has_country_flag = PLC_RAD_War_end }
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "PLC42.A"
+	set_country_flag = PRU_out_RAD
+	release_vassal = PRU
+	PRU = {
+	any_owned = { 
+	    limit = { 
+		is_core = PLC
+			}
+		remove_core = PLC
+    }
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	}
+}
+
+country_event = { 
+	id = 222465
+	title = "PLC43.T" #The Reactionary Sejm in Kiev - They crown their own king and basically proclaim the PLC to be a Pariah State.
+	desc = "PLC43.D" 
+	
+	trigger = { 
+	tag = PLC
+	has_country_flag = we_fucking_refuse_RAD
+	NOT = { has_country_flag = KIE_out_RAD }
+	NOT = { has_global_flag = PLC_RAD_War }
+	NOT = { has_country_flag = PLC_RAD_War_end }
+	}
+	
+	mean_time_to_happen = { 
+	days = 8
+	}
+	
+	option = { 
+	name = "PLC43.A"
+	set_country_flag = KIE_out_RAD
+	release_vassal = KIE
+	KIE = {
+	any_owned = { 
+	limit = { 
+		is_core = PLC	
+			}
+		remove_core = PLC
+	}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+	}
+	}
+}
+
+country_event = { 
+	id = 222466
+	title = "PLC44.T" #INTERVENTION IS INEVITABLE - PLC sends its insults and effectively threatens declaring war on everyone.
+	desc = "PLC44.D" 
+	
+	trigger = { 
+	tag = PLC
+	has_country_flag = KIE_out_RAD
+	NOT = { has_country_flag = PLC_INSULTS_WAR }
+	NOT = { has_global_flag = PLC_RAD_War }
+	NOT = { has_country_flag = PLC_RAD_War_end }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC44.A"
+	set_country_flag = PLC_INSULTS_WAR
+	badboy = 5
+	political_reform = mandatory_service
+    add_country_modifier = {
+			name = the_last_stand_PLC
+			duration = 1095
+	}
+    add_country_modifier = {
+			name = taiping_draft
+			duration = 1095
+	}
+	any_country = {
+	limit = {
+	owns = 625
+	NOT = { tag = GER }
+	   }
+	   country_event = 222467
+	}
+	RUS = { country_event = 222468 }   
+	}
+}
+
+country_event = { 
+	id = 222467
+	title = "PLC45.T" #BOH/HLR/CAE Intervention - Cannot refuse due to insults and a guarantee of war even if they refuse
+	desc = "PLC45.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC45.A"
+	prestige = -5
+	PLC = { clr_country_flag = PLC_INSULTS_WAR }
+	set_global_flag = PLC_RAD_War
+	casus_belli = { 
+				target = FROM 
+				type = cut_down_to_size
+				months = 12
+			}
+	war = {
+		target = FROM
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+		    }
+	}
+}
+
+country_event = { 
+	id = 222468
+	title = "PLC46.T" #RUS Intervention - Cannot refuse due to insults and a guarantee of war even if they refuse
+	desc = "PLC46.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLC46.A"
+	prestige = -5
+	PLC = { clr_country_flag = PLC_INSULTS_WAR }
+	set_global_flag = PLC_RAD_War
+	casus_belli = { 
+				target = FROM 
+				type = cut_down_to_size
+				months = 12
+			}
+	war = {
+		target = FROM
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+		    }
+	}
+}
+
+country_event = { 
+	id = 222469
+	title = "PLC47.T" # PLC victory
+	desc = "PLC47.D"	
+	
+	major = yes 
+	
+	trigger = { 
+	tag = PLC 
+	has_global_flag = PLC_RAD_War
+	war = no 
+	is_disarmed = no 
+	} 
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "PLC47.A"
+	prestige = 40
+	remove_country_modifier = the_last_stand_PLC
+	remove_country_modifier = taiping_draft
+    add_country_modifier = {
+			name = no_more_war
+			duration = 1825
+	}	
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	set_country_flag = treaty_hadiach
+	add_accepted_culture = lithuanian
+	add_accepted_culture = ruthenian
+	add_accepted_culture = belarusian
+	add_accepted_culture = galician
+	country_event = { id = 222305 days = 1 }
+	clr_global_flag = PLC_RAD_War
+	}
+}
+
+country_event = { 
+	id = 222470
+	title = "PLC48.T" # PLC loses after killing what is likely millions of people and is completely fucking obliterated in Revenge (Second Partition)
+	desc = "PLC48.D"	
+	
+	major = yes 
+	
+	trigger = {
+	tag = PLC 
+	has_global_flag = PLC_RAD_War
+	war = no 
+	is_disarmed = yes
+	} 
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	immediate = {
+	release = LIT
+	}
+	
+	option = { 
+	name = "PLC48.A"
+	prestige_factor = -0.9
+	remove_country_modifier = the_last_stand_PLC
+	remove_country_modifier = taiping_draft
+    add_country_modifier = {
+			name = no_more_war
+			duration = 1825
+	}
+	political_reform = unitary
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+    set_country_flag = PLC_has_departed
+	clr_global_flag = PLC_RAD_War
+	release_vassal = LIT
+	release_vassal = DZG
+	release_vassal = KIE
+	release_vassal = PRU
+    change_tag = POL
+	UKR = { all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	RUS_955 = { add_core = RUG }
+    RUS_958 = { add_core = RUG } 
+    957 = { add_core = RUG }
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_owned = { 
+		limit = {
+		is_core = UKR
+		NOT = { is_core = GLM }
+		}
+		remove_core = POL
+        secede_province = RUS
+	}	
+	#### The New Lithuania Chain ###
+	any_country = {
+			limit = { 
+			tag = RUS
+			owns = 1008
+			NOT = { has_global_flag = THE_SOUTHERN_BEAR }
+			}
+	   leave_alliance = PLC
+       country_event = { id = 222322 days = 0 }
+	}
+	any_country = {
+			limit = { 
+			tag = RUS
+			owns = 1008
+			has_global_flag = THE_SOUTHERN_BEAR
+			}
+	   leave_alliance = PLC
+       country_event = { id = 222323 days = 0 }
+	}
+	#### The New Lithuania Chain ###
+	### Russia declaring war on Kiev if it still exists ###
+	any_country = {
+		limit = { 
+			tag = RUS
+			owns = 962
+			exists = KIE
+		}
+	    leave_alliance = KIE
+	    war = {
+		target = KIE
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = war_reparations
+			}
+		}
+	}
+	### Russia declaring war on Kiev if it still exists ###
+	any_owned = { 
+		limit = {
+		is_core = PRU
+		NOT = { is_core = PML }
+		}
+		remove_core = POL
+        secede_province = PRU
+	}		
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}	
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_owned = { 
+	limit = { 
+	is_core = CRI
+	      }
+	secede_province = CRI
+	   }
+	}
+}
+
+### Status Quo Success - Third Sejm ###
+
+country_event = { 
+	id = 222471
+	title = "PLC49.T" #THE THIRD SEJM - The Hardest One
+	desc = "PLC49.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	year = 1900
+	has_country_flag = bad_second_sejm_SQ
+	NOT = { has_country_flag = BSS_SQ_Third }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	# Crimean
+	
+	option = { 
+	name = "PLC49.A"
+	prestige = 10
+    set_country_flag = BSS_SQ_Third
+	set_country_flag = the_beginning_of_the_end_PLC
+	relation = { who = TAR value = 100 }
+	relation = { who = CRI value = 100 }
+	}
+	
+	# Ruthenian
+	
+	option = { 
+	name = "PLC49.B"
+	prestige = 10
+    set_country_flag = BSS_SQ_Third
+	set_country_flag = the_beginning_of_the_end_PLC
+	relation = { who = RUT value = 100 }
+	relation = { who = UKR value = 100 }
+	relation = { who = KIE value = 200 }
+	}
+	
+	# Polish
+
+	option = { 
+	name = "PLC49.C"
+	prestige = 10
+    set_country_flag = BSS_SQ_Third
+	set_country_flag = the_beginning_of_the_end_PLC
+	any_pop = { 
+		consciousness = -2
+		militancy = -2
+	    } 
+	}
+	
+	# Burgundian
+	
+	option = { 
+	name = "PLC49.D"
+	prestige = 10
+    set_country_flag = BSS_SQ_Third
+	set_country_flag = the_beginning_of_the_end_PLC
+	relation = { who = PBG value = 100 }
+	relation = { who = BRG value = 100 }
+	relation = { who = LRR value = 200 }
+	}
+	
+	# Danubian
+	
+	option = { 
+	name = "PLC49.E"
+	prestige = 10
+    set_country_flag = BSS_SQ_Third
+	set_country_flag = the_beginning_of_the_end_PLC
+	relation = { who = WUR value = 200 }
+	relation = { who = SGF value = 100 }
+	relation = { who = GER value = 50 }
+	}
+}
+
+# The Truth is Revealed
+
+country_event = { 
+	id = 222472
+	title = "PLC50.T" 
+	desc = "PLC50.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = the_beginning_of_the_end_PLC
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC50.A"
+	prestige = -15   
+    remove_country_modifier = PLC_golden_liberty	
+	any_pop = { 
+		limit = { 
+		NOT = { pop_type = aristocrats }
+		}
+		consciousness = 4
+		militancy = 4
+		ideology = { factor = 0.25 value = socialist } 
+	} 
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = 8
+		militancy = 8
+		ideology = { factor = 0.5 value = separatist } 
+	}
+	relation = { who = BOH value = -100 }
+	relation = { who = CAE value = -100 }
+	relation = { who = HLR value = -100 }
+	relation = { who = RUS value = -100 }
+	clr_country_flag = the_beginning_of_the_end_PLC
+	set_country_flag = the_chaos_begins_PLC
+	}
+}
+
+# Warsaw Falls into Anarchy
+
+country_event = { 
+	id = 222473
+	title = "PLC51.T" 
+	desc = "PLC51.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = the_chaos_begins_PLC
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLC51.A"
+	any_pop = { 
+		consciousness = 2
+		militancy = 2
+		ideology = { factor = 0.10 value = socialist } 
+	} 						
+	clr_country_flag = the_chaos_begins_PLC
+	set_country_flag = anarchy_in_poland_PLC
+	}
+}
+
+# MAJOR - The Polish Reign of Terror
+
+country_event = { 
+	id = 222474
+	title = "PLC52.T" 
+	desc = "PLC52.D"
+	picture = "sejm"
+	
+	major = yes
+
+	trigger = { 
+	tag = PLC 
+	has_country_flag = anarchy_in_poland_PLC
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLC52.A"
+	clr_country_flag = anarchy_in_poland_PLC
+	set_country_flag = the_polish_terror_PLC
+	inherit = KIE
+	badboy = 3
+	prestige = -10
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		reduce_pop = 0.9
+		consciousness = 10
+		militancy = 10
+	} 
+	any_country = {
+			limit = { 
+			tag = RUS
+			exists = RUS
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+       diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = NGF
+			exists = NGF
+			owns = 549
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			exists = BOH
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+   }
+   any_country = {
+			limit = { 
+			tag = CAE
+			exists = CAE
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = SCA
+			exists = SCA
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = HLR
+			exists = HLR
+			}
+	   leave_alliance = PLC
+	   relation = { who = PLC value = -400 }
+	   diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 8
+			}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 3
+			}
+		scaled_militancy = { 
+				ideology = socialist 
+				factor = -6
+			}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = -8
+			}
+		scaled_militancy = { 
+				ideology = communist
+				factor = -10
+			}
+		scaled_militancy = { 
+				ideology = anarcho_liberal 
+				factor = -10
+			}
+	    }		
+	}
+}
+
+# The Aftermath of the Terror
+
+country_event = { 
+	id = 222475
+	title = "PLC53.T" 
+	desc = "PLC53.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	has_country_flag = the_polish_terror_PLC
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC53.A"
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE		
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = all_trade_unions
+	political_reform = secret_ballots 	
+	political_reform = proportional_representation	
+	political_reform = no_draft
+	social_reform = good_schools					
+	clr_country_flag = the_polish_terror_PLC
+	}
+}
+
+### Republic Chain ###
+
+country_event = { 
+	id = 222476
+	title = "PLC54.T" #The Deluge - loss of monarchy before nobility is purged collapse
+	desc = "PLC54.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	NOT = {
+		OR = { 
+	       has_global_flag = NOBILITY_ARE_GONE
+		   government = absolute_monarchy
+		   government = prussian_constitutionalism
+		   government = hms_government
+		   }
+	    }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC54.A"
+	political_reform = unitary
+	prestige_factor = -0.5
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+	set_global_flag = final_partition
+	set_global_flag = PLC_broken_early
+    set_country_flag = PLC_has_departed
+	release_vassal = DZG
+	release_vassal = PRU
+	release_vassal = KIE
+	release_vassal = LIT
+	leave_alliance = KIE
+	leave_alliance = LIT
+	leave_alliance = PRU
+	leave_alliance = DZG
+	relation = { who = KIE value = -400 }
+	relation = { who = DZG value = -400 }
+	relation = { who = LIT value = -400 }
+	relation = { who = PRU value = -400 }
+	change_tag = POL	
+	UKR = { all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }	
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	954 = { add_core = KIE }
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_owned = { 
+	   limit = { is_core = PRU NOT = { is_core = PML } }
+	   secede_province = PRU
+	}
+	any_owned = { 
+	   limit = { is_core = SAM }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = KIE }
+	   secede_province = KIE
+	}
+	any_owned = { 
+	   limit = { is_core = BLR }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = LIT }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = VOL NOT = { is_core = GLM } }
+	   secede_province = VOL
+	}
+	any_owned = { 
+	   limit = { is_core = UKR NOT = { is_core = GLM } }
+	   secede_province = KIE
+	}
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}
+	LIT = { 
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL		
+	}
+	VOL = { 
+		 add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+		 }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	}
+	any_country = {
+	    limit = {
+	    tag = KIE
+	    exists = yes
+	    NOT = { is_vassal = yes }
+		NOT = { is_substate = yes }
+	    }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL
+	    set_country_flag = VOL_WAR_INEVITABLE_ALT
+	}
+	}
+}
+
+country_event = { 
+	id = 222478
+	title = "PLC55.T" #The Deluge - Kiev or Lithuania are lost
+	desc = "PLC55.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PLC 
+	NOT = {
+		OR = { 
+		   has_global_flag = first_partition_start
+		   has_global_flag = first_partition
+	       has_global_flag = NOBILITY_ARE_GONE
+		   has_global_flag = PLC_confederacy
+		   has_country_flag = KIE_out_RAD
+		   has_country_flag = march_RUT
+		   LIT = { substate_of = PLC }
+		   KIE = { substate_of = PLC }
+		   }
+	    }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC55.A"
+	political_reform = unitary
+	prestige_factor = -0.5
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+	set_global_flag = final_partition
+	set_global_flag = PLC_broken_early
+    set_country_flag = PLC_has_departed
+	release_vassal = DZG
+	release_vassal = PRU
+	release_vassal = KIE
+	release_vassal = LIT
+	leave_alliance = KIE
+	leave_alliance = LIT
+	leave_alliance = PRU
+	leave_alliance = DZG
+	relation = { who = KIE value = -400 }
+	relation = { who = DZG value = -400 }
+	relation = { who = LIT value = -400 }
+	relation = { who = PRU value = -400 }
+	change_tag = POL	
+	UKR = { all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }	
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	954 = { add_core = KIE }
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_owned = { 
+	   limit = { is_core = PRU NOT = { is_core = PML } }
+	   secede_province = PRU
+	}
+	any_owned = { 
+	   limit = { is_core = SAM }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = KIE }
+	   secede_province = KIE
+	}
+	any_owned = { 
+	   limit = { is_core = BLR }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = LIT }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = VOL NOT = { is_core = GLM } }
+	   secede_province = VOL
+	}
+	any_owned = { 
+	   limit = { is_core = UKR NOT = { is_core = GLM } }
+	   secede_province = KIE
+	}
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = four_year_draft
+    political_reform = first_past_the_post
+	political_reform = underground_parties 
+	random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+						government = fascist_monarchy
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	}
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	LIT = { 
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL		
+	}
+	VOL = { 
+		 add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+		 }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+		relation = { who = POL value = -400 }
+	}
+	any_country = {
+	    limit = {
+	    tag = KIE
+	    exists = yes
+	    NOT = { is_vassal = yes }
+		NOT = { is_substate = yes }
+	    }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL
+		leave_alliance = POL
+	    set_country_flag = VOL_WAR_INEVITABLE_ALT
+	}
+	}
+}
+
+country_event = { 
+	id = 2224780
+	title = "PLC550.T" #The Deluge - You had taken too long to centralize the Commonwealth or in a Great War with a unstable commonwealth.
+	desc = "PLC550.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	    tag = PLC 
+	    NOT = {
+		   OR = { 
+		      has_global_flag = first_partition_start
+		      has_global_flag = first_partition
+	          has_country_flag = lublin_new
+	     	  has_global_flag = PLC_confederacy
+		      has_country_flag = KIE_out_RAD
+		      has_country_flag = march_RUT
+		   }
+	    }
+		OR = { 
+		   year = 1910
+		   has_country_flag = in_great_war
+		   has_country_flag = lublin_failure
+		}		
+	}
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "PLC55.A"
+	any_country = {
+	   limit = { war_with = PLC }
+	      end_war = THIS
+    }		  
+	political_reform = unitary
+	prestige_factor = -0.5
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+	set_global_flag = first_partition
+	set_global_flag = second_partition
+	set_global_flag = final_partition
+	set_global_flag = PLC_broken_early
+    set_country_flag = PLC_has_departed
+	release_vassal = DZG
+	release_vassal = PRU
+	release_vassal = KIE
+	release_vassal = LIT
+	leave_alliance = KIE
+	leave_alliance = LIT
+	leave_alliance = PRU
+	leave_alliance = DZG
+	relation = { who = KIE value = -400 }
+	relation = { who = DZG value = -400 }
+	relation = { who = LIT value = -400 }
+	relation = { who = PRU value = -400 }
+	change_tag = POL	
+	UKR = { all_core = { remove_core = POL } }
+	BLR = { all_core = { remove_core = POL } }
+	SAM = { all_core = { remove_core = POL } }
+	LIT = { all_core = { remove_core = POL } remove_accepted_culture = polish }
+	PRU = { all_core = { remove_core = POL } }	
+	VOL = { all_core = { remove_core = POL } }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }
+	PML = { all_core = { add_core = POL } }
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	954 = { add_core = KIE }
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_owned = { 
+	   limit = { is_core = PRU NOT = { is_core = PML } }
+	   secede_province = PRU
+	}
+	any_owned = { 
+	   limit = { is_core = SAM }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = KIE }
+	   secede_province = KIE
+	}
+	any_owned = { 
+	   limit = { is_core = BLR }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = LIT }
+	   secede_province = LIT
+	}
+	any_owned = { 
+	   limit = { is_core = VOL NOT = { is_core = GLM } }
+	   secede_province = VOL
+	}
+	any_owned = { 
+	   limit = { is_core = UKR NOT = { is_core = GLM } }
+	   secede_province = KIE
+	}
+	any_country = {
+			limit = { 
+			owns = 680
+			}
+	leave_alliance = POL
+    country_event = 222394	
+	}
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+	}
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = four_year_draft
+    political_reform = first_past_the_post
+	political_reform = underground_parties 
+	random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+						government = fascist_monarchy
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	}
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	LIT = { 
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL		
+	}
+	VOL = { 
+		 add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+		 }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+		relation = { who = POL value = -400 }
+	}
+	any_country = {
+	    limit = {
+	    tag = KIE
+	    exists = yes
+	    NOT = { is_vassal = yes }
+		NOT = { is_substate = yes }
+	    }
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 1000
+	    small_arms = 1000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+		relation = { who = POL value = -400 }
+		relation = { who = VOL value = 400 }
+		create_alliance = VOL
+		leave_alliance = POL
+	    set_country_flag = VOL_WAR_INEVITABLE_ALT
+	}
+	}
+}
+
+########### THE END OF POLAND ############
+
+country_event = { 
+	id = 222479
+	title = "PLC56.T" #The End of Poland
+	desc = "PLC56.D"
+	picture = "sejm"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	name = "PLC56.A"
+	prestige_factor = -0.5 	
+	any_owned = { 
+	   limit = { is_core = KRA }
+	   remove_core = POL
+	}
+	any_owned = { 
+	   limit = { is_core = KRA }
+	   secede_province = KRA
+	}
+	KRA = {
+	government = democracy
+    political_reform = appointed
+    political_reform = wealth_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+	}
+	government = parliamentary_republic
+    political_reform = appointed
+    political_reform = landed_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = underground_parties
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	set_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+    clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	any_country = {
+			limit = { 
+			owns = 681
+			}
+	leave_alliance = POL
+    country_event = { id = 222395 days = 1 }
+	}
+	PML = { all_core = { remove_core = POL } }
+	change_tag = MAZ
+	}
+}
+
+#### The OTHER Volhynia War ####
+
+country_event = { 
+	id = 222480
+	title = "PLC57.T" #The Treason of Volhynia ALT
+	desc = "PLC57.D"
+	picture = "sejm"
+
+	trigger = { 
+	tag = POL 
+	exists = KIE
+	NOT = { has_country_flag = VOL_WAR_ALT }
+	NOT = { has_country_flag = VOL_WAR_TIME_ALT }
+	KIE = { has_country_flag = VOL_WAR_INEVITABLE_ALT }	
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC57.A"
+	KIE = { clr_country_flag = VOL_WAR_INEVITABLE_ALT }
+	set_country_flag = VOL_WAR_TIME_ALT
+	}
+}
+
+country_event = { 
+	id = 222481
+	title = "PLC58.T" #Volhynia War Begins ALT!
+	desc = "PLC58.D"
+	picture = "sejm"
+	
+	major = yes
+
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR_TIME_ALT
+	NOT = { has_country_flag = VOL_WAR_ALT }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "PLC37.A"
+	clr_country_flag = VOL_WAR_TIME_ALT
+	set_country_flag = VOL_WAR_ALT
+	VOL = { all_core = { add_core = POL } }
+	war = {
+		target = VOL
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	}
+	}
+}
+	
+country_event = { 
+	id = 2224820
+	title = "PLC59.T" #Volhynia War - KIE Wins - POL monarchy restored and UKR formed.
+	desc = "PLC59.D"
+	picture = "sejm"
+
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR_ALT
+	war = no
+	exists = VOL
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC38.A"
+	clr_country_flag = VOL_WAR_ALT
+	any_owned = { 
+	   limit = { is_core = UKR }
+	   secede_province = VOL
+	}
+	VOL = { all_core = { remove_core = POL } }
+	prestige = -50
+	government = hms_government
+	 ruling_party_ideology = conservative
+     political_reform = population_equal_weight
+     political_reform = universal_voting
+     political_reform = yes_meeting
+     political_reform = free_press
+     political_reform = proportional_representation
+     political_reform = secret_ballots
+     political_reform = mandatory_service
+     clr_country_flag = theocratic_government
+	 clr_country_flag = merchantrepublic_gov
+	 clr_country_flag = communist_gov
+	 clr_country_flag = absolute_monarchy_gov
+     clr_country_flag = semi_constitutional_monarchy_gov
+	 clr_country_flag = constitutional_monarchy_gov
+     clr_country_flag = parliamentary_republic_gov
+     set_country_flag = democracy_gov
+     clr_country_flag = presidential_dictatorship_gov
+	 clr_country_flag = fascist_gov
+	 clr_country_flag = anarcho_liberal_gov
+	 clr_country_flag = socialist_republic_gov
+	 clr_country_flag = fascist_monarchy_gov
+	 clr_country_flag = election_started
+	 set_country_flag = tory_election_win
+	 clr_country_flag = socialist_election_win
+	 clr_country_flag = liberal_election_win
+	 clr_country_flag = communist_election_win
+	 clr_country_flag = fascist_election_win
+	 clr_country_flag = reactionary_election_win
+	 clr_country_flag = anarcho_liberal_election_win
+	 clr_country_flag = social_liberal_election_win
+	 clr_country_flag = market_liberal_election_win
+	 set_country_flag = conservative_party_in_power
+	 clr_country_flag = liberal_party_in_power
+	 clr_country_flag = reactionary_party_in_power
+	 clr_country_flag = socialist_party_in_power
+	 clr_country_flag = communist_party_in_power
+	 clr_country_flag = fascist_party_in_power
+	 clr_country_flag = anarcho_liberal_party_in_power
+	 clr_country_flag = market_liberal_party_in_power
+	 KIE = { country_event = 222482 }
+	 country_event = { id = 222479 days = 31 } 
+	}
+}
+
+country_event = { 
+	id = 222482
+	title = "PLC60.T" #Volhynia War - KIE Wins - Ukraine Formation
+	desc = "PLC60.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLC60.A"
+	prestige = 20
+	inherit = VOL
+	change_tag = UKR
+	}
+}
+
+country_event = { 
+	id = 222483
+	title = "PLC61.T" #Volhynia War - POL Wins
+	desc = "PLC61.D"
+	picture = "sejm"
+	
+	trigger = { 
+	tag = POL
+	has_country_flag = VOL_WAR_ALT
+	war = no
+	NOT = { exists = VOL }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLC61.A"
+	prestige = 20
+	clr_country_flag = VOL_WAR_ALT
+	set_country_flag = POL_is_great
+	set_country_flag = nationalist_poland
+	VOL = { all_core = { add_core = POL } }
+	}
+}	
+
+##### Status Quo Partition Chain is at the bottom of this File #####
+
+### #### 222484 - The Abolition of Prussia
+
+country_event = { 
+	id = 222484
+	title = "PLC62.T"
+	desc = "PLC62.D"
+	picture = "sejm"
+	
+	major = yes
+	
+	trigger = { 
+	tag = POL
+	NOT = { exists = PRU }
+	PRU = { all_core = { owned_by = THIS } }
+	has_country_flag = POLkllingprussia
+	NOT = { has_country_flag = lawno45POL }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	# Delete PRU Cores. Move all Germans in Poland to Berlin. Give Memel to Lithuania. Remove Polish core on Memel.
+	
+	option = {               
+	name = "PLC62.A"
+	badboy = 5
+	prestige = 20
+	clr_country_flag = VOL_WAR_ALT
+	set_country_flag = lawno45POL
+	
+	PRU = { all_core = { remove_core = GER } all_core = { remove_core = SCA } all_core = { remove_core = BOH } all_core = { remove_core = POM } all_core = { remove_core = HLR } all_core = { remove_core = CAE } all_core = { remove_core = NGF } all_core = { remove_core = PRU } }
+	DZG = { all_core = { remove_core = DZG } }
+	any_country = {
+	  limit = {
+      is_culture_group = germanic	
+	  }
+	  relation = { who = POL value = -400 }
+        }
+		698 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Klaipeda"
+			remove_core = POL
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		690 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }			
+			change_province_name = "Gdansk"
+            state_scope = {
+                change_region_name = "Pomerelia"
+            }
+	    }
+		694 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Torun"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		697 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_core = SAM
+			change_province_name = "Gumbine"		
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+   	    }
+		696 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Lek"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		695 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+			change_province_name = "Krolewiec"
+			add_core = SAM
+            state_scope = {
+                change_region_name = "Borussia"
+            }
+	   }	
+	   693 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Olsztyn"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	   }	
+	   691 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 680
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 680
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Tczew"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	   }	   
+	   any_owned = { 
+	    limit = { 
+	       province_id = 698
+	    }
+	    secede_province = SAM
+	   }
+	   any_country = {
+	    limit = { 
+		  tag = LIT
+		  exists = yes
+		}
+		inherit = SAM
+	   }
+	   ai_chance = {
+			factor = 75
+	   }
+	}
+	
+	# Delete PRU Cores. Move all Germans in Poland to Berlin. Keep Memel. Remove Polish core on Memel.
+	
+	option = {               
+	name = "PLC62.B"
+	badboy = 5
+	prestige = 20
+	clr_country_flag = VOL_WAR_ALT
+	set_country_flag = lawno45POL
+	PRU = { all_core = { remove_core = GER } all_core = { remove_core = SCA } all_core = { remove_core = BOH } all_core = { remove_core = POM } all_core = { remove_core = HLR } all_core = { remove_core = CAE } all_core = { remove_core = NGF } all_core = { remove_core = PRU } }
+	DZG = { all_core = { remove_core = DZG } }
+	any_country = {
+	  limit = {
+      is_culture_group = germanic	
+	  }
+	  relation = { who = POL value = -400 }
+    }
+		698 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Klaipeda"
+			remove_core = POL
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		690 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }			
+			change_province_name = "Gdansk"
+            state_scope = {
+                change_region_name = "Pomerelia"
+            }
+	    }
+		694 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Torun"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		697 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_core = SAM
+			change_province_name = "Gumbine"		
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+   	    }
+		696 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Lek"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	    }
+		695 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 354
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 354
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+			change_province_name = "Krolewiec"
+			add_core = SAM
+            state_scope = {
+                change_region_name = "Borussia"
+            }
+	   }	
+	   693 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 703
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 703
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Olsztyn"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	   }	
+	   691 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.3 }
+					33 = { reduce_pop = 0.2 }
+					33 = { reduce_pop = 0.1 }
+				}
+				move_pop = 680
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.4 }
+					33 = { reduce_pop = 0.3 }
+				}
+				move_pop = 680
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = prussian
+				}
+				assimilate = yes
+			}
+			change_province_name = "Tczew"
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+	   }
+	   ai_chance = {
+			factor = 25
+	   }
+	}
+	
+	# Keep PRU cores in existence
+	
+	option = {               
+	name = "PLC62.C"
+    clr_country_flag = VOL_WAR_ALT
+	set_country_flag = lawno45POL 
+	ai_chance = {
+			factor = 0
+	   }
+	}
+}
+
+### #### 222240 Liberum veto
+
+country_event = {
+	id = 222240
+	title = "EVTNAME222240"
+	desc = "EVTDESC222240"
+	picture = "sejm" 
+	
+	trigger = {	exists = yes
+	    tag = PLC
+		NOT = { has_global_flag = NOBILITY_ARE_GONE }
+		constructing_cb_progress = 0.5 #5% progress
+		OR = {
+			constructing_cb_type = acquire_state
+			constructing_cb_type = conquest
+			constructing_cb_type = make_puppet
+            constructing_cb_type = steal_puppet
+            constructing_cb_type = release_puppet				
+            constructing_cb_type = add_to_sphere
+			constructing_cb_type = take_from_sphere
+			constructing_cb_type = war_reparations
+			constructing_cb_type = liberate_country
+			constructing_cb_type = free_peoples
+			constructing_cb_type = humiliate
+            constructing_cb_type = cut_down_to_size		
+			constructing_cb_type = dismantle_forts
+			constructing_cb_type = free_allied_cores
+		}
+		NOT = { has_country_modifier = Liberum_Veto }	
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "EVTOPTA222240"
+		add_country_modifier = {
+			name = Liberum_Veto
+			duration = 365
+		}
+		any_owned = {
+		   limit = {
+		      is_core = PLC
+		      owner = { ai = yes }
+		   }
+		   owner = {
+		   add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+		       } 
+		   }
+	    }	
+	}
+}
+
+### PLC is has had a illegal party swtich. Silly King. You are not really incharge of this nation.
+country_event = {
+	id = 22233
+	title = "EVTNAME22233"
+	desc = "EVTDESC22233"
+	picture = "sejm"
+
+	trigger = {
+		ai = no
+		tag = PLC
+		NOT = { has_global_flag = NOBILITY_ARE_GONE }
+		OR = {
+			AND = {
+				has_country_flag = conservative_party_in_power
+				NOT = { ruling_party_ideology = conservative }
+			}
+			AND = {
+				has_country_flag = market_liberal_party_in_power
+				NOT = { ruling_party_ideology = market_liberal }
+			}
+			AND = {
+				has_country_flag = social_liberal_party_in_power
+				NOT = { ruling_party_ideology = social_liberal }
+			}
+			AND = {
+				has_country_flag = liberal_party_in_power
+				NOT = { ruling_party_ideology = liberal }
+			}
+			AND = {
+				has_country_flag = reactionary_party_in_power
+				NOT = { ruling_party_ideology = reactionary }
+			}
+			AND = {
+				has_country_flag = socialist_party_in_power
+				NOT = { ruling_party_ideology = socialist }
+			}
+			AND = {
+				has_country_flag = communist_party_in_power
+				NOT = { ruling_party_ideology = communist }
+			}
+			AND = {
+				has_country_flag = fascist_party_in_power
+				NOT = { ruling_party_ideology = fascist }
+			}
+			AND = {
+				has_country_flag = anarcho_liberal_party_in_power
+				NOT = { ruling_party_ideology = anarcho_liberal }
+			}
+		}
+	}
+	
+	mean_time_to_happen = { days = 3 }
+	
+	option = {
+		name = "You are not getting off this wild ride."
+		ruling_party_ideology = conservative
+		clr_country_flag = election_started
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		clr_country_flag = social_liberal_party_in_power
+		clr_country_flag = market_liberal_party_in_power
+		set_country_flag = conservative_party_in_power
+	}
+}
+
+### 22234 has been dummied out.
+
+### 22250 has been dummied out.
+
+##################################################################
+###	The Death of the Commonwealth. Status Quo Partition Chains ###
+##################################################################
+
+# The First Partition of Poland and the Kiev Plot
+
+country_event = { 
+	id = 222390
+	title = "POL11.T"
+	desc = "POL11.D"
+    picture = "partition_of_PLC"
+	
+	trigger = { 
+	tag = RUS 
+	exists = KIE
+	PLC = { 
+	   exists = yes 
+	   has_country_flag = bad_second_sejm_SQ
+	   NOT = { has_country_flag = BSS_SQ_Third }
+	   NOT = { has_country_flag = lublin_new }
+	   NOT = { is_greater_power = yes } 
+	}
+	NOT = { exists = KHK }
+	NOT = { exists = CSK }
+	NOT = { has_global_flag = NOBILITY_ARE_GONE }
+	NOT = { has_global_flag = the_ruthenia_plot }
+	NOT = { has_global_flag = the_partition_of_poland }
+	NOT = { has_global_flag = no_partition }
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+    }	
+	
+	option = { 
+	name = "222390.A"
+	set_global_flag = the_ruthenia_plot
+	random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 250000 }
+					NOT = { check_variable = { which = owed_cash_money value = 1 } }
+				} 
+			}
+			owner = { set_variable = { which = owed_cash_money value = 250 } }
+	}
+	random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 250000 }
+					check_variable = { which = owed_cash_money value = 9 }
+				} 
+			}
+			owner = { change_variable = { which = owed_cash_money value = 250 } }
+	}
+	random_owned = {
+			limit = { owner = { money = 250000 } }
+			owner = { treasury = -250000 }
+	}	
+	ai_chance = { 
+	factor = 100
+		} 
+	}
+	
+	option = { 
+	name = "222390.B"
+	set_global_flag = no_partition
+    PLC = { set_country_flag = no_partition }
+	ai_chance = { 
+	factor = 0
+		} 
+	}
+}
+
+# The Ruthenia Plot
+
+country_event = { 
+	id = 222416
+	title = "RUT4.T"
+	desc = "RUT4.D"
+    picture = "partition_of_PLC"
+	
+	trigger = { 
+	tag = KIE
+	has_global_flag = the_ruthenia_plot
+	NOT = { has_country_flag = kiev_accepts_part }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+    }	
+	
+	option = { 
+	name = "222416.A"
+	treasury = 250000
+	set_country_flag = kiev_accepts_part
+    RUS = { country_event = { id = 222418 days = 3 } }
+	ai_chance = { 
+	factor = 100
+		} 
+	}
+	
+	option = { 
+	name = "222416.B"
+	set_global_flag = no_partition
+	clr_global_flag = the_ruthenia_plot
+	RUS = { country_event = 222422 }
+    PLC = { set_country_flag = no_partition }
+	ai_chance = { 
+	factor = 0
+		} 
+	}
+}
+
+country_event = { 
+	id = 222418
+	title = "RUT6.T"
+	desc = "RUT6.D"
+    picture = "partition_of_PLC"
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "222418.A"	
+	prestige = 1
+	clr_global_flag = the_ruthenia_plot
+    set_global_flag = the_partition_of_poland
+	}	
+}
+
+country_event = { 
+	id = 222419
+	title = "RUT7.T"
+	desc = "RUT7.D"
+    picture = "partition_of_PLC"
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "222419.A"	
+	prestige = 1
+    set_global_flag = first_partition_start
+	}	
+}
+
+country_event = { 
+	id = 222420
+	title = "RUT8.T"
+	desc = "RUT8.D"
+    picture = "partition_of_PLC"
+	
+	trigger = { 
+	tag = KIE
+	has_global_flag = first_partition_start
+	RUS = { war = no }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+    }	
+	
+	option = { 
+	name = "222420.A"
+	clr_country_flag = kiev_accepts_part
+	add_country_modifier = { name = taiping_draft duration = 1200 } 
+	PLC = { 
+	   release_vassal = THIS 	
+	}
+	RUS = {
+	   any_owned = { 
+		limit = { is_core = UKR }
+		secede_province = KIE
+	   }
+	}
+	change_tag = UKR
+	relation = { who = RUS value = 400 }
+	diplomatic_influence = { who = RUS value = 400 }	
+    create_alliance = RUS
+	any_country = {
+			limit = { 
+			tag = RUS
+			exists = RUS
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = NGF
+			exists = NGF
+			owns = 549
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			exists = BOH
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = CAE
+			exists = CAE
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = GER
+			exists = GER
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	any_country = {
+			limit = { 
+			tag = HLR
+			exists = HLR
+			}
+	leave_alliance = PLC
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }		
+	}
+	PLC = { add_country_modifier = {
+				name = no_more_war
+				duration = 3650
+          }
+	}
+    PLC = { country_event = { id = 222392 days = 1 } }
+	}
+}
+
+country_event = { 
+	id = 222421
+	title = "RUT9.T"
+	desc = "RUT9.D"
+    picture = "partition_of_PLC"
+	
+	trigger = { 
+	tag = UKR
+	has_global_flag = RUT_death_moment
+	NOT = { has_country_flag = RUT_will_die }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+    }	
+	
+	option = { 
+	name = "222420.A"
+	clr_global_flag = RUT_death_moment
+	set_country_flag = RUT_will_die
+	relation = { who = RUS value = 10 }
+	diplomatic_influence = { who = RUS value = 10 }
+	any_owned = { 
+		limit = {
+		is_core = VOL		
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }			
+		}
+        secede_province = PLC
+	}
+	any_owned = { 
+		limit = {
+		is_core = BLR	
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }	
+		}
+        secede_province = LIT
+	}	
+	any_owned = { 
+		limit = {
+		is_core = LIT
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }	
+		}
+        secede_province = LIT
+	}
+	RUS = { inherit = THIS }
+	ai_chance = { 
+	factor = 40
+	modifier = {
+	factor = 2
+	RUS = { has_country_flag = panslavic_focus }
+	    }
+	modifier = {
+	factor = 0.5
+	NOT = { RUS = { has_country_flag = panslavic_focus } }
+		  }
+	   } 
+    }
+	
+	option = { 
+	name = "222420.A"
+	clr_global_flag = RUT_death_moment
+	set_country_flag = RUT_will_die
+	leave_alliance = RUS
+	relation = { who = RUS value = -400 }
+	diplomatic_influence = { who = RUS value = -400 }
+	any_owned = { 
+		limit = {
+		is_core = VOL		
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }			
+		}
+        secede_province = PLC
+	}
+	any_owned = { 
+		limit = {
+		is_core = BLR	
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }	
+		}
+        secede_province = LIT
+	}	
+	any_owned = { 
+		limit = {
+		is_core = LIT
+        NOT = { province_id = 942 }	
+        NOT = { province_id = 959 }	
+		}
+        secede_province = LIT
+	}	
+    RUS = { 
+	casus_belli = { 
+		target = THIS
+		type = conquest
+		months = 24
+	}
+	war = {
+		target = THIS
+			attacker_goal = {
+				casus_belli = conquest
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			   }
+		    }
+       }
+	ai_chance = { 
+	factor = 60
+	modifier = {
+	factor = 0.3
+	RUS = { has_country_flag = panslavic_focus }
+	    }
+	modifier = {
+	factor = 1.7
+	NOT = { RUS = { has_country_flag = panslavic_focus } }
+		  }
+	   } 
+	} 	   
+}
+
+country_event = { 
+	id = 222422
+	title = "Partition Failed"
+	desc = "Someone has refused the partition"
+    picture = "partition_of_PLC"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "Annoying"
+	prestige = -5	
+    }	
+}
+
+
+
+country_event = { 
+	id = 222391
+	title = "POL12.T"
+	desc = "POL12.D"
+    picture = "partition_of_PLC"
+	
+    fire_only_once = yes 
+	
+	trigger = { 
+	OR = {
+	tag = CAE
+	tag = HLR
+	tag = GER
+	AND = {
+	tag = BOH
+	owns = 549
+	   }
+	AND = {
+	tag = NGF
+	owns = 549
+	   }
+	}
+    has_global_flag = the_partition_of_poland
+	NOT = { has_global_flag = first_partition_start }
+	NOT = { has_global_flag = no_partition }
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+    }	
+	
+	option = { 
+	name = "222391.A"
+	prestige = 10
+	badboy = 1
+    RUS = { country_event = { id = 222419 days = 7 } }
+	ai_chance = { 
+	factor = 99 
+		} 
+	}
+	
+	option = { 
+	name = "222391.B"
+	RUS = { country_event = 222422 }
+	clr_global_flag = the_partition_of_poland
+	set_global_flag = no_partition
+    PLC = { set_country_flag = no_partition }
+	ai_chance = { 
+	factor = 1
+	modifier = {
+	factor = 0
+	RUS = { has_country_flag = panslavic_focus }
+			}	
+		} 
+	}
+}
+
+country_event = { 
+	id = 222392
+	title = "POL13.T"
+	desc = "POL13.D"
+    picture = "january_uprising"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "222392.A"
+	prestige = -50
+	any_owned = { 
+		limit = {
+		province_id = 942
+		}
+        secede_province = UKR
+	}
+	any_owned = { 
+		limit = {
+		province_id = 959
+		}
+        secede_province = UKR
+	}
+    set_country_flag = no_choice_PLC
+	ai_chance = { 
+	factor = 10
+		} 
+	}
+	
+	option = { 
+	name = "222392.B"
+    set_country_flag = no_choice_but_suicide
+	remove_country_modifier = no_more_war
+	# This is a completely unwinnable war. No great power is going to save them here.
+	any_country = { 
+		limit = {
+		is_greater_power = yes
+		}
+		diplomatic_influence = { who = PLC value = -400 }
+		relation = { who = PLC value = -400 }
+	    leave_alliance = PLC		
+	}
+	# Thus everyone declares war on them
+	any_owned = { 
+		limit = {
+		province_id = 942
+		}
+        secede_province = UKR
+	}
+	any_owned = { 
+		limit = {
+		province_id = 959
+		}
+        secede_province = UKR
+	}
+	war = {
+		target = UKR
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	}
+	any_country = {
+			limit = { 
+			tag = NGF
+			exists = NGF
+			owns = 549
+			}
+	leave_alliance = PLC
+	war = {
+		target = PLC 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}	
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			exists = BOH
+			}
+	leave_alliance = PLC
+	war = {
+		target = PLC 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}	
+	}
+	any_country = {
+			limit = { 
+			tag = CAE
+			exists = CAE
+			}
+	leave_alliance = PLC
+	war = {
+		target = PLC 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}	
+	}
+	any_country = {
+			limit = { 
+			tag = GER
+			exists = GER
+			}
+	leave_alliance = PLC
+	war = {
+		target = PLC 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}	
+	}
+	any_country = {
+			limit = { 
+			tag = HLR
+			exists = HLR
+			}
+	leave_alliance = PLC
+	war = {
+		target = PLC 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}	
+	}
+	ai_chance = { 
+	factor = 90
+		} 
+	}
+}
+
+country_event = { 
+	id = 222393
+	title = "POL14.T"
+	desc = "POL14.D"
+	
+    fire_only_once = yes 
+	major = yes
+	
+	trigger = { 
+    tag = PLC
+	NOT = { has_global_flag = first_partition }
+	has_global_flag = first_partition_start
+	war = no 
+	OR = {
+    is_disarmed = yes
+	has_country_flag = no_choice_PLC
+	     }
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+    }
+	
+	option = { 
+	name = "222393.A"
+	prestige_factor = -0.5
+	political_reform = confederalism
+	remove_country_modifier = PLC_golden_liberty
+	clr_country_flag = elective_monarchy_PLC
+	set_global_flag = NOBILITY_ARE_GONE	
+    clr_global_flag = first_partition_start
+    set_global_flag = first_partition
+	set_global_flag = RUT_death_moment
+	release_vassal = PRU
+	release_vassal = DZG
+	leave_alliance = DZG
+	leave_alliance = PRU
+	inherit = POL
+	UKR = {
+	relation = { who = PLC value = -400 }
+	diplomatic_influence = { who = PLC value = -400 }	
+    leave_alliance = PLC	
+	}
+	any_country = {
+	   limit = { 
+	   owns = 680
+	   }
+	   leave_alliance = PLC
+       country_event = 222394	
+	}
+	}
+}
+
+country_event = { 
+	id = 222394
+	title = "POL16.T"
+	desc = "POL16.D"
+    picture = "partition_of_PLC"
+
+	is_triggered_only = yes 
+	
+	immediate = {
+	PLC = { 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_691
+	    }
+	    secede_province = THIS
+	    add_core = PML	 
+	    add_core = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_695
+	    }
+	    secede_province = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    province_id = 698
+	    }
+	    secede_province = THIS
+	    } 
+    }
+	POL = { 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_691
+	    }
+	    secede_province = THIS
+	    add_core = PML	 
+	    add_core = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_695
+	    }
+	    secede_province = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    province_id = 698
+	    }
+	    secede_province = THIS
+	    } 
+    }
+	CPL = { 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_691
+	    }
+	    secede_province = THIS
+	    add_core = PML	 
+	    add_core = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    region = PRU_695
+	    }
+	    secede_province = THIS
+	    } 
+	    any_owned = { 
+	    limit = { 
+	    province_id = 698
+	    }
+	    secede_province = THIS
+	      } 
+       }	
+	}
+	
+	option = { 
+	name = "222394.A"
+	690 = { add_core = PML }
+	#### The Danzig Chain ####
+	## Event 1 will result in the immediate annexation of Danzig by Scandinavia ###
+	random_owned = {
+		limit = { province_id = 691 owner = { tag = SCA } }
+		owner = { country_event = { id = 222306 days = 1 } }
+	}
+	## Event 2 will begin the Danzig Crisis ###
+    any_country = {
+	    limit = {
+		tag = SCA
+		NOT = { owns = 691 }
+		}
+		country_event = { id = 222307 days = 1 }
+     }
+	#### The Danzig Chain ####
+    }
+}
+
+country_event = { 
+	id = 222413
+	title = "POL31.T"
+	desc = "POL31.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "222411.A"
+    FROM = {
+    inherit = PRU 
+    }	
+	ai_chance = { 
+	factor = 80
+	   }
+    }
+	
+	option = { 
+	name = "222411.B"
+	FROM = {
+	any_owned = { 
+	    limit = { 
+		OR = {
+	    region = PRU_691
+	    region = PRU_695
+		province_id = 698
+		}
+	    }
+	    secede_province = PRU
+	    add_core = PRU	    
+	} 
+	casus_belli = { 
+		target = PRU
+		type = conquest
+		months = 12
+	}
+	war = {
+		target = PRU
+		attacker_goal = {
+			casus_belli = conquest
+			 }
+
+		    defender_goal = {
+			casus_belli = status_quo
+			 }
+		 }
+	}
+	ai_chance = { 
+	factor = 20
+	     }
+    }
+}
+
+country_event = { 
+	id = 222395
+	title = "POL15.T"
+	desc = "POL15.D"
+    picture = "partition_of_PLC"
+
+	is_triggered_only = yes 
+
+	option = { 
+	name = "222395.A"
+	set_country_flag = PZN_ruler
+	prestige = 5
+	PLC = { 
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+    }
+	POL = { 
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+    }
+	CPL = { 
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+    }
+	MAZ = { 
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	add_core = PZN
+	remove_core = POL
+	remove_core = CPL
+	remove_core = MAZ
+	secede_province = THIS
+	      } 
+    }
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	secede_province = PZN
+	    }
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	secede_province = PZN
+	    }
+	create_vassal = PZN
+	any_owned = { 
+	limit = { 
+	region = PRU_699
+	}
+	secede_province = PZN
+	    }
+	any_owned = { 
+	limit = { 
+	province_id = 708
+	}
+	secede_province = PZN
+	    }
+	PZN = { country_event = { id = 19370 days = 1 } }
+    }
+}
+
+# The Second Partition of Poland
+
+country_event = { 
+	id = 222396
+	title = "POL17.T"
+	desc = "POL17.D"
+    picture = "partition_of_PLC"
+	
+	trigger = { 
+    tag = RUS
+	has_global_flag = first_partition
+	NOT = { has_global_flag = second_partition_start }
+	NOT = { has_global_flag = second_partition }
+	NOT = { has_country_flag = no_second_partition }
+	PLC = { 
+	   NOT = { is_greater_power = yes } 
+	   NOT = { has_country_flag = lublin_new }   
+	}
+	NOT = { exists = RUT }
+	NOT = { exists = UKR }
+	owns = 958
+	owns = 946
+	year = 1883
+	war = no 	
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	modifier = { 
+	factor = 0.1
+	has_country_flag = panslavic_focus
+	   }
+	modifier = { 
+	factor = 0.1
+	year = 1886
+	   }
+	modifier = {
+	  factor = 99
+	    badboy = 0.5
+	   }
+    }	
+	
+	option = { 
+	name = "222396.A"
+	badboy = 10
+    set_global_flag = second_partition_start
+	ai_chance = { 
+	factor = 95 
+	modifier = {
+	factor = 2
+	has_country_flag = panslavic_focus
+			}
+        }
+    }
+		
+	option = { 
+	name = "222396.B"
+    set_country_flag = no_second_partition
+	ai_chance = { 
+	factor = 5
+	modifier = {
+	factor = 0
+	has_country_flag = panslavic_focus
+			}	
+		}
+    }		
+}
+
+#country_event = { 
+#	id = 222397
+#	title = "POL18.T"
+#	desc = "POL18.D"
+#
+#	is_triggered_only = yes 
+#
+#	option = { 
+#	name = "222397.A"
+#	prestige = -5
+#	set_country_flag = secondpartbenefactor
+#    ai_chance = { 
+#	factor = 90
+#       }
+#    }
+#   
+#	option = { 
+#	name = "222397.B"
+#	prestige = 5
+#    ai_chance = { 
+#	factor = 10
+#        }
+#   }
+#}
+
+country_event = { 
+	id = 222398
+	title = "POL19.T"
+	desc = "POL19.D"
+	
+    major = yes  
+    fire_only_once = yes 
+
+	trigger = { 
+    tag = PLC
+	has_global_flag = second_partition_start
+	NOT = { has_global_flag = second_partition }
+	war = no 	
+	}	
+	
+	mean_time_to_happen = { 
+	days = 7
+    }	
+
+	option = { 
+	name = "222398.A"
+	prestige_factor = -0.7
+	remove_country_modifier = no_more_war
+    clr_global_flag = second_partition_start
+	set_global_flag = second_partition
+	change_tag = POL
+	release_vassal = LIT
+	political_reform = unitary
+	LIT = { remove_accepted_culture = polish all_core = { remove_core = POL } } 
+	BLR = { all_core = { remove_core = POL }   }
+	SAM = { all_core = { remove_core = POL }   }
+	PRU = { all_core = { remove_core = POL }   }
+	UKR = { all_core = { remove_core = POL }   }
+	690 = { add_core = PML }
+	693 = { add_core = PML }
+	PRU_699 = { add_core = PZN }
+	708 = { add_core = PZN }
+	PRU_691 = { add_core = PML }	
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	RUS_955 = { add_core = RUG }
+    RUS_958 = { add_core = RUG } 
+    957 = { add_core = RUG }	
+	712 = { add_core = KRA }
+	714 = { add_core = KRA }
+	703 = { add_core = KRA }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	any_country = {
+			limit = { 
+			tag = HUN
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUA }
+			}
+    country_event = 222399
+    diplomatic_influence = { who = POL value = -400 }
+    relation = { who = POL value = -400 }
+	leave_alliance = POL
+	}  
+	any_country = {
+			limit = { 
+			tag = HUA
+            owns = 636
+			NOT = { exists = SLV }
+			NOT = { exists = HUN }
+			}
+    country_event = 222399
+    diplomatic_influence = { who = POL value = -400 }
+    relation = { who = POL value = -400 }
+	leave_alliance = POL
+	} 
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+    diplomatic_influence = { who = POL value = -400 }
+    relation = { who = POL value = -400 }
+	leave_alliance = POL
+	}  	
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+    diplomatic_influence = { who = POL value = -400 }
+    relation = { who = POL value = -400 }
+	leave_alliance = POL
+	} 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			NOT = { exists = CAE }
+			OR = {
+			exists = SLV
+			owns = 636
+			   }
+			}
+    country_event = 222399
+    diplomatic_influence = { who = POL value = -400 }
+    relation = { who = POL value = -400 }
+	leave_alliance = POL
+	} 
+	#### The New Lithuania Chain ###
+	any_country = {
+			limit = { 
+			tag = RUS
+			owns = 1008
+			NOT = { has_global_flag = THE_SOUTHERN_BEAR }
+			}
+	   leave_alliance = PLC
+       country_event = { id = 222322 days = 0 }
+	}
+	any_country = {
+			limit = { 
+			tag = RUS
+			owns = 1008
+			has_global_flag = THE_SOUTHERN_BEAR
+			}
+	   leave_alliance = PLC
+       country_event = { id = 222323 days = 0 }
+	}
+	#### The New Lithuania Chain ###
+	any_owned = { 
+	limit = { 
+	is_core = VOL
+	NOT = { is_core = GLM }
+	}
+	secede_province = RUS
+	}
+	any_owned = { 
+	limit = { 
+	is_core = CRI
+	}
+	secede_province = CRI
+	}
+  }
+}
+	 
+country_event = { 
+	id = 222399
+	title = "POL20.T"
+	desc = "POL20.D"
+    picture = "polish_uprising_aus"
+
+	is_triggered_only = yes 
+	
+	immediate = {
+    VOL_702 = { add_core = GLM }
+	VOL_953 = { add_core = GLM }
+	957 = { remove_core = GLM }
+	702 = { remove_core = GLM }
+	POL = { 
+	any_owned = { 
+	limit = { 
+	is_core = GLM
+	}
+	secede_province = THIS
+	}	
+	}
+	PLC = { 
+	any_owned = { 
+	limit = { 
+	is_core = GLM
+	}
+	secede_province = THIS
+	}	
+	}
+	any_owned = { 
+	limit = { 
+	is_core = GLM
+	}
+	secede_province = GLM
+	}
+	}
+
+	option = { 
+	name = "222399.A"
+	any_owned = { 
+	limit = { 
+	is_core = GLM
+	}
+	secede_province = GLM
+	}
+	create_vassal = GLM	   
+    }
+}
+
+#country_event = { 
+#	id = 222400
+#	title = "POL21.T"
+#	desc = "POL21.D"
+#	picture = "vilnus"
+#
+#	is_triggered_only = yes 
+#
+#	option = { 
+#	name = "222400.A"
+#	POL = { 		   
+#	any_owned = { 
+#	limit = { 
+#	is_core = SAM
+#	}
+#	secede_province = THIS
+#	    }
+#   } 
+#	set_global_flag = LIT_DEAD
+#	country_event = { id = 222304 days = 1 }
+#   }
+#}
+
+# Final Partition or Third Partition
+
+country_event = { 
+	id = 222401
+	title = "POL22.T"
+	desc = "POL22.D"
+    picture = "january_uprising"
+	
+	trigger = { 
+    tag = RUS
+	has_global_flag = second_partition
+	NOT = { has_global_flag = third_partition_attempt }
+	NOT = { has_global_flag = final_partition }
+	NOT = { has_country_flag = no_third_partition }
+	POL = { NOT = { is_greater_power = yes } }
+	NOT = { exists = RUT }
+	NOT = { exists = UKR }
+	year = 1890
+	war = no 	
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	modifier = { 
+	factor = 0.1
+	has_country_flag = panslavic_focus
+	   }
+	modifier = { 
+	factor = 0.1
+	year = 1890
+	   }
+	modifier = {
+	  factor = 99
+	    badboy = 0.5
+	   }
+    }	
+	
+	option = { 
+	name = "222401.A"
+	#badboy = 8
+    set_global_flag = third_partition_attempt
+	set_global_flag = conclusion_to_third
+	POL = { country_event = 222402 }
+	ai_chance = { 
+	factor = 99  
+		}
+    }
+		
+	option = { 
+	name = "222401.B"
+    set_country_flag = no_third_partition
+	ai_chance = { 
+	factor = 1
+	modifier = {
+	factor = 0
+	has_country_flag = panslavic_focus
+			}		
+		}
+    }		
+}
+
+country_event = { 
+	id = 222402
+	title = "POL23.T"
+	desc = "POL23.D"
+    picture = "january_uprising"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "222402.A"
+	prestige = 10
+	add_country_modifier = { 
+	   name = taiping_draft
+	   duration = 1095
+    }	
+	RUS = { 
+	war = {
+		target = POL
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	}
+	ai_chance = { 
+	factor = 90
+	modifier = {
+		factor = 0
+		in_sphere = RUS
+			} 
+	modifier = {
+		factor = 10
+	NOT = { in_sphere = RUS }
+			}				
+		}
+    }
+		
+	option = { 
+	name = "222402.B"
+	prestige = -100
+    RUS = { create_vassal = POL }
+	ai_chance = { 
+	factor = 10 
+	modifier = {
+		factor = 10
+		in_sphere = RUS
+			}
+	modifier = {
+		factor = 0
+	NOT = { in_sphere = RUS }
+			}	
+		}
+    }		
+}
+
+country_event = { 
+	id = 222403
+	title = "POL24.T"
+	desc = "POL24.D"
+    picture = "january_uprising"
+	
+	trigger = { 
+    tag = RUS
+	has_global_flag = third_partition_attempt
+	NOT = { has_global_flag = final_partition }
+	NOT = { POL = { vassal_of = RUS } }
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+    }	
+		
+	option = { 
+	name = "222403.A"
+	clr_global_flag = conclusion_to_third
+	prestige = -25
+	}
+}
+
+# The Final Death of Poland - RIP
+
+country_event = { 
+	id = 222404
+	title = "POL25.T"
+	desc = "POL25.D"
+	
+	major = yes
+    fire_only_once = yes 
+	
+	trigger = { 
+    tag = RUS
+	has_global_flag = third_partition_attempt
+	NOT = { has_global_flag = final_partition }
+	POL = { vassal_of = RUS }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+    }	
+	   
+	immediate = { 
+	   POL = {
+	   any_owned = { 
+	      limit = { is_core = KRA }
+	      remove_core = POL
+
+	   }
+	   any_owned = { 
+	      limit = { is_core = KRA }
+	      secede_province = KRA	
+	   }
+	   }
+	}
+		
+	option = { 
+	name = "222404.A"
+	clr_global_flag = conclusion_to_third
+	clr_global_flag = third_partition_attempt
+	set_global_flag = final_partition
+	prestige = 25
+	POL = {	
+    any_owned = { 
+	   limit = { is_core = POL }
+	   add_core = CPL
+	}
+    any_owned = { 
+	   limit = { is_core = POL }
+	   add_core = MAZ
+	}
+	release = KRA
+	any_owned = { 
+	   limit = { is_core = KRA }
+	   secede_province = KRA	
+	}
+    change_tag = CPL	
+	set_country_flag = russian_governorate  
+    set_country_flag = unreleasable_country
+    set_country_flag = tierthree_blocker
+	country_event = { id = 812810 days = 0 }
+	} 
+	any_country = {
+			limit = { 
+			owns = 681
+			}
+	leave_alliance = POL
+    country_event = { id = 222395 days = 1 }
+	} 
+	KRA = {
+	government = democracy
+    political_reform = appointed
+    political_reform = wealth_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+	}
+	PZN = { all_core = { remove_core = CPL }   }
+	PML = { all_core = { remove_core = CPL }   }
+	GLM = { all_core = { remove_core = CPL }   }	
+	KRA = { all_core = { remove_core = CPL }   }
+    }
+}
+
+#country_event = { 
+#	id = 222405
+#	title = "POL26.T"
+#	desc = "POL26.D"
+#	
+#	major = yes
+#	
+#	is_triggered_only = yes
+#		
+#	option = { 
+#	name = "222404.A"
+#	clr_global_flag = third_partition_attempt
+#	set_global_flag = final_partition
+#	prestige = 25
+#	POL = {	
+#   any_owned = { 
+#	limit = { 
+#	is_core = POL
+#	}
+#	add_core = CPL
+#	}
+#   change_tag = CPL
+#	} 
+#	PZN = { all_core = { remove_core = CPL }   }
+#	PML = { all_core = { remove_core = CPL }   }
+#	GLM = { all_core = { add_core = CPL }   }	
+#   }
+#}
+
+# Krakow - A very silly place - The Ultimate Challenge
+
+country_event = { 
+	id = 2224060
+	title = "POL260.T"
+	desc = "POL260.D"
+	
+	picture = "krakow_uprising"
+	
+    fire_only_once = yes 
+	
+	trigger = { 
+       OR = {
+	      tag = BOH
+	      tag = HLR
+	      tag = CAE
+	   }
+	   exists = KRA
+       NOT = { has_country_flag = HOI_Krakow }	
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+    }	
+		
+	option = { 
+	name = "POL260.A"
+	badboy = 1
+	leave_alliance = KRA
+	relation = { who = KRA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	war = {
+		target = KRA
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+	}	
+	set_country_flag = HOI_Krakow
+	ai_chance = { 
+	factor = 50
+	   modifier = {
+	       factor = 2
+		   NOT = { 
+	          OR = {
+			      government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+		        } 
+		     }
+		  }
+	   }
+    }	
+	
+	option = { 
+	name = "POL260.B"
+	badboy = -1
+	create_alliance = KRA
+	relation = { who = KRA value = 400 }
+	diplomatic_influence = { who = KRA value = 400 }	
+	set_country_flag = HOI_Krakow
+	ai_chance = { 
+	factor = 50
+	   modifier = {
+	       factor = 0
+		   NOT = { 
+	          OR = {
+			      government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+		        } 
+		     }
+		  }
+	   }
+    }
+}
+
+# The End of the Poznan Occupation
+
+country_event = { 
+	id = 2224061
+	title = "POL261.T"
+	desc = "POL261.D"
+	
+	picture = "january_uprising"
+	
+    fire_only_once = yes 
+	
+	trigger = {
+       has_country_flag = PZN_ruler		
+	   PZN = { vassal_of = THIS }  
+	}
+	
+	mean_time_to_happen = { 
+	   months = 60
+    }	
+		
+	option = { 
+	name = "POL261.A"
+	badboy = -5
+	release_vassal = PZN 	
+	create_alliance = PZN
+	relation = { who = PZN value = 400 }
+	diplomatic_influence = { who = PZN value = 400 }
+	clr_country_flag = PZN_ruler
+	ai_chance = { 
+	factor = 50
+	       modifier = {
+	       factor = 2
+	          OR = {
+			      government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+		        } 
+		   }
+	       modifier = {
+	       factor = 1.5
+	          government = hms_government
+		   }
+	       modifier = {
+	       factor = 0.5
+		      OR = {
+			  	 government = presidential_dictatorship
+		         government = bourgeois_dictatorship
+			  }
+		   }
+	       modifier = {
+	       factor = 0
+		      OR = {
+	             government = proletarian_dictatorship 
+				 government = absolute_monarchy
+				 government = fascist_monarchy
+				 government = fascist_dictatorship
+			  }
+		   }
+		}
+	}	
+	
+	option = { 
+	name = "POL261.B"
+	badboy = 5
+	clr_country_flag = PZN_ruler
+	ai_chance = { 
+	factor = 50
+	       modifier = {
+	       factor = 0
+	          OR = {
+			      government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+				  government = fascist_monarchy
+				  government = fascist_dictatorship
+		        } 
+		   }
+	       modifier = {
+	       factor = 0.5
+	          government = hms_government
+		   }
+	       modifier = {
+	       factor = 1.5
+		      OR = {
+			  	 government = presidential_dictatorship
+		         government = bourgeois_dictatorship
+			  }
+		   }
+	       modifier = {
+	       factor = 2
+		       OR = { 
+	              government = proletarian_dictatorship 
+				  government = absolute_monarchy
+               }
+		   }		   
+		}
+    }
+	
+	option = { 
+	name = "POL261.C"
+	badboy = 10
+	inherit = PZN
+	clr_country_flag = PZN_ruler
+	ai_chance = { 
+	factor = 25
+	       modifier = {
+	       factor = 0
+		      NOT = {
+	             OR = {
+				    government = fascist_monarchy
+				    government = fascist_dictatorship
+		         } 
+			  }
+		   }
+	       modifier = {
+	       factor = 4
+	             OR = {
+				    government = fascist_monarchy
+				    government = fascist_dictatorship
+		         } 
+		   }		   
+		}
+    }
+}
+
+country_event = { 
+	id = 2224062
+	title = "POL262.T"
+	desc = "POL262.D"
+	
+	picture = "january_uprising"
+	
+    fire_only_once = yes 
+	
+	trigger = { 
+	   has_country_flag = PZN_ruler	
+	   PZN = { NOT = { vassal_of = THIS } } 
+	   war = no       
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+    }
+
+	option = { 
+	name = "POL262.A"
+	prestige = -5
+	clr_country_flag = PZN_ruler
+    }
+}
+
+##### In regards to Grenada #####
+
+country_event = { 
+	id = 2224063
+	title = "POL263.T"
+	desc = "POL263.D"
+	
+	picture = "january_uprising"
+	
+	trigger = { 
+		owns = 2238
+		NOT = { owns = 2233 }
+		OR = {
+	       has_global_flag = first_partition
+	       has_global_flag = PLC_broken_early
+		}
+		AND = {
+		   PLC = { NOT = { any_owned_province = { is_coastal = yes } } }
+		   POL = { NOT = { any_owned_province = { is_coastal = yes } } }
+		   CPL = { NOT = { any_owned_province = { is_coastal = yes } } }
+		   MAZ = { NOT = { any_owned_province = { is_coastal = yes } } }
+		   NOT = { has_country_flag = grenada_ours }
+		}
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+    }
+		
+	option = { 
+	name = "POL263.A"
+	set_country_flag = grenada_ours
+	2233 = { add_core = UBD }
+	 PLC = { 
+	    any_owned = { 
+	    limit = { 
+	    is_core = UBD
+	    }
+        secede_province = THIS
+		}
+     }
+	 POL = { 
+	    any_owned = { 
+	    limit = { 
+	    is_core = UBD
+	    }
+        secede_province = THIS
+		}
+     }
+	 CPL = { 
+	    any_owned = { 
+	    limit = { 
+	    is_core = UBD
+	    }
+        secede_province = THIS
+		   }
+     }
+	 MAZ = { 
+	    any_owned = { 
+	    limit = { 
+	    is_core = UBD
+	    }
+        secede_province = THIS
+		   }
+     }
+	 }
+}
+
+
+#### The New Act of Union
+
+country_event = { 
+	id = 222406
+	title = "POL27.T"
+	desc = "POL27.D"
+	picture = "january_uprising"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "222406.A"
+	PLC = { inherit = THIS }
+	PLC = { prestige = 5 }
+	ai_chance = { 
+	factor = 50
+	modifier = {
+	factor = 0
+	OR = {
+	NOT = { substate_of = PLC }
+	NOT = { vassal_of = PLC }
+	               } 
+	       }
+	modifier = {
+	factor = 0
+    in_sphere = SCA
+           }
+	modifier = {
+	factor = 0
+    in_sphere = RUS
+		   }
+	   }
+	}
+	
+	option = { 
+	name = "222406.B"
+	PLC = { prestige = -5 }
+	PLC = { release_vassal = THIS }
+    THIS = { 
+	government = democracy 
+	remove_accepted_culture = polish
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			}
+	}
+	war = {
+			target = PLC
+			attacker_goal = {
+				casus_belli = status_quo
+			}
+			defender_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	ai_chance = { 
+	factor = 50
+	modifier = {
+	factor = 2
+    in_sphere = SCA
+         }
+	modifier = {
+	factor = 2
+    in_sphere = RUS
+		 }
+	  }	
+   }
+}
+
+country_event = { 
+	id = 222407
+	title = "POL28.T"
+	desc = "POL28.D"
+	
+	major = yes
+	
+	trigger = {
+	tag = PLC
+	has_global_flag = lublin_new_begin
+	war = no
+    PRU = { exists = no }
+    LIT = { exists = no }
+    KIE = { exists = no }
+	}
+	
+	mean_time_to_happen = { 
+	days = 31
+	}
+		
+	option = { 
+	name = "222407.A"
+	clr_global_flag = lublin_new_begin
+    set_country_flag = lublin_new
+	prestige = 15 
+    }	
+}
+
+country_event = { 
+	id = 222408
+	title = "POL29.T"
+	desc = "POL29.D"
+	
+	major = yes
+	
+	trigger = {
+	tag = PLC
+	has_global_flag = lublin_new_begin
+	war = no
+	OR = {
+       PRU = { exists = yes }
+       LIT = { exists = yes }
+       KIE = { exists = yes }
+	}
+	}
+	
+	mean_time_to_happen = { 
+	months = 6
+	}
+		
+	option = { 
+	name = "222408.A"
+	clr_global_flag = lublin_new_begin
+	set_country_flag = lublin_failure
+	prestige = -50 
+    }	
+}
+
+##### PLC Restoring Autonomy #####
+##### Lithuania is the exception due to the fact that Lithuania is accepted culture #####
+
+#### Restoring Autonomy has been removed. PLC collapses if any substate is lost. ####
+
+##### Crisis-Poland or PLC ran out of Danzig changes to PML #####
+
+country_event = { 
+	id = 222410
+	title = "The Wrong Poland"
+	desc = "We should not be Poland. Switching to another tag."
+    picture = "partition_of_PLC"
+
+	trigger = {
+	    OR = {
+		   tag = POL
+		   tag = PLC
+		}
+		ai = yes
+		OR = {
+		   capital = 690
+		   capital = 691
+		}
+		PRU_691 = { owned_by = THIS }
+		NOT = { owns = 706 }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { 
+	name = "You should not see this."
+	any_owned = { 
+	limit = { 
+	region = PRU_691
+	}
+	add_core = PML	 
+	}
+    any_owned = { 
+    limit = { 
+    is_core = PML
+    }
+    secede_province = PML
+    }
+    PML = { inherit = POL inherit = PLC }	
+    }
+}
+
+##### Quick PLC Subject Buff #####
+
+country_event = { 
+	id = 222411
+	title = "Sub-State of the Commonwealth"
+	desc = "We are a sub-state of the commonwealth and are protected by their armies. Thus revolt is impossible until the collapse of the Commonwealth proper."
+    picture = "sejm"
+
+	trigger = {
+    substate_of = PLC
+	NOT = { has_country_modifier = PLC_subject_fix }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { 
+	name = "For the Commonwealth."
+	add_country_modifier = {
+			name = PLC_subject_fix
+			duration = -1
+	     }		
+	}
+}
+
+country_event = { 
+	id = 222412
+	title = "Former Sub-State of the Commonwealth"
+	desc = "We are no longer a sub-state of the commonwealth and do not need to be protected by them anymore."
+    picture = "sejm"
+
+	trigger = {
+    has_country_modifier = PLC_subject_fix
+	NOT = { substate_of = PLC }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { 
+	name = "Goodbye Commonwealth."
+	remove_country_modifier = PLC_subject_fix		
+	}
+}
+
+### #### 222301 - Lithuania Stuff Part One
+
+country_event = { 
+	id = 222301
+	title = "LITPRU1.T"
+	desc = "LITPRU1.D"
+    picture = "vilnus"
+
+	trigger = {
+    exists = yes
+	tag = LIT
+	NOT = { vassal_of = PLC }
+	NOT = { substate_of = PLC }
+	NOT = { has_global_flag = INDIE_LIT	 }
+	}
+
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	name = "LITPRU1.A"
+	remove_accepted_culture = polish
+	any_pop = { 
+		limit = { 
+	    culture = lithuanian
+		}
+		consciousness = 2
+		militancy = 2
+	}
+	any_pop = { 
+		limit = { 
+	    culture = belarusian
+		}
+		consciousness = 1
+		militancy = 1
+	}
+	set_global_flag = INDIE_LIT	
+	}
+}
+
+# The Collapse of the Grand Duchy
+
+country_event = { 
+	id = 222302
+	title = "LITPRU2.T"
+	desc = "LITPRU2.D"
+    picture = "vilnus"
+	
+	major = yes
+
+	trigger = {
+    exists = yes
+	tag = LIT
+    war = no
+	OR = {
+	   government = absolute_monarchy
+	   government = prussian_constitutionalism
+	   government = hms_government
+    }		  
+	NOT = {
+	   OR = {
+	      is_secondary_power = yes
+		  is_greater_power = yes
+		  BLR = { all_core = { owned_by = THIS } }
+	   }
+	}   	  
+    has_global_flag = INDIE_LIT	
+	}
+
+	mean_time_to_happen = { 
+	months = 500 
+	modifier = { 
+	   factor = 0.4 
+	   year = 1870
+	}
+	modifier = { 
+	   factor = 0.2
+	   year = 1900
+	}
+	modifier = { 
+	   factor = 0.9 
+	   RUS = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.9
+	   RUS = { is_greater_power = yes }
+	}
+	modifier = { 
+	   factor = 0.9 
+	   LAT = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.01
+	   SAM = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.01 
+	   NOT = { any_owned_province = { is_core = SAM } }
+    }
+	}
+
+	option = { 
+	name = "LITPRU2.A"
+	clr_global_flag = INDIE_LIT	
+	set_global_flag = LIT_DEAD
+	remove_accepted_culture = lithuanian
+	remove_accepted_culture = ashkenazi
+	clr_country_flag = lithuania_problem
+	SAM = { all_core = { remove_core = LIT } }
+	LIT = { all_core = { add_core = BLR } }
+	BLR = { all_core = { remove_core = LIT } }
+	RUS_360 = { add_core = BLR }
+	any_owned = { 
+	  limit = { 
+	  is_core = SAM
+	  NOT = { region = RUS_360 }
+	  }
+	  secede_province = SAM
+    }
+	any_country = {
+	   limit = {
+	   tag = BLR
+	   exists = yes
+	   }
+	   inherit = THIS
+	}
+    change_tag = BLR
+	}
+}
+
+# The End of Greater Lithuania
+
+country_event = { 
+	id = 222303
+	title = "LITPRU3.T"
+	desc = "LITPRU3.D"
+    picture = "vilnus"
+	
+	major = yes
+
+	trigger = {
+    exists = yes
+	tag = LIT
+    war = no	
+	NOT = {
+	   OR = {
+	      government = absolute_monarchy
+	      government = prussian_constitutionalism
+	      government = hms_government
+		  government = fascist_monarchy
+		  government = fascist_dictatorship
+		  government = proletarian_dictatorship
+	      is_secondary_power = yes
+		  is_greater_power = yes
+		  BLR = { all_core = { owned_by = THIS } }
+	   }
+	}   	  
+    has_global_flag = INDIE_LIT	
+	}
+
+	mean_time_to_happen = { 
+	months = 500 
+	modifier = { 
+	   factor = 0.4 
+	   year = 1870
+	}
+	modifier = { 
+	   factor = 0.2
+	   year = 1900
+	}
+	modifier = { 
+	   factor = 0.9 
+	   RUS = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.9
+	   RUS = { is_greater_power = yes }
+	}
+	modifier = { 
+	   factor = 0.9 
+	   LAT = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.01
+	   SAM = { exists = yes }
+    }
+	modifier = { 
+	   factor = 0.01 
+	   NOT = { any_owned_province = { is_core = SAM } }
+    }
+	}
+
+	option = { 
+	name = "LITPRU3.A"
+	clr_global_flag = INDIE_LIT	
+	set_global_flag = LIT_DEAD
+	remove_accepted_culture = lithuanian
+	remove_accepted_culture = ashkenazi
+	clr_country_flag = lithuania_problem
+	SAM = { all_core = { remove_core = LIT } }
+	LIT = { all_core = { add_core = BLR } }
+	BLR = { all_core = { remove_core = LIT } }
+	RUS_360 = { add_core = BLR }
+	any_owned = { 
+	  limit = { 
+	  is_core = SAM
+	  NOT = { region = RUS_360 }
+	  }
+	  secede_province = SAM
+    }
+	any_country = {
+	   limit = {
+	   tag = BLR
+	   exists = yes
+	   }
+	   inherit = THIS
+	}
+    change_tag = BLR
+	}
+}
+
+# Second Partition or Generic Destruction
+
+country_event = { 
+	id = 222304
+	title = "LITPRU4.T"
+	desc = "LITPRU4.D"
+    picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU4.A"
+	prestige = 5
+	clr_global_flag = INDIE_LIT
+	set_global_flag = LIT_DEAD
+	SAM = { all_core = { remove_core = LIT } }
+	LIT = { clr_country_flag = lithuania_problem all_core = { add_core = BLR } }
+	BLR = { all_core = { remove_core = LIT } }
+	RUS_360 = { add_core = BLR }
+	}
+}
+
+
+# Polish Destruction of the Grand Duchy
+
+country_event = { 
+	id = 222305
+	title = "LITPRU5.T"
+	desc = "LITPRU5.D"
+    picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU5.A"
+	prestige = 5
+	clr_global_flag = INDIE_LIT
+	set_global_flag = LIT_DEAD
+	SAM = { all_core = { remove_core = LIT } }
+	LIT = { clr_country_flag = lithuania_problem all_core = { add_core = BLR } }
+	BLR = { all_core = { remove_core = LIT } }
+	RUS_360 = { add_core = BLR }
+	}
+}
+
+#### Danzig Crisis ####
+
+### From 222394 ####
+
+#### Iteration 1 - Scandinavia owns Royal Prussia. Annex Danzig. ####
+
+country_event = { 
+	id = 222306
+	title = "LITPRU6.T"
+	desc = "LITPRU6.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU6.A"
+	prestige = 1
+	inherit = DZG
+	any_country = {
+		limit = { 
+		   tag = PRU 
+		   exists = PRU
+		}	
+	    country_event = { id = 222413 days = 2 }
+	}
+	}
+}
+
+#### Iteration 2 - The Danzig Crisis ####
+
+country_event = { 
+	id = 222307
+	title = "LITPRU7.T"
+	desc = "LITPRU7.D"
+    picture = "stortinget"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU7.A"
+	prestige = -1
+	any_country = {
+	   limit = { 
+	      owns = 691
+	   }
+	   relation = { who = SCA value = -25 }
+	   diplomatic_influence = { who = SCA value = -25 }	
+	}
+	country_event = { id = 222312 days = 2 }
+	}
+}
+
+### German Tag has won the Danzig Crisis ####
+
+country_event = { 
+	id = 222308
+	title = "LITPRU8.T"
+	desc = "LITPRU8.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU8.A"
+	prestige = 5
+	inherit = DZG
+	SCA = { country_event = { id = 222310 days = 2 } }	
+	any_country = {
+		limit = { 
+		   tag = PRU 
+		   exists = PRU
+		}	
+	    country_event = { id = 222413 days = 2 }
+	}
+	}
+}
+
+### Scandinavia has won the Danzig Crisis ###
+
+country_event = { 
+	id = 222309
+	title = "LITPRU9.T"
+	desc = "LITPRU9.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU9.A"
+	prestige = 5
+	inherit = DZG
+	any_country = {
+	   limit = { 
+	      owns = 691
+	   }
+	   country_event = { id = 222311 days = 2 }
+	}
+	any_country = {
+		limit = { 
+		   tag = PRU 
+		   exists = PRU
+		}	
+	    country_event = { id = 222413 days = 2 }
+	}	
+	}
+}
+
+### Warning that Scandinavia has lost the Danzig Crisis ####
+
+country_event = { 
+	id = 222310
+	title = "LITPRU10.T"
+	desc = "LITPRU10.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU10.A"
+	prestige = -5
+	}
+}
+
+### Warning that German Tag has lost the Danzig Crisis ###
+
+country_event = { 
+	id = 222311
+	title = "LITPRU11.T"
+	desc = "LITPRU11.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU11.A"
+	prestige = -5
+	}
+}
+
+# Crisis T1
+
+country_event = { 
+	id = 222312
+	title = "LITPRU12.T"
+	desc = "LITPRU12.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU12.A"
+	DZG = { country_event = { id = 222313 days = 3 } }	
+	ai_chance = { 
+	factor = 100
+		}	
+	}
+	
+	option = { 
+	name = "LITPRU12.B"
+	any_country = {
+	   limit = {
+	   owns = 691
+	   }
+	   country_event = { id = 222308 days = 1 }
+	}
+	ai_chance = { 
+	factor = 0
+		}	
+	}
+}
+
+# Crisis T2
+
+country_event = { 
+	id = 222313
+	title = "LITPRU13.T"
+	desc = "LITPRU13.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU13.A"
+	SCA = { country_event = { id = 222309 days = 1 } }	
+	ai_chance = { 
+	factor = 20
+		}	
+	}
+	
+	option = { 
+	name = "LITPRU13.B"
+	any_country = {
+	   limit = {
+	   owns = 691
+	   }
+	   country_event = { id = 222314 days = 3 }
+	}
+	ai_chance = { 
+	factor = 80
+		}	
+	}
+}
+
+# Crisis T3
+
+country_event = { 
+	id = 222314
+	title = "LITPRU14.T"
+	desc = "LITPRU14.D"
+    picture = "danzig"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU14.A"
+	prestige = 1
+	relation = { who = SCA value = -25 }
+	diplomatic_influence = { who = SCA value = -25 }	
+    SCA = { country_event = { id = 222315 days = 3 } }	
+	ai_chance = { 
+	factor = 90
+		}	
+	}
+	
+	option = { 
+	name = "LITPRU14.B"
+	SCA = { country_event = { id = 222309 days = 1 } }	
+	ai_chance = { 
+	factor = 10
+		}	
+	}
+}
+
+# Crisis T4
+
+country_event = { 
+	id = 222315
+	title = "LITPRU15.T"
+	desc = "LITPRU15.D"
+    picture = "norwegian_storting"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU15.A"
+	prestige = 1
+	relation = { who = FROM value = -25 }
+	diplomatic_influence = { who = FROM value = -25 }	
+	any_country = {
+	   limit = {
+	   owns = 691
+	   }
+	   country_event = { id = 222316 days = 3 }
+	}
+	ai_chance = { 
+	factor = 80
+		}	
+	}
+	
+	option = { 
+	name = "LITPRU15.B"
+	any_country = {
+	   limit = {
+	   owns = 691
+	   }
+	   country_event = { id = 222308 days = 1 }
+	}
+	
+	ai_chance = { 
+	factor = 20
+		}	
+	}
+}
+
+# Crisis T5
+
+country_event = { 
+	id = 222316
+	title = "LITPRU16.T"
+	desc = "LITPRU16.D"
+    picture = "speech_assembly"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU16.A"
+	prestige = 1
+	relation = { who = SCA value = -25 }
+	diplomatic_influence = { who = SCA value = -25 }	
+	SCA = { country_event = { id = 222317 days = 3 } }
+	ai_chance = { 
+	factor = 80
+		}	
+	}
+	
+	option = { 
+	name = "LITPRU16.B"
+	SCA = { country_event = { id = 222309 days = 1 } }	
+	ai_chance = { 
+	factor = 20
+		}	
+	}
+}
+
+# Crisis Breaking Point - The Danzig Crisis
+
+country_event = { 
+	id = 222317
+	title = "LITPRU17.T"
+	desc = "LITPRU17.D"
+    picture = "Smolensk_battle"
+
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+	name = "LITPRU17.A"
+    random_list = {
+	    50 = { 
+		prestige = 5
+	    country_event = { id = 222309 days = 1 }		
+		}
+		50 = { 
+		prestige = -5
+	    any_country = {
+	    limit = {
+	    owns = 691
+	    }
+	    country_event = { id = 222308 days = 1 }
+	    }
+		}
+	}
+	}
+}
+
+### #### 222318 - Lithuania Stuff Part Two. See 222301 for Part 1
+
+### PLC Startup Chain for Lithuania ###
+
+## Students at the University of Vilnus are discussing true Lithuanian/Batic Lithuanian 
+
+country_event = { 
+	id = 222318
+	title = "LITPRU18.T"
+	desc = "LITPRU18.D"
+	picture = "vilnus"
+
+	trigger = {
+	tag = LIT
+    has_global_flag = PLC_EASTERN_COLLAPSE
+	NOT = { has_country_flag = LIT_university_crisis }
+	}
+	
+	mean_time_to_happen = {
+	   months = 6
+	}
+	
+	option = {
+	name = "LITPRU18.A"
+	    set_country_flag = LIT_university_crisis
+		any_pop = {
+			limit = {
+				culture = belarusian
+			}
+			militancy = 2
+			consciousness = 2
+			ideology = {
+				factor = 0.05
+				value = reactionary
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = lithuanian
+			}
+			consciousness = 4
+			ideology = {
+				factor = 0.05
+				value = liberal
+		    }
+	    }	
+	    country_event = { id = 222319 days = 40 }
+	}
+}
+
+## University of Vilnus leadership bans the Material.
+
+country_event = { 
+	id = 222319
+	title = "LITPRU19.T"
+	desc = "LITPRU19.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+	
+	option = {
+	    name = "LITPRU19.A"
+		any_pop = {
+			limit = {
+				culture = belarusian
+			}
+			militancy = -2
+			consciousness = -2
+			ideology = {
+				factor = 0.1
+				value = conservative
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = lithuanian
+			}
+			consciousness = 1
+			militancy = 3
+			ideology = {
+				factor = 0.15
+				value = liberal
+		    }
+	    }	
+	    PLC = { country_event = { id = 222320 days = 5 } }
+	}
+}
+
+## PLC Informed
+
+country_event = { 
+	id = 222320
+	title = "LITPRU20.T"
+	desc = "LITPRU20.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+	
+	option = {
+	    name = "LITPRU20.A"
+		set_country_flag = the_lithuania_problem
+		any_pop = {
+			limit = {
+				culture = belarusian
+			}
+			militancy = -2
+			consciousness = -2
+			ideology = {
+				factor = 0.1
+				value = conservative
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = lithuanian
+			}
+			consciousness = 5
+			militancy = 3
+			ideology = {
+				factor = 0.15
+				value = liberal
+		    }
+	    }
+	}
+}
+
+# Explanation of the Lithuania Problem or "It would be really nice to have a functional sejm"
+
+country_event = { 
+	id = 222321
+	title = "LITPRU21.T"
+	desc = "LITPRU21.D"
+	picture = "vilnus"
+
+	trigger = {
+	tag = PLC
+    has_country_flag = the_lithuania_problem
+	}
+	
+	mean_time_to_happen = {
+	   months = 1
+	}
+	
+	option = {
+	    name = "LITPRU21.A"
+	    clr_country_flag = the_lithuania_problem
+		prestige = -5
+		any_pop = {
+			limit = {
+				culture = polish
+			}
+			militancy = 1
+			consciousness = 1
+			ideology = {
+				factor = 0.05
+				value = conservative
+		    }
+	    }
+		any_pop = {
+			limit = {
+				culture = ruthenian
+			}
+			militancy = 1
+			consciousness = 1
+			ideology = {
+				factor = 0.05
+				value = reactionary
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = belarusian
+			}
+			militancy = 1
+			consciousness = 1
+			ideology = {
+				factor = 0.05
+				value = reactionary
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = lithuanian
+			}
+			militancy = 1
+			consciousness = 1
+			ideology = {
+				factor = 0.05
+				value = liberal
+		    }
+	    }	
+	}
+}
+
+### SECOND PARTITION OR INDIE LIT PARTITION CHAIN
+
+## N-RUS or C-RUS given options regarding what to do with Lithuania
+
+country_event = { 
+	id = 222322
+	title = "LITPRU22.T"
+	desc = "LITPRU22.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+	
+	option = {
+	   name = "LITPRU22.A"
+	   prestige = -5	
+	   relation = { who = SCA value = -50 }
+	   diplomatic_influence = { who = SCA value = -50 }
+	   LIT = { country_event = { id = 222327 days = 2 } }
+	   ai_chance = { 
+	      factor = 80
+	         modifier = { 
+	            factor = 0.5
+		        NOT = { has_global_flag = THE_NORTHERN_BEAR }
+		     }
+	   }	
+	}
+	
+	option = {
+	   name = "LITPRU22.B"
+	   prestige = 5
+	   relation = { who = SCA value = 50 }
+	   diplomatic_influence = { who = SCA value = 50 }
+	   LIT = { country_event = { id = 222324 days = 2 } }
+	   SCA = { country_event = { id = 222325 days = 1 } }
+	   ai_chance = { 
+	      factor = 20
+	      modifier = { 
+	         factor = 3
+	   	     NOT = { has_global_flag = THE_NORTHERN_BEAR }
+		  }
+	   }	
+	}
+}
+
+## S-RUS is only given one option regarding what to do with Lithuania
+
+country_event = { 
+	id = 222323
+	title = "LITPRU23.T"
+	desc = "LITPRU23.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU23.A"
+	   prestige = 5
+	   relation = { who = SCA value = 50 }
+	   diplomatic_influence = { who = SCA value = 50 }
+	   LIT = { country_event = { id = 222324 days = 3 } }
+	   SCA = { country_event = { id = 222325 days = 1 } }	
+	}
+}
+
+# LIT PARTITION CHAIN
+
+# Lithuania is basically told that that their independence really only exists on paper after the collapse of the Commonwealth and that the Grand Duchy is basically dead as a result. The White Ruthenian Army pulls back and entrenches itself in Vilnus.
+
+country_event = { 
+	id = 222324
+	title = "LITPRU24.T"
+	desc = "LITPRU24.D"
+    picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "LITPRU24.A"
+	prestige_factor = -0.90
+	clr_global_flag = INDIE_LIT
+	set_global_flag = LIT_DEAD
+	SAM = { all_core = { remove_core = LIT } }
+	LIT = { all_core = { add_core = BLR } }
+	BLR = { all_core = { remove_core = LIT } }
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+    add_country_modifier = {
+			name = the_last_stand_PLC
+			duration = 720
+	}
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 720
+	}
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = BLR
+		}
+		fort = 3
+	}
+	RUS_360 = { add_core = BLR }
+    RUS_718 = { add_core = RUG }
+    RUS_360 = { add_core = RUG }
+	936 = { add_core = RUG }
+	937 = { add_core = RUG }
+	change_tag = BLR
+	any_owned = { 
+	   limit = {
+	      is_core = SAM
+	      NOT = { region = RUS_360 }
+		  NOT = { province_id = 936 }
+	   }
+	   secede_province = SCA
+	}
+	any_owned = { 
+	   limit = {
+	      is_core = BLR
+	      NOT = { region = RUS_360 }
+		  NOT = { province_id = 936 }
+	   }
+	   secede_province = RUS
+	}
+	relation = { who = RUS value = -400 }
+	diplomatic_influence = { who = RUS value = -400 }	
+	leave_alliance = RUS
+	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	leave_alliance = SCA
+	RUS = { country_event = { id = 222326 days = 1 } }
+	SCA = { country_event = { id = 222326 days = 1 } }	
+	}
+}
+
+# Scandinavia is informed of the impending partition of Lithuania
+
+country_event = { 
+	id = 222325
+	title = "LITPRU25.T"
+	desc = "LITPRU25.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU25.A"
+	}
+}
+
+# Both Russia and Scandinavia are informed that the rest of the Lithuanian Army has entrenched itself in Vilnus and the country will need to be taken down.
+
+country_event = { 
+	id = 222326
+	title = "LITPRU26.T"
+	desc = "LITPRU26.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU26.A"
+	    war = {
+		target = BLR
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		 }
+	}
+}
+
+#### YET ANOTHER RUSSIAN PLOY ###
+
+# This event turns LIT into a Russian Vassal. LIT is informed that its a "alliance" but its better then getting auto-partitioned so eh?
+
+country_event = { 
+	id = 222327
+	title = "LITPRU27.T"
+	desc = "LITPRU27.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU27.A"
+	   relation = { who = RUS value = 400 }
+	   diplomatic_influence = { who = RUS value = 400 }	
+	   RUS = { create_vassal = LIT }
+	   SCA = { country_event = { id = 222328 days = 1 } }
+	}
+}
+
+# Inform Scandinavia that Lithuania has been stolen by that fucking bear and asks if they want to actually attempt to recover Lithuania.
+
+country_event = { 
+	id = 222328
+	title = "LITPRU28.T"
+	desc = "LITPRU28.D"
+	picture = "vilnus"
+
+	is_triggered_only = yes
+	
+	# Fight the Bear
+
+	option = {	
+	   name = "LITPRU28.A"
+	   prestige = 10
+	   relation = { who = RUS value = -200 }
+	   diplomatic_influence = { who = RUS value = -200 }		  
+	   country_event = { id = 222329 days = 1 }
+	   ai_chance = { 
+	      factor = 50
+	   }
+	}
+	
+	# Don't fight the Bear
+	
+	option = {	
+	   name = "LITPRU28.B"
+	   prestige = -10
+	   relation = { who = RUS value = 100 }
+	   diplomatic_influence = { who = RUS value = 100 }	
+	   RUS = { country_event = { id = 222332 days = 1 } }
+	   ai_chance = { 
+	      factor = 50
+	   }
+	}
+}
+
+# The Scandinavian War for Lithuania
+
+country_event = { 
+	id = 222329
+	title = "LITPRU29.T"
+	desc = "LITPRU29.D"
+	picture = "vilnus"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU29.A"
+	    prestige = 1
+	    set_global_flag = SCA_LIT_RUS_WAR
+	    war = {
+		target = LIT
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = war_reparations
+			}
+		}
+	}
+}
+
+# Scandinavia was BTFOed by Russia and Lithuania is annexed by Russia. However, the Governorate cores are different with SMG getting all of its cores.
+
+country_event = { 
+	id = 222330
+	title = "LITPRU30.T"
+	desc = "LITPRU30.D"
+	picture = "vilnus"
+	
+	trigger = {
+	   tag = RUS
+	   war = no
+	   LIT = { 
+	      exists = yes
+	      war = no 
+	   }
+       has_global_flag = SCA_LIT_RUS_WAR
+	}
+	
+	mean_time_to_happen = {
+	   days = 3
+	}
+
+	option = {	
+	   name = "LITPRU30.A"
+	   prestige = 20
+	   inherit = LIT
+       RUS_718 = { add_core = RUG }
+	   937 = { add_core = RUG }
+       SAM = { all_core = { add_core = SMG } }   
+	   clr_global_flag = SCA_LIT_RUS_WAR	    
+	}
+}
+
+# Scandinavia managed to take Lithuania. Russia will be back.
+
+country_event = { 
+	id = 222331
+	title = "LITPRU31.T"
+	desc = "LITPRU31.D"
+	picture = "vilnus"
+	
+	trigger = {
+	   tag = SCA
+	   war = no
+	   NOT = { exists = LIT }
+       has_global_flag = SCA_LIT_RUS_WAR
+	}
+	
+	mean_time_to_happen = {
+	   days = 3
+	}
+
+	option = {	
+	   name = "LITPRU31.A"
+	   prestige = 20
+       RUS_718 = { add_core = RUG }
+       RUS_360 = { add_core = RUG }
+	   936 = { add_core = RUG }
+	   937 = { add_core = RUG }
+	   clr_global_flag = SCA_LIT_RUS_WAR
+	}
+}
+
+# Russia automatically wins because Scandinavia did not actually want to fight. Lithuania is annexed but the Governorate cores are different with SMG getting all of its cores.
+
+country_event = { 
+	id = 222332
+	title = "LITPRU32.T"
+	desc = "LITPRU32.D"
+	picture = "vilnus"
+	
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU32.A"
+	   prestige = 10
+	   inherit = LIT
+       RUS_718 = { add_core = RUG }
+	   937 = { add_core = RUG }
+       SAM = { all_core = { add_core = SMG } } 
+	   clr_global_flag = SCA_LIT_RUS_WAR	    
+	}
+}
+
+# The Lithuanian Ploy - This event triggers the Lithuanian Puppet Event
+
+country_event = { 
+	id = 222333
+	title = "LITPRU33.T"
+	desc = "LITPRU33.D"
+	picture = "vilnus"
+	
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU33.A"
+	   prestige = 1
+	   relation = { who = LIT value = 50 }
+	   diplomatic_influence = { who = LIT value = 50 }	
+	   LIT = { country_event = { id = 222327 days = 1 } }	    
+	}
+}
+
+### The Ruthenian Unification - This will occur if Ukraine and Belarus with no Lithuania. ####
+
+country_event = { 
+	id = 222334
+	title = "LITPRU34.T"
+	desc = "LITPRU34.D"
+	picture = "speech_assembly"
+	
+	trigger = {
+	   exists = yes
+	   tag = UKR
+	   war = no
+	   BLR = { exists = yes }
+	   LIT = { exists = no }
+	   NOT = { has_country_flag = ruthenian_ruthenia }
+	}
+	
+	mean_time_to_happen = {
+	   months = 1
+	}
+
+	option = {	
+	   name = "LITPRU34.A"
+	   set_country_flag = ruthenian_ruthenia
+	   BLR = { country_event = { id = 222335 days = 3 } }    
+	}
+}
+
+country_event = { 
+	id = 222335
+	title = "LITPRU35.T"
+	desc = "LITPRU35.D"
+	picture = "speech_assembly"
+	
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU35.A"
+	   UKR = { country_event = { id = 222336 days = 3 } }   
+	   ai_chance = { 
+	   factor = 80
+	   }		   
+	}
+	
+	option = {	
+	   name = "LITPRU35.B"
+	   change_tag_no_core_switch = UKR  
+	   UKR = { country_event = { id = 222336 days = 3 } }
+	   ai_chance = { 
+	   factor = 0
+	   }	   
+	}
+	
+	option = {	
+	   name = "LITPRU35.C"
+	   UKR = { country_event = { id = 222337 days = 3 } }  
+	   ai_chance = { 
+	   factor = 20
+	   }	     
+	}
+}
+
+country_event = { 
+	id = 222336
+	title = "LITPRU36.T"
+	desc = "LITPRU36.D"
+	picture = "vilnus"
+	
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU36.A"
+	   prestige = 10
+	   inherit = BLR	   
+	}
+}
+
+country_event = { 
+	id = 222337
+	title = "LITPRU37.T"
+	desc = "LITPRU37.D"
+	picture = "vilnus"
+	
+	is_triggered_only = yes
+
+	option = {	
+	   name = "LITPRU37.A"
+	   prestige = -10	   
+	}
+}
+
+# End of ZAZ - The AI is only likely to ever see this.
+
+country_event = { 
+	id = 222338
+	title = "The End of Zaporizhian Host"
+	desc = "We screwed up badly. RIP."
+	picture = "sejm"
+	
+	trigger = {
+	   tag = ZAZ
+	   exists = yes
+	   NOT = { 
+		  owns = 971
+          owns = 970
+	      owns = 972
+		  owns = 969
+		  owns = 978 
+	   }
+	   NOT = { has_country_flag = ZAZ_Dead }
+	}
+	
+	mean_time_to_happen = {
+	   days = 3
+	}
+
+	option = {	
+	   name = "Goodbye"
+	   set_country_flag = ZAZ_Dead
+       any_country = {
+          limit = {
+             owns = 958
+          }
+          inherit = ZAZ
+       }		  
+	}
+}

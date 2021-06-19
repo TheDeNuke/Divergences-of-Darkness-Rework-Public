@@ -1,0 +1,2312 @@
+# Perhaps a reverse version for AI that auto-breaks military access if the relations are too low.
+#country_event = {
+#	id = 800004
+#	title = "800004.T"
+#	desc = "800004.D"
+#	picture = "boer_war"
+#	
+#	trigger = {
+#		exists = yes
+#		is_vassal = no
+#		OR = {
+#		   any_greater_power = { 
+#			    NOT = { military_access = THIS } 
+#				OR = { 
+#				   alliance_with = THIS 
+#				   is_sphere_leader_of = THIS
+#			    } 
+#			} 
+#		    any_neighbor_country = { 
+#			    NOT = { military_access = THIS } 
+#				OR = { 
+#				   alliance_with = THIS 
+#				   is_sphere_leader_of = THIS
+#			    } 
+#			}
+#		} 
+#	}
+#	
+#	mean_time_to_happen = {
+#		days = 2
+#	}
+#	
+#	option = {
+#		name = "800004.A"		
+#		any_country = {
+#			limit = {
+#				is_sphere_leader_of = THIS
+#				NOT = { alliance_with = THIS }
+#				NOT = { military_access = THIS }
+#			}
+#			country_event = 800005
+#		}
+#		any_country = {
+#			limit = {
+#				alliance_with = THIS 
+#				NOT = { is_sphere_leader_of = THIS }
+#				NOT = { military_access = THIS }
+#			}
+#			country_event = 800005
+#		}
+#		any_country = {
+#			limit = {
+#				military_access = THIS
+#				NOT = { is_sphere_leader_of = THIS }
+#				NOT = { alliance_with = THIS  }
+#			}
+#			country_event = 800007
+#		}
+#	}
+#}
+#
+#country_event = {
+#	id = 800005
+#	title = "800005.T"
+#	desc = "800005.D"
+#	picture = "boer_war"
+#	
+#	is_triggered_only = yes
+#	
+#	option = {
+#		name = "97086.A"
+#		military_access = FROM
+#	}
+#}
+#
+#
+# AI cancelling military access if relations are too low or not at war.
+country_event = {
+	id = 800006
+	title = "Military Access Cancelled"
+	desc = "This military access cannot be maintained."
+	picture = "boer_war"
+	
+	trigger = {
+	    ai = yes
+		exists = yes
+		is_vassal = no
+		OR = {
+		any_neighbor_country = {
+			military_access = THIS
+			NOT = { is_sphere_leader_of = THIS }
+			NOT = { in_sphere = THIS }
+		    NOT = { alliance_with = THIS }
+            NOT = { vassal_of = THIS }	
+            NOT = { substate_of = THIS }		
+            OR = { 			
+			   NOT = { relation = { who = THIS value = 100 } }
+			   war = no
+			}
+		}
+		any_greater_power = {
+			military_access = THIS
+			NOT = { is_sphere_leader_of = THIS }
+		    NOT = { alliance_with = THIS }		
+            OR = { 			
+			   NOT = { relation = { who = THIS value = 100 } }
+			   war = no
+			}
+		}
+        }		
+	}	
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "800006.A"
+		any_country = {
+			limit = {
+				military_access = THIS
+			    NOT = { is_sphere_leader_of = THIS }
+				NOT = { in_sphere = THIS }
+		        NOT = { alliance_with = THIS }		
+                NOT = { vassal_of = THIS }	
+                NOT = { substate_of = THIS }					
+                OR = { 			
+			       NOT = { relation = { who = THIS value = 100 } }
+			       war = no
+			    }
+			}
+			country_event = 800007
+		}
+	}
+}
+
+country_event = {
+	id = 800007
+	title = "800007.T"
+	desc = "800007.D"
+	picture = "conscription_marching"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "190451.A"
+		end_military_access = FROM
+	}
+}
+
+
+# Great Power Contention
+country_event = {
+	id = 19006
+	title = "EVTNAME19000"
+	desc = "EVTDESC19006"
+	picture = "greatpowers"
+	
+	trigger = {	exists = yes
+		any_greater_power = {
+			OR = {
+				is_sphere_leader_of = THIS
+				diplomatic_influence = {
+					who = THIS
+					value = 75
+				}
+			}
+		}
+		any_greater_power = {
+			NOT = { is_sphere_leader_of = THIS }
+			OR = {
+				AND = {
+					THIS = { part_of_sphere = no }
+					diplomatic_influence = {
+						who = THIS
+						value = 50
+					}
+					NOT = {
+						diplomatic_influence = {
+							who = THIS
+							value = 75
+						}
+					}
+				}
+				AND = {
+					THIS = { part_of_sphere = yes }
+					diplomatic_influence = {
+						who = THIS
+						value = 50
+					}
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 200
+		modifier = {
+			factor = 0.5
+			part_of_sphere = no
+		}
+		modifier = {
+			factor = 2
+			NOT = { rank = 32 }
+
+		}
+		modifier = {
+			factor = 2
+			civilized = no
+
+		}
+		modifier = {
+			factor = 0.75
+			is_secondary_power = no
+			rank = 32
+		}
+		modifier = {
+			factor = 0.5
+			is_secondary_power = yes
+		}
+	}
+
+	option = {
+		name = "EVTOPTA19000"
+		any_country = {
+			limit = {
+				is_greater_power = yes
+				NOT = { is_sphere_leader_of = THIS }
+				diplomatic_influence = {
+					who = THIS
+					value = 50
+				}
+			}
+			country_event = 19007
+		}
+	}
+}
+
+# Reply to Above
+country_event = {
+	id = 19007
+	title = "EVTNAME19005"
+	desc = "EVTDESC19007"
+	picture = "greatpowers"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTB19005"
+		diplomatic_influence = {
+			who = FROM
+			value = -100
+		}
+		relation = {
+			who = FROM
+			value = 50
+		}
+		random_country = {
+			limit = {
+				tag = FROM
+				part_of_sphere = yes
+			}
+			sphere_owner = {
+				relation = {
+					who = THIS
+					value = 25
+				}
+			}
+		}
+		prestige = -5
+	}
+	
+	option = {
+		name = "EVTOPTA19005"
+		relation = {
+			who = FROM
+			value = -50
+		}
+		random_country = {
+			limit = {
+				tag = FROM
+				part_of_sphere = no
+				NOT = { total_pops = 10000000 }
+			}
+			add_casus_belli = {
+				target = THIS
+				type = add_to_sphere
+				months = 12
+			}
+		}
+		random_country = {
+			limit = {
+				tag = FROM
+				part_of_sphere = yes
+			}
+			sphere_owner = {
+				add_casus_belli = {
+					target = THIS
+					type = take_from_sphere
+					months = 12
+				}
+				casus_belli = {
+					target = THIS
+					type = humiliate
+					months = 12
+				}
+				relation = {
+					who = THIS
+					value = -25
+				}
+			}
+		}
+		badboy = 2
+	}
+}
+		
+
+# Parade
+country_event = {
+	id = 19010
+	title = "EVTNAME19010"
+	desc = "EVTDESC19010"
+	news = yes
+	news_desc_long = "EVTDESC19010_NEWS_LONG"
+	news_desc_medium = "EVTDESC19010_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC19010_NEWS_SHORT"
+	picture = "greatpowers"
+	
+	trigger = {	exists = yes
+		is_greater_power = yes
+		colonial_nation = yes
+		prestige = 100
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+		
+		modifier = {
+			factor = 0.9
+			prestige = 150
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 200
+		}
+		modifier = {
+			factor = 1.2
+			badboy = 0.4
+		}
+		modifier = {
+			factor = 10
+			badboy = 0.8
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA19010"
+		prestige = 20
+		capital_scope = {
+			any_pop = {
+				militancy = -1
+				consciousness = -1
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB19010"
+		any_greater_power = {
+			prestige = -1
+		}
+		capital_scope = {
+			any_pop = {
+				militancy = -1
+				consciousness = -1
+			}
+		}
+	}
+}
+
+#AI Event for Low-Relation Allies
+country_event = {
+	id = 19015
+	title = "Allies or Enemies?"
+	desc = "Relations with one of our allies have cooled. Perhaps we should reconsider our alliance?"
+	
+	trigger = {	exists = yes
+		ai = yes
+		war = no
+		OR = {
+			is_greater_power = yes
+			is_secondary_power = yes
+		}
+		OR = {
+			any_greater_power = {
+				alliance_with = THIS
+				NOT = {
+					is_sphere_leader_of = THIS
+					relation = { who = THIS value = 0 }
+					is_our_vassal = THIS
+				}
+			}
+			any_neighbor_country = {
+				alliance_with = THIS
+				NOT = {
+					is_sphere_leader_of = THIS
+					relation = { who = THIS value = 0 }
+					is_our_vassal = THIS
+					vassal_of = THIS
+				}
+			}
+		}				
+	}
+
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+		name = "EVT19015OPTA"
+		random_country = {
+			limit = {
+				alliance_with = THIS
+				NOT = {
+					is_sphere_leader_of = THIS
+					relation = { who = THIS value = 0 }
+					is_our_vassal = THIS
+					vassal_of = THIS
+				}
+			}
+			leave_alliance = THIS
+			end_military_access = THIS
+			relation = {
+				who = THIS
+				value = -100
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				any_neighbor_country = {
+					military_score = THIS
+					NOT = {
+						relation = {
+							who = THIS
+							value = -100
+						}
+					}
+				}
+			}
+		}	
+	}
+
+	option = {
+		name = "EVT19015OPTB"
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+country_event = {
+	id = 19016
+	title = "The Great Game"
+	desc = "We are under the influence of a Great Power. Or we should be."
+
+	trigger = {	exists = yes
+		ai = yes
+		is_greater_power = no
+		part_of_sphere = no
+		war = no
+		any_greater_power = {
+			ai = yes
+			diplomatic_influence = {
+				who = THIS
+				value = 95
+			}
+			NOT = { truce_with = THIS }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = "We welcome our new allies."
+		random_country = {
+			limit = {
+				is_greater_power = yes
+				ai = yes
+				diplomatic_influence = {
+					who = THIS
+					value = 95
+				}
+				NOT = { truce_with = THIS }
+			}
+			diplomatic_influence = {
+				who = THIS
+				value = 10
+			}
+		}				
+	}
+}
+
+country_event = {
+	id = 19017
+	title = "Questioning Our Alliance"
+	desc = "We have begun to question our alliance to a great power that is clearly not our true protector."
+	
+	trigger = {	exists = yes
+		war = no
+		great_wars_enabled = no
+		part_of_sphere = yes
+		any_greater_power = {
+			alliance_with = THIS
+			NOT = { is_sphere_leader_of = THIS }
+			NOT = { is_our_vassal = THIS }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "Let us change this arrangement."
+		random_country = {
+			limit = {
+				is_greater_power = yes
+				NOT = { is_sphere_leader_of = THIS }
+				NOT = { is_our_vassal = THIS }
+				alliance_with = THIS
+			}
+			relation = { who = THIS value = -50 }
+			leave_alliance = THIS
+			end_military_access = THIS
+		}
+	}
+}
+
+# Alliance Breaker
+country_event = {
+	id = 19018
+	title = "Alliance Broken!"
+	desc = "A series of diplomatic blunders have broken our alliance!"
+	picture = "treaty"
+	
+	trigger = {
+		war = no
+		ai = yes
+		OR = {
+			any_neighbor_country = {
+				alliance_with = THIS
+				NOT = { vassal_of = THIS }
+				NOT = { is_our_vassal = THIS }
+				NOT = { in_sphere = THIS }
+				NOT = { is_sphere_leader_of = THIS }
+			}
+			any_greater_power = {
+				alliance_with = THIS
+				NOT = { is_our_vassal = THIS }
+				NOT = { is_sphere_leader_of = THIS }
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 360
+	}
+	
+	option = {
+		name = "Ah, blast."
+		prestige = -10
+		random_country = {
+			limit = {
+				alliance_with = THIS
+				NOT = { vassal_of = THIS }
+				NOT = { is_our_vassal = THIS }
+				NOT = { in_sphere = THIS }
+				NOT = { is_sphere_leader_of = THIS }
+			}
+			leave_alliance = THIS
+			end_military_access = THIS
+			relation = { who = THIS value = -50 }
+		}	
+	}
+}
+
+country_event = {
+	id = 19019
+	title = "Alliance Broken!"
+	desc = "A series of diplomatic blunders have broken our alliance!"
+	picture = "treaty"
+	
+	trigger = {
+		war = no
+		ai = yes
+		is_greater_power = yes
+		any_greater_power = {
+			ai = yes
+			war = no
+			alliance_with = THIS
+			NOT = { tag = THIS }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 2
+			great_wars_enabled = yes
+		}
+	}
+	
+	option = {
+		name = "Ah, blast."
+		random_country = {
+			limit = {
+				is_greater_power = yes
+				ai = yes
+				war = no
+				alliance_with = THIS
+				NOT = { tag = THIS }
+			}
+			leave_alliance = THIS
+			end_military_access = THIS
+			relation = { who = THIS value = -100 }
+		}	
+	}
+	
+	option = {
+		name = "But we really need that alliance!"
+		prestige = -10
+		random_country = {
+			limit = {
+				is_greater_power = yes
+				ai = yes
+				war = no
+				alliance_with = THIS
+				NOT = { tag = THIS }
+			}
+			relation = { who = THIS value = -50 }
+		}		
+	}
+}
+
+#Provincename Botanical Expedition
+province_event = {
+	id = 19020
+	title = "EVTNAME19020"
+	desc = "EVTDESC19020"
+	
+	trigger = {
+		owner = {
+			is_greater_power = yes
+		}
+		is_colonial = yes
+		is_overseas = yes
+		NOT = {
+			life_rating = 25
+			has_global_flag = botanical_expedition_in_progress
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 0.8
+			NOT = {
+				life_rating = 20
+			}
+		}
+		modifier = {
+			factor = 0.9
+			NOT = {
+				life_rating = 25
+			}
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 4
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA19020"
+		set_global_flag = botanical_expedition_in_progress
+		
+		owner = {
+			prestige = 5
+			treasury = -1000
+		}
+		any_country = {
+			limit = {
+				civilized = yes
+				prestige = 25
+				NOT = {
+					tag = THIS
+					relation = {
+						who = THIS
+						value = 0
+					}
+				}
+			}
+			country_event = 19022
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				owner = { NOT = { money = 1000 } }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB19020"
+		owner = {
+			prestige = -5
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+country_event = {
+	id = 19022
+	title = "EVTNAME19022"
+	desc = "EVTDESC19022"
+	picture = "Botanic_expedition"
+	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA19022"
+		set_country_flag = participates_in_botanical_expedition
+		prestige = 5
+	}
+	
+	option = {
+		name = "EVTOPTB19022"
+		prestige = -5
+	}
+}
+
+country_event = {
+	id = 19023
+	title = "EVTNAME19023"
+	desc = "EVTDESC19023"
+	picture = "Botanic_expedition"
+	
+	trigger = { exists = yes
+		has_country_flag = participates_in_botanical_expedition
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	option = {
+		name = "EVTOPTA19023"
+		clr_country_flag = participates_in_botanical_expedition
+		prestige = -5
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB19023"
+		treasury = -1000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 1000 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 19024
+	title = "EVTNAME19024"
+	desc = "EVTDESC19024"
+	picture = "Botanic_expedition"
+	
+	trigger = { exists = yes
+		has_country_flag = participates_in_botanical_expedition
+		upper_house = {
+			ideology = liberal
+			value = 0.3
+		}			
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	option = {
+		name = "EVTOPTA19024"
+		clr_country_flag = participates_in_botanical_expedition
+		prestige = -2
+	}
+	
+	option = {
+		name = "EVTOPTB19024"
+		any_pop = {
+			scaled_militancy = {
+				ideology = liberal
+				factor = 3
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 19025
+	title = "EVTNAME19025"
+	desc = "EVTDESC19025"
+	picture = "Botanic_expedition"
+	
+	trigger = { exists = yes
+		has_country_flag = participates_in_botanical_expedition
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	option = {
+		name = "EVTOPTA19025"
+		prestige = 5
+		any_pop = {
+			consciousness = 0.1
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB19025"
+		set_country_flag = botanical_expedition_threatened
+		prestige = 2
+	}
+}
+
+country_event = {
+	id = 19026
+	title = "EVTNAME19026"
+	desc = "EVTDESC19026"
+	picture = "Botanic_expedition"
+	
+	trigger = {	exists = yes
+		has_country_flag = participates_in_botanical_expedition
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+		modifier = {
+			has_country_flag = botanical_expedition_threatened
+			factor = 0.4
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA19026"
+		clr_country_flag = participates_in_botanical_expedition
+		clr_country_flag = botanical_expedition_threatened
+		prestige = -10
+	}
+}
+
+country_event = {
+	id = 19027
+	title = "EVTNAME19027"
+	desc = "EVTDESC19027"
+	picture = "Botanic_expedition"
+	
+	trigger = {	exists = yes
+		has_country_flag = participates_in_botanical_expedition
+		NOT = {
+			has_global_flag = victoria_regina_found
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 400
+		modifier = {
+			has_country_flag = botanical_expedition_threatened
+			factor = 1.2
+		}	
+	}
+	
+	option = {
+		name = "EVTOPTA19027"
+		set_country_flag = victoria_regina
+		set_global_flag = victoria_regina_found
+		prestige = 10
+		clr_country_flag = botanical_expedition_threatened
+		any_country = {
+			limit = {
+				OR = {
+					has_country_flag = botanical_expedition_threatened
+					has_country_flag = participates_in_botanical_expedition
+				}
+			}
+			country_event = 19028
+			clr_global_flag = botanical_expedition_in_progress
+		}
+	}
+}
+
+country_event = {
+	id = 19028
+	title = "EVTNAME19028"
+	desc = "EVTDESC19028"
+	picture = "Botanic_expedition"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA19028"
+		clr_country_flag = botanical_expedition_threatened
+		clr_country_flag = participates_in_botanical_expedition
+		years_of_research = 0.2
+		prestige = -5
+	}
+}
+
+country_event = {
+	id = 19029
+	title = "EVTNAME19029"
+	desc = "EVTDESC19029"
+	picture = "Botanic_expedition"
+	
+	trigger = {	exists = yes
+		has_country_flag = botanical_expedition_in_progress
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+		modifier = {
+			factor = 1.1
+			has_country_flag = botanical_expedition_threatened
+		}	
+	}
+	
+	option = {
+		name = "EVTNAME19029"
+		clr_country_flag = botanical_expedition_in_progress
+		clr_country_flag = botanical_expedition_threatened
+		prestige = 10
+		years_of_research = 0.5
+	}
+}
+
+#Titanic Sinks
+country_event = {
+	id = 81002213
+	title = "EVTNAME81002213"
+	desc = "EVTDESC81002213"
+	news = yes
+	news_desc_long = "EVTDESC81002213_NEWS_LONG"
+	news_desc_medium = "EVTDESC81002213_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC81002213_NEWS_SHORT"
+	picture = "titanic_sinks"
+	
+	trigger = {
+		has_country_flag = titanic_sinks
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "EVT81002213OPTA"
+		clr_country_flag = titanic_sinks
+		prestige = -25
+		any_pop = { consciousness = 1 }
+	}
+}
+
+#Titanic Doesn't Sink
+country_event = {
+	id = 81002214
+	title = "EVTNAME81002214"
+	desc = "EVTDESC81002214"
+	news = yes
+	news_desc_long = "EVTDESC81002214"
+	news_desc_medium = "EVTDESC81002214"
+	news_desc_short = "EVTDESC81002214"
+	picture = "titanic_arrives"
+	
+	trigger = {
+		has_country_flag = titanic_arrives
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "EVT81002214OPTA"
+		clr_country_flag = titanic_arrives
+		prestige = 25
+		random_country = {
+			limit = {
+				prestige = 10
+				NOT = { tag = RAP }
+				capital_scope = { continent = north_america }
+				OR = {
+					is_greater_power = yes
+					NOT = { any_greater_power = { capital_scope = { continent = north_america } } }
+				}
+			}
+			relation = { who = THIS value = 50 }
+		}
+	}
+}
+
+# Great wars
+country_event = {
+	id = 19355
+	title = "EVTNAME19355"
+	desc = "EVTDESC19355"
+	news = yes
+	news_desc_long = "EVTDESC19355_NEWS_LONG"
+	news_desc_medium = "EVTDESC19355_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC19355_NEWS_SHORT"
+	major = yes
+	picture = "greatpowers"
+
+	fire_only_once = yes
+
+	trigger = {
+	    civilized = yes
+		war = yes
+		any_greater_power = { war_with = THIS }
+		any_greater_power = { alliance_with = THIS }
+		great_wars_enabled = no
+		NOT = { has_global_flag = great_wars_enabled }
+		year = 1890
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+		
+		modifier = {
+			factor = 0.6
+			any_neighbor_country = { 
+			is_greater_power = yes
+			war_with = THIS
+			}
+		}
+		
+		modifier = {
+			factor = 0.8
+			lost_national = 0.25
+		}
+	}
+
+	option = {
+		name = "EVTOPTA19355"
+		great_wars_enabled = yes
+		set_global_flag = great_wars_enabled
+	}
+}
+
+# World wars
+country_event = {
+	id = 19356
+	news = yes
+	news_desc_long = "EVTDESC19356_NEWS_LONG"
+	news_desc_medium = "EVTDESC19356_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC19356_NEWS_SHORT"
+	title = "EVTNAME19356"
+	desc = "EVTDESC19356"
+	major = yes
+	picture = "greatpowers"
+
+	fire_only_once = yes
+
+	trigger = {
+		world_wars_enabled = no
+		great_wars_enabled = yes
+		NOT = { has_global_flag = world_wars_enabled }
+        invention = great_war_paradigm	
+		year = 1905	
+	}
+
+	mean_time_to_happen = {
+		months = 10
+		modifier = {
+			factor = 0.1
+			government = fascist_dictatorship
+		}
+		modifier = {
+			factor = 0.1
+			government = fascist_monarchy
+		}
+		modifier = {
+			factor = 0.1
+			government = proletarian_dictatorship
+		}
+	}
+
+	option = {
+		name = "EVTOPTA19356"
+		world_wars_enabled = yes
+		set_global_flag = world_wars_enabled
+	}
+}
+
+#Asking sphere owner for help in regaining cores
+
+country_event = {
+	id = 19365
+	title = "EVTNAME19365" #The Restoration of $COUNTRY$
+	desc = "EVTDESC19365"
+	picture = "deliberation"
+	
+	trigger = {	exists = yes
+		war = no
+		is_greater_power = no
+		part_of_sphere = yes
+		NOT = { government = theocracy }
+		any_core = {
+			NOT = { owned_by = THIS }
+			empty = no
+			owner = {
+				number_of_states = 2
+				NOT = {
+					is_sphere_leader_of = THIS
+					truce_with = THIS
+					alliance_with = THIS
+					is_vassal = yes
+					sphere_owner = { is_sphere_leader_of = THIS }
+				}
+			}
+		}
+		sphere_owner = {
+			alliance_with = THIS
+			is_disarmed = no
+			war = no
+			NOT = {
+				badboy = 0.88
+				war_exhaustion = 10
+				war_policy = pacifism
+				has_country_modifier = neutrality
+				has_country_flag = in_great_war
+				has_country_modifier = no_more_war
+				any_owned_province = { is_core = THIS }
+			}
+		}
+		NOT = {
+			badboy = 0.92
+			war_exhaustion = 10
+			war_policy = pacifism
+			has_country_modifier = neutrality
+			has_country_flag = in_great_war
+			has_country_modifier = no_more_war
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+		modifier = {
+			factor = 5
+			has_country_flag = asked_for_restoration
+		}
+		modifier = {
+			factor = 2
+			OR = {
+				sphere_owner = { ai = no }
+				ai = no
+			}
+		}
+		modifier = {
+			factor = 1.5
+			civilized = no
+		}
+		modifier = {
+			factor = 1.5
+			war_policy = anti_military
+		}
+		modifier = {
+			factor = 0.75
+			war_policy = jingoism
+		}
+		modifier = {
+			factor = 0.8
+			nationalism_n_imperialism = 1
+		}
+		modifier = {
+			factor = 0.8
+			great_wars_enabled = yes
+		}
+	}
+	
+	option = {
+		name = "We will approach our protector."
+		set_country_flag = asked_for_restoration
+		sphere_owner = { country_event = 19366 }
+		any_pop = {
+			limit = { is_primary_culture = yes }
+			dominant_issue = {
+				factor = 0.05
+				value = jingoism
+			}
+		}
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 0.75
+				sphere_owner = { NOT = { neighbour = THIS } }
+			}
+		}
+	}
+	
+	option = {
+		name = "We will leave the matter alone for now."
+		random_country = {
+			limit = {
+				neighbour = THIS
+				any_owned_province = { is_core = THIS }
+				number_of_states = 2
+				NOT = {
+					truce_with = THIS
+					alliance_with = THIS
+					is_vassal = yes
+					sphere_owner = { is_sphere_leader_of = THIS }
+				}
+			}
+			relation = { who = THIS value = -50 }
+		}
+		any_pop = {
+			limit = { is_primary_culture = yes }
+			dominant_issue = {
+				factor = 0.05
+				value = anti_military
+			}
+		}
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 0.75
+				sphere_owner = { neighbour = THIS }
+			}
+			modifier = {
+				factor = 2
+				has_country_flag = asked_for_restoration
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 19366
+	title = "EVTNAME19366" #The Restoration of $FROMCOUNTRY$
+	desc = "EVTDESC19366"
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Tell them we shall consider it."
+		diplomatic_influence = { who = FROM value = 50 }
+		military_access = FROM
+		FROM = { country_event = 19367 }
+		random_country = {
+			limit = {
+				any_owned_province = { is_core = FROM }
+				number_of_states = 2
+				NOT = {
+					truce_with = FROM
+					alliance_with = FROM
+					is_vassal = yes
+					in_sphere = THIS
+				}
+			}
+			leave_alliance = THIS
+			relation = { who = THIS value = -100 }
+			add_casus_belli = {
+				target = THIS
+				type = free_allied_cores
+				months = 75
+			}
+		}
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 0.5
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 0.5
+				num_of_revolts = 1
+			}
+			modifier = {
+				factor = 0.75
+				NOT = { neighbour = FROM }
+			}
+			modifier = {
+				factor = 0.75
+				has_recently_lost_war = yes
+			}
+		}
+	}
+	
+	option = {
+		name = "We cannot afford such a conflict."
+		prestige = -10
+		diplomatic_influence = { who = FROM value = -25 }
+		FROM = { country_event = 19368 }
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 2
+				revolt_percentage = 0.1
+			}
+			modifier = {
+				factor = 1.25
+				has_recently_lost_war = yes
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 19367
+	title = "EVTNAME19367" #$FROMCOUNTRY$ Has Agreed
+	desc = "EVTDESC19367"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Then there is hope."
+		badboy = 3
+		relation = { who = FROM value = 50 }
+	}
+}
+
+country_event = {
+	id = 19368
+	title = "EVTNAME19368" #$FROMCOUNTRY$ Has Refused
+	desc = "EVTDESC19368"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "$FROMCOUNTRY_ADJ$ cowards!"
+		prestige = -5
+		relation = { who = FROM value = -25 }
+		random_country = {
+			limit = {
+				any_owned_province = { is_core = THIS }
+				number_of_states = 2
+				NOT = {
+					truce_with = THIS
+					alliance_with = THIS
+					is_vassal = yes
+					sphere_owner = { is_sphere_leader_of = THIS }
+				}
+			}
+			relation = { who = THIS value = -50 }
+			casus_belli = {
+				target = THIS
+				type = humiliate
+				months = 12
+			}
+		}
+	}
+}
+
+#Event for a country that has been puppeted by CB
+country_event = {
+	id = 19370
+	title = "EVTNAME19370" #The $FROMCOUNTRY$ Overlords
+	desc = "EVTDESC19370"
+	news = yes
+	news_desc_long = "EVTDESC19370_NEWS_LONG"
+	news_desc_medium = "EVTDESC19370_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC19370_NEWS_SHORT"
+	picture = "Celebration"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "A sad day for $COUNTRY$."
+		FROM = { create_vassal = THIS }
+		random_owned = {
+			limit = {
+				FROM = { government = fascist_dictatorship }
+				owner = {
+					civilized = yes
+					NOT = { government = fascist_dictatorship }
+				}
+			}
+			owner = {
+				ruling_party_ideology = fascist
+				government = fascist_dictatorship
+				political_reform = none_voting
+				political_reform = party_appointed
+				political_reform = no_meeting
+				political_reform = state_press
+				political_reform = state_controlled
+				political_reform = underground_parties
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+				clr_country_flag = fascist_purge
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_brown_scare } }
+	               owner = { remove_country_modifier = the_brown_scare }
+                }
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = { government = fascist_monarchy }
+				owner = {
+					civilized = yes
+					NOT = { government = fascist_monarchy }
+				}
+			}
+			owner = {
+				ruling_party_ideology = fascist
+				government = fascist_monarchy
+				political_reform = none_voting
+				political_reform = party_appointed
+				political_reform = no_meeting
+				political_reform = state_press
+				political_reform = state_controlled
+				political_reform = underground_parties
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+				clr_country_flag = fascist_purge
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_brown_scare } }
+	               owner = { remove_country_modifier = the_brown_scare }
+                }
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = { government = socialist_republic }
+				owner = {
+					civilized = yes
+					NOT = { government = socialist_republic }
+				}
+			}
+			owner = {
+    	       random_owned = {
+	           limit = { 
+		       owner = { 
+		            OR = {
+					   has_country_flag = presidential_dictatorship_gov
+					   has_country_flag = fascist_monarchy_gov	
+					   has_country_flag = fascist_gov
+					   has_country_flag = communist_gov
+				    }
+			    } 
+		        }
+	            owner = { set_country_flag = show_trials_possible }
+                }
+				ruling_party_ideology = socialist
+				government = socialist_republic
+				random_owned = {
+					limit = {
+						owner = { NOT = { vote_franschise = universal_voting } }
+					}
+					owner = { political_reform = universal_weighted_voting }
+				}
+				random_owned = {
+					limit = {
+						owner = {
+							OR = {
+								political_parties = underground_parties
+								political_parties = harassment
+								political_parties = gerrymandering
+							}
+						}
+					}
+					owner = { political_reform = non_secret_ballots }
+				}
+				random_owned = {
+					limit = {
+						owner = { upper_house_composition = party_appointed }
+					}
+					owner = { political_reform = appointed }
+				}
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+			    clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_red_scare } }
+	               owner = { remove_country_modifier = the_red_scare }
+                }
+	            clr_country_flag = communist_purge	
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = { government = proletarian_dictatorship }
+				owner = {
+					civilized = yes
+					NOT = { government = proletarian_dictatorship }
+				}
+			}
+			owner = {
+				ruling_party_ideology = communist
+				government = proletarian_dictatorship
+				political_reform = none_voting
+				political_reform = party_appointed
+				political_reform = no_meeting
+				political_reform = state_press
+				political_reform = state_controlled
+				political_reform = underground_parties
+				social_reform = good_minimum_wage
+				social_reform = eight_hours
+				social_reform = good_subsidies
+				social_reform = good_pensions
+				social_reform = good_health_care
+				nationalize = yes
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_red_scare } }
+	               owner = { remove_country_modifier = the_red_scare }
+                }
+	            clr_country_flag = communist_purge				
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = { government = bourgeois_dictatorship }
+				owner = {
+					civilized = yes
+					NOT = { government = bourgeois_dictatorship }
+				}
+			}
+			owner = {
+				ruling_party_ideology = market_liberal
+				government = bourgeois_dictatorship
+				political_reform = universal_voting
+				political_reform = party_appointed
+				political_reform = yes_meeting
+				political_reform = free_press
+				political_reform = all_trade_unions
+				political_reform = underground_parties
+				social_reform = no_minimum_wage
+				social_reform = no_work_hour_limit
+				social_reform = no_safety
+				social_reform = no_subsidies
+				social_reform = no_pensions
+				social_reform = no_health_care
+				
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = {
+					OR = {
+						government = democracy
+						government = parliamentary_republic 
+						government = hms_government
+						government = merchant_republic
+					}
+				}
+				owner = {
+					civilized = yes
+					OR = {
+						government = absolute_monarchy
+						government = fascist_monarchy
+						government = prussian_constitutionalism
+					}
+				}
+			}
+			owner = {
+				government = hms_government
+				random_owned = {
+					limit = {
+						owner = { NOT = { vote_franschise = universal_voting } }
+					}
+					owner = { political_reform = universal_weighted_voting }
+				}
+				random_owned = {
+					limit = {
+						owner = {
+							OR = {
+								political_parties = underground_parties
+								political_parties = harassment
+								political_parties = gerrymandering
+							}
+						}
+					}
+					owner = { political_reform = non_secret_ballots }
+				}
+				random_owned = {
+					limit = {
+						owner = { upper_house_composition = party_appointed }
+					}
+					owner = { political_reform = appointed }
+				}
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+			    clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+				election = yes
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = {
+					OR = {
+						government = democracy
+						government = hms_government
+						government = merchant_republic
+					}
+				}
+				owner = {
+					civilized = yes
+					OR = {
+						government = fascist_dictatorship
+						government = proletarian_dictatorship
+						government = bourgeois_dictatorship
+					}
+				}
+			}
+			owner = {
+    	       random_owned = {
+	           limit = { 
+		       owner = { 
+		            OR = {
+					   has_country_flag = presidential_dictatorship_gov
+					   has_country_flag = fascist_monarchy_gov	
+					   has_country_flag = fascist_gov
+					   has_country_flag = communist_gov
+				    }
+			    } 
+		        }
+	            owner = { set_country_flag = show_trials_possible }
+                }
+				government = democracy
+				random_owned = {
+					limit = {
+						owner = { NOT = { vote_franschise = universal_voting } }
+					}
+					owner = { political_reform = universal_weighted_voting }
+				}
+				random_owned = {
+					limit = {
+						owner = {
+							OR = {
+								political_parties = underground_parties
+								political_parties = harassment
+								political_parties = gerrymandering
+							}
+						}
+					}
+					owner = { political_reform = non_secret_ballots }
+				}
+				random_owned = {
+					limit = {
+						owner = { upper_house_composition = party_appointed }
+					}
+					owner = { political_reform = appointed }
+				}
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+				election = yes
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = {
+					government = parliamentary_republic
+				}
+				owner = {
+					civilized = yes
+					OR = {
+						government = fascist_dictatorship
+						government = fascist_monarchy
+						government = proletarian_dictatorship
+						government = bourgeois_dictatorship
+					}
+				}
+			}
+			owner = {
+    	       random_owned = {
+	           limit = { 
+		       owner = { 
+		            OR = {
+					   has_country_flag = presidential_dictatorship_gov
+					   has_country_flag = fascist_monarchy_gov	
+					   has_country_flag = fascist_gov
+					   has_country_flag = communist_gov
+				    }
+			    } 
+		        }
+	            owner = { set_country_flag = show_trials_possible }
+                }
+				government = parliamentary_republic
+				random_owned = {
+					limit = {
+						owner = { NOT = { vote_franschise = universal_voting } }
+					}
+					owner = { political_reform = universal_voting }
+				}
+				random_owned = {
+					limit = {
+						owner = {
+							OR = {
+								political_parties = underground_parties
+								political_parties = harassment
+								political_parties = gerrymandering
+								political_parties = non_secret_ballots
+							}
+						}
+					}
+					owner = { political_reform = secret_ballots }
+				}
+				random_owned = {
+					limit = {
+						owner = { upper_house_composition = party_appointed }
+					}
+					owner = { political_reform = appointed }
+				}
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+				election = yes
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = {
+					OR = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+					}
+				}
+				owner = {
+					civilized = yes
+					NOT = { government = absolute_monarchy }
+					NOT = { government = prussian_constitutionalism }
+				}
+			}
+			owner = {
+				government = absolute_monarchy
+				ruling_party_ideology = reactionary
+				political_reform = none_voting
+				political_reform = appointed
+				political_reform = underground_parties
+				
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+				clr_country_flag = fascist_purge
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_brown_scare } }
+	               owner = { remove_country_modifier = the_brown_scare }
+                }
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				FROM = { government = presidential_dictatorship }
+				owner = {
+					civilized = yes
+					NOT = { government = presidential_dictatorship }
+				}
+			}
+			owner = {
+				government = presidential_dictatorship
+				ruling_party_ideology = reactionary
+				political_reform = none_voting
+				political_reform = appointed
+				political_reform = no_meeting
+				political_reform = state_press
+				political_reform = underground_parties
+				
+				clr_country_flag = election_started
+				clr_country_flag = conservative_party_in_power
+				clr_country_flag = liberal_party_in_power
+				clr_country_flag = reactionary_party_in_power
+				clr_country_flag = socialist_party_in_power
+				clr_country_flag = communist_party_in_power
+				clr_country_flag = fascist_party_in_power
+				clr_country_flag = anarcho_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power
+				clr_country_flag = tory_election_win
+				clr_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win
+				clr_country_flag = fascist_purge
+	            random_owned = {
+	               limit = { owner = { has_country_modifier = the_brown_scare } }
+	               owner = { remove_country_modifier = the_brown_scare }
+                }
+				add_country_modifier = {
+					name = national_confusion
+					duration = 365
+				}
+			}
+		}
+		
+		random_owned = {
+			limit = {
+				FROM = { tag = TUS government = democracy }
+				owner = {
+					civilized = yes
+					NOT = { government = democracy }
+				}
+			}
+			owner = {
+				ruling_party_ideology = liberal
+				government = democracy
+			}
+		}
+		
+             random_owned = {
+                limit = {
+                    owner = { FROM = { slavery = no_slavery } }
+                }
+                owner = {
+                    political_reform = no_slavery
+                }
+            }
+            ########Meetings
+            random_owned = {
+                limit = {
+                    owner = { FROM = { public_meetings = no_meeting } }
+                }
+                owner = {
+                    political_reform = no_meeting
+                }
+            }
+
+            random_owned = {
+                limit = {
+                    owner = { FROM = { public_meetings = yes_meeting } }
+                }
+                owner = {
+                    political_reform = yes_meeting
+                }
+            }
+            ########Debt Law
+            random_owned = {
+                limit = {
+                    owner = { FROM = { debt_law = peonage } }
+                }
+                owner = {
+                    political_reform = peonage
+                }
+            }
+
+            random_owned = {
+                limit = {
+                    owner = { FROM = { debt_law = debtors_prisons } }
+                }
+                owner = {
+                    political_reform = debtors_prisons
+                }
+            }
+
+            random_owned = {
+                limit = {
+                    owner = { FROM = { debt_law = bankruptcy } }
+                }
+                owner = {
+                    political_reform = bankruptcy
+                }
+            }
+            ########Press Rights
+            random_owned = {
+                limit = { owner = { FROM = { press_rights = state_press } } }
+                owner = {
+                    political_reform = state_press
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { press_rights = censored_press } } }
+                owner = {
+                    political_reform = censored_press
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { press_rights = free_press } } }
+                owner = {
+                    political_reform = free_press
+                }
+            }
+            ########Voting System
+            random_owned = {
+                limit = { owner = { FROM = { voting_system = first_past_the_post } } }
+                owner = {
+                    political_reform = first_past_the_post
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { voting_system = jefferson_method } } }
+                owner = {
+                    political_reform = jefferson_method
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { voting_system = proportional_representation } } }
+                owner = {
+                    political_reform = proportional_representation
+                }
+            }
+            ########Vote Franchise
+            random_owned = {
+                limit = { owner = { FROM = { vote_franschise = none_voting } } }
+                owner = {
+                    political_reform = none_voting
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { vote_franschise = landed_voting } } }
+                owner = {
+                    political_reform = landed_voting
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { vote_franschise = wealth_weighted_voting } } }
+                owner = {
+                    political_reform = wealth_weighted_voting
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { vote_franschise = wealth_voting } } }
+                owner = {
+                    political_reform = wealth_voting
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { vote_franschise = universal_weighted_voting } } }
+                owner = {
+                    political_reform = universal_weighted_voting
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = {  vote_franschise = universal_voting } } }
+                owner = {
+                    political_reform = universal_voting
+                }
+            }
+            ########Political Parties
+            random_owned = {
+                limit = { owner = { FROM = { political_parties = underground_parties } } }
+                owner = {
+                    political_reform = underground_parties
+                }
+            }
+            random_owned = {
+                limit = { owner = { FROM = { political_parties = harassment } } }
+                owner = {
+                    political_reform = harassment
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { political_parties = gerrymandering } } }
+                owner = {
+                    political_reform = gerrymandering
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { political_parties = non_secret_ballots } } }
+                owner = {
+                    political_reform = non_secret_ballots
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { political_parties = secret_ballots } } }
+                owner = {
+                    political_reform = secret_ballots
+                }
+            }
+            ########Upper House Composition
+            random_owned = {
+                limit = { owner = { FROM = { upper_house_composition = party_appointed } } }
+                owner = {
+                    political_reform = party_appointed
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { upper_house_composition = appointed } } }
+                owner = {
+                    political_reform = appointed
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { upper_house_composition = state_equal_weight } } }
+                owner = {
+                    political_reform = state_equal_weight
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { upper_house_composition = population_equal_weight } } }
+                owner = {
+                    political_reform = population_equal_weight
+                }
+            }
+            ########Trade Unions
+            random_owned = {
+                limit = { owner = { FROM = { trade_unions = no_trade_unions } } }
+                owner = {
+                    political_reform = no_trade_unions
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { trade_unions = state_controlled } } }
+                owner = {
+                    political_reform = state_controlled
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { trade_unions = non_socialist } } }
+                owner = {
+                    political_reform = non_socialist
+                }
+            }
+
+            random_owned = {
+                limit = { owner = { FROM = { trade_unions = all_trade_unions } } }
+                owner = {
+                    political_reform = all_trade_unions
+                }
+            }
+            ########Child Labor
+            # random_owned = {
+                # limit = { owner = { FROM = { child_labor = child_labor_legal } } }
+                # owner = {
+                    # social_reform = child_labor_legal
+                # }
+            # }
+            random_owned = {
+                limit = { owner = { FROM = { child_labor = child_labor_restricted } } }
+                owner = {
+                    social_reform = child_labor_restricted
+                }
+            }
+            random_owned = {
+                limit = { owner = { FROM = { child_labor = child_labor_illegal } } }
+                owner = {
+                    social_reform = child_labor_illegal
+                }
+            }
+        random_country = {
+            limit = {
+                is_greater_power = yes
+                tag = FROM
+            }
+            diplomatic_influence = { who = THIS value = 400 }
+        }
+        any_country = {
+            limit = {
+                is_greater_power = yes
+                NOT = { tag = FROM }
+            }
+            diplomatic_influence = { who = THIS value = -100 }
+        }
+        any_country = {
+            limit = {
+                alliance_with = THIS
+                NOT = { tag = FROM }
+            }
+            leave_alliance = THIS
+        }
+        any_pop = {
+            limit = {
+                OR = {
+                    is_primary_culture = yes
+                    is_accepted_culture = yes
+                }
+                location = { is_core = THIS }
+            }
+            militancy = 4
+        }
+        any_owned = {
+            limit = { is_core = THIS }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 1825
+            }
+        }
+	}
+}
+

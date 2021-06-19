@@ -1,0 +1,797 @@
+political_decisions = {  
+
+	claim_SCA = {
+	picture = form_scandinavia
+	potential = {
+	        OR = {
+			tag = DEN
+			tag = SWE
+			tag = NOR
+			}
+			NOT = {	SCA = { exists = yes }	}
+			NOT = { has_country_flag = SWEDENClaim_SCA }
+	        has_global_flag = Broken_SCA	
+		}
+
+		allow = {
+			NOT = { war = yes }
+			NOT = { is_vassal = yes }
+			mass_politics = 1
+			is_greater_power = yes
+		}
+		
+		effect = {
+			prestige = 20
+            SWE = { all_core = { add_core = THIS } }
+            DEN = { all_core = { add_core = THIS } }
+            NOR = { all_core = { add_core = THIS } }
+			set_country_flag = SWEDENClaim_SCA
+			any_country = {
+				limit = {
+					NOT = {
+						is_greater_power = yes
+					}
+					is_culture_group = THIS
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	reform_SCA = {
+	picture = form_scandinavia
+	potential = {
+	        OR = {
+			tag = DEN
+			tag = SWE
+			tag = NOR
+			}
+			NOT = {	SCA = { exists = yes }	}
+			NOT = { has_country_flag = valid_SCA }
+	        has_global_flag = Broken_SCA	
+		}
+
+		allow = {
+			NOT = { war = yes }
+			NOT = { is_vassal = yes }
+			OR = {
+			is_secondary_power = yes
+			is_greater_power = yes
+			}
+			prestige = 50
+			SCA = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			prestige = 20
+			set_country_flag = valid_SCA
+			change_tag = SCA
+			any_country = {
+				limit = {
+					NOT = {
+						is_greater_power = yes
+					}
+					is_culture_group = THIS
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	danelaw = {
+	    picture = British_islands
+		potential = {
+			tag = SCA
+			has_global_flag = french_int
+			has_country_flag = SCA_danelaw
+            OR = {
+			NTL = { exists = yes }
+			DUA = { any_owned_province = { is_core = NTL } }
+			}
+			NOT = { has_country_flag = eightsevenone }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			SCO = { all_core = { owned_by = THIS } }
+			is_greater_power = yes 
+		}
+		
+		effect = {
+			set_country_flag = eightsevenone
+			NTL = { all_core = { add_core = SCA } }
+			any_country = {
+				limit = {
+					any_owned_province = { is_core = ENL }
+				}
+				relation = { who = THIS value = -200 }
+				leave_alliance = THIS
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	claim_ireland = {
+	    picture = British_islands
+		potential = {
+			tag = SCA
+			OR = {
+			has_global_flag = french_int
+			DUA = { has_country_flag = Anglois_accepted }
+			}
+			has_country_flag = SCA_danelaw
+			NOT = { has_country_flag = irish_SCA }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			SCO = { all_core = { owned_by = THIS } }
+			NTL = { all_core = { owned_by = THIS } }
+			is_greater_power = yes 
+		}
+		
+		effect = {
+			set_country_flag = irish_SCA
+			IRE = { all_core = { add_core = SCA } }
+			any_country = {
+				limit = {
+					any_owned_province = { is_core = IRE }
+				}
+				relation = { who = THIS value = -200 }
+				leave_alliance = THIS
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	accept_the_scottish = {
+	    picture = British_islands
+		potential = {
+			tag = SCA
+			has_country_flag = scottish_failure
+			NOT = { accepted_culture = scottish }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			SCO = { all_core = { owned_by = THIS } }
+			citizens_rights = all_voting_pops
+			OR = {
+			government = hms_government
+			government = democracy
+			government = socialist_republic
+			government = parliamentary_republic
+			}
+			OR = {
+			vote_franschise = universal_weighted_voting
+			vote_franschise = universal_voting
+			}
+		}
+		
+		effect = {
+		    prestige = 10
+			clr_country_flag = scottish_failure
+            add_accepted_culture = scottish
+		}
+		
+		ai_will_do = {
+			factor = 1
+		  }
+	}
+	
+	annex_scotland = {
+	    picture = British_islands
+		potential = {
+			tag = DUA
+			has_global_flag = english_int
+			NOT = { SCA = { has_country_flag = SCO_decisions_held } }
+			SCO = { has_country_flag = SCO_recognized }
+			NOT = { has_country_flag = annexed_scotland }
+		}
+		
+		allow = {
+		   is_greater_power = yes 
+		   war = no
+		   SCO = { exists = yes }
+		   SCO = {
+				all_core = {
+						OR = {
+						owned_by = THIS
+						owner = {
+						    NOT = { vassal_of = SCA }
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+		    prestige = 10
+			inherit = SCO
+		}
+		
+		ai_will_do = {
+			factor = 1
+		  }
+	}
+
+	SCO_recognized = {
+		potential = {
+			tag = SCO
+			NOT = { has_country_flag = SCO_recognized }
+		    SCA = { NOT = { has_country_flag = SCO_decisions_held } }
+			all_core = { owned_by = THIS }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+		}
+		
+		effect = {
+			set_country_flag = SCO_recognized
+			set_global_flag = SCO_loss
+			any_owned = {
+				limit = { is_core = THIS }
+				remove_core = SCA
+			}
+			any_country = {
+				limit = {
+					any_owned_province = { is_core = SCO }
+					NOT = { primary_culture = scottish }
+				}
+				relation = { who = THIS value = -100 }
+				leave_alliance = THIS
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	SCO_claim = {
+		potential = {
+			tag = SCA
+			OR = {
+			government = hms_government
+			government = prussian_constitutionalism
+			government = absolute_monarchy
+			government = fascist_dictatorship
+			government = fascist_monarchy
+            government = proletarian_dictatorship
+			}
+			has_global_flag = SCO_loss 
+			is_greater_power = yes 
+			NOT = { ENG = { exists = yes } }		
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			SCO = { NOT = { is_greater_power = yes } }
+			all_core = { owned_by = THIS }
+			nationalism_n_imperialism = 1 
+		}
+		
+		effect = {
+			clr_global_flag = SCO_loss
+			badboy = 10
+			SCO = { all_core = { add_core = SCA } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	############# FINNISH STUFF #######################
+	
+	
+	LATEFINKARclaim = {
+		potential = {
+			tag = FIN
+			has_country_flag = reclaim_KAR_possible 
+		}
+		
+		allow = {
+			OR = {
+			government = fascist_dictatorship
+			government = fascist_monarchy
+            government = proletarian_dictatorship
+			}
+			war = no
+			is_vassal = no
+			all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+            clr_country_flag = reclaim_KAR_possible
+			badboy = 5
+			KAR = { all_core = { add_core = FIN } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	SCA_FINPuppetAnnex = {
+		potential = {
+			tag = SCA
+			has_country_flag = puppet_finland
+			FIN = { vassal_of = SCA }
+		}
+		
+		allow = {
+		    OR = {
+			year = 1890
+			revolution_n_counterrevolution = 1
+			}
+		}
+		
+		effect = {
+		    prestige = 5
+            inherit = FIN
+			clr_country_flag = puppet_finland
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	SCA_KARPuppetAnnex = {
+		potential = {
+			tag = SCA
+			has_country_flag = puppet_karelia
+			KAR = { vassal_of = SCA }
+		}
+		
+		allow = {
+		    OR = {
+			year = 1890
+			revolution_n_counterrevolution = 1
+			}
+		}
+		
+		effect = {
+		    prestige = 5
+            inherit = KAR
+			clr_country_flag = puppet_karelia
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	obtain_greater_karelia = {
+		potential = {
+			tag = SCA
+			accepted_culture = finnish
+			FIN = { all_core = { OR = { owned_by = SCA is_core = KAR } } }
+			NOT = { has_country_flag = greater_KAR }
+		}
+		
+		allow = {
+			is_greater_power = yes
+			revolution_n_counterrevolution = 1 
+			biologism = 1 
+		}
+		
+		effect = {
+		    set_country_flag = greater_KAR
+            KAR = { all_core = { add_core = SCA } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	roulette_obtain_greater_karelia = {
+		potential = {
+			tag = SCA
+			NOV = { owns = 988 }
+			OR = {
+			   has_country_flag = PSV_chain_end_PSV
+			   has_country_flag = PSV_chain_end_ING
+			}
+			has_country_flag = finnish_roulette
+			NOT = { has_country_flag = NOV_yoink }
+		}
+		
+		allow = {
+		    war = no
+            NOV = { exists = yes }
+		}
+		
+		effect = {
+		    set_country_flag = NOV_yoink
+			KAR = { all_core = { add_core = SCA } }
+            NOV = { remove_country_modifier = neutrality country_event = { id = 191957 days = 0 } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	roulette_obtain_greater_karelia_pomor = {
+		potential = {
+			tag = SCA
+		    PMY = { owns = 988 in_sphere = SCA }
+			OR = {
+			   has_country_flag = PSV_chain_end_PSV
+			   has_country_flag = PSV_chain_end_ING
+			}
+			has_country_flag = finnish_roulette
+			NOT = { has_country_flag = NOV_yoink }
+		}
+		
+		allow = {
+		    war = no
+            NOV = { exists = yes }
+		}
+		
+		effect = {
+		    set_country_flag = NOV_yoink
+			KAR = { all_core = { add_core = SCA } }
+			PMY = {
+	           any_owned = { 
+	           limit = { is_core = KAR }
+	           secede_province = SCA
+	           }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	reintergrate_finnish = {
+		potential = {
+			tag = SCA
+			NOT = { accepted_culture = finnish }
+			FIN = { all_core = { OR = { owned_by = SCA is_core = KAR } } }
+		}
+		
+		allow = {
+			is_greater_power = yes 
+			revolution_n_counterrevolution = 1 
+			biologism = 1 
+		}
+		
+		effect = {
+		  prestige = 10
+		  set_country_flag = greater_KAR
+          add_accepted_culture = finnish
+		  FIN = { all_core = { add_core = SCA } }		  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	intergrate_karelian = {
+		potential = {
+			tag = SCA
+			NOT = { accepted_culture = karelian  }
+			KAR = { all_core = { owned_by = SCA } }
+		}
+		
+		allow = {
+			is_greater_power = yes 
+			accepted_culture = finnish
+			revolution_n_counterrevolution = 1 
+			biologism = 1 
+		}
+		
+		effect = {
+		    prestige = 10 
+            add_accepted_culture = karelian
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# This annexes Ingria if its still a vassal of GP SCA by 1900
+	
+	intergrate_ingria = {
+		potential = {
+			tag = SCA
+			ING = { vassal_of = SCA }
+		}
+		
+		allow = {
+			is_greater_power = yes 
+			mass_politics = 1
+		}
+		
+		effect = {
+		    prestige = 10 
+			ING = { 
+			   any_owned = { remove_province_modifier = ingrian_integration }
+			   all_core = { add_core = SCA } 
+			}
+            inherit = ING	
+		}		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	#### SCA German Decisions moved here from Baltic.txt ####
+	
+	reclaimPOM = {	
+		potential = { 
+			tag = SCA 
+			NOT = {
+				544 = { is_core  = THIS }
+				has_country_flag = lol_rekt
+			}
+		}
+		
+		allow = { 
+		    OR = {
+			is_greater_power = yes 
+			government = fascist_dictatorship
+			government = fascist_monarchy
+			}			
+			OR = { 
+			war_policy = jingoism
+			government = absolute_monarchy
+			government = presidential_dictatorship
+			government = fascist_dictatorship
+			government = fascist_monarchy
+			government = proletarian_dictatorship
+			has_global_flag = SCO_loss
+		         }
+		    }
+		
+		effect = {
+			set_country_flag = lol_rekt
+			PRU_546 = { add_core = SCA }
+			badboy = 10
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	integrate_germans = {
+
+		potential = {
+			tag = SCA
+			is_greater_power = yes
+			OR = {
+				has_country_flag = baltic_claimed
+				year = 1890
+			}
+			NOT = { has_country_flag = north_integration }
+		}
+
+		allow = {
+			industrial_score = 200
+			press_rights = free_press
+			public_meetings = yes_meeting
+			OR = {
+				vote_franschise = wealth_weighted_voting
+				vote_franschise = wealth_voting
+				vote_franschise = universal_weighted_voting
+				vote_franschise = universal_voting
+			}
+			OR = {
+				549 = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+				534 = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+				695 = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+
+			}
+		}
+
+		effect = {
+			prestige = 20
+			set_country_flag = north_integration
+			add_accepted_culture = north_german
+			add_accepted_culture = prussian
+			any_pop = {
+				limit = {
+					culture = scandinavian
+				}
+				militancy = 3
+				consciousness = 3
+				ideology = {
+					factor = 0.2
+					value = reactionary
+				}
+			}
+			any_pop = {
+				limit = {
+					culture = north_german
+				}
+				consciousness = -1
+				militancy = -3
+				ideology = {
+					factor = 0.1
+					value = liberal
+				}
+			}
+			any_pop = {
+				limit = {
+					culture = prussian
+				}
+				consciousness = -1
+				militancy = -3
+				ideology = {
+					factor = 0.1
+					value = liberal
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+			
+
+
+	nordtyskland = {
+		picture = form_scandinavia
+		potential = { 
+			tag = SCA 
+			is_greater_power = yes 
+			has_country_flag = baltic_claimed
+			NOT = { has_global_flag = hre_formed has_global_flag = cae_formed has_country_flag = nordtyskland }
+		}
+	
+		allow = { 
+			has_country_flag = north_integration
+			549 = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}
+				}
+			}
+			534 = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}
+				}
+			}
+			555 = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}
+				}
+			}
+			695 = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}
+				}
+			}
+			690 = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}
+				}
+			}
+		}
+	
+		effect = { 
+			set_country_flag = nordtyskland
+			PRU_553 = { add_core = THIS }
+			PRU_549 = { add_core = THIS }
+			HAM_528 = { add_core = THIS }
+			HAN_534 = { add_core = THIS }
+			PRU_581 = { add_core = THIS }
+			any_country = {
+				limit = {
+					primary_culture = prussian
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+			any_country = {
+				limit = {
+					primary_culture = north_german
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1 
+		}
+	}
+}	

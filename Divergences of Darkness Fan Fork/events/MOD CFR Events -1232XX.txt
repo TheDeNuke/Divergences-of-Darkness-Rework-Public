@@ -1,0 +1,1756 @@
+
+###### Confederation of the Rhine #######
+###### To resolve the SGF post treaty of Frankfurt. A new tag CFR gets created that consists of all the non BRG Rhineish land broken into a barely functional functional confederation for the purposes of "German Unity" It can slowly annex its confederal lands via decision (and Rhineland if it manages to get it in its sphere) and reform into SGF if it manages to take all its land. ######
+
+###### A Confederation of the Rhine? (Post Treaty BOH Event } ######
+
+country_event = {
+	id = 123200
+	title = "CFR01.T"
+	desc = "CFR01.D"
+	picture = "prussian_constitution"
+	
+    is_triggered_only = yes
+	
+#	trigger = {
+#	}
+	
+#	mean_time_to_happen = {
+#		days = 31
+#	}
+	
+	option = { 
+	name = "123200.A"
+	set_global_flag = CFR_is_created
+	prestige = 5
+	ai_chance = { factor = 90 }
+	}
+	
+	option = { 
+	name = "123200.B"	
+    set_global_flag = CFR_ignored
+    prestige = 10
+	relation = { who = BRG value = -400 }
+	relation = { who = PBG value = -400 }
+	ai_chance = { factor = 10 }
+	}
+}
+
+###### Confederation of the Rhine Request ( BRG ) ######
+		
+country_event = {
+	id = 123201
+	title = "CFR02.T"
+	desc = "CFR02.D"
+	picture = "prussian_constitution"
+	
+	trigger = {
+    tag = BRG
+	owns = 411
+	has_global_flag = CFR_is_created
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "123201.A"
+	clr_global_flag = CFR_is_created
+	set_global_flag = CFR_is_created_BRG
+	prestige = 5
+	ai_chance = { factor = 90 }
+	}
+	
+	option = { 
+	name = "123201.B"
+    clr_global_flag = CFR_is_created
+    set_global_flag = CFR_ignored	
+    prestige = 10
+	relation = { who = BOH value = -400 }
+	relation = { who = CAE value = -400 }
+	ai_chance = { factor = 10 }
+	}
+}
+
+###### Confederation of the Rhine Request ( PBG ) ######
+		
+country_event = {
+	id = 1232011
+	title = "CFR02.T"
+	desc = "CFR02.D"
+	picture = "prussian_constitution"
+	
+	trigger = {
+    tag = PBG
+	owns = 411
+	has_global_flag = CFR_is_created
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "123201.A"
+	clr_global_flag = CFR_is_created
+	set_global_flag = CFR_is_created_BRG
+	prestige = 5
+	ai_chance = { factor = 99 }
+	}
+	
+	option = { 
+	name = "123201.B"
+    clr_global_flag = CFR_is_created
+    set_global_flag = CFR_ignored	
+    prestige = 10
+	ai_chance = { factor = 1 }
+	}
+}	
+
+###### Confederation of the Rhine Inevitable ######
+
+country_event = {
+	id = 123202
+	title = "CFR03.T"
+	desc = "CFR03.D"
+	picture = "prussian_constitution"
+	
+	trigger = {
+    tag = SGF
+	has_global_flag = CFR_is_created_BRG
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "123202.A"
+	clr_global_flag = CFR_is_created_BRG
+	set_global_flag = CFR_formation
+	prestige = 5
+	}
+}	
+
+
+###### Confederation of the Rhine Formation Event ######
+
+country_event = {
+	id = 123203 #Creation of the Rhineish Confederation
+	title = "CFR04.T"
+	desc = "CFR04.D"
+	picture = "?"
+	
+	major = yes
+	
+	trigger = {
+	    tag = SGF
+		exists = yes
+        has_global_flag = CFR_formation
+	}
+			
+	mean_time_to_happen = { 
+	days = 31
+	}
+	
+	option = {
+		name = "123203.A" #This is the end of the Danubian Dream
+        clr_global_flag = CFR_formation
+		set_global_flag = CFR_exists
+		prestige = -10
+		# Inherit Wuttemburg as a "just in case"
+		inherit = WUR
+		inherit = SWI
+        # Dealing with Grissons
+		SWI_605 = { add_core = CFR }	#East Switzerland
+		603 = { add_core = CFR }
+		614 = { add_core = GRB }
+		611 = { add_core = GRB }
+		# Repeat Previous SGF Treaty
+        any_owned = { 
+	    limit = { 
+	    is_core = HUA
+		   }
+	    secede_province = HUA
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SAL
+		}
+	    secede_province = SAL
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = AUS
+		   }
+	    secede_province = AUS
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = TIR
+		   }
+	    secede_province = TIR
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = BAV
+		   }
+	    secede_province = BAV
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRW
+		   }
+	    secede_province = FRW
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRE
+		   }
+	    secede_province = FRE
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = GRB
+		   }
+	    secede_province = GRB
+	    }
+		GRB = { capital = 611 }
+		# Remove all SGF Cores
+		GER = { all_core = { remove_core = SGF }}
+		# Add Cores to all Rhineish Regions
+	    WUR_589 = { add_core = CFR }	#Wuttemburg
+	    BAD_586 = { add_core = CFR }	#Baden
+	    HES_566 = { add_core = CFR }	#Hessen
+	    PRU_575 = { add_core = CFR }	#Nordrhein	
+	    PRU_581 = { add_core = CFR }    #Westfalen
+	    HAN_534 = { add_core = CFR }	#East Frisia 
+		2560 = { add_core = CFR } 
+		2560 = { remove_core = BAV } 
+		596 = { add_core = CFR }
+		596 = { remove_core = BAV }
+		597 = { add_core = CFR }
+		597 = { remove_core = BAV }
+		OLD = { all_core = { remove_core = CFR } }
+		# Change Tag to CFR and change cultures.
+		change_tag = CFR
+		political_reform = confederalism
+		primary_culture = rheinish
+	    add_accepted_culture = south_german
+		# Burgundian Influence Everywhere
+		diplomatic_influence = { who = BRG value = 400 }
+		relation = { who = BRG value = 400 }
+		diplomatic_influence = { who = PBG value = 400 }
+		relation = { who = PBG value = 400 }
+		# Free Tech School Change
+		tech_school = culture_tech_school
+		# Release Frankfurt, Hesse-Darmstadt
+        any_owned = { 
+	    limit = { 
+	    is_core = HES
+		   }
+	    secede_province = HES
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRM
+		   }
+	    secede_province = FRM
+	    }		
+		# Ensure that BOH gives all territory it owns to CFR
+		BOH = { 
+        any_owned = { 
+	    limit = { 
+	    is_core = CFR
+		   }
+	    secede_province = CFR
+	       }
+        }
+		# Ensure that BRG gives all territory it owns to CFR
+		BRG = { 
+        any_owned = { 
+	    limit = { 
+	    is_core = CFR
+		   }
+	    secede_province = CFR
+	       }
+        }	
+		PBG = { 
+        any_owned = { 
+	    limit = { 
+	    is_core = CFR
+		   }
+	    secede_province = CFR
+	       }
+        }		
+		# Vassal all Rhineish States that still exist
+		create_vassal = FRM #Frankfurt
+		create_vassal = HES #Hesse-Darmstadt
+		#create_vassal = HEK #Hesse-Kassel
+		create_vassal = FRI #East Frisia
+		create_vassal = MNR #Munster
+		create_vassal = NAS #Nassu
+		create_vassal = LIP #Lippe
+		create_vassal = BEG #Berg
+		create_vassal = WES #Westphalia
+		# Trigger Vassal Fix in Two Days
+		country_event = { id = 123204 days = 2 }
+        }
+}
+
+country_event = {
+	id = 123204
+	title = "CFR05.T"
+	desc = "CFR05.D"
+	picture = "prussian_constitution"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	name = "123204.A"
+	set_country_flag = CFR_locking
+    any_owned = { 
+	limit = { 
+	is_core = FRM
+    }
+	secede_province = FRM
+	    }	
+    #any_owned = { 
+	#limit = { 
+	#is_core = HES
+    #}
+	#secede_province = HES
+	#    }
+    any_owned = { 
+	limit = { 
+	is_core = FRI
+    }
+	secede_province = FRI
+	    }		
+    any_owned = { 
+	limit = { 
+	is_core = MNR
+    }
+	secede_province = MNR
+	    }
+    any_owned = { 
+	limit = { 
+	is_core = NAS
+    }
+	secede_province = NAS
+	    }
+    any_owned = { 
+	limit = { 
+	is_core = LIP
+    }
+	secede_province = LIP
+	    }
+    any_owned = { 
+	limit = { 
+	is_core = BEG
+    }
+	secede_province = BEG
+	    }
+    any_owned = { 
+	limit = { 
+	is_core = WES
+    }
+	secede_province = WES
+	    }
+    country_event = { id = 123205 days = 3650 }
+	}
+}
+
+country_event = {
+	id = 123205
+	title = "CFR06.T"
+	desc = "CFR06.D"
+	picture = "deliberation"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	name = "123205.A"
+    set_country_flag = CFR_integration_permitted
+	}
+}
+
+################# OWNERSHIP LOCKS IF INTERGRATION IS NOT COMPLETED #####################
+
+#### Need to fix the forced release events. Syntax might be incorrect #####
+
+#### WESTPHALIA LOCK ####
+
+country_event = {
+	id = 123206
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = WES_integration }
+	owns = 566
+	owns = 567
+	owns = 568
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = WES
+    }
+	secede_province = WES
+	    }
+	create_vassal = WES
+    any_owned = { 
+	limit = { 
+	is_core = WES
+    }
+	secede_province = WES
+	    }
+	}
+}
+
+#### FRANKFURT LOCK ####
+
+country_event = {
+	id = 123207
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = FRM_integration }
+    owns = 564
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = FRM
+    }
+	secede_province = FRM
+	    }
+	create_vassal = FRM
+    any_owned = { 
+	limit = { 
+	is_core = FRM
+    }
+	secede_province = FRM
+	    }
+	}
+}
+
+#### HESSE LOCK ####
+
+country_event = {
+	id = 123208
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = HES_integration }
+    owns = 2560
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = HES
+    }
+	secede_province = HES
+	    }
+	create_vassal = HES
+    any_owned = { 
+	limit = { 
+	is_core = HES
+    }
+	secede_province = HES
+	    }
+	}
+}
+
+#### EAST FRISIA LOCK ####
+
+country_event = {
+	id = 123209
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = FRI_integration }
+    owns = 538
+	owns = 542
+	owns = 543
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = FRI
+    }
+	secede_province = FRI
+	    }
+	create_vassal = FRI
+    any_owned = { 
+	limit = { 
+	is_core = FRI
+    }
+	secede_province = FRI
+	    }
+	}
+}
+
+#### MUNSTER LOCK ####
+
+country_event = {
+	id = 123210
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = MNR_integration }
+    owns = 580
+	owns = 581
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = MNR
+    }
+	secede_province = MNR
+	    }
+	create_vassal = MNR
+    any_owned = { 
+	limit = { 
+	is_core = MNR
+    }
+	secede_province = MNR
+	    }
+	}
+}
+
+#### NASSU LOCK ####
+
+country_event = {
+	id = 123211
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = NAS_integration }
+    owns = 565
+	owns = 583
+	owns = 584
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = NAS
+    }
+	secede_province = NAS
+	    }
+	create_vassal = NAS
+    any_owned = { 
+	limit = { 
+	is_core = NAS
+    }
+	secede_province = NAS
+	    }
+	}
+}
+
+#### LIPPE LOCK ####
+
+country_event = {
+	id = 123212
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = LIP_integration }
+    owns = 585
+	owns = 582
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = LIP
+    }
+	secede_province = LIP
+	    }
+	create_vassal = LIP
+    any_owned = { 
+	limit = { 
+	is_core = LIP
+    }
+	secede_province = LIP
+	    }
+	}
+}
+
+#### BERG LOCK ####
+
+country_event = {
+	id = 123213
+	title = "CFR07.T"
+	desc = "CFR07.D"
+	picture = "treaty_fr"
+	
+	trigger = {
+    tag = CFR
+	has_country_flag = CFR_locking
+	NOT = { has_global_flag = CFR_completed }
+	NOT = { has_country_flag = BEG_integration }
+    owns = 2561
+	owns = 578
+	owns = 579
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "This is not ours to keep."
+    any_owned = { 
+	limit = { 
+	is_core = BEG
+    }
+	secede_province = BEG
+	    }
+	create_vassal = BEG
+    any_owned = { 
+	limit = { 
+	is_core = BEG
+    }
+	secede_province = BEG
+	    }
+	}
+}
+
+#### Centralization is Completed. Cores added to RHI. ####
+
+country_event = {
+	id = 123214
+	title = "CFR08.T"
+	desc = "CFR08.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+
+	option = { 
+	name = "123206.A"	
+    set_global_flag = CFR_completed
+	political_reform = federalism
+	set_country_flag = CFR_GER
+    clr_country_flag = CFR_locking
+    clr_country_flag = CFR_integration_permitted
+    RHI = { all_core = { add_core = THIS } }
+	}
+}
+
+#### Collapse of the SGF if CFR is not created ####
+
+country_event = {
+	id = 123215
+	title = "CFR09.T"
+	desc = "CFR09.D"
+	picture = "speech_assembly"
+
+    major = yes
+	
+	trigger = {
+	    tag = SGF
+		exists = yes
+        has_global_flag = CFR_ignored
+		NOT = { has_global_flag = CFRSGF_died }
+	}
+			
+	mean_time_to_happen = { 
+	days = 31
+	}
+	
+	option = {
+		name = "123207.A" #This is the end of the Danubian Dream
+		prestige = -100
+		capital = 589
+		## Killing the SGF
+        any_owned = { 
+	    limit = { 
+	    is_core = HUA
+		   }
+	    secede_province = HUA
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = BAD
+		   }
+	    secede_province = BAD
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SAL
+		}
+	    secede_province = SAL
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = AUS
+		   }
+	    secede_province = AUS
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = TIR
+		   }
+	    secede_province = TIR
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRW
+		   }
+	    secede_province = FRW
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRE
+		   }
+	    secede_province = FRE
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SWI
+		   }
+	    secede_province = SWI
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = BAV
+		   }
+	    secede_province = BAV
+	    }
+		596 = { add_core = BAV }
+		597 = { add_core = BAV }
+		# Remove all SGF Cores
+		GER = { all_core = { remove_core = SGF }}
+		# Become Wuttemburg
+		change_tag = WUR
+		political_reform = unitary
+		clr_global_flag = CFR_ignored
+		set_global_flag = CFRSGF_died
+    }
+}
+
+#### CFR Breakdown Events ####
+
+country_event = {
+	id = 123216
+	title = "CFR10.T"
+	desc = "CFR10.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+	
+	option = {
+	name = "CFR10.A"
+	prestige = -100
+	set_global_flag = CFR_fragmented
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	OLD = { all_core = { add_core = CAE } }
+	LIP = { all_core = { add_core = CAE } }
+	543 = { add_core = CAE }
+    any_owned = { 
+	limit = { 
+	is_core = CAE
+    }
+	secede_province = CAE
+	}	
+	ai_chance = { factor = 20 }
+    }
+	
+	option = {
+	name = "CFR10.B"
+	prestige = 50
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 365
+	}
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	CAE = { country_event = { id = 123217 days = 3 } }
+	ai_chance = { factor = 10 }
+	}
+	
+	option = {
+	name = "CFR10.C"
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 365
+	}
+	set_country_flag = CFR_allies_check
+	ai_chance = { factor = 70 }
+	}
+}	
+	
+country_event = {
+	id = 123217
+	title = "CFR11.T"
+	desc = "CFR11.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+	
+	option = {
+	name = "CFR11.A"
+	prestige = 10
+	OLD = { all_core = { add_core = CAE } }
+	LIP = { all_core = { add_core = CAE } }
+	543 = { add_core = CAE }
+	war = {
+		target = CFR
+		attacker_goal = { casus_belli = conquest_any }
+		defender_goal = { casus_belli = cut_down_to_size }
+		call_ally = yes
+	}
+	set_global_flag = CFR_CAE_War
+	ai_chance = { factor = 100 }
+	}
+	
+	option = {
+	name = "CFR11.B"
+	prestige = -10
+	ai_chance = { factor = 0 }	
+	}
+}	
+
+country_event = {
+	id = 123218
+	title = "CFR12.T"
+	desc = "CFR12.DE"
+	picture = "speech_assembly"
+	
+	trigger = {
+	    tag = CFR
+		exists = yes
+        has_country_flag = CFR_allies_check
+		OR = {
+		   BRG = { exists = yes owns = 390 }
+		   PBG = { exists = yes owns = 390 owns = 411 }
+		}
+	}
+			
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = {
+	name = "CFR12.A"
+	prestige = -1
+	clr_country_flag = CFR_allies_check
+	any_country = {
+	   limit = {
+	      exists = yes 
+	      tag = BRG
+	   }
+	   country_event = { id = 123220 days = 3 }
+	}
+	any_country = {
+	   limit = {
+	      exists = yes
+	      tag = PBG
+	      owns = 411
+	   }
+	   country_event = { id = 123220 days = 3 }
+	}
+	ai_chance = { factor = 70 }	
+	}
+	
+	option = {
+	name = "CFR12.B"
+	prestige = -1
+	clr_country_flag = CFR_allies_check
+	any_country = {
+	   limit = {
+	      exists = yes 
+	      tag = BRG
+	   }
+	   country_event = { id = 123220 days = 3 }
+	}
+	any_country = {
+	   limit = {
+	      exists = yes
+	      tag = PBG
+	      owns = 411
+	   }
+	   country_event = { id = 123220 days = 3 }
+	}
+	any_country = {
+	   limit = {
+	      exists = yes 
+	      tag = BRG
+	   }
+	   CFR = { change_tag_no_core_switch = BRG }
+	}
+	any_country = {
+	   limit = {
+	      exists = yes
+	      tag = PBG
+	      owns = 411
+	   }
+	   CFR = { change_tag_no_core_switch = PBG }
+	}	
+	ai_chance = { factor = 0 }	
+	}
+	
+	option = {
+	name = "CFR12.C"
+	prestige = -1
+	clr_country_flag = CFR_allies_check
+    SGF = { country_event = { id = 123221 days = 3 } }
+	ai_chance = { factor = 15 }	
+	}
+	
+	option = {
+	name = "CFR12.D"
+	prestige = -1
+    SGF = { country_event = { id = 123221 days = 3 } }
+	clr_country_flag = CFR_allies_check
+	change_tag_no_core_switch = SGF
+	ai_chance = { factor = 0 }	
+	}
+	
+	option = {
+	name = "CFR12.E"
+	prestige = 50
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	clr_country_flag = CFR_allies_check
+	CAE = { country_event = { id = 123217 days = 3 } }
+	ai_chance = { factor = 5 }
+	}
+	
+	option = {
+	name = "CFR12.F"
+	prestige = -100
+	clr_country_flag = CFR_allies_check
+	set_global_flag = CFR_fragmented
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	OLD = { all_core = { add_core = CAE } }
+	LIP = { all_core = { add_core = CAE } }
+	543 = { add_core = CAE }
+    any_owned = { 
+	limit = { 
+	is_core = CAE
+    }
+	secede_province = CAE
+	}	
+	ai_chance = { factor = 10 }
+	}
+}	
+
+country_event = {
+	id = 123219
+	title = "CFR12.T"
+	desc = "CFR13.D"
+	picture = "speech_assembly"
+	
+	trigger = {
+	    tag = CFR
+		exists = yes
+        has_country_flag = CFR_allies_check
+		AND = {
+		  BRG = { OR = { exists = no NOT = { owns = 390 } } }
+		  PBG = { OR = { exists = no NOT = { owns = 390 } } }
+		}
+	}
+			
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = {
+	name = "CFR12.C"
+	prestige = -1
+	clr_country_flag = CFR_allies_check
+    SGF = { country_event = { id = 123221 days = 3 } }
+	ai_chance = { factor = 70 }	
+	}
+	
+	option = {
+	name = "CFR12.D"
+	prestige = -1
+    SGF = { country_event = { id = 123221 days = 3 } }
+	clr_country_flag = CFR_allies_check
+	change_tag_no_core_switch = SGF
+	ai_chance = { factor = 0 }	
+	}
+	
+	option = {
+	name = "CFR12.E"
+	prestige = 50
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	clr_country_flag = CFR_allies_check
+	CAE = { country_event = { id = 123217 days = 3 } }
+	ai_chance = { factor = 10 }
+	}
+	
+	option = {
+	name = "CFR12.F"
+	prestige = -100
+	clr_country_flag = CFR_allies_check
+	set_global_flag = CFR_fragmented
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	OLD = { all_core = { add_core = CAE } }
+	LIP = { all_core = { add_core = CAE } }
+	543 = { add_core = CAE }
+    any_owned = { 
+	limit = { 
+	is_core = CAE
+    }
+	secede_province = CAE
+	}	
+	ai_chance = { factor = 20 }
+	}
+}	
+
+country_event = {
+	id = 123220
+	title = "CFR14.T"
+	desc = "CFR14.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+	
+	option = {
+	name = "CFR14.A"
+	any_country = { 
+		limit = {
+		is_greater_power = yes
+		NOT = { tag = BRG }
+		NOT = { tag = PBG }
+		}
+		diplomatic_influence = { who = CFR value = -400 }
+	}
+	relation = { who = CFR value = 400 }
+	diplomatic_influence = { who = CFR value = 400 }	
+    create_alliance = CFR	
+	set_global_flag = BRG_curse
+	CAE = { country_event = { id = 123217 days = 2 } }	
+	ai_chance = { factor = 80 }
+	}
+	
+	option = {
+	name = "CFR14.B"	
+	relation = { who = CFR value = -100 }
+	CFR = { country_event = { id = 123222 days = 2 } }
+	ai_chance = { factor = 20 }
+	}
+}	
+	
+country_event = {
+	id = 123221
+	title = "CFR15.T"
+	desc = "CFR15.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+	
+	option = {
+	name = "CFR15.A"
+	any_country = { 
+		limit = {
+		is_greater_power = yes
+		NOT = { tag = SGF }
+		}
+		diplomatic_influence = { who = CFR value = -400 }
+	}
+	relation = { who = CFR value = 400 }
+	diplomatic_influence = { who = CFR value = 400 }	
+    create_alliance = CFR	
+	set_global_flag = SGF_curse
+	CAE = { country_event = { id = 123217 days = 2 } }	
+	ai_chance = { factor = 50 }
+	}
+
+	option = {
+	name = "CFR15.B"
+	relation = { who = CFR value = -100 }
+	CFR = { country_event = { id = 123222 days = 2 } }
+	ai_chance = { factor = 50 }
+    }
+}
+
+country_event = {
+	id = 123222
+	title = "CFR16.T"
+	desc = "CFR16.D"
+	picture = "speech_assembly"
+	
+    is_triggered_only = yes
+	
+	option = {
+	name = "CFR12.C"
+	prestige = 50
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	CAE = { country_event = { id = 123217 days = 3 } }
+	ai_chance = { factor = 20 }
+	}
+	
+	option = {
+	name = "CFR12.D"
+	prestige = -100
+	set_global_flag = CFR_fragmented
+	set_country_flag = LIP_integration
+	set_country_flag = FRI_integration
+	set_country_flag = CFR_coastline 
+	inherit = FRI
+	inherit = LIP
+	inherit = OLD
+    531 = { add_core = CFR } 
+    535 = { add_core = CFR }
+    539 = { add_core = CFR }
+	OLD = { all_core = { add_core = CFR } }
+	OLD = { all_core = { add_core = CAE } }
+	LIP = { all_core = { add_core = CAE } }
+	543 = { add_core = CAE }
+    any_owned = { 
+	limit = { 
+	is_core = CAE
+    }
+	secede_province = CAE
+	}	
+	ai_chance = { factor = 80 }
+	}
+}
+
+#### The Aftermath of the War ####
+	
+#### This will need to clear the dismantle flags to prevent event conflicts ####
+
+### CAE Wins - The End of the Buffer State ###
+
+country_event = {
+	id = 123223
+	title = "CFR17.T"
+	desc = "CFR17.D"
+	picture = "speech_assembly"
+	
+	major = yes
+	
+	trigger = {
+	    tag = CAE
+        has_global_flag = CFR_CAE_War
+		CFR = { exists = no }
+		war = no
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = {
+	name = "CFR17.A"
+    clr_global_flag = CFR_CAE_War
+	clr_global_flag = SGF_curse
+	clr_global_flag = BRG_curse
+	CFR = {
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+	}
+	CFR = { all_core = { remove_core = CFR } }
+    prestige = 10
+    clr_country_flag = CFR_hates_council
+    set_country_flag = BOH_eats_CFR
+	#PRU_572 = { add_core = THIS } 	#Rhineland
+	2560 = { add_core = THIS }	#Palatinate - Hesse Only
+	PRU_575 = { add_core = THIS }	#Nordrhein
+	HES_566 = { add_core = THIS }	#Hessen
+	PRU_581 = { add_core = THIS }	#Westphalia
+	HAN_534 = { add_core = THIS }	#East Frisia
+    add_accepted_culture = rheinish 
+	any_owned = { 
+	limit = { 
+	is_core = BAD
+    }
+	secede_province = BAD
+	}
+    any_owned = { 
+	limit = { 
+	is_core = WUR
+    }
+    secede_province = WUR
+	}	
+    any_owned = { 
+	limit = { 
+	is_core = FRE
+    }
+    secede_province = FRE
+	}
+    any_owned = { 
+	limit = { 
+	is_core = FRW
+    }
+    secede_province = FRW
+	}	
+    any_owned = { 
+	limit = { 
+	is_core = SWI
+    }
+    secede_province = SWI
+	}
+    any_country = { 
+    limit = {
+    tag = SGF
+    exists = yes
+    }
+	set_country_flag = SGF_eats_CFR
+    add_accepted_culture = rheinish 
+    inherit = BAD
+    inherit = WUR
+    inherit = FRE
+    inherit = FRW
+    inherit = SWI
+	FRE = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	FRW = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	SWI = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	BAD = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	WUR = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	}
+	}		
+}
+
+#### Stalemate - CFR still exists and is not allied to Burgundy - CAE is not disarmed - Status Quo Continues at least until CAE just annexes the land anyway for the treaty break ####
+
+country_event = {
+	id = 123224
+	title = "CFR18.T"
+	desc = "CFR18.D"
+	picture = "speech_assembly"
+	
+	major = yes
+	
+	trigger = {
+	    tag = CFR
+        has_global_flag = CFR_CAE_War
+		exists = yes
+		war = no
+		NOT = { is_disarmed = yes }
+		CAE = { is_disarmed = no }
+		NOT = { has_global_flag = BRG_curse }
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = {
+	name = "CFR18.A"
+	prestige = 5
+	clr_global_flag = SGF_curse
+	clr_global_flag = BRG_curse
+	clr_global_flag = CFR_CAE_War
+	set_global_flag = CFR_fragmented
+	}
+}
+
+### CFR Wins -  CFR still exists and has disarmed CAE ###
+
+country_event = {
+	id = 123225
+	title = "CFR19.T"
+	desc = "CFR19.D"
+	picture = "speech_assembly"
+	
+	major = yes
+	
+	trigger = {
+	    tag = CFR
+        has_global_flag = CFR_CAE_War
+		exists = yes
+		war = no
+		CAE = { is_disarmed = yes }
+		NOT = { has_global_flag = BRG_curse }
+		NOT = { has_global_flag = SGF_curse }		
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = {
+	name = "CFR19.A"
+	prestige = 50
+	clr_global_flag = CFR_CAE_War
+	clr_global_flag = SGF_curse
+	clr_global_flag = BRG_curse
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+	CAE = {
+	prestige = -100
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+    any_owned = { 
+	limit = { 
+	is_core = NGF
+    }
+    secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = BRN
+    }
+    secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = PRU
+    }
+    secede_province = CFR
+	}
+	}	
+    }
+}
+
+### SGF Wins - Danubia Victorious! - CFR+SGF has beaten CAE ###
+
+country_event = {
+	id = 123226
+	title = "CFR20.T"
+	desc = "CFR20.D"
+	picture = "speech_assembly"
+	
+	major = yes
+	
+	trigger = {
+	    tag = CFR
+        has_global_flag = CFR_CAE_War
+		exists = yes
+		war = no
+		has_global_flag = SGF_curse
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = {
+	name = "CFR20.A"
+	clr_global_flag = SGF_curse
+	clr_global_flag = BRG_curse
+	clr_global_flag = CFR_CAE_War
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+	CFR = { all_core = { add_core = SGF } }
+	SGF = { 
+	prestige = 100
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+	inherit = CFR
+	}
+	CAE = {
+	prestige = -100
+	clr_country_flag = in_great_war
+	clr_country_flag = calling_all_allies
+	clr_country_flag = enemy_of_my_enemy
+	clr_country_flag = total_collapse
+	clr_country_flag = ultimatum_accepted
+	clr_country_flag = will_not_surrender
+	clr_country_flag = dismantling_treaty
+	remove_country_modifier = great_war
+	remove_country_modifier = great_war2
+	remove_country_modifier = great_war3
+    any_owned = { 
+	limit = { 
+	is_core = NGF
+    }
+    secede_province = SGF
+	}
+    any_owned = { 
+	limit = { 
+	is_core = BRN
+    }
+    secede_province = SGF
+	}
+    any_owned = { 
+	limit = { 
+	is_core = PRU
+    }
+    secede_province = SGF
+	}
+	}	
+	ai_chance = { factor = 100 }
+	}
+}
+
+### BRG Wins - The Burgundian Dream - CFR still exists ###
+
+country_event = {
+	id = 123227
+	title = "CFR21.T"
+	desc = "CFR21.D"
+	picture = "speech_assembly"
+	
+	major = yes
+	
+	trigger = {
+	    OR = {
+	       tag = BRG
+		   tag = PBG
+		}
+        has_global_flag = CFR_CAE_War
+		CFR = { exists = yes war = no }
+		war = no
+		has_global_flag = BRG_curse
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = {
+	name = "CFR21.A"
+	prestige = 25
+	clr_global_flag = CFR_CAE_War
+	clr_global_flag = SGF_curse
+	clr_global_flag = BRG_curse
+	inherit = CFR
+	FRE = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	FRW = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	SWI = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	BAD = {
+	all_core = {
+	add_core = SGF
+	}
+	}
+	WUR = {
+	all_core = {
+	add_core = SGF
+	}
+	}	
+	SGF = { all_core = { remove_core = CFR } }
+	any_owned = { 
+	limit = { 
+	is_core = BAD
+    }
+	secede_province = BAD
+	}
+    any_owned = { 
+	limit = { 
+	is_core = WUR
+    }
+    secede_province = WUR
+	}	
+    any_owned = { 
+	limit = { 
+	is_core = FRE
+    }
+    secede_province = FRE
+	}
+    any_owned = { 
+	limit = { 
+	is_core = FRW
+    }
+    secede_province = FRW
+	}	
+    any_owned = { 
+	limit = { 
+	is_core = SWI
+    }
+    secede_province = SWI
+	}
+    any_country = { 
+    limit = {
+    tag = SGF
+    exists = yes
+    }
+	set_country_flag = SGF_eats_CFR
+    add_accepted_culture = rheinish 
+    inherit = BAD
+    inherit = WUR
+    inherit = FRE
+    inherit = FRW
+    inherit = SWI
+	}
+	CFR = { all_core = { add_core = RHI } }	
+	CFR = { all_core = { remove_core = CFR } }	
+	BEG = { all_core = { add_core = THIS } }
+	FRI = { all_core = { add_core = THIS } }
+	OLD = { all_core = { add_core = THIS } }
+    clr_global_flag = RHI_vassal
+    set_country_flag = annex_the_rhine 
+	set_country_flag = east_frisian_burgundy
+	any_owned = { 
+	limit = { 
+	is_core = RHI
+	NOT = { is_core = BRG }
+	NOT = { is_core = PBG }
+    }
+	secede_province = RHI
+	}
+	create_vassal = RHI
+	OLD = { all_core = { remove_core = BRG } }
+	FRI = { all_core = { remove_core = BRG } }
+	OLD = { all_core = { remove_core = PBG } }
+	FRI = { all_core = { remove_core = PBG } }
+	}
+}
+
+country_event = {
+	id = 123228
+	title = "CFR22.T"
+	desc = "CFR22.D"
+	picture = "speech_assembly"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "CFR22.A"
+       any_country = {
+	   limit = {
+	      exists = yes
+		     ai = yes
+		     NOT = { tag = BAD }
+			 NOT = { tag = SWI }
+			 NOT = { tag = WUR }
+			 NOT = { tag = RHI }
+	         OR = {
+	         primary_culture = rheinish
+			 tag = LIP
+			 tag = FRI
+			 }
+	    }
+		country_event = { id = 123229 days = 1 }
+	   }
+       any_country = {
+	   limit = {
+	      exists = yes
+		     ai = no
+		     NOT = { tag = BAD }
+			 NOT = { tag = SWI }
+			 NOT = { tag = WUR }
+			 NOT = { tag = RHI }
+	         OR = {
+	         primary_culture = rheinish
+			 tag = LIP
+			 tag = FRI
+			 }
+	    }
+		country_event = { id = 11101 days = 1 }
+      }
+   }
+}
+
+country_event = {
+	id = 123229
+	title = "CFR22.T"
+	desc = "CFR22.D"
+	picture = "speech_assembly"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "CFR22.A"
+	FROM = { inherit = THIS }
+    }
+}
+
+

@@ -1,0 +1,4524 @@
+##### A Gold Rush ######
+
+#Diamonds Discovered in Kolesberg
+country_event = {
+	id = 98262
+	title = "EVTNAME98262"
+	desc = "EVTDESC98262"
+	picture = "diamonds_in_kimberley"
+	
+	trigger = {
+		OR = {
+			owns = 2558
+			AND = {
+				owns = 2103
+				owns = 2101
+			}
+		}
+		year = 1864
+		civilized = yes
+		2094 = {
+			empty = yes
+			NOT = { trade_goods = precious_goods }
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { months = 36 }
+		
+	option = {
+		name = "EVT98262OPTA"
+		set_country_flag = kimberley_goldrush
+		2094 = {
+			secede_province = THIS
+			trade_goods = precious_goods
+			add_province_modifier = { name = gold_rush duration = 5475 }
+		}
+	}
+}
+
+########### New South African Events ####################
+
+########### Initial Geus Modifier Information #################
+
+country_event = {
+	id = 333201
+	title = "SAFN01.T"
+	desc = "SAFN01.D"
+	picture = "geusintro"
+	
+	trigger = { 
+	OR = { 
+	   primary_culture = afro_south_african
+	   primary_culture = boer
+	}
+	NOT = { has_country_flag = der_status_quo }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	    name = "SAFN01.A"
+	    set_country_flag = der_status_quo
+	    prestige = 1	
+	    any_country = {
+	        limit = { 
+		        is_greater_power = yes
+	        }  
+	        leave_alliance = THIS
+	        relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }		
+	    }
+	}
+}
+
+########### 1844 Mossel Chain #################
+
+country_event = {
+	id = 333202
+	title = "SAFN02.T"
+	desc = "SAFN02.D"
+	picture = "schoeman_rifles"
+	
+	trigger = { 
+	tag = LWE
+	year = 1844
+	NOT = { has_country_flag = alyo_strikes }
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	name = "SAFN02.A"
+	set_country_flag = alyo_strikes
+	prestige = 5
+	BRG = { country_event = { id = 333203 days = 30 } }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+	
+	option = { 
+	name = "SAFN02.B"
+	set_country_flag = alyo_strikes
+	set_country_flag = LWE_status_quo
+	prestige = -10
+	any_pop = {
+		militancy = 3 
+		consciousness = 3
+	}	
+	ai_chance = { 
+	factor = 25 
+		}
+	}
+}
+
+country_event = {
+	id = 333203
+	title = "SAFN03.T"
+	desc = "SAFN03.D"
+	picture = "schoeman_rifles"
+	
+	is_triggered_only = yes
+	
+	# Who cares?
+	
+	option = { 
+	name = "SAFN03.A"
+	prestige = -5
+    any_pop = {
+         limit = {
+             has_pop_culture = burgundian
+             location = { province_id = 2091 }
+         }
+         move_pop = 2087
+    }     
+	LWE = { 
+	   prestige = 5
+	   set_country_flag = LWE_status_quo 
+	}
+	any_owned = { 
+	  limit = { 
+	  province_id = 2091
+	  }
+	  secede_province = LWE
+	}
+	ai_chance = { 
+	factor = 75
+		}
+	}
+	
+	# DECLARE WAR
+	
+	option = { 
+	name = "SAFN03.B"
+	set_global_flag = LWE_BRG_War
+	prestige = 5
+    any_pop = {
+         limit = {
+             has_pop_culture = burgundian
+             location = { province_id = 2091 }
+         }
+         move_pop = 2087
+    }
+	any_owned = { 
+	  limit = { 
+	  province_id = 2091
+	  }
+	  secede_province = LWE
+	}
+	war = {
+		target = LWE
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_core_state
+				state_province_id = 2087
+			}
+	}	
+	ai_chance = { 
+	   factor = 25 
+			modifier = {
+				factor = 0
+				is_disarmed = yes
+			}
+			modifier = {
+				factor = 0
+				war = yes
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 333204
+	title = "SAFN04.T"
+	desc = "SAFN04.D"
+	picture = "cape_map"
+	
+	trigger = { 
+	tag = BRG
+	has_global_flag = LWE_BRG_War
+	war = no
+	NOT = { exists = LWE }
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "SAFN04.A"
+	clr_global_flag = LWE_BRG_War
+	set_global_flag = SAF_SQ_Broken
+	prestige = 10
+	}
+}
+
+country_event = {
+	id = 333205
+	title = "SAFN05.T"
+	desc = "SAFN05.D"
+	picture = "cape_map"
+	
+	trigger = { 
+	tag = LWE
+	has_global_flag = LWE_BRG_War
+	war = no
+	owns = 2087
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+
+	option = { 
+	name = "SAFN05.A"
+	clr_global_flag = LWE_BRG_War
+	clr_global_flag = SAFFGW
+	set_global_flag = SAFFGWEnd
+	clr_global_flag = SAFSGW
+    clr_global_flag = SAFSGWA
+	set_global_flag = SAFSGWEnd
+	clr_country_flag = LWE_status_quo
+	set_country_flag = alyo_strikes
+	set_global_flag = SAF_SQ_Broken
+	prestige = 10
+	}
+}
+
+# If LWE owns 2087 without LWE_BRG_War
+
+country_event = {
+	id = 333206
+	title = "SAFN06.T"
+	desc = "SAFN06.D"
+	picture = "cape_map"
+	
+	trigger = { 
+	tag = LWE
+	war = no
+	owns = 2087
+	NOT = { has_country_flag = alyo_strikes }
+	NOT = { has_global_flag = LWE_BRG_War }	
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+
+	option = { 
+	name = "SAFN06.A"
+	clr_global_flag = LWE_BRG_War
+	clr_global_flag = SAFFGW
+	set_global_flag = SAFFGWEnd
+	clr_global_flag = SAFSGW
+    clr_global_flag = SAFSGWA
+	set_global_flag = SAFSGWEnd
+	clr_country_flag = LWE_status_quo
+	set_country_flag = alyo_strikes
+	set_global_flag = SAF_SQ_Broken
+	prestige = 20
+	}
+}
+
+# Stalemate
+
+country_event = {
+	id = 333207
+	title = "SAFN07.T"
+	desc = "SAFN07.D"
+	picture = "boer_war"
+	
+	trigger = { 
+	exists = yes
+	tag = LWE
+	has_global_flag = LWE_BRG_War
+	war = no
+	NOT = { owns = 2087 }
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+
+	option = { 
+	name = "SAFN07.A"
+	clr_global_flag = LWE_BRG_War
+	set_country_flag = LWE_status_quo
+	BRG = { prestige = -10 }
+	prestige = -10
+	}
+}
+
+########### 1849 Reur Chain - Will trigger prematurely if Status Quo is broken by Mossel Chain #################
+
+country_event = {
+	id = 333208
+	title = "SAFN08.T"
+	desc = "SAFN08.D"
+	picture = "pioneer_wagons"
+	
+	trigger = { 
+	tag = TRN
+	NFL = { exists = yes }
+	year = 1844
+	NOT = { has_country_flag = reur_republic }
+	}
+	
+	mean_time_to_happen = { 
+	months = 100
+        modifier = {
+			factor = 5
+			AND = {
+			   NOT = { year = 1849 }
+			   NOT = { has_global_flag = SAF_SQ_Broken }
+			}
+		}
+		modifier = {
+			factor = 0.01
+			has_global_flag = SAF_SQ_Broken
+		}
+		modifier = {
+			factor = 0.01
+			year = 1849
+		}
+	}
+	
+	option = { 
+	name = "SAFN08.A"
+	set_country_flag = reur_republic
+	prestige = 5
+	NFL = { country_event = { id = 333209 days = 3 } }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+	
+	option = { 
+	name = "SAFN08.B"
+	set_country_flag = reur_republic
+	set_country_flag = TRN_status_quo
+	NFL = { set_country_flag = NFL_status_quo }
+	relation = { who = NFL value = 100 }	
+	ai_chance = { 
+	    factor = 25 
+			modifier = {
+				factor = 0
+				has_global_flag = SAF_SQ_Broken
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 333209
+	title = "SAFN09.T"
+	desc = "SAFN09.D"
+	picture = "pioneer_wagons"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN09.A"
+	set_country_flag = NFL_status_quo
+	TRN = { country_event = { id = 333210 days = 3 } }	
+	ai_chance = { 
+	    factor = 50
+			modifier = {
+				factor = 0
+				has_global_flag = SAF_SQ_Broken
+			}
+		}
+	}
+	
+	option = { 
+	name = "SAFN09.B"
+	prestige = 5
+	relation = { who = TRN value = -50 }	
+	TRN = { country_event = { id = 333211 days = 3 } }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+}
+
+country_event = {
+	id = 333210
+	title = "SAFN10.T"
+	desc = "SAFN10.D"
+	picture = "trekboers_crossing_the_karoo"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN10.A"
+	prestige = 10
+	set_country_flag = TRN_status_quo
+	}
+}
+
+country_event = {
+	id = 333211
+	title = "SAFN11.T"
+	desc = "SAFN11.D"
+	picture = "schoeman_rifles"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN11.A"
+	prestige = -10
+	relation = { who = NFL value = -50 }
+	set_country_flag = TRN_status_quo
+	NFL = { set_country_flag = NFL_status_quo }
+	any_pop = {
+		militancy = 2 
+		consciousness = 2
+	}
+	ai_chance = { 
+	    factor = 25
+			modifier = {
+				factor = 0
+				has_global_flag = SAF_SQ_Broken
+			}
+		}
+	}
+	
+	option = { 
+	name = "SAFN11.B"
+	prestige = 5
+	set_global_flag = NFL_TRN_War
+	relation = { who = NFL value = -200 }	
+	leave_alliance = NFL
+	war = { 
+		target = NFL
+		    attacker_goal = {
+			casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = make_puppet
+	        }
+            call_ally = yes			
+	}
+	ai_chance = { 
+	factor = 75
+		}
+	}
+}
+
+# Status Quo
+
+country_event = {
+	id = 333212
+	title = "SAFN12.T"
+	desc = "SAFN12.D"
+	picture = "cape_map"
+	
+	trigger = { 
+	tag = TRN
+	war = no	
+	is_vassal = no
+	NFL = { NOT = { vassal_of = THIS } }	
+	has_global_flag = NFL_TRN_War
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "SAFN12.A"
+	prestige = -10
+    NFL = { prestige = -10 }
+	set_country_flag = TRN_status_quo
+	NFL = { set_country_flag = NFL_status_quo }
+	}
+}
+
+# The New Northern Status Quo
+
+country_event = {
+	id = 333213
+	title = "SAFN13.T"
+	desc = "SAFN13.D"
+	picture = cape_map
+	
+	trigger = {
+    OR = {	
+	   tag = TRN
+	   tag = NFL
+	}
+	has_global_flag = NFL_TRN_War
+	is_vassal = no
+	war = no	
+	OR = {
+	   TRN = { vassal_of = THIS }
+	   NFL = { vassal_of = THIS }
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "SAFN13.A"
+	clr_global_flag = NFL_TRN_War
+	set_country_flag = ngeus_status_quo
+	relation = { who = TRN value = 400 }
+	relation = { who = NFL value = 400 }
+	any_country = { 
+	   limit = {  
+		  tag = TRN
+		  is_vassal = yes
+		  NOT = { tag = THIS }
+	   }
+	   NFL = { inherit = TRN }
+	}
+	any_country = { 
+	   limit = { 
+		  tag = NFL
+		  is_vassal = yes
+		  NOT = { tag = THIS }
+	   }
+	   TRN = { inherit = NFL }
+	}
+	TRN = { all_core = { add_core = ORA } }
+	NFL = { all_core = { add_core = ORA } }
+	change_tag = ORA
+	}	
+}
+
+##############################################
+
+############ CONSOLIDATION EVENTS ############
+
+##############################################
+
+## These events add cores to native tags over time with flavor events.
+
+## LWE can kill Xhosa around 1848
+
+## ZUL will invade BSH around 1851 if Mega-TRN/NFL exists as a precaution. Does not get cores. Aggressive Conquest with Taiping Draft
+
+## TRN/Mega-NFL can kill BSH if it still exists around 1854
+
+## NFL/Mega-TRN can kill ZUL (gets cores on BSH as well as a precaution) around 1857
+
+country_event = {
+	id = 333214
+	title = "SAFN14.T"
+	desc = "SAFN14.D"
+	picture = "xhosa_bushfighting"
+	
+	trigger = {
+    tag = LWE
+	OR = { 
+	owns = 2087
+	has_country_flag = LWE_status_quo
+	}
+	NOT = { has_country_flag = LWE_XHO_Con }
+	year = 1848
+	XHO = { exists = yes }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "SAFN14.A"
+	set_country_flag = LWE_XHO_Con
+	relation = { who = XHO value = -400 }
+	XHO = { all_core = { add_core = THIS } }
+	}
+}
+
+country_event = {
+	id = 333215
+	title = "SAFN15.T"
+	desc = "SAFN15.D"
+	picture = "zulu"
+	
+	trigger = {
+    tag = ZUL
+    exists = ORA
+	NOT = { has_country_flag = ZUL_BSH_Con }
+	year = 1850
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "SAFN15.A"
+	set_country_flag = ZUL_BSH_Con
+	define_general = {
+		name = "Sigujana"
+		personality = brilliant
+		background = expert_raider
+	}
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	}
+	relation = { who = BSH value = -400 }
+	war = { 
+		target = BSH
+		    attacker_goal = {
+			casus_belli = conquest
+			}
+			defender_goal = {
+				casus_belli = status_quo
+	        }			
+	}
+	}
+}		
+
+country_event = {
+	id = 333216
+	title = "SAFN16.T"
+	desc = "SAFN16.D"
+	picture = "xhosa_bushfighting"
+	
+	trigger = {
+	OR = { 
+	   AND = { 
+	      tag = TRN
+	      NOT = { exists = ORA }
+	   }
+	   AND = { 
+	      tag = LWE
+	      NOT = { exists = TRN }
+		  NOT = { exists = ORA }
+	   }
+	}
+	OR = { 
+	   has_country_flag = LWE_status_quo
+	   has_country_flag = TRN_status_quo
+	   owns = 2087   
+	}
+	NOT = { has_country_flag = TRN_BSH_Con }
+	BSH = { exists = yes }
+	year = 1854
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "SAFN16.A"
+	clr_country_flag = native_retreat_BOE
+	set_country_flag = TRN_BSH_Con
+	prestige = 1
+	relation = { who = BSH value = -400 }
+	BSH = { all_core = { add_core = THIS } }
+	}
+}
+
+country_event = {
+	id = 333217
+	title = "SAFN17.T"
+	desc = "SAFN17.D"
+	picture = "zulu"
+	
+	trigger = {
+	OR = {
+	   tag = ORA 
+	   tag = NFL
+	}
+    OR = {
+       has_country_flag = ngeus_status_quo
+	   has_country_flag = NFL_status_quo
+	}	
+	NOT = { has_country_flag = NFL_ZUL_Con }
+	ZUL = { exists = yes }
+	year = 1857
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "SAFN17.A"
+	clr_country_flag = native_retreat_BOE
+	set_country_flag = NFL_ZUL_Con
+	prestige = 1
+	relation = { who = ZUL value = -400 }	
+	ZUL = { all_core = { add_core = THIS } }
+	}
+}
+
+country_event = {
+	id = 333218
+	title = "SAFN18.T"
+	desc = "SAFN18.D"
+	picture = "blood_river"
+	
+	trigger = {
+	OR = {
+	   tag = ORA 
+	   tag = NFL
+	   tag = TRN
+	   tag = LWE
+	}
+	OR = {
+	  AND = {
+	     owns = 2112
+	     NOT = { exists = ZUL }
+	  }
+	  AND = {
+	     owns = 2104
+         NOT = { exists = BSH }
+      }	  
+	}
+	NOT = { has_country_flag = native_retreat_BOE }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN17.A"
+	set_country_flag = native_retreat_BOE
+	any_owned = {
+	limit = {
+	province_id = 2104
+	}
+	remove_core = THIS
+	secede_province = BSH
+	}
+	any_owned = {
+	limit = {
+	province_id = 2112
+	}
+	remove_core = THIS
+	secede_province = ZUL
+	}	
+	}
+}
+
+##############################################
+
+############ THE FIRST GEUZEN WAR ############
+
+##############################################
+
+#### The First Geuzen War - Alternative Warning (Republican BRG) ####
+
+country_event = {
+	id = 333262
+	title = "SAFN62.T"
+	desc = "SAFN62.D"
+	picture = "cape_map"
+
+	
+	trigger = {
+    tag = PBG
+	year = 1857
+	has_country_flag = SAFN_break
+	NOT = { has_country_flag = the_boer_warning }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	# Allow him to maintain his autonomy.
+	
+	option = { 
+	name = "SAFN62.A"
+	set_country_flag = the_boer_warning
+	any_pop = { 
+	   limit = { 
+	      location = { is_core = BTV }
+	   }
+	   militancy = 1
+	   consciousness = 1
+	   ideology = { factor = 0.05 value = separatist } 
+	} 
+	relation = { who = LWE value = -100 }
+	relation = { who = ORA value = -100 }
+	relation = { who = NFL value = -100 }
+	relation = { who = TRN value = -100 }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	# Prepare to abolish the duchy and offer the Geuzen everything but Cape Town for a deal.
+	
+	option = { 
+	name = "SAFN62.B"
+	set_country_flag = the_boer_warning
+	any_country = {
+	   limit = {
+	      tag = LWE
+	      owns = 2096
+		  exists = yes
+	   }	
+	   country_event = { id = 333263 days = 14 }
+	}
+    any_country = {
+	   limit = {
+	      owns = 2049
+	      NOT = { exists = LWE }
+	   }
+	   country_event = { id = 333263 days = 14 }
+	}
+	ai_chance = { 
+	   factor = 50
+	   }	
+	}
+}
+
+#### The First Geuzen War - The Treaty of Anvers ####
+
+country_event = {
+	id = 333263
+	title = "SAFN63.T"
+	desc = "SAFN63.D"
+	picture = "cape_map"
+
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN63.A"
+	    prestige = 5
+		clr_country_flag = the_boer_warning
+		clr_country_flag = SAFN_break
+	    clr_global_flag = SAFFGW
+	    clr_global_flag = SAFSGW
+        clr_global_flag = SAFSGWA
+	    set_global_flag = SAFFGWEnd      
+	    set_global_flag = SAFSGWEnd	
+		set_global_flag = 2087_Treaty
+        2087 = { remove_core = BTV remove_core = LWE remove_core = SAF }			
+		SAF = {
+			all_core = {
+				limit = { continent = africa }
+				remove_core = PBG
+			}
+		}	
+		BTV = {
+			all_core = {
+				limit = { continent = africa }
+				remove_core = PBG
+			}
+		}		
+	    any_country = {
+	    limit = {
+	    OR = {
+	       primary_culture = boer
+	       primary_culture = afro_south_african
+	       }
+	    }
+	    remove_country_modifier = geus_status_quo
+	    } 
+        any_country = {
+	    limit = {
+	    tag = LWE
+	    exists = no 
+	    }
+	    government = democracy
+	    ruling_party_ideology = conservative
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = secret_ballots
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	    }
+        PBG = {
+	    relation = { who = THIS value = 300 }
+	    diplomatic_influence = { who = THIS value = 200 }
+		create_alliance = THIS
+	    any_owned = {
+	    limit = {
+	    is_core = LWE
+	    }
+	    secede_province = LWE
+	    } 	
+        }	
+        2087 = { add_core = SAF }	
+	    ai_chance = { 
+	    factor = 80
+	    }
+	}
+
+	option = { 
+	name = "SAFN63.B"
+	   PBG = { country_event = { id = 333264 days = 14 } }
+	   ai_chance = { 
+	   factor = 20
+	   }
+	}
+}
+
+#### The First Geuzen War - Treaty Refused ####
+
+country_event = {
+	id = 333264
+	title = "SAFN64.T"
+	desc = "SAFN64.D"
+	picture = "cape_map"
+
+	is_triggered_only = yes
+	
+	# I guess we are going to have to tolerate the duke then.
+	
+	option = { 
+	name = "SAFN64.A"
+	any_pop = { 
+	   limit = { 
+	      location = { is_core = BTV }
+	   }
+	   militancy = 1
+	   consciousness = 1
+	   ideology = { factor = 0.05 value = separatist } 
+	} 
+	relation = { who = LWE value = -100 }
+	relation = { who = ORA value = -100 }
+	relation = { who = NFL value = -100 }
+	relation = { who = TRN value = -100 }
+	}	
+}
+
+#### The First Geuzen War - Alt LWE Invasion (Republic) ####
+
+country_event = {
+	id = 333265
+	title = "SAFN65.T"
+	desc = "SAFN65.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+    tag = PBG
+	year = 1860
+	month = 4
+	LWE = { exists = yes }
+	has_country_flag = the_boer_warning
+	has_country_flag = SAFN_break
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	option = { 
+	name = "SAFN65.A"
+	prestige = -1
+	clr_country_flag = the_boer_warning
+	clr_country_flag = SAFN_break
+	set_global_flag = SAFFGW
+	set_country_flag = LWE_BRG_War
+	war = { 
+		target = LWE
+		    attacker_goal = {
+			casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_core_state
+				state_province_id = 2087
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - The Warning ####
+
+country_event = {
+	id = 333224
+	title = "SAFN24.T"
+	desc = "SAFN24.D"
+	picture = "cape_map"
+	
+	trigger = {
+    tag = BRG
+	year = 1857
+	NOT = { has_country_flag = SAFN_break }
+	NOT = { has_country_flag = the_boer_warning }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	name = "SAFN24.A"
+	set_country_flag = the_boer_warning
+	any_pop = { 
+	   limit = { 
+	      location = { is_core = BTV }
+	   }
+	   militancy = 1
+	   consciousness = 1
+	   ideology = { factor = 0.05 value = separatist } 
+	} 
+	relation = { who = LWE value = -100 }
+	relation = { who = ORA value = -100 }
+	relation = { who = NFL value = -100 }
+	relation = { who = TRN value = -100 }
+	}
+}
+
+#### The First Geuzen War - LWE exists ####
+
+country_event = {
+	id = 333219
+	title = "SAFN19.T"
+	desc = "SAFN19.D"
+	picture = "boer_troops"
+	
+	trigger = {
+    tag = BRG
+	year = 1860
+	month = 4
+	has_country_flag = the_boer_warning
+	LWE = { exists = yes }
+	NOT = { has_country_flag = SAFN_break }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 4
+	}
+	
+	option = { 
+	name = "SAFN19.A"
+	clr_country_flag = the_boer_warning
+	set_global_flag = JEAN_FGW
+	country_event = { id = 333220 days = 10 }
+	relation = { who = LWE value = -400 }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+	
+	option = { 
+	name = "SAFN19.B"
+	set_global_flag = JEAN_FGW
+	clr_country_flag = the_boer_warning
+	country_event = { id = 333221 days = 10 }
+	relation = { who = LWE value = -400 }	
+	ai_chance = { 
+	factor = 25
+		}
+	}
+}
+
+#### The First Geuzen War - Duke invades with Authority ####
+
+country_event = {
+	id = 333220
+	title = "SAFN20.T"
+	desc = "SAFN20.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+	name = "SAFN20.A"
+	prestige = 10
+	clr_global_flag = JEAN_FGW
+	set_global_flag = SAFFGW
+	set_country_flag = LWE_BRG_War
+	war = { 
+		target = LWE
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}		
+	    }
+	}
+}
+
+#### The First Geuzen War - Duke invades without Authority ####
+
+country_event = {
+	id = 333221
+	title = "SAFN21.T"
+	desc = "SAFN21.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+	name = "SAFN21.A"
+	prestige = -10
+	clr_global_flag = JEAN_FGW
+	set_global_flag = SAFFGW
+	set_country_flag = LWE_BRG_War
+	war = { 
+		target = LWE
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - Boer States. No LWE. ####
+
+country_event = {
+	id = 333222
+	title = "SAFN22.T"
+	desc = "SAFN22.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	OR = {
+       tag = BRG
+	   AND = {
+	      tag = PBG
+	      has_country_flag = SAFN_break
+	   }
+	}
+	year = 1860
+	month = 5
+	has_country_flag = the_boer_warning
+	LWE = { exists = no }
+	ORA = { exists = no }
+	TRN = { exists = yes }
+	NFL = { exists = yes }
+	NOT = { war = yes }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 4
+	}
+	
+	option = { 
+	name = "SAFN22.A"
+	prestige = -10
+	clr_country_flag = the_boer_warning
+	clr_country_flag = SAFN_break
+	clr_global_flag = JEAN_FGW
+	set_global_flag = SAFFGW
+	war = { 
+		target = TRN
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	war = { 
+		target = NFL
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - ORA. No LWE. ####
+
+country_event = {
+	id = 333223
+	title = "SAFN23.T"
+	desc = "SAFN23.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	OR = {  
+       tag = BRG
+	   AND = {
+	      tag = PBG
+	      has_country_flag = SAFN_break
+	   }
+	}
+	year = 1860
+	month = 5
+	has_country_flag = the_boer_warning
+	LWE = { exists = no }
+	ORA = { exists = yes }
+	TRN = { exists = no }
+	NFL = { exists = no }
+	NOT = { war = yes }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 4
+	}
+	
+	option = { 
+	name = "SAFN21.A"
+	prestige = -10
+	clr_country_flag = the_boer_warning
+	clr_country_flag = SAFN_break
+	clr_global_flag = JEAN_FGW
+	set_global_flag = SAFFGW
+	war = { 
+		target = ORA
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - LWE Help Chain - Boer States ####
+
+country_event = {
+	id = 333225
+	title = "SAFN25.T"
+	desc = "SAFN25.D"
+	picture = "boer_troops"
+	
+	trigger = {
+	exists = yes
+    tag = LWE
+	has_global_flag = SAFFGW
+	war = yes
+	NOT = { exists = ORA }
+	NOT = { has_country_flag = LWE_AID }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN25.A"
+	set_country_flag = LWE_AID
+	relation = { who = NFL value = -100 }
+	relation = { who = TRN value = -100 }
+	ai_chance = { 
+	factor = 20
+		}
+	}
+	
+	option = { 
+	name = "SAFN25.B"
+	set_country_flag = LWE_AID
+	TRN = { country_event = { id = 333226 days = 1 } }
+	NFL = { country_event = { id = 333226 days = 2 } }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+}
+
+country_event = {
+	id = 333226
+	title = "SAFN26.T"
+	desc = "SAFN26.D"
+	picture = "boer_troops"
+	
+	is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN26.A"
+	prestige = 5
+	relation = { who = LWE value = 400 }
+	create_alliance = LWE
+	LWE = { country_event = { id = 333227 days = 1 } }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+	
+	option = { 
+	name = "SAFN26.B"
+	prestige = -5
+	THIS = { end_war = BRG }
+	relation = { who = LWE value = -100 }
+	ai_chance = { 
+	factor = 25
+		}
+	}
+}
+
+country_event = {
+	id = 333227
+	title = "SAFN27.T"
+	desc = "SAFN27.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN27.A"
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				alliance_with = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+	}
+}
+
+#### The First Geuzen War - LWE Help Chain - ORA ####
+
+country_event = {
+	id = 333228
+	title = "SAFN28.T"
+	desc = "SAFN28.D"
+	picture = "boer_troops"
+	
+	trigger = {
+	exists = yes
+    tag = LWE
+	has_global_flag = SAFFGW
+	war = yes
+	exists = ORA
+	NOT = { has_country_flag = LWE_AID }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN28.A"
+	set_country_flag = LWE_AID
+	relation = { who = ORA value = -100 }
+	ai_chance = { 
+	factor = 25
+		}
+	}
+	
+	option = { 
+	name = "SAFN28.B"
+	set_country_flag = LWE_AID
+	ORA = { country_event = { id = 333229 days = 1 } }
+	ai_chance = { 
+	factor = 75
+		}
+	}
+}
+
+country_event = {
+	id = 333229
+	title = "SAFN29.T"
+	desc = "SAFN29.D"
+	picture = "boer_troops"
+	
+	is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN29.A"
+	prestige = 5
+	relation = { who = LWE value = 400 }
+	create_alliance = LWE
+	LWE = { country_event = { id = 333230 days = 1 } }
+	ai_chance = { 
+	factor = 50
+		}
+	}
+	
+	option = { 
+	name = "SAFN29.B"
+	prestige = 10
+	THIS = { end_war = BRG }
+	relation = { who = LWE value = -400 }
+	leave_alliance = LWE
+	war = { 
+		target = LWE
+		    attacker_goal = {
+			casus_belli = civil_war
+			}
+			defender_goal = {
+			casus_belli = civil_war
+	    }			
+	}	
+	LWE = { country_event = { id = 333231 days = 1 } }
+	BRG = { country_event = { id = 333232 days = 3 } }
+	ai_chance = { 
+	factor = 40
+		}
+	}
+	
+	option = { 
+	name = "SAFN29.C"
+	prestige = -5
+	THIS = { end_war = BRG }
+	relation = { who = LWE value = -100 }
+	ai_chance = { 
+	factor = 10
+		}
+	}
+}
+
+country_event = {
+	id = 333230
+	title = "SAFN30.T"
+	desc = "SAFN30.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN30.A"
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				alliance_with = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 333231
+	title = "SAFN31.T"
+	desc = "SAFN31.D"
+	picture = "boer_war"
+	
+    is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN31.A"
+	relation = { who = ORA value = -400 }
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1440
+	    }
+	}
+}
+
+country_event = {
+	id = 333232
+	title = "SAFN32.T"
+	desc = "SAFN32.D"
+	picture = "boer_war"
+	
+    is_triggered_only = yes	
+	
+	option = { 
+	name = "SAFN32.A"
+	prestige = -1
+	relation = { who = ORA value = -400 }
+	war = { 
+		target = ORA
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - LWE dead and standard north is not at war with BRG ####
+
+country_event = {
+	id = 333233
+	title = "SAFN33.T"
+	desc = "SAFN33.D"
+	picture = "cape_map"
+	
+	trigger = {
+    tag = BRG
+	has_global_flag = SAFFGW
+	has_country_flag = LWE_BRG_War
+	exists = TRN
+	exists = NFL
+	NOT = { exists = LWE }
+	NOT = { exists = ORA }
+	NOT = { war_with = PBG }
+	NOT = { war_with = BRG }
+	NOT = { war_with = TRN }
+	NOT = { war_with = NFL }
+	NOT = { war_with = ORA }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN33.A"
+	war = { 
+		target = TRN
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	war = { 
+		target = NFL
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - LWE dead and ORA north is not at war with BRG ####
+
+country_event = {
+	id = 333234
+	title = "SAFN34.T"
+	desc = "SAFN34.D"
+	picture = "cape_map"
+	
+	trigger = {
+    tag = BRG
+	has_global_flag = SAFFGW
+	has_country_flag = LWE_BRG_War	
+	exists = ORA
+	NOT = { exists = LWE }
+	NOT = { exists = TRN }
+	NOT = { exists = NFL }
+	NOT = { war_with = PBG }
+	NOT = { war_with = BRG }
+	NOT = { war_with = TRN }
+	NOT = { war_with = NFL }
+	NOT = { war_with = ORA }
+	NOT = { has_global_flag = JEAN_FGW }
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN34.A"
+	war = { 
+		target = ORA
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+	}
+}
+
+#### The First Geuzen War - BRG White Peace Event ####
+
+country_event = {
+	id = 333235
+	title = "SAFN35.T"
+	desc = "SAFN35.D"
+	picture = "volksraad"
+	
+	trigger = {
+    tag = BRG
+	exists = PBG
+	OR = {
+	   war_with = ORA
+	   war_with = LWE
+	   war_with = TRN
+	   war_with = NFL
+	}
+	has_global_flag = SAFFGW
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 2
+	}
+	
+	option = { 
+	name = "SAFN35.A"
+	prestige = 10
+	end_war = ORA
+	end_war = LWE
+	end_war = TRN
+	end_war = NFL
+	ai_chance = { 
+	factor = 60
+		}
+	}
+	
+	option = { 
+	name = "SAFN35.B"
+	prestige = -10 
+	ai_chance = { 
+	factor = 40
+		}
+	}
+}
+
+#### The First Geuzen War - BRG is dead or a normal WP occurred ####
+
+country_event = {
+	id = 333236
+	title = "SAFN36.T"
+	desc = "SAFN36.D"
+	picture = "trekboers_crossing_the_karoo"
+	
+	trigger = {
+	exists = yes
+    tag = ORA
+	war = no
+	has_global_flag = SAFFGW
+	NOT = { war_with = PBG }
+	NOT = { war_with = BRG }
+	LWE = { 
+	   AND = {
+	      NOT = { war_with = PBG }
+	      NOT = { war_with = BRG }
+	   }
+	}
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "SAFN36.A"
+	prestige = 10
+    any_country = {
+	limit = {
+	tag = LWE
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = TRN
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = NFL
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	BRG = {
+	any_owned = { 
+	  limit = { 
+	  is_core = ORA
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = ORA
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = NFL
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = NFL
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = TRN
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = TRN
+	}
+	}
+	PBG = {
+	any_owned = { 
+	  limit = { 
+	  is_core = ORA
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = ORA
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = NFL
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = NFL
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = TRN
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = TRN
+	}
+	}
+	clr_global_flag = SAFFGW
+	set_global_flag = SAFFGWEnd
+	set_global_flag = SAFFGWWhitePeace	
+	}	
+}
+	
+country_event = {
+	id = 333237
+	title = "SAFN37.T"
+	desc = "SAFN37.D"
+	picture = "trekboers_crossing_the_karoo"
+	
+	trigger = {
+	exists = yes
+	war = no
+	OR = {
+	   tag = NFL
+	   AND = {
+	      tag = TRN
+	      NOT = { exists = NFL }
+	    }
+    }
+	has_global_flag = SAFFGW
+	NOT = { exists = ORA }
+	NOT = { war_with = PBG }
+	NOT = { war_with = BRG }
+	LWE = { 
+	   AND = {
+	      NOT = { war_with = PBG }
+	      NOT = { war_with = BRG }
+	   }
+	}	
+	TRN = { 
+	   AND = {
+	      NOT = { war_with = PBG }
+	      NOT = { war_with = BRG }
+	   }
+	}
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "SAFN37.A"
+	prestige = 10
+    any_country = {
+	limit = {
+	tag = LWE
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = TRN
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = NFL
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	BRG = {
+	any_owned = { 
+	  limit = { 
+	  is_core = ORA
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = ORA
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = NFL
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = NFL
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = TRN
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = TRN
+	}
+	}
+	PBG = {
+	any_owned = { 
+	  limit = { 
+	  is_core = ORA
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = ORA
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = NFL
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = NFL
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = TRN
+	  NOT = { is_core = SAF }
+	  }
+	  secede_province = TRN
+	}
+	}
+	clr_global_flag = SAFFGW
+	set_global_flag = SAFFGWEnd
+	set_global_flag = SAFFGWWhitePeace	
+	}	
+}
+
+#### The First Geuzen War - BRG has defeated the Boers before dying ####
+
+country_event = {
+	id = 333238
+	title = "SAFN38.T"
+	desc = "SAFN38.D"
+	picture = "cape_map"
+	
+	trigger = {
+    tag = BRG
+	NOT = { exists = ORA }
+	NOT = { exists = TRN }
+	NOT = { exists = LWE }
+	NOT = { exists = NFL }
+	NOT = { exists = BTV }
+	has_global_flag = SAFFGW
+	NOT = { has_global_flag = SAFFGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN38.A"
+	end_war = ORA
+	end_war = LWE
+	end_war = TRN
+	end_war = NFL
+	prestige = 20
+	war_exhaustion = -25
+	any_country = {
+	    limit = {
+	    OR = {
+	       primary_culture = boer
+	       primary_culture = afro_south_african
+	       }
+	    }
+	    remove_country_modifier = geus_status_quo
+	}
+	clr_global_flag = SAFFGW
+	set_global_flag = SAFFGWEnd
+	}	
+}
+
+### See 98247+ and above for Treaty of Vereeniging related events ###
+
+#####################################################
+
+############ THE NIEJE HOOP CONFEDRATION ############
+
+##############################################
+
+country_event = {
+	id = 333239
+	title = "SAFN39.T"
+	desc = "SAFN39.D"
+	picture = "volksraad"
+	
+	trigger = {
+	OR = {
+	   tag = ORA
+	   AND = {
+	      tag = NFL
+	      NOT = { exists = ORA }
+	   }
+    }
+	has_global_flag = SAFFGWEnd
+	has_global_flag = SAFFGWWhitePeace
+	NOT = { has_global_flag = SAFNHConcluded }
+	}
+	
+	mean_time_to_happen = { 
+	   months = 1
+	}
+	
+	option = { 
+	name = "SAFN39.A"
+	prestige = 10
+	set_country_flag = BoerNHC
+	any_country = { 
+	limit = {
+	primary_culture = boer
+	exists = yes
+	NOT = { tag = THIS }
+	}
+	country_event = 333240
+	}
+    }	
+}
+
+country_event = {
+	id = 333240
+	title = "SAFN40.T"
+	desc = "SAFN40.D"
+	picture = "volksraad"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN40.A"
+ 		ai_chance = {  
+			factor = 100
+			modifier = {
+				factor = 0.75
+				tag = TRN
+				NOT = { government = democracy }
+				NOT = { OR = { government = democracy government = parliamentary_republic } }
+			}
+			modifier = {
+				factor = 0.5
+				tag = LWE
+				NOT = { OR = { government = democracy government = parliamentary_republic } }
+			}
+		}    
+	}	
+	
+	option = { 
+	name = "SAFN40.B"
+	prestige = 10
+    set_global_flag = BTV_conference_collapse
+ 		ai_chance = {  
+			factor = 50
+			modifier = {
+				factor = 0
+				government = democracy
+			}
+			modifier = {
+				factor = 0
+				government = parliamentary_republic
+			}
+		} 
+	}
+	
+	option = { 
+	name = "SAFN40.C"
+	    any_country = {
+		limit = {
+	    tag = ORA
+	    exists = yes
+		}
+		THIS = { change_tag_no_core_switch = ORA }
+	    }
+	    any_country = {
+		limit = {
+	    tag = NFL
+	    exists = yes
+		}
+		THIS = { change_tag_no_core_switch = NFL }
+	    }	
+ 		ai_chance = {  
+			factor = 0
+		} 
+	}
+}
+
+### NHC - Good Ending
+
+country_event = {
+	id = 333241
+	title = "SAFN41.T"
+	desc = "SAFN41.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	OR = {
+	   tag = ORA
+	   AND = {
+	      tag = NFL
+	      NOT = { exists = ORA }
+	   }
+    }
+	has_global_flag = SAFFGWWhitePeace
+	has_country_flag = BoerNHC
+	NOT = { has_global_flag = BTV_conference_collapse }
+	NOT = { has_global_flag = SAFNHConcluded }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "SAFN41.A"
+	prestige = 20
+	clr_country_flag = BoerNHC
+	clr_global_flag = SAFFGWWhitePeace
+	set_global_flag = SAFNHConcluded
+	SAF = { all_core = { remove_core = BTV } }
+	any_country = { 
+	limit = {
+	primary_culture = boer
+	exists = yes
+	NOT = { tag = THIS }
+	}
+	all_core = { add_core = BTV } 
+	annex_to = THIS
+	}
+    change_tag = BTV  
+    } 	
+}
+
+### NHC - Complete Chaos
+
+country_event = {
+	id = 333242
+	title = "SAFN42.T"
+	desc = "SAFN42.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	OR = {
+	   tag = ORA
+	   AND = {
+	      tag = NFL
+	      NOT = { exists = ORA }
+	   }
+    }
+	has_global_flag = SAFFGWWhitePeace
+	has_country_flag = BoerNHC
+	has_global_flag = BTV_conference_collapse
+	NOT = { has_global_flag = SAFNHCWar }
+	NOT = { has_global_flag = SAFNHConcluded }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "SAFN42.A"
+	prestige = -20
+    add_country_modifier = {
+		name = taiping_draft
+		duration = 1095
+	}
+	clr_country_flag = BoerNHC
+	clr_global_flag = SAFFGWWhitePeace
+	clr_global_flag = BTV_conference_collapse
+	set_global_flag = SAFNHCWar
+	SAF = { all_core = { remove_core = BTV } }
+	relation = { who = LWE value = -400 }
+	relation = { who = TRN value = -400 }
+	any_country = { 
+	    limit = {
+	       primary_culture = boer
+	       exists = yes
+	       NOT = { tag = THIS }
+	    }
+	    relation = { who = THIS value = -400 }
+		leave_alliance = THIS
+        add_country_modifier = {
+		name = taiping_draft
+		duration = 1095
+	    }
+	    war = { 
+		target = THIS
+		    attacker_goal = {
+			   casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+	        }			
+	    }
+	}
+	any_country = { 
+	    limit = {
+	       tag = LWE
+		   exists = yes
+		   exists = TRN
+	    }
+	    relation = { who = TRN value = -400 }
+		leave_alliance = TRN
+	    war = { 
+		target = TRN
+		    attacker_goal = {
+			   casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+	        }			
+	    }
+	}
+	}
+}
+
+### NHC - Everyone is dead. Therefore I win.
+
+country_event = {
+	id = 333243
+	title = "SAFN43.T"
+	desc = "SAFN43.D"
+	picture = "boer_war_camps"
+	
+	trigger = {
+	has_global_flag = SAFNHCWar
+	NOT = { has_global_flag = SAFNHConcluded }
+	OR = {
+	   AND = {
+	   tag = BTV
+	   NOT = { exists = LWE }
+	   NOT = { exists = NFL }
+	   NOT = { exists = TRN }
+	   NOT = { exists = ORA }
+	   }
+	   AND = {
+	   tag = ORA
+	   NOT = { exists = LWE }
+	   NOT = { exists = NFL }
+	   NOT = { exists = TRN }
+	   }
+	   AND = { 
+	   tag = NFL 
+	   NOT = { exists = LWE }
+	   NOT = { exists = ORA }
+	   NOT = { exists = TRN }
+	   }
+	   AND = { 
+	   tag = TRN
+	   NOT = { exists = LWE }
+	   NOT = { exists = ORA }
+	   NOT = { exists = NFL }
+	   }
+	   AND = { 
+	   tag = LWE 
+	   NOT = { exists = NFL }
+	   NOT = { exists = ORA }
+	   NOT = { exists = TRN }
+	   }	   
+    }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "SAFN43.A"
+	prestige = 20
+	clr_global_flag = SAFNHCWar
+	set_global_flag = SAFNHConcluded
+	change_tag = BTV
+	}
+}
+
+#####################################################
+
+############ THE SECOND GUEZEN WAR ##################
+
+#####################################################
+
+# Diamonds found in Rijsseenfoort
+
+country_event = {
+	id = 333244
+	title = "SAFN44.T"
+	desc = "SAFN44.D"
+	picture = "goldrush"
+	
+	trigger = {
+	   year = 1883
+	   owns = 2092
+	   civilized = yes
+	   2092 = {
+		   NOT = { trade_goods = precious_goods }
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	   months = 12
+	}
+	
+	option = { 
+	name = "SAFN44.A"
+		2092 = {
+			trade_goods = precious_goods
+			add_province_modifier = { name = gold_rush duration = 5475 }
+		}
+		BRG = { set_country_flag = rijsseenfoortcrisis	 }
+		PBG = { set_country_flag = rijsseenfoortcrisis	 }	
+	}
+}
+
+# BRG/PBG is made aware if they still own 2087 and Dutch Crisis is resolved or they are democratic.
+
+country_event = {
+	id = 333245
+	title = "SAFN45.T"
+	desc = "SAFN45.D"
+	picture = "goldrush"
+	
+	trigger = {
+	   OR = {
+	      tag = BRG
+		  tag = PBG
+	   }
+	   owns = 2087
+	   NOT = { owns = 2092 }
+	   OR = {
+	      has_global_flag = DUTCH_OVER
+		  government = hms_government 
+		  government = democracy
+		  government = parliamentary_republic
+	   }
+	   has_country_flag = rijsseenfoortcrisis
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "SAFN45.A"
+		clr_country_flag = rijsseenfoortcrisis
+		set_country_flag = prospectors_bane_BRG
+	}
+}
+
+# BRG/PBG initial prospecting flavour event
+
+country_event = {
+	id = 333246
+	title = "SAFN46.T"
+	desc = "SAFN46.D"
+	picture = "diamonds_in_kimberley"
+	
+	trigger = {
+	   OR = {
+	      tag = BRG
+		  tag = PBG
+	   }
+	   has_country_flag = you_idiot_SAF
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "SAFN46.A"
+	money = 10000
+	clr_country_flag = you_idiot_SAF
+	set_country_flag = SAF_murder_prosp
+	BTV = { country_event = { id = 333247 days = 3 } }
+    }
+}
+
+# The Beginning of the Crisis - Prospectors Murdered!
+
+country_event = {
+	id = 333247
+	title = "SAFN47.T"
+	desc = "SAFN47.D"
+	picture = "schoeman_rifles"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "SAFN47.A"
+	clr_country_flag = you_idiot_SAF
+	set_country_flag = SAF_murder_prosp
+    any_country = {
+	   limit = {
+	   owns = 2087
+	   }
+	   country_event = { id = 333248 days = 31 }
+	   }
+	}
+}
+
+# The Second Geuzen War - SAF attacks BTV and drags BRG/PBG into it
+
+country_event = {
+	id = 333248
+	title = "SAFN48.T"
+	desc = "SAFN48.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "SAFN48.A"
+	any_country = {
+	    limit = {
+	    OR = {
+	       primary_culture = boer
+	       primary_culture = afro_south_african
+	       }
+	    }
+	    remove_country_modifier = geus_status_quo
+	} 
+	clr_country_flag = SAF_murder_prosp
+	set_global_flag = SAFSGW
+	SAF = { all_core = { add_core = BTV } }
+	2093 = { add_core = BTV }
+	2088 = { add_core = BTV }
+	    war = { 
+		target = BTV
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+    }  		
+}
+
+#### The Second Geuzen War - BRG has defeated the Boers ####
+
+country_event = {
+	id = 333249
+	title = "SAFN49.T"
+	desc = "SAFN49.D"
+	picture = "cape_map"
+	
+	trigger = {
+	OR = {
+       tag = BRG
+	   tag = PBG
+	}
+	war = no
+	NOT = { exists = BTV }
+	has_global_flag = SAFSGW
+	NOT = { has_global_flag = SAFSGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "SAFN49.A"
+	prestige = 10
+	war_exhaustion = -25
+	# Inherit any remaining Geus tags
+	inherit = ORA
+	inherit = LWE
+	inherit = TRN
+	inherit = NFL
+	clr_global_flag = SAFFGW
+	clr_global_flag = SAFSGW
+    clr_global_flag = SAFSGWA
+	set_global_flag = SAFFGWEnd
+	set_global_flag = SAFSGWEnd
+	set_global_flag = SAFSGWBRGWins
+	}	
+}
+
+
+#####################################################
+
+############ ALT SECOND GUEZEN WAR ##################
+
+#####################################################
+
+## The Plan for the Raid
+
+country_event = {
+	id = 333266
+	title = "SAFN66.T"
+	desc = "SAFN66.D"
+	picture = "schoeman_rifles"
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "SAFN66.A"
+    set_country_flag = BTV_is_a_wimp
+	ai_chance = { 
+	factor = 20
+		}	
+	}
+	
+	option = { 
+	name = "SAFN66.B"
+	badboy = 3
+	country_event = { id = 333269 days = 7 }
+	ai_chance = { 
+	factor = 80
+		}			
+	}
+}
+
+## No-Raid Path - National Archives fire and the reaction
+
+country_event = {
+	id = 333267
+	title = "SAFN67.T"
+	desc = "SAFN67.D"
+	picture = "BOH_Nuremberg_Burning"
+	
+	trigger = {
+	has_country_flag = BTV_is_a_wimp
+	}
+	
+	mean_time_to_happen = { 
+	months = 6
+	}
+	
+	option = { 
+	name = "SAFN67.A"
+	prestige = -2
+	clr_country_flag = BTV_is_a_wimp
+	set_global_flag = BTV_trap
+	}	
+}
+
+country_event = {
+	id = 333268
+	title = "SAFN68.T"
+	desc = "SAFN68.D"
+	picture = "schoeman_rifles"
+	
+	trigger = {
+	exists = yes
+	OR = {
+	  tag = BRG
+	  tag = PBG
+	}
+	has_global_flag = BTV_trap
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "SAFN68.A"
+	prestige = 1
+	clr_global_flag = BTV_trap
+	set_country_flag = BTV_SGW_trigger
+	}	
+}
+
+## Raid Path - BTV/OIA did a naughty thing. Next event triggers war.
+
+country_event = {
+	id = 333269
+	title = "SAFN69.T"
+	desc = "SAFN69.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN69.A"
+	set_country_flag = ASGW_BTV
+	any_country = {
+	   limit = {
+	     exists = yes
+	     OR = {
+		    tag = BRG
+			tag = PBG
+	     }
+	   }
+	   country_event = { id = 3332702 days = 1 }
+	}	
+	}	
+}
+
+## BTV/ORA warned that Burgundy has decided to march north. Next event triggers war.
+
+country_event = {
+	id = 3332701
+	title = "SAFN70.T"
+	desc = "SAFN70.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN70.A"
+	set_country_flag = ASGW_BTV
+	any_country = {
+	   limit = {
+	     exists = yes
+	     OR = {
+		    tag = BRG
+			tag = PBG
+	     }
+	   }
+	   country_event = { id = 3332703 days = 1 }
+	}	
+	}	
+}
+
+# The Second Geuzen War - BRG/PBG attacks BTV/ORA after BTV/ORA stole states in the south.
+
+country_event = {
+	id = 3332702
+	title = "SAFN71.T"
+	desc = "SAFN71.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "SAFN71.A"
+	any_country = {
+	    limit = {
+	    OR = {
+	       primary_culture = boer
+	       primary_culture = afro_south_african
+	       }
+	    }
+	    remove_country_modifier = geus_status_quo
+	} 
+	clr_global_flag = BTV_southern_raid
+	set_global_flag = SAFSGWA
+	set_country_flag = ASGW_BRG
+	SAF = { all_core = { add_core = BTV } }
+	any_owned = {
+	   limit = { 
+	      province_id = 2096
+	   }
+	   secede_province = FROM
+	}
+	any_owned = {
+	   limit = { 
+	      province_id = 2097
+	   }
+	   secede_province = FROM
+	}
+	any_owned = {
+	   limit = { 
+	      province_id = 2092
+	   }
+	   secede_province = FROM
+	}
+	2093 = { add_core = BTV }
+	2088 = { add_core = BTV }
+	war = { 
+		target = FROM
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+    }  		
+}
+
+# The Second Geuzen War - BRG/PBG attacks BTV/ORA
+
+country_event = {
+	id = 3332703
+	title = "SAFN72.T"
+	desc = "SAFN72.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "SAFN72.A"
+	any_country = {
+	    limit = {
+	    OR = {
+	       primary_culture = boer
+	       primary_culture = afro_south_african
+	       }
+	    }
+	    remove_country_modifier = geus_status_quo
+	} 
+	clr_global_flag = BTV_southern_raid
+	set_global_flag = SAFSGWA
+	set_country_flag = ASGW_BRG
+	SAF = { all_core = { add_core = BTV } }
+	war = { 
+		target = FROM
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}			
+	    }
+    }  		
+}
+
+#### The Second Geuzen War - BRG has defeated the Boers ####
+
+country_event = {
+	id = 3332704
+	title = "SAFN73.T"
+	desc = "SAFN73.D"
+	picture = "cape_map"
+	
+	trigger = {
+	OR = {
+       tag = BRG
+	   tag = PBG
+	}
+	war = no
+	NOT = { exists = BTV }
+	NOT = { exists = ORA }
+	has_global_flag = SAFSGWA
+    has_country_flag = ASGW_BRG
+	NOT = { has_global_flag = SAFSGWEnd }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "SAFN49.A"
+	prestige = 10
+	war_exhaustion = -25
+	# Inherit any remaining Geus tags
+	inherit = ORA
+	inherit = LWE
+	inherit = TRN
+	inherit = NFL
+	clr_global_flag = SAFFGW
+	clr_global_flag = SAFSGW
+    clr_global_flag = SAFSGWA
+	set_global_flag = SAFFGWEnd
+	set_global_flag = SAFSGWEnd
+	set_global_flag = SAFSGWBRGWins
+	}	
+}
+
+#####################################################
+
+############ Geus Victory Stuff #####################
+
+#####################################################
+
+# Treaty of Vereeniging - Unchanged from the Old Events
+
+country_event = {
+	id = 98247
+	title = "EVTNAME98247" #South Africa is Lost
+	desc = "EVTDESC98247"
+	news = yes
+	news_title = "EVTNAME98248"
+	news_desc_long = "EVTDESC98247_NEWS_LONG"
+	news_desc_medium = "EVTDESC98247_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC98247_NEWS_SHORT"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "98247.A"
+		prestige = -50
+	    clr_global_flag = SAFFGW
+	    set_global_flag = SAFFGWEnd
+	    clr_global_flag = SAFSGW
+        clr_global_flag = SAFSGWA
+	    set_global_flag = SAFSGWEnd
+		SAF = {
+			all_core = {
+				limit = { continent = africa }
+				remove_core = THIS
+			}
+		}
+		BTV = {
+			all_core = {
+				limit = { continent = africa }
+				remove_core = THIS
+			}
+		}
+	    any_country = {
+		   limit = {
+	       OR = {
+	          primary_culture = boer
+	          primary_culture = afro_south_african
+	       }
+		   }
+	       remove_country_modifier = geus_status_quo
+	    }
+		random_country = {
+			limit = {
+				war_with = THIS
+				controls = 2087
+			}
+			end_war = THIS
+			country_event = 98248
+		}
+		any_country = {
+			limit = {
+				OR = {
+					primary_culture = boer
+					alliance_with = FROM
+				}
+				war_with = THIS
+			}
+			end_war = THIS
+		}
+	}
+	
+	option = {
+		name = "98247.B"
+		prestige = -25
+	    clr_global_flag = SAFFGW
+	    set_global_flag = SAFFGWEnd
+	    clr_global_flag = SAFSGW
+        clr_global_flag = SAFSGWA
+	    set_global_flag = SAFSGWEnd
+	    any_country = {
+	       limit = {
+	       OR = {
+	          primary_culture = boer
+	          primary_culture = afro_south_african
+	          }
+	       }
+	       remove_country_modifier = geus_status_quo
+	    }
+		random_country = {
+			limit = {
+				war_with = THIS
+				controls = 2087
+			}
+			end_war = THIS
+			country_event = 98249
+		}
+		any_country = {
+			limit = {
+				OR = {
+					primary_culture = boer
+					alliance_with = FROM
+				}
+				war_with = THIS
+			}
+			end_war = THIS
+		}
+	}
+}
+
+country_event = {
+	id = 98248
+	title = "EVTNAME98248" #The Treaty of Vereeniging - Reconciliation
+	desc = "EVTDESC98248"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "98248.A"
+		prestige = 25
+		FROM = {
+			any_owned = {
+				limit = {
+					continent = africa
+					is_core = BTV
+				}
+				secede_province = THIS
+			}
+			any_owned = {
+				limit = {
+					continent = africa
+					is_core = SAF
+				}
+				secede_province = THIS
+			}
+			relation = { who = THIS value = 200 }
+			diplomatic_influence = { who = THIS value = 50 }
+		}
+		any_country = {
+			limit = {
+				alliance_with = FROM
+				war_with = THIS
+			}
+			end_war = THIS
+		}
+	}
+}
+
+country_event = {
+	id = 98249
+	title = "EVTNAME98248" #The Treaty of Vereeniging - Anger
+	desc = "EVTDESC98249"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "98249.A"
+		prestige = 25
+		FROM = {
+			any_owned = {
+				limit = {
+					continent = africa
+					is_core = BTV
+				}
+				secede_province = THIS
+			}
+			any_owned = {
+				limit = {
+					continent = africa
+					is_core = SAF
+				}
+				secede_province = THIS
+			}
+			casus_belli = {
+				target = THIS
+				type = cut_down_to_size
+				months = 240
+			}
+			casus_belli = {
+				target = SAF
+				type = cut_down_to_size
+				months = 240
+			}
+		}
+		any_pop = {
+			limit = { has_pop_culture = burgundian }
+			militancy = 8
+			consciousness = 4
+		}
+		any_country = {
+			limit = {
+				alliance_with = FROM
+				war_with = THIS
+			}
+			end_war = THIS
+		}
+	}
+}
+
+## LWE's unique total Victory Event
+
+country_event = {
+	id = 333250
+	title = "SAFN50.T"
+	desc = "SAFN50.D"
+	picture = "volksraad"
+	
+	trigger = { 
+	tag = BTV 
+	government = presidential_dictatorship 
+	capital = 2096 
+	has_country_flag = aloysuis
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "333250.A"
+	government = absolute_monarchy 
+	clr_country_flag = aloysuis
+	set_country_flag = former_LWE
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = { 
+	name = "333250.B"
+	clr_country_flag = aloysuis
+	set_country_flag = former_LWE
+	government = democracy
+	political_reform = state_equal_weight
+	political_reform = universal_weighted_voting
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = all_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	country_event = 800054
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+}
+
+## This is designed so someone can take North-Kaap after Burgundy is kicked out or SAF is created by Burgundy
+
+country_event = {
+	id = 333251
+	title = "SAFN51.T"
+	desc = "SAFN51.D"
+	picture = "pioneer_wagons"
+	
+	trigger = { 
+	OR = { tag = SAF tag = BTV }
+	2093 = { empty = yes }
+	2088 = { empty = yes }
+	2087 = { owned_by = THIS }
+	}
+	
+	mean_time_to_happen = { 
+	months = 10 
+	}
+	
+	option = { 
+	name = "333251.A"
+	2088 = { secede_province = THIS }
+	2093 = { secede_province = THIS }
+	}
+}
+
+## This should give a rather large amount of colonists for 30 years or so
+
+country_event = {
+	id = 333252
+	title = "SAFN52.T"
+	desc = "SAFN52.D"
+	picture = "pioneer_wagons"
+
+	trigger = { 
+	OR = {
+	   tag = SAF
+       tag = BTV
+    }	
+	owns = 2087
+	primary_culture = boer 
+	NOT = { is_vassal = yes }
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "333252.A" 
+	add_country_modifier = { 
+	name = trek_boers
+	duration = 10000
+		}
+	}
+}
+	
+#####################################################
+
+############ GVS - The Geuzen Civil War #####################
+
+#####################################################
+
+# This is triggered if BRG/PBG is out of Africa. BTV exists and LWE exist at the same time.
+ 
+# The Final Showdown - All Geus Tags are warned that they are going to be declaring war on each other at some point in the next few weeks since there is no point with the continued status quo if BRG/PBG has been kicked out.
+
+country_event = {
+	id = 333253
+	title = "SAFN53.T"
+	desc = "SAFN53.D"
+	picture = "schoeman_rifles"
+	
+	trigger = {
+	exists = yes
+    OR = { 
+       tag = ORA	
+	   tag = BTV
+	   tag = NFL
+	   tag = TRN
+	   tag = LWE
+    }	
+    OR = {	
+	   AND = {
+          NOT = { BRG = { owns = 2087 } }
+	      NOT = { PBG = { owns = 2087 } }
+	   }
+	   has_global_flag = 2087_Treaty
+	}	
+	NOT = { has_country_flag = line_is_drawn_here }
+	NOT = { has_global_flag = Geus_Civil_War }
+	NOT = { has_global_flag = GCWConcluded }
+	NOT = { has_global_flag = SAFNHConcluded }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SAFN53.A"
+	prestige = 1
+	set_country_flag = line_is_drawn_here
+	}
+}
+
+# All Geus tags declare war on one another.
+
+country_event = {
+	id = 333254
+	title = "SAFN54.T"
+	desc = "SAFN54.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	exists = yes
+    OR = { 
+       tag = ORA	
+	   tag = BTV
+	   tag = NFL
+	   tag = TRN
+	   tag = LWE
+    }
+    OR = {	
+	   AND = {
+          NOT = { BRG = { owns = 2087 } }
+	      NOT = { PBG = { owns = 2087 } }
+	   }
+	   has_global_flag = 2087_Treaty
+	}
+	has_country_flag = line_is_drawn_here
+	NOT = { has_global_flag = Geus_Civil_War }
+	NOT = { has_global_flag = GCWConcluded }
+    NOT = { has_global_flag = SAFNHConcluded }
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "SAFN54.A"
+	ORA = { clr_country_flag = line_is_drawn_here }
+    BTV = { clr_country_flag = line_is_drawn_here }
+	NFL = { clr_country_flag = line_is_drawn_here }
+	TRN = { clr_country_flag = line_is_drawn_here }
+	LWE = { clr_country_flag = line_is_drawn_here }
+	any_country = {
+	   limit = {
+	   OR = {
+	      primary_culture = boer
+	      primary_culture = afro_south_african
+	      }
+	   }
+	   remove_country_modifier = geus_status_quo
+	}
+	set_global_flag = Geus_Civil_War
+	any_country = {
+	   limit = {
+	   exists = yes
+	   primary_culture = boer 
+	   }
+	   war = { 
+	   target = THIS
+	      attacker_goal = {
+		     casus_belli = civil_war
+		  }
+		  defender_goal = {
+		     casus_belli = civil_war
+		        }			
+	        }	   
+	    }
+	}
+}
+
+# Geus Civil War - I still exist. Therefore I win.
+
+country_event = {
+	id = 333255
+	title = "SAFN55.T"
+	desc = "SAFN55.D"
+	picture = "boer_war_camps"
+	
+	trigger = {
+	has_global_flag = Geus_Civil_War
+	NOT = { has_global_flag = GCWConcluded }
+	NOT = { has_global_flag = SAFNHConcluded }
+	OR = {
+	   AND = {
+	   tag = ORA
+	   NOT = { exists = LWE }
+	   NOT = { exists = NFL }
+	   NOT = { exists = TRN }
+	   }
+	   AND = { 
+	   tag = NFL 
+	   NOT = { exists = LWE }
+	   NOT = { exists = ORA }
+	   NOT = { exists = TRN }
+	   }
+	   AND = { 
+	   tag = TRN
+	   NOT = { exists = LWE }
+	   NOT = { exists = ORA }
+	   NOT = { exists = NFL }
+	   }
+	   AND = { 
+	   tag = LWE 
+	   NOT = { exists = NFL }
+	   NOT = { exists = ORA }
+	   NOT = { exists = TRN }
+	   }	   
+    }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "SAFN55.A"
+	prestige = 20
+	clr_global_flag = Geus_Civil_War
+	set_global_flag = GCWConcluded
+	change_tag = BTV
+	}
+}
+
+# The rest of the Post-GCW Content for the Geus are in decisions.
+
+#####################################################
+
+############ Burgundian Victory Stuff ###############
+
+#####################################################
+
+### Braindead AI has released SAF prior to the_final_chapter_SAF being set. ###
+
+country_event = {
+	id = 3332560
+	title = "The AI is being dumb"
+	desc = "As usual"
+	picture = "boer_war"
+	
+	trigger = {
+	exists = yes
+	ai = yes
+	OR ={
+	   tag = BRG
+	   tag = PBG 
+	}
+	SAF = { OR = { vassal_of = BRG vassal_of = PBG } }
+	NOT = { has_country_flag = the_final_chapter_SAF }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "This should never trigger for non-AI"
+	inherit = SAF
+	}
+}
+
+### Killing GRQ ###
+
+country_event = {
+	id = 333256
+	title = "SAFN56.T"
+	desc = "SAFN56.D"
+	picture = "boer_war"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN56.A"
+	prestige = -20
+	2094 = { secede_province = FROM remove_core = GRQ }
+	2095 = { secede_province = FROM remove_core = GRQ }
+	2088 = { secede_province = FROM }
+	2093 = { secede_province = FROM }
+	FROM = { prestige = 5 create_vassal = GRQ }	
+	ai_chance = { 
+	factor = 30
+		}
+	}
+	
+	option = { 
+	name = "SAFN56.B"
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 1440
+	}
+    FROM = {
+	   war = { 
+	   target = GRQ
+	      attacker_goal = {
+		     casus_belli = conquest_any
+		  }
+		  defender_goal = {
+		     casus_belli = status_quo
+		        }			
+	        }	
+	    }
+	}
+}
+
+### The Original Event but with new localization and sets flags for yet another Geus Revolt ###
+
+country_event = {
+	id = 333257
+	title = "SAFN57.T"
+	desc = "SAFN57.D"
+	picture = "danishgovernment"
+
+	major = yes
+
+	trigger = {
+	    OR = {
+		tag = PBG
+		tag = BRG
+		}
+		exists = yes
+		war = no
+		year = 1895
+		any_owned_province = { is_core = SAF }
+		NOT = { has_country_flag = the_final_chapter_SAF }
+		NOT = { has_global_flag = 2087_Treaty }
+		NOT = { exists = SAF }
+	    NOT = { exists = BTV }
+	    NOT = { exists = NFL }
+	    NOT = { exists = LWE }
+	    NOT = { exists = ORA }
+	    NOT = { exists = TRN }
+		is_possible_vassal = SAF
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = SAF }
+				average_militancy = 3
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = SAF }
+				average_militancy = 4
+			}
+		}
+		modifier = {
+			factor = 0.5
+			year = 1905
+		}
+		modifier = {
+			factor = 0.5
+			year = 1915
+		}
+		modifier = {
+			factor = 0.5
+			year = 1925
+		}
+		modifier = {
+			factor = 0.5
+			year = 1935
+		}
+	}
+
+	option = {
+		name = "SAFN57.A"
+		set_country_flag = the_final_chapter_SAF
+		prestige = -10
+		badboy = -5
+		BTV = { all_core = { add_core = SAF } }
+		GRQ = { all_core = { add_core = SAF } }
+		any_country = {
+		limit = { 
+		tag = GRQ
+		vassal_of = THIS 
+		}
+		country_event = { id = 333257 days = 2 }
+		}
+		SAF = { primary_culture = burgundian add_accepted_culture = boer }
+
+		any_pop = {
+			limit = { location = { is_core = SAF } }
+			militancy = -10
+		}
+		SAF = {
+			all_core = { remove_core = BRG }
+		}
+		release_vassal = SAF
+		SAF = {
+			prestige = -80
+			capital = 2087
+		}
+		relation = {
+			who = SAF
+			value = 50
+		}
+		diplomatic_influence = {
+			who = SAF
+			value = 200
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+					government = prussian_constitutionalism
+					government = absolute_monarchy
+				}
+			}
+			modifier = {
+				factor = 2
+				AND = {
+				   government = hms_government
+				   tag = PBG
+				}
+			}
+			modifier = {
+				factor = 2
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 2
+				government = democracy
+			}
+			modifier = {
+				factor = 2
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 3
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 5
+			}
+			
+		}	
+	}
+	option = {
+		name = "SAFN57.B"
+		set_country_flag = the_final_chapter_SAF
+		any_owned = {
+			limit = { is_core = SAF }
+			any_pop = {
+				militancy = 3
+			}
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0.5
+				AND = {
+				   government = hms_government
+				   tag = PBG
+				}
+			}
+			modifier = {
+				factor = 0.5
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 0.5
+				government = democracy
+			}
+			modifier = {
+				factor = 0.5
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 3
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 5
+			}
+		}
+	}
+	option = {
+		name = "SAFN57.C"
+		set_country_flag = the_final_chapter_SAF
+		prestige = -10
+		badboy = -5
+		BTV = { all_core = { add_core = SAF } }
+		GRQ = { all_core = { add_core = SAF } }
+		any_country = {
+		limit = { 
+		tag = GRQ
+		vassal_of = THIS 
+		}
+		country_event = { id = 333257 days = 2 }
+		}
+		SAF = { primary_culture = burgundian add_accepted_culture = boer }
+
+		any_pop = {
+			limit = { location = { is_core = SAF } }
+			militancy = -10
+		}
+		SAF = {
+			all_core = { remove_core = BRG }
+		}
+		release_vassal = SAF
+		SAF = {
+			prestige = -80
+			capital = 2087
+		}
+		relation = {
+			who = SAF
+			value = 50
+		}
+		diplomatic_influence = {
+			who = SAF
+			value = 200
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		change_tag_no_core_switch = SAF
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+### Killing GRQ. For good. No chance for revolt here since they already effectively signed their autonomy away.  ###
+
+country_event = {
+	id = 333258
+	title = "SAFN58.T"
+	desc = "SAFN58.D"
+	picture = "boer_war_camps"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN58.A"
+	prestige = -20
+	SAF = { inherit = THIS add_accepted_culture = afro_south_african }
+	ai_chance = { 
+	factor = 100
+		}
+	}
+	
+	# Repeat the event in 3 days
+	
+	option = { 
+	name = "SAFN58.B"
+	country_event = { id = 333258 days = 1 }
+	change_tag_no_core_switch = SAF	
+	ai_chance = { 
+	factor = 0
+		}
+	}
+}
+
+### The Final Geus Revolt - BRG/PBG vs GRQ/BTV ###
+
+country_event = {
+	id = 333259
+	title = "SAFN59.T"
+	desc = "SAFN59.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	exists = yes
+    OR = { 
+	tag = BRG
+	tag = PBG
+	}
+	NOT = { exists = SAF }
+	owns = 2087
+	owns = 2049
+	has_country_flag = the_final_chapter_SAF
+	NOT = { has_global_flag = final_geus_revolt }
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+	
+	option = { 
+	name = "SAFN59.A"
+	set_global_flag = final_geus_revolt
+	any_country = {
+	limit = {
+	tag = BTV
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = GRQ
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	release_vassal = GRQ
+	any_owned = { 
+	  limit = { 
+	  is_core = BTV
+	  NOT = { is_core = LWE }
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = XHO
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = BSH
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = GRQ
+	  }
+	  secede_province = GRQ
+	}
+	BTV = {
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	}
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	all_core = { add_core = SAF }
+	}
+	GRQ = {
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	}
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	all_core = { add_core = SAF }
+	}
+	war = { 
+	   target = BTV
+		    attacker_goal = {
+			    casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}		
+	}		
+	war = { 
+	   target = GRQ
+	      attacker_goal = {
+		     casus_belli = conquest_any
+		  }
+		  defender_goal = {
+		     casus_belli = status_quo
+		}			
+	}	
+	}	
+}
+
+### The Final Geus Revolt - SAF vs GRQ/BTV ###
+
+# The Warning
+
+country_event = {
+	id = 333260
+	title = "SAFN60.T"
+	desc = "SAFN60.D"
+	picture = "boer_troops"
+	
+	trigger = { 
+	exists = yes
+	tag = SAF
+	owns = 2087
+	owns = 2049
+    NOT = { exists = BTV }
+    NOT = { exists = GRQ }
+	NOT = { is_vassal = yes }
+	NOT = { is_greater_power = yes }
+	NOT = { has_country_flag = SAF_GP_War }
+	NOT = { has_global_flag = 2087_Treaty }
+	NOT = { has_global_flag = final_geus_revolt }
+	}
+	
+	mean_time_to_happen = { 
+	months = 96
+	}
+	
+	option = { 
+	name = "SAFN60.A"
+	set_country_flag = SAF_GP_War
+	prestige = -5
+	   any_pop = { 
+	      limit = {
+		     location = { is_core = BTV }
+		  }
+	      consciousness = 2
+	      militancy = 2
+	   }
+	   any_pop = { 
+	      limit = {
+		     location = { is_core = GRQ }
+		  }
+	      consciousness = 4
+	      militancy = 4
+	   }
+	}
+}
+
+# The Revolt
+
+country_event = {
+	id = 333261
+	title = "SAFN61.T"
+	desc = "SAFN61.D"
+	picture = "boer_war"
+	
+	major = yes
+	
+	trigger = {
+	exists = yes
+    tag = SAF
+	owns = 2087
+	owns = 2049
+	has_country_flag = SAF_GP_War
+    NOT = { exists = BTV }
+    NOT = { exists = GRQ }
+	NOT = { has_global_flag = final_geus_revolt }
+	}
+	
+	mean_time_to_happen = { 
+	months = 6
+	}
+	
+	option = { 
+	name = "SAFN61.A"
+	clr_country_flag = SAF_GP_War
+	set_global_flag = final_geus_revolt
+	remove_accepted_culture = boer
+	remove_accepted_culture = afro_south_african
+	any_country = {
+	limit = {
+	tag = BTV
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	limit = {
+	tag = GRQ
+	exists = no 
+	}
+	government = democracy
+	ruling_party_ideology = conservative
+    political_reform = population_equal_weight
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    political_reform = free_press
+    political_reform = secret_ballots
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = BTV
+	  NOT = { is_core = LWE }
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = XHO
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = BSH
+	  }
+	  secede_province = BTV
+	}
+	any_owned = { 
+	  limit = { 
+	  is_core = GRQ
+	  }
+	  secede_province = GRQ
+	}
+	BTV = {
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	}
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	}
+	GRQ = {
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	}
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	}
+	war = { 
+	   target = BTV
+	      attacker_goal = {
+		     casus_belli = civil_war
+		  }
+		  defender_goal = {
+			 casus_belli = civil_war 
+		  }			
+	}		
+	war = { 
+	   target = GRQ
+	      attacker_goal = {
+		     casus_belli = civil_war 
+		  }
+		  defender_goal = {
+		     casus_belli = status_quo
+		}			
+	}	
+	}	
+}
+
+# A unrelated event that I'm yet to actually understand. Ignore this.
+
+country_event = {
+	id = 44335
+	title = "44335.T"
+	desc = "44335.D"
+	picture = "deliberation"
+	
+	trigger = {
+		exists = yes
+		is_vassal = yes
+		war = no
+		is_substate = no
+		civilized = yes
+		overlord = {
+			war = no
+			civilized = yes
+			NOT = { truce_with = THIS }
+			any_owned_province = {
+				is_overseas = yes
+				is_core = THIS
+			}
+		}
+		NOT = { has_country_flag = no_more_asking_for_cores }
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = "44335.A"
+		overlord = { country_event = 44336 }
+		ai_chance = { factor = 100 }
+	}
+	
+	option = {
+		name = "44335.B"
+		set_country_flag = no_more_asking_for_cores
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = {
+	id = 44336
+	title = "44336.T"
+	desc = "44336.D"
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "44336.A"
+		any_owned = {
+			limit = {
+				is_core = FROM
+				is_overseas = yes
+			}
+			remove_core = THIS
+		}
+		diplomatic_influence = { who = FROM value = 100 }
+		FROM = { country_event = 44337 }
+		ai_chance = { factor = 100 }
+	}
+	
+	option = {
+		name = "44336.B"
+		FROM = {
+			set_country_flag = no_more_asking_for_cores
+			country_event = 44338
+		}
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = {
+	id = 44337
+	title = "44337.T"
+	desc = "44337.D"
+	picture = "unite"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "190411.A"
+		prestige_factor = -0.1
+		relation = { who = FROM value = 50 }
+		FROM = {
+			any_owned = {
+				limit = {
+					is_core = THIS
+					is_overseas = yes
+				}
+				secede_province = THIS
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 44338
+	title = "97392.T"
+	desc = "44338.D"
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "44338.A"
+		relation = { who = FROM value = -100 }
+		leave_alliance = FROM
+		casus_belli = {
+			target = FROM
+			type = become_independent
+			months = 120
+		}
+	}
+}
+
+### Killing off the Zulu and Xhosa for BRG/PBG - Ported from HFM ###
+
+# Border Dispute with the Zulu
+country_event = {
+	id = 44338
+	title = "EVTNAME98250"
+ 	desc = "EVTDESC98250"
+ 	picture = "zulu"
+
+	trigger = {
+		war = no
+		OR = {
+			tag = BRG
+			tag = PBG
+		}
+		year = 1872
+		NOT = { exists = SAF }
+		ZUL = {
+			neighbour = THIS
+			war = no
+			civilized = no
+			NOT = { truce_with = THIS }			
+		}
+	}
+
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		months = 6
+		modifier = {
+			factor = 0.5
+			year = 1873
+		}
+		modifier = {
+			factor = 0.25
+			year = 1874
+		}
+	}
+
+	option = {
+		name = "EVT98250OPTA"
+		badboy = 2
+		diplomatic_influence = { who = ZUL value = -200 }
+		leave_alliance = ZUL
+		casus_belli = {
+			target = ZUL
+			type = conquest_any
+			months = 12
+		}
+		war = {
+			target = ZUL
+			attacker_goal = { casus_belli = conquest_any }
+		}	
+		ai_chance = {
+			factor = 99
+			modifier = {
+				factor = 0
+				badboy = 0.92
+			}
+		}
+	}
+	option = {
+		name = "EVT98250OPTB"
+		prestige = -20
+		diplomatic_influence = {
+			who = ZUL
+			value = -200
+		}
+		leave_alliance = ZUL
+		any_pop = {
+			scaled_militancy = {
+				factor = 2
+				issue = jingoism
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+country_event = {
+	id = 44339
+	title = "EVTNAME98256" #The Final Straw
+	desc = "EVTDESC98256"
+	picture = "zulu"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		OR = {
+			tag = BRG
+			tag = PBG
+		}
+		is_greater_power = yes
+		neighbour = XHO
+		NOT = {
+			war_with = XHO
+			truce_with = XHO
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+		modifier = {
+			factor = 1.5
+			war = yes
+		}
+		modifier = {
+			factor = 0.8
+			nationalism_n_imperialism = 1
+		}
+		modifier = {
+			factor = 0.5
+			year = 1870
+		}
+		modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "EVT98256OPTA"
+		badboy = 2
+		prestige = 10
+		leave_alliance = XHO
+		diplomatic_influence = { who = XHO value = -200 }
+		relation = { who = XHO value = -200 }
+		war = {
+			target = XHO
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+		}
+		ai_chance = {
+			factor = 99
+		}
+	}
+	
+	option = {
+		name = "EVT98256OPTB"
+		badboy = -2
+		prestige = -10
+		relation = { who = XHO value = 50 }
+		diplomatic_influence = { who = XHO value = 200 }
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

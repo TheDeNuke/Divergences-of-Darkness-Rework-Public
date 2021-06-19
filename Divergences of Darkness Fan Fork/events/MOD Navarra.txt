@@ -1,0 +1,1256 @@
+country_event = { #Navarran Independence 
+	
+	id = 987401
+	title = "NAV1.T"
+	desc = "NAV1.D" 
+	
+	major = yes 
+	
+	trigger = { 
+		tag = NAV 
+		war = no
+		OR = {
+		vassal_of = ARA
+		vassal_of = ARI
+		vassal_of = CAT
+		}
+		NOT = { has_global_flag = NAV_resolved }
+		neighbour = DUA
+		OR = {
+		ARA = { 
+		    exists = yes
+			NOT = { 
+				is_greater_power = yes 
+				}
+			}
+        ARI = { 
+		    exists = yes
+			NOT = { 
+				is_greater_power = yes 
+				}
+			}
+        CAT = { 
+			exists = yes
+			NOT = { 
+				is_greater_power = yes 
+				}
+			}
+		}
+		in_sphere = DUA
+		DUA = { 
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		NOT = { has_country_flag = independence_NAV }
+		}
+
+	mean_time_to_happen = { 
+		months = 24 
+	}
+	
+	option = { 
+	name = "987401.A" 
+	set_country_flag = independence_NAV
+	DUA = { country_event = 987402 } 
+	ai_chance = { 
+		factor =  60
+		}
+	}
+	
+	option = { 
+	name = "987401.B"
+	set_country_flag = independence_NAV
+	any_country = {
+		limit = { 
+			tag = SPA
+			exists = SPA
+	    }
+	country_event = 987406	
+	}
+	any_country = {
+		limit = { 
+			tag = SPC
+			exists = SPC
+	    }
+	country_event = 987406	
+	}
+	ai_chance = { 
+		factor =  20
+		}
+	}
+	
+	option = { 
+	name = "987401.C"
+	NAV = { country_event = 987417 }
+	DUA = { 
+		diplomatic_influence = { who = NAV value = -100 }
+		relation = { who = NAV value = -50 }
+		}
+	ai_chance = { 
+		factor =  20
+		}
+	}
+}
+
+country_event = { #Dual-Monarchy's answer 
+	
+	id = 987402
+	title = "NAV2.T"
+	desc = "NAV2.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "987402.A" 
+	NAV = { country_event = 987403 }
+		diplomatic_influence = { who = NAV value = 100 }
+		relation = { who = NAV value = 50 }
+	ai_chance = { 
+		factor = 20
+		}
+	}
+	
+	option = { 
+	name = "987402.B"
+	diplomatic_influence = { who = NAV value = -100 }
+	relation = { who = NAV value = -50 }
+	relation = { who = ARA value = 50 }
+    relation = { who = CAT value = 50 }
+    relation = { who = ARI value = 50 }
+	NAV = { country_event = 987405 }
+	ai_chance = { 
+		factor = 10 
+		}
+	}
+	option = { 
+	name = "987402.C"
+	diplomatic_influence = { who = NAV value = -100 }
+	relation = { who = NAV value = 15 }
+	relation = { who = SPA value = 50 }
+	relation = { who = SPC value = 50 }
+    relation = { who = CAT value = -50 }
+    relation = { who = ARI value = -50 }
+	relation = { who = ARA value = -50 }
+	set_global_flag = DUASPANAV_question
+	ai_chance = { 
+		factor = 70 
+		}
+	}
+}
+
+country_event = { #Basque Proclamation of Independence (DUA support) 
+
+	id = 987403 
+	title = "NAV3.T"
+	desc = "NAV3.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	name = "98412.A"
+	set_global_flag = NAV_resolved
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = ARI
+			exists = ARI
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	DUA = {
+		create_vassal = NAV
+		diplomatic_influence = {
+			who = NAV
+			value = 400
+			}				
+			military_access = NAV
+			create_alliance = NAV
+	}
+	any_country = {
+		limit = { 
+			tag = SPA
+			exists = SPA
+	    }
+	country_event = 987418
+	}
+	any_country = {
+		limit = { 
+			tag = SPC
+			exists = SPC
+	    }
+	country_event = 987418	
+	}
+    }
+}
+
+country_event = { #Basque Proclamation of Independence : Aragon's reaction 
+
+	id = 987404 
+	title = "NAV4.T"
+	desc = "NAV4.D"
+	
+	trigger = {
+	OR = {
+	tag = ARA
+	tag = ARI
+	tag = CAT
+	}
+	has_global_flag = NAV_DUA_Broke
+    exists = yes
+	}
+			
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "987404.A"
+	clr_global_flag = NAV_DUA_Broke
+	prestige_factor = -0.20
+	relation = { who = NAV value = 50 }
+	relation = { who = DUA value = 100 }
+	THIS = { country_event = 987416 }
+	ai_chance = { 
+	factor = 85 
+		}
+	}
+	
+	option = { 
+	name = "987404.B"
+	badboy = 5 
+	ESK_1 = {
+		add_core = THIS
+		}
+    clr_global_flag = NAV_DUA_Broke
+	DUA = { country_event = 987420 }
+	casus_belli = {
+				target = NAV
+				type = conquest
+				months = 60
+			}
+	war = {
+			target = NAV
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		call_ally = yes
+		}
+	ai_chance = { 
+		factor = 5
+		modifier = { 
+		factor = 0.1 
+		DUA = { 
+				war_with = ENL 
+				has_country_flag = glorious_revolution
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Basque re-evaluate the situation after DUA refusal
+
+	id = 987405
+	title = "NAV5.T"
+	desc = "NAV5.D"
+	
+	is_triggered_only = yes	
+	
+	option = { 
+	name = "987405.A"
+	any_country = {
+		limit = { 
+			tag = SPA
+			exists = SPA
+	    }
+	country_event = 987406
+	}
+	any_country = {
+		limit = { 
+			tag = SPC
+			exists = SPC
+	    }
+	country_event = 987406	
+	}
+	ai_chance = { 
+		factor =  75
+		}
+	} 
+	
+	option = { 
+	name = "987405.B"
+	prestige = -5
+	NAV = { country_event = 987417 }
+	ai_chance = { 
+		factor =  25
+		}
+	}
+}
+
+country_event = { #Spanish answer
+
+	id = 987406
+	title = "NAV6.T"
+	desc = "NAV6.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "987406.A" 
+	NAV = { country_event = 987407 }
+	prestige = 5 
+	SPA = { 
+		diplomatic_influence = { who = NAV value = 100 }
+		relation = { who = NAV value = 50 }
+	}
+	SPC = { 
+		diplomatic_influence = { who = NAV value = 100 }
+		relation = { who = NAV value = 50 }
+	}
+	ai_chance = { 
+		factor = 70
+		}
+	}
+	
+	option = { 
+	name = "987406.B" 
+	relation = { who = ARA value = 50 }
+    relation = { who = CAT value = 50 }
+    relation = { who = ARI value = 50 }
+	relation = { who = NAV value = -50 }
+	NAV = { country_event = 987417 }
+	ai_chance = { 
+		factor = 30
+		}
+	}
+}
+
+country_event = { #Basque Proclamation of Independence (SPA support) 
+
+	id = 987407
+	title = "NAV7.T"
+	desc = "NAV7.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	name = "987407.A"
+	set_global_flag = NAV_resolved
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_SPA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = ARI
+			exists = ARI
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_SPA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_SPA_Broke
+	}
+	any_country = {
+		limit = { 
+			tag = SPA
+			exists = SPA
+	    }
+		create_vassal = NAV
+		diplomatic_influence = {
+			who = NAV
+			value = 400
+			}				
+			military_access = NAV
+			create_alliance = NAV
+	}
+	any_country = {
+		limit = { 
+			tag = SPC
+			exists = SPC
+	    }
+		create_vassal = NAV
+		diplomatic_influence = {
+			who = NAV
+			value = 400
+			}				
+			military_access = NAV
+			create_alliance = NAV
+		}
+	}
+}
+
+country_event = { #Basque Proclamation of Independence : Aragon's reaction 
+
+	id = 987408 
+	title = "NAV8.T"
+	desc = "NAV8.D"
+	
+	trigger = {
+	OR = {
+	tag = ARA
+	tag = ARI
+	tag = CAT
+	}
+	has_global_flag = NAV_SPA_Broke
+    exists = yes
+	}
+			
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "987408.A"
+    clr_global_flag = NAV_SPA_Broke
+	prestige_factor = -0.20
+	relation = { who = NAV value = 50 }
+	relation = { who = SPA value = 50 }
+	relation = { who = SPC value = 50 }
+	THIS = { country_event = { id = 987416 days = 2 } }
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "987408.B"
+    clr_global_flag = NAV_SPA_Broke
+	ESK_1 = {
+		add_core = THIS
+		}
+	badboy = 5 
+	casus_belli = {
+				target = NAV
+				type = conquest
+				months = 60
+			}
+	war = {
+			target = NAV
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		call_ally = yes
+		}
+	ai_chance = { 
+		factor = 60
+		}
+	}
+}
+
+country_event = {
+
+	id = 987409 
+
+	trigger = {
+		tag = NAV
+		NOT = {
+			has_country_flag = independence_NAV
+		}
+		has_country_flag = impending_doom
+		war = no
+		is_ideology_enabled = anarcho_liberal
+		OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+	    OR = {
+		vassal_of = ARA
+		vassal_of = ARI
+		vassal_of = CAT
+		}
+		OR = {
+		ruling_party_ideology = conservative
+		ruling_party_ideology = market_liberal
+		ruling_party_ideology = reactionary
+		ruling_party_ideology = fascist
+		ruling_party_ideology = communist
+		war_policy = pro_military
+		war_policy = jingoism
+		}
+		}
+ 
+	mean_time_to_happen =  {
+		months = 24
+
+		modifier = {
+			factor = 0.5 #increase likelihood to happen
+			year = 1860
+		}
+
+		modifier = {
+			factor = 0.95 #increase likelihood to happen
+			year = 1865
+		}
+
+		modifier = {
+			factor = 0.95 #increase likelihood to happen
+			year = 1870
+		}
+	}
+
+	title = "NAV9.T"
+	desc = "NAV9.D"
+	
+	option = {
+		name = "987409.A" 
+		prestige = 2
+		government = democracy
+		political_reform = population_equal_weight
+		political_reform = wealth_weighted_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = no_trade_unions
+		political_reform = gerrymandering
+		political_reform = first_past_the_post
+		ruling_party_ideology = liberal
+		country_event = 800054
+		add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	}
+	NAV = {
+		any_pop = {
+			consciousness = 2
+			militancy = -3
+		}
+		bureaucrats = {
+			consciousness = -1
+		}
+		officers = {
+			consciousness = -1
+		}
+		aristocrats = {
+			consciousness = 3
+			militancy = 2
+		}
+		clergymen = {
+			consciousness = 1
+			militancy = 1
+		}
+		any_pop = {
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}
+		scaled_militancy = {
+				factor = 2
+				ideology = reactionary
+			}
+	}
+	ai_chance = { 
+		factor = 100
+	}
+	}
+}
+country_event = { #Basque Proclamation of Independence (dem support) 
+
+	id = 987410
+	title = "NAV10.T"
+	desc = "NAV10.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	name = "987407.A"
+	set_global_flag = NAV_resolved
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_REP_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = ARI
+			exists = ARI
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_REP_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_REP_Broke
+	}	
+	}
+}
+
+country_event = { #Basque Proclamation of Independence : Aragon's reaction 
+
+	id = 987411 
+	title = "NAV11.T"
+	desc = "NAV11.D"
+	
+	trigger = {
+	OR = {
+	tag = ARA
+	tag = ARI
+	tag = CAT
+	}
+	has_global_flag = NAV_REP_Broke
+    exists = yes
+	}
+			
+	mean_time_to_happen = { 
+	days = 30
+	}
+	
+	option = { 
+	name = "987411.A"
+    clr_global_flag = NAV_REP_Broke
+	prestige_factor = -0.10
+	relation = { who = NAV value = 150 }
+	relation = { who = SPA value = 50 }
+	relation = { who = DUA value = 50 }
+	THIS = { country_event = 987416 }
+	ai_chance = { 
+	factor = 30 
+		}
+	}
+	
+	option = { 
+	name = "987411.B"
+    clr_global_flag = NAV_REP_Broke
+	ESK_1 = {
+		add_core = THIS
+		}
+	badboy = 5 
+	casus_belli = {
+				target = NAV
+				type = conquest
+				months = 60
+			}
+	war = {
+			target = NAV
+			attacker_goal = {
+				casus_belli = conquest
+			}
+			defender_goal =  { 
+				casus_belli = install_democracy
+			}
+			call_ally = yes
+		}
+	ai_chance = { 
+		factor = 60
+		}
+	}
+}
+
+country_event = { #Reaction from Paris 
+
+	id = 987412 
+	title = "NAV12.T"
+	desc = "NAV12.D"
+	
+	trigger = {
+	 has_global_flag = DUASPANAV_question
+	 tag = NAV
+	  }
+	mean_time_to_happen = { 
+		months = 3
+	}
+	
+	option = { 
+	name = "987412.A"
+    clr_global_flag = DUASPANAV_question
+	prestige_factor = -0.10
+	relation = { who = DUA value = 150 }
+	relation = { who = SPA value = 50 }
+	relation = { who = SPC value = 50 }
+	set_global_flag = SPA_iswaiting
+	ai_chance = { 
+	factor = 70 
+		}
+	}
+	
+	option = { 
+	name = "987412.B"
+	clr_global_flag = DUASPANAV_question
+	
+	prestige_factor = 0.10
+	relation = { who = DUA value = -150 }
+	NAV = { country_event = 987417 }
+	ai_chance = { 
+		factor = 30
+		}
+	}
+}
+
+
+country_event = { #Dual-Monarchy's answer 
+	
+	id = 987413
+	title = "NAV13.T"
+	desc = "NAV13.D" 
+	
+	trigger = {
+	 has_global_flag = SPA_iswaiting
+	 OR = {
+	 tag = SPA
+	 tag = SPC
+	 }
+	 exists = yes
+	}
+	
+	mean_time_to_happen = { 
+		months = 3
+	}
+	
+	option = { 
+	name = "987413.A" 
+	NAV = { country_event = 987414 }
+	diplomatic_influence = { who = NAV value = 100 }
+	relation = { who = NAV value = 50 }
+	create_alliance = DUA
+	relation = { who = DUA value = 400 }
+	relation = { who = ARA value = -50 }
+    relation = { who = CAT value = -50 }
+    relation = { who = ARI value = -50 }
+	ai_chance = { 
+		factor = 90
+		}
+	}
+	
+	option = { 
+	name = "987413.B"
+	diplomatic_influence = { who = NAV value = -100 }
+	relation = { who = NAV value = -50 }
+	leave_alliance = DUA
+	relation = { who = DUA value = -50 }
+	relation = { who = ARA value = 50 }
+    relation = { who = CAT value = 50 }
+    relation = { who = ARI value = 50 }
+	NAV = { country_event = 987417 }
+	ai_chance = { 
+		factor = 10 
+		}
+	}
+}
+
+
+country_event = { #Basque Proclamation of Independence (DUAL support) 
+
+	id = 987414 
+	title = "NAV14.T"
+	desc = "NAV14.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "987414.A"
+	set_global_flag = NAV_resolved
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = ARI
+			exists = ARI
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+	    }
+		release_vassal = NAV
+		leave_alliance = NAV
+		set_global_flag = NAV_DUA_Broke
+	}
+	any_country = {
+		limit = { 
+			tag = SPA
+			exists = SPA
+	    }
+		create_vassal = NAV
+		diplomatic_influence = {
+			who = NAV
+			value = 400
+			}				
+			military_access = NAV
+			create_alliance = NAV
+	}
+	any_country = {
+		limit = { 
+			tag = SPC
+			exists = SPC
+	    }
+		create_vassal = NAV
+		diplomatic_influence = {
+			who = NAV
+			value = 400
+			}				
+			military_access = NAV
+			create_alliance = NAV
+	}
+	set_global_flag = ARAisdumdum
+	}
+}
+
+country_event = { #Aragon's reaction
+
+	id = 987415
+	title = "NAV15.T"
+	desc = "NAV15.D"
+	major = yes
+	
+	trigger = { 
+	OR = {
+	tag = ARI
+	tag = ARA
+	tag = CAT
+	}
+	exists = yes
+    has_global_flag = ARAisdumdum
+	}
+	
+	mean_time_to_happen = { 
+		days = 2 
+	}
+	
+	option = { 
+	name = "987415.B"
+    clr_global_flag = ARAisdumdum
+	ESK_1 = { 
+		add_core = THIS
+		}
+	DUA = { 
+		casus_belli = {
+				target = THIS
+				type = cut_down_to_size
+				months = 60
+			}
+		}
+	DUA = {
+	war = {
+			target = THIS
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal =  { 
+				casus_belli = acquire_core_state
+				state_province_id = 492
+				}
+			}
+		}
+		ai_chance = { 
+		factor = 0 
+		}
+	}
+	
+	option = { 
+	name = "987415.A" 
+    clr_global_flag = ARAisdumdum
+	prestige = -15
+	ESK_1 = { 
+		remove_core = THIS
+		}
+	NAV = { country_event = 987416 }
+	ai_chance = { 
+		factor = 100 
+		}
+	}
+}
+
+country_event = { #Aragon accepts death as ultimate punishment
+
+	id = 987416 
+	title = "NAV16.T"
+	desc = "NAV16.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "987416.A"
+	prestige = 20
+	badboy = -2
+	any_pop = {
+			consciousness = -2
+			militancy = -3
+		}
+	}
+}
+
+country_event = { #Navarra accepts death as ultimate punishment
+
+	id = 987417 
+	title = "NAV17.T"
+	desc = "NAV17.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "987417.A"
+	prestige = -5
+	any_pop = {
+			consciousness = 4
+			militancy = 2
+		}
+	set_country_flag = impending_doom
+	}
+}
+
+country_event = { #Spain infuriated at DUA 
+
+	id = 987418 
+	title = "NAV18.T"
+	desc = "NAV18.D"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	name = "987418.A"
+	set_global_flag = SPA_DUA_parents
+	prestige_factor = -0.10
+	relation = { who = NAV value = -100 }
+	relation = { who = DUA value = -200 }
+	set_country_flag = basqueland
+	ESK_1 = {
+		add_core = THIS
+		}
+	}
+}
+
+country_event = { #Bilbao Incident
+
+	id = 987419
+	title = "NAV19.T"
+	desc = "NAV19.D"
+	major = yes
+	
+	trigger = { 
+	    OR = {
+		tag = SPA
+        tag = SPC
+        }
+        exists = yes 		
+		war = no
+		OR = {
+			ruling_party_ideology = conservative
+			ruling_party_ideology = market_liberal
+			ruling_party_ideology = reactionary
+			ruling_party_ideology = fascist
+			ruling_party_ideology = communist
+			war_policy = pro_military
+			war_policy = jingoism
+		} 
+		has_global_flag = SPA_DUA_parents
+		NAV = {
+		    exists = yes	
+			vassal_of = DUA	
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		NOT = { has_global_flag = end_navarre }
+		}
+
+	mean_time_to_happen = { 
+		months = 36
+	}
+	
+	option = { 
+	name = "987419.B"
+	prestige = 30
+	badboy = 2
+	DUA = { country_event = 987420 }
+	casus_belli = {
+				target = DUA
+				type = cut_down_to_size
+				months = 60
+	}
+	war = {
+			target = NAV
+			attacker_goal =  { 
+				casus_belli = acquire_core_state
+				state_province_id = 492
+				}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+	}
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = {
+	name = "987419.A"
+	ESK_1 = {
+	remove_core = THIS
+	}
+	prestige = -20
+	relation = { who = DUA value = 100 }
+	relation = { who = NAV value = 50 }
+	badboy = -5
+	ai_chance = { 
+	factor = 50 
+		}
+    }
+}
+
+country_event = { #DUA reacts
+
+	id = 987420
+	title = "NAV20.T"
+	desc = "NAV20.D"
+	major = yes
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+	name = "987420.A"
+	prestige = 15
+	badboy = 5
+	}
+}
+
+
+
+
+####### The war of Bourbon Succession (the remainders of it) ####### 
+
+country_event = { 
+	
+	id = 987421
+	title = "NAV21.T"
+	desc = "NAV21.D" 
+	
+	trigger = { 
+		has_global_flag = NAV_resolved
+		tag = NAV 
+		war = no
+		year = 1860
+		OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		OR = {
+		ARA = {
+		    exists = yes		
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		NAV = {
+		    exists = yes	
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		ARI = { 
+		    exists = yes
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		CAT = { 
+			exists = yes
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		  }	
+        }		  
+		DUA = { 
+			exists = yes 
+			OR = { 
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = fascist_monarchy
+			}
+		}
+		NOT = { has_global_flag = end_bourbon }
+		}
+
+	mean_time_to_happen = { 
+		months = 35
+	}
+	
+	option = { 
+	name = "987421.A" 
+	set_global_flag = end_bourbon
+	DUA = { 
+	country_event = 987422
+	}
+	ai_chance = { 
+		factor = 30
+		}
+	}
+	
+	option = { 
+	name = "987421.B"
+	set_global_flag = end_bourbon
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+			}
+	country_event = 987423
+	}
+	any_country = {
+			limit = { 
+			tag = ARI
+			exists = ARI
+			}
+	country_event = 987423
+	}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+			}
+	country_event = 987423
+	}
+	ai_chance = { 
+		factor =  50
+		modifier = {
+				factor = 0
+				vassal_of = DUA
+			}
+		modifier = {
+				factor = 0
+				vassal_of = SPA
+			}
+		}
+	}
+	
+	option = { 
+	name = "987421.C"
+	NAV = { country_event = 987410 }
+	set_global_flag = end_bourbon 
+	prestige = 2
+	government = democracy
+	political_reform = population_equal_weight
+	political_reform = wealth_weighted_voting
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = no_trade_unions
+	political_reform = gerrymandering
+	political_reform = first_past_the_post
+	ruling_party_ideology = liberal
+	country_event = 800054
+	ai_chance = { 
+		factor = 20
+		}
+	}
+}
+
+country_event = { #DUA notification 
+
+	id = 987422
+	title = "NAV22.T"
+	desc = "NAV22.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "987422.A"
+	prestige = 10
+	ESK_1 = {
+		add_core = DUA
+		}
+	set_country_flag = DUA_NAV_connection
+	}
+}
+
+country_event = { #Aragon's notification
+
+	id = 987423
+	title = "NAV23.T"
+	desc = "NAV23.D"
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+	name = "987412.A"
+	prestige = 20
+    inherit = NAV 
+	set_country_flag = ARA_inherit_nav
+	#ESK_1 = {
+	#	add_core = THIS
+	#	}
+	}
+}

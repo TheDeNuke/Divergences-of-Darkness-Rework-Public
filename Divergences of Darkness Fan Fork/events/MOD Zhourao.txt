@@ -1,0 +1,247 @@
+###################################### ADVANCE AUSTRALIA FAIR #######################################################
+
+country_event = {
+	id = 95624 #The Conquest of Terra Australis
+	title = "ZHO1.T"
+	desc = "ZHO1.D"
+	picture = "american_colonization_society"
+
+	trigger = {	
+	    exists = yes
+	    NOT = { has_global_flag = active_australia_attempt }
+	    NOT = { has_global_flag = perth_is_owned }
+		NOT = { has_country_flag = australia_failure }
+		2497 = { empty = yes }
+		capital_scope = { continent = europe }
+		any_owned_province = { port = yes }
+		rank = 12
+		total_amount_of_ships = 10
+		war = no
+		is_disarmed = no
+		is_vassal = no
+		NOT = {
+			year = 1900
+			tag = BOH
+			tag = RUS
+			tag = MUS
+			tag = NOV
+			tag = RYA
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 100
+		modifier = {
+			factor = 0.5
+			year = 1840
+		}
+		modifier = {
+			factor = 0.5
+			year = 1850
+		}
+		modifier = {
+			factor = 0.5
+			year = 1855
+		}
+		modifier = {
+			factor = 0.1
+			year = 1860
+		}
+	}
+	
+	option = {
+		name = "We shall conquer the lost continent!"
+	    set_global_flag = active_australia_attempt
+	    prestige = 5
+		random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 50000 }
+					NOT = { check_variable = { which = owed_cash_money value = 1 } }
+				} 
+			}
+			owner = { set_variable = { which = owed_cash_money value = 50 } }
+		}
+
+		random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 50000 }
+					check_variable = { which = owed_cash_money value = 9 }
+				} 
+			}
+			owner = { change_variable = { which = owed_cash_money value = 50 } }
+		}
+
+		random_owned = {
+			limit = { owner = { money = 50000 } }
+			owner = { treasury = -50000 }
+		}
+
+		random_list = {
+			40 = { country_event = { id = 95625 days = 60 } }
+			60 = { country_event = { id = 95626 days = 60 } }
+		}
+		
+		ai_chance = {
+			factor = 90
+		}
+	}
+
+	option = {
+		name = "There is clearly nothing there."
+		set_country_flag = australia_failure
+		prestige = -1
+		ai_chance = {
+			factor = 10
+		}
+	}
+} 
+
+country_event = {
+	id = 95625 #The Conquest has Failed
+	title = "ZHO2.T"
+	desc = "ZHO2.D"
+	picture = "sudan_question"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "I was promised fertile land and they gave me nothing."
+		prestige = -10
+	    clr_global_flag = active_australia_attempt
+		set_country_flag = australia_failure
+	}
+} 
+
+country_event = {
+	id = 95626 #Colonization is Possible!
+	title = "ZHO3.T"
+	desc = "ZHO3.D"
+	picture = "1843_GreatMigration"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "Terra Australis is ours!"
+		prestige = 10
+		GAN = { country_event = { id = 95627 days = 7 } }
+		GAN_8 = { secede_province = THIS }
+		GAN_7 = { secede_province = THIS }
+		2497 = { add_province_modifier = { name = gold_rush duration = 7300 } }
+		2497 = { add_province_modifier = { name = developing_homeland duration = 1095 } }
+	    clr_global_flag = active_australia_attempt
+		set_country_flag = australia_owner
+		set_global_flag = perth_is_owned
+	}
+} 
+
+country_event = {
+	id = 95627 #The Europeans have arrived
+	title = "ZHO4.T"
+	desc = "ZHO4.D"
+	picture = "taiping_attack"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "How dare they tarnish the legacy of Zheng He!"
+		prestige = -1
+	}
+} 
+
+country_event = {
+	id = 95628 #The Last Bastion of Humanity
+	title = "ZHO5.T"
+	desc = "ZHO5.D"
+	picture = "american_colonization_society"
+
+	trigger = {	
+	    exists = yes
+	    has_global_flag = perth_is_owned
+		NOT = { has_global_flag = zeeland_is_zeehere }
+		NOT = { has_country_flag = australia_owner }
+		NOT = { has_country_flag = no_zealand_zeee }
+		2515 = { empty = yes }
+		capital_scope = { continent = europe }
+		any_owned_province = { port = yes }
+		rank = 12
+		total_amount_of_ships = 10
+		war = no
+		is_disarmed = no
+		is_vassal = no
+		NOT = {
+			year = 1900
+			tag = BOH
+			tag = RUS
+			tag = MUS
+			tag = NOV
+			tag = RYA
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 100
+		modifier = {
+			factor = 0.5
+			year = 1850
+		}
+		modifier = {
+			factor = 0.5
+			year = 1855
+		}
+		modifier = {
+			factor = 0.5
+			year = 1860
+		}
+		modifier = {
+			factor = 0.1
+			year = 1865
+		}
+	}
+	
+	option = {
+		name = "What can a bunch of primitives do to stop us? Colonize it!"
+	    set_global_flag = zeeland_is_zeehere 
+	    prestige = 5
+		random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 100000 }
+					NOT = { check_variable = { which = owed_cash_money value = 1 } }
+				} 
+			}
+			owner = { set_variable = { which = owed_cash_money value = 100 } }
+		}
+
+		random_owned = {
+			limit = {
+				owner = {
+					NOT = { money = 100000 }
+					check_variable = { which = owed_cash_money value = 9 }
+				} 
+			}
+			owner = { change_variable = { which = owed_cash_money value = 100 } }
+		}
+
+		random_owned = {
+			limit = { owner = { money = 100000 } }
+			owner = { treasury = -100000 }
+		}
+		
+		ENG_2513 = { secede_province = THIS }
+
+		ai_chance = {
+			factor = 90
+		}
+	}
+
+	option = {
+		name = "There is clearly nothing there."
+		set_country_flag = no_zealand_zeee
+		prestige = -1
+		ai_chance = {
+			factor = 10
+		}
+	}
+}

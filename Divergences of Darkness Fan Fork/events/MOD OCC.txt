@@ -1,0 +1,526 @@
+#### Occitania ####
+
+country_event = {
+	id = 65100
+	title = "OCC1.T"
+	desc = "OCC1.D"
+    picture = "election"
+	
+	trigger = { 
+	tag = OCC
+    NOT = { vassal_of = DUA }	
+	NOT = { has_global_flag = FRA_OCC } 
+	NOT = { has_global_flag = CAT_OCC } 	
+	NOT = { has_global_flag = wait_DUA } 
+	NOT = { war = yes }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+
+	option = { 
+	name = "65100.A"
+	set_global_flag = FRA_OCC
+	
+	ai_chance = {  
+			factor = 40 
+		}	
+	}
+	
+	option = { 
+	name = "65100.B"
+	set_global_flag = CAT_OCC
+	
+	ai_chance = {  
+			factor = 60 
+		}	
+	}
+}
+
+# VIVA LA FRANCE
+
+country_event = {
+	id = 65101
+	title = "OCC2.T"
+	desc = "OCC2.D"
+		
+	trigger = { 
+	tag = OCC 
+	has_global_flag = FRA_OCC 
+    exists = PRV
+	NOT = { war = yes }
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+
+	option = { 
+	name = "65101.A"
+	OCC = { all_core = { add_core = PRV }   }
+	PRV = { all_core = { add_core = OCC }   }
+	war = {
+			target = PRV
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = annex_core_country
+			}			
+		}
+	ai_chance = {  
+			factor = 100 
+		}
+	}		
+
+	option = { 
+	name = "65101.B"
+	clr_global_flag = FRA_OCC
+	set_global_flag = CAT_OCC
+	ai_chance = {  
+			factor = 0 
+		}
+	}	
+}
+	
+country_event = {
+	id = 65102
+	title = "OCC3.T"
+	desc = "OCC3.D"
+		
+	trigger = { 
+	tag = OCC 
+	has_global_flag = FRA_OCC 
+	NOT = { has_country_flag = FRA_OCC_PATH }
+    NOT = { exists = PRV }
+	NOT = { war = yes }
+	}
+
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "65102.A"	
+	set_country_flag = FRA_OCC_PATH
+    government = hms_government
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	change_tag = PRV
+	OCC = { set_country_flag = FRA_OCC_PATH }
+	any_country = {
+	limit = {
+	exists = yes
+	tag = FRA
+	   }
+	country_event = 65109
+	}
+	ai_chance = {  
+			factor = 50
+	     }	 
+    }
+	
+	option = { 
+	name = "We don't need to rule over France."	
+    prestige = -10
+	set_country_flag = FRA_OCC_PATH
+	PRV = { set_country_flag = FRA_OCC_PATH }
+	ai_chance = {  
+			factor = 50 
+	     }	 
+    }
+	
+	option = { 
+	name = "65101.B"
+	clr_global_flag = FRA_OCC
+	set_global_flag = CAT_OCC
+	ai_chance = {  
+			factor = 0 
+		 }	
+    }
+}
+
+country_event = {
+	id = 65109
+	title = "OCC10.T"
+	desc = "OCC10.D"
+		
+    is_triggered_only = yes
+
+	option = { 
+	name = "65110.A"
+    prestige = 5	
+	PRV = { all_core = { add_core = FRA }   }
+	OCC = { all_core = { add_core = FRA }   }
+	add_accepted_culture = provencal 
+    set_country_flag = occitania_reclaime	
+    }
+}
+
+# The rest is dealt with by the standard Valois events
+	
+# Catalonia/Occitania Union
+# A general union is done via events. If Aragon still exists then Occitania can just claim its land via a decision.
+
+country_event = {
+	id = 65103
+	title = "OCC4.T"
+	desc = "OCC4.D"
+	
+	major = yes
+		
+	trigger = { 
+	tag = OCC	
+	has_global_flag = CAT_OCC
+    exists = CAT	
+	all_core = { owned_by = THIS }
+	NOT = { war = yes }
+	NOT = { has_global_flag = union_of_cats }
+	NOT = { has_global_flag = cats_like_union }
+	NOT = { has_global_flag = cat_fight }
+	NOT = { has_global_flag = cat_resolution }
+	NOT = { exists = ARA }
+	}
+
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	name = "65103.A"	
+	set_global_flag = union_of_cats
+    }
+}
+
+country_event = {
+	id = 65104
+	title = "OCC5.T"
+	desc = "OCC5.D"
+	
+	trigger = { 
+	tag = CAT 
+	has_global_flag = union_of_cats
+	NOT = { war = yes }
+	NOT = { exists = ARA }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}	
+	
+	option = { 
+	name = "65104.A"	
+	clr_global_flag = union_of_cats
+	set_global_flag = cats_like_union
+
+	ai_chance = {  
+			factor = 50
+			modifier = {
+				factor = 2
+			    AND = {
+				OR = {
+				   government = democracy
+				   government = parliamentary_republic
+				   government = socialist_republic
+				}
+				OCC = {
+                   OR = { 	
+                      government = democracy				   
+				      government = parliamentary_republic 
+					  government = socialist_republic
+				      }
+				   }
+			    }
+			}
+
+	# The Aragon Monarchy/Dictatorship will not have its prestige destroyed by a bunch of fake French.
+			modifier = {
+				factor = 0
+				OR = {
+					government = absolute_monarchy
+					government = prussian_constitutionalism
+					government = proletarian_dictatorship
+					government = presidential_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+				}
+			}
+		}
+    }
+
+	option = { 
+	name = "65104.B"	
+	clr_global_flag = union_of_cats
+	set_global_flag = cat_fight
+	
+	ai_chance = {  
+			factor = 50
+			modifier = {
+				factor = 0
+			    AND = {
+				OR = {
+				   government = democracy
+				   government = parliamentary_republic
+				   government = socialist_republic
+				}
+				OCC = {
+                   OR = { 	
+                      government = democracy				   
+				      government = parliamentary_republic 
+					  government = socialist_republic
+				      }
+				   }
+			    }
+			}
+
+			# The Aragon Monarchy/Dictatorship will not have its prestige destroyed by a bunch of fake french.
+			modifier = {
+				factor = 2
+				OR = {
+					government = absolute_monarchy
+					government = prussian_constitutionalism
+					government = proletarian_dictatorship
+					government = presidential_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+				}
+			}
+		}
+    }
+ }
+
+# Thanks for the Free Clay. I'm sure Spain and France won't be pissed off about this.
+
+ country_event = {
+	id = 65105
+	title = "OCC6.T"
+	desc = "OCC6.D"
+	picture = "big_parade"
+	
+	trigger = { 
+	tag = OCC 
+	has_global_flag = cats_like_union
+	NOT = { war = yes }
+	NOT = { exists = ARA }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}	
+	
+	option = { 
+	name = "65105.A"
+	clr_global_flag = cats_like_union
+	set_global_flag = cat_resolution
+	set_country_flag = catalatalan	
+	CAT = { all_core = { add_core = OCC }   }
+	add_accepted_culture = catalan
+	inherit = CAT
+    }
+}	
+
+# YOU FUCKING BASTARD I'M GOING TO KILL YOU
+	
+country_event = {
+	id = 65106
+	title = "OCC7.T"
+	desc = "OCC7.D"
+	picture = "nationalists"
+	
+	trigger = { 
+	tag = OCC 
+	has_global_flag = cat_fight
+	NOT = { war = yes }
+	NOT = { exists = ARA }
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}	
+
+	option = { 
+	name = "65106.A"
+	clr_global_flag = cat_fight
+	set_global_flag = cat_resolution
+	set_country_flag = murder_of_catalan
+	CAT = { all_core = { add_core = OCC }   }
+	war = {
+			target = CAT
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+       }	
+   }
+}  
+
+# Portugal
+
+country_event = {
+	id = 65107
+	title = "OCC8.T"
+	desc = "OCC8.D"
+	picture = "nationalists"
+	
+	trigger = { 
+	tag = OCC 
+	has_country_flag = iberian_orange
+	all_core = { owned_by = THIS }
+	}
+	
+	mean_time_to_happen = { 
+	days = 356
+	}	
+
+	option = { 
+	name = "65107.A"
+	set_country_flag = portugal_is_pissed
+	POR = { all_core = { remove_core = OCC }   }
+	prestige = -20
+	any_pop = {
+			limit = {
+				culture = portuguese
+			}
+			militancy = 3
+		}
+   }
+}
+ 
+ country_event = {
+	id = 65108
+	title = "OCC9.T"
+	desc = "OCC9.D"
+	picture = "mexican_castle"
+	
+	trigger = { 
+	tag = OCC 
+	has_country_flag = the_portugal_compromise
+	}
+	
+	mean_time_to_happen = { 
+	days = 31
+	}	
+
+	option = { 
+	name = "65108.A"
+	clr_country_flag = portugal_is_pissed
+	add_accepted_culture = castilian
+	add_accepted_culture = basque
+	any_owned = { 
+	limit = { 
+	is_core = POR
+		}
+	secede_province = POR
+	}
+	ai_chance = {  
+			factor = 100 
+	}
+}
+
+	option = { 
+	name = "65108.B"
+	clr_country_flag = portugal_is_pissed
+	prestige = -10
+	any_pop = {
+			limit = {
+				culture = portuguese
+			}
+			militancy = 8
+		}
+	ai_chance = {  
+			factor = 100 
+	}
+  }
+}	
+
+country_event = {
+	id = 65111
+	title = "OCC11.T"
+	desc = "OCC11.D"
+	picture = "mexican_castle"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "OCC11.A"
+		end_war = FROM
+		PRV = { add_accepted_culture = french add_accepted_culture = breton add_accepted_culture = anglois }
+        PRV = { inherit = THIS }
+		PRV = { change_tag = FRA }
+	}
+}
+
+country_event = {
+	id = 65112
+	title = "OCC12.T"
+	desc = "OCC12.D"
+	picture = "barricade_red"
+
+	trigger = { 
+	tag = PRV 
+	NOT = { has_country_flag = deleted_PRV }
+	has_country_flag = valois_rulez
+	OR = {
+	government = democracy
+	government = parliamentary_republic
+	government = socialist_republic
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	days = 31
+	}	
+
+	option = {
+		name = "OCC12.A"
+		end_war = FRA
+		set_country_flag = deleted_PRV
+        FRA = { inherit = THIS }
+	    ai_chance = {  
+			factor = 100 
+	    }
+	}
+	option = {
+		name = "OCC12.B"
+		end_war = FRA
+		set_country_flag = deleted_PRV
+		add_accepted_culture = french
+		add_accepted_culture = breton
+		add_accepted_culture = anglois
+        inherit = FRA
+		change_tag = FRA
+	    ai_chance = {  
+			factor = 0
+	    }
+	}
+	option = {
+		name = "OCC12.C"
+		prestige = 1
+		set_country_flag = deleted_PRV
+	    ai_chance = {  
+			factor = 0 
+	    }
+	}
+}
+	

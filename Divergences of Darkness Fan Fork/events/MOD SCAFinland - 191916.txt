@@ -1,0 +1,2543 @@
+############################################## Finnish and Pskov Troubles ##############################################
+
+### Lore by NPMister
+
+### Events written by DeNuke
+
+
+### Finnish Agitation - Warning of Impending Diet ####
+
+country_event = {
+	id = 191916
+	title = "SCAFIN1.T"
+	desc = "SCAFIN1.D"
+	picture = "crisis"
+
+	trigger = {
+		tag = SCA
+		has_global_flag = liberal_revolution_somewhere
+		has_country_flag = THREECROWNS
+	    NOT = { exists = KAR }
+		NOT = { exists = FIN }
+        any_owned_province = { is_core = FIN }              
+		NOT = { has_global_flag = finnish_chain_trigger }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "191916.A"
+		set_global_flag = finnish_chain_trigger
+		prestige = -3
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 1
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = 1
+		}
+    }
+}
+
+	
+################################ The First National Diet of Finland #####################################
+
+country_event = {
+	id = 191917
+	title = "SCAFIN2.T"
+	desc = "SCAFIN2.D"
+	picture = "finland_diet"
+
+	trigger = {
+		tag = SCA
+		war = no
+		has_global_flag = finnish_chain_trigger
+		NOT = { has_country_flag = finnish_diet_trigger }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		months = 2
+	}
+
+	option = {
+		name = "191917.A"
+		prestige = 5
+		set_country_flag = finnish_diet_trigger 
+		set_country_flag = finnish_diet_two
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 3
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = 3
+		}
+	    ai_chance = {  
+			factor = 65
+		}
+    }
+		
+	option = {
+		name = "191917.B"
+		set_country_flag = finnish_diet_trigger 
+		set_country_flag = finnish_diet_stockholm
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 1
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = 1
+		}
+	    ai_chance = {  
+			factor = 10
+		}
+    }
+		
+	option = {
+		name = "191917.C"
+		prestige = -5
+		set_country_flag = finnish_diet_trigger 
+		set_country_flag = finnish_diet_helsing
+	    ai_chance = {  
+			factor = 25
+		}
+    }
+}
+
+################################ Helsing Diet #####################################
+
+country_event = {
+	id = 191918
+	title = "SCAFIN3.T"
+	desc = "SCAFIN3.D"
+	picture = "banquet"
+
+	trigger = {
+		tag = SCA
+		has_country_flag = finnish_diet_helsing
+		NOT = { has_global_flag = finnish_chain_ended }
+		NOT = { has_country_flag = finnish_first_done }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "191918.A"
+		set_country_flag = finnish_first_done
+		random_list = {
+			30 = { country_event = { id = 191919 days = 3 } }
+			10 = { country_event = { id = 191920 days = 3 } }
+			60 = { country_event = { id = 191921 days = 3 } }
+		} 
+    }	
+}	
+
+#### Ostrosolution - 2ND Diet Trigger ####
+
+country_event = {
+	id = 191919
+	title = "SCAFIN4.T"
+	desc = "SCAFIN4.D"
+	picture = "speech_assembly"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191919.A"
+		prestige = 5
+		set_country_flag = finnish_diet_two
+		set_country_flag = finnish_diet_autotrigger
+	    add_country_modifier = {
+				name = finnish_autonomy
+				duration = 2555
+		}
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = -1
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = -1
+		}
+    }
+}
+
+#### Autonomy Solution ####
+
+country_event = {
+	id = 191920
+	title = "SCAFIN5.T"
+	desc = "SCAFIN5.D"
+	picture = "finland_free"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191920.A"
+		prestige = -10
+        set_global_flag = finnish_chain_ended
+		set_country_flag = puppet_finland
+		#PSV = { set_country_flag = finnish_diet_concluded }
+        NOV = { set_country_flag = finnish_diet_concluded }		
+	    any_pop = {
+			limit = {
+			has_pop_culture = scandinavian
+			}
+			ideology = { factor = 0.10 value = conservative }
+			ideology = { factor = -0.10 value = liberal } 
+	    }
+		FIN = { all_core = { remove_core = SCA } }
+	    any_owned = { 
+	    limit = { is_core = FIN }
+	    secede_province = FIN
+	    }
+	    create_vassal = FIN
+		FIN = { capital = 343 }
+	    relation = { who = FIN value = 400 }
+	    diplomatic_influence = { who = FIN value = 400 }
+    }
+}
+
+### Karelia Question ####
+
+country_event = {
+	id = 191921
+	title = "SCAFIN6.T"
+	desc = "SCAFIN6.D"
+	picture = "speech_assembly"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191921.A"
+		random_list = {
+			10 = { country_event = { id = 191922 days = 3 } }
+			40 = { country_event = { id = 191923 days = 3 } }
+			50 = { country_event = { id = 191924 days = 3 } }
+		} 
+    }
+}
+
+### Karelian Positive Solution ####
+
+country_event = {
+	id = 191922
+	title = "SCAFIN7.T"
+	desc = "SCAFIN7.D"
+	picture = "finland_free"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191922.A"
+		prestige = -10
+        set_global_flag = finnish_chain_ended
+		#PSV = { set_country_flag = finnish_diet_concluded }
+        NOV = { set_country_flag = finnish_diet_concluded }		
+    	983 = { add_core = FIN }
+	    2587 = { add_core = FIN }
+		FIN = { all_core = { remove_core = SCA } }
+		SCA_345 = { add_core = SCA }
+	    any_owned = { 
+	    limit = { is_core = FIN NOT = { is_core = SCA } }
+	    secede_province = FIN
+	    }
+        FIN = {
+        government = hms_government
+        upper_house_composition = appointed
+        vote_franschise = universal_voting
+        public_meetings = yes_meeting
+        press_rights = free_press
+        trade_unions = no_trade_unions
+        voting_system = first_past_the_post
+        political_parties = non_secret_ballots
+	    ruling_party_ideology = conservative
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		capital = 343
+		prestige = -10
+		remove_accepted_culture = scandinavian
+		election = yes
+	    }
+	    relation = { who = FIN value = 400 }
+	    diplomatic_influence = { who = FIN value = 400 }
+    }
+}
+
+### Karelian Doomed Finnish ####
+
+country_event = {
+	id = 191923
+	title = "SCAFIN8.T"
+	desc = "SCAFIN8.D"
+	picture = "finland_diet"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191923.A"
+		prestige = -5
+        set_global_flag = finnish_chain_ended
+		set_country_flag = puppet_karelia 
+		FIN = { set_country_flag = reclaim_KAR_possible }
+		#PSV = { set_country_flag = finnish_diet_concluded }
+        NOV = { set_country_flag = finnish_diet_concluded }		
+		KAR = { all_core = { remove_core = FIN } }
+		KAR = { all_core = { remove_core = SCA } }
+	    any_owned = { 
+	    limit = { is_core = KAR }
+	    secede_province = KAR
+	    }
+        KAR = {
+        government = hms_government
+        upper_house_composition = appointed
+        vote_franschise = universal_voting
+        public_meetings = yes_meeting
+        press_rights = free_press
+        trade_unions = no_trade_unions
+        voting_system = first_past_the_post
+        political_parties = non_secret_ballots
+	    ruling_party_ideology = conservative
+		remove_accepted_culture = scandinavian
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+        capital = 342
+		election = yes
+	    }
+		FIN = { remove_accepted_culture = karelian remove_accepted_culture = scandinavian }
+	    create_vassal = KAR
+	    relation = { who = KAR value = 400 }
+	    diplomatic_influence = { who = KAR value = 400 }
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 5
+		}	
+    }
+}
+
+### Karelian and off to the Second Diet - 2ND Diet Trigger ####
+
+country_event = {
+	id = 191924
+	title = "SCAFIN9.T"
+	desc = "SCAFIN9.D"
+	picture = "finland_diet"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191924.A"
+		prestige = 5
+		set_country_flag = finnish_diet_two
+		set_country_flag = finnish_diet_autotrigger
+	    add_country_modifier = {
+				name = finnish_autonomy
+				duration = 4380
+		}
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = -2
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = -2
+		}
+    }
+}
+
+################################ Stockholm Diet #####################################
+
+country_event = {
+	id = 191925
+	title = "SCAFIN10.T"
+	desc = "SCAFIN10.D"
+	picture = "stortinget"
+
+	trigger = {
+		tag = SCA
+		has_country_flag = finnish_diet_stockholm
+		NOT = { has_country_flag = finnish_first_done }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "191925.A"
+		set_country_flag = finnish_first_done
+		random_list = {
+			85 = { country_event = { id = 191926 days = 3 } }
+			15 = { country_event = { id = 191927 days = 3 } }
+		} 
+    }
+}
+
+### For the last time Autonomy never works. I thought you should have worked this out by now ####
+
+country_event = {
+	id = 191926
+	title = "SCAFIN11.T"
+	desc = "SCAFIN11.D"
+	picture = "finland_diet"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191926.A"
+		prestige = 5
+		set_country_flag = finnish_diet_two
+		set_country_flag = finnish_diet_autotrigger
+	    add_country_modifier = {
+				name = finnish_autonomy
+				duration = 2555
+		}
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = -2
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = -2
+		}
+    }
+}
+
+### The Stockholm diet is a bad idea ####
+
+country_event = {
+	id = 191927
+	title = "SCAFIN12.T"
+	desc = "SCAFIN12.D"
+	picture = "crisis_revolution_enabled"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "191927.A"
+		prestige = 10
+		add_accepted_culture = karelian
+		set_country_flag = finnish_roulette
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = -1
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = -1
+		}
+    }
+}
+
+
+### Roulette Failure - WINTER WAR TRIGGER ####
+
+country_event = {
+	id = 191928
+	title = "SCAFIN13.T"
+	desc = "SCAFIN13.D"
+	picture = "storming_palace"
+
+	trigger = {
+		tag = SCA
+		has_country_flag = finnish_roulette
+		war = no
+	}
+
+	mean_time_to_happen = {
+		months = 24
+	}
+
+	option = {
+		name = "191928.A"
+		clr_country_flag = finnish_roulette
+		set_country_flag = WINTER_IS_COMING
+		prestige = -10
+		SCA = { remove_accepted_culture = finnish remove_accepted_culture = karelian }
+		FIN = { remove_accepted_culture = scandinavian }
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 2
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = 2
+		}
+    }
+}
+
+### Roulette Success - You dodged that one ####
+
+country_event = {
+	id = 191929
+	title = "SCAFIN14.T"
+	desc = "SCAFIN14.D"
+	picture = "danishgovernment"
+
+	trigger = {
+		tag = SCA
+		has_country_flag = finnish_roulette
+		995 = { owned_by = THIS }
+		war = no
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "191929.A"
+		prestige = 20
+		set_country_flag = greater_KAR
+		#PSV = { set_country_flag = finnish_diet_concluded }
+        NOV = { set_country_flag = finnish_diet_concluded }		
+		set_global_flag = finnish_chain_ended
+		clr_country_flag = finnish_roulette
+    }
+}
+
+################################ The Second National Diet of Finland #####################################
+# I've edited this so it triggers always before 1852 as a failsafe - DeNuke #
+
+country_event = {
+	id = 191930
+	title = "SCAFIN15.T"
+	desc = "SCAFIN15.D"
+	picture = "senate_debate"
+
+	trigger = {
+		tag = SCA
+		war = no
+		has_country_flag = finnish_diet_two
+	    any_owned_province = { is_core = FIN } 
+	    NOT = { exists = KAR }
+		NOT = { exists = FIN }
+		NOT = { has_country_modifier = finnish_autonomy }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		months = 36
+		modifier = {
+			factor = 0.1
+			has_country_modifier = springtime_of_nations
+		}
+		modifier = {
+			factor = 0.1
+			year = 1850
+		}
+		modifier = {
+			factor = 0.01
+			year = 1852
+		}
+		modifier = {
+			factor = 0.01
+			has_country_flag = finnish_diet_autotrigger
+		}
+		modifier = {
+			factor = 0.01
+			NOT = { any_owned_province = { is_core = KAR } }
+		}
+	}
+
+	option = {
+		name = "191930.A"
+		prestige = 5
+		clr_country_flag = finnish_diet_two
+		set_country_flag = FIN_war_is_inevitable
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = 5
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = 5
+		}
+	    ai_chance = {  
+			factor = 50
+		}
+    }
+
+	option = {
+		name = "191930.B"
+		prestige = 5
+		clr_country_flag = finnish_diet_two
+		set_country_flag = the_worst_diet_FIN		
+	    any_pop = {
+		limit = {
+		culture = finnish
+		}
+		militancy = -1
+		}	
+	    any_pop = {
+		limit = {
+		culture = karelian
+		}
+		militancy = -1
+		}
+	    ai_chance = {  
+			factor = 50
+		}
+    }
+}
+	
+country_event = {
+	id = 191931
+	title = "SCAFIN16.T"
+	desc = "SCAFIN16.D"
+	picture = "finland_free"
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = the_worst_diet_FIN
+	    any_owned_province = { is_core = FIN } 
+	    NOT = { exists = KAR }
+		NOT = { exists = FIN }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+	name = "191931.A"
+	clr_country_flag = the_worst_diet_FIN
+	random_list = {
+			25 = { country_event = { id = 191932 days = 3 } }
+			25 = { country_event = { id = 191933 days = 3 } }
+			50 = { country_event = { id = 191934 days = 3 } }
+	    } 
+	}
+}
+
+### The Fennosolution ###
+
+country_event = {
+	id = 191932
+	title = "SCAFIN17.T"
+	desc = "SCAFIN17.D"
+	picture = "crisis_revolution_enabled"
+	
+	is_triggered_only = yes
+
+	option = {
+	name = "191932.A"
+	prestige = 10
+	add_accepted_culture = karelian
+	set_country_flag = finnish_roulette
+	any_pop = {
+    limit = {
+    culture = finnish
+	}
+	militancy = -1
+	}	
+	any_pop = {
+	limit = {
+    culture = karelian
+	}
+	militancy = -1
+	}	
+	}
+}
+
+### The Worst Ending ###
+
+country_event = {
+	id = 191933
+	title = "SCAFIN18.T"
+	desc = "SCAFIN18.D"
+	picture = "FIN_inevitable"
+	
+	is_triggered_only = yes
+
+	option = {
+	name = "191933.A"
+	prestige = -20
+    set_global_flag = finnish_chain_ended
+	#PSV = { set_country_flag = finnish_diet_concluded }
+	NOV = { set_country_flag = finnish_diet_concluded }
+	set_country_flag = SCA_collapse_early
+	983 = { add_core = FIN }
+	2587 = { add_core = FIN }
+	338 = { add_core = FIN }
+	982 = { add_core = FIN }
+	FIN = { all_core = { remove_core = SCA } }
+	any_owned = { 
+	limit = { is_core = FIN NOT = { province_id = 994 }  }
+	secede_province = FIN
+	}
+    FIN = {
+    government = hms_government
+    upper_house_composition = appointed
+    vote_franschise = universal_voting
+    public_meetings = yes_meeting
+    press_rights = free_press
+    trade_unions = no_trade_unions
+    voting_system = first_past_the_post
+    political_parties = non_secret_ballots
+	ruling_party_ideology = conservative
+	capital = 343
+    prestige = 10
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+    clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+    clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	election = yes
+	}
+	relation = { who = FIN value = 400 }
+	diplomatic_influence = { who = FIN value = 400 }	
+	any_pop = {
+	limit = {
+    culture = scandinavian
+	}
+	militancy = 3
+	}	
+	}
+}
+
+### This Diet Sucks ###
+
+country_event = {
+	id = 191934
+	title = "SCAFIN19.T"
+	desc = "SCAFIN19.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+
+	option = {
+	name = "191934.A"
+	random_list = {
+			10 = { country_event = { id = 191935 days = 3 } }
+			90 = { country_event = { id = 191936 days = 3 } }
+	    } 	
+	}
+}
+
+### The Finnish are annoyed. Eternal Status Quo ####
+
+country_event = {
+	id = 191935
+	title = "SCAFIN20.T"
+	desc = "SCAFIN20.D"
+	picture = "storming_palace"
+	
+	is_triggered_only = yes
+
+	option = {
+	name = "191935.A"
+	set_global_flag = finnish_chain_ended
+	#PSV = { set_country_flag = finnish_diet_concluded }
+	NOV = { set_country_flag = finnish_diet_concluded }
+	FIN = { remove_accepted_culture = scandinavian }
+	add_country_modifier = {
+		name = finnish_autonomy
+		duration = -1
+	}
+	any_pop = {
+    limit = {
+    culture = finnish
+	}
+	militancy = 7
+	}	
+	any_pop = {
+	limit = {
+    culture = karelian
+	}
+	militancy = 7
+	}	
+	}
+}
+
+################# A COMPLETE FAILURE - WAR IS INEVITABLE #################
+
+country_event = {
+	id = 191936
+	title = "SCAFIN21.T"
+	desc = "SCAFIN21.D"
+	picture = "finland_diet"
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = FIN_war_is_inevitable
+	    any_owned_province = { is_core = FIN } 
+	    NOT = { exists = KAR }
+		NOT = { exists = FIN }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "191936.A"
+	prestige = -5
+    clr_country_flag = FIN_war_is_inevitable
+    set_country_flag = WINTER_IS_COMING
+	any_pop = {
+    limit = {
+    culture = finnish
+	}
+	militancy = 5
+	}	
+	any_pop = {
+	limit = {
+    culture = karelian
+	}
+	militancy = 5
+	}		
+	}
+}
+
+################# THE FINNISH INDEPENDENCE WAR - TRIGGER - REMOVE CORES AND CULTURE FROM FIN #################
+
+country_event = {
+	id = 191937
+	title = "SCAFIN22.T"
+	desc = "SCAFIN22.D"
+	picture = "FIN_inevitable"
+	
+	trigger = {
+		tag = SCA
+		war = no
+		has_country_flag = WINTER_IS_COMING
+		NOT = { has_country_flag = WINTER_IS_ALMOST }
+		NOT = { has_country_flag = WINTER_IS_HERE }
+		NOT = { has_country_flag = WINTER_IS_OVER }
+	    any_owned_province = { is_core = FIN } 
+	    NOT = { exists = KAR }
+		NOT = { exists = FIN }
+		NOT = { has_global_flag = finnish_chain_ended }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "191937.A"
+	set_global_flag = finnish_chain_ended
+    set_country_flag = WINTER_IS_ALMOST
+	clr_country_flag = WINTER_IS_COMING 
+	prestige = -20
+	983 = { add_core = FIN }
+	2587 = { add_core = FIN }
+	338 = { add_core = FIN }
+	982 = { add_core = FIN }
+	FIN = { all_core = { remove_core = SCA } }
+	# POM removed if not done already
+	any_country = {
+	limit = {
+	tag = POM
+	vassal_of = SCA
+	}
+	SCA = { inherit = POM }
+	}
+	# Temp Removal of NOV and RUS cores to prevent AI declaring war on FIN during warm up
+	KAR = { all_core = { remove_core = NOV } }
+	983 = { remove_core = NOV }
+	2587 = { remove_core = NOV }
+	any_owned = { 
+	limit = { is_core = FIN NOT = { province_id = 994 } }
+	secede_province = FIN
+	}
+	SCA = { remove_accepted_culture = finnish remove_accepted_culture = karelian }
+    FIN = {
+    government = hms_government
+    upper_house_composition = appointed
+    vote_franschise = universal_voting
+    public_meetings = yes_meeting
+    press_rights = free_press
+    trade_unions = no_trade_unions
+    voting_system = first_past_the_post
+    political_parties = non_secret_ballots
+	ruling_party_ideology = conservative
+	capital = 343
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+    clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+    clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = conservative_party_in_power
+	remove_accepted_culture = scandinavian
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	    }
+	country_event = { id = 191938 days = 1 }
+	}
+	country_event = { id = 191945 days = 60 }
+	relation = { who = FIN value = -400 }
+	diplomatic_influence = { who = FIN value = -400 }	
+	}	
+}
+
+################# THE FINNISH INDEPENDENCE WAR - KINGLESS CHAIN #################
+
+### First Option is BRG. Second Option is BOH. Third Option is Suicide #######
+
+country_event = {
+	id = 191938
+	title = "SCAFIN23.T"
+	desc = "SCAFIN23.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191938.A"	
+	BRG = { country_event = { id = 191939 days = 1 } }	
+	ai_chance = {
+	factor = 60
+	}
+	}
+
+	option = {
+	name = "191938.B"	
+	any_country = {
+	limit = {
+	owns = 625
+	}
+    country_event = { id = 191942 days = 1 }
+	}
+	ai_chance = {
+	factor = 30
+	    }	
+	}
+	
+	option = {
+	name = "191938.C"
+	prestige = 30
+	add_accepted_culture = scandinavian
+	ai_chance = {
+	factor = 10
+	}		
+	}
+}
+
+## BOH/CAE/HLR/CZE ##
+
+country_event = {
+	id = 191939
+	title = "SCAFIN24.T"
+	desc = "SCAFIN24.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191939.A"	
+	FIN = { country_event = { id = 191940 days = 1 } }	
+	ai_chance = {
+	factor = 90
+	modifier = {
+	factor = 0
+	NOT = {
+	OR = {
+	government = absolute_monarchy
+	government = prussian_constitutionalism
+    government = hms_government
+                 }	
+	          }
+	      }
+	   }
+	}
+
+	option = {
+	name = "191939.B"	
+    FIN = { country_event = { id = 191941 days = 1 } }
+	ai_chance = {
+	factor = 10
+	    }	
+	}		
+}
+
+country_event = {
+	id = 191940
+	title = "SCAFIN25.T"
+	desc = "SCAFIN25.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191940.A"	
+	any_country = {
+	limit = {
+	owns = 625
+	}
+	create_alliance = FIN
+ 	relation = { who = FIN value = 400 }
+	diplomatic_influence = { who = FIN value = 400 }	
+	leave_alliance = SCA
+ 	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	}
+    }   	
+}
+
+country_event = {
+	id = 191941
+	title = "SCAFIN26.T"
+	desc = "SCAFIN26.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191941.A"	
+	prestige = -10
+    }   	
+}
+
+## BURGUNDY ##
+
+country_event = {
+	id = 191942
+	title = "SCAFIN27.T"
+	desc = "SCAFIN27.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191942.A"	
+	FIN = { country_event = { id = 191943 days = 1 } }	
+	ai_chance = {
+	factor = 80
+	modifier = {
+	factor = 0
+	NOT = {
+	OR = {
+	government = absolute_monarchy
+	government = prussian_constitutionalism
+    government = hms_government
+                 }	
+	          }
+	      }
+	   }
+	}
+
+	option = {
+	name = "191942.B"	
+	set_country_flag = prince_is_dead
+    FIN = { country_event = { id = 191944 days = 1 } }
+	ai_chance = {
+	factor = 20
+	    }	
+	}		
+}
+
+country_event = {
+	id = 191943
+	title = "SCAFIN28.T"
+	desc = "SCAFIN28.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191943.A"	
+	create_alliance = BRG
+ 	relation = { who = BRG value = 400 }
+	diplomatic_influence = { who = BRG value = 400 }
+    BRG = { 	
+	leave_alliance = SCA
+ 	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	      }
+    }   	
+}
+
+country_event = {
+	id = 191944
+	title = "SCAFIN29.T"
+	desc = "SCAFIN29.D"
+	picture = "finland_free"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191944.A"	
+	prestige = 30
+	set_country_flag = prince_is_dead
+	ai_chance = {
+	factor = 50
+	    }	
+    }   
+
+	option = {
+	name = "191944.B"	
+	prestige = 30	
+	government = democracy
+	political_reform = universal_weighted_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = conservative_party_in_power
+	ai_chance = {
+	factor = 40
+	    }	
+    }   	
+
+	option = {
+	name = "191944.C"	
+	prestige = 30	
+    set_country_flag = prince_is_dead
+    government = presidential_dictatorship 
+    political_reform = none_voting
+	political_reform = party_appointed
+    political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 	
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = conservative_party_in_power
+	ai_chance = {
+	factor = 10
+	    }	
+    }   		
+}
+
+
+################# THE FINNISH INDEPENDENCE WAR - THE WAR IS UNLEASHED - DECLARE CONQUEST WAR - FIN CALL ALLIES #################
+
+country_event = {
+	id = 191945
+	title = "SCAFIN30.T"
+	desc = "SCAFIN30.D"
+	major = yes
+	
+	is_triggered_only = yes
+
+	option = {
+	name = "191945.A"
+	clr_country_flag = WINTER_IS_ALMOST
+	set_country_flag = WINTER_IS_HERE
+ 	relation = { who = NOV value = -400 }
+	diplomatic_influence = { who = NOV value = -400 }	
+ 	relation = { who = PSV value = -400 }
+	diplomatic_influence = { who = PSV value = -400 }
+    #PSV = { set_country_flag = SCA_influence_check }	
+    NOV = { set_country_flag = SCA_influence_check }	
+	casus_belli = {
+		target = FIN
+		type = conquest_any
+		months = 24
+	}
+	war = {
+		target = FIN
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+			call_ally = yes
+		 }
+	}	
+}
+
+################# THE FINNISH INDEPENDENCE WAR - Event triggered for NOV and PSV warning them about the influence loss #################
+
+country_event = {
+	id = 191946
+	title = "SCAFIN31.T"
+	desc = "SCAFIN31.D"
+	picture = "FIN_inevitable"
+	
+	trigger = {
+	    exists = yes
+	    OR = { 
+		   tag = PSV
+		   tag = NOV
+		}
+		has_country_flag = SCA_influence_check
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "191946.A"	
+	prestige = -1
+	#PSV = { set_country_flag = finnish_diet_concluded }
+	NOV = { set_country_flag = finnish_diet_concluded }
+	clr_country_flag = SCA_influence_check
+    } 
+}
+
+################# THE FINNISH INDEPENDENCE WAR - FINNISH VICTORY - SCA_collapse_early SET #################
+
+country_event = {
+	id = 191947
+	title = "SCAFIN32.T"
+	desc = "SCAFIN32.D"
+	picture = "crimean_war_defeat"
+	
+	trigger = {
+		tag = SCA
+        has_country_flag = WINTER_IS_HERE
+		NOT = { has_country_flag = WINTER_IS_OVER }
+		FIN = { exists = yes }
+	    war = no	
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "191947.A"
+	KAR = { all_core = { add_core = NOV } }
+	983 = { add_core = NOV }
+	2587 = { add_core = NOV }
+	clr_country_flag = WINTER_IS_HERE
+	set_country_flag = WINTER_IS_OVER
+	set_country_flag = SCA_collapse_early
+	prestige = -20
+	any_pop = {
+	limit = {
+    culture = scandinavian
+	}
+	militancy = 3
+	}	
+    }	
+}
+
+################# THE FINNISH INDEPENDENCE WAR - SCANDAVIAN VICTORY #################
+
+country_event = {
+	id = 191948
+	title = "SCAFIN33.T"
+	desc = "SCAFIN33.D"
+	picture = "danishgovernment"
+	
+	trigger = {
+		tag = SCA
+        has_country_flag = WINTER_IS_HERE
+		NOT = { has_country_flag = WINTER_IS_OVER }
+		FIN = { exists = no }
+	    war = no	
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "191948.A"
+	KAR = { all_core = { add_core = NOV } }
+	983 = { add_core = NOV }
+	2587 = { add_core = NOV }
+	clr_country_flag = WINTER_IS_HERE
+	set_country_flag = WINTER_IS_OVER
+	set_country_flag = FIN_reconquest
+	prestige = 20
+	any_pop = {
+	limit = {
+    culture = scandinavian
+	}
+	militancy = -3
+	}	
+    }	
+}
+
+################# EXTRA STUFF ####################
+
+################# PSV INFLUENCE EVENT CHAIN - TRIGGERED ABOUT 14 DAYS AFTER THE FINNISH CHAIN STARTS ################# 
+
+## The Murder of the Posadnik
+
+country_event = {
+	id = 191949
+	title = "SCAFIN34.T"
+	desc = "SCAFIN34.D"
+	picture = "pskov"
+	
+	trigger = {
+	    exists = yes
+		tag = PSV
+        vassal_of = SCA	      	
+        SCA = { has_country_flag = finnish_diet_trigger }
+	}
+
+	mean_time_to_happen = {
+		days = 14
+		modifier = {
+			factor = 0.1
+			SCA = { war_with = FIN }
+		}
+	}
+
+	option = {
+	name = "191949.A"
+	SCA = { release_vassal = PSV }
+	NOV = { country_event = { id = 191950 days = 2 } }
+	ai_chance = {
+	factor = 60
+	   }
+    }	
+	
+	option = {
+	name = "191949.B"
+	SCA = { release_vassal = PSV }
+	SCA = { country_event = { id = 191954 days = 2 } }	
+	ai_chance = {
+	factor = 40
+	   }
+    }	
+}
+
+### NOV has no choice but to annex Pskov
+
+country_event = {
+	id = 191950
+	title = "SCAFIN35.T"
+	desc = "SCAFIN35.D"
+	picture = "pskov"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191950.A"
+	set_global_flag = PSV_active
+	inherit = PSV
+	997 = { remove_core = PSV }
+	996 = { remove_core = PSV }
+	SCA = {
+	   relation = { who = NOV value = -400 }
+	   diplomatic_influence = { who = NOV value = -400 }	
+	   leave_alliance = NOV
+	   country_event = { id = 191951 days = 1 }
+	}
+    }	
+}
+
+### Inform SCA that they can either go to war to resolve the issue of Pskov being stolen or create a compromise with NOV ###
+
+country_event = {
+	id = 191951
+	title = "SCAFIN36.T"
+	desc = "SCAFIN36.D"
+	picture = "pskov"
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+	name = "191951.A"
+	prestige = 1
+	NOV = { country_event = { id = 191952 days = 3 } }
+	ai_chance = {
+	factor = 90
+	   }			
+	}
+	
+	option = {
+	name = "191951.B"	
+	clr_global_flag = PSV_active
+	badboy = 1
+	# Alert Novogrod and trigger global flag for the war.
+	NOV = { remove_country_modifier = neutrality country_event = { id = 232550 days = 0 } }
+	war = {
+			target = NOV
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 996
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	}	
+	ai_chance = {
+	factor = 10
+	   }		
+	}
+}
+
+### NOV can either accept the deal or get invaded ###
+
+country_event = {
+	id = 191952
+	title = "SCAFIN37.T"
+	desc = "SCAFIN37.D"
+	picture = "stortinget"
+	
+	is_triggered_only = yes
+	
+	immediate = { 
+	    994 = { add_core = ING }
+	    996 = { add_core = ING }
+	}
+	
+	option = {
+	name = "191952.A"
+	prestige = -5
+	clr_global_flag = PSV_active	
+	SCA = {
+	   set_country_flag = PSV_chain_end_ING
+	   set_country_flag = PSV_Treaty_Successful
+	   prestige = 5
+	   relation = { who = NOV value = 250 }
+	   diplomatic_influence = { who = NOV value = 250 }	
+	}
+	any_owned = { 
+	   limit = { is_core = ING }
+	   secede_province = SCA
+	}
+	ai_chance = {
+	factor = 20
+	   }			
+	}
+	
+	option = {
+	name = "191952.B"	
+	SCA = { country_event = { id = 191953 days = 3 } }
+	ai_chance = {
+	factor = 80
+	   }		
+	}
+}
+
+## Tell SCA that the deal was not accepted and the only choice is war.
+
+country_event = {
+	id = 191953
+	title = "SCAFIN38.T"
+	desc = "SCAFIN38.D"
+	picture = "stortinget"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191953.A"	
+	clr_global_flag = PSV_active
+	# Alert Novogrod and trigger global flag for the war.
+	NOV = { remove_country_modifier = neutrality  country_event = { id = 232550 days = 0 } }
+	war = {
+			target = NOV
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 996
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	}			
+	}
+}
+
+# Pskov goes for the compromise
+
+country_event = {
+	id = 191954
+	title = "SCAFIN39.T"
+	desc = "SCAFIN39.D"
+	picture = "stortinget"
+	
+	is_triggered_only = yes
+	
+	# That's a viable compromise
+		
+	option = {
+	name = "191954.A"
+	set_country_flag = PSV_chain_end_PSV
+	#994 = { change_province_name = "Nevskoye" }
+    relation = { who = PSV value = 400 }
+	diplomatic_influence = { who = PSV value = 400 }	
+	create_alliance = PSV
+    PSV = {
+	  government = prussian_constitutionalism
+      political_reform = appointed
+      political_reform = landed_voting
+      political_reform = yes_meeting
+      political_reform = state_press
+      political_reform = no_trade_unions
+      political_reform = first_past_the_post
+      political_reform = underground_parties
+	  clr_country_flag = theocratic_government
+	  clr_country_flag = merchantrepublic_gov
+	  clr_country_flag = parliamentary_republic_gov
+	  clr_country_flag = communist_gov
+	  clr_country_flag = absolute_monarchy_gov
+	  set_country_flag = semi_constitutional_monarchy_gov
+	  clr_country_flag = constitutional_monarchy_gov
+	  clr_country_flag = presidential_dictatorship_gov
+	  clr_country_flag = fascist_gov
+	  clr_country_flag = anarcho_liberal_gov
+	  clr_country_flag = socialist_republic_gov
+	  clr_country_flag = fascist_monarchy_gov
+	  clr_country_flag = democracy_gov
+	}
+	ai_chance = {
+	factor = 25
+	   }			
+	}
+	
+	# Not Good Enough
+	
+	option = {
+	name = "191954.B"	
+	set_country_flag = PSV_chain_end_ING
+	badboy = 1
+	994 = { add_core = ING }
+	996 = { add_core = ING }
+	997 = { add_core = ING }
+	1006 = { add_core = ING }
+	casus_belli = { 
+			target = PSV
+			type = conquest
+			months = 60
+	}
+	war = {
+			target = PSV
+			attacker_goal = {
+				casus_belli = conquest
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	}	
+    PSV = {
+	  government = prussian_constitutionalism
+      political_reform = appointed
+      political_reform = landed_voting
+      political_reform = yes_meeting
+      political_reform = state_press
+      political_reform = no_trade_unions
+      political_reform = first_past_the_post
+      political_reform = underground_parties
+	  clr_country_flag = theocratic_government
+	  clr_country_flag = merchantrepublic_gov
+	  clr_country_flag = parliamentary_republic_gov
+	  clr_country_flag = communist_gov
+	  clr_country_flag = absolute_monarchy_gov
+	  set_country_flag = semi_constitutional_monarchy_gov
+	  clr_country_flag = constitutional_monarchy_gov
+	  clr_country_flag = presidential_dictatorship_gov
+	  clr_country_flag = fascist_gov
+	  clr_country_flag = anarcho_liberal_gov
+	  clr_country_flag = socialist_republic_gov
+	  clr_country_flag = fascist_monarchy_gov
+	  clr_country_flag = democracy_gov
+	}
+	ai_chance = {
+	factor = 75
+	   }		
+	}
+}
+
+################## Creation of ING #######################
+
+country_event = {
+	id = 191955
+	title = "SCAFIN40.T"
+	desc = "SCAFIN40.D"
+	picture = "finland_diet"
+	
+	trigger = {
+		tag = SCA
+		owns = 996
+		war = no
+		OR = {
+		   NOT = { exists = PSV }
+		   has_country_flag = PSV_Treaty_Successful
+		}
+		NOT = { has_country_flag = ING_created }
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	immediate = { 
+	any_owned = { 
+	   limit = { province_id = 994 }
+	   add_core = ING
+	}
+	any_owned = { 
+	   limit = { province_id = 996 }
+	   add_core = ING
+	}
+	any_owned = { 
+	   limit = { province_id = 1006 }
+	   add_core = ING
+	}
+	any_owned = { 
+	   limit = { province_id = 997 }
+	   add_core = ING
+	}
+	any_owned = { 
+	   limit = { is_core = ING }
+	   secede_province = ING
+	}
+	create_vassal = ING
+	}
+
+	option = {
+	name = "191955.A"
+	clr_country_flag = PSV_treaty_successful
+	set_country_flag = ING_created
+	any_owned = { 
+	   limit = { is_core = ING }
+	   secede_province = ING
+	}	
+	ING = {
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	any_owned = { add_province_modifier = { name = ingrian_integration duration = 36500 } }
+    }
+    }	
+}
+
+################## Reformation of Pskov ##################
+
+country_event = {
+	id = 191956
+	title = "SCAFIN41.T"
+	desc = "SCAFIN41.D"
+	picture = "pskov"
+	
+	trigger = {
+		tag = NOV
+		owns = 1006
+		war = no
+		NOT = { exists = PSV }
+		NOT = { has_global_flag = PSV_active }
+		NOT = { has_global_flag = NOV_END_STAGE_ONE }
+		NOT = { has_country_flag = PSV_created }
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	immediate = { 
+	any_owned = { 
+	   limit = { is_core = PSV }
+	   secede_province = PSV
+	}
+	create_vassal = PSV
+	}
+
+	option = {
+	name = "191956.A"
+	clr_country_flag = PSV_treaty_successful
+	set_country_flag = PSV_created
+	any_owned = { 
+	   limit = { is_core = PSV }
+	   secede_province = PSV
+	}	
+	PSV = {
+	any_owned = { remove_province_modifier = ingrian_integration }
+    }
+    }	
+}
+
+#################### NOV AND KARELIA #####################
+
+########### If under the "Finnish_Roulette" situation and the PSV Influence Event chain has ended. Then SCA can seize KAR's Provinces via Decision ############
+
+country_event = {
+	id = 191957
+	title = "SCAFIN42.T"
+	desc = "SCAFIN42.D"
+	picture = "crisis_revolution_enabled"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "191957.A"
+	prestige = -20
+ 	any_owned = { 
+	limit = { is_core = KAR }
+	secede_province = SCA
+	}
+	any_pop = { 
+	    consciousness = 2
+	}
+	any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 2
+		}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = 2
+		}
+	}
+    add_country_modifier = {
+		name = neutrality
+		duration = -1
+	}
+	change_variable = {
+	    which = NOV_polar
+		value = 1
+	}
+	ai_chance = {
+	factor = 20
+	   }
+	}  
+	
+	option = {
+	name = "191957.B"
+	prestige = 20
+	set_country_flag = NOV_blocker
+	set_global_flag = NOV_KAR_WAR
+	leave_alliance = SCA
+	# Strong NOV is annoyed
+	random_owned = {
+		limit = { owner = { NOT = { check_variable = { which = NOV_polar value = 2 } } } }
+		owner = { add_country_modifier = { name = taiping_draft duration = 720 } add_country_modifier = { name = too_weak_BCW duration = 720 } political_reform = mandatory_service }
+	}
+	# Weak NOV immediately surrenders
+	random_owned = {
+		limit = { owner = { check_variable = { which = NOV_polar value = 6 } } }
+		owner = { country_event = { id = 232551 days = 7 } }
+	}
+	SCA = {
+	relation = { who = NOV value = -400 }
+	diplomatic_influence = { who = NOV value = -400 }	
+	war = {
+		target = NOV
+			attacker_goal = {
+				casus_belli = acquire_core_state
+				state_province_id = 995
+			}
+			defender_goal =  { 
+                casus_belli = status_quo
+			}
+	    }
+    }
+	ai_chance = {
+	factor = 80
+	}
+    }
+}
+
+############## PSKOV/INGRIA RUSSIAN UNIFICATION CHAIN #################
+
+#### Iteration 1: Pskov is out of SOI and Puppet Status - Fund Insurgents ####
+
+country_event = {
+	id = 191958
+	title = "SCAFIN43.T"
+	desc = "SCAFIN43.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN43.A"
+	relation = { who = PSV value = -50 }
+	diplomatic_influence = { who = PSV value = -50 }	
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 25000  }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 25 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 25000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 25 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 25000 } }
+        owner = { treasury = -25000 }
+    }
+	PSV = { country_event = { id = 191959 days = 3 } }
+	}
+}
+
+country_event = {
+	id = 191959
+	title = "SCAFIN44.T"
+	desc = "SCAFIN44.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN44.A"
+	relation = { who = RUS value = -50 }
+	diplomatic_influence = { who = RUS value = -50 }	
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = SCA
+	}
+ 	994 = { remove_core = PSV add_core = RUS }
+	996 = { add_core = RUS remove_core = PSV }
+	997 = { add_core = RUS remove_core = PSV }
+	1006 = { add_core = RUS remove_core = PSV }      	
+    RUS = { inherit = THIS }	
+	}
+}
+
+#### Iteration 2: Pskov is out of Puppet Status - Fund Insurgents ####
+
+country_event = {
+	id = 191960
+	title = "SCAFIN45.T"
+	desc = "SCAFIN45.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN45.A"
+	relation = { who = ING value = -50 }
+	diplomatic_influence = { who = ING value = -50 }	
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 25000  }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 25 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 25000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 25 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 25000 } }
+        owner = { treasury = -25000 }
+    }
+	ING = { country_event = { id = 191961 days = 3 } }
+	}
+}
+
+country_event = {
+	id = 191961
+	title = "SCAFIN46.T"
+	desc = "SCAFIN46.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN46.A"
+	relation = { who = RUS value = -50 }
+	diplomatic_influence = { who = RUS value = -50 }
+    any_owned = { remove_province_modifier = ingrian_integration }	
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = SCA
+	}
+ 	994 = { remove_core = ING add_core = RUS }
+	996 = { add_core = RUS remove_core = ING }
+	997 = { add_core = RUS remove_core = ING }
+	1006 = { add_core = RUS remove_core = ING }      	
+    RUS = { inherit = THIS }    	
+	}
+}
+
+#### Iteration 3: Pskov is alive and in Scandinavian SOI/Puppet ####
+
+country_event = {
+	id = 191962
+	title = "SCAFIN47.T"
+	desc = "SCAFIN47.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN47.A"
+	relation = { who = SCA value = -25 }
+	diplomatic_influence = { who = SCA value = -25 }	
+	SCA = { country_event = { id = 191963 days = 3 } }
+	}
+}
+
+country_event = {
+	id = 191963
+	title = "SCAFIN48.T"
+	desc = "SCAFIN48.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN48.A"
+	relation = { who = RUS value = 25 }
+	diplomatic_influence = { who = RUS value = 25 }	
+	RUS = { country_event = { id = 191964 days = 3 } }
+	ai_chance = {
+	factor = 90
+	}
+	}
+	
+	option = {
+	name = "SCAFIN48.B"
+	prestige = 5
+	relation = { who = RUS value = -400 }
+	diplomatic_influence = { who = RUS value = -400 }	
+	RUS = { country_event = { id = 191966 days = 3 } }
+	ai_chance = {
+	factor = 10
+	}
+	}
+}
+
+country_event = {
+	id = 191964
+	title = "SCAFIN49.T"
+	desc = "SCAFIN49.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN49.A"
+	relation = { who = SCA value = 100 }
+	diplomatic_influence = { who = SCA value = 100 }	
+	PSV = { country_event = { id = 191965 days = 3 } }
+	ai_chance = {
+	factor = 60
+	   modifier = {
+	      factor = 0
+          has_global_flag = THE_NORTHERN_BEAR
+       }
+	}
+	}
+	
+	option = {
+	name = "SCAFIN49.B"
+	prestige = 5
+	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	country_event = { id = 191966 days = 3 }
+	ai_chance = {
+	factor = 40
+	}
+	}
+}
+
+### The End of Pskov ###
+
+country_event = {
+	id = 191965
+	title = "SCAFIN50.T"
+	desc = "SCAFIN50.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN50.A"
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = SCA
+	}
+ 	994 = { remove_core = PSV }
+	996 = { add_core = RUS remove_core = PSV }
+	997 = { add_core = RUS remove_core = PSV }
+	1006 = { add_core = RUS remove_core = PSV }      	
+    RUS = { set_country_flag = northern_expansion_blocked inherit = THIS }	
+	}
+}
+
+### The Ingrian War - PSV Variation ###
+
+country_event = {
+	id = 191966
+	title = "SCAFIN51.T"
+	desc = "SCAFIN51.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN51.A"
+	    set_global_flag = THE_PSKOV_WAR
+	    PSV = { add_country_modifier = { name = taiping_draft duration = 720 } }
+	    war = {
+			target = PSV
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal =  {
+                casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+	}
+}
+
+### You should have defended your lines you idiot - RUS Victory ###
+
+country_event = {
+	id = 191967
+	title = "SCAFIN52.T"
+	desc = "SCAFIN52.D"
+    picture = "ambush_army"
+
+    trigger = {	
+        tag = SCA	
+		war = no
+		NOT = { exists = PSV }	
+		has_global_flag = THE_PSKOV_WAR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "SCAFIN52.A"
+	clr_global_flag = THE_PSKOV_WAR	
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = RUS
+	}
+ 	994 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	996 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	997 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	1006 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }   	
+	RUS = { any_owned = { remove_province_modifier = ingrian_integration } }
+	}
+}
+
+### SCA - Victory ###
+
+country_event = {
+	id = 191968
+	title = "SCAFIN53.T"
+	desc = "SCAFIN53.D"
+    picture = "ambush_army"
+	
+    trigger = {	
+        tag = SCA	
+		war = no
+		exists = PSV
+		has_global_flag = THE_PSKOV_WAR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "SCAFIN53.A"
+	clr_global_flag = THE_PSKOV_WAR	
+	# Add blocker for northern expansion
+	set_country_flag = ING_created
+	RUS = {
+	set_country_flag = northern_expansion_blocked
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = PSV
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = PSV
+	}
+  	any_owned = { 
+	   limit = { province_id = 996 }
+	   secede_province = PSV
+	}
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = PSV
+	}
+	}
+ 	994 = { add_core = ING remove_core = PSV remove_core = RUS }
+	996 = { add_core = ING remove_core = PSV remove_core = RUS }
+	997 = { add_core = ING remove_core = PSV remove_core = RUS }
+	1006 = { add_core = ING remove_core = PSV remove_core = RUS } 
+    PSV = {
+	change_tag = ING
+	primary_culture = finnish
+	add_accepted_culture = scandinavian
+	add_accepted_culture = north_russian
+	any_owned = { add_province_modifier = { name = ingrian_integration duration = 36500 } }
+	}    	
+	}
+}
+
+#### Iteration 4-5: Pskov is alive and in Scandinavian SOI/Puppet ####
+
+# Big ING
+
+country_event = {
+	id = 191969
+	title = "SCAFIN54.T"
+	desc = "SCAFIN54.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN54.A"
+	relation = { who = RUS value = -50 }
+	diplomatic_influence = { who = RUS value = -50 }	
+	ING = {
+	any_pop = { 
+		   limit = { 
+	          culture = north_russian
+		    }
+		    consciousness = 6
+		    militancy = 6
+	}
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = SCA
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = SCA
+	}
+	}
+	RUS = { country_event = { id = 191970 days = 3 } }
+	}
+}
+
+# Threaten Them. Y or N.
+
+country_event = {
+	id = 191970
+	title = "SCAFIN55.T"
+	desc = "SCAFIN55.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN55.A"
+	relation = { who = SCA value = -10 }
+	diplomatic_influence = { who = SCA value = -10 }		
+	SCA = { country_event = { id = 191971 days = 3 } }
+	ai_chance = {
+	factor = 90
+	   modifier = {
+	      factor = 0
+          has_global_flag = THE_NORTHERN_BEAR
+       }
+	}
+	}
+
+	option = {
+	name = "SCAFIN55.B"
+	prestige = 5
+	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }		
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = ING
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = ING
+	}
+	country_event = { id = 191974 days = 3 }
+	ai_chance = {
+	factor = 10
+	}
+	}
+}
+
+# The Threat from Russia - BIG ING
+
+country_event = {
+	id = 191971
+	title = "SCAFIN56.T"
+	desc = "SCAFIN56.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+ 
+    # Give them the Russian Majority lands and a hunk of cash as a concession.
+ 
+	option = {
+	name = "SCAFIN56.A"
+	relation = { who = RUS value = 150 }
+	diplomatic_influence = { who = RUS value = 150 }		
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 250000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 250 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 250000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 250 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 250000 } }
+        owner = { treasury = -250000 }
+    }
+	997 = { add_core = RUS remove_core = ING remove_core = SCA }
+	1006 = { add_core = RUS remove_core = ING remove_core = SCA } 
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = RUS
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = RUS
+	}
+	RUS = { set_country_flag = northern_expansion_blocked any_owned = { remove_province_modifier = ingrian_integration } }
+	ai_chance = {
+	factor = 70
+	}
+	}
+
+	option = {
+	name = "SCAFIN56.B"
+	prestige = 5
+	relation = { who = SCA value = -10 }
+	diplomatic_influence = { who = SCA value = -10 }	
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = ING
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = ING
+	}	
+	RUS = { country_event = { id = 191974 days = 3 } }
+	ai_chance = {
+	factor = 30
+	}
+	}
+}
+
+# SMOL ING
+
+# Lets try and ask for ING
+
+country_event = {
+	id = 191972
+	title = "SCAFIN57.T"
+	desc = "SCAFIN57.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN57.A"
+	relation = { who = SCA value = 50 }
+	diplomatic_influence = { who = SCA value = 50 }	
+	SCA = { country_event = { id = 191973 days = 3 } }
+	}
+}
+
+# The Conference of Helsinki - Will only fail in the current build
+
+country_event = {
+	id = 191973
+	title = "SCAFIN58.T"
+	desc = "SCAFIN58.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN58.A"
+	relation = { who = RUS value = -400 }
+	diplomatic_influence = { who = RUS value = -400 }	
+	RUS = { country_event = { id = 191974 days = 3 } }
+	}
+}
+
+### The Ingrian War - ING Variation ###
+
+country_event = {
+	id = 191974
+	title = "SCAFIN59.T"
+	desc = "SCAFIN59.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "SCAFIN74.A"
+	    set_global_flag = THE_INGRIAN_WAR
+	    ING = { add_country_modifier = { name = taiping_draft duration = 720 } }
+	    war = {
+			target = ING
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal =  {
+                casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+	}
+}
+
+### You should have defended your lines you idiot - RUS Victory ###
+
+country_event = {
+	id = 191975
+	title = "SCAFIN60.T"
+	desc = "SCAFIN60.D"
+    picture = "ambush_army"
+
+    trigger = {	
+        tag = SCA	
+		war = no
+		NOT = { exists = ING }	
+		has_global_flag = THE_INGRIAN_WAR	
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "SCAFIN60.A"
+	clr_global_flag = THE_INGRIAN_WAR
+	prestige_factor = -0.2
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = RUS
+	}
+ 	994 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	996 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	997 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }
+	1006 = { add_core = RUS remove_core = PSV remove_core = ING remove_core = SCA }  
+    RUS = { any_owned = { remove_province_modifier = ingrian_integration } } 	
+	}
+}
+
+### SCA - Victory ###
+
+country_event = {
+	id = 191976
+	title = "SCAFIN61.T"
+	desc = "SCAFIN61.D"
+    picture = "ambush_army"
+	
+    trigger = {	
+        tag = SCA	
+		war = no
+		exists = ING
+		has_global_flag = THE_INGRIAN_WAR	
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "SCAFIN61.A"
+	clr_global_flag = THE_INGRIAN_WAR	
+	# Add blocker for northern expansion
+	set_country_flag = ING_created
+	RUS = {
+	set_country_flag = northern_expansion_blocked
+  	any_owned = { 
+	   limit = { province_id = 1006 }
+	   secede_province = ING
+	}
+  	any_owned = { 
+	   limit = { province_id = 997 }
+	   secede_province = ING
+	}
+  	any_owned = { 
+	   limit = { province_id = 996 }
+	   secede_province = ING
+	}
+  	any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = ING
+	}
+	}
+ 	994 = { add_core = ING remove_core = PSV remove_core = RUS  }
+	996 = { add_core = ING remove_core = PSV remove_core = RUS }
+	997 = { add_core = ING remove_core = PSV remove_core = RUS }
+	1006 = { add_core = ING remove_core = PSV remove_core = RUS } 
+    ING = {
+	any_owned = { add_province_modifier = { name = ingrian_integration duration = 36500 } }
+	}    	
+	}
+}

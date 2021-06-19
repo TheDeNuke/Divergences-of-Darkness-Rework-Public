@@ -1,0 +1,893 @@
+country_event = {
+	id = 75400
+	title = "MLT1.T" #Old and sick knight
+	desc = "MLT1.D"
+	picture = "MLT_old_knight"
+	
+	trigger = { 
+	tag = MLT 
+	year = 1840 
+	NOT = { has_global_flag = old_knight }
+	} 
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "MLT1.A" 
+	set_global_flag = old_knight
+	ARA = { country_event = 75401 }
+	DUA = { country_event = 75401 }
+	}
+}
+
+country_event = {
+	id = 75401
+	title = "MLT2.T" #Old and sick knight -Notifications for ARA and DUA
+	desc = "MLT2.D"
+	picture = "MLT_old_knight"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT2.A"	
+	}
+}
+	
+country_event = {
+	id = 75402
+	title = "MLT3.T" #Grandmaster dies -No DUA intervention 
+	desc = "MLT3.D"
+	picture = "MLT_old_knight"
+	
+	trigger = { 
+	tag = MLT 
+	government = theocracy
+	has_global_flag = old_knight 
+	NOT = { 
+	OR = {
+		has_global_flag = old_knight_dead
+		has_global_flag = old_knight_retirement
+			}
+		}
+	year = 1851 
+	}
+	
+	mean_time_to_happen = { 
+	days = 7 
+	}
+	
+	option = { 
+	name = "MLT3.A"
+	set_global_flag = old_knight_dead 
+	ARA = { country_event = 75403 }
+	any_country = {
+			limit = { 
+			tag = DUA
+			exists = DUA
+			}
+	country_event = 75404
+		}
+	}
+}
+
+country_event = {
+	id = 75403
+	title = "MLT4.T" #Grandmaster dies - ARA notification
+	desc = "MLT4.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT4.A"
+	prestige = 1 
+	}
+}
+
+
+country_event = {
+	id = 75404
+	title = "MLT5.T" #Grandmaster dies - DUA notification
+	desc = "MLT5.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT4.A"
+	prestige = -1 
+	}
+}
+
+country_event = {
+	id = 75405
+	title = "MLT6.T" #ARA lost SIC
+	desc = "MLT6.D"
+	picture = "MLT_portoferrante"
+	
+	trigger = { 
+	tag = MLT 
+	government = theocracy
+	is_vassal = yes
+	war = no 
+	ARA = { 
+		war = no 
+		NOT = { owns = 762 }
+		}
+	} 
+	
+	mean_time_to_happen = { 
+	days = 4
+	}
+	
+	option = { 
+	name = "MLT6.A" #Throw the Knights out but don't join who owns Sicily
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+			}
+	release_vassal = THIS
+	country_event = 75406
+			}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+			}
+	country_event = 75406
+	release_vassal = THIS
+			}
+	government = democracy 
+	political_reform = state_equal_weight
+	political_reform = universal_weighted_voting
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = all_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	ai_chance = { 
+		factor = 20 
+		}
+	}
+	
+	option = { 
+	name = "MLT6.B" #Throw the Knights out and join whoever owns Sicily
+	any_country = {
+			limit = { 
+			owns = 762
+			}
+    country_event = 75407
+		}
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+			}
+	country_event = 75408
+			}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+			}
+	country_event = 75408
+			}
+	ai_chance = { 
+		factor = 75 
+		}
+	}
+	option = { 
+	name = "MLT6.C" #Knights hold out but declare sovereignity
+	any_country = {
+			limit = { 
+			tag = ARA
+			exists = ARA
+			}
+	country_event = 75409
+	release_vassal = THIS
+			}
+	any_country = {
+			limit = { 
+			tag = CAT
+			exists = CAT
+			}
+	country_event = 75409
+	release_vassal = THIS
+			}
+	ai_chance = { 
+		factor = 5
+		}
+	}
+}
+
+country_event = {
+	id = 75406
+	title = "MLT7.T" #ARA lost SIC -Maltese Republic 
+	desc = "MLT7.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT7.A" 
+	prestige = -5 
+	relation = { who = MLT value = -200 }
+	leave_alliance = MLT 
+	}
+}
+
+country_event = {
+	id = 75407
+	title = "MLT8.T" #ARA lost SIC -Malta joins SIC/ITA
+	desc = "MLT8.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT8.A" 
+	inherit = FROM
+	}
+}
+
+country_event = {
+	id = 75408
+	title = "MLT9.T" #ARA lost SIC -Malta joins SIC/ITA
+	desc = "MLT9.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT9.A" 
+	prestige = -5 
+	}
+}
+
+country_event = {
+	id = 75409
+	title = "MLT10.T" #ARA lost SIC -Knights still there
+	desc = "MLT10.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT10.A" 
+	prestige = -5 
+	relation = { who = MLT value = -200 }
+	leave_alliance = MLT 
+	}
+}
+
+country_event = {
+	id = 75410
+	title = "MLT11.T" #MLT revolution 
+	desc = "MLT11.D"
+	picture = "MLT_portoferrante"
+	
+	trigger = { 
+	year = 1860 
+	tag = MLT 
+	government = theocracy
+	NOT = { has_country_flag = MLT_revolution } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 50 
+	}
+	
+	option = { 
+	name = "MLT11.A"
+	set_country_flag = MLT_revolution 
+	government = democracy
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	ai_chance = { 
+	factor = 95 
+		}
+	}
+	
+	option = { 
+	name = "MLT11.B" 
+	set_country_flag = MLT_revolution 
+	ai_chance = { 
+		factor = 5 
+			modifier = { 
+				factor = 2 
+				NOT = { has_country_flag = german_grandmaster }
+			}
+		}
+	}
+}
+	
+#Grandmaster abdication 	
+	
+country_event = {
+	id = 75411
+	title = "MLT12.T" #Montfort-Laval in Marseilles
+	desc = "MLT12.D"
+	picture = "MLT_prince" 
+
+	trigger = { 
+	tag = DUA 
+	has_global_flag = old_knight
+	has_country_flag = meddle_in_italy 
+	MLT = { exists = yes government = theocracy } 
+	NOT = { 
+		OR = { 
+		has_global_flag = old_knight_dead
+		has_country_flag = montfort_laval_DUA
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 4
+	}
+	
+	option = { 
+	name = "MLT12.A" 
+	set_country_flag = montfort_laval_DUA
+	MLT = { country_event = 75412 }
+	}
+	
+}
+
+country_event = {
+	id = 75412
+	title = "MLT13.T" #Montfort 'Coup'
+	desc = "MLT13.D"
+	picture = "MLT_portoferrante" 
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT13.A" 
+	set_global_flag = old_knight_retirement
+	ARA = { country_event = 75413 }
+	}
+	
+}
+
+country_event = {
+	id = 75413
+	title = "MLT14.T" #Montfort 'Coup' -ARA notification 
+	desc = "MLT14.D"
+	picture = "MLT_portoferrante" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT14.A" 
+	}
+}
+
+country_event = {
+	id = 75414
+	title = "MLT15.T" #Contentious election
+	desc = "MLT15.D"
+	picture = "MLT_portoferrante" 
+	
+	trigger = { 
+	tag = MLT 
+	has_global_flag = old_knight_retirement
+	NOT = { has_country_flag = MLT_election }
+	}
+	
+	mean_time_to_happen = { 
+	days = 10 
+	}
+	
+	option = { 
+	name = "MLT15.A"
+	set_country_flag = MLT_election
+	BOH = { country_event = 75415 }
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			}
+    country_event = 75415
+	} 
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = HLR }
+			}
+    country_event = 75415
+		} 
+	}
+}
+
+
+country_event = { 
+	id = 75415
+	title = "MLT16.T" #Trouble in the Holy Council 
+	desc = "MLT16.D"
+	picture = "MLT_portoferrante" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT16.A" #Use contacts in the Holy See to support the neutral Von Preysing
+	prestige = 2 
+	DUA = { country_event = 75416 }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = { 
+	name = "MLT16.B" #Do not intervene
+	MLT = { country_event = { id = 75428 days = 15 } } 
+	ai_chance = { 
+	factor = 50 
+	modifier = { 
+	factor = 1.2 
+	relation = { who = DUA value = 150 } 
+			}
+	modifier = { 
+	factor = 1.5
+	alliance_with = DUA 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 75416
+	title = "MLT17.T" #DUA hears about BOH meddling
+	desc = "MLT17.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT17.A" #Contact Spain
+	prestige = -1
+	any_country = {
+			limit = { 
+			tag = SPC
+			NOT = { exists = SPA }
+			}
+    country_event = 75417
+	} 
+	any_country = {
+			limit = { 
+			tag = SPA
+			NOT = { exists = SPC }
+			}
+    country_event = 75417
+		} 
+	}
+}
+
+country_event = { 
+	id = 75417
+	title = "MLT18.T" #SPA/SPC helping DUA 
+	desc = "MLT18.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT18.A"
+	relation = { who = FROM value = 50 }
+	prestige = 1
+	MLT = { country_event = { id = 75418 days = 15 } } 
+	}
+}
+
+country_event = { 
+	id = 75418
+	title = "MLT19.T" #Contentious election
+	desc = "MLT19.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT19.A" #BOH candidate 
+	relation = { who = ARA value = -100 } 
+	relation = { who = DUA value = -100 } 
+	relation = { who = PAP value = 100 } 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			}
+	relation = { who = THIS value = 100 }
+	diplomatic_influence = { who = THIS value = 100 } 
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = HLR }
+			}
+	relation = { who = THIS value = 100 }
+	diplomatic_influence = { who = THIS value = 100 } 
+	}
+	ARA = { diplomatic_influence = { who = THIS value = -100 } }
+	leave_alliance = ARA
+	DUA = { diplomatic_influence = { who = THIS value = -100 } }
+	ARA = { country_event = 75419 } 
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "MLT19.B" #DUA Monfort-Laval 
+	relation = { who = ARA value = -200 } 
+	relation = { who = DUA value = 50 } 
+	DUA = { diplomatic_influence = { who = THIS value = 300 } country_event = 75422 }
+	ARA = { diplomatic_influence = { who = THIS value = 300 } country_event = 75422 }
+	set_country_flag = Montfort_Laval_elected
+	relation = { who = PAP value = -50 } 
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "MLT19.C" #ARA : De Margarit de Biure
+	relation = { who = ARA value = 200 } 
+	relation = { who = DUA value = -200 } 
+	DUA = { diplomatic_influence = { who = THIS value = -100 } }
+	ARA = { country_event = 75427 }
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 75419
+	title = "MLT20.T" #Convention of Porto Ferrante
+	desc = "MLT20.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT20.A" #Accept the convention 
+	release_vassal = MLT 
+	leave_alliance = MLT 
+	prestige = -5
+	badboy = -5
+	relation = { who = PAP value = 50 } 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			}
+	relation = { who = THIS value = 50 }
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = HLR }
+			}
+	relation = { who = THIS value = 50 }
+		}
+	FROM = { country_event = 75420 }
+	}
+	
+	option = { 
+	name = "MLT20.B" #Go against the Pope (AI will never do it) 
+	release_vassal = MLT 
+	leave_alliance = MLT 
+	854 = { add_core = THIS }
+	badboy = 10
+	relation = { who = PAP value = -150 } 
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			}
+	relation = { who = THIS value = -100 }
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = HLR }
+			}
+	relation = { who = THIS value = -100 }
+		}
+	ai_chance = { 
+	factor = 0 
+		}
+	}
+}
+
+country_event = { 
+	id = 75420
+	title = "MLT21.T" #Convention of Porto Ferrante -MAJOR
+	desc = "MLT21.D"
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT21.A"
+	any_country = {
+			limit = { 
+			tag = HLR
+			NOT = { exists = BOH }
+			}
+	country_event = 75421
+	}
+	any_country = {
+			limit = { 
+			tag = BOH
+			NOT = { exists = HLR }
+			}
+	country_event = 75421
+		}
+	}
+}
+
+country_event = { 
+	id = 75421
+	title = "MLT22.T" #The Maltese Falcon
+	desc = "MLT22.D"
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT22.A" 
+	prestige = 3
+	}
+}
+
+country_event = { 
+	id = 75422
+	title = "MLT23.T" #Monfort-Laval elected -notif for ARA
+	desc = "MLT23.D"
+	picture = "MLT_prince"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT23.A" 
+	prestige = -2 
+	}
+}
+
+country_event = { 
+	id = 75423
+	title = "MLT24.T" #Monfort-Laval elected -notif for DUA
+	desc = "MLT24.D"
+	picture = "MLT_prince"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT24.A" 
+	prestige = 2
+	}
+}
+
+country_event = { 
+	id = 75424
+	title = "MLT25.T" #The Principality of Malta
+	desc = "MLT25.D" 
+	
+	major = yes
+	
+	trigger = { 
+	tag = MLT 
+	is_vassal = yes 
+	has_country_flag = Montfort_Laval_elected
+	}
+	
+	mean_time_to_happen = { 
+	months = 7 
+	}
+	
+	option = { 
+	name = "MLT25.A"
+	clr_country_flag = Montfort_Laval_elected
+	government = prussian_constitutionalism
+	political_reform = appointed
+	political_reform = wealth_voting
+	political_reform = yes_meeting
+	political_reform = censored_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	ARA = { country_event = 75425 }
+	}
+}
+
+country_event = { 
+	id = 75425
+	title = "MLT26.T" #The Principality of Malta -ARA reaction
+	desc = "MLT26.D" 
+	picture = "MLT_prince"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT26.A" 
+	prestige = -10 
+	release_vassal = MLT 
+	leave_alliance = MLT 
+	854 = { add_core = THIS }
+	relation = { who = DUA value = -100 } 
+	DUA = { diplomatic_influence = { who = MLT value = 150 } } 
+	relation = { who = MLT value = -200 } 
+	DUA = { country_event = 75426 }
+	ai_chance = { 
+	factor = 80 
+		}
+	}
+	
+	option = { 
+	name = "MLT26.B" 
+	prestige = -10 
+	release_vassal = MLT 
+	leave_alliance = MLT 
+	854 = { add_core = THIS }
+	relation = { who = DUA value = -100 } 
+	DUA = { diplomatic_influence = { who = MLT value = 150 } } 
+	war = { 
+		target = FROM
+		   attacker_goal = {
+				casus_belli = annex_core_country
+			}	
+		}
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+	
+country_event = { 
+	id = 75426
+	title = "MLT27.T" #Notif that ARA abandoned claims
+	desc = "MLT27.D" 
+	picture = "MLT_prince"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT27.A"
+	prestige = 2 
+	DUA = { country_event = 75429 }
+	}
+}
+
+country_event = { 
+	id = 75427
+	title = "MLT28.T" #Aragonese candidate wins
+	desc = "MLT28.D" 
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT28.A"
+	prestige = 2 
+	}
+}
+
+country_event = { 
+	id = 75428
+	title = "MLT29.T" #Contentious election (only DUA and ARA)
+	desc = "MLT29.D" 
+	picture = "MLT_portoferrante"
+	
+	is_triggered_only = yes 
+	
+	
+	option = { 
+	name = "MLT19.B" #DUA Monfort-Laval 
+	relation = { who = ARA value = -200 } 
+	relation = { who = DUA value = 50 } 
+	DUA = { diplomatic_influence = { who = THIS value = 300 } country_event = 75423 }
+	ARA = { diplomatic_influence = { who = THIS value = 300 } country_event = 75422 }
+	set_country_flag = Montfort_Laval_elected
+	relation = { who = PAP value = -50 } 
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "MLT19.C" #ARA : De Margarit de Biure
+	relation = { who = ARA value = 200 } 
+	relation = { who = DUA value = -200 } 
+	DUA = { diplomatic_influence = { who = THIS value = -100 } }
+	ARA = { country_event = 75427 }
+	ai_chance = { 
+	factor = 60 
+		}
+	}
+}
+
+country_event = { 
+	id = 75429
+	title = "MLT30.T" #Notif that ARA abandoned claims -DUA
+	desc = "MLT30.D" 
+	picture = "MLT_prince"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "MLT30.A"
+	create_alliance = FROM
+	prestige = 2 
+	}
+}
+	

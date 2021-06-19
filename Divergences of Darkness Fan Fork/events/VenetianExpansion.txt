@@ -1,0 +1,482 @@
+###Sale of Dürres
+country_event = { # Triggered event for buying Dürres
+	id = 500000
+	title = "500000.T"
+	desc = "500000.D"
+	major = yes #<- Correct
+	
+	is_triggered_only = yes
+	
+	option = { # Agree to sell
+		name = "500000.A"
+		prestige = -20
+		ai_chance = { 
+		     factor = 15
+		}
+		any_pop = {
+			militancy = 2
+		}
+		VEN = {
+			country_event = 500001
+		}
+	}
+	
+	option = { # Refuse to sell
+		name = "500000.B"
+		prestige = 10
+		ai_chance = { 
+		     factor = 85
+		}
+		any_pop = {
+			militancy = -1
+		}
+		VEN = {
+			country_event = 500002
+		}
+	}
+}
+
+country_event = { # Venice gains Dürres
+	id = 500001
+	title = "500001.T"
+	desc = "500001.D"
+	picture = " "
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "500001.A"
+		prestige = 10
+		851 = {
+			secede_province = VEN
+			add_core = VEN
+		}
+		money = -175000
+		ALB ={
+			money = 175000
+		}
+		set_country_flag = bought_durres
+	}
+}
+
+country_event = { # Venice is informed of Albanian refusal
+	id = 500002
+	title = "500002.T"
+	desc = "500002.D"
+	picture = " "
+	
+	is_triggered_only = yes
+	
+	option = { # Declare war
+		name = "500002.A"
+		prestige = 5
+		set_country_flag = war_for_durres
+		war = {
+			target = ALB
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}		
+	}
+	option = { # Not worth it
+		name = "500002.B"
+		prestige = -25
+		any_pop = {
+		militancy = 2 
+	    }
+	}
+}
+
+country_event = { # Victory over Albania
+	id = 500003
+	title = "500003.T"
+	desc = "500003.D"
+	picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_country_flag = war_for_durres
+		ALB = { 
+			is_vassal = yes 
+			in_sphere = THIS
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 30
+	}
+	
+	option = { 
+		name = "500003.A"
+		prestige = 10
+		851 = {
+			secede_province = VEN
+			add_core = VEN
+		}
+	}
+}
+
+###Sale of Kotor
+country_event = { # Triggered event for buying Kotor
+	id = 500004
+	title = "500004.T"
+	desc = "500004.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { # Agree to sell
+		name = "500004.A"
+		prestige = -20
+		ai_chance = { 
+		     factor = 15
+		}
+		any_pop = {
+			militancy = 2
+		}
+		VEN = {
+			country_event = 500005
+		}
+	}
+	
+	option = { # Refuse to sell
+		name = "500004.B"
+		prestige = 10
+		ai_chance = { 
+		     factor = 85
+		}
+		any_pop = {
+			militancy = -1
+		}
+		VEN = {
+			country_event = 500006
+		}
+	}
+}
+
+country_event = { # Venice gains Kotor
+	id = 500005
+	title = "500005.T"
+	desc = "500005.D"
+    picture = " "
+ 	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "500005.A"
+		prestige = 10
+		2582 = {
+			secede_province = VEN
+			add_core = VEN
+		}
+		money = -125000
+		MON ={
+			money = 125000
+		}
+	}
+}
+
+country_event = { # Venice is informed of Montenegran refusal
+	id = 500006
+	title = "500006.T"
+	desc = "500006.D"
+    picture = " "
+	
+	is_triggered_only = yes
+	
+	option = { # Declare war
+		name = "500006.A"
+		prestige = 5
+		set_country_flag = war_for_kotor
+		war = {
+			target = MON
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}		
+	}
+	option = { # Not worth it
+		name = "500006.B"
+		prestige = -25
+		any_pop = {
+		militancy = 2 
+	    }
+	}
+}
+
+country_event = { # Victory over Montenegro
+	id = 500007
+	title = "500007.T"
+	desc = "500007.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_country_flag = war_for_kotor
+		MON = { 
+			is_vassal = yes 
+			in_sphere = THIS
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 30
+	}
+	
+	option = { 
+		name = "500007.A"
+		prestige = 10
+		2582 = {
+			secede_province = VEN
+			add_core = VEN
+		}
+	}
+}
+
+country_event = { # Establish puppet over Albania
+	id = 500008
+	title = "500008.T"
+	desc = "500008.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_country_flag = bought_durres
+		ALB = { 
+			in_sphere = THIS
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 60
+	}
+	
+	option = { 
+		name = "500008.A"
+		prestige = 5
+		create_vassal = ALB
+	}
+}
+
+country_event = { # Establish puppet over Montenegro
+	id = 500009
+	title = "500009.T"
+	desc = "500009.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_country_flag = bought_durres
+		MON = { 
+			in_sphere = THIS
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 60
+	}
+	
+	option = { 
+		name = "500009.A"
+		prestige = 5
+		create_vassal = MON
+	}
+}
+
+country_event = { # Event for intergrating Macedonia into Greek dominion
+	id = 500010
+	title = "500010.T"
+	desc = "500010.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = MAC 
+		has_global_flag = intergrate_macedonia_into_greece
+		MAC = { 
+			is_vassal = yes 
+			in_sphere = VEN
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 30
+	}
+	
+	option = { 
+		name = "500010.A"
+		prestige = 5
+		MAC = {
+			any_owned = {
+				secede_province = GRE
+			}
+		}
+	}
+}
+
+country_event = { # Venetian event for annexing Constantinopel from Greece
+	id = 500011
+	title = "500011.T"
+	desc = "500011.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = GRE
+		has_global_flag = claim_greater_greece
+		GRE = { 
+			is_vassal = yes 
+			in_sphere = VEN
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 30
+	}
+	
+	option = { 
+		name = "500011.A"
+		prestige = 10
+		860 = {
+			secede_province = VEN
+		}
+		861 = {
+			secede_province = VEN
+		}
+	}
+}
+
+country_event = { # Egyptian revolt against Venetian influence
+	id = 500012
+	title = "500012.T"
+	desc = "500012.D"
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = EGY 
+		has_global_flag = legation_quarter_alexandria
+		EGY = { 
+			in_sphere = VEN
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 60 
+	}
+	
+	option = {
+		name = "500012.A"
+		any_pop = {
+		militancy = 2 
+	    }
+		VEN = {
+			country_event = 500013
+		}
+		1751 = {
+		remove_province_modifier = legation_quarter			
+		}
+		set_global_flag = egypt_legation_revolt
+	}
+}
+
+country_event = { # Venetian response to the revolt
+	id = 500013
+	title = "500013.T"
+	desc = "500013.D"
+    picture = " "
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "500013.A"
+		war = {
+			target = EGY
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}
+	}
+	
+	option = {
+		name = "500013.B"
+		prestige = -35
+		relation = {
+			who = EGY
+			value = -400
+		}
+		diplomatic_influence = {
+			who = EGY
+			value = -400
+		}
+	}
+}
+
+country_event = { # Venetian victory over Egypt
+	id = 500014
+	title = "500014.T"
+	desc = "500014.D"
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_global_flag = egypt_legation_revolt
+		EGY = { 
+			in_sphere = VEN
+			is_vassal = yes
+		}
+	}
+	
+	option = {
+		name = "500014.A"
+		prestige = 25
+		1751 = {
+			secede_province = VEN
+		}
+		set_country_flag = victory_over_egypt
+	}
+}
+
+country_event = { # Venice can integrate Egypt after the Scramble for Africa has begun
+	id = 500015
+	title = "500015.T"
+	desc = "500015.D"
+    picture = "scramble_for_africa"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = VEN 
+		has_country_flag = victory_over_egypt
+		has_global_flag = berlin_conference
+		EGY = { 
+			in_sphere = VEN
+			is_vassal = yes
+		}
+	}
+	
+	option = { 
+		name = "500015.A"
+		prestige = 5
+		inherit = EGY
+	}
+	
+	option = { 
+		name = "500015.B"
+		prestige = 20
+		badboy = 2
+	}
+}

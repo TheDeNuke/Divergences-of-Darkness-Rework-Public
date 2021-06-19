@@ -1,0 +1,189 @@
+political_decisions = {
+
+	call_geneva_convention = {
+		picture = call_geneva_convention
+		potential = {
+		    OR = {
+			tag = SCA
+			tag = SWE
+			}
+			owns = 334
+			NOT = {
+				has_global_flag = geneva_convention_held
+			}
+		}
+		
+		allow = {
+			war = no
+			any_greater_power = {
+				war_exhaustion = 5
+			}
+			empiricism = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = signed_the_geneva_convention
+				duration = -1
+			}
+			set_global_flag = geneva_convention_held
+			prestige = 10
+		}
+	}
+	
+	sign_the_geneva_convention = {
+		alert = no
+		potential = {
+			civilized = yes
+			has_global_flag = geneva_convention_held
+			NOT = { has_country_modifier = signed_the_geneva_convention }
+		}
+		
+		allow = {
+			NOT = {
+				badboy = 1
+				has_country_modifier = withdrew_from_geneva_convention
+			}
+			OR = {
+				NOT = {has_country_modifier = law_changed_by_force }
+				ai = no
+			}
+		}
+		
+		effect = {
+			remove_country_modifier = educational_reform
+			remove_country_modifier = military_reform
+			remove_country_modifier = western_influences
+			remove_country_modifier = uncivilized_isolationism
+			remove_country_modifier = trade_restrictions
+			remove_country_modifier = sayings_of_the_dutch
+			remove_country_modifier = western_presence
+			any_owned = {
+				remove_province_modifier = western_presence
+				remove_province_modifier = foreign_smugglers
+				remove_province_modifier = foreign_trading_post
+				remove_province_modifier = local_opium_habit
+				remove_province_modifier = european_military_mission
+				remove_province_modifier = legation_quarter
+				remove_province_modifier = kettler_denkmal
+				remove_province_modifier = extraterritoriality_granted
+			}
+			add_country_modifier = {
+				name = signed_the_geneva_convention
+				duration = -1
+			}
+			badboy = -1
+		}
+	}
+	
+	withdraw_signature_geneva_convetion = {
+		alert = no
+		picture = sign_the_geneva_convention
+		
+		potential = {
+			has_global_flag = geneva_convention_held
+			has_country_modifier = signed_the_geneva_convention
+			OR = {
+				ruling_party_ideology = reactionary
+				ruling_party_ideology = fascist
+				ruling_party_ideology = communist
+				}
+			OR = {
+				government = absolute_monarchy
+				government = fascist_dictatorship
+				government = fascist_monarchy
+				government = presidential_dictatorship
+				government = proletarian_dictatorship
+			}
+		}
+		allow = {
+			has_country_modifier = signed_the_geneva_convention
+		}
+		effect = {
+			badboy = 5
+			add_country_modifier = {
+				name = withdrew_from_geneva_convention
+				duration = 1825
+			}
+			remove_country_modifier = signed_the_geneva_convention
+		}
+		ai_will_do = { factor = 0 }
+	}
+	
+	build_gotthard_tunnel = {
+	picture = build_gotthard_tunnel
+		potential = {
+		    OR = {
+			tag = SWI
+			tag = SGF
+			tag = GER
+			tag = HLR
+			tag = CFR
+			}
+			owns = 606
+			NOT = {
+				has_country_flag = gotthard_tunnel_built
+			}
+			NOT = {
+			SWI = {
+				has_country_flag = gotthard_tunnel_built
+				}
+			CFR = {
+				has_country_flag = gotthard_tunnel_built
+				}
+			SGF = {
+				has_country_flag = gotthard_tunnel_built
+				}
+			GER = {
+				has_country_flag = gotthard_tunnel_built
+				}
+			HLR = {
+				has_country_flag = gotthard_tunnel_built
+				}
+			}
+		}
+		
+		allow = {
+			invention = machine_tools
+			steel_railroad = 1
+			money = 10000
+		}
+		
+		effect = {
+			money = -10000
+			606 = { infrastructure = 4 }
+			prestige = 5
+			set_country_flag = gotthard_tunnel_built
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	swiss_banking_and_industry = {
+		picture = institute_central_bank
+		potential = {
+		    tag = GNV
+            has_country_modifier = neutrality
+			NOT = { has_country_modifier = swiss_banking }
+		}
+		
+		allow = {
+			tag = GNV
+			NOT = { num_of_ports = 1 }
+			NOT = { unemployment_by_type = { type = craftsmen value = 0.01 } }
+			has_country_modifier = central_bank_established
+			industrial_score = 70
+			modern_central_bank_system = 1
+			OR = {
+				management_strategy = 1
+				neoclassical_theory = 1
+				economic_responsibility = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = { name = land_of_opportunity duration = 730 }
+			add_country_modifier = { name = swiss_banking duration = -1 }	
+		}
+		ai_will_do = { factor = 1 }
+	}
+}

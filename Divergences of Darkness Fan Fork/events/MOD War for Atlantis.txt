@@ -1,0 +1,381 @@
+## The War for Atlantia - 775427 and onwards
+
+#### Oriental Republic of Lotharingia - Introduction Event ####
+
+country_event = { 
+	id = 775427
+	title = "LOT2.T"
+	desc = "LOT2.D"
+	picture = "frc_costa_rica"
+
+	trigger = {
+	tag = LOT
+	NOT = { has_country_flag = LOTBegins }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+	
+	option = {
+	name = "LOT2.A"
+	prestige = -1
+	set_country_flag = LOTBegins
+	add_country_modifier = { name = initial_amerigan_immigration duration = -1 }
+    }
+}
+
+#### Federation of Amazonia - Introduction Event ####
+
+country_event = { 
+	id = 775428
+	title = "LOT1.T"
+	desc = "LOT1.D"
+	picture = "confederation"
+
+	trigger = {
+	tag = AMA
+	NOT = { has_country_flag = AMABegins }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+	
+	option = {
+	name = "LOT1.A"
+	ATL = { all_core = { remove_core = LOT } }
+	end_war = LOT
+	prestige = -1
+	set_country_flag = AMABegins
+	add_country_modifier = { name = initial_amerigan_immigration duration = -1 }
+    }
+}
+
+#### The Monarchist Compromise ####
+
+country_event = { 
+	id = 775429
+	title = "LOT3.T"
+	desc = "LOT3.D"
+	picture = "argentina_monarchy"
+
+	trigger = {
+	tag = LOT
+	has_country_flag = LOTBegins
+	NOT = { has_country_flag = funnydictator }
+	NOT = { has_country_flag = compromise_failure }
+	NOT = { has_global_flag = compromise_set }
+	NOT = { has_country_flag = compromise_denied }
+	}
+
+	mean_time_to_happen = {
+	months = 6
+	}
+	
+	option = {
+	name = "LOT3.A"
+	prestige = -10
+	government = hms_government
+	nationalvalue = nv_liberty
+	ruling_party_ideology = conservative
+	political_reform = unitary
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	country_event = 800054
+	any_pop = { 
+		scaled_militancy = {
+			ideology = reactionary
+			factor = -10
+		      }
+        }
+	any_pop = { 
+		scaled_militancy = {
+			ideology = conservative
+			factor = -1
+		      }
+        }			  
+	any_pop = { 
+		scaled_militancy = {
+			ideology = liberal
+			factor = -1
+		      }
+        }
+	set_global_flag = compromise_set
+    ai_chance = {
+	factor = 90
+	     }
+    }
+	
+	option = {
+	name = "LOT3.B"
+	prestige = 10
+	set_country_flag = compromise_denied
+	political_reform = unitary
+	any_pop = { 
+		scaled_militancy = {
+			ideology = conservative
+			factor = -5
+		      }
+        }		
+	any_pop = { 
+		scaled_militancy = {
+			ideology = liberal
+			factor = 1
+		      }
+        }
+	any_pop = { 
+		scaled_militancy = {
+			ideology = reactionary
+			factor = 8
+		      }
+        }
+    ai_chance = {
+	factor = 10
+	     }
+    }
+}
+
+#### THE GLORIOUS RECONQUEST OF ATLANTIA ###
+
+country_event = { 
+	id = 775430
+	title = "LOT4.T"
+	desc = "LOT4.D"
+	picture = "pacification_of_patagonia"
+
+	trigger = {
+	tag = LOT
+	government = presidential_dictatorship
+	has_country_flag = LOTBegins
+	has_country_flag = compromise_denied
+	NOT = { has_country_flag = funnydictator }
+	}
+
+	mean_time_to_happen = {
+	months = 6
+	modifier = {
+	factor = 0.01
+	year = 1840
+	    }
+	}
+	
+	option = {
+	name = "LOT4.A"
+    clr_country_flag = compromise_denied
+	remove_country_modifier = initial_amerigan_immigration
+    set_country_flag = funnydictator
+	ATL = { all_core = { add_core = LOT } }
+	add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	}
+	AMA = {
+	remove_country_modifier = initial_amerigan_immigration
+	add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	      }
+    }
+	casus_belli = {
+		target = AMA
+		type = acquire_core_state
+		months = 24
+	}
+	war = {
+		target = AMA
+			attacker_goal =  { 
+				casus_belli = acquire_core_state
+				state_province_id = 2447
+			}
+		    defender_goal = {
+			casus_belli = status_quo
+			    }
+		   }
+	}
+}
+
+#### The Atlantia Counter-Revolution ###
+
+country_event = { 
+	id = 775431
+	title = "LOT5.T"
+	desc = "LOT5.D"
+	picture = "pacification_of_patagonia"
+	
+	major = yes
+
+	trigger = {
+	tag = AMA
+    has_global_flag = compromise_set
+    NOT = { has_country_flag = atl_cr }
+	}
+
+	mean_time_to_happen = {
+	months = 6
+	modifier = {
+	factor = 0.01
+	year = 1840
+	    }
+	}
+	
+	option = {
+	name = "LOT5.A"
+	remove_country_modifier = initial_amerigan_immigration
+    set_country_flag = atl_cr
+	LOT = { country_event = { id = 775432 days = 1 } }
+	ATL = { all_core = { add_core = LOT } }
+	any_owned = {
+	limit = {
+	is_core = LOT
+	}
+	secede_province = LOT
+	   }
+    ai_chance = {
+	factor = 70
+	     }
+	}
+	
+	option = {
+	name = "LOT5.B"
+	remove_country_modifier = initial_amerigan_immigration
+    LOT = { remove_country_modifier = initial_amerigan_immigration }
+    set_country_flag = atl_cr
+	ATL = { all_core = { add_core = LOT } }
+	any_owned = {
+	limit = {
+	is_core = LOT
+	}
+	secede_province = LOT
+	   }
+   ai_chance = {
+	factor = 30
+	     }
+	}
+}
+
+country_event = { 
+	id = 775432
+	title = "LOT6.T"
+	desc = "LOT6.D"
+	picture = "conscription_marching"
+
+    is_triggered_only = yes
+
+	option = {
+	name = "LOT6.A"
+	set_global_flag = donotloseatlantic
+	remove_country_modifier = initial_amerigan_immigration
+	ATL = { all_core = { add_core = AMA } }
+	add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	}
+	FROM = {
+	add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	}
+	war = {
+		target = LOT
+			attacker_goal =  { 
+				casus_belli = acquire_core_state
+				state_province_id = 2447
+			}
+		    defender_goal = {
+			casus_belli = status_quo
+			    }
+		   }
+    }
+    ai_chance = {
+	factor = 90
+	     }
+	}
+	
+	option = {
+	name = "LOT6.B"
+	set_global_flag = donotloseatlantic
+	country_event = { id = 775433 days = 2 }
+	remove_country_modifier = initial_amerigan_immigration
+	prestige = -25
+	any_owned = {
+	limit = {
+	is_core = ATL
+	}
+	secede_province = AMA
+	   }
+    ai_chance = {
+	factor = 10
+	     }
+	}
+}
+
+#### LOT Failure #####
+
+country_event = { 
+	id = 775433
+	title = "LOT7.T"
+	desc = "LOT7.D"
+	picture = "execution_king"
+
+	trigger = {
+	tag = LOT
+    government = hms_government
+	NOT = { has_country_flag = compromise_failure }
+	NOT = { owns = 2447 }
+	has_global_flag = donotloseatlantic
+	has_global_flag = compromise_set
+	}
+
+	mean_time_to_happen = {
+	months = 1
+	}
+	
+	option = {
+	name = "LOT7.A"
+    clr_global_flag = compromise_set
+	clr_global_flag = donotloseatlantic
+    set_country_flag = compromise_failure
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	country_event = 800050
+	leadership = -10
+    ai_chance = {
+	factor = 50
+	     }
+	}
+	
+	option = {
+	name = "LOT7.B"
+    clr_global_flag = compromise_set
+	clr_global_flag = donotloseatlantic
+    set_country_flag = compromise_failure
+	government = democracy
+	ruling_party_ideology = liberal
+	political_reform = universal_weighted_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	country_event = 800054
+	leadership = -100 
+    ai_chance = {
+	factor = 50
+	     }
+	}
+}
+
+
+

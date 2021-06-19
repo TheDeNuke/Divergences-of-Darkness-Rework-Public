@@ -1,0 +1,301 @@
+political_decisions = {
+    form_tatarstan = { 
+	picture = Tatarstan
+   
+        potential = { 
+        OR = { 
+        primary_culture = astrakhani 
+        primary_culture = crimean 
+        primary_culture = tatar
+		primary_culture = bashkir
+            } 
+        NOT = { TAR = { exists = yes } }
+        }
+       
+        allow = { 
+			1039 = { owned_by = THIS }
+            OR = {
+                tag = ASK
+                AND = { 
+                    NOT = { ASK = { exists = yes } }
+                    owns = 1036 #Astrakhan
+                    }
+                ASK = { in_sphere = THIS }
+                ASK = { vassal_of = THIS }
+                }
+            OR = {
+                tag = KAZ
+                AND = { 
+                    NOT = { KAZ = { exists = yes } }
+                    owns = 1030 #capital of Kazan
+                    }
+               KAZ = { in_sphere = THIS }
+               KAZ = { vassal_of = THIS }
+                }
+        }
+   
+    effect = { 
+        any_country = {
+            limit = {
+                is_culture_group = tatar_group
+                OR = {
+                    in_sphere = THIS
+                    vassal_of = THIS
+                }
+            }
+            annex_to = THIS
+        }
+        CRI = { all_core = { add_core = TAR } }
+        ASK = { all_core = { add_core = TAR } }
+		KAZ = { all_core = { add_core = TAR } }
+        BAH = { all_core = { add_core = TAR } }
+        add_accepted_culture = crimean 
+        add_accepted_culture = astrakhani 
+        add_accepted_culture = tatar
+		add_accepted_culture = bashkir
+        change_tag = TAR 
+        years_of_research = 3.0
+        prestige = 20 
+        }
+        ai_will_do = {
+            factor = 1
+        }
+    }
+    #Makes Sebestapol, Astrakhan, Kazan and Saraj grow. More POPs for a unified Tataristan.
+    TAR_encourage_sedentarization = {
+        potential = {
+            tag = TAR
+            NOT = { has_country_flag = TAR_urbanization }
+        }
+        allow = {
+            civilized = yes
+            owns = 967 #Sebestapol
+            owns = 1036 #Astrakhan
+			owns = 1030 #Kazan
+			owns = 1039 #Saraj
+            medicine = 1 #City planning has a health component to it.
+
+        }
+        effect = {
+            set_country_flag = TAR_urbanization
+            967 = {
+                    add_province_modifier = {
+                        name = baby_boom
+                        duration = 1825
+                    }     
+            }           
+			1036 = {
+                    add_province_modifier = {
+                        name = baby_boom
+                        duration = 1825
+                    }     
+            }			
+            1030 = {
+                    add_province_modifier = {
+                        name = baby_boom
+                        duration = 1825
+                    }     
+            }
+			1039 = {
+                    add_province_modifier = {
+                        name = baby_boom
+                        duration = 1825
+                    }     
+            }
+        }
+        ai_will_do = {
+            factor = 1
+        }
+
+    }
+	
+	great_Saraj_capital = { 
+	potential = {
+            tag = TAR
+            has_country_flag = TAR_urbanization
+			NOT = { capital = 1039 } 
+        }
+	
+	allow = { 
+	owns = 1039
+	early_railroad = 1 
+	state_n_government = 1 
+		}
+		
+	effect = { 
+	capital = 1039
+	prestige = 5
+	1039 = {
+            life_rating = 5  
+			}
+		}
+	}
+	
+	expansion_TAR_tier1 = { 
+	
+	potential = { 
+		tag = TAR 
+		NOT = { has_country_flag = tier_1 }
+		}
+	
+	allow = { 
+		civilized = yes 
+		all_core = { OR = { owned_by = THIS owner = { is_vassal = yes NOT = { vassal_of = THIS } } } }
+		}
+	
+	effect = { 
+	set_country_flag = tier_1
+	SIB = { all_core = { add_core = TAR } }
+	BAH = { all_core = { add_core = TAR } }
+		}
+	}
+	
+	expansion_TAR_tier2 = { 
+	
+	potential = { 
+		tag = TAR 
+		has_country_flag = tier_1 
+		NOT = { has_country_flag = tier_2 } 
+	}
+	
+	allow = { 
+	is_greater_power = yes 
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = {  
+	set_country_flag = tier_2
+	RUS_1102 = { add_core = THIS }
+	RUS_1052 = { add_core = THIS }
+	RUS_1049 = { add_core = THIS }
+	ZHE = { all_core = { add_core = THIS } }
+	}
+	
+	}
+	
+	accept_kazakhs_TAR = { 
+	
+	potential = { 
+	tag = TAR 
+	NOT = { has_country_flag = accepted_Kazaks }
+	has_country_flag = tier_1
+	}
+	
+	allow = { 
+	nationalism_n_imperialism = 1 
+	NOG = { all_core = { owned_by = THIS } }
+	ZHE = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	prestige = -2 
+	add_accepted_culture = kazak
+	set_country_flag = accepted_Kazaks
+	}
+	
+	}
+	
+	accept_siberian_TAR = { 
+	
+	potential = { 
+	tag = TAR 
+	NOT = { has_country_flag = accepted_siberian }
+	has_country_flag = tier_1
+	}
+	
+	allow = { 
+	nationalism_n_imperialism = 1 
+	SIB = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	prestige = -2 
+	add_accepted_culture = altaic
+	set_country_flag = accepted_siberian
+	}
+	
+	}
+	
+	expansion_TAR_tier3 = { 
+	
+	potential = { 
+	tag = TAR 
+	has_country_flag = tier_2 
+	NOT = { has_country_flag = tier_3 } 
+	}
+	
+	allow = { 
+	tag = TAR 
+	all_core = { owned_by = THIS } 
+	is_greater_power = yes 
+	OR = { 
+	mass_politics = 1
+	government = absolute_monarchy
+	government = fascist_dictatorship
+    government = fascist_monarchy
+		}
+	}
+	
+	effect = { 
+	badboy = 20
+	set_country_flag = tier_3
+	RUS_1090 = { add_core = THIS } 
+	GEO_1 = { add_core = THIS }
+	RUS_1098 = { add_core = THIS } 
+	ZAZ = { all_core = { add_core = THIS } } 
+	KHK = { all_core = { add_core = THIS } } 
+	VOR = { all_core = { add_core = THIS } } 
+	CSK = { all_core = { add_core = THIS } }
+	BUK = { all_core = { add_core = THIS } } 
+	RUS_1196 = { add_core = THIS } 
+	KOK = { all_core = { add_core = THIS } }
+	UGH = { all_core = { add_core = THIS } }
+	}
+	
+	}
+	
+	refute_RUS_cores = {
+		potential = {
+			exists = yes
+			tag = TAR
+			RUS = { exists = yes }
+			NOT = {
+				has_country_flag = refuted_RUS_cores
+			}
+		}
+		
+		allow = {
+			war = no
+			NOT = { has_recently_lost_war = yes }
+			AND = {
+					truce_with = RUS
+					RUS = { has_recently_lost_war = yes }
+				}
+			OR = {
+					is_greater_power = yes
+				AND = {
+					THIS = { rank = 16 } 
+					NOT = { RUS = { is_greater_power = yes } }
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = refuted_RUS_cores
+			prestige = 10
+			RUS = {
+				prestige_factor = -0.4
+				relation = { who = THIS value = -200 }
+			}
+			
+			any_owned = {
+				limit = {
+					is_core = RUS
+					is_core = THIS
+				}
+				remove_core = RUS
+			}
+		}
+	}
+
+}

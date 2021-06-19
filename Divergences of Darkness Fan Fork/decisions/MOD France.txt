@@ -1,0 +1,438 @@
+political_decisions = {
+	anschluss_DUA = {
+	potential = { 
+	has_country_flag = anschluss_DUA 
+	DUA = { exists = yes }
+	}
+	
+	allow = {
+		425 = { controlled_by = THIS 
+			province_control_days = 365 }
+		DUA = {
+				all_core = {
+					OR = {
+						controlled_by = THIS
+						controller = { alliance_with = THIS }
+						controller = { has_country_flag = anschluss_DUA }
+						empty = yes
+						province_id = 419
+						province_id = 304
+						controller = {
+							NOT = { war_with = THIS }
+						}
+					}
+				}
+			}	
+	}
+	
+	effect = { 
+	DUA = { country_event = 650290 }
+	}
+	
+	}
+	
+	annex_OCC = { 
+	picture = Occitania
+	potential = { 
+	tag = FRA 
+	has_global_flag = FRA_OCC
+	OR = {
+	   government = parliamentary_republic
+	   government = democracy 
+	   government = socialist_republic
+	}
+	is_greater_power = yes 
+	NOT = { has_country_flag = occitania_reclaime }
+		}
+		
+	allow = { 
+	OR = {
+	   OCC = { government = parliamentary_republic }
+	   OCC = { government = democracy } 
+	   OCC = { government = socialist_republic }
+	}
+	OCC = { in_sphere = THIS }
+		}
+	
+	effect = { 
+	inherit = OCC
+	OCC = { all_core = { add_core = THIS }}
+	add_accepted_culture = provencal
+	set_country_flag = occitania_reclaime
+		}	
+	}
+	
+	claim_OCC = { 
+	picture = Occitania
+	potential = { 
+	tag = FRA 
+	is_greater_power = yes	 
+	OR = {
+	   NOT = { OCC = { exists = yes } }
+       government = absolute_monarchy
+	   government = fascist_dictatorship
+	   government = fascist_monarchy
+       government = proletarian_dictatorship
+	   government = presidential_dictatorship
+    }
+	NOT = { has_country_flag = occitania_reclaime }
+	}
+		
+	allow = { 
+	OR = {
+	   455 = { owned_by = THIS }
+       government = absolute_monarchy
+	   government = fascist_dictatorship
+	   government = fascist_monarchy
+       government = proletarian_dictatorship
+       government = presidential_dictatorship
+	}
+    }
+	
+	effect = { 
+	OCC = { all_core = { add_core = THIS } }
+	### Removing cores on Catalonia and Aragon as a "just in case" ###
+	CAT = { all_core = { add_core = THIS } }
+	ARA = { all_core = { remove_core = THIS } }
+	ARI = { all_core = { remove_core = THIS } }
+	FRA_467 = { add_core = FRA }
+	FRA_461 = { add_core = FRA }
+	add_accepted_culture = provencal 
+	set_country_flag = occitania_reclaime
+		}	
+	}
+	
+	claim_LRR = { 
+	picture = alsace_lorraine_mines
+	potential = { 
+	OR = {
+	   tag = FRA
+	   tag = FRT
+	   AND = {
+	      tag = DUA
+	      has_global_flag = french_int
+	   }
+	}
+	OR = {
+	   revolution_n_counterrevolution = 1 
+	   has_country_flag = farnese_emperor
+	}
+	NOT = { has_global_flag = wait_neuch }
+	NOT = { has_country_flag = More_Natural_Borders }
+	}
+		
+	allow = { 
+	owns = 428
+	OR = {
+	   mass_politics = 1
+	   has_country_flag = farnese_emperor
+	}
+	is_greater_power = yes
+	all_core = { owned_by = THIS }	
+	OR = {
+	   AND = {
+	      rank = 4
+	      BRG = { NOT = { rank = 4 } }
+		  PBG = { NOT = { rank = 4 } }
+	   }
+	   government = absolute_monarchy
+	   government = fascist_dictatorship
+	   government = fascist_monarchy
+       government = proletarian_dictatorship
+	   #government = presidential_dictatorship
+    }
+    }
+	
+	effect = { 
+	LRR = { all_core = { add_core = THIS } }
+	FRA_428 = { add_core = THIS }
+	badboy = 15
+	set_country_flag = More_Natural_Borders
+	}	
+	}
+	
+	savoy_cores_OCC = { 
+	potential = { 
+	OR = { tag = OCC
+	AND = { tag = FRA 
+			has_country_flag = occitania_reclaime
+			}
+		}
+	NOT = { has_global_flag = savoy_cores }
+	}
+	
+	allow = { 
+	owns = 466 
+	}
+	
+	effect = { 
+	SAR_466 = { remove_core = ITA }
+	set_global_flag = savoy_cores
+		}
+	
+	}
+	
+	integrating_provencal = { 
+	potential = {
+	NOT = { has_country_flag = provencal_betrayal }
+	NOT = { has_country_flag = Paris_congress }
+	NOT = { has_country_flag = provencal_acc }
+	NOT = { has_country_flag = DUA_schooling }
+	tag = DUA 
+	OR = { has_country_flag = Anglois_accepted 
+	has_global_flag = french_int }
+	}
+	
+	allow = { 
+	OCC = { all_core = { owned_by = THIS } }
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = { 
+	set_country_flag = provencal_acc
+	add_accepted_culture = provencal 
+	}
+	
+	}
+	
+	integrating_irish = { 
+	potential = {
+	NOT = { has_country_flag = Paris_congress }
+	NOT = { has_country_flag = irish_acc }
+	NOT = { has_country_flag = DUA_schooling }
+	tag = DUA 
+	OR = { has_country_flag = Anglois_accepted 
+	has_global_flag = english_int }
+	}
+	
+	allow = { 
+	IRE = { all_core = { owned_by = THIS } }
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = { 
+	set_country_flag = irish_acc
+	add_accepted_culture = irish 
+		}
+	
+	}
+	
+	integrate_scotland = { 
+	potential = {
+	tag = DUA 
+	NOT = { has_country_flag = Paris_congress }
+	NOT = { has_country_flag = scotland_acc }
+	has_global_flag = english_int
+	}
+	
+	allow = { 
+	SCO = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	set_country_flag = scotland_acc 
+	SCO = { all_core = { add_core = THIS } }
+	}
+	
+	}
+	
+	integrating_scottish = { 
+	potential = {
+	NOT = { has_country_flag = Paris_congress }
+	NOT = { has_country_flag = scottish_acc }
+	NOT = { has_country_flag = DUA_schooling }
+	tag = DUA 
+	has_country_flag = scotland_acc
+	}
+	
+	allow = { 
+	SCO = { all_core = { owned_by = THIS } }
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = { 
+	set_country_flag = scottish_acc
+	add_accepted_culture = scottish 
+		}
+	
+	}
+	
+	integrating_basque = { 
+	potential = {
+	NOT = { has_country_flag = Paris_congress }
+	NOT = { has_country_flag = basque_acc }
+	NOT = { has_country_flag = DUA_schooling }
+	tag = DUA 
+	has_global_flag = end_bourbon
+	}
+	
+	allow = { 
+	NAV = { all_core = { owned_by = THIS } }
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = { 
+	set_country_flag = basque_acc
+	add_accepted_culture = basque 
+		}
+	}
+	
+	anglois_education_system = {
+	
+    picture = adolphe_thiers
+
+		potential = {
+			tag = DUA
+			school_reforms = no_schools
+			NOT = { has_country_flag = anglois_schools }
+		}
+		
+		allow = {
+		   biologism = 1
+		}
+		
+		effect = { 
+		   set_country_flag = anglois_schools
+		   prestige = 5
+		   social_reform = acceptable_schools
+		}
+	}
+	
+	anglois_language_schooling = {
+	
+    picture = indoctrinal_education_communist
+
+		potential = {
+			tag = DUA
+			OR = { has_global_flag = english_int has_global_flag = french_int has_country_flag = Anglois_accepted }
+			NOT = { government = fascist_dictatorship government = fascist_monarchy government = proletarian_dictatorship government = socialist_republic government = presidential_dictatorship government = bourgeois_dictatorship }
+			NOT = {
+				has_country_flag = enacted_anglois_schooling
+				school_reforms = no_schools
+			}
+		}
+		
+		allow = {
+			NOT = { exists = ENL }
+			NOT = { exists = AEN }
+			NOT = { exists = ENG }
+			NOT = { exists = OCC }
+			war = no
+			invention = biased_multiculturalism
+			invention = social_darwinism
+		}
+		
+		effect = { 
+		set_country_flag = enacted_anglois_schooling
+		random_owned = {
+				limit = {
+					owner = { school_reforms = low_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		random_owned = {
+				limit = {
+					owner = { school_reforms = acceptable_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		}
+	}
+	
+	enact_commie_federalism = {
+	
+    picture = indoctrinal_education_communist
+
+		potential = {
+			tag = DUA
+			OR = { has_global_flag = english_int has_global_flag = french_int has_country_flag = Anglois_accepted }
+			OR = {
+			   government = proletarian_dictatorship
+			   government = socialist_republic
+			}
+			NOT = {
+				has_country_flag = enacted_anglois_schooling
+				school_reforms = no_schools
+			}
+		}
+		
+		allow = {
+			NOT = { exists = ENL }
+			NOT = { exists = AEN }
+			NOT = { exists = ENG }
+			NOT = { exists = OCC }
+			war = no
+			invention = biased_multiculturalism
+			invention = social_darwinism
+		}
+		
+		effect = { 
+		set_country_flag = enacted_anglois_schooling
+		country_event = 650304
+		}
+	}
+	
+	extreme_anglois_language_schooling = {
+	
+	   	picture = indoctrinal_education
+	
+		potential = {
+			tag = DUA
+			OR = { has_global_flag = english_int has_global_flag = french_int has_country_flag = Anglois_accepted }
+			OR = {
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
+			}
+			NOT = { has_country_flag = DUA_schooling }
+		}
+		
+		allow = {
+			NOT = { exists = ENL }
+			NOT = { exists = AEN }
+			NOT = { exists = ENG }
+			NOT = { exists = OCC }
+			war = no
+			invention = biased_multiculturalism
+			invention = social_darwinism
+		}
+		
+		effect = { 
+		set_country_flag = DUA_schooling
+		remove_accepted_culture = breton 
+        remove_accepted_culture = welsh 
+        remove_accepted_culture = french 
+	    remove_accepted_culture = english 
+  	    remove_accepted_culture = irish 
+        remove_accepted_culture = scottish 
+	    remove_accepted_culture = provencal
+	    remove_accepted_culture = basque
+		random_owned = {
+				limit = {
+					owner = { school_reforms = no_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		random_owned = {
+				limit = {
+					owner = { school_reforms = low_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		random_owned = {
+				limit = {
+					owner = { school_reforms = acceptable_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+	    any_owned = {
+				limit = {
+					is_core = DUA 
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+			}
+		}
+	}
+}

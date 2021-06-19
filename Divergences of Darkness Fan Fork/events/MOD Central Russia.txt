@@ -1,0 +1,6046 @@
+###################################### Central Russia Events #######################################################
+
+## Ivan III decided to slip on some soap and then suddenly warlords ###
+
+# 8 - Opening Events
+# 99 - Smolensk Chain
+# 1212 - Green Prince
+# 2801 - Russian Anarchy
+
+###### Opening Events ######
+
+###### Opening Event for TVE, NZH, RYA ###### 
+
+country_event = {
+	id = 222500
+	title = "CRUS1.T"
+	desc = "CRUS1.D"
+	picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS1.A"
+		relation = { who = NOV value = -400 }
+		relation = { who = SCA value = -400 }
+	    any_country = { 
+		   limit = {
+		      is_greater_power = yes
+		   }
+		   diplomatic_influence = { who = THIS value = -400 }
+	    }
+		add_country_modifier = {
+			name = rock_and_hard_place
+			duration = 54750
+		}
+	}
+} 
+
+####### Opening Event (and Warning) for MUS #######
+
+country_event = {
+	id = 222501
+	title = "CRUS2.T"
+	desc = "CRUS2.D"
+	picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "CRUS2.A"
+		prestige_factor = -0.1
+		relation = { who = NOV value = -400 }
+		relation = { who = SCA value = -400 }
+	    any_country = { 
+		   limit = {
+		      is_greater_power = yes
+		   }
+		   diplomatic_influence = { who = THIS value = -400 }
+	    }
+		add_country_modifier = {
+			name = rock_and_hard_place
+			duration = 54750
+		}
+	}
+} 
+
+####### Opening Event for SMO #######
+
+country_event = {
+	id = 222502
+	title = "CRUS3.T"
+	desc = "CRUS3.D"
+	picture = "Smolensk_battle"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "CRUS3.A"
+		prestige_factor = -0.2
+		relation = { who = NOV value = -400 }
+		relation = { who = SCA value = -400 }
+	    any_country = { 
+		   limit = {
+		      is_greater_power = yes
+		   }
+		   diplomatic_influence = { who = THIS value = -400 }
+	    }
+		add_country_modifier = {
+			name = rock_and_hard_place
+			duration = 54750
+		}
+	}
+} 
+
+############################################# The Initial SMO Chain #######################################################
+
+country_event = {
+	id = 222503
+	title = "CRUS4.T"
+	desc = "CRUS4.D"
+	picture = "sejm"
+
+	trigger = {	
+	    exists = yes
+		tag = SMO
+		year = 1837
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = SMO_polish }
+		NOT = { has_country_flag = SMO_non_polish }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "CRUS4.A"
+		prestige_factor = -0.1
+		add_country_modifier = {
+			name = little_poland
+			duration = 1460
+		}
+	    any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -8
+		}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = -4 
+		}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = 4
+				}
+		}
+	    set_country_flag = SMO_polish
+		country_event = { id = 222504 days = 14 }
+	    ai_chance = {
+			factor = 10
+	    }
+	}
+	
+	option = {
+		name = "CRUS4.B"
+		prestige = 1
+	    any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+		}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 2
+		}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = -2
+				}
+		}
+	    set_country_flag = SMO_non_polish
+		country_event = { id = 222504 days = 14 }
+	    ai_chance = {
+			factor = 90
+	    }
+	}
+} 
+
+country_event = {
+	id = 222504
+	title = "CRUS5.T"
+	desc = "CRUS5.D"
+	picture = "sejm"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS5.A"
+		prestige_factor = -0.1
+		add_country_modifier = {
+			name = SMO_student_protests
+			duration = 1460
+		}
+	    any_pop = { 
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 4
+		}
+		scaled_militancy = { 
+				ideology = liberal 
+				factor = 3
+				}
+		}
+	    set_global_flag = SMO_students
+	}
+}
+
+#### The Smolensk Revolution ####
+
+country_event = {
+	id = 222505
+	title = "CRUS6.T"
+	desc = "CRUS6.D"
+	picture = "smolensk_duma"
+
+	trigger = {	
+	    exists = yes
+		tag = SMO
+		year = 1838
+		has_global_flag = SMO_students
+		has_global_flag = SMO_kingdead
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "CRUS6.A"
+		prestige = -10
+		clr_global_flag = SMO_kingdead
+		clr_global_flag = SMO_students
+		remove_country_modifier = SMO_student_protests
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		#political_reform = peonage
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = 3
+		militancy = 3
+	    }
+		country_event = { id = 222506 days = 14 }
+	}
+}
+
+country_event = {
+	id = 222506
+	title = "CRUS7.T"
+	desc = "CRUS7.D"
+	picture = "smolensk_duma"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS7.A"
+		set_country_flag = SMO_MON
+		set_global_flag = SMO_confirms
+	    government = prussian_constitutionalism
+        political_reform = appointed
+        political_reform = landed_voting
+        political_reform = yes_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = underground_parties
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = -3
+		militancy = -3
+	    }
+	    ai_chance = {
+			factor = 55
+	    }
+	}
+	
+	option = {
+		name = "CRUS7.B"
+		set_country_flag = SMO_MON
+		set_global_flag = SMO_confirms
+	    government = hms_government
+        political_reform = appointed
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_parties = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = 2
+		militancy = 2
+		ideology = { factor = 0.3 value = separatist } 
+	    }
+	    ai_chance = {
+			factor = 30
+	    }
+	}
+	
+	option = {
+		name = "CRUS7.C"
+		set_country_flag = SMO_REP
+		set_global_flag = SMO_confirms
+	    government = democracy 
+	    ruling_party_ideology = liberal
+	    political_reform = universal_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = non_socialist
+	    political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    set_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    set_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+		consciousness = 5
+		militancy = 5
+		ideology = { factor = 0.7 value = separatist } 
+	    }
+	    ai_chance = {
+			factor = 15
+	    }
+	}
+}
+
+#### Kilinski's Revolt ####
+
+## SMO is free and General Kilinski attempts to coup the Government with no PEL. Fails badly and Kilinski disappears. No Revolt ##
+
+country_event = {
+	id = 222507
+	title = "CRUS8.T"
+	desc = "CRUS8.D"
+	picture = "Smolensk_battle"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		has_global_flag = PLC_EASTERN_COLLAPSE
+	    has_country_flag = SMO_non_polish	
+        any_owned_province = { is_core = BLR }		
+		NOT = { has_global_flag = RUS_STAGE_ONE } 
+		NOT = { has_country_flag = BLR_attempt_one }
+		NOT = { has_country_flag = BLR_second_attempt }
+		NOT = { has_country_flag = BLR_revolts }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CRUS8.A"
+	    prestige = 5
+	    any_pop = { 
+		   limit = { 
+	       culture = belarusian
+		   }
+		   consciousness = 3
+		   militancy = 3
+	    }
+		set_country_flag = BLR_attempt_one
+   }
+}
+
+## SMO is free and General Kilinski attempts to coup the Government with PEL. Fails but can trigger a revolt.##
+
+country_event = {
+	id = 222508
+	title = "CRUS9.T"
+	desc = "CRUS9.D"
+	picture = "Smolensk_battle"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		has_global_flag = PLC_EASTERN_COLLAPSE
+	    has_country_flag = SMO_polish
+		any_owned_province = { is_core = BLR }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = BLR_attempt_one }
+		NOT = { has_country_flag = BLR_second_attempt }
+		NOT = { has_country_flag = BLR_revolts }		
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CRUS9.A"
+		random_list = {
+			35 = { 
+			set_country_flag = BLR_attempt_one
+	        prestige = 5
+	        any_pop = { 
+		       limit = { 
+	              culture = belarusian
+		       }
+		       consciousness = 3
+		       militancy = 3
+	        }
+			}
+			65 = { 
+	        any_pop = { 
+		       limit = { 
+	              culture = belarusian
+		       }
+		       consciousness = 5
+		       militancy = 5
+	        }
+			country_event = { id = 222509 days = 1 }
+			}
+		}
+   }
+}
+
+### The Revolt Triggers - This is a hard one. ###
+
+country_event = {
+	id = 222509
+	title = "CRUS10.T"
+	desc = "CRUS10.D"
+	picture = "Smolensk_battle"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS10.A"
+		set_country_flag = BLR_revolts
+		set_country_flag = BLR_attempt_one
+	    any_owned = { 
+	    limit = { 
+	    is_core = BLR
+	    }
+	    secede_province = BLR
+	    }
+		BLR = {
+		set_country_flag = BLR_kilinski
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		#political_reform = peonage
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000		
+		}
+	    war = {
+			target = BLR
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}	
+   }
+}   
+
+### SMO stuff is continued below in the post MUS SMO war ###
+
+## SMO_DEM Vozhd Events ##
+
+country_event = {
+	id = 222510
+	title = "CRUS11.T"
+	desc = "CRUS11.D"
+	picture = "smolensk_duma"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		year = 1841
+		has_country_flag = SMO_REP
+	    has_country_flag = BLR_attempt_one 
+		any_owned_province = { is_core = BLR }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+		modifier = {
+			factor = 2
+			has_country_flag = BLR_revolts
+	    }
+	}
+	
+	option = {
+		name = "CRUS11.A"
+	    any_pop = { 
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+			}
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 2 
+			}
+		}
+		MUS = { country_event = 222513 }
+		set_country_flag = SMO_MON_WAIT
+		country_event = { id = 222514 days = 120 }
+	    ai_chance = {
+			factor = 75
+	    }	
+   }
+   
+  option = {
+		name = "CRUS11.B"
+		prestige = -10
+		set_country_flag = HE_IS_COMING
+	    any_pop = { 
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = 8 
+			}
+		}
+	    ai_chance = {
+			factor = 25
+	    }			
+   }
+}
+
+country_event = {
+	id = 222511
+	title = "CRUS12.T"
+	desc = "CRUS12.D"
+	picture = "vozhd"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		has_country_flag = HE_IS_COMING
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "CRUS12.A"
+		clr_country_flag = HE_IS_COMING
+		clr_country_flag = SMO_REP
+		set_country_flag = SMO_VOZ
+		add_country_modifier = {
+			name = SMO_vozhd
+			duration = 3650
+		}
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		#political_reform = peonage
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    any_pop = { 
+		scaled_militancy = { 
+				ideology = conservative 
+				factor = -8 
+			}
+		}
+		MUS = { country_event = 222513 }
+		set_country_flag = SMO_MON_WAIT
+		country_event = { id = 222514 days = 120 }	
+   }
+}
+
+### The Smolensk-MUScow War ###
+
+country_event = {
+	id = 222512
+	title = "CRUS13.T"
+	desc = "CRUS13.D"
+	picture = "Smolensk_battle"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		year = 1841
+		has_country_flag = SMO_MON
+	    has_country_flag = BLR_attempt_one 
+		any_owned_province = { is_core = BLR }
+		NOT = { has_country_flag = HE_IS_COMING }
+		NOT = { has_country_flag = SMO_MON_WAIT }
+		NOT = { has_country_flag = SMO_endwar }		
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+		modifier = {
+			factor = 2
+			has_country_flag = BLR_revolts
+	    }
+	}
+	
+	option = {
+		name = "CRUS13.A"
+	    prestige = 5
+		MUS = { country_event = 222513 }
+		country_event = { id = 222514 days = 120 }
+		set_country_flag = SMO_MON_WAIT
+   }
+}
+
+country_event = {
+	id = 222513
+	title = "CRUS14.T"
+	desc = "CRUS14.D"
+	picture = "Smolensk_battle"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS14.A"
+	    leave_alliance = PLC
+	    relation = { who = PLC value = -100 }
+		diplomatic_influence = { who = PLC value = -100 }	
+	    any_pop = { 
+	    consciousness = 1 
+		}
+    }
+}
+
+country_event = {
+	id = 222514
+	title = "CRUS15.T"
+	desc = "CRUS15.D"
+	picture = "Smolensk_battle"
+
+	is_triggered_only = yes
+	
+	immediate = {
+		1014 = { add_core = SMO }
+		1015 = { add_core = SMO }
+    }
+	
+	option = {
+		name = "CRUS15.A"
+		set_country_flag = SMO_winning
+		casus_belli = { 
+				target = MUS
+				type = cut_down_to_size
+				months = 60
+		}
+		casus_belli = { 
+				target = MUS
+				type = acquire_state
+				months = 60
+		}
+		MUS = {
+		casus_belli = { 
+				target = SMO
+				type = humiliate
+				months = 60
+		   }
+		}
+	    war = {
+			target = MUS
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 1015
+			}
+			defender_goal =  { 
+                casus_belli = humiliate
+			}
+	    }
+    }
+}
+
+country_event = {
+	id = 222515
+	title = "CRUS16.T"
+	desc = "CRUS16.D"
+	picture = "vozhd"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		owns = 1015
+		has_country_flag = SMO_winning
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "CRUS13.A"
+		set_country_flag = SMO_endwar
+		clr_country_flag = SMO_MON_WAIT
+		clr_country_flag = SMO_winning
+	    prestige = 10     
+   }
+}
+
+## General Kilinski Part 2 - If the first revolt never happened ##
+
+## General Kilinski tries to coup victorious government against MUS and gets killed off along with Belarusian Nationalism ###
+
+country_event = {
+	id = 222516
+	title = "CRUS17.T"
+	desc = "CRUS17.D"
+	picture = "Smolensk_battle"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		owns = 1015
+		has_country_flag = BLR_attempt_one 
+		any_owned_province = { is_core = BLR }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = BLR_revolts }
+		NOT = { has_country_flag = BLR_second_attempt }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS13.A"
+	    prestige = 5 
+		clr_country_flag = SMO_winning
+		clr_country_flag = BLR_attempt_one 
+		set_country_flag = BLR_second_attempt
+		set_country_flag = SMO_endwar
+	    any_pop = { 
+		    limit = { 
+	           culture = belarusian
+		     }
+		     consciousness = -3
+		     militancy = -3
+	    }
+   }
+}
+
+## General Kilinski tries to coup VOZHD after failed war and gets brutally murdered before VOZHD turns around and purges a good portion of the Belarusians ###
+
+country_event = {
+	id = 222517
+	title = "CRUS18.T"
+	desc = "CRUS18.D"
+	picture = "vozhd"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		NOT = { owns = 1015 }
+		has_country_flag = SMO_winning
+		has_country_flag = SMO_VOZ
+		has_country_flag = BLR_attempt_one 
+		any_owned_province = { is_core = BLR }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = BLR_revolts }
+		NOT = { has_country_flag = BLR_second_attempt }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS13.A"
+	    prestige = -5 
+		clr_country_flag = SMO_winning
+		clr_country_flag = BLR_attempt_one
+        clr_country_flag = SMO_MON_WAIT		
+		set_country_flag = BLR_second_attempt
+		set_country_flag = SMO_endwar
+	    any_pop = { 
+		    limit = { 
+	           culture = belarusian
+		     }
+			 reduce_pop = 0.05
+		     consciousness = 3
+		     militancy = 3
+	    }
+   }
+}
+
+## General Kilinski tries to coup failing government against MUS and either triggers a outright revolt or causes nationalist chaos. ###
+
+country_event = {
+	id = 222518
+	title = "CRUS19.T"
+	desc = "CRUS19.D"
+	picture = "Smolensk_battle"
+
+	trigger = {	
+	    exists = yes
+	    tag = SMO
+		war = no
+		NOT = { owns = 1015 }
+		has_country_flag = SMO_winning	
+		has_country_flag = BLR_attempt_one 
+		any_owned_province = { is_core = BLR }
+		NOT = { has_country_flag = SMO_VOZ }
+		NOT = { has_country_flag = BLR_revolts }
+		NOT = { has_country_flag = BLR_second_attempt }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS19.A"
+		random_list = {
+		75 = {
+	    prestige = -20
+		clr_country_flag = SMO_winning
+		clr_country_flag = BLR_attempt_one 
+        clr_country_flag = SMO_MON_WAIT
+		set_country_flag = BLR_revolts
+		set_country_flag = SMO_endwar
+	    any_owned = { 
+	    limit = { 
+	    is_core = BLR
+	    }
+	    secede_province = BLR
+	    }
+		BLR = {
+		set_country_flag = BLR_kilinski
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		#political_reform = peonage
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000		
+		}
+	    war = {
+			target = BLR
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			   }
+		   }
+		}
+		25 = {
+		clr_country_flag = SMO_winning
+		clr_country_flag = BLR_attempt_one 
+		set_country_flag = BLR_revolts
+	    any_pop = { 
+		    limit = { 
+	           culture = belarusian
+		     }
+			 reduce_pop = 0.05
+		     consciousness = 5
+		     militancy = 5
+	          }
+		   }	
+        }		
+   }
+}
+
+### Belarus is now free of Smolensk. What now? ###
+
+country_event = {
+	id = 222519
+	title = "CRUS20.T"
+	desc = "CRUS20.D"
+	picture = "sejm"
+
+	trigger = {	
+	    exists = yes
+	    tag = BLR
+		war = no
+		has_country_flag = BLR_kilinski
+		PLC = { exists = yes }
+		NOT = { year = 1878 }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS20.A"
+	    clr_country_flag = BLR_kilinski
+		all_core = { remove_core = SMO }
+	    prestige = 20	
+		PLC = { country_event = { id = 222520 days = 3 } }
+	    ai_chance = { 
+	      factor = 100
+	    }
+	}
+	
+	option = {
+		name = "CRUS20.A"
+		clr_country_flag = BLR_kilinski
+		all_core = { remove_core = SMO }
+	    prestige = 10	
+	    ai_chance = { 
+	      factor = 0
+	    }
+	}
+}
+
+country_event = {
+	id = 222520
+	title = "CRUS21.T"
+	desc = "CRUS21.D"
+	picture = "sejm"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS21.A"
+		prestige = -1
+	    any_pop = { 
+		    limit = { 
+	           culture = lithuanian
+		     }
+		     consciousness = 1
+		     militancy = 1
+	    }	
+        set_country_flag = LIT_BLR_WAITING	
+        LIT = { set_country_flag = LIT_BLR_WAITING }		
+		BLR = { country_event = { id = 222521 days = 3 } }
+	}
+}
+
+country_event = {
+	id = 222521
+	title = "CRUS22.T"
+	desc = "CRUS22.D"
+	picture = "sejm"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS21.A"
+		prestige = -1
+		relation = { who = PLC value = 400 }
+		create_alliance = PLC
+	    any_pop = { 
+		    limit = { 
+	           culture = lithuanian
+		     }
+		     consciousness = 1
+		     militancy = 1
+	    }
+	}
+}
+
+### Add decision for BLR to get itself annexed into LIT when possible. ###
+
+### A wild hapsburg
+
+country_event = {
+	id = 2225210
+	title = "CRUS220.T"
+	desc = "CRUS220.D"
+	picture = "dacha_countryside"
+
+	trigger = {	
+	    exists = yes
+	    tag = MUS
+		war = no
+		has_country_flag = hapsburg_general
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS220.A"
+		clr_country_flag = hapsburg_general
+		define_general = {
+		name = "Stanislaw Habsburg"
+		personality = inspiring
+		background = rising_star
+		}	
+   }
+}
+
+######################### THE GREEN PRINCE ##########################################
+
+country_event = {
+	id = 222522
+	title = "CRUS23.T"
+	desc = "CRUS23.D"
+	picture = "dacha_countryside"
+
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1840
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = gay_green_prince }
+		NOT = { has_country_flag = NZH_crisis }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = "CRUS23.A"
+		prestige = -10
+	    set_country_flag = gay_green_prince
+		any_country = {
+		   limit = {
+		      primary_culture = russian
+		   }
+		   country_event = 222523
+		}
+    }
+}
+
+country_event = {
+	id = 222523
+	title = "CRUS24.T"
+	desc = "CRUS24.D"
+	picture = "dacha_countryside"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS24.A"
+		relation = { who = NZH value = -20 }
+	}
+}
+
+country_event = {
+	id = 222524
+	title = "CRUS25.T"
+	desc = "CRUS25.D"
+	picture = "sejm"
+
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1842
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_heir }
+		NOT = { has_country_flag = NZH_crisis }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "CRUS25.A"
+		prestige = 10
+	    set_country_flag = NZH_heir
+    }
+}
+
+###### The Announcement of the Heir #######
+
+country_event = {
+	id = 222525
+	title = "CRUS26.T"
+	desc = "CRUS26.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1843
+		has_country_flag = NZH_heir
+		has_country_flag = gay_green_prince
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_crisis }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = "CRUS26.A"
+		prestige = 10
+	    clr_country_flag = NZH_heir
+		clr_country_flag = gay_green_prince
+		set_country_flag = NZH_crisis
+		TVE = { country_event = { id = 222526 days = 3 } }
+		MUS = { country_event = { id = 222527 days = 6 } }
+    }
+}
+
+### Tver Response ###
+
+country_event = {
+	id = 222526
+	title = "CRUS27.T"
+	desc = "CRUS27.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS27.A"
+		relation = { who = NZH value = 100 }
+		NZH = {
+		   set_country_flag = TVE_agree
+		}
+	    ai_chance = { 
+	      factor = 50
+	    }
+    }
+	
+	option = {
+		name = "CRUS27.B"
+		relation = { who = NZH value = -100 }
+		NZH = {
+		   prestige = -10
+		   set_country_flag = TVE_denied
+		}
+	    ai_chance = { 
+	      factor = 50
+	    }	
+    }
+}
+
+### Moscow Response ###
+
+country_event = {
+	id = 222527
+	title = "CRUS28.T"
+	desc = "CRUS28.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS28.A"
+		relation = { who = NZH value = 100 }
+		NZH = {
+		   set_country_flag = MUS_agree
+		}
+	    ai_chance = { 
+	      factor = 20
+	    }
+    }
+	
+	option = {
+		name = "CRUS28.B"
+		relation = { who = NZH value = -100 }
+		NZH = {
+		   prestige = -10
+		   set_country_flag = MUS_denied
+		}
+	    ai_chance = { 
+	      factor = 80
+	    }	
+    }
+}
+
+### Now for the four potential outcomes of the above. This is going to be a rather large amount of code. ###
+
+### TVE Agrees and MUS disagrees ###
+
+country_event = {
+	id = 222528
+	title = "CRUS29.T"
+	desc = "CRUS29.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		has_country_flag = NZH_crisis
+		has_country_flag = TVE_agree
+		has_country_flag = MUS_denied
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	# This will be tagged with "will cause game over"
+	
+	option = {
+		name = "CRUS29.A"
+		prestige = -5
+		relation = { who = MUS value = -100 }
+		relation = { who = TVE value = 100 }
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    ruling_party_ideology = reactionary
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_agree
+		clr_country_flag = MUS_denied
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222529 days = 31 }
+	    ai_chance = { 
+	      factor = 65
+	    }
+    }
+	
+    # Indie Path
+	
+	option = {
+		name = "CRUS29.B"
+		prestige = 10
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_agree
+		clr_country_flag = MUS_denied
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222532 days = 7 }
+	    ai_chance = { 
+	      factor = 35
+	    }
+    }
+}
+
+# A doomed path - Tver conspiracy is successful and the Green Prince is made a puppet along with Anna. Everything previously is made irrelevant.#
+
+country_event = {
+	id = 222529
+	title = "CRUS30.T"
+	desc = "CRUS30.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS30.A"
+		TVE = { create_vassal = NZH country_event = { id = 222530 days = 1 } }
+		country_event = { id = 222531 days = 370 }
+    }
+}
+
+# Tver gets a good laugh and is told to expect NZH annexation at some point when the final arragements are completed.
+
+country_event = {
+	id = 222530
+	title = "CRUS31.T"
+	desc = "CRUS31.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS31.A"
+		prestige = 5
+		relation = { who = NZH value = 400 }
+    }
+}
+
+# The Green Prince mysteriously commits suicide and Anna Lyapunova is abducted. The princedom is annexed into TVE. MUS gets cores on NZH. Trigger Generic TVE-MUS war.
+
+country_event = {
+	id = 222531
+	title = "CRUS32.T"
+	desc = "CRUS32.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS32.A"
+
+		prestige_factor = -0.9
+		#all_core = { add_core = MUS }
+		#all_core = { add_core = TVE }
+		#clr_country_flag = NZH_crisis_two
+		#set_global_flag = MUS_TVE_WAR
+		MUS = { country_event = { id = 222560 days = 1 } }
+		TVE = { inherit = NZH }
+    }
+}
+
+# Anna tries to stop die
+
+country_event = {
+	id = 222532
+	title = "CRUS33.T"
+	desc = "CRUS33.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	# Anna attempts to create a constitutional government but its soon made irrelevent by TVE's plotting
+	
+	option = {
+		name = "CRUS33.A"
+		prestige = -20
+		relation = { who = MUS value = -100 }
+		relation = { who = TVE value = 100 }
+	    government = hms_government
+        political_reform = appointed
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_parties = gerrymandering
+		country_event = { id = 222529 days = 31 }
+	    ai_chance = { 
+	      factor = 25
+	    }
+    }
+	
+	# Dictatorship gets cores on Ivanovo and is made a MUS puppet. Triggers unique MUS_TVE_WAR variation
+	
+	option = {
+		name = "CRUS33.B"
+		prestige = -10
+		1022 = { add_core = NZH }
+		relation = { who = TVE value = -400 }
+		relation = { who = MUS value = 400 }     
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		MUS = { create_vassal = NZH create_alliance = NZH country_event = { id = 222533 days = 3 } }
+		TVE = { country_event = { id = 222534 days = 1 } }
+	    ai_chance = { 
+	      factor = 60
+	    }
+    }
+	
+	# A madman from Kazan immediately starts a three way war between NZH-MUS and TVE with the push of a single button and takes Anna on a hell of a ride.
+	
+	option = {
+		name = "CRUS33.C"
+		prestige = 20
+		relation = { who = TVE value = -400 }
+		relation = { who = MUS value = -400 }
+		relation = { who = KAZ value = 400 }
+		set_country_flag = anna_control
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    ruling_party_ideology = reactionary
+		KAZ = { country_event = { id = 222535 days = 7 } }
+    }
+}
+
+# Oh Shit. TVE is pissed
+
+country_event = {
+	id = 222533
+	title = "CRUS34.T"
+	desc = "CRUS34.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS34.A"
+		prestige = 5
+		relation = { who = TVE value = -400 }
+		relation = { who = NZH value = 400 }
+    }
+}
+
+# TVE gets very angry and invades NZH or not if the player wants to be a big dumb dumb
+
+country_event = {
+	id = 222534
+	title = "CRUS35.T"
+	desc = "CRUS35.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+	   NZH = { all_core = { add_core = TVE } }
+	}
+	
+	option = {
+		name = "CRUS35.A"
+		prestige = 5
+		relation = { who = MUS value = -400 }
+		NZH = { clr_country_flag = NZH_crisis_two }				
+	    war = {
+			target = NZH
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	option = {
+		name = "CRUS35.B"
+		prestige_factor = -0.3
+		relation = { who = TVE value = -400 }
+		relation = { who = NZH value = 400 }
+		NZH = { all_core = { add_core = TVE } }
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+# Does Kazan want to go on this suicidal adventure to go declare war on the whole of central russia?
+
+country_event = {
+	id = 222535
+	title = "CRUS36.T"
+	desc = "CRUS36.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS36.A"
+		prestige = 10
+		relation = { who = NZH value = 400 }
+		create_alliance = NZH
+		NZH = { country_event = { id = 222536 days = 1 } }
+		ai_chance = { 
+	      factor = 100
+	    }	
+    }
+	
+	option = {
+		name = "CRUS36.B"
+		prestige = -5
+		NZH = { country_event = { id = 222536 days = 1 } }
+		ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+# The madman declares war on MUS with a puppet CB as a response to their modelling.
+
+country_event = {
+	id = 222536
+	title = "CRUS37.T"
+	desc = "CRUS37.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		all_core = { add_core = MUS }
+		all_core = { add_core = TVE }
+		1022 = { add_core = NZH }
+		1022 = { add_core = MUS }	
+	}
+	
+	option = {
+		name = "CRUS37.A"
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR
+		add_accepted_culture = chuvash
+		add_accepted_culture = volgaic
+		add_country_modifier = { name = taiping_draft duration = 720 } 
+	    war = {
+			target = MUS
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+			call_ally = yes
+		}
+	    war = {
+			target = TVE
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+			call_ally = yes
+		}	
+        TVE = { country_event = { id = 222537 days = 1 } }		
+		ai_chance = { 
+	      factor = 100
+	    }	
+    }
+	
+	option = {
+		name = "CRUS37.B"
+		prestige_factor = -0.3
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END	
+		ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+# Tver just realizes just how much Moscow had fucked up and declares war on Moscow. A player can't avoid this.
+
+country_event = {
+	id = 222537
+	title = "CRUS38.T"
+	desc = "CRUS38.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS38.A"
+		relation = { who = MUS value = -400 }
+	    war = {
+			target = MUS
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+    }
+}
+
+### MUS Agrees and TVE disagrees ###
+
+country_event = {
+	id = 222538
+	title = "CRUS39.T"
+	desc = "CRUS39.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		has_country_flag = NZH_crisis
+		has_country_flag = TVE_denied
+		has_country_flag = MUS_agree
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	# This will be tagged with "will cause game over"
+	
+	option = {
+		name = "CRUS39.A"
+		prestige = -5
+		relation = { who = MUS value = 100 }
+		relation = { who = TVE value = -100 }
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_denied
+		clr_country_flag = MUS_agree
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222539 days = 31 }
+	    ai_chance = { 
+	      factor = 40
+	    }
+    }
+	
+    # Another Indie Path
+	
+	option = {
+		name = "CRUS39.B"
+		prestige = 10
+		set_country_flag = anna_control
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_denied
+		clr_country_flag = MUS_agree
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222541 days = 7 }
+	    ai_chance = { 
+	      factor = 60
+	    }
+    }
+}
+
+### You fucked up and have been annexed by MUS. Game Over. ###
+
+country_event = {
+	id = 222539
+	title = "CRUS40.T"
+	desc = "CRUS40.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS30.A"
+		TVE = { country_event = { id = 222559 days = 7 } }
+		MUS = { country_event = { id = 222540 days = 1 } inherit = NZH }
+    }
+}
+
+### MUS warning regarding inevitable war with TVE. It also adds the MUS cores ###
+
+country_event = {
+	id = 222540
+	title = "CRUS41.T"
+	desc = "CRUS41.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS41.A"
+		prestige = 10
+		NZH = { all_core = { add_core = MUS } }
+    }
+}
+
+### She literally just crushed anything that resembles a plot here. Naturally MUS and TVE are going to be pissed but what can you do about it? ###
+# MUS intervention via decision
+
+country_event = {
+	id = 222541
+	title = "CRUS42.T"
+	desc = "CRUS42.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS42.A"
+		relation = { who = MUS value = -200 }
+		relation = { who = TVE value = -200 }
+		relation = { who = KAZ value = 400 }
+		add_accepted_culture = chuvash
+		add_accepted_culture = volgaic
+		all_core = { add_core = TVE }
+		1022 = { add_core = NZH }
+		#1022 = { add_core = MUS }
+	    government = absolute_monarchy
+		ruling_party_ideology = reactionary	
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    political_reform = four_year_draft
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END				
+    }
+}
+
+### Both Agree ###
+
+country_event = {
+	id = 222542
+	title = "CRUS43.T"
+	desc = "CRUS43.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		has_country_flag = NZH_crisis
+		has_country_flag = TVE_agree
+		has_country_flag = MUS_agree
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS43.A"
+		prestige = 10
+		relation = { who = MUS value = 100 }
+		relation = { who = TVE value = 100 }
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_agree
+		clr_country_flag = MUS_agree
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222543 days = 31 }
+    }
+}
+
+country_event = {
+	id = 222543
+	title = "CRUS44.T"
+	desc = "CRUS44.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS43.A"
+		prestige = -10
+		relation = { who = KAZ value = -200 }
+	    government = hms_government
+        political_reform = appointed
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_parties = gerrymandering
+		country_event = { id = 222544 days = 365 }
+    }
+}
+
+### Hey look. Literally three ways to die. ###
+
+country_event = {
+	id = 222544
+	title = "CRUS45.T"
+	desc = "CRUS45.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	# Instant Death
+	
+	option = {
+		name = "CRUS46.A"
+		prestige_factor = -0.9
+		relation = { who = MUS value = -200 }
+		relation = { who = TVE value = 200 }
+		MUS = { country_event = { id = 222560 days = 7 } }
+		TVE = {  country_event = { id = 222545 days = 1 } inherit = NZH }
+	    ai_chance = { 
+	      factor = 40
+	    }
+    }
+	
+    # Instant Death
+	
+	option = {
+		name = "CRUS46.B"
+		prestige_factor = -0.9
+		relation = { who = MUS value = 200 }
+		relation = { who = TVE value = -200 }
+		TVE = { country_event = { id = 222559 days = 7 } }
+		MUS = { country_event = { id = 222546 days = 1 } inherit = NZH }
+	    ai_chance = { 
+	      factor = 60
+	    }
+    }
+	
+	# The only one without instant death
+	# MUS intervention via decision
+	
+	option = {
+		name = "CRUS46.C"
+		prestige = 10
+		relation = { who = MUS value = -200 }
+		relation = { who = TVE value = -200 }
+		relation = { who = KAZ value = 400 }
+		add_accepted_culture = chuvash
+		add_accepted_culture = volgaic
+		all_core = { add_core = TVE }
+		1022 = { add_core = NZH }
+		#1022 = { add_core = MUS }
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END	
+	    ai_chance = { 
+	      factor = 15
+	    }
+    }
+}
+
+### TVE warning regarding inevitable war with MUS. It also adds the TVE cores ###
+
+country_event = {
+	id = 222545
+	title = "CRUS46.T"
+	desc = "CRUS46.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS46.A"
+		prestige = 10
+		NZH = { all_core = { add_core = TVE } }
+    }
+}
+
+### MUS warning regarding inevitable war with TVE. It also adds the MUS cores ###
+
+country_event = {
+	id = 222546
+	title = "CRUS47.T"
+	desc = "CRUS47.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS47.A"
+		prestige = 10
+		NZH = { all_core = { add_core = MUS } }
+    }
+}
+
+### Both Disagree (oh no) ###
+
+country_event = {
+	id = 222547
+	title = "CRUS48.T"
+	desc = "CRUS48.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		has_country_flag = NZH_crisis
+		has_country_flag = TVE_denied
+		has_country_flag = MUS_denied
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_country_flag = NZH_crisis_two }
+		NOT = { has_global_flag = MUS_TVE_WAR }
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS48.A"
+		prestige = -10
+	    any_pop = { 
+		   limit = { 
+		      pop_type = aristocrats
+		   }
+		   consciousness = 3
+		   militancy = 3
+	    }
+		relation = { who = MUS value = -100 }
+		relation = { who = TVE value = -100 }
+		clr_country_flag = NZH_crisis
+		clr_country_flag = TVE_denied
+		clr_country_flag = MUS_denied
+		set_country_flag = NZH_crisis_two
+		country_event = { id = 222548 days = 78 }
+    }
+}
+
+# Political Chaos ensues and a general blows himself up
+
+country_event = {
+	id = 222548
+	title = "CRUS49.T"
+	desc = "CRUS49.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = { 
+		any_pop = { 
+		   limit = { 
+		      pop_type = officers
+		   }
+		   consciousness = 5
+		   militancy = 5
+		}
+	}
+	
+	# GP restores order and pisses Moscow off
+	
+	option = {
+		name = "CRUS49.A"
+        prestige = 10
+		relation = { who = MUS value = -400 }
+	    government = absolute_monarchy
+		ruling_party_ideology = reactionary	
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    political_reform = four_year_draft
+		MUS = { country_event = { id = 222549 days = 23 } }
+	    ai_chance = { 
+	      factor = 65
+	    }
+    }
+	
+    # Anna throws the GP in prison.
+	
+	option = {
+		name = "CRUS49.B"
+		set_country_flag = anna_control
+		prestige = -5
+	    any_pop = { 
+		   limit = { 
+		      pop_type = aristocrats
+		   }
+		   militancy = 2
+	    }
+		country_event = { id = 222556 days = 28 }
+	    ai_chance = { 
+	      factor = 35
+	    }
+    }
+}
+
+# They literally just held a member of the family hostage. Stop them.
+
+country_event = {
+	id = 222549
+	title = "CRUS50.T"
+	desc = "CRUS50.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	# Yes. Threaten the idiotic green prince
+	
+	option = {
+		name = "CRUS50.A"
+		prestige = 5
+		NZH = { country_event = { id = 222550 days = 7 } }
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	# This will just stalemate the situation and give TVE cores on NZH. You idiot.
+	
+	option = {
+		name = "CRUS50.B"
+		prestige_factor = -0.3
+		NZH = { clr_country_flag = NZH_crisis_two all_core = { add_core = TVE } }
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+# A threat from Muscovy
+
+country_event = {
+	id = 222550
+	title = "CRUS51.T"
+	desc = "CRUS51.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS51.A"
+		country_event = { id = 222551 days = 7 }
+    }
+}
+
+# The Attempted Coup
+
+country_event = {
+	id = 222551
+	title = "CRUS52.T"
+	desc = "CRUS52.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	# He gets murdered and torn to pieces. NZH tells Moscow to go fuck itself and TVE takes the opportunity to invade. MUS will intervene via the indie decision and a three way will begin.
+	
+	option = {
+		name = "CRUS52.A"
+		prestige = 5
+		TVE = { country_event = { id = 222552 days = 2 } }
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 75
+	    }
+    }
+	
+	# The Army stays loyal and says no
+	
+	option = {
+		name = "CRUS52.B"
+		TVE = { country_event = { id = 222553 days = 2 } }
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 25
+	    }
+    }
+}
+
+# TVE choosing to invade NZH
+# MUS intervention via decision
+
+country_event = {
+	id = 222552
+	title = "CRUS53.T"
+	desc = "CRUS53.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		NZH = { all_core = { add_core = MUS } }
+		NZH = { all_core = { add_core = TVE } }
+    }		
+	
+	option = {
+		name = "CRUS53.A"
+		prestige = 5
+		relation = { who = NZH value = -400 }
+		#1022 = { add_core = MUS }
+	    war = {
+			target = NZH
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	option = {
+		name = "CRUS53.B"
+		prestige_factor = -0.3
+		relation = { who = NZH value = -400 }
+		1022 = { add_core = MUS }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+# Do you want to ask NZH to be a puppet or just invade them (triggering a MUS intervention)
+
+country_event = {
+	id = 222553
+	title = "CRUS54.T"
+	desc = "CRUS54.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+
+	immediate = {
+		NZH = { all_core = { add_core = MUS } }
+		NZH = { all_core = { add_core = TVE } }
+    }
+
+	option = {
+		name = "CRUS54.A"
+		prestige = 1
+        NZH = { country_event = { id = 222554 days = 2 } }
+	    ai_chance = { 
+	      factor = 90
+	    }
+    }
+	
+	option = {
+		name = "CRUS54.B"
+		prestige = -1
+		relation = { who = NZH value = -400 }
+	    war = {
+			target = NZH
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+		clr_country_flag = NZH_crisis_two
+		set_global_flag = MUS_TVE_WAR_END
+	    ai_chance = { 
+	      factor = 10
+	    }
+    }
+}
+
+country_event = {
+	id = 222554
+	title = "CRUS55.T"
+	desc = "CRUS55.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	# Triggers the event below and you get to die and be a puppet.
+	
+	option = {
+		name = "CRUS55.A"
+		prestige = -20
+		relation = { who = TVE value = 400 }
+		TVE = { create_vassal = NZH create_alliance = NZH }
+        MUS = { country_event = { id = 222555 days = 7 } }
+	    ai_chance = { 
+	      factor = 30
+	    }
+    }
+	
+	# Triggers the event above. You get to die without being a puppet and MUS will still likely invade you anyway.
+	
+	option = {
+		name = "CRUS55.B"
+		prestige = 20
+		MUS = { country_event = { id = 222555 days = 7 } }
+	    ai_chance = { 
+	      factor = 70
+	    }
+    }
+}
+
+# MUS choosing to invade NZH
+
+country_event = {
+	id = 222555
+	title = "CRUS56.T"
+	desc = "CRUS56.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		NZH = { all_core = { add_core = MUS } }
+		NZH = { all_core = { add_core = TVE } }
+		1022 = { add_core = MUS }
+    }
+	
+	option = {
+		name = "CRUS56.A"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige = 5
+		relation = { who = NZH value = -400 }	
+	    war = {
+			target = NZH
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	option = {
+		name = "CRUS56.B"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige_factor = -0.3
+		relation = { who = NZH value = -400 }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+### Anna goes ham but ends up getting the GP killed anyway. Good Job breaking it hero. At least we got a alliance with MUS out of it.
+### This will make the annexation decision visible for MUS but it can't be used till NZH makes it possible.
+
+country_event = {
+	id = 222556
+	title = "CRUS57.T"
+	desc = "CRUS57.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS51.A"
+		prestige = 5
+		set_country_flag = MUS_NZH_alliance
+		relation = { who = MUS value = 400 }
+		MUS = { set_country_flag = MUS_NZH_alliance create_alliance = NZH }
+		country_event = { id = 222557 days = 27 }
+    }
+}
+
+### Oh shit. TVER found out.
+
+country_event = {
+	id = 222557
+	title = "CRUS58.T"
+	desc = "CRUS58.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS51.A"
+		TVE = { country_event = { id = 222558 days = 3 } }
+    }
+}
+
+### Yeah. NZH just killed your cousin. You should do something about that.
+
+
+country_event = {
+	id = 222558
+	title = "CRUS59.T"
+	desc = "CRUS59.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		NZH = { all_core = { add_core = TVE } }
+		1022 = { add_core = NZH }
+    }
+	
+	option = {
+		name = "CRUS56.A"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige = 5
+		relation = { who = NZH value = -400 }
+	    war = {
+			target = NZH
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	option = {
+		name = "CRUS56.B"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige_factor = -0.3
+		relation = { who = NZH value = -400 }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+##### NZH VS TVE WARS WHEN CORES NEED TO BE REMOVED ####
+
+### TVE VS MUS ###
+
+country_event = {
+	id = 222559
+	title = "CRUS60.T"
+	desc = "CRUS60.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+	   1022 = { add_core = NZH }
+	   1022 = { add_core = MUS }
+	}
+	
+	option = {
+		name = "CRUS60.A"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR
+		prestige = 5
+		relation = { who = NZH value = -400 }
+		relation = { who = MUS value = -400 }
+		NZH = { all_core = { add_core = MUS } all_core = { add_core = TVE } }
+	    war = {
+			target = MUS
+			attacker_goal = {
+                casus_belli = acquire_any_state
+				state_province_id = 1012	
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	## This is basically a surrender button and you are a idiot for pressing this.
+	
+	option = {
+		name = "CRUS60.B"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige_factor = -0.5
+		relation = { who = NZH value = -400 }
+		NZH = { all_core = { remove_core = TVE } all_core = { remove_core = NZH } }
+		1022 = { add_core = TVE }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+### MUS VS TVE ###
+
+country_event = {
+	id = 222560
+	title = "CRUS61.T"
+	desc = "CRUS61.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+	   1022 = { add_core = NZH }
+	   1022 = { add_core = MUS }
+	}
+	
+	option = {
+		name = "CRUS61.A"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR
+		prestige = 5
+		relation = { who = NZH value = -400 }
+		relation = { who = TVE value = -400 }
+	    NZH = { all_core = { add_core = MUS } all_core = { add_core = TVE } }
+	    war = {
+			target = TVE
+			attacker_goal = {
+                casus_belli = acquire_any_state
+				state_province_id = 1012	
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	## This is basically a surrender button and you are a idiot for pressing this.
+	
+	option = {
+		name = "CRUS61.B"
+		NZH = { clr_country_flag = NZH_crisis_two }
+		set_global_flag = MUS_TVE_WAR_END
+		prestige_factor = -0.5
+		relation = { who = NZH value = -400 }
+		NZH = { all_core = { remove_core = MUS } all_core = { remove_core = TVE } }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+### MUS wins and has disarmed TVE. Remove TVE and NZH (except on 1023) cores.
+
+country_event = {
+	id = 222561
+	title = "CRUS62.T"
+	desc = "CRUS62.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = MUS
+		war = no
+		owns = 1020
+		has_global_flag = MUS_TVE_WAR
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "CRUS62.A"
+		clr_global_flag = MUS_TVE_WAR
+		set_global_flag = MUS_TVE_WAR_END
+		prestige = 20	
+		TVE = { prestige = -20 }
+		NZH = { all_core = { remove_core = TVE } all_core = { remove_core = NZH } }
+		1022 = { add_core = TVE }
+    }
+}
+
+### TVE wins and has disarmed NZH. Remove MUS and NZH cores.
+
+country_event = {
+	id = 222562
+	title = "CRUS63.T"
+	desc = "CRUS63.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = TVE
+		war = no
+		owns = 1020
+		has_global_flag = MUS_TVE_WAR
+		NOT = { has_global_flag = MUS_TVE_WAR_END }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "CRUS63.A"
+		clr_global_flag = MUS_TVE_WAR
+		set_global_flag = MUS_TVE_WAR_END
+		prestige = 20	
+		MUS = { prestige = -20 }
+		NZH = { all_core = { remove_core = MUS } all_core = { remove_core = NZH } }
+    }
+}
+
+
+###  NZH has stabilized. Enable annexation decision.(MUS TVE Alliance) 
+
+country_event = {
+	id = 222563
+	title = "CRUS64.T"
+	desc = "CRUS64.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		war = no
+		has_global_flag = MUS_TVE_WAR_END
+		has_country_flag = MUS_NZH_alliance
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CRUS64.A"
+		clr_country_flag = anna_control
+		MUS = { set_country_flag = enable_NZH_kill }
+	    ai_chance = { 
+	      factor = 100
+	    }
+    }
+	
+	option = {
+		name = "CRUS64.B"
+		prestige = 10
+		clr_country_flag = MUS_NZH_alliance
+		MUS = { clr_country_flag = MUS_NZH_alliance }
+	    ai_chance = { 
+	      factor = 0
+	    }
+    }
+}
+
+### Its 1847 and NZH still exists and is not a puppet dictatorship. Complete reforms, abolish Serfdom and claim Tartaiya
+
+country_event = {
+	id = 222564
+	title = "CRUS65.T"
+	desc = "CRUS65.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1847
+		government = presidential_dictatorship
+		has_global_flag = MUS_TVE_WAR_END		
+        NOT = { has_country_flag = NZH_control }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+   option = {
+		name = "CRUS65.A"
+		prestige = 20
+		political_reform = peonage
+		relation = { who = KAZ value = -400 }
+		leave_alliance = KAZ
+		#RUS_1030 = { add_core = NZH }
+		set_country_flag = NZH_control
+    }
+}
+
+### Its 1847 and NZH still exists and is not a puppet monarchy. Complete reforms, abolish Serfdom and claim Moscow.
+
+country_event = {
+	id = 222565
+	title = "CRUS66.T"
+	desc = "CRUS66.D"
+	picture = "Anna_NZH"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1847
+		has_country_flag = anna_control
+		has_global_flag = MUS_TVE_WAR_END	
+        NOT = { has_country_flag = NZH_control }		
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "CRUS66.A"
+		clr_country_flag = anna_control	
+		prestige = 20
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = peonage
+		relation = { who = MUS value = -400 }
+		leave_alliance = MUS
+		MUS = { all_core = { add_core = NZH } }
+		set_country_flag = NZH_control 
+    }
+}
+
+### Its 1847 and NZH somehow still exists through other non-event related means. Set NZH_control flag.
+
+country_event = {
+	id = 2225650
+	title = "CRUS660.T"
+	desc = "CRUS660.D"
+	picture = "sejm"
+	
+	trigger = {	
+	    exists = yes
+        tag = NZH
+		year = 1847
+		NOT = { has_country_flag = anna_control }
+		NOT = { government = presidential_dictatorship }
+		has_global_flag = MUS_TVE_WAR_END	
+        NOT = { has_country_flag = NZH_control }		
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "CRUS660.A"
+		prestige = 20
+		set_country_flag = NZH_control 
+    }
+}
+
+############### The Russian Anarchy #######################
+
+## If NZH is a puppet or does not exist or has triggered the above events and Finland has been resolved in any way then these events will trigger.
+
+## Trigger One: Hapsburg PLC
+
+country_event = {
+	id = 222566
+	title = "CRUS67.T"
+	desc = "CRUS67.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS67.A"
+		set_global_flag = RUS_TRIGGERMAN
+    }
+}
+
+## Trigger Two: Aggressive SCA
+
+country_event = {
+	id = 222567
+	title = "CRUS68.T"
+	desc = "CRUS68.D"
+	picture = "mother_anarchy"
+	
+     trigger = {	
+	    exists = yes
+        OR = { 
+           tag = MUS
+		   AND = { 
+		     tag = TVE
+			 NOT = { exists = MUS }
+		   }
+		}
+		OR = { 
+		   988 = { owned_by = SCA }
+		   1006 = { owned_by = SCA }
+		}
+		year = 1848
+		NOT = { year = 1850 }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	    NOT = { has_global_flag = RUS_TRIGGERMAN }
+		NOT = { has_global_flag = RUS_ANARCHY }	
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS68.A"
+		set_global_flag = RUS_TRIGGERMAN
+    }
+}
+
+## Trigger Three: SCA Influence Collapsed
+
+country_event = {
+	id = 222568
+	title = "CRUS69.T"
+	desc = "CRUS69.D"
+	picture = "mother_anarchy"
+	
+     trigger = {	
+	    exists = yes
+        OR = { 
+           tag = MUS
+		   AND = { 
+		     tag = TVE
+			 NOT = { exists = MUS }
+		   }
+		}
+		OR = { 
+		   KAR = { exists = yes }
+		   FIN = { exists = yes }
+		}
+		year = 1848
+		NOT = { year = 1850 }
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	    NOT = { has_global_flag = RUS_TRIGGERMAN }
+		NOT = { has_global_flag = RUS_ANARCHY }	
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS69.A"
+		set_global_flag = RUS_TRIGGERMAN
+    }
+}
+
+## Trigger Four: 1850 and none of the above
+
+country_event = {
+	id = 222569
+	title = "CRUS70.T"
+	desc = "CRUS70.D"
+	picture = "mother_anarchy"
+	
+     trigger = {	
+	    exists = yes
+        OR = { 
+		   tag = MUS
+		   AND = { 
+		     tag = TVE
+			 NOT = { exists = MUS }
+		   }
+		}
+		year = 1850
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+	    NOT = { has_global_flag = RUS_TRIGGERMAN }
+		NOT = { has_global_flag = RUS_ANARCHY }	
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CRUS70.A"
+		set_global_flag = RUS_TRIGGERMAN
+    }
+}
+
+###################### THE GREAT RUSSIAN ANARCHY BEGINS #####################
+
+## sacred war powerful version ##
+
+country_event = {
+	id = 222570
+	title = "CRUS71.T"
+	desc = "CRUS71.D"
+	picture = "mother_anarchy"
+	
+	major = yes
+	
+    trigger = {	
+	    exists = yes
+        OR = { 
+		   tag = MUS
+		   AND = { 
+		     tag = TVE
+			 NOT = { exists = MUS }
+		   }
+		}
+        year = 1848
+		AND = {
+		   has_global_flag = MUS_TVE_WAR_END	
+           OR = {
+              NOT = { exists = NZH }
+              NZH = { is_vassal = yes }		
+              NZH = { has_country_flag = NZH_control }	  
+		   } 
+        }
+		NZH = { war = no }
+		TVE = { war = no }
+		MUS = { war = no }
+		SMO = { war = no }
+		RYA = { war = no }				
+		has_global_flag = RUS_TRIGGERMAN
+		NOT = { has_global_flag = RUS_STAGE_ONE }
+		NOT = { has_global_flag = RUS_ANARCHY }	
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CRUS71.A"
+		political_reform = mandatory_service
+		clr_global_flag = RUS_TRIGGERMAN
+	    set_global_flag = RUS_ANARCHY
+		random_owned = {
+		limit = { 
+		owner = { capital = 1008 }
+		}
+		owner = { add_country_modifier = { name = MUS_enemies_all_sides duration = 1825 } }
+		}
+		any_country = {
+		   limit = { 
+		      NOT = { tag = THIS }
+	          primary_culture = russian
+			  exists = yes
+			  NOT = { is_vassal = yes }
+		   }
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = MUS
+		   leave_alliance = RYA
+		   leave_alliance = TVE
+		   leave_alliance = SMO
+		   leave_alliance = NZH
+		   country_event = { id = 222571 days = 1 }
+	   }
+	   # CLEAR ALLIANCES AND RELATIONS WITH GPS
+	   any_country = { 
+		 limit = {
+		 is_greater_power = yes
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }
+	   # CLEAR ALLIANCES AND RELATIONS WITH SPECIFIC POWERS
+	   any_country = { 
+		 limit = {
+		 tag = SCA
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }	
+	   any_country = { 
+		 limit = {
+		 tag = PLC
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }	   
+       # ADD CORES TO ALL CENTRAL RUSSIAN MINOR CLAIMS
+       RYA = { 
+	   money = 100000
+	   small_arms = 100
+	   regular_clothes = 100
+	   artillery = 100
+	   canned_food = 100
+	   all_core = { add_core = THIS } 
+	   add_casus_belli = {
+	      target = SMO
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = NZH
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = TVE
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = MUS
+		  type = conquest
+		  months = 120
+	      }			  
+	   }
+       SMO = { 
+	   money = 100000
+	   small_arms = 100
+	   regular_clothes = 100
+	   artillery = 100
+	   canned_food = 100
+	   all_core = { add_core = THIS } 
+	   add_casus_belli = {
+	      target = RYA
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = NZH
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = MUS
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = TVE
+		  type = conquest
+		  months = 120
+	      }	   
+	   }
+	   NZH = { 
+	   money = 100000
+	   small_arms = 100
+	   regular_clothes = 100
+	   artillery = 100
+	   canned_food = 100
+	   all_core = { add_core = THIS } 
+	   add_casus_belli = {
+	      target = SMO
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = RYA
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = TVE
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = MUS
+		  type = conquest
+		  months = 120
+	      }	   
+	   }
+       MUS = { 
+	   money = 100000
+	   small_arms = 100
+	   regular_clothes = 100
+	   artillery = 100
+	   canned_food = 100
+	   all_core = { add_core = THIS } 
+	   add_casus_belli = {
+	      target = SMO
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = NZH
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = TVE
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = RYA
+		  type = conquest
+		  months = 120
+	      }	   
+	   }
+	   TVE = { 
+	   money = 100000
+	   small_arms = 100
+	   regular_clothes = 100
+	   artillery = 100
+	   canned_food = 100
+	   all_core = { add_core = THIS } 
+	   add_casus_belli = {
+	      target = SMO
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = NZH
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = RYA
+		  type = conquest
+		  months = 120
+	      }	
+	   add_casus_belli = {
+	      target = MUS
+		  type = conquest
+		  months = 120
+	      }	   
+	   }
+	   # REMOVE PERM ROCK AND HARD PLACE
+	   remove_country_modifier = rock_and_hard_place
+	   # ADD TEMP ROCK AND HARD PLACE
+	   add_country_modifier = { name = rock_and_hard_place duration = 1825 }
+	   # EMERGENCY DRAFT FOR ALL
+	   add_country_modifier = { name = MOS_anarchy duration = 1825 } 
+	   # MAY THE BEST COUNTRY WIN	   
+    }
+}
+
+## ANARCHY FOR WARLORDS
+
+country_event = {
+	id = 222571
+	title = "CRUS72.T"
+	desc = "CRUS72.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS72.A"
+		political_reform = mandatory_service
+		leave_alliance = MUS
+		leave_alliance = RYA
+		leave_alliance = TVE
+	    leave_alliance = SMO
+		leave_alliance = NZH
+	   # CLEAR ALLIANCES AND RELATIONS WITH GPS
+	   any_country = { 
+		 limit = {
+		 is_greater_power = yes
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }
+	   # CLEAR ALLIANCES AND RELATIONS WITH SPECIFIC POWERS
+	   any_country = { 
+		 limit = {
+		 tag = SCA
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }	
+	   any_country = { 
+		 limit = {
+		 tag = PLC
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+	   }	   
+	   # REMOVE PERM ROCK AND HARD PLACE
+	   remove_country_modifier = rock_and_hard_place
+	   # ADD TEMP ROCK AND HARD PLACE
+	   add_country_modifier = { name = rock_and_hard_place duration = 1825 }
+       # ADD CORES TO ALL CENTRAL RUSSIAN MINOR CLAIMS
+       RYA = { all_core = { add_core = THIS } }
+       SMO = { all_core = { add_core = THIS } }
+	   NZH = { all_core = { add_core = THIS } }
+       MUS = { all_core = { add_core = THIS } }
+	   TVE = { all_core = { add_core = THIS } }
+	   # EMERGENCY DRAFT FOR ALL
+	   add_country_modifier = { name = MOS_anarchy duration = 1825 } 
+	   # MAY THE BEST COUNTRY WIN
+    }
+}
+
+### Rus Formation ###
+
+country_event = {
+	id = 222572
+	title = "CRUS73.T"
+	desc = "CRUS73.D"
+	picture = "mother_anarchy"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS72.A"
+		tech_school = industrial_tech_school
+		clr_country_flag = MOS_forming
+		# End Taiping Draft
+		remove_country_modifier = MOS_anarchy
+		# End MUS Modifier
+		remove_country_modifier = MUS_enemies_all_sides
+		# REMOVE ROCK AND HARD PLACE
+		remove_country_modifier = rock_and_hard_place		
+		# Check location of capital and set the former nation flag
+		random_owned = {
+		  limit = {
+		     owner = { capital = 1001 }
+		  }
+		  owner = { set_country_flag = TVE_MOS } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 1012 }
+		  }
+		  owner = { set_country_flag = RYA_MOS } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 943 has_country_flag = SMO_MON }
+		  }
+		  owner = { set_country_flag = SMO_MOS_MON } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 943 has_country_flag = SMO_VOZ }
+		  }
+		  owner = { set_country_flag = SMO_MOS_VOZ } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 943 has_country_flag = SMO_REP }
+		  }
+		  owner = { set_country_flag = SMO_MOS_REP } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 1020 }
+		  }
+		  owner = { set_country_flag = NZH_MOS } 
+		}
+		random_owned = {
+		  limit = {
+		     owner = { capital = 1008 }
+		  }
+		  owner = { set_country_flag = MUS_MOS } 
+		}	
+        # Clear all possible flags to prevent issues later
+	    clr_global_flag = RUS_ANARCHY
+		clr_global_flag = RUS_TRIGGERMAN
+		clr_global_flag = MUS_TVE_WAR_END
+		clr_global_flag = MUS_TVE_WAR
+		NZH = { 
+		clr_country_flag = NZH_control 
+		clr_country_flag = anna_control
+		clr_country_flag = MUS_NZH_alliance
+		}
+		SMO = {
+		clr_country_flag = BLR_attempt_one
+		clr_country_flag = BLR_second_attempt
+		clr_country_flag = BLR_revolts
+		clr_country_flag = SMO_MON
+		clr_country_flag = SMO_REP
+		clr_country_flag = SMO_VOZ
+		clr_country_flag = SMO_non_polish
+		clr_country_flag = SMO_polish
+		clr_country_flag = SMO_MON_WAIT
+		clr_country_flag = SMO_endwar
+		}
+		MUS = {
+		clr_country_flag = enable_NZH_kill
+		clr_country_flag = MUS_NZH_alliance
+		}
+		# Set stage one blocker
+		set_global_flag = RUS_STAGE_ONE
+		# Add Moscow Cores
+		THIS = { all_core = { add_core = MOS } }
+		# Remove warlord cores
+		MOS = { 
+		all_core = { remove_core = TVE }
+		all_core = { remove_core = MUS }	
+		all_core = { remove_core = NZH }
+        all_core = { remove_core = RYA }
+        all_core = { remove_core = SMO }
+        }	
+        # Become Moscow
+        change_tag = MOS		
+		# Add warlord cores back. Also add MOS cores just to be sure.
+		1020 = { add_core = MUS add_core = TVE add_core = NZH add_core = MOS }
+		1011 = { remove_core = MUS }
+		RUS_1008 = { add_core = MUS add_core = MOS }
+		RUS_1020 = { add_core = RYA add_core = MOS }	
+		RUS_998 = { add_core = TVE add_core = MOS }
+		RUS_1015 = { add_core = SMO add_core = MOS }
+		# Ten Year Cooldown before Stage 2 can start,
+		add_country_modifier = {
+			name = MOS_cooldown
+			duration = 3650
+		}
+		add_country_modifier = {
+			name = no_more_war
+			duration = 3650
+		}			
+	}		
+}
+
+### AI Event to invade neighbours ###
+
+country_event = {
+	id = 222573
+	title = "CRUS74.T"
+	desc = "CRUS74.D"
+	picture = "mother_anarchy"
+	
+     trigger = {	
+	    ai = yes
+		exists = yes
+		war = no
+		primary_culture = russian
+		has_global_flag = RUS_ANARCHY	
+		OR = {
+		   exists = MUS
+		   exists = TVE
+		   exists = RYA
+		   exists = NZH
+		   exists = SMO
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "CRUS74.A"
+	    any_country = { 
+		 limit = {
+		   primary_culture = russian
+		   neighbour = THIS
+		   exists = yes
+		 }
+		 diplomatic_influence = { who = THIS value = -400 }
+		 relation = { who = THIS value = -400 }
+	     leave_alliance = THIS	
+		 country_event = { id = 222574 days = 0 }
+	     }
+    }
+}
+
+country_event = {
+	id = 222574
+	title = "CRUS75.T"
+	desc = "CRUS75.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS75.A"
+		FROM = {
+			war = {
+				target = THIS
+				call_ally = yes
+				attacker_goal = {
+					casus_belli = civil_war
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}
+			}
+		}
+    }
+}	
+
+########################## STAGE 2 - THE UNIFICATION OF RUSSIA #######################################
+
+## Tidings of doom upon the Crimeans and ASK ###
+
+country_event = {
+	id = 222575
+	title = "CRUS76.T"
+	desc = "CRUS76.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS76.A"
+		prestige = -1
+    }
+}	
+
+## Cossack's Annexation Event ###
+
+country_event = {
+	id = 222576
+	title = "CRUS77.T"
+	desc = "CRUS77.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS77.A"
+		prestige = -10
+		FROM = { inherit = THIS }
+	    ai_chance = { 
+		factor = 50
+	       modifier = { 
+		      factor = 2
+		      vassal_of = FROM
+	       }	
+	       modifier = { 
+		      factor = 1.5
+		      exists = RUS
+	       }
+	       modifier = { 
+		      factor = 1.5
+		      FROM = { OR = { government = democracy government = parliamentary_republic } }
+	       }
+	       modifier = { 
+		      factor = 0.2
+		      FROM = { government = absolute_monarchy }
+	       }
+	       modifier = { 
+		      factor = 0.5
+		      FROM = { government = prussian_constitutionalism }
+	       }
+	       modifier = { 
+		      factor = 0
+		      FROM = { OR = { government = fascist_monarchy government = fascist_dictatorship } }
+	       }
+	    }		
+    }
+	
+	option = {
+		name = "CRUS77.B"
+		prestige = 10
+		diplomatic_influence = { who = FROM value = -400 }
+		relation = { who = FROM value = -400 }
+	    ai_chance = { 
+		factor = 50 
+	       modifier = { 
+		      factor = 0
+		      vassal_of = FROM
+	       }
+	       modifier = { 
+		      factor = 0.5
+		      exists = RUS
+	       }
+	       modifier = { 
+		      factor = 0.5
+		      FROM = { OR = { government = democracy government = parliamentary_republic } }
+	       }
+	       modifier = { 
+		      factor = 1.8
+		      FROM = { government = absolute_monarchy }
+	       }
+	       modifier = { 
+		      factor = 1.5
+		      FROM = { government = prussian_constitutionalism }
+	       }	
+	       modifier = { 
+		      factor = 2
+		      FROM = { OR = { government = fascist_monarchy government = fascist_dictatorship } }
+	       }		   
+	    }		
+    }
+}	
+
+# RUS-MOS Bump event for Cossack Collapse
+
+country_event = {
+	id = 222577
+	title = "CRUS770.T"
+	desc = "CRUS770.D"
+	picture = "mother_anarchy"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "CRUS770.A"
+		any_country = {
+			limit = {
+			    exists = yes
+				primary_culture = cossack
+				NOT = { tag = CSK }
+			}
+			country_event = { id = 222576 days = 0 }
+		}
+    }
+}	
+
+#################################### NOV - MOS/CSK CHAIN #########################################
+
+#### Novogrod is warned of impending Southern Dealings. Fires a event depending on conditions. ####
+
+country_event = {
+	id = 222578
+	title = "CRUS78.T"
+	desc = "CRUS78.D"
+	picture = "mother_anarchy"
+	
+	trigger = {
+	   exists = yes
+	   tag = NOV
+	   war = no
+	   has_country_flag = NOV_CHAIN_TRIGGER   
+	   NOT = { has_global_flag = NCW_54A_BEGIN }
+	   NOT = { has_global_flag = NCW_54B_BEGIN }
+	   NOT = { has_global_flag = NCW_54C_BEGIN }	   
+	}
+
+	mean_time_to_happen = {
+	   days = 2
+	}
+	
+	option = {
+		name = "CRUS76.A"
+		clr_country_flag = NOV_CHAIN_TRIGGER   
+        # Monarchy MOS/CSK + Monarchy Failstate NOV		
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+			      government = prussian_constitutionalism
+			      government = hms_government
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = failstate_NOV 
+               OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_ABMON
+               }				  
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222580 days = 1 }
+        }
+		# Monarchy MOS/CSK + Non-Monarchy Failstate NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+			      government = prussian_constitutionalism
+			      government = hms_government
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = failstate_NOV
+               OR = {
+                  has_global_flag = NOV_DICTATORSHIP
+                  has_global_flag = NOV_DEMOCRACY
+               }             			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222582 days = 1 }
+        }  
+		# Dictatorship MOS/CSK + Any Failstate NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = proletarian_dictatorship
+			      government = fascist_dictatorship
+			      government = presidential_dictatorship
+		          government = bourgeois_dictatorship
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = failstate_NOV     			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222584 days = 1 }
+        }	
+		# Democracy MOS/CSK + Democracy Failstate NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = failstate_NOV
+               OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_DEMOCRACY
+               }				   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222586 days = 1 }
+        }	
+		# Democracy MOS/CSK + Non-Democracy Failstate NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = failstate_NOV
+               OR = {
+                  has_global_flag = NOV_DICTATORSHIP	
+                  has_global_flag = NOV_ABMON
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222588 days = 1 }
+        }	
+		# Absolute MOS/CSK + Any Isolationalist NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+			   OR = {
+		          government = absolute_monarchy
+				  government = fascist_monarchy
+			   }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = isolat_NOV			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222592 days = 1 }
+        }	
+		# Non-Absolute Monarchy MOS/CSK + Any Isolationalist NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+			      government = prussian_constitutionalism
+			      government = hms_government
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = isolat_NOV				   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222596 days = 1 }
+        }	
+		# Dictatorship MOS/CSK + Any Isolationalist NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = proletarian_dictatorship
+			      government = fascist_dictatorship
+			      government = presidential_dictatorship
+		          government = bourgeois_dictatorship
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   has_global_flag = isolat_NOV				   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222601 days = 1 }
+        }	
+		# Democracy MOS/CSK + Democratic Isolationalist or Panrussian NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   OR = {
+			      has_global_flag = isolat_NOV	
+                  has_global_flag = panrussian_NOV
+               }
+			   OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_DEMOCRACY
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222602 days = 1 }
+        }	
+		# Democracy MOS/CSK + Non-Democratic Isolationalist or Panrussian NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   OR = {
+			      has_global_flag = isolat_NOV	
+                  has_global_flag = panrussian_NOV
+               }
+			   OR = {
+                  has_global_flag = NOV_DICTATORSHIP	
+                  has_global_flag = NOV_ABMON
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222604 days = 1 }
+        }	
+        # Absolute MOS/CSK + Monarchy Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+				  government = fascist_monarchy
+               }
+			   has_country_flag = GO_NORTH_TAG	
+               has_global_flag = panrussian_NOV
+			   OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_ABMON
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222608 days = 1 }
+        }
+        # Absolute MOS/CSK + Other Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+				  government = fascist_monarchy
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV
+			   OR = {
+                  has_global_flag = NOV_DEMOCRACY	
+                  has_global_flag = NOV_DICTATORSHIP	
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222612 days = 1 }
+        }
+        # Other Monarchy MOS/CSK + Any Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+			      government = prussian_constitutionalism
+			      government = hms_government
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV		   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222614 days = 1 }
+        }
+        # Dictatorship MOS/CSK + Any Panrussian NOV		
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = proletarian_dictatorship
+			      government = fascist_dictatorship
+			      government = presidential_dictatorship
+		          government = bourgeois_dictatorship
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV		   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222616 days = 1 }
+        }
+    }
+}
+
+# NOV was unable to press a specific decision in time and collapsed
+
+country_event = {
+	id = 222579
+	title = "CRUS79.T"
+	desc = "CRUS79.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "CRUS79.A"
+	prestige_factor = -0.50
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	clr_country_flag = tl_dictatorship_NOV
+	clr_country_flag = staraya_NOV
+	clr_country_flag = time_limited_NOV
+	set_global_flag = failstate_NOV
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	}
+}
+
+#### CSK/MOS is Monarchy - NOV is Failstate Monarchy ###
+
+#### A Simple Strategy ####
+
+country_event = {
+	id = 222580
+	title = "CRUS80.T"
+	desc = "CRUS80.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+
+	option = {
+	name = "CRUS80.A"
+	prestige = 5
+	relation = { who = BLO value = 100 }
+	relation = { who = UGG value = 100 }
+	relation = { who = VYA value = -10 }
+	relation = { who = KTK value = -10 }
+	relation = { who = KOM value = -10 }
+	relation = { who = PRM value = -10 }
+	relation = { who = NTS value = -10 }
+	NOV = { country_event = { id = 222581 days = 7 } }
+	}
+}
+
+### The Palace Coup ###
+
+country_event = {
+	id = 222581
+	title = "CRUS81.T"
+	desc = "CRUS81.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS80.A"
+	clr_global_flag = failstate_NOV
+	prestige_factor = -0.90
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	}
+}
+
+#### CSK/MOS is Monarchy - NOV is Failstate Non-Monarchy  ###
+
+#### The Offer ####
+
+country_event = {
+	id = 222582
+	title = "CRUS82.T"
+	desc = "CRUS82.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+
+	option = {
+	name = "CRUS80.A"
+	relation = { who = BLO value = -10 }
+	relation = { who = UGG value = -10 }
+	relation = { who = VYA value = -10 }
+	relation = { who = KTK value = -10 }
+	relation = { who = KOM value = -10 }
+	relation = { who = PRM value = -10 }
+	relation = { who = NTS value = -10 }
+	NOV = { country_event = { id = 222583 days = 7 } }
+	}
+}
+
+#### NOV gets the offer ####
+
+country_event = {
+	id = 222583
+	title = "CRUS83.T"
+	desc = "CRUS83.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS83.A"
+	clr_global_flag = failstate_NOV
+	prestige_factor = -0.10
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS83.B"
+	clr_global_flag = failstate_NOV
+	prestige = 10
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222618 days = 1 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+#### CSK/MOS is Dictatorship - NOV is Any Failstate  ###
+
+country_event = {
+	id = 222584
+	title = "CRUS84.T"
+	desc = "CRUS84.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+
+	option = {
+	name = "CRUS84.A"
+	prestige = 5
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	NOV = { country_event = { id = 222585 days = 7 } }
+	}
+}
+
+#### NOV gets the threat ####
+
+country_event = {
+	id = 222585
+	title = "CRUS85.T"
+	desc = "CRUS85.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS85.A"
+	clr_global_flag = failstate_NOV
+	prestige_factor = -0.10
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS85.A"
+	clr_global_flag = failstate_NOV
+	prestige = 10
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222618 days = 1 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+#### CSK/MOS is Democracy - NOV is Failstate Democracy  ###
+
+### Reccomend Referendum ####
+
+country_event = {
+	id = 222586
+	title = "CRUS86.T"
+	desc = "CRUS86.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS86.A"
+	prestige = 10
+	relation = { who = NOV value = 50 }
+	relation = { who = VYA value = 50 }
+	relation = { who = KTK value = 50 }
+	relation = { who = KOM value = 50 }
+	relation = { who = PRM value = 50 }
+	relation = { who = NTS value = 50 }
+	NOV = { country_event = { id = 222587 days = 7 } }
+	}
+}
+
+### The Great Unification/Referendum ###
+
+country_event = {
+	id = 222587
+	title = "CRUS87.T"
+	desc = "CRUS87.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS87.A"
+	clr_global_flag = failstate_NOV
+	prestige = 10
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	}
+}
+
+#### CSK/MOS is Democracy - NOV is Non-Democracy  ###
+
+### The Stubboness of Novogrod ####
+
+country_event = {
+	id = 222588
+	title = "CRUS88.T"
+	desc = "CRUS88.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS88.A"
+	prestige = -5
+	relation = { who = NOV value = -200 }
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	NOV = { 
+	   any_pop = { 
+	      limit = { 
+	         location = { is_core = RUS }
+	      }
+	      militancy = 2
+	   }		
+	   country_event = { id = 222589 days = 7 }
+	   }
+	}
+}
+
+### A Panrussian Rebellion  ###
+
+country_event = {
+	id = 222589
+	title = "CRUS89.T"
+	desc = "CRUS89.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS89.A"
+	clr_global_flag = failstate_NOV
+	prestige_factor = -0.90
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS89.B"
+	clr_global_flag = failstate_NOV
+	prestige = 10
+	add_country_modifier = {
+		name = panrussian_rebellion_NOV
+		duration = 1095
+	}
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = 4
+	}
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222618 days = 1 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+### Failstate Substates Annexation Events ###
+
+### Opening Event - Asking the Substates ###
+
+country_event = {
+	id = 222590
+	title = "CRUS90.T"
+	desc = "CRUS90.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS90.A"
+	any_country = {
+	  limit = { 
+	     exists = yes
+		 NOT = { is_vassal = yes }
+	     OR = { 
+		    is_culture_group = uralic
+			primary_culture = north_russian
+	     }
+      }
+	  country_event = { id = 222591 days = 1 }
+	}
+    }	
+}
+
+### Annexation Event ###
+
+country_event = {
+	id = 222591
+	title = "CRUS91.T"
+	desc = "CRUS91.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS91.A"
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS91.B"
+	prestige = 10
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = 2
+	}
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	# Nobody is going to protect some siberian substate against Russia
+	any_country = { 
+		limit = {
+		  is_greater_power = yes
+		  NOT = { tag = RUS }
+		}
+		diplomatic_influence = { who = THIS value = -400 }
+		relation = { who = THIS value = -400 }
+	    leave_alliance = THIS	
+	}
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+#### CSK/MOS is Absolute - NOV is Any Isolationist ###
+
+### Sending Agents across the border ####
+
+country_event = {
+	id = 222592
+	title = "CRUS92.T"
+	desc = "CRUS92.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS92.A"
+	prestige = 5
+	relation = { who = NOV value = -20 }
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	NOV = { 
+	   any_pop = { 
+	      limit = { 
+	         location = { is_core = RUS }
+	      }
+	      militancy = 3
+	   }		
+	   country_event = { id = 222593 days = 7 }
+	   }
+	}
+}
+
+### A Panrussian Rebellion  ###
+
+country_event = {
+	id = 222593
+	title = "CRUS93.T"
+	desc = "CRUS93.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS93.A"
+	clr_global_flag = isolat_NOV
+	prestige_factor = -0.90
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222594 days = 0 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS93.B"
+	clr_global_flag = isolat_NOV
+	prestige = 10
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = 3
+	}
+	add_country_modifier = {
+		name = panrussian_rebellion_NOV
+		duration = 1095
+	}
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	country_event = { id = 222595 days = 0 }
+	FROM = { country_event = { id = 222618 days = 2 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+### The Faulty Union with Novogrod ###
+
+country_event = {
+	id = 222594
+	title = "CRUS94.T"
+	desc = "CRUS94.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS94.A"
+	prestige = -1
+	any_owned = { limit = { is_core = NOV } add_province_modifier = { name = nationalist_agitation duration = 720 } }
+    }
+}
+
+### The Panrussiansians Evacuate South ###
+
+country_event = {
+	id = 222595
+	title = "CRUS95.T"
+	desc = "CRUS95.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS95.B"
+	clr_global_flag = isolat_NOV
+	prestige = 1
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = -2
+	}
+	}
+}
+
+#### CSK/MOS is Other Monarchy - NOV is Any - Conference of Kostroma ###
+
+country_event = {
+	id = 222596
+	title = "CRUS96.T"
+	desc = "CRUS96.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS96.A"
+	prestige = 10
+	relation = { who = NOV value = 50 }
+	any_country = {
+	  limit = { 
+	  tag = NOV
+	      OR = {
+		     government = democracy
+		     government = parliamentary_republic
+	         government = socialist_republic
+	         government = prussian_constitutionalism
+	         government = hms_government	
+             government = merchant_republic			 
+	      }
+	   }
+	   country_event = { id = 222597 days = 4 }
+	}
+	any_country = {
+	  limit = { 
+	  tag = NOV
+	      OR = {
+		     government = proletarian_dictatorship
+             government = fascist_dictatorship
+		     government = presidential_dictatorship
+		     government = bourgeois_dictatorship
+             government = absolute_monarchy	
+             government = fascist_monarchy				  
+	      }
+	   }
+	   country_event = { id = 222598 days = 4 }
+	}
+    }
+}
+
+# The Referendum
+
+country_event = {
+	id = 222597
+	title = "CRUS97.T"
+	desc = "CRUS97.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS97.A"
+	clr_global_flag = isolat_NOV
+	prestige_factor = -0.10
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS97.B"
+	clr_global_flag = isolat_NOV
+	prestige = 10
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = 5
+	}
+	add_country_modifier = {
+		name = panrussian_rebellion_NOV
+		duration = 1095
+	}
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222618 days = 2 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+country_event = {
+	id = 222598
+	title = "CRUS98.T"
+	desc = "CRUS98.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS98.A"
+	prestige = 5
+	FROM = { country_event = { id = 222599 days = 2 } }
+	}
+}
+
+country_event = {
+	id = 222599
+	title = "CRUS99.T"
+	desc = "CRUS99.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS98.A"
+	prestige = -5
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	NOV = { country_event = { id = 222600 days = 2 } }
+	}
+}
+
+country_event = {
+	id = 222600
+	title = "CRUS100.T"
+	desc = "CRUS100.D"
+    picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS100.A"
+	clr_global_flag = isolat_NOV
+	prestige_factor = -0.90
+	relation = { who = BLO value = -20 }
+	relation = { who = UGG value = -20 }
+	relation = { who = VYA value = -20 }
+	relation = { who = KTK value = -20 }
+	relation = { who = KOM value = -20 }
+	relation = { who = PRM value = -20 }
+	relation = { who = NTS value = -20 }
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+	
+	option = {
+	name = "CRUS100.B"
+	clr_global_flag = isolat_NOV
+	prestige = 10
+	any_pop = { 
+	   limit = { 
+	       location = { is_core = RUS }
+	   }
+	   militancy = 5
+	}
+	add_country_modifier = {
+		name = panrussian_rebellion_NOV
+		duration = 1095
+	}
+	country_event = { id = 222595 days = 0 }
+	FROM = { prestige = -10 country_event = { id = 222618 days = 2 } }
+	ai_chance = { 
+	   factor = 50
+	   }
+	}
+}
+
+#### CSK/MOS is Dictatorship - NOV is Any Isolationist ###
+
+### The Suprise Attack - Really? Did you expect anything else? ###
+
+country_event = {
+	id = 222601
+	title = "CRUS100.T"
+	desc = "CRUS100.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS98.A"
+	prestige = 5
+	add_country_modifier = {
+		name = panrussian_rebellion_NOV
+		duration = 1095
+	}
+	country_event = { id = 222618 days = 2 }
+	}
+}
+
+#### CSK/MOS is Democratic Republic - NOV is Democracy Panrussian or Isolationist ###
+
+### The Referendum - Send to NOV to "choose" which nation they should unite under ###
+
+country_event = {
+	id = 222602
+	title = "CRUS101.T"
+	desc = "CRUS101.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS101.A"
+	prestige = 5
+	NOV = { country_event = { id = 222603 days = 7 } }
+	}
+}
+
+### A Grand Unification - Either unite under Muscovy or Novogrod - AI will always choose Muscovy/Cossakia ###
+
+country_event = {
+	id = 222603
+	title = "CRUS102.T"
+	desc = "CRUS102.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+	name = "CRUS102.A"
+	prestige = -10
+	clr_global_flag = isolat_NOV
+	clr_global_flag = panrussian_NOV
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	ai_chance = { 
+	   factor = 100
+	   }
+	}
+	
+	option = {
+	name = "CRUS102.B"
+	prestige = 20
+	clr_global_flag = isolat_NOV
+	set_global_flag = panrussian_NOV
+	FROM = {
+	relation = { who = THIS value = 400 }
+	diplomatic_influence = { who = THIS value = 400 }
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	}
+	inherit = FROM
+	ai_chance = { 
+	   factor = 0
+	   }
+	}
+}
+
+#### CSK/MOS is Democratic Republic - NOV is Non-Democracy Panrussian or Isolationist ###
+
+### A Very Diplomatic Offer of Unification ###
+
+country_event = {
+	id = 222604
+	title = "CRUS103.T"
+	desc = "CRUS103.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS103.A"
+	prestige = 5
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = socialist
+				factor = -2
+			}
+	}
+	NOV = { country_event = { id = 222605 days = 3 } }
+	}
+}
+
+### A Offer that often has a habit of ending in "fuck off" ###
+
+country_event = {
+	id = 222605
+	title = "CRUS104.T"
+	desc = "CRUS104.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+	name = "CRUS104.A"
+	prestige_factor = -0.20
+	clr_global_flag = isolat_NOV
+	clr_global_flag = panrussian_NOV
+	relation = { who = FROM value = 400 }
+	diplomatic_influence = { who = FROM value = 400 }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	ai_chance = { 
+	   factor = 10
+	   }
+	}
+	
+	option = {
+	name = "CRUS104.B"
+	prestige = 10
+	random_owned = {
+       limit = { owner = { has_global_flag = isolat_NOV } }
+	   owner = { country_event = { id = 222606 days = 3 } }
+	}
+	random_owned = {
+       limit = { owner = { has_global_flag = panrussian_NOV } }
+	   owner = { country_event = { id = 222607 days = 3 } }
+	}
+	ai_chance = { 
+	   factor = 90
+	   }
+	}
+}
+
+### A Pre-Emptive Strike? - Isolat ###
+
+country_event = {
+	id = 222606
+	title = "CRUS105.T"
+	desc = "CRUS105.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	option = {
+	name = "CRUS102.A"
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 100000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 100000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 100000 } }
+        owner = { treasury = -100000 }
+    }
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	any_country = { 
+	   limit = {
+	      OR = { 
+		     tag = MOS
+			 tag = CSK
+	      }
+		  has_country_flag = GO_NORTH_TAG
+	   }
+	add_country_modifier = {
+		name = internal_sabotage_MOS
+		duration = 1095
+	}
+	country_event = { id = 222618 days = 2 }
+	}
+	ai_chance = { 
+	   factor = 100
+	   }
+	}
+	
+	option = {
+	name = "CRUS102.B"
+	any_country = { 
+	   limit = {
+	      OR = { 
+		     tag = MOS
+			 tag = CSK
+	      }
+		  has_country_flag = GO_NORTH_TAG
+	   }
+	add_country_modifier = {
+		name = internal_sabotage_MOS
+		duration = 1095
+	}
+	country_event = { id = 222618 days = 2 }
+	}
+	ai_chance = { 
+	   factor = 0
+	   }
+	}
+}
+
+### A Pre-Emptive Strike? - Panrussian ###
+
+country_event = {
+	id = 222607
+	title = "CRUS106.T"
+	desc = "CRUS106.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	option = {
+	name = "CRUS103.A"
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 100000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 100000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 100000 } }
+        owner = { treasury = -100000 }
+    }
+	# Give negative organization modifier here to represent sabotage in MOS
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	any_country = { 
+	   limit = {
+	      OR = { 
+		     tag = MOS
+			 tag = CSK
+	      }
+		  has_country_flag = GO_NORTH_TAG
+	   }
+	add_country_modifier = {
+		name = internal_sabotage_MOS
+		duration = 1095
+	}
+	country_event = { id = 222621 days = 2 }
+	}
+	ai_chance = { 
+	   factor = 100
+	   }
+	}
+	
+	option = {
+	name = "CRUS103.B"
+	any_country = { 
+	   limit = {
+	      OR = { 
+		     tag = MOS
+			 tag = CSK
+	      }
+		  has_country_flag = GO_NORTH_TAG
+	   }
+	add_country_modifier = {
+		name = internal_sabotage_MOS
+		duration = 1095
+	}
+	country_event = { id = 222621 days = 2 }
+	}
+	ai_chance = { 
+	   factor = 0
+	   }
+	}
+}
+
+#### CSK/MOS is Absolute - NOV is Monarchy Panrussian ##
+
+### The "Offer" - Basically just threaten Novogrod ###
+
+country_event = {
+	id = 222608
+	title = "CRUS107.T"
+	desc = "CRUS107.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS101.A"
+	prestige = 10
+	NOV = { country_event = { id = 222609 days = 3 } }
+	}
+}
+
+### What the fuck? FUCK YOU MUSCOVY/COSSAKIA ###
+
+country_event = {
+	id = 222609
+	title = "CRUS108.T"
+	desc = "CRUS108.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS105.A"
+	prestige = -5
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222610 days = 3 } }
+	}
+}
+
+### The threat has been made. Now to try and kill off the Prince with a Bomb ###
+
+country_event = {
+	id = 222610
+	title = "CRUS109.T"
+	desc = "CRUS109.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS106.A"
+	prestige = 10
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { country_event = { id = 222611 days = 3 } }
+	}
+}
+
+### OK. THAT'S IT. ITS TIME FOR WAR YOU FUCKING GITS. ###
+
+country_event = {
+	id = 222611
+	title = "CRUS110.T"
+	desc = "CRUS110.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS106.A"
+	prestige = -5
+	add_country_modifier = {
+		name = the_new_nevsky_NOV
+		duration = 1095
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = socialist
+				factor = -5
+			}
+	}	
+	FROM = { country_event = { id = 222621 days = 3 } }
+	}
+}
+
+#### CSK/MOS is Absolute - NOV is Non-Monarchy Panrussian ##
+
+### Threaten Them ###
+
+country_event = {
+	id = 222612
+	title = "CRUS111.T"
+	desc = "CRUS111.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS101.A"
+	prestige = 5
+	NOV = { country_event = { id = 222613 days = 3 } }
+	}
+}
+
+### *Laughter Sounds* ####
+
+country_event = {
+	id = 222613
+	title = "CRUS112.T"
+	desc = "CRUS112.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS109.A"
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { prestige = -5 country_event = { id = 222621 days = 3 } }
+	}
+}
+
+#### CSK/MOS is Other Monarchy - NOV is Any Panrussian ##
+
+### Diplomatic Discussions in Novogrod ###
+
+country_event = {
+	id = 222614
+	title = "CRUS113.T"
+	desc = "CRUS113.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS113.A"
+	prestige = 5
+	relation = { who = NOV value = 50 }
+	diplomatic_influence = { who = NOV value = 50 }
+	NOV = { country_event = { id = 222615 days = 3 } }
+	}
+}
+
+### The Diplomatic Farse ####
+
+country_event = {
+	id = 222615
+	title = "CRUS114.T"
+	desc = "CRUS114.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS114.A"
+	prestige = 10
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { prestige = -5 country_event = { id = 222621 days = 3 } }
+	}
+}
+
+#### CSK/MOS is Dictatorship - NOV is Any Panrussian ##
+
+### Send Insurgents into Novogrod  ###
+
+country_event = {
+	id = 222616
+	title = "CRUS115.T"
+	desc = "CRUS115.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS115.A"
+	prestige = 5
+	NOV = { country_event = { id = 222617 days = 3 } }
+	}
+}
+
+### The Failed Insurgency, the Oath, and the War ####
+
+country_event = {
+	id = 222617
+	title = "CRUS116.T"
+	desc = "CRUS116.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "CRUS116.A"
+	prestige = 20
+	add_country_modifier = {
+		name = the_new_nevsky_NOV
+		duration = 1095
+	}
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { prestige = -5 country_event = { id = 222621 days = 3 } }
+	}
+}
+
+### THE EVENT THAT STARTS THE WAR BETWEEN NOVOGROD AND THE SOUTH - Non-Panrussian ###
+
+country_event = {
+	id = 222618
+	title = "CRUS117.T"
+	desc = "CRUS117.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+	name = "CRUS117.A"
+	set_global_flag = THE_UNIFICATION_WAR
+	set_country_flag = UNI_INST	
+	    war = {
+			target = NOV
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal =  {
+                casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+	}
+}
+
+### Novogrod has been defeated ###
+
+country_event = {
+	id = 222619
+	title = "CRUS118.T"
+	desc = "CRUS118.D"
+    picture = "ambush_army"
+
+    trigger = {	
+	    exists = yes
+        OR = {
+           tag = RUS
+           tag = MOS
+           tag = CSK
+        }	
+		war = no
+        NOT = { exists = NOV }		
+        has_country_flag = UNI_INST		
+		has_global_flag = THE_UNIFICATION_WAR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS118.A"
+	prestige = 20
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	clr_country_flag = UNI_INST	
+	clr_global_flag = THE_UNIFICATION_WAR
+	}
+}
+
+### Muscovy/Cossakia has been defeated or forced into a WP. Eat Shit and Die. ###
+
+country_event = {
+	id = 222620
+	title = "CRUS119.T"
+	desc = "CRUS119.D"
+    picture = "ambush_army"
+
+    trigger = {	
+	    exists = yes
+        OR = {
+           tag = RUS
+           tag = MOS
+           tag = CSK
+        }	
+		war = no
+        exists = NOV	
+        has_country_flag = UNI_INST		
+		has_global_flag = THE_UNIFICATION_WAR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS119.A"
+	prestige_factor = -0.25
+	add_country_modifier = {
+	  name = MOS_cooldown
+	  duration = 3650
+    }
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	set_country_flag = UNI_FAILURE
+	clr_country_flag = UNI_INST	
+	clr_global_flag = THE_UNIFICATION_WAR
+	}
+}
+
+### THE EVENT THAT STARTS THE WAR BETWEEN NOVOGROD AND THE SOUTH - Panrussian ###
+
+country_event = {
+	id = 222621
+	title = "CRUS120.T"
+	desc = "CRUS120.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+	name = "CRUS120.A"
+	set_global_flag = THE_UNIFICATION_WAR_PR
+	set_country_flag = UNI_INST	
+	NOV = { set_country_flag = UNI_OTHER }
+	    war = {
+			target = NOV
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal =  {
+                casus_belli = civil_war
+			}
+			call_ally = yes
+		}
+	}
+}
+
+### Novogrod has been defeated ###
+
+country_event = {
+	id = 222622
+	title = "CRUS121.T"
+	desc = "CRUS121.D"
+    picture = "ambush_army"
+
+    trigger = {	
+	    exists = yes
+        OR = {
+           tag = RUS
+           tag = MOS
+           tag = CSK
+        }	
+		war = no
+        NOT = { exists = NOV }		
+        has_country_flag = UNI_INST		
+		has_global_flag = THE_UNIFICATION_WAR_PR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS121.A"
+	prestige = 25
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	NOV = { clr_country_flag = UNI_OTHER }
+	clr_country_flag = UNI_INST	
+	clr_global_flag = THE_UNIFICATION_WAR_PR
+	}
+}
+
+### Muscovy/Cossakia has been defeated. Eat Shit and Die ###
+
+country_event = {
+	id = 222623
+	title = "CRUS122.T"
+	desc = "CRUS122.D"
+    picture = "ambush_army"
+
+    trigger = {	
+	    exists = yes
+        OR = {
+           tag = RUS
+           tag = MOS
+           tag = CSK
+        }	
+		war = no
+        NOT = { exists = MOS }
+        NOT = { CSK = { owns = 1008 } }			
+        has_country_flag = UNI_OTHER	
+		has_global_flag = THE_UNIFICATION_WAR_PR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS122.A"
+	prestige = 25
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	clr_country_flag = UNI_OTHER	
+	MOS = { clr_country_flag = UNI_INST	}
+	CSK = { clr_country_flag = UNI_INST	}
+	clr_global_flag = THE_UNIFICATION_WAR_PR
+	}
+}
+
+### Nobody Won - Give cores on each other ###
+
+country_event = {
+	id = 222624
+	title = "CRUS123.T"
+	desc = "CRUS123.D"
+    picture = "ambush_army"
+
+    trigger = {	
+	    exists = yes
+        OR = {
+           tag = RUS
+           tag = MOS
+           tag = CSK
+        }	
+		war = no
+		exists = NOV	
+		has_global_flag = THE_UNIFICATION_WAR_PR		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS123.A"
+	prestige = -20
+	NOV = { all_core = { add_core = THIS } }
+	all_core = { add_core = NOV }
+	clr_country_flag = GO_NORTH_TAG 
+	set_country_flag = GO_NORTH_ENDED
+	NOV = { clr_country_flag = UNI_INST }
+	clr_country_flag = UNI_INST	
+	clr_global_flag = THE_UNIFICATION_WAR_PR
+	}
+}
+
+#################################### STAGE 2 - INTERVENTION CHAINS - CSK OR NOV #########################################
+
+# Panrussian NOV warned that MOS is going south.
+
+country_event = {
+	id = 222625
+	title = "CRUS124.T"
+	desc = "CRUS124.D"
+    picture = "mother_anarchy"
+
+    trigger = {	
+	    exists = yes
+        tag = NOV
+		war = no
+		has_global_flag = GO_SOUTH_YOUNG_MAN
+        has_global_flag = panrussian_NOV	
+		NOT = { has_country_flag = panrussian_NOV_warning }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+	name = "CRUS124.A"
+	prestige = 1
+	set_country_flag = panrussian_NOV_warning
+ 	any_country = {
+		limit = { 
+		    exists = yes
+			owns = 1008
+		    OR = { 
+			   tag = CSK 
+			   tag = MOS 
+			}
+		 }
+		 country_event = { id = 222626 days = 1 }
+    }
+    random_owned = {
+	limit = { owner = { OR = { government = proletarian_dictatorship government = fascist_dictatorship government = presidential_dictatorship government = bourgeois_dictatorship } } }
+	owner = { set_global_flag = NOV_DICTATORSHIP }
+	}				
+	random_owned = {
+	limit = { owner = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+	owner = { set_global_flag = NOV_DEMOCRACY }
+	}
+	random_owned = {
+	limit = { owner = { OR = { government = merchant_republic government = hms_government government = prussian_constitutionalism } } }
+	owner = { set_global_flag = NOV_CONMON }
+	}
+	random_owned = {
+	limit = { owner = { OR = { government = absolute_monarchy government = fascist_monarchy } } }
+	owner = { set_global_flag = NOV_ABMON }
+	}
+	ai_chance = { 
+	   factor = 100
+	   }	
+	}
+	
+	option = {
+	name = "CRUS124.B"
+	prestige = -1
+	set_country_flag = panrussian_NOV_warning
+	ai_chance = { 
+	   factor = 0
+	   }	
+	}
+}
+
+country_event = {
+	id = 222626
+	title = "CRUS125.T"
+	desc = "CRUS125.D"
+    picture = "mother_anarchy"
+
+    is_triggered_only = yes
+	
+	option = {
+	name = "CRUS125.A"
+	prestige = -5
+	set_global_flag = GO_NORTH_YOUNG_MAN
+	set_country_flag = GO_NORTH_TAG
+	relation = { who = NOV value = -200 }
+	NOV = { country_event = { id = 222627 days = 1 } }	
+	}
+}
+
+country_event = {
+	id = 222627
+	title = "CRUS126.T"
+	desc = "CRUS126.D"
+    picture = "mother_anarchy"
+
+    is_triggered_only = yes
+	
+	option = {
+		name = "CRUS126.A"	
+		# Democracy MOS/CSK + Democratic Isolationalist or Panrussian NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   OR = {
+			      has_global_flag = isolat_NOV	
+                  has_global_flag = panrussian_NOV
+               }
+			   OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_DEMOCRACY
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222602 days = 1 }
+        }	
+		# Democracy MOS/CSK + Non-Democratic Isolationalist or Panrussian NOV	
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = democracy
+			      government = parliamentary_republic
+			      government = socialist_republic
+               }
+			   has_country_flag = GO_NORTH_TAG
+			   OR = {
+			      has_global_flag = isolat_NOV	
+                  has_global_flag = panrussian_NOV
+               }
+			   OR = {
+                  has_global_flag = NOV_DICTATORSHIP	
+                  has_global_flag = NOV_ABMON
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222604 days = 1 }
+        }	
+        # Absolute MOS/CSK + Monarchy Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+				  government = fascist_monarchy
+               }
+			   has_country_flag = GO_NORTH_TAG	
+               has_global_flag = panrussian_NOV
+			   OR = {
+                  has_global_flag = NOV_CONMON	
+                  has_global_flag = NOV_ABMON
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222608 days = 1 }
+        }
+        # Absolute MOS/CSK + Other Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = absolute_monarchy
+				  government = fascist_monarchy
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV
+			   OR = {
+                  has_global_flag = NOV_DEMOCRACY	
+                  has_global_flag = NOV_DICTATORSHIP	
+               }			   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222612 days = 1 }
+        }
+        # Other Monarchy MOS/CSK + Any Panrussian NOV
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+			      government = prussian_constitutionalism
+			      government = hms_government
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV		   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222614 days = 1 }
+        }
+        # Dictatorship MOS/CSK + Any Panrussian NOV		
+ 	    any_country = {
+		   limit = { 
+		       exists = yes
+		       OR = { 
+			      tag = CSK 
+				  tag = MOS 
+			   } 
+		       OR = { 
+		          government = proletarian_dictatorship
+			      government = fascist_dictatorship
+			      government = presidential_dictatorship
+		          government = bourgeois_dictatorship
+               }
+			   has_country_flag = GO_NORTH_TAG
+               has_global_flag = panrussian_NOV		   
+		   }
+		   clr_global_flag = NOV_DICTATORSHIP
+		   clr_global_flag = NOV_DEMOCRACY
+		   clr_global_flag = NOV_CONMON
+		   clr_global_flag = NOV_ABMON
+		   country_event = { id = 222616 days = 1 }
+        }
+    }
+}
+
+# Panrussian Cossacks allowed to declare war on Muscovy and Novgrod if they are at war with each other.
+
+country_event = {
+	id = 222628
+	title = "CRUS127.T"
+	desc = "CRUS127.D"
+    picture = "mother_anarchy"
+	
+	major = yes
+
+    trigger = {	
+	    exists = yes
+        tag = CSK
+		war = no
+		has_global_flag = GO_NORTH_YOUNG_MAN
+        has_global_flag = panrussian_CSK
+		MOS = { war_with = NOV }
+		NOT = { has_country_flag = panrussian_CSK_warning }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS127.A"
+	prestige = 1
+	leave_alliance = MOS
+	leave_alliance = NOV
+	add_country_modifier = {
+		name = for_freedom_CSK
+		duration = 1095
+	}
+	set_country_flag = panrussian_CSK_warning
+ 	war = {
+		target = MOS
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			   }
+    }
+ 	war = {
+		target = NOV
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+    }		
+	ai_chance = { 
+	   factor = 100
+	   }	
+	}
+	
+	option = {
+	name = "CRUS127.B"
+	prestige = -1
+	set_country_flag = panrussian_CSK_warning
+	ai_chance = { 
+	   factor = 0
+	   }	
+	}
+}
+
+# Panrussian Cossacks declaring war on Muscovy if they try to go south.
+
+country_event = {
+	id = 222630
+	title = "CRUS129.T"
+	desc = "CRUS129.D"
+    picture = "mother_anarchy"
+	
+	major = yes
+
+   is_triggered_only = yes
+	
+	option = {
+	name = "CRUS129.A"
+	prestige = 1
+	leave_alliance = MOS
+	leave_alliance = NOV
+	add_country_modifier = {
+		name = for_freedom_CSK
+		duration = 1095
+	}
+ 	war = {
+		target = MOS
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+    }	
+	ai_chance = { 
+	   factor = 100
+	   }	
+	}
+	
+	option = {
+	name = "CRUS129.B"
+	prestige = -1
+	ai_chance = { 
+	   factor = 0
+	   }	
+	}
+}
+
+# MOS IS AT WAR WITH BOTH CSK AND NOV AT THE SAME TIME - THIS IS THE GREAT TRIAL COMRADE
+
+country_event = {
+	id = 222629
+	title = "CRUS128.T"
+	desc = "CRUS128.D"
+    picture = "mother_anarchy"
+
+    trigger = {	
+	    exists = yes
+        tag = MOS
+		war_with = NOV
+		war_with = CSK
+		has_global_flag = panrussian_CSK
+		has_global_flag = panrussian_NOV
+		NOT = { has_country_flag = the_great_trial }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "CRUS128.A"
+	prestige = 10
+	add_country_modifier = {
+		name = the_great_trial_MOS
+		duration = 1095
+	}
+	set_country_flag = the_great_trial
+    }
+}

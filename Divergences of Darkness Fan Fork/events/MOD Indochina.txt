@@ -1,0 +1,590 @@
+#######################################################################################################################################
+
+
+
+## Indochina # Contains the fate of Champa, Khmer Empire and European Colonization of the Region ######################################
+
+
+
+#######################################################################################################################################
+
+### Khmer Introduction ##
+
+country_event = { 
+
+	id = 95601
+	title = "INDO1.T"
+	desc = "INDO1.D"
+	picture = "lan_xang"	
+
+	trigger = {
+	tag = CAM
+	NOT = { has_country_flag = Cambodia_Startup }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "INDO1.A"
+    set_country_flag = Cambodia_Startup
+	set_global_flag = to_kill_Champa
+	prestige = 5
+	CHP = { all_core = { remove_core = CAM } }
+    }
+}
+
+### The Collapse of Champa
+
+### The King is dying - This is the warning event for players ###
+
+country_event = { 
+
+	id = 95602
+	title = "INDO2.T"
+	desc = "INDO2.D"
+	picture = "lan_xang"	
+
+	trigger = {
+	tag = CHP
+	NOT = { has_global_flag = deadchampa }
+	has_global_flag = to_kill_Champa
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+
+	option = { 
+	name = "INDO2.A"
+    clr_global_flag = to_kill_Champa
+	set_global_flag = to_kill_Champa2
+    }
+}
+
+### The Collapse itself
+
+country_event = { 
+
+	id = 95603
+	title = "INDO3.T"
+	desc = "INDO3.D"
+	picture = "lan_xang"	
+
+	trigger = {
+	tag = CHP
+	NOT = { has_global_flag = deadchampa }
+	has_global_flag = to_kill_Champa2
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+
+	option = { 
+	name = "INDO3.A"
+	prestige = -100
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties
+	country_event = 800050
+    any_owned = { 
+	    limit = { 
+	    region = ANN_1379
+		   }
+	    secede_province = DAI
+	}	
+	DAI = { country_event = { id = 95604 days = 2 } }
+	CAM = { country_event = { id = 95605 days = 4 } }
+    clr_global_flag = to_kill_Champa2
+	set_global_flag = deadchampa
+    }
+}
+
+### The Succession of Central Champa ###
+
+country_event = { 
+
+	id = 95604
+	title = "INDO4.T"
+	desc = "INDO4.D"
+	picture = "lan_xang"	
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "INDO4.A"
+	prestige = 3
+	ANN_1379 = { add_core = DAI }	
+    }
+}
+
+### Khmer cores Champa and declares war with mobilization for a year ###
+
+country_event = { 
+
+	id = 95605
+	title = "INDO5.T"
+	desc = "INDO5.D"
+	picture = "asian_administration"	
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "INDO5.A"
+	prestige = 3
+	CHP = { all_core = { add_core = CAM } }
+	add_country_modifier = {
+			name = taiping_draft
+			duration = 720
+	}
+	war = {
+		target = CHP 
+		attacker_goal = {
+			casus_belli = annex_core_country
+		}
+		defender_goal = {
+			casus_belli = status_quo
+		   }
+	   }
+   }
+}
+
+################## Missionaries in Cocinchina - The warning event for the inevitable event below.
+
+country_event = { 
+
+	id = 95606
+	title = "INDO6.T"
+	desc = "INDO6.D"
+	picture = "missionaries"	
+	
+	trigger = {
+	NOT = { has_global_flag = INO_Missionaries_Warning }
+	year = 1845
+    owns = 1380
+    civilized = no
+    is_vassal = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+	
+	option = { 
+	name = "INDO6.A"
+	prestige = -2
+    set_global_flag = INO_Missionaries_Warning
+    }
+}
+
+
+
+
+
+################## Our foreign mission is being persecuted. ##################
+
+country_event = { 
+	id = 95607
+	title = "INDO7.T"
+	desc = "INDO7.D"
+	picture = "missionaries"
+
+	trigger = {	
+	    exists = yes
+	    NOT = { has_global_flag = cochin_invasion }
+		1380 = { owner = { civilized = no } }
+		year = 1850	
+		capital_scope = { continent = europe }
+		any_owned_province = { port = yes }
+		is_greater_power = yes
+		total_amount_of_ships = 10
+		war = no
+		is_disarmed = no
+		is_vassal = no
+		NOT = {
+			year = 1900
+			tag = BOH
+			tag = RUS
+			tag = MUS
+			tag = NOV
+			tag = RYA
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+		modifier = {
+			factor = 0.5
+			has_global_flag = hindustan_conference
+		}
+		modifier = {
+			factor = 0.1
+			year = 1857
+		}
+	}
+	
+	option = {
+		name = "We must act at once!"
+	    set_global_flag = cochin_invasion
+	    prestige = 5
+		any_country = {
+		limit = {
+		owns = 1380
+		}
+		country_event = { id = 95608 days = 7 }
+		}
+		ai_chance = {
+			factor = 90
+		}
+	}
+
+	option = {
+		name = "Indochina is dangerous."
+		prestige = 1
+		ai_chance = {
+			factor = 10
+		}
+	}
+} 
+
+################## The $FROMCOUNTRY$ Protectorate ##################
+
+country_event = { 
+
+	id = 95608
+	title = "INDO8.T"
+	desc = "INDO8.D"
+	picture = "budhist_religion"	
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "INDO8.A"
+	prestige = 5
+	any_owned = { 
+	limit = { 
+	region = ANN_1383
+		}
+	secede_province = FROM
+	}
+	war = {
+		target = FROM
+			attacker_goal =  { 
+				casus_belli = acquire_core_state
+				state_province_id = 1383
+			}
+		    defender_goal = {
+			casus_belli = status_quo
+		   }
+	   }
+	ai_chance = {
+    factor = 10
+	modifier = {
+	factor = 0
+	tag = CHP
+			}
+		}
+   }
+   
+	option = { 
+	name = "INDO8.B"
+	prestige = -20
+	any_owned = { 
+	limit = { 
+	region = ANN_1383
+		}
+	secede_province = FROM
+	}
+    ai_chance = {
+	factor = 90
+	   }
+   }
+}
+
+################## The Return to Indochina ##################
+
+country_event = { 
+
+	id = 95609
+	title = "INDO9.T"
+	desc = "INDO9.D"
+	picture = "budhist_religion"	
+	
+	trigger = {	
+	    exists = yes
+		NOT = { has_global_flag = indochina_has_returned }
+		year = 1860
+		owns = 1380
+		capital_scope = { continent = europe }
+		any_owned_province = { port = yes }
+		war = no
+		is_disarmed = no
+		is_vassal = no
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.01
+			nationalism_n_imperialism = 1 
+		}
+	}
+	
+	option = { 
+	name = "INDO9.A"
+	prestige = 5
+    set_global_flag = indochina_has_returned
+   }
+}
+ 
+################## $FROMCOUNTRY$ wants the State of Champa ##################
+
+country_event = { 
+
+	id = 95610
+	title = "INDO10.T"
+	desc = "INDO10.D"
+	picture = "asian_administration"	
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	name = "INDO10.A"
+	prestige = -5
+	any_owned = { 
+	limit = { 
+	region = ANN_1379
+		}
+	secede_province = FROM
+	    }
+    ai_chance = {
+	factor = 80
+	   }
+    }
+
+	option = { 
+	name = "INDO10.B"
+	prestige = 5
+	FROM = {
+	war = {
+		target = THIS
+			attacker_goal =  { 
+				casus_belli = demand_concession_casus_belli
+				state_province_id = 1379
+			}
+		    defender_goal = {
+			casus_belli = status_quo
+			    }
+		   }
+	}
+    ai_chance = {
+	factor = 20
+	     }
+	}
+}
+
+################## An Unequal Treaty (DAI) ##################
+
+country_event = { 
+
+	id = 95611
+	title = "INDO11.T"
+	desc = "INDO11.D"
+	picture = "asian_administration"	
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "INDO11.A"
+	prestige = -50
+	FROM = { set_country_flag = unequal_doom_murderer }
+	relation = { who = FROM value = 200 }
+	diplomatic_influence = { who = FROM value = 200 }
+	FROM = { inherit = THIS }
+	ai_chance = { 
+	factor = 25
+		}
+	}
+
+	option = { 
+	name = "INDO11.B"
+	prestige = 10
+	FROM = { set_country_flag = unequal_doom_murderer }
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -200 }
+	FROM = {
+	war = {
+		target = THIS
+			attacker_goal =  { 
+				casus_belli = establish_protectorate_casus_belli
+			}
+		    defender_goal = {
+			casus_belli = status_quo
+			    }
+		   }
+	   }
+	ai_chance = { 
+	factor = 75
+		}
+   }
+}
+
+country_event = { 
+
+	id = 95612
+	title = "INDO12.T"
+	desc = "INDO12.D"
+	picture = "malay_sultan"	
+	
+	trigger = {	
+        has_country_flag = unequal_doom_murderer
+		NOT = { exists = DAI }
+		any_owned_province = {
+			is_core = DAI
+		}
+		war = no
+		is_vassal = no
+	}
+	
+	mean_time_to_happen = { 
+	days = 7 
+	}
+	
+	option = { 
+	name = "INDO12.A"
+    prestige = 5
+	any_owned = { 
+	limit = { 
+	is_core = LUA
+	NOT = { region = ANN_1379 }
+	NOT = { region = ANN_1383 }
+		}
+	secede_province = LUA
+	}
+	any_owned = { 
+	limit = { 
+	is_core = SIA
+	NOT = { region = ANN_1379 }
+	NOT = { region = ANN_1383 }
+		}
+	secede_province = SIA
+	}
+	any_owned = { 
+	limit = { 
+	is_core = DAI
+	NOT = { region = ANN_1379 }
+	NOT = { region = ANN_1383 }
+		}
+	secede_province = DAI
+	}
+	any_owned = { 
+	limit = { 
+	is_core = CHP
+	NOT = { region = ANN_1379 }
+	NOT = { region = ANN_1383 }
+		}
+	secede_province = CHP
+	}	
+	LUA = { 
+	relation = { who = THIS value = 400 }
+	diplomatic_influence = { who = THIS value = 200 }
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+    }
+	SIA = { 
+	relation = { who = THIS value = 400 }
+	diplomatic_influence = { who = THIS value = 200 }
+    }
+	DAI = { 
+	relation = { who = THIS value = 400 }
+	diplomatic_influence = { who = THIS value = 200 }
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+    }
+	CHP = { 
+	relation = { who = THIS value = 400 }
+	diplomatic_influence = { who = THIS value = 200 }
+    }
+    country_event = { id = 95613 days = 2 }
+	}
+}
+
+
+
+country_event = { 
+
+	id = 95613
+	title = "INDO13.T"
+	desc = "INDO13.D"
+	picture = "asian_administration"	
+	
+	is_triggered_only = yes
+	
+	major = yes
+		
+	option = { 
+	name = "INDO13.A"
+	prestige = 5
+	clr_country_flag = unequal_doom_murderer
+    country_event = { id = 95614 days = 2 }
+    country_event = { id = 95615 days = 4 }
+	}
+}
+
+country_event = { 
+
+	id = 95614
+	title = "INDO14.T"
+	desc = "INDO14.D"
+	picture = "asian_administration"	
+	
+    is_triggered_only = yes
+		
+	option = { 
+	name = "INDO13.A"
+	prestige = 5
+	LUA = { government = absolute_monarchy }
+	create_vassal = LUA
+	}
+}
+
+country_event = { 
+
+	id = 95615
+	title = "INDO15.T"
+	desc = "INDO15.D"
+	picture = "asian_administration"	
+	
+    is_triggered_only = yes
+		
+	option = { 
+	name = "INDO13.A"
+	prestige = 5
+	DAI = { government = absolute_monarchy }
+	create_vassal = DAI
+	}
+}
+
+##### That should be it. Further conquests in this region should be completed via the imperialism CB #####
+
+  

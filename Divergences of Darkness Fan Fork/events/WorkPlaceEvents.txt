@@ -1,0 +1,2012 @@
+# --- Coal ---
+# Mine accident
+country_event = {
+	id = 12000
+	title = "EVTNAME12000"
+	desc = "EVTDESC12000"
+	picture = "Mining"
+	
+	trigger = { exists = yes
+		any_state = {
+			is_colonial = no
+			any_owned_province = {
+				has_pop_type = capitalists
+				produces = coal
+			}
+		}
+	}
+	
+	
+	mean_time_to_happen = {
+		months = 800
+		
+		modifier = {
+			factor = 0.33
+			safety_regulations = no_safety
+		}
+		modifier = {
+			factor = 0.5
+			safety_regulations = trinket_safety
+		}
+		modifier = {
+			factor = 2
+			safety_regulations = acceptable_safety
+		}
+		modifier = {
+			factor = 3
+			safety_regulations = good_safety
+		}		
+	}
+	
+	option = {
+		name = "EVTOPTA12000"
+		random_owned = {
+			limit = {
+				trade_goods = coal
+			}
+			state_scope = {
+				bureaucrats = {
+					militancy = 6
+					consciousness = 6
+				}
+				capitalists = {
+					militancy = 6
+					consciousness = 6
+				}
+				clerks = {
+					militancy = 6
+					consciousness = 6
+				}
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTB12000"
+		any_owned = {
+			limit = {
+				NOT = {
+					is_colonial = yes
+				}
+			}
+			labourers = {
+				consciousness = 4
+			}
+		}
+	}
+}
+
+# Parlimentary Inquiry
+country_event = {
+	id = 12010
+	title = "EVTNAME12010"
+	desc = "EVTDESC12010"
+	picture = "Mining"
+	
+	trigger = { exists = yes
+		any_owned_province = {
+			produces = coal
+			is_colonial = no
+		}
+		plurality = 30
+		civilized = yes
+		OR = {
+			government = hms_government
+			government = prussian_constitutionalism
+			government = democracy
+			government = parliamentary_republic
+            government = socialist_republic	
+			government = merchant_republic			
+		}
+		child_labor = child_labor_legal
+		OR = {
+			safety_regulations = trinket_safety
+			safety_regulations = no_safety
+		}
+	}
+	mean_time_to_happen = {
+		months = 480
+#		modifier = {
+#			factor = 0.8
+#			plurality = 30
+#		}
+		modifier = {
+			factor = 0.9
+			plurality = 40
+		}
+		modifier = {
+			factor = 0.8
+			plurality = 50
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { plurality = 30 }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12010"
+		add_country_modifier = {
+			name = conservative_reaction
+			duration = 1825
+		}
+		any_pop = {
+			consciousness = 4
+			dominant_issue = {
+				factor = 0.1
+				value = low_safety
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12010"
+		add_country_modifier = {
+			name = liberal_reaction
+			duration = 2500
+		}
+		labourers = {
+			consciousness = 4
+		}
+	}
+}
+
+# Parlimentary Inquiry - low_safety
+country_event = {
+	id = 12011
+	title = "EVTNAME12010"
+	desc = "EVTDESC12010"
+	picture = "Mining"
+	
+	trigger = {	exists = yes
+		civilized = yes
+		any_owned_province = {
+			trade_goods = coal
+		}
+		plurality = 30
+		OR = {
+			government = hms_government
+			government = prussian_constitutionalism
+			government = democracy
+			government = parliamentary_republic  
+			government = socialist_republic
+			government = merchant_republic
+		}
+		safety_regulations = low_safety
+		
+	}
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 0.8
+			plurality = 40
+		}
+		modifier = {
+			factor = 0.9
+			plurality = 60
+		}
+		modifier = {
+			factor = 0.8
+			plurality = 80
+		}
+		modifier = {
+			factor = 2
+			NOT = {
+				plurality = 30
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12010"
+		add_country_modifier = {
+			name = conservative_reaction
+			duration = 1825
+		}
+		any_pop = {
+			consciousness = 4
+			dominant_issue = {
+				factor = 0.1
+				value = acceptable_safety
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12010"
+		add_country_modifier = {
+			name = liberal_reaction
+			duration = 2500
+		}
+		labourers = {
+			consciousness = 4
+		}
+	}
+}
+
+#The Girl in The Coal Mine
+country_event = {
+	id = 12020
+	title = "EVTNAME12020"
+	desc = "EVTDESC12020"
+	picture = "childlabor2"
+	
+	trigger = {	exists = yes
+		civilized = yes
+        press_rights = free_press
+		NOT = { child_labor = child_labor_illegal }
+		NOT = {	has_country_modifier = national_tragedy }			
+		any_owned_province = {
+			trade_goods = coal
+			is_colonial = no
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 1.5
+			child_labor = child_labor_restricted
+		}
+		modifier = {
+			factor = 0.8
+			child_labor = child_labor_legal
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 3
+		}
+		modifier = {
+			factor = 1.2
+			NOT = { average_consciousness = 4 }
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12020"
+		add_country_modifier = {
+			name = national_tragedy
+			duration = 730
+		}
+		random_owned = {
+			limit = {
+				trade_goods = coal
+				owner = { child_labor = child_labor_legal }
+			}
+			any_pop = {
+				consciousness = 6
+				dominant_issue = {
+					factor = 0.3
+					value = child_labor_restricted
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				trade_goods = coal
+				owner = { child_labor = child_labor_legal }
+			}
+			any_pop = {
+				consciousness = 6
+				dominant_issue = {
+					factor = 0.3
+					value = child_labor_illegal
+				}
+			}
+		}
+	}
+}
+
+# Production Shortfalls
+country_event = {
+	id = 12030
+	title = "EVTNAME12030"
+	desc = "EVTDESC12030"
+	picture = "factory"
+	
+	trigger = {	exists = yes
+		ammunition = 50
+		civilized = yes
+		any_state = { has_building = ammunition_factory }
+		NOT = {	economic_policy = laissez_faire	}	
+        NOT = {	economic_policy = agrarianism }
+	}
+	
+	mean_time_to_happen = {
+		months = 1000
+		modifier = {
+			factor = 0.7
+			economic_policy = interventionism
+		}
+		modifier = {
+			factor = 0.6
+			economic_policy = state_capitalism
+		}
+		modifier = {
+			factor = 0.5
+			economic_policy = planned_economy
+		}
+		modifier = {
+			factor = 1.5
+			poor_strata_life_needs = 0.9
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12030"
+		ammunition = -250
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12030"
+		random_state = {
+			limit = {
+				has_building = ammunition_factory 
+			}
+			poor_strata = {
+				militancy = 4
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Factory Stinks!
+province_event = {
+	id = 12040
+	title = "EVTNAME12040"
+	desc = "EVTDESC12040"
+	picture = "factory"
+	
+	trigger = {
+		civilized = yes
+		state_scope = {
+			has_pop_type = capitalists
+			has_building = fertilizer_factory
+			NOT = { unemployment_by_type = { type = craftsmen value = 0.3 } }
+		}
+	}
+		
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 1.5
+			NOT = {
+				poor_strata_life_needs = 0.9
+			}
+		}
+		modifier = {
+			factor = 0.8
+			poor_strata_everyday_needs = 0.9
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12040"
+		random_state = {
+			limit = {
+				has_building = fertilizer_factory 
+			}
+			any_pop = {
+				consciousness = 6
+				militancy = 4
+			}
+		}
+		fertilizer = 250
+	}
+	
+	option = {
+		name = "EVTOPTB12040"
+		capitalists = {
+			consciousness = 6
+			militancy = 4
+		}
+	}
+}
+
+# Tea Weighing Station Robbed
+country_event = {
+	id = 12050
+	title = "EVTNAME12050"
+	desc = "EVTDESC12050"
+	picture = "farming"
+	
+	trigger = {	exists = yes
+        produces = tea
+		tea = 40
+	}
+		
+	mean_time_to_happen = {
+		months = 1000
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.7
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.6
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.7
+			NOT ={
+				poor_strata_life_needs = 0.9
+			}
+		}			
+		modifier = {
+			factor = 0.5
+			any_owned_province = {
+				trade_goods = tea
+				has_crime = mafia
+			}
+		}
+		modifier = {
+			factor = 1.5
+			NOT = {
+				average_militancy = 5
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12050"
+		tea = -250
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12050"
+		random_owned = {
+			limit = {
+				trade_goods = tea
+			}
+			farmers = {
+				militancy = 4
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTC12050"
+		random_owned = {
+			limit = {
+				trade_goods = tea
+			}
+			bureaucrats = {
+				militancy = 4
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Feed the Hungry Soldiers
+country_event = {
+	id = 12060
+	title = "EVTNAME12060"
+	desc = "EVTDESC12060"
+	picture = "Recruits"
+	
+	trigger = {	exists = yes
+		war = yes
+		OR = {
+			any_state = { has_building = canned_food_factory }
+			
+			
+			
+            NOT = { unemployment_by_type = { type = craftsmen value = 0.3 } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1000
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 4
+		}
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 8
+		}
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 12
+		}
+		modifier = {
+			factor = 1.2
+			NOT = {
+				war_exhaustion = 1
+			}
+		}
+		modifier = {
+			factor = 1.2
+			NOT = {
+				average_militancy = 5
+			}
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 5
+		}
+	}
+		
+	option = {
+		name = "EVTOPTA12060"
+		canned_food = 250
+		random_state = {
+			limit = {
+				has_building = canned_food_factory
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPTB12060"
+		war_exhaustion = -5
+	}
+}
+
+# Old Canned Food
+country_event = {
+	id = 12070
+	title = "EVTNAME12070"
+	desc = "EVTDESC12070"
+	picture = "Recruits"
+	
+	trigger = {	exists = yes
+		civilized = yes
+        canned_food = 15
+		or = {
+			any_state = { has_building = canned_food_factory }
+			
+			
+			
+			NOT = { unemployment_by_type = { type = craftsmen value = 0.3 } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 0.9
+			poor_strata_life_needs = 0.9
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 5
+		}
+	}
+		
+	option = {
+		name = "EVTOPTA12070"
+		canned_food = 250
+	}
+	option = {
+		name = "EVTOPTB12070"
+		random_state = {
+			limit = {
+				has_building = canned_food_factory
+			}
+			poor_strata = {
+				militancy = -1
+				consciousness = -4
+			}
+		}
+	}
+}
+
+# Bovine Fever
+country_event = {
+	id = 12080
+	title = "EVTNAME12080"
+	desc = "EVTDESC12080"
+	picture = "cattle"
+	
+	trigger = {	exists = yes
+		produces = cattle
+		cattle = 10
+	}
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 0.7
+			cattle = 500
+		}
+		modifier = {
+			factor = 0.8
+			NOT = {
+				poor_strata_life_needs = 0.9
+			}
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 5
+		}
+	}
+
+	option = {
+		name = "EVTOPTA12080"
+		cattle = -500
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12080"
+		farmers = {
+			militancy = 2
+			consciousness = 6
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Death In The Silk Fields
+country_event = {
+	id = 12090
+	title = "EVTNAME12090"
+	desc = "EVTDESC12090"
+	picture = "farming"
+	
+	trigger = {	exists = yes
+        silk = 10
+		any_owned_province = {
+			trade_goods = silk
+			NOT = { has_province_modifier = silk_famine }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 900
+		modifier = {
+			factor = 0.8
+			NOT = {
+				poor_strata_everyday_needs = 0.5
+			}
+		}
+		modifier = {
+			factor = 0.5
+			any_owned_province = {
+				trade_goods = silk
+				NOT = { has_province_modifier = silk_famine }
+				any_neighbor_province = { has_province_modifier = silk_famine }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			poor_strata_everyday_needs = 0.9
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12090"
+		random_owned = {
+			limit = {
+				trade_goods = silk
+				NOT = { has_province_modifier = silk_famine }
+			}
+			any_pop = {
+				militancy = 2
+				consciousness = 6
+			}
+			add_province_modifier = {
+				name = silk_famine
+				duration = 1500
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12090"
+		silk = -200
+		canned_food = -200
+		treasury = -50000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 50000 }
+			}
+		}
+	}
+}
+
+# A Cure!
+province_event = {
+	id = 12100
+	title = "EVTNAME12100"
+	desc = "EVTDESC12100"
+	
+	trigger = {
+		has_province_modifier = silk_famine
+	}
+	
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 0.8
+			poor_strata_everyday_needs = 0.8
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 0.9
+			owner = {
+				civilized = yes
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12100"
+		remove_province_modifier = silk_famine
+		any_pop = {
+			militancy = -1
+			consciousness = -3
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12100"
+		owner = {
+			any_owned = {
+				limit = {
+					has_province_modifier = silk_famine
+				}
+				remove_province_modifier = silk_famine
+			}
+			treasury = -50000
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				owner = { NOT = { money = 50000 } }
+			}
+		}
+	}
+}
+
+# In Them Old Cotton Fields
+country_event = {
+	id = 12110
+	title = "EVTNAME12110"
+	desc = "EVTDESC12110"
+	picture = "farming"
+		
+	trigger = {	exists = yes
+		produces = cotton
+		civilized = yes
+		cotton = 10
+	}
+		
+	mean_time_to_happen = {
+		months = 800
+		
+		modifier = {
+			factor = 0.9
+			cotton = 100
+		}
+		modifier = {
+			factor = 0.8
+			NOT = {
+				average_militancy = 5
+			}
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12110"
+		random_owned = {
+			limit = { trade_goods = cotton }
+			state_scope = {
+				farmers = {
+					consciousness = -4
+					militancy = -2
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12110"
+		prestige = 2
+		cotton = -200
+		random_country = {
+			limit = {
+				civilized = yes
+				neighbour = THIS
+			}
+			cotton = 200
+			relation = {
+				who = THIS
+				value = 15
+			}
+		}
+	}
+}
+
+# Blood & Iron Mine
+province_event = {
+	id = 12120
+	title = "EVTNAME12120"
+	desc = "EVTDESC12120"
+	picture = "mining"
+		
+	trigger = {
+		OR = {
+			produces = iron
+			produces = coal
+		}
+		NOT = { has_province_modifier = blood_and_iron_mine }
+		owner = {
+			civilized = yes
+			OR = {
+				advanced_metallurgy = 1
+				year = 1900
+			}
+			OR = {
+				any_owned_province = {
+					trade_goods = iron
+					unemployment_by_type = { value = 0.05 type = labourers }
+				}
+				any_neighbor_country = {
+					any_owned_province = {
+						trade_goods = iron
+						unemployment_by_type = { value = 0.05 type = labourers }
+					}
+				}
+				any_greater_power = {
+					any_owned_province = {
+						trade_goods = iron
+						unemployment_by_type = { value = 0.05 type = labourers }
+					}
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			NOT = {
+				average_militancy = 5
+			}
+		}
+		modifier = {
+			factor = 1.5
+			civilized = no
+		}
+		modifier = {
+			factor = 1.5
+			owner = { is_greater_power = no }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12120"
+		state_scope = {
+			any_owned = {
+				limit = {
+					OR = {
+						trade_goods = iron
+						trade_goods = coal
+					}
+                    NOT = { has_province_modifier = blood_and_iron_mine }
+				}
+			add_province_modifier = { name = blood_and_iron_mine duration = 9125 }
+			}
+		}
+		ai_chance = { factor = 90 }
+	}
+	
+	option = {
+		name = "EVTOPTB12120"
+		random_owned = {
+			limit = {
+					OR = {
+						trade_goods = iron
+						trade_goods = coal
+					}
+				NOT = { has_province_modifier = blood_and_iron_mine }
+			}
+			state_scope = {
+				labourers = {
+					consciousness = -6
+					militancy = -2
+				}
+			}
+		}
+	}
+}
+
+# Quality Problems
+country_event = {
+	id = 12130
+	title = "EVTNAME12130"
+	desc = "EVTDESC12130"
+	picture = "colonial_factory"
+		
+	trigger = {	exists = yes
+		produces = wool
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			economic_policy = laissez_faire
+		}
+		modifier = {
+			factor = 4
+			economic_policy = agrarianism
+		}
+		modifier = {
+			factor = 1.1
+			average_militancy = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12130"
+		regular_clothes = 100
+		random_owned = {
+			limit = {
+				trade_goods = wool
+			}	
+			any_pop = {
+				militancy = -1
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12130"
+		luxury_clothes = 50
+		random_owned = {
+			limit = {
+				trade_goods = wool
+			}
+			any_pop = {
+				consciousness = -2
+			}
+		}
+	}
+}
+
+# Clippings
+country_event = {
+	id = 12140
+	title = "EVTNAME12140"
+	desc = "EVTDESC12140"
+	picture = "americascup"
+		
+	trigger = {	exists = yes
+		civilized = yes
+		any_state = {
+			has_building = clipper_shipyard
+			NOT = { unemployment_by_type = { type = craftsmen value = 0.3 } }
+		}
+		any_owned_province = {
+			port = yes
+			NOT = { has_province_modifier = naval_school }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			poor_strata_life_needs = 0.9
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			average_consciousness = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12140"
+		random_state = {
+			limit = {
+				has_building = clipper_shipyard
+			}
+			any_pop = {
+				militancy = -2
+				consciousness = -6
+			}
+		}
+		clipper_convoy = 20
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12140"
+		treasury = -100000
+		random_owned = {
+			limit = {
+				port = yes
+				NOT = { has_province_modifier = naval_school }
+			}
+			add_province_modifier = {
+				name = naval_school
+				duration = -1
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+}
+
+# Boiler Explodes!
+country_event = {
+	id = 12150
+	title = "EVTNAME12150"
+	desc = "EVTDESC12150"
+	picture = "Christiansborgs"
+		
+	trigger = {	exists = yes
+		any_owned_province = { has_building = steamer_shipyard }
+		steamer_convoy = 5
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 1.3
+			safety_regulations = acceptable_safety
+		}
+		modifier = {
+			factor = 1.5
+			safety_regulations = good_safety
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12150"
+		steamer_convoy = -20
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTB12150"
+		random_state = {
+			limit = {
+				has_building = steamer_shipyard
+			}
+			any_pop = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Standard $PROVINCENAME$ Cement
+country_event = {
+	id = 12160
+	title = "EVTNAME12160"
+	desc = "EVTDESC12160"
+	picture = "factory"
+
+	trigger = {	exists = yes
+		any_state = {
+			has_building = cement_factory
+			NOT = { unemployment_by_type = { type = craftsmen value = 0.3 } }
+		}
+		has_pop_type = capitalists
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 1.8
+			OR = {
+				work_hours = no_work_hour_limit
+				work_hours = fourteen_hours
+			}
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			NOT = {
+				poor_strata_life_needs = 0.9
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12160"
+		cement = 200
+		random_state = {
+			limit = {
+				has_building = cement_factory
+			}
+			labourers = {
+				militancy = -2
+				consciousness = -6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12160"
+		cement = 200
+		random_state = {
+			limit = {
+				has_building = cement_factory
+			}
+			capitalists = {
+				money = 200
+			}
+		}
+	}
+}
+
+# Dyeworks Accident
+country_event = {
+	id = 12170
+	title = "EVTNAME12170"
+	desc = "EVTDESC12170"
+	picture = "factory_workers"
+	
+	trigger = {	exists = yes
+		any_state = { has_building = dye_factory }
+		dye = 15
+		NOT = {
+			safety_regulations = acceptable_safety
+			safety_regulations = good_safety
+		      }
+		}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 1.5
+			NOT = {
+				OR = {
+					safety_regulations = no_safety
+					safety_regulations = trinket_safety
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			safety_regulations = no_safety
+		}
+		modifier = {
+			factor = 0.8
+			safety_regulations = trinket_safety
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.1
+			average_consciousness = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12170"
+		dye = -200
+		random_state = {
+			limit = { has_building = dye_factory }
+			poor_strata = {
+				militancy = -1
+				consciousness = -4
+			}
+			rich_strata = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12170"
+		dye = 200
+		random_state = {
+			limit = { has_building = dye_factory }
+			poor_strata = {
+				militancy = 2
+				consciousness = 6
+			}
+			rich_strata = {
+				militancy = -1
+				consciousness = -4
+			}
+		}
+	}
+}
+
+# Cistern Explodes
+country_event = {
+	id = 12180
+	title = "EVTNAME12180"
+	desc = "EVTDESC12180"
+	picture = "Christiansborgs"
+	
+	trigger = {	exists = yes
+		any_state = { has_building = fuel_refinery }
+		fuel = 30
+	}
+	mean_time_to_happen = {
+		months = 600
+		modifier = {
+			factor = 1.5
+			safety_regulations = good_safety
+		}
+		modifier = {
+			factor = 1.3
+			safety_regulations = acceptable_safety
+		}
+		modifier = {
+			factor = 0.9
+			safety_regulations = no_safety
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12180"
+		fuel = -250
+		random_state = {
+			limit = {
+				has_building = fuel_refinery
+			}
+			any_pop = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12180"
+		fuel = -500
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+}
+
+#Overproduction at the Refinery
+country_event = {
+	id = 12190
+	title = "EVTNAME12190"
+	desc = "EVTDESC12190"
+	picture = "factory"
+	
+	trigger = {	exists = yes
+		any_state = {
+			has_building = fuel_refinery
+			NOT = { unemployment_by_type = { type = labourers value = 0.1 } }
+		}
+		OR = {
+			safety_regulations = no_safety
+			safety_regulations = trinket_safety
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 1.5
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 0.8
+			NOT = {
+				average_militancy = 5
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12190"
+		fuel = 250
+	}
+	
+	option = {
+		name = "EVTOPTB12190"
+		random_state = {
+			limit = {
+				has_building = fuel_refinery
+			}
+			any_pop = {
+				militancy = -2
+				consciousness = -6
+			}
+		}
+	}
+}
+
+# Tragedy at the Mine
+country_event = {
+	id = 12200
+	title = "EVTNAME12200"
+	desc = "EVTDESC12200"
+	picture = "iron"
+	
+	trigger = {	exists = yes
+		produces = iron
+		has_pop_type = capitalists
+		NOT = { safety_regulations = acceptable_safety }
+		NOT = { safety_regulations = good_safety }
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.5
+			safety_regulations = no_safety
+		}
+		modifier = {
+			factor = 0.8
+			economic_policy = planned_economy
+		}
+		modifier = {
+			factor = 1.2
+			economic_policy = laissez_faire
+		}
+		modifier = {
+			factor = 4
+			economic_policy = agrarianism
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12200"
+		iron = 200
+		random_owned = {
+			limit = { trade_goods = iron }
+			labourers = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12200"
+		iron = -200
+		capitalists = {
+			militancy = 2
+			consciousness = 6
+		}
+	}
+}
+
+# The Old Man and The Sea
+country_event = {
+	id = 12210
+	title = "EVTNAME12210"
+	desc = "EVTDESC12210"
+	picture = "americascup"
+	
+	trigger = {	exists = yes
+		num_of_ports = 10
+		any_owned_province = {
+			trade_goods = fish
+			NOT = { unemployment_by_type = { type = farmers value = 0.05 } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.8
+			NOT = {
+				poor_strata_life_needs = 0.9
+			}
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12210"
+		fish = 250
+	}
+	option = {
+		name = "EVTOPTB12210"
+		random_owned = {
+			limit = {
+				trade_goods = fish
+				is_coastal = yes
+			}
+			poor_strata = {
+				militancy = -2
+			}
+		}
+	}
+}
+
+# A trader from $COUNTRY$
+country_event = {
+	id = 12220
+	title = "EVTNAME12220"
+	desc = "EVTDESC12220"
+	picture = "farming"
+	
+	trigger = {	exists = yes
+		produces = tea
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+	}
+	
+	option = {
+		name = "EVTOPTA12220"
+		tea = 200
+	}
+		
+	option = {
+		name = "EVTOPTB12220"
+		random_owned = {
+			limit = { trade_goods = tea }
+			state_scope = {
+				poor_strata = {
+					militancy = -2
+					consciousness = -6
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTC12220"
+		random_owned = {
+			limit = { trade_goods = tea }
+			state_scope = {
+				capitalists = {
+					money = 200
+				}
+			}
+		}
+	}
+}
+
+# Radio $PROVINCENAME$
+country_event = {
+	id = 12230
+	title = "EVTNAME12230"
+	desc = "EVTDESC12230"
+	picture = "news"
+	
+	trigger = {	exists = yes
+		radio = 5
+		war = yes
+		any_state = { has_building = radio_factory }
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.8
+			radio = 10
+		}
+		modifier = {
+			factor = 0.9
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 0.8
+			poor_strata_life_needs = 0.9
+		}
+		modifier = {
+			factor = 1.5
+			economic_policy = laissez_faire
+		}
+		modifier = {
+			factor = 4
+			economic_policy = agrarianism
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12230"
+		random_state = {
+			limit = {
+				has_building = radio_factory
+			}
+			any_pop = {
+				militancy = 1
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12230"
+		radio = -50
+		treasury = -100000
+		random_state = {
+			limit = {
+				has_building = radio_factory
+			}
+			any_pop = {
+				militancy = -2
+				consciousness = -6
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+}
+
+#The drunk fool
+country_event = {
+	id = 12240
+	title = "EVTNAME12240"
+	desc = "EVTDESC12240"
+	picture = "Merchants"
+	
+	trigger = {	exists = yes
+		any_state = {
+			OR = {
+				has_building = winery
+				has_building = liquor_distillery
+                has_building = rum_distillery
+			}
+            NOT = { unemployment_by_type = { type = craftsmen value = 0.1 } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.5
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 1.5
+			religious_policy = moralism
+		}
+		modifier = {
+			factor = 0.9
+			NOT = {
+				poor_strata_life_needs = 0.9
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12240"
+		wine = 200
+		liquor = 200
+		random_state = {
+			limit = {
+				OR = {
+					has_building = winery
+					has_building = liquor_distillery
+					has_building = rum_distillery
+				}
+			}
+			middle_strata = {
+			militancy = 1
+			consciousness = 6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12240"
+		random_state = {
+			limit = {
+				OR = {
+					has_building = winery
+					has_building = liquor_distillery
+					has_building = rum_distillery
+				}
+			}
+			rich_strata = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+}
+
+# Explosives Explode
+province_event = {
+	id = 12250
+	title = "EVTNAME12250"
+	desc = "EVTDESC12250"
+	picture = "chicagofire"
+	
+	trigger = {
+        or = {
+		state_scope = { has_building = explosives_factory }
+		state_scope = { has_building = ammunition_factory }
+        }
+		is_capital = no
+		owner = {
+			NOT = {
+				safety_regulations = acceptable_safety
+				safety_regulations = good_safety
+			}
+		}
+	}
+	
+	
+	mean_time_to_happen = {
+		months = 900
+		modifier = {
+			factor = 0.9
+			middle_strata_everyday_needs = 0.9
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 1.3
+			owner = { safety_regulations = trinket_safety }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12250"
+		random_state = {
+			limit = {
+				or = {
+					has_building = explosives_factory
+					has_building = ammunition_factory
+				}
+			}
+			poor_strata = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12250"
+		random_state = {
+			limit = {
+				or = {
+					has_building = explosives_factory
+					has_building = ammunition_factory
+				}
+			}
+			any_pop = {
+				militancy = 1
+				consciousness = 3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTC12250"
+		random_state = {
+			limit = {
+				or = {
+					has_building = explosives_factory
+					has_building = ammunition_factory
+				}
+			}
+			rich_strata = {
+				militancy = 2
+				consciousness = 6
+			}
+		}
+	}
+}
+
+#Elegant furniture
+country_event = {
+	id = 12260
+	title = "EVTNAME12260"
+	desc = "EVTDESC12260"
+	picture = "Merchants"
+	
+	trigger = {	exists = yes
+		luxury_furniture = 10
+		OR = {
+			any_state = { has_building = luxury_furniture_factory }
+			any_state = { has_building = advanced_luxury_furniture_factory }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			poor_strata_everyday_needs = 0.9
+			factor = 0.8
+		}
+		modifier = {
+			middle_strata_everyday_needs = 0.9
+			factor = 0.8
+		}
+		modifier = {
+			factor = 1.5
+			NOT = {
+				poor_strata_life_needs = 0.8
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTA12260"
+		luxury_furniture = -250
+		treasury = -100000
+		prestige = 2
+		random_state = {
+			limit = {
+				or = {
+					has_building = luxury_furniture_factory
+					has_building = advanced_luxury_furniture_factory
+				}
+			}
+			any_pop = {
+				militancy = -1
+				consciousness = -6
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12260"
+
+		random_state = {
+			limit = {
+				or = {
+					has_building = luxury_furniture_factory
+					has_building = advanced_luxury_furniture_factory
+				}
+			}
+			middle_strata = {
+				militancy = 1
+				consciousness = 6
+			}
+			poor_strata = {
+				militancy = -1
+				consciousness = -2
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Fashion Fails
+country_event = {
+	id = 12270
+	title = "EVTNAME12270"
+	desc = "EVTDESC12270"
+	picture = "Merchants"
+	
+	trigger = {	exists = yes
+		luxury_clothes = 30
+		or = {
+			any_state = { has_building = luxury_clothes_factory }
+			any_state = { has_building = advanced_luxury_clothes_factory }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+	}
+	
+	option = {
+		name = "EVTOPTA12270"
+		luxury_clothes = -250
+		regular_clothes = 250
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12270"
+		prestige = -2
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "EVTOPTC12270"
+		rich_strata = {
+			militancy = 0.5
+		}
+		middle_strata = {
+			militancy = 0.5
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Fashion Plates
+country_event = {
+	id = 12280
+	title = "EVTNAME12280"
+	desc = "EVTDESC12280"
+	picture = "factory"
+	
+	trigger = {	exists = yes
+		regular_clothes = 30
+		any_state = { has_building = regular_clothes_factory }
+	}
+	
+	mean_time_to_happen = {
+		months = 800
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			average_consciousness = 5
+		}
+		modifier = {
+			factor = 1.5
+			NOT = {
+				average_militancy = 5
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA12280"
+		regular_clothes = -250
+		treasury = -100000
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.1
+				NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB12280"
+		random_state = {
+			limit = { has_building = regular_clothes_factory }
+			poor_strata = {
+				militancy = 1
+				consciousness = 6
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+}

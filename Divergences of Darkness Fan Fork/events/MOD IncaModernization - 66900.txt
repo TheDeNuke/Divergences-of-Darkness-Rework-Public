@@ -1,0 +1,3154 @@
+#The Inauguration of Pachacuti II
+country_event = {
+	id = 66898
+	title = "EVTNAME66898"
+	desc = "EVTDESC66898"
+	picture = "Inca"
+
+	
+	trigger = {
+		tag = INC
+		year = 1842
+		NOT = { has_country_flag = INC_Coup_Success }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "EVTOPTA66898"
+		centralization = unitary
+		civilized = yes
+		country_event = 90910
+		ruling_party_ideology = liberal
+		prestige = 25
+		any_pop = {
+			militancy = 4
+		}
+		add_country_modifier = {
+			name = pachacuti_reforms
+			duration = 3650
+		}
+		CLM = {
+			diplomatic_influence = {
+				who = INC
+				value = -150
+			}
+		}
+		set_global_flag = pachacuti_reforms
+	}
+}
+
+#Transcribing the Quipu
+country_event = {
+	id = 66899
+	title = "EVTNAME66899"
+	desc = "EVTDESC66899"
+	picture = "Quipu"
+
+	
+	trigger = {
+		tag = INC
+		has_global_flag = pachacuti_reforms
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = "EVTOPTA66899"
+		prestige = 10
+		any_pop = {
+			literacy = 0.1 #toned down from 2 and make it a more gradual event 
+		}
+		add_country_modifier = {
+			name = transcribing_quipus
+			duration = 3650
+		}
+	}
+}
+
+#Incan Rebellion in Cuzco
+country_event = {
+	id = 66900
+	title = "EVTNAME66900"
+	desc = "EVTDESC66900"
+	picture = "inca rebellion"
+
+	
+	trigger = {
+		tag = INC
+		has_global_flag = pachacuti_reforms
+		NOT = {
+			has_global_flag = inca_rebellion
+		}
+		NOT = { war = yes }
+		OR = { 
+			NOT = { owns = 2302 }
+			NOT = { owns = 2304 }
+		}
+
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 48
+	}
+	option = {
+		name = "EVTOPTA66900"
+		any_country = {
+			limit = {
+				owns = 2302
+				owns = 2304
+				NOT = { tag = INC }
+			}
+			country_event = 66901
+		}
+		any_country = {
+			limit = {
+				owns = 2302
+				NOT = { owns = 2304 }
+				NOT = { tag = INC }
+			}
+			country_event = 66901
+		}
+		any_country = {
+			limit = {
+				owns = 2304
+				NOT = { owns = 2302 }
+				NOT = { tag = INC }
+			}
+			country_event = 66901
+		}
+		set_global_flag = inca_rebellion
+	}
+}
+
+country_event = {
+	id = 66901
+	title = "EVTNAME66901"
+	desc = "EVTDESC66901"
+	picture = "gritoasencio"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA66901"
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				NOT = { OR = { is_secondary_power = yes is_greater_power = yes  } }
+			}
+		}
+		set_global_flag = inca_rebellion
+		2304 = {
+			secede_province = INC
+		}
+		2578 = {
+			secede_province = INC
+		}
+		2303 = {
+			secede_province = INC
+		}
+		2297 = {
+			secede_province = INC
+		}
+		2299 = {
+			secede_province = INC
+		}
+		2301 = {
+			secede_province = INC
+		}
+		2302 = {
+			secede_province = INC
+		}
+		relation = { who = INC value = 300 }
+		prestige = 20
+		badboy = -5
+	}
+
+	option = {
+		name = "EVTOPTB66901"
+		set_global_flag = inca_rebellion
+		ai_chance = {
+			factor = 50
+		}
+		2304 = {
+			secede_province = INC
+		}
+		2578 = {
+			secede_province = INC
+		}
+		2303 = {
+			secede_province = INC
+		}
+		2297 = {
+			secede_province = INC
+		}
+		2299 = {
+			secede_province = INC
+		}
+		2301 = {
+			secede_province = INC
+		}
+		2302 = {
+			secede_province = INC
+		}	
+		random_owned = {
+			limit = {
+				owner = {
+					exists = yes
+				}
+			}
+			owner = {
+				war = {
+					target = INC
+					attacker_goal = {
+						casus_belli = acquire_state
+						state_province_id = 2302
+					}
+					attacker_goal = {
+						casus_belli = acquire_state
+						state_province_id = 2304
+					}
+			
+					defender_goal = {
+						casus_belli = status_quo
+					}
+				}
+			}
+		}
+		relation = { who = INC value = -300 }
+	}
+}
+
+###################################################
+####			Bad Inca path 					###
+###################################################
+
+country_event = {
+	id = 66902 #Quiso Yupanqui in Camelot
+	title = "INC1.T"
+	desc = "INC1.D"
+	picture = "inca_fight" 
+	
+	trigger = { 
+	tag = NAN 
+	NOT = { has_country_flag = INC_claimant }
+	year = 1837
+	}
+	
+	mean_time_to_happen = { 
+	months = 5
+	}
+	
+	option = { 
+	name = "INC1.A"
+	set_country_flag = INC_claimant
+	set_global_flag = INC_Coup
+	relation = { who = INC value = -100 }
+	ammunition = -1000
+	small_arms = -500
+	ai_chance = { 
+	factor = 20
+		}
+	}
+	
+	option = { 
+	name = "INC1.B"
+	set_country_flag = INC_claimant
+	prestige = 1 
+	relation = { who = INC value = 50 }
+	ai_chance = { 
+	factor = 80
+		}
+	}
+}
+
+country_event = {
+	id = 66903 #Quiso Yupanqui assaults the capital
+	title = "INC2.T"
+	desc = "INC2.D"
+	picture = "inca_fight" 
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = INC_Coup
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+	
+	option = { 
+	name = "INC2.A"
+	set_country_flag = INC_Coup_Success
+	clr_global_flag = INC_Coup
+	INC = { country_event = { id = 66904 days = 20 } }
+	ai_chance = { 
+	factor = 100
+		}
+	}
+	
+	option = { 
+	name = "INC2.B"
+	clr_global_flag = INC_Coup
+	ai_chance = { 
+	factor = 0
+		}
+	}
+}
+
+country_event = {
+	id = 66904 #Quiso Yupanqui crowned 
+	title = "INC3.T"
+	desc = "INC3.D"
+	picture = "inca_fight" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC3.A"
+	add_country_modifier = { 
+			name = Quiso_rule
+			duration = 3650
+		}
+	relation = { who = NAN value = 150 }
+	DUA = { 
+		diplomatic_influence = {
+				who = INC
+				value = -100
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 66905 #The Great Andine Famine
+	title = "INC4.T"
+	desc = "INC4.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = INC_Coup_Success
+	year = 1847
+	NOT = { has_country_flag = INC_famine }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "INC4.A" 
+	set_country_flag = INC_famine
+	set_global_flag = INC_famine_andes
+	random_state = {
+			limit = {
+				any_owned_province = {
+					is_core = INC
+					NOT = { has_province_modifier = potato_blight }
+				}
+			}
+			any_owned = {
+				add_province_modifier = {
+					name = INC_potato_blight
+					duration = 1825
+				}
+			}
+			any_pop = {
+				consciousness = 3
+				militancy = 5
+			}
+		}
+	add_country_modifier = { 
+		name = INC_panic
+		duration = 1500
+		}
+	}
+}
+
+province_event = {
+	id = 66906
+	title = "INC5.T" # Famine Spreads
+	desc = "INC5.D"
+	picture = "famine"
+	
+	trigger = {
+		is_core = INC
+		owner = { has_country_flag = INC_famine }
+		any_neighbor_province = { has_province_modifier = INC_potato_blight }
+		NOT = {
+			year = 1852
+			has_province_modifier = INC_potato_blight
+			has_province_modifier = potato_blight
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 20
+	}
+	
+	option = {
+		name = "INC5.A"
+		state_scope = {
+			any_owned = {
+				add_province_modifier = {
+					name = INC_potato_blight
+					duration = 1825
+				}
+			}
+			any_pop = {
+				consciousness = 3
+				militancy = 3
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 66907
+	title = "INC6.T" #Uraycusta riot 
+	desc = "INC6.D"
+	picture = "uraycusta_bay"
+	
+	trigger = { 
+	tag = INC 
+	owns = 2325 
+	2325 = { has_province_modifier = INC_potato_blight }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 10 
+	}
+	
+	option = { 
+	name = "INC6.A"
+	2325 = { 
+	any_pop = { 
+		limit = { 
+			OR = { 
+				culture = aimara 
+				culture = quechua
+					}
+				}
+			reduce_pop = 0.8
+			}
+		}
+	}
+}
+
+
+##################################################
+######			Beornian War 				######	
+##################################################
+
+country_event = { 
+	id = 66908
+	title = "INC7.T" #Beornia demands territories 
+	desc = "INC7.D"
+	picture = "occupation_of_araucania"
+	
+	trigger = { 
+	tag = NAN 
+	has_global_flag = INC_famine_andes
+	NOT = { OR = { has_country_flag = War_Andes has_country_flag = NOT_War_Andes } }
+	NOT = { year = 1852 }
+	}
+	
+	mean_time_to_happen = { 
+	months = 20 
+	}
+	
+	option = { 
+	name = "INC7.A"
+	INC = { country_event = 66909 }
+	set_country_flag = War_Andes
+	ai_chance = { 
+	factor = 99 
+		}
+	}
+	
+	option = { 
+	name = "INC7.B"
+	set_country_flag = NOT_War_Andes
+	relation = { who = INC value = 75 }
+	any_pop = {
+			scaled_militancy = {
+				issue = jingoism
+				factor = 2
+			}
+		}
+	ai_chance = { 
+	factor = 1
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 66909
+	title = "INC8.T" #Beornian demands
+	desc = "INC8.D"
+	picture = "garibaldi_raid"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC8.A"
+	add_casus_belli = {
+				target = FROM 
+				type = cut_down_to_size
+				months = 12
+			}
+	NAN = { country_event = 66910 }
+	ai_chance = { 
+	factor = 90
+		}
+	}
+	
+	option = { 
+	name = "INC8.B"
+	any_owned = {
+			limit = {
+				OR = { 
+				region = CHL_2322
+				region = ARG_2387
+				region = INC_2389
+				}
+			}
+			secede_province = FROM
+		}
+	NAN = { country_event = 66911 }
+	any_pop = { 
+		militancy = 5
+		}
+	ai_chance = { 
+	factor = 10
+		}
+	}
+}
+
+country_event = { 
+	id = 66910
+	title = "INC9.T" #Beornian declaration of war
+	desc = "INC9.D"
+	picture = "garibaldi_raid"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC9.A"
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = { 
+				casus_belli = cut_down_to_size
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 66912
+	title = "INC11.T"
+	desc = "INC11.D"
+	picture = "occupation_of_araucania"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC11.A"
+	any_owned = {
+			limit = {
+				OR = { 
+				region = CHL_2322
+				region = ARG_2387
+				region = INC_2389
+				}
+			}
+			secede_province = FROM
+		}
+	NAN = { country_event = 66913 }
+	any_pop = { 
+		militancy = 5
+		}
+	}
+}
+
+country_event = { 
+	id = 66911
+	title = "INC10.T" #Beornian occupation of the Andes
+	desc = "INC10.D"
+	picture = "occupation_of_araucania"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC10.A"
+	set_country_flag = Andes_barbary
+	release_vassal = ARU
+	2388 = { #Kuchiyay pops go to Atacama
+		
+		poor_strata = {
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+			}
+			move_pop = 2322
+		}
+			
+		any_pop = { 
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			militancy = 7
+			consciousness = 9
+		}
+			
+		any_pop = { 
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+				OR = {
+					pop_type = artisans
+					pop_type = clergymen
+					pop_type = bureaucrats
+				}
+			}
+			pop_type = labourers
+		}
+		any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 2190 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2387 = {
+			poor_strata = { 
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2323
+			}
+			any_pop = { 
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+			remove_province_modifier = nationalist_agitation
+		}
+		
+		2389 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2305
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		
+		#Catamarca pops go to Tilcara
+		2385 = { poor_strata = {
+		limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2368
+			}
+			any_pop = {
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+			limit = {
+			OR = {
+			has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2374 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2372
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2373 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2371
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2375 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2370
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = labourers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		#Antisuyu pops to Cutinsuyu 
+		
+		2325 = { #Uraycusta is 'spared' because of the foreign legations
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		}
+		
+		2326 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2307
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2327 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2307
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2324 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2313
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2330 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 2315
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = labourers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+	}
+}
+
+country_event = { 
+	id = 66913
+	title = "INC12.T" #Beornian occupation of the Andes
+	desc = "INC12.D"
+	picture = "occupation_of_araucania"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC12.A"
+	set_country_flag = Andes_barbary
+	release_vassal = ARU
+	2388 = { #Kuchiyay pops go to Atacama
+		
+		poor_strata = {
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+				34 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+				33 = { reduce_pop = 0.6 }
+			}
+			move_pop = 2322
+		}
+			
+		any_pop = { 
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			militancy = 7
+			consciousness = 9
+		}
+			
+		any_pop = { 
+			limit = {
+				OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+				OR = {
+					pop_type = artisans
+					pop_type = clergymen
+					pop_type = bureaucrats
+				}
+			}
+			pop_type = labourers
+		}
+		any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 2190 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2387 = {
+			poor_strata = { 
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2323
+			}
+			any_pop = { 
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+					OR = {
+						has_pop_culture = aimara
+						has_pop_culture = quechua
+						has_pop_culture = patagonian
+					}
+				}
+				pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+			add_province_modifier = { name = population_resettlement duration = 1460 }
+			remove_province_modifier = nationalist_agitation
+		}
+		
+		2389 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2305
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		
+		#Catamarca pops go to Tilcara
+		2385 = { poor_strata = {
+		limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2368
+			}
+			any_pop = {
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+			limit = {
+			OR = {
+			has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2374 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2372
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2373 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2371
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2375 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2370
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = labourers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		#Antisuyu pops to Cutinsuyu 
+		
+		2325 = { #Uraycusta is 'spared' because of the foreign legations
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		}
+		
+		2326 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2307
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2327 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2307
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2324 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2313
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = farmers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2330 = { poor_strata = { 
+		limit = {
+			OR = {
+					has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			random_list = {
+					34 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+					33 = { reduce_pop = 0.6 }
+				}
+				move_pop = 2315
+			}
+			any_pop = { 
+			limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+				militancy = 7
+				consciousness = 9
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			OR = {
+				pop_type = artisans
+				pop_type = clergymen
+				pop_type = bureaucrats
+					}
+				}
+			pop_type = labourers
+			}
+			any_pop = {
+				limit = {
+			OR = {
+				has_pop_culture = aimara
+					has_pop_culture = quechua
+					has_pop_culture = patagonian
+				}
+			}
+			reduce_pop = 1.2
+			}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+	}
+}
+
+######################################
+###			'Good' events		   ###
+######################################
+
+country_event = { 
+	id = 66914
+	title = "INC13.T" #New Governement
+	desc = "INC13.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = pachacuti_reforms
+	OR = { 
+		government = absolute_monarchy
+		government = prussian_constitutionalism	
+			}
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 40 
+	}
+	
+	option = { 
+		name = "INC13.A"
+		government = prussian_constitutionalism
+		political_reform = wealth_voting
+		political_reform = censored_press
+		political_reform = gerrymandering
+		any_pop = {
+			limit = { literacy = 0.2 }
+			ideology = { factor = 0.1 value = liberal }
+			}
+	}
+}
+
+country_event = { 
+	id = 66915 
+	title = "INC14.T"
+	desc = "INC14.D"
+	picture = "uraycusta_bay"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = pachacuti_reforms 
+	owns = 2325
+	NOT = { has_country_flag = uraycusta_port }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 15 
+	}
+	
+	option = { 
+	name = "INC14.A"
+	2325 = { 
+		life_rating = 2 
+		}
+	set_country_flag = uraycusta_port
+	}
+
+}
+
+country_event = { 
+	id = 66916
+	title = "INC15.T" #Rice farming
+	desc = "INC15.D"
+	picture = "Asian_INC"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = pachacuti_reforms 
+	has_country_flag = uraycusta_port
+	owns = 2325
+	NOT = { has_country_flag = rice_INC }
+	}
+	
+	mean_time_to_happen = { 
+	months = 20 
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "INC15.A"
+	2326 = { add_province_modifier = { name = INC_rice_farming duration = 1825 } }
+	2327 = { add_province_modifier = { name = INC_rice_farming duration = 1825 } }
+	2324 = { add_province_modifier = { name = INC_rice_farming duration = 1825 } }
+	set_country_flag = rice_INC
+	}
+
+}
+
+country_event = { 
+	id = 66917
+	title = "INC16.T" #Last Silver payment
+	desc = "INC16.D"
+	picture = "uraycusta_bay"
+	
+	trigger = { 
+	tag = INC 
+	war = no 
+	has_global_flag = pachacuti_reforms 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 10 
+	} 
+	
+	option = { 
+	name = "INC16.A"
+	money = -50000
+	DUA = { 
+		country_event = 66918
+		diplomatic_influence = {
+				who = INC
+				value = -100
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 66918
+	title = "INC17.T" #Last Silver payment
+	desc = "INC17.D"
+	picture = "uraycusta_bay"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC17.A"
+	relation = { who = INC value = 50 }
+	money = 50000
+	}
+}
+
+country_event = { 
+	id = 66919
+	title = "INC18.T" #Land Reform
+	desc = "INC18.D"
+	picture = "Peasants_INC"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = rice_INC
+	NOT = { has_country_flag = INC_land_reform }
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "INC18.A"
+	set_country_flag = INC_land_reform
+	any_pop = { 
+		limit = { 	
+			pop_type = aristocrats
+			}
+		militancy = 8 
+		ideology = { factor = 0.5 value = reactionary }
+		}
+	any_pop = { 
+		limit = { 
+			pop_type = farmers 
+			}
+		militancy = -2 
+		consciousness = 3 
+		}
+	money = -50000
+	}
+}
+
+country_event = { 
+	id = 66920
+	title = "INC19.T" #Inca Baby-Boom
+	desc = "INC19.D"
+	picture = "welcome_stranger_nugget"
+	
+	trigger = { 
+	tag = INC 
+	year = 1865
+	medicine = 1 
+	has_country_flag = rice_INC
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 20 
+	}
+	
+	option = { 
+	name = "INC19.A"
+	add_country_modifier = { 
+		name = global_baby_boom
+		duration = 3650
+			}
+	}
+}
+
+country_event = { 
+	id = 66921 #Destroying the Encomiendas 
+	title = "INC20.T"
+	desc = "INC20.D"
+	picture = "Peasants_INC"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = INC_land_reform 
+	capital = 2302
+	owns = 2279 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+	
+	option = { 
+	name = "INC20.A"
+	any_owned = { 
+	limit = { 
+		OR = { 
+			is_core = QUI
+			is_core = ARE 
+				}
+			}
+		add_province_modifier = { 
+			name = INC_end_encomienda
+			duration = 7700
+			}
+		}
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		OR = { 
+			location = { is_core = QUI }
+			location = { is_core = ARE }
+				}
+		OR = { 
+			culture = granadan 
+			AND = { 
+			culture = quechua
+			has_pop_religion = catholic
+					}
+				}
+			}
+		reduce_pop = 0.7 
+		militancy = 8 
+		}
+	any_pop = { 
+		limit = { 
+		OR = { 
+		pop_type = farmers
+		pop_type = labourers
+			}
+		OR = { 
+			location = { is_core = QUI }
+			location = { is_core = ARE }
+				}
+			}
+		
+		militancy = -3
+		}
+	}
+}
+
+#################
+###	Diplomacy ###
+#################
+
+country_event = { 
+	id = 66922 #Qingqiu alliance (they always break it because INC is unciv) 
+	title = "INC21.T"
+	desc = "INC21.D" 
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = uraycusta_port 
+	war = no
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "INC21.A"
+	relation = { who = DNG value = 100 } 
+	DNG = { country_event = 66923 }
+	ai_chance = { 
+	factor = 100 
+		}
+	}
+	
+	option = { 
+	name = "INC21.B"
+	relation = { who = DNG value = -50 }
+	ai_chance = { 
+	factor = 0 
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66923 #Inca alliance 
+	title = "INC22.T"
+	desc = "INC22.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC22.A"
+	create_alliance = FROM 
+	relation = { who = FROM value = 100 }
+	ai_chance = { 
+	factor = 100 
+		}
+	}
+	
+	option = { 
+	name = "INC22.B"
+	relation = { who = FROM value = -50 }
+	ai_chance = { 
+	factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 66924 #
+	title = "INC23.T"
+	desc = "INC23.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC23.A"
+	prestige = 5 
+	relation = { who = INC value = 75 }
+	}
+	
+} 
+
+
+#############
+###	Liwru ###
+#############
+	
+country_event = { 
+	id = 66925
+	title = "INC24.T"
+	desc = "INC24.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = pachacuti_reforms 
+	private_bank_money_bill_printing = 1 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 24 
+	}
+	
+	option = { 
+	name = "INC24.A"
+	prestige = 3
+	}
+}
+
+#####################
+###	Inti religion ###
+#####################
+
+country_event = { 
+	id = 66926 
+	title = "INC25.T"
+	desc = "INC25.D"
+	picture = "inti_religion"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = pachacuti_reforms 
+	NOT = { has_country_flag = religious_freedom_INC }
+	}
+	
+	mean_time_to_happen = { 
+	months = 17 
+	}
+	
+	option = { 
+	name = "INC25.A"
+	set_country_flag = religious_freedom_INC
+	any_pop = {
+		limit = { 
+		has_pop_religion = inti
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		}
+	any_pop = { 
+	limit = { 
+	NOT = { has_pop_religion = inti }
+			}
+	militancy = -1 
+	dominant_issue = {
+				factor = 0.05
+				value = pluralism
+			}	
+		}
+	}
+	
+	
+}
+
+country_event = { 
+	id = 66927
+	title = "INC26.T"
+	desc = "INC26.D"
+	picture = "inti_religion"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = religious_freedom_INC
+	NOT = { has_country_flag = religious_reform_INC }
+	}
+	
+
+	mean_time_to_happen = { 
+	months = 80 
+	modifier = { 
+		factor = 0.5 
+		capital = 2302
+		}
+	modifier = { 
+		factor = 0.1
+		owns = 2279
+		}
+	}
+	
+	option = { 
+	name = "INC26.A"
+	set_country_flag = religious_reform_INC
+	any_pop = { 	
+	limit = { 
+		has_pop_religion = inti 	
+			}
+		dominant_issue = {
+				factor = 0.1
+				value = moralism
+			}
+		militancy = -1
+		consciousness = 3
+		}
+	}
+}
+
+country_event = { 
+	id = 66928
+	title = "INC27.T"
+	desc = "INC27.D"
+	picture = "inca_raymi"
+	
+	trigger = { 
+	tag = INC 
+	capital = 2302 
+	NOT = { has_country_flag = inti_raymi }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+	
+	option = { 
+	name = "INC27.A"
+	set_country_flag = inti_raymi
+	prestige = 5 
+	any_pop = { 
+		limit = { 
+		has_pop_religion = inti 
+			}
+		militancy = -3
+		}
+	}
+}
+
+country_event = { 
+	id = 66929 
+	title = "INC28.T" #Koricancha
+	desc = "INC28.D"
+	picture = "inca_temple"
+	
+	trigger = { 
+	tag = INC 
+	capital = 2302 
+	has_country_flag = inti_raymi
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 20 
+	}
+	
+	option = { 
+	name = "INC28.A"
+	prestige = 5 
+	any_pop = { 
+	limit = { 
+		has_pop_religion = catholic 
+			}
+		militancy = 7 
+		}
+	}
+}
+
+country_event = { 
+	id = 66930
+	title = "INC29.T" #University of Cuzco
+	desc = "INC29.D"
+	picture = "cuzco"
+	
+	trigger = { 
+	tag = INC 
+	capital = 2302 
+	NOT = { has_country_flag = university_Cuzco }
+	}
+	
+	mean_time_to_happen = { 
+	months = 20 
+	}
+	
+	option = { 
+	name = "INC29.A"
+	set_country_flag = university_Cuzco
+	years_of_research = 1
+	2302 = {
+		any_pop = { 
+			literacy = 0.1
+			}
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66931
+	title = "INC30.T" #Beornian crimes 
+	desc = "INC30.D"
+	
+	trigger = { 
+	tag = NAN 
+	has_country_flag = Andes_barbary 
+	year = 1880 
+	}
+	
+	major = yes 
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 25
+	}
+	
+	option = { 
+	name = "INC30.A"
+	prestige = -40 
+	}
+}
+
+#country_event = { 
+#	id = 66932
+#	title = "INC31.T" #Potosi sanctuarized 
+#	desc = "INC31.D"
+
+
+
+
+###############
+#	Mapuche	  #
+###############
+
+country_event = { 
+
+	id = 66960
+	title = "INC61.T" #Lars Heyerdhal enters Mapuche 
+	desc = "INC61.D"
+	picture = "Mapuche"
+	
+	trigger = {
+	tag = ARU 
+	year = 1861 
+	SCA = { rank = 8 }
+	NOT = { 
+	OR = { 
+		INC = { is_greater_power = yes } 
+		NAN = { is_greater_power = yes }
+			}
+		}
+	NOT = { has_country_flag = ARU_heyerdhal }
+	}
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "INC61.A"
+	set_country_flag = ARU_heyerdhal
+	government = absolute_monarchy
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	INC = { 
+	country_event = 66961
+			}
+		}
+}
+
+country_event = { 
+
+	id = 66961
+	title = "INC62.T" #Lars Heyerdhal enters Mapuche -INC informs SCA
+	desc = "INC62.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC62.A" 
+	prestige = -1 
+	release_vassal = ARU 
+	2327 = { secede_province = FROM } 
+	2330 = { secede_province = FROM } 
+	SCA = { country_event = 66962 }
+	}
+}
+
+country_event = { 
+
+	id = 66962
+	title = "INC63.T" #Lars Heyerdhal enters Mapuche -SCA decision
+	desc = "INC63.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC64.A" 
+	prestige = 2 
+	badboy = 1 
+	diplomatic_influence = { who = ARU value = 200 }
+	ARU = { country_event = 66964 }
+	ai_chance = { 
+	factor = 75
+	modifier = { 
+	factor = 0.5
+	war = yes 
+			}	
+		}
+	}
+	
+	option = { 
+	name = "INC64.B" 
+	badboy = -1
+	ARU = { country_event = 66980 }
+	ai_chance = { 
+	factor = 25
+	modifier = { 
+	factor = 0.5 
+	rank = 4 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 66964
+	title = "INC65.T" #SCA supports ARU 
+	desc = "INC65.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC65.A" 
+	INC = { country_event = 66965 }
+	any_owned = { 
+			add_province_modifier = {
+				name = INC_resistance_mapuche
+				duration = 1825
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 66965
+	title = "INC66.T" #SCA supports ARU - what does INC do ?
+	desc = "INC66.D"
+	picture = "Mapuche_war"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC66.A"
+	prestige = 5 
+	2329 = { add_core = THIS }
+	2328 = { add_core = THIS }
+	2331 = { add_core = THIS }
+	war = { 
+		target = FROM
+		   attacker_goal = {
+				casus_belli = annex_core_country
+			}	
+		}
+	set_global_flag = mapuche_war
+	SCA = { country_event = 66966 }
+	ai_chance = { 
+	factor = 80 
+		}
+	}
+	
+	option = { 
+	name = "INC66.B" 
+	ARU = { country_event = 66979 }
+	prestige_factor = -0.4
+	any_pop = { 
+	militancy = 2 	
+		}
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 66966
+	title = "INC67.T" #INC invades ARU -SCA notif
+	desc = "INC67.D"
+	picture = "Mapuche_war"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC67.A"
+	}
+}
+
+country_event = { 
+	id = 66967
+	title = "INC68.T" #Treaty of Uraycusta
+	desc = "INC68.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	
+	option = {
+		name = "INC68.A"
+		prestige = -10
+	    clr_global_flag = mapuche_war
+		
+		random_country = {
+			limit = {
+				war_with = THIS
+				controls = 2331
+			}
+			end_war = THIS
+			country_event = 66968
+		}
+	}
+}
+
+country_event = { 
+	id = 66968
+	title = "INC69.T" #INC ends ARU
+	desc = "INC69.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC69.A"
+	end_war = ARU 
+	inherit = ARU 
+	prestige = 10
+	clr_global_flag = mapuche_war
+	}
+}
+
+country_event = { 
+	id = 66969
+	title = "INC70.T" #INC lost - clearing flags
+	desc = "INC70.D"
+	picture = "mapuche_war"
+	
+	
+	trigger = { 
+	tag = ARU 
+	war = no 
+	in_sphere = SCA 
+	has_global_flag = mapuche_war 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "INC70.A" 
+	clr_global_flag = mapuche_war
+	prestige = 5
+	SCA = { country_event = 66971 }
+	}
+
+}
+
+country_event = { 
+	id = 66971
+	title = "INC72.T" #INC lost - SCA after Beornia
+	desc = "INC72.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC72.A" 
+	NAN = { country_event = 66972 } 
+	}
+}
+
+country_event = { 
+	id = 66972
+	title = "INC73.T" #Scandinavia asks Beornia to recognize the claims of ARU
+	desc = "INC73.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC73.A" 
+	any_owned = { 
+		limit = { is_core = ARU } 
+		secede_province = ARU 
+		}
+	prestige_factor = -0.4
+	
+	ARU = { country_event = 66973 }
+	ai_chance = { 
+	factor = 80 	
+		}
+	}
+	
+	option = { 
+	name = "INC73.B" #Refuse
+	prestige = 3 
+	set_global_flag = NAN_SCA_war
+	ai_chance = { 
+	factor = 20 	
+		}
+	}
+}
+
+country_event = { 
+	id = 66973
+	title = "INC74.T" #Beornia dropped claims 
+	desc = "INC74.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC72.A" 
+	random_owned = {
+			limit = {
+				2332 = { empty = yes }
+			}
+			2332 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2399 = { empty = yes }
+			}
+			2399 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2398 = { empty = yes }
+			}
+			2398 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2397 = { empty = yes }
+			}
+			2397 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2396 = { empty = yes }
+			}
+			2396 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2392 = { empty = yes }
+			}
+			2392 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2391 = { empty = yes }
+			}
+			2391 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2394 = { empty = yes }
+			}
+			2394 = { secede_province = ARU }
+		}
+	SCA = { country_event = 66974 } 
+	prestige = 1 
+	any_pop = { 
+	militancy = -5 
+		}
+	}
+}
+
+country_event = { 
+	id = 66974
+	title = "INC75.T" #Beornia dropped claims -SCA
+	desc = "INC75.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC75.A" 
+	prestige = 10 
+	random_owned = {
+			limit = {
+				2400 = { empty = yes }
+			}
+			2400 = { secede_province = FROM }
+		}
+		random_owned = {
+			limit = {
+				2335 = { empty = yes }
+			}
+			2335 = { secede_province = FROM }
+		}
+		random_owned = {
+			limit = {
+				2334 = { empty = yes }
+			}
+			2334 = { secede_province = FROM }
+		}
+		random_owned = {
+			limit = {
+				2333 = { empty = yes }
+			}
+			2333 = { secede_province = FROM }
+		}
+	relation = { who = ARU value = 100 } 
+	}
+}
+
+country_event = { 
+	id = 66975
+	title = "INC76.T" #NAN at peace with SCA 
+	desc = "INC76.D"
+	
+	trigger = { 
+	tag = NAN 
+	has_global_flag = NAN_SCA_war
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	days = 3 
+	}
+	
+	option = { 
+	name = "INC76.A" 
+	prestige = 10
+	clr_global_flag = NAN_SCA_war
+	}
+}
+
+country_event = { 
+	id = 66976
+	title = "INC77.T" #NAN Treaty 
+	desc = "INC77.D"
+	
+	is_triggered_only = yes 
+	
+		
+	option = { 
+	name = "INC77.A" 
+	clr_global_flag = NAN_SCA_war
+	end_war = FROM
+	any_owned = { 
+		limit = { is_core = ARU } 
+		secede_province = ARU 
+		}
+	prestige_factor = -0.6
+	
+	ARU = { country_event = 66977 } 
+	}
+	
+	
+}
+
+country_event = { 
+	id = 66977
+	title = "INC78.T" #Beornia dropped claims 
+	desc = "INC78.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC78.A" 
+	random_owned = {
+			limit = {
+				2332 = { empty = yes }
+			}
+			2332 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2399 = { empty = yes }
+			}
+			2399 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2398 = { empty = yes }
+			}
+			2398 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2397 = { empty = yes }
+			}
+			2397 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2396 = { empty = yes }
+			}
+			2396 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2392 = { empty = yes }
+			}
+			2392 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2391 = { empty = yes }
+			}
+			2391 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2394 = { empty = yes }
+			}
+			2394 = { secede_province = ARU }
+		}
+	SCA = { country_event = 66978 }
+	prestige = 1 
+	any_pop = { 
+	militancy = -5 
+		}
+	}
+}
+
+country_event = { 
+	id = 66978
+	title = "INC79.T" #Beornia dropped claims -SCA
+	desc = "INC79.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC79.A" 
+	prestige = 10 
+	random_owned = {
+			limit = {
+				2400 = { empty = yes }
+			}
+			2400 = { secede_province = THIS }
+		}
+		random_owned = {
+			limit = {
+				2335 = { empty = yes }
+			}
+			2335 = { secede_province = THIS }
+		}
+		random_owned = {
+			limit = {
+				2334 = { empty = yes }
+			}
+			2334 = { secede_province = THIS}
+		}
+		random_owned = {
+			limit = {
+				2333 = { empty = yes }
+			}
+			2333 = { secede_province = THIS }
+		}
+	relation = { who = ARU value = 100 } 
+	}
+}
+
+country_event = { 
+	id = 66979
+	title = "INC80.T" #INC didn't march south
+	desc = "INC80.D"
+	picture = "mapuche_war"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "INC80.A" 
+	clr_global_flag = mapuche_war
+	prestige = 5
+	SCA = { country_event = 66971 }
+	}
+
+}
+
+country_event = { 
+	id = 66980
+	title = "INC81.T" #The Mapuche Rebellion
+	desc = "INC81.D"
+	picture = "mapuche_war"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC80.A" 
+	add_casus_belli = {	
+				target = INC
+				type = acquire_state
+		}
+	war = {
+			target = INC
+			attacker_goal = {
+				casus_belli = acquire_state
+				state_province_id = 2325
+				}
+				defender_goal = {
+						casus_belli = annex_core_country
+				}
+		}
+	}
+}
+
+country_event = { 
+	id = 66981
+	title = "INC82.T" #
+	desc = "INC82.D"
+	picture = "Mapuche"
+	
+	
+	trigger = { 
+	tag = ARU 
+	government = absolute_monarchy 
+	year = 1876
+	in_sphere = SCA 
+	}
+	
+	mean_time_to_happen = { 
+	months = 10 
+	}
+	
+	option = { 
+	name = "INC82.A"
+	government = democracy
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	SCA = { country_event = 66982 }
+	}
+}
+
+country_event = { 
+	id = 66982
+	title = "INC83.T" #INC lost - clearing flags
+	desc = "INC83.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC83.A" 
+	badboy = 2 
+	ARU = { country_event = 66983 } 
+	ai_chance = { 
+	factor = 80 
+		}
+	}
+	
+	option = { 
+	name = "INC83.B" 
+	relation = { who = FROM value = 100 } 
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 66983
+	title = "INC84.T" #INC lost - clearing flags
+	desc = "INC84.D"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "INC84.A"
+	FROM = { inherit = THIS }
+	}
+}

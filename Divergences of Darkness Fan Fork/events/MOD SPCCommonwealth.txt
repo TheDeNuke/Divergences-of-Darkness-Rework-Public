@@ -1,0 +1,655 @@
+### Tale of the Two Capitals ####
+### Triggered after the end of the Columbian War. This ultimately effects the civil war event chain if it ever occurs. ###
+
+country_event = { 
+
+	id = 47000
+	title = "SPACW01.T"
+	desc = "SPACW01.D"
+	picture = "spanish_glorious_revolution"	
+
+	trigger = {
+	NOT = { has_global_flag = SPACapitalChoice }
+	tag = SPA
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+
+	option = { 
+	name = "SPACW01.A"
+	set_country_flag = SPA_MADRID
+	set_global_flag = SPACapitalChoice
+	prestige = 1
+	ai_chance = { 
+	factor = 50
+	   }
+	}
+
+	option = { 
+	name = "SPACW01.B"
+	set_country_flag = SPA_LISBON
+	set_global_flag = SPACapitalChoice
+	prestige = 1
+    capital = 521
+	primary_culture = portuguese
+	add_accepted_culture = castilian
+	ai_chance = { 
+	factor = 50
+	   }
+    }
+}
+
+
+#### The Formation of the Spanish Commonwealth - Congress of Havana ####
+
+country_event = { 
+
+	id = 47020
+	title = "SPACW22.T"
+	desc = "SPACW22.D"
+	picture = "spanish_glorious_revolution"	
+	
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPACW22.A"	
+	clr_country_flag = SPC_form_soon
+	set_global_flag = SPC_formation_check
+	clr_country_flag = SPA_MADRID
+	set_country_flag = SPA_LISBON
+    capital = 521
+	inherit = CUB
+	inherit = PNM
+	add_accepted_culture = caribeno
+    SPA = { all_core = { add_core = SPC } }
+	CUB = { all_core = { add_core = SPC } }
+	PNM = { all_core = { add_core = SPC } }
+	political_reform = federalism
+	tech_school = naval_tech_school
+	change_tag = SPC
+	GRA = {
+	any_owned = {
+	limit = { is_core = PNM }
+	secede_province = SPC
+	      }
+    }
+	UCA = {
+	any_owned = {
+	limit = { is_core = PNM }
+	secede_province = SPC
+	     }	
+	}
+
+	ai_chance = { 
+	factor = 100
+	   }
+	}
+
+
+	option = { 
+	name = "SPACW22.B"
+	clr_country_flag = SPC_form_soon
+	set_global_flag = SPC_formation_check
+	ai_chance = { 
+	factor = 0
+	   }
+    }
+}
+
+#### Collapse of the Commonwealth #####
+
+### SPA has broken free from SPC  ###
+
+country_event = { 
+
+	id = 47021
+	title = "SPACW23.T"
+	desc = "SPACW23.D"
+	picture = "spanish_glorious_revolution"	
+	
+	trigger = {
+	tag = SPC
+    exists = SPA
+	war = no
+    exists = yes
+	NOT = { any_owned_province = { is_core = SPA } }
+    NOT = { has_country_flag = SPC_goes_boom }
+    }
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "SPACW23.A"
+	SPA = { 
+	set_country_flag = Colombian_loss 
+	set_country_flag = SPA_MADRID
+	clr_country_flag = SPA_LISBON
+	political_reform = unitary
+	primary_culture = castilian
+	add_accepted_culture = portuguese
+	capital = 487  
+	}
+	political_reform = unitary
+	clr_country_flag = SPC_is_complete 
+	set_global_flag = congress_of_panama
+    set_global_flag = congress_of_panama_over
+	set_country_flag = SPC_goes_boom
+	clr_global_flag = spaCLM_Vice_royalties
+	clr_global_flag = spaCLM_divided
+	clr_global_flag = spaCLM.Occupation
+	any_owned = {
+			limit = {
+				is_core = MGH
+			}
+			secede_province = SPA
+	} 
+	any_owned = {
+			limit = {
+				is_core = SPA
+			}
+			secede_province = SPA
+	} 
+	inherit = MEX
+	SPC = { all_core = { remove_core = SPC } }
+	release = GUY
+	release = TAP 
+	release = CAS
+	any_owned = {
+			limit = {
+				is_core = ARE
+			}
+			secede_province = INC
+	} 
+	release = QUI 
+	release = YUC
+	release = NIC
+	release = PNM
+	release = ELS
+	release = LST
+	any_owned = { limit = { region = ENG_2228 } add_core = CUB }
+	any_owned = { limit = { region = ENG_2224 } add_core = CUB }
+	release = CUB
+	release = SAN
+	release = PUR
+	release = JLS
+	release = ZAP
+	release_vassal = LST 
+	release_vassal = GRA
+	release_vassal = UCA 
+	release_vassal = QUI
+    change_tag = MEX	
+	capital = 2172
+	remove_accepted_culture = castilian
+	remove_accepted_culture = portuguese
+    remove_accepted_culture = caribeno
+    remove_accepted_culture = granadan
+    remove_accepted_culture = central_american
+    remove_accepted_culture = lusitanian
+    remove_accepted_culture = basque
+	primary_culture = mexican
+	any_owned = { 
+	    limit = { 
+		NOT = { is_core = MEX }
+	    NOT = { continent = north_america }
+		}
+	    secede_province = SPA
+	} 
+   # What is this meant to trigger?
+   #any_country = {
+   #	    limit = {
+   #	    overlord = { tag = MEX }
+   #        NOT = { capital_scope = { continent = north_america } }
+   #		}
+   #	    country_event = { id = 653024 days = 3 }
+   #}
+   } 
+}
+
+country_event = { 
+
+	id = 47022
+	title = "SPACW24.T"
+	desc = "SPACW24.D"
+	picture = "spanish_glorious_revolution"	
+	
+	trigger = {
+	tag = SPC
+	exists = yes
+	is_secondary_power = yes
+	NOT = { is_greater_power = yes }
+	NOT = { has_country_flag = SPC_check_one }
+	NOT = { has_country_flag = second_colonial_revoultion }
+    has_country_flag = SPC_VGSannex 
+	OR = {
+	government = absolute_monarchy
+	government = prussian_constitutionalism
+    }
+	war = no
+    }
+	
+	mean_time_to_happen = { 
+	months = 24
+	}
+	
+	option = { 
+	name = "SPACW24.A"
+	set_country_flag = SPC_check_one
+	prestige = -10
+    government = hms_government
+	political_reform = confederalism
+    political_reform = appointed
+    political_reform = universal_voting
+    political_reform = yes_meeting
+    #political_reform = mandatory_service
+    political_reform = free_press
+    political_reform = all_trade_unions
+    political_reform = first_past_the_post
+    political_reform = non_secret_ballots
+	ai_chance = { 
+	factor = 80
+	   }
+	}
+
+	option = { 
+	name = "SPACW24.B"
+	prestige = 10
+	set_country_flag = SPC_check_one
+	set_country_flag = SPC_doomed
+	ai_chance = { 
+	factor = 20
+	   }
+    }
+}
+
+country_event = { 
+
+	id = 47023
+	title = "SPACW25.T"
+	desc = "SPACW25.D"
+	picture = "spanish_glorious_revolution"	
+	
+	trigger = {
+	tag = SPC
+	exists = yes
+	NOT = { is_secondary_power = yes }
+	NOT = { is_greater_power = yes }
+	NOT = { has_country_flag = SPC_doomed }
+	NOT = { has_country_flag = second_colonial_revoultion }
+    }
+	
+	mean_time_to_happen = { 
+	months = 24
+	}
+	
+	option = { 
+	name = "SPACW25.A"
+	prestige = -20
+	set_country_flag = SPC_doomed
+    }
+}
+
+country_event = { 
+
+	id = 47024
+	title = "SPACW26.T"
+	desc = "SPACW26.D"
+	picture = "spanish_glorious_revolution"	
+	
+	trigger = {
+	tag = SPC
+	exists = yes
+	war = no
+	has_country_flag = SPC_doomed
+	NOT = { has_country_flag = CLM_is_twopointoh }
+	NOT = { has_country_flag = second_colonial_revoultion }
+    }
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "SPACW26.A"
+	prestige = -5
+	set_country_flag = CLM_is_twopointoh
+	MEX = { all_core = { add_core = CLM } }
+	LST = { all_core = { add_core = CLM } }
+	UCA = { all_core = { add_core = CLM } }
+	GRA = { all_core = { add_core = CLM } }
+	CUB = { all_core = { add_core = CLM } }
+	PNM = { all_core = { add_core = CLM } }
+    }
+}
+
+country_event = { 
+
+	id = 47025
+	title = "SPACW27.T"
+	desc = "SPACW27.D"
+	picture = "spanish_glorious_revolution"	
+	
+	#major = yes
+	
+	trigger = {
+	tag = SPC
+	exists = yes
+	war = no
+	has_country_flag = CLM_is_twopointoh
+	NOT = { has_country_flag = second_colonial_revoultion }
+	NOT = {
+	   OR = {
+	      government = hms_government
+	      government = absolute_monarchy
+	      government = prussian_constitutionalism
+	      government = fascist_monarchy
+       }
+	}
+    }
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "SPACW27.A"
+	clr_country_flag = SPC_check_one
+	clr_country_flag = SPC_doomed
+	clr_country_flag = CLM_is_twopointoh
+    set_country_flag = second_colonial_revoultion 
+	set_global_flag = congress_of_panama
+    set_global_flag = congress_of_panama_over
+	set_global_flag = columbian_unity
+	prestige = -5
+    any_country = {
+			limit = {
+			    OR = { 
+				is_culture_group = mesoandean
+				is_culture_group = latin_american
+				}
+				NOT = { tag = INC }
+				NOT = { tag = AYM }
+			}
+			country_event = 11101
+    }
+	any_owned = {
+			limit = {
+				is_core = CLM
+			}
+			secede_province = CLM
+	}
+	CLM = {
+	     inherit = CUB
+         set_country_flag = chapultepec_castle	
+         prestige = 100		 
+	     capital = 2209
+         government = democracy
+		 political_reform = federalism
+         political_reform = appointed
+         political_reform = universal_voting
+         political_reform = yes_meeting
+         political_reform = mandatory_service
+         political_reform = free_press
+         political_reform = all_trade_unions
+         political_reform = first_past_the_post
+         political_reform = non_secret_ballots	
+		 clr_country_flag = tory_election_win
+		 clr_country_flag = socialist_election_win
+		 clr_country_flag = liberal_election_win
+		 clr_country_flag = communist_election_win
+		 clr_country_flag = fascist_election_win
+		 clr_country_flag = reactionary_election_win
+		 clr_country_flag = anarcho_liberal_election_win
+		 clr_country_flag = social_liberal_election_win
+		 clr_country_flag = market_liberal_election_win
+		 clr_country_flag = conservative_party_in_power
+		 clr_country_flag = liberal_party_in_power
+		 clr_country_flag = reactionary_party_in_power
+		 clr_country_flag = socialist_party_in_power
+		 clr_country_flag = communist_party_in_power
+		 clr_country_flag = fascist_party_in_power
+		 clr_country_flag = anarcho_liberal_party_in_power
+		 clr_country_flag = market_liberal_party_in_power
+	     primary_culture = mexican
+	     add_accepted_culture = lusitanian
+	     add_accepted_culture = central_american
+	     add_accepted_culture = granadan
+		 add_country_modifier = {
+			name = CLM_fight
+			duration = 3650
+	     }
+		 add_country_modifier = {
+			name = taiping_draft
+			duration = 3650
+	     }
+	     treasury = 100000
+	     ammunition = 10000
+	     small_arms = 10000
+	     artillery = 10000
+	     canned_food = 10000
+	     regular_clothes = 10000
+    }
+    add_country_modifier = {
+	name = no_more_war
+	duration = 7
+	}	
+	country_event = { id = 47027 days = 2 }
+    }
+}
+
+country_event = { 
+
+	id = 47026
+	title = "SPACW28.T"
+	desc = "SPACW28.D"
+	picture = "spanish_glorious_revolution"	
+	
+	#major = yes
+	
+	trigger = {
+	tag = SPC
+	exists = yes
+	war = no
+	has_country_flag = CLM_is_twopointoh
+	NOT = { has_country_flag = second_colonial_revoultion }
+	OR = {
+	   government = hms_government
+	   government = absolute_monarchy
+	   government = prussian_constitutionalism
+	   government = fascist_monarchy
+    }
+    }
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "SPACW28.A"
+	clr_country_flag = SPC_check_one
+	clr_country_flag = SPC_doomed
+	clr_country_flag = CLM_is_twopointoh
+    set_country_flag = second_colonial_revoultion 
+	set_global_flag = congress_of_panama
+    set_global_flag = congress_of_panama_over
+	set_global_flag = columbian_unity
+	prestige = -5
+    any_country = {
+			limit = {
+			    OR = { 
+				is_culture_group = mesoandean
+				is_culture_group = latin_american
+				}
+				NOT = { tag = INC }
+				NOT = { tag = AYM }
+			}
+			country_event = 11101
+    }
+	any_owned = {
+			limit = {
+				is_core = CLM
+			}
+			secede_province = CLM
+	}
+	CLM = {
+	     inherit = CUB
+         set_country_flag = chapultepec_castle		 
+	     capital = 2209
+         government = hms_government
+		 political_reform = federalism
+         political_reform = appointed
+         political_reform = universal_voting
+         political_reform = yes_meeting
+         political_reform = mandatory_service
+         political_reform = free_press
+         political_reform = all_trade_unions
+         political_reform = first_past_the_post
+         political_reform = non_secret_ballots	
+		 clr_country_flag = tory_election_win
+		 clr_country_flag = socialist_election_win
+		 clr_country_flag = liberal_election_win
+		 clr_country_flag = communist_election_win
+		 clr_country_flag = fascist_election_win
+		 clr_country_flag = reactionary_election_win
+		 clr_country_flag = anarcho_liberal_election_win
+		 clr_country_flag = social_liberal_election_win
+		 clr_country_flag = market_liberal_election_win
+		 clr_country_flag = conservative_party_in_power
+		 clr_country_flag = liberal_party_in_power
+		 clr_country_flag = reactionary_party_in_power
+		 clr_country_flag = socialist_party_in_power
+		 clr_country_flag = communist_party_in_power
+		 clr_country_flag = fascist_party_in_power
+		 clr_country_flag = anarcho_liberal_party_in_power
+		 clr_country_flag = market_liberal_party_in_power
+	     primary_culture = mexican
+	     add_accepted_culture = lusitanian
+	     add_accepted_culture = central_american
+	     add_accepted_culture = granadan
+		 add_country_modifier = {
+			name = CLM_fight
+			duration = 3650
+	     }
+		 add_country_modifier = {
+			name = taiping_draft
+			duration = 3650
+	     }
+    }
+    add_country_modifier = {
+	name = no_more_war
+	duration = 7
+	}	
+	country_event = { id = 47027 days = 2 }
+    }
+}
+
+country_event = { 
+
+	id = 47027
+	title = "SPACW29.T"
+	desc = "SPACW29.D"
+	picture = "spanish_glorious_revolution"	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPACW29.A"
+    clr_global_flag = spaCLM_Vice_royalties
+	clr_global_flag = spaCLM_divided
+	set_global_flag = spaCLM.Occupation
+	CLM = { capital = 2172 }
+	any_owned = {
+			limit = {
+				is_core = CLM
+			}
+			secede_province = CLM
+	}
+	set_country_flag = CLM_revolution_is_here
+	remove_country_modifier = no_more_war
+	war = { 
+	target = CLM
+	attacker_goal = {
+				casus_belli = civil_war
+			}
+	defender_goal = {
+				casus_belli = status_quo
+			}
+	}	
+    }
+}
+
+country_event = { 
+
+	id = 47028
+	title = "SPACW30.T"
+	desc = "SPACW30.D"
+	picture = "spanish_glorious_revolution"	
+	
+	trigger = {
+	tag = SPC
+	war = no
+	NOT = { exists = CLM }
+	has_country_flag = CLM_revolution_is_here
+    }
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SPACW30.A"
+	prestige = 100
+	clr_country_flag = CLM_revolution_is_here
+	CLM = { remove_country_modifier = CLM_fight remove_country_modifier = taiping_draft }
+    }
+}
+
+country_event = { 
+
+	id = 47029
+	title = "SPACW31.T"
+	desc = "SPACW31.D"
+	picture = "spanish_glorious_revolution"	
+	major = yes
+	
+	trigger = {
+	tag = SPC
+	war = no
+	exists = CLM
+	has_country_flag = CLM_revolution_is_here
+    }
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SPACW31.A"
+	prestige = -100
+	political_reform = unitary
+	set_country_flag = Colombian_loss 
+	set_country_flag = SPC_goes_boom
+	clr_country_flag = CLM_revolution_is_here
+	clr_global_flag = spaCLM_Vice_royalties
+	clr_global_flag = spaCLM_divided
+	clr_global_flag = spaCLM.Occupation
+	clr_country_flag = SPC_is_complete 	
+    remove_accepted_culture = caribeno
+    remove_accepted_culture = granadan
+    remove_accepted_culture = central_american
+    remove_accepted_culture = lusitanian
+	remove_accepted_culture = mexican
+	SPC = { all_core = { remove_core = SPC } }
+    change_tag = SPA
+    CLM = { prestige = 100 remove_country_modifier = CLM_fight remove_country_modifier = taiping_draft }	
+    }
+}

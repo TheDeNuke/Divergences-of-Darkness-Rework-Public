@@ -1,0 +1,255 @@
+political_decisions = {
+	claim_old_england = {
+	
+		picture = England_NAN
+		
+			potential = {
+				tag = NAN
+				NOT = { has_country_flag = claim_old_england }  
+				NOT = { has_country_flag = holy_britannia }
+			}
+		
+			allow = {
+				ENL = { exists = no }
+				NOT = { war = yes }
+				is_greater_power = yes
+				
+				
+			}
+		
+			effect = {
+				prestige = 20
+				
+				relation = { who = DUA value = -200 }
+				
+				ENL = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				
+				set_country_flag = claim_old_england
+			}
+			ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	conquer_old_england = { 
+		
+		picture = England_NAN
+		
+		potential = {
+				tag = NAN
+				NOT = { has_country_flag = claim_old_england }  
+				NOT = { has_country_flag = holy_britannia }
+				ENL = { exists = yes NOT = { rank = 4 } }
+			}
+		
+		allow = { 
+			NOT = { war = yes }
+			is_greater_power = yes
+		}
+	
+		effect = {
+				badboy = 24 
+				
+				relation = { who = ENL value = -200 }
+				
+				ENL = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				
+				set_country_flag = claim_old_england
+			}
+			ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	return_home_NAN = {
+	
+	picture = England_NAN
+	
+			potential = {
+				tag = NAN
+			}
+		
+			allow = {
+				ENL = { exists = no }
+				NOT = { war = yes }
+				ENL = {
+					all_core = {
+						owned_by = THIS
+					}
+				}
+				
+			}
+		
+			effect = {
+				prestige = 20
+				any_owned = {
+					limit = {
+						is_core = ENL
+					}
+					remove_core = NAN
+				}
+				change_tag = ENL
+				primary_culture = english 
+				add_accepted_culture = beornian
+				add_accepted_culture = anglois
+				capital = 300
+			}
+			ai_will_do = {
+				factor = 1
+			}
+	}
+  
+  proclaim_britannia = {
+      		picture = HBE
+			potential = {
+				tag = NAN
+				NOT = { has_country_flag = claim_old_england }  
+				NOT = { has_country_flag = holy_britannia }
+			}
+		
+			allow = {
+				HBE = { exists = no }
+				NOT = { war = yes }
+				is_greater_power = yes
+				OR = {
+       		      government = absolute_monarchy
+			      government = fascist_monarchy
+				}
+			}
+		
+			effect = {
+				prestige = 25
+				
+				NAN = { all_core = { add_core = HBE	} }
+				AMA = { all_core = { add_core = HBE	} }
+				ARU = { all_core = { add_core = HBE	} }
+				LOT = { all_core = { add_core = HBE	} }
+				GUY = { all_core = { add_core = HBE	} }
+        
+        change_tag = HBE
+				
+				set_country_flag = holy_britannia
+			}
+			ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	claim_new_mercia = { 
+		
+		picture = "NAN_Andes"
+		
+		potential = { 
+		tag = NAN 
+		has_country_flag = War_Andes
+		NOT = { 
+		OR = { 
+		year = 1854
+		is_disarmed = yes 
+		has_country_flag = Andes_barbary
+				}
+			}
+		}
+		
+		allow = { 
+		INC = { truce_with = THIS is_disarmed = yes }
+			}
+		
+		effect = { 
+		INC = { country_event = 66912 }
+		prestige = 4
+		}
+	}
+	
+	NAN_rename_New_Mercia = {
+		picture = "gtfo"
+		potential = {
+			primary_culture = beornian
+			OR = {
+				AND = { owns = 2324 NOT = { has_global_flag = NAN_rename_antisuyu  } }
+				AND = { owns = 2389 NOT = { has_global_flag = NAN_rename_Kuchichay } }
+				AND = { owns = 2373 NOT = { has_global_flag = NAN_rename_catamarca } }
+				AND = { owns = 2400 owns = 2334 owns = 2335 NOT = { has_global_flag = NAN_rename_landsend } }
+				AND = { owns = 2328 owns = 2329 owns = 2331 owns = 2332 owns = 2333 NOT = { has_global_flag = NAN_rename_collasuyu } }
+			}
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 2324 }
+				2324 = { 
+					change_province_name = "Osricton"
+					state_scope = { change_region_name = "New Mercia"  }
+				}
+				2325 = { change_province_name = "Edward's Landing" }
+				2326 = { change_province_name = "Redding" }
+				2327 = { change_province_name = "St Harold's" }
+				2330 = { change_province_name = "New Hastings" }
+				owner = { set_global_flag = NAN_rename_antisuyu }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2389 }
+				2389 = { 
+					change_province_name = "Werrickshire "
+					state_scope = { change_region_name = "Werrickshire"  }
+				}
+				2387 = { change_province_name = "Lancelot" }
+				2388 = { change_province_name = "Rosby" }
+				owner = { set_global_flag = NAN_rename_Kuchichay }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2373 }
+				2373 = { 
+					change_province_name = "Farrington"
+					state_scope = { change_region_name = "Cumbria"  }
+				}
+				2374 = { change_province_name = "Heregyth" }
+				2375 = { change_province_name = "Ragstoc" }
+				2385 = { change_province_name = "Pecsaetan" }
+				
+				owner = { set_global_flag = NAN_rename_catamarca }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2334 }
+				2334  = { 
+					change_province_name = "Wirth's Point"
+				}
+				2335 = { change_province_name = "Hronrade" }
+				
+				owner = { set_global_flag = NAN_rename_landsend clr_global_flag = SCA_rename_landsend}
+			}
+			
+			random_owned = {
+				limit = { province_id = 2331 }
+				2331 = { 
+					change_province_name = "Wayside"
+					state_scope = { change_region_name = "Southern Sussex"  }
+				}
+				2328 = { change_province_name = "Carlsborough" }
+				2329 = { change_province_name = "Siex-Shires" }
+				2332 = { change_province_name = "Sussex Port " }
+				2333 = { change_province_name = "New Scotia" }
+				
+				owner = { set_global_flag = NAN_rename_collasuyu }
+			}
+		}
+			
+
+		ai_will_do = { factor = 1 }
+	}
+}

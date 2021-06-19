@@ -1,0 +1,677 @@
+political_decisions = {
+
+# Old formable decisions are blocked unless under exceptional circumstances
+
+	form_batavia = { 
+	
+	potential = { 
+	has_country_flag = THIS_IS_BLOCKED_CURRENTLY
+	OR = { tag = LWE tag = ORA  tag = TRN tag = NFL }
+	}
+	
+	allow = { 
+	LWE = {
+			OR = {
+				tag = LWE
+				AND = { 
+					NOT = { LWE = { exists = yes } }
+					owns = 2096
+					}
+				in_sphere = THIS
+				vassal_of = THIS
+				}
+	
+			}
+	TRN = {
+			all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+								OR = {
+								in_sphere = THIS
+								vassal_of = THIS
+							}
+						}
+					}
+	
+				}
+			}
+	NFL = {
+			all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+								OR = {
+								in_sphere = THIS
+								vassal_of = THIS
+							}
+						}
+					}
+	
+				}
+			}
+			
+	}
+	
+	effect = { 
+	any_country = {
+				limit = {
+					primary_culture = boer
+					OR = {
+						in_sphere = THIS
+						vassal_of = THIS
+					}
+				}
+				annex_to = THIS
+			}
+	ENG_2087 = { add_core = BTV }
+	change_tag = BTV 
+	prestige = 20 
+	}
+	}
+	
+	form_south_africa = {
+		potential = {
+			NOT = { part_of_sphere = yes }
+			NOT = { exists = SAF }
+			OR = { 
+			   tag = GRQ
+			   tag = ZUL
+			   tag = BSH
+			   tag = XHO
+			}
+		}
+		allow = {
+			civilized = yes
+			SAF = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			prestige = 10
+			any_country = {
+				limit = {
+					OR = {
+						tag = TRN
+  				  tag = GRQ
+  			   	tag = LWE
+  				  tag = NFL
+  				  tag = ZUL
+					}
+					in_sphere = THIS
+					NOT = {
+						tag = THIS
+					}
+				}
+				annex_to = THIS
+			}
+			any_owned = {
+				limit = {
+					is_core = THIS
+				}
+				add_core = SAF
+			}
+			BTV = { all_core = { add_core = SAF } }
+			GRQ = { all_core = { add_core = SAF } }
+			add_accepted_culture = boer
+			capital = 2087 
+			2087 = {
+                change_province_name = "Kaapstad"
+            }
+			change_tag = SAF
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	Baastards_SAF = { 
+	    picture = embrace_the_boer
+		potential = { 
+		    OR = {
+			tag = SAF 
+			tag = BTV
+			}
+			NOT = { accepted_culture = afro_south_african }
+			NOT = { has_country_flag = baastards_SAF }
+			NOT = { has_country_flag = SAF_CW }
+			owns = 892 
+			owns = 923
+		}
+		
+		allow = { 
+			OR = { 
+			citizenship_policy = full_citizenship
+			citizenship_policy = limited_citizenship
+			}
+			slavery = no_slavery 
+			OR = {
+				upper_house = {
+					ideology = socialist
+					value = 0.4
+				}
+				upper_house = {
+					ideology = liberal
+					value = 0.4
+				}
+				upper_house = {
+					ideology = anarcho_liberal
+					value = 0.4
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+			}
+		}
+		
+		effect = { 
+			prestige = -15
+			set_country_flag = baastards_SAF 
+			add_accepted_culture = afro_south_african  
+			any_pop = { 
+				limit = { is_primary_culture = boer }
+				militancy = 2 
+				scaled_militancy = {
+				factor = 3
+				ideology = reactionary
+				}
+				scaled_militancy = {
+				factor = 2
+				ideology = conservative
+				}
+				scaled_militancy = {
+				factor = 2
+				ideology = market_liberal
+				}
+			}
+		}
+	}
+	
+# End of the Aloysus Stain - "JEAN_ENDING+FgW ending+SnG"
+	
+	end_of_aloysius_stain = { 
+	picture = cape_map
+	
+	potential = { 
+	OR = { 
+	   tag = BRG 
+	   tag = PBG
+	}
+	LWE = { exists = no }
+	OR = {
+	   exists = ORA
+	   exists = NFL
+	   exists = TRN
+	}
+    has_global_flag = SAFFGWEnd
+	has_global_flag = JEAN_ENDING
+	NOT = { has_global_flag = BTV_no_south }
+	NOT = { has_global_flag = BTV_southern_raid }
+	NOT = { has_country_flag = ASGW_BRG }
+	}
+
+	allow = {   
+	   state_n_government = 1
+       owns = 2096
+	}
+	
+	effect = { 
+	prestige = 10
+	LWE = { all_core = { remove_core = BTV } all_core = { add_core = SAF } }
+	2093 = { remove_core = BTV }
+	2088 = { remove_core = BTV }
+	set_global_flag = BTV_no_south
+	}
+		
+	ai_will_do = { 
+	factor = 1 
+		}
+	}
+	
+# This decision will also start the Second Geus War
+
+	the_southern_raid_BTV = { 
+	picture = cape_map
+	
+	potential = { 
+	OR = { 
+	   tag = ORA
+	   tag = BTV
+	}
+	NOT = { owns = 2096 }
+	has_global_flag = BTV_no_south
+	NOT = { has_global_flag = BTV_southern_raid }
+	NOT = { has_country_flag = ASGW_BTV }
+	}
+
+	allow = { 
+       OR = {
+       revolution_n_counterrevolution = 1	   
+	   year = 1875
+	   }
+	}
+	
+	effect = { 
+	prestige = 10
+	clr_global_flag = BTV_no_south
+	set_global_flag = BTV_southern_raid
+	country_event = { id = 333266 days = 14 }
+	}
+		
+	ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_global_flag = DUTCH_OVER }
+			   }
+            }
+	}	
+	
+	the_northlander_menace_BRG = { 
+	picture = embrace_the_boer
+	
+	potential = { 
+	OR = { 
+	   tag = BRG
+	   tag = PBG
+	}
+	has_country_flag = BTV_SGW_trigger
+	}
+
+	allow = { 
+       OR = {
+	      AND = {
+             revolution_n_counterrevolution = 1	   
+			 OR = {
+			    government = hms_government
+			    government = democracy
+				government = parliamentary_republic
+				government = socialist_republic
+		     }
+		  }
+		  has_global_flag = DUTCH_OVER
+	   }	      
+	}
+	
+	effect = { 
+	clr_country_flag = BTV_SGW_trigger
+	any_country = {
+	   limit = {
+	     exists = yes
+	     OR = {    
+		    tag = BTV
+			AND = {
+			   tag = ORA
+			   NOT = { exists = BTV }
+			}
+	     }
+	   }
+	   country_event = { id = 3332701 days = 14 }
+	}
+	}
+		
+	ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              is_disarmed = yes
+			  }
+         }
+	}	
+
+# This decision will start the Second Geus War
+	
+	send_prospectors_SAF = { 
+	picture = embrace_the_boer
+	
+	potential = { 
+	OR = { 
+	   tag = BRG 
+	   tag = PBG
+	}
+	BTV = { exists = yes }
+	owns = 2087 
+	2092 = { owner = { primary_culture = boer } }	
+	has_country_flag = prospectors_bane_BRG
+	NOT = { has_global_flag = SAFSGW }
+	NOT = { has_global_flag = SAFSGWEnd }
+	NOT = { has_country_flag = you_idiot_SAF }
+	NOT = { has_country_flag = SAF_murder_prosp }
+	}
+
+	allow = {
+    OR = {	
+	is_greater_power = yes
+	is_secondary_power = yes
+	}
+	owns = 2087 
+	}
+	
+	effect = { 
+	prestige = 20
+	set_country_flag = you_idiot_SAF
+	}
+		
+	ai_will_do = { 
+	factor = 1 
+		}
+	}
+	
+# This decision is for SAF/BRG/PBG to murder poor GRQ.
+	
+	nuke_GRQ = { 
+	picture = cape_map
+	
+	potential = { 
+	   OR = {  
+	      tag = SAF
+	      tag = BRG 
+	      tag = PBG
+	   }
+	   GRQ = { exists = yes }
+	   owns = 2087 
+	   has_global_flag = berlin_conference
+	   NOT = { has_global_flag = 2087_Treaty }
+	   NOT = { has_global_flag = nuke_GRQ }
+	}
+
+	allow = {
+	   owns = 2087
+	   is_greater_power = yes
+	   NOT = { exists = BTV }
+	   NOT = { exists = NFL }
+	   NOT = { exists = LWE }
+	   NOT = { exists = ORA }
+	   NOT = { exists = TRN }	 
+	}
+	
+	effect = { 
+	prestige = 10
+	set_global_flag = nuke_GRQ
+	GRQ = { country_event = { id = 333256 days = 3 } }
+	}
+		
+	ai_will_do = { 
+	factor = 1 
+		}
+	}
+	
+# If the 2087 Treaty has been signed this is how they get the land back.
+	
+	reclaim_cape = { 
+	picture = cape_map
+	
+	potential = { 
+	   tag = BTV
+	   has_global_flag = 2087_Treaty
+	   NOT = { has_country_flag = reclaimed_cape }
+	}
+
+	allow = {
+	   revolution_n_counterrevolution = 1
+	   OR = {
+	      is_greater_power = yes
+	      government = fascist_dictatorship
+		  government = fascist_monarchy
+	      government = proletarian_dictatorship   
+	   }	   
+	   all_core = { owned_by = THIS }  
+	}
+	
+	effect = { 
+	prestige = 10
+	2087 = { add_core = LWE add_core = BTV  }
+	set_country_flag = reclaimed_cape
+	}
+		
+	ai_will_do = { 
+	factor = 1 
+		}
+	}
+
+# This only works during the First Geus War or the Second Geus War (and afterwards).
+	
+	
+	treaty_of_vereeniging = {
+		picture = treaty_signing
+		potential = {
+	        OR = {
+			   has_global_flag = SAFFGW
+			   has_global_flag = SAFSGW
+			   has_global_flag = SAFSGWA
+			   has_global_flag = SAFSGWEnd
+			}
+			OR = {
+				tag = NFL
+				tag = ORA
+				tag = LWE
+				tag = TRN
+				tag = BTV
+				AND = {
+					tag = SAF
+					primary_culture = boer
+				}
+			}
+			2087 = {
+				owner = {
+					NOT = { primary_culture = boer }
+					war_with = THIS
+				}
+			}
+			OR = {
+				tag = SAF
+				SAF = { exists = no }
+			}
+			NOT = { has_global_flag = 2087_Treaty }
+		}
+		
+		allow = {
+			war = yes
+			2087 = { controlled_by = THIS 
+			province_control_days = 720 }
+			
+			SAF = {
+				all_core = {
+					OR = {
+						controlled_by = THIS
+						controller = { alliance_with = THIS }
+						empty = yes
+						province_id = 2083
+						owner = {
+							NOT = { war_with = THIS }
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			random_country = {
+				limit = {
+					owns = 2087
+					war_with = THIS
+				}
+				country_event = 98247
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+    greatest_batavia = {
+	        picture = cape_map
+			potential = {
+				tag = BTV
+				NOT = { has_country_flag = claim_old_netherlands }
+				NOT = { has_country_flag = greatest_batavia }
+			}
+		
+			allow = {
+				NOT = { war = yes }
+				NOT = { has_country_modifier = geus_status_quo }
+				owns = 2087
+				is_greater_power = yes
+			}
+		
+			effect = {
+				prestige = 20
+				SAF = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				GRQ = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				MAT = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				SHO = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				ZIM = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				POR_2053 = { add_core = THIS }
+				POR_2060 = { add_core = THIS }
+					
+				set_country_flag = greatest_batavia
+			}
+			
+			ai_will_do = {
+				factor = 1
+	            modifier = {
+	               factor = 0
+	               has_country_flag = aloysuis
+				}
+	            modifier = {
+	               factor = 0
+	               has_country_flag = former_LWE
+				}
+			}  
+	}
+	
+    claim_old_netherlands = {
+	        picture = holland
+			potential = {
+				tag = BTV
+				NOT = { has_country_flag = claim_old_netherlands }
+				NOT = { has_country_flag = greatest_batavia }
+				NOT = { has_global_flag = final_geus_revolt }
+			}
+		
+			allow = {
+				DIE = { exists = no }
+				NOT = { war = yes }
+				NOT = { has_country_modifier = geus_status_quo }
+				owns = 2087
+				is_greater_power = yes
+			}
+		
+			effect = {
+				prestige = 5
+				
+				relation = { who = BRG value = -200 }
+				relation = { who = PBG value = -200 }
+				
+				NET = {
+					all_core = {
+						add_core = THIS
+					}
+				}
+				set_country_flag = claim_old_netherlands
+			}
+			ai_will_do = {
+				factor = 1
+	            modifier = {
+	               factor = 0
+	               NOT = { OR = { has_country_flag = aloysuis has_country_flag = former_LWE } }
+				}
+			} 
+	}
+	
+	return_home_BTV = {
+	        picture = holland
+			potential = {
+				tag = BTV
+			}
+		
+			allow = {
+				NOT = { DIE = { exists = yes } }
+				NOT = { war = yes }
+				NET = {
+					all_core = {
+						owned_by = THIS
+					}
+				}
+				BTV = {
+					all_core = {
+						owned_by = THIS
+					}
+				}
+			}
+		
+			effect = {
+				prestige = 50
+		        NET_375 = { add_core = DIE }
+		        NET_382 = { add_core = DIE }
+		        NET_380 = { add_core = DIE }		
+		        NET_385 = { add_core = DIE }	
+				change_tag = DIE
+				set_country_flag = Boer_Dutch
+				set_global_flag = DIE_appeared
+				add_accepted_culture = boer
+				add_accepted_culture = frisian
+				primary_culture = dutch
+				capital = 375
+			}
+			ai_will_do = {
+				factor = 1
+		}
+	}
+}

@@ -1,0 +1,994 @@
+# This file is yet to be filled out but the general concept is for a scottish revolt that resolves the current issues with scotland.
+# 1. It can ONLY happen if the Glorious Revolution is successful and not if the Total Revolution or just general ENL independence occurs.
+# 2. It will only likely result in the annexation of SCO as it can only happen under ENL rather then under DUA or any other circumstance.
+#
+# Event 1: The Scottish Aristocratic Society
+# Triggered by: A. 1870
+#               B. Dictatorship Scandinavia
+#               C. Existent England
+# This event explains that various Scottish aristocrats are preparing a council meeting regarding what they should do regarding the Scandinavian Menace.
+# 
+# Event 2: The Scottish Government agrees.
+#
+# This event explains that the Scottish government is willing to hear out these Aristocrats on the basis of culture. Ideology is made irrelevant in such a council.
+#
+# Event 3: The Council of Scots
+#
+# This event is not a major event but is the trigger event for the event which triggers the various variable events that are needed to resolve the scottish situation. 
+#
+# Variable Events: 
+#
+# Starting Variable is at 5
+#
+# Scandinavia is not a great power -1
+# Scandinavia is a democracy -1
+# Scandinavia does not own Livonia -1
+# Scandinavia does not own Pommerania -1
+# Scandinavia is a dictatorship of any type -2
+# England exists -2
+# If Walter Scott is helped by ENL: -4 (100 Percent Chance of a Civil War)
+# Separate Events trigger if DUA monarchy exists and has one of the "integration" flags. If English Integration -4 from Scandinavia (DUA will get a decision to Puppet SCO for free after the civil war if English), If French Integration -1 from Scandinavia and if Anglois = -2.
+# 
+# 4-5 = Stable, Council Fails
+# 2-3 = Home Rule, if denied = CIVIL WAR
+# 0-1 = CIVIL WAR
+# So, a relatively stable monarchist Scandinavia should avoid any issues with the sheer exception of a WScott England or English Integration DUA which will likely trigger the worst case situation almost always.
+# Also, this revolt is always HMS Government but if SCO wins the Civil War and there is a republican ENL there will be a coup to switch it to republic.
+
+country_event = { 
+
+	id = 48265
+	title = "HAGGIS01.T"
+	desc = "HAGGIS01.D"
+	picture = "banquet"	
+
+	trigger = {
+	tag = SCA
+    NOT = { has_global_flag = BAGPIPESAREOVER }
+    NOT = { has_global_flag = LOUDBAGPIPES }
+    NOT = { has_country_flag = haggislads }
+    NOT = { has_country_flag = haggisladscouncil }
+	owns = 269
+	OR = {
+	      year = 1870
+	      exists = ENL
+	      government = fascist_dictatorship
+	      government = fascist_monarchy
+          government = proletarian_dictatorship
+          government = presidential_dictatorship
+	      government = bourgeois_dictatorship
+	      has_global_flag = english_int
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	months = 48
+    modifier = {
+			factor = 0.01
+			has_global_flag = ENL_help_SCO 
+		}
+	}
+
+	option = { 
+	name = "HAGGIS01.A"
+	prestige = -1
+	any_pop = { limit = { culture = scottish } militancy = 1 consciousness = 3 }
+	set_country_flag = haggislads
+	}
+}
+
+country_event = { 
+
+	id = 48266
+	title = "HAGGIS02.T"
+	desc = "HAGGIS02.D"
+	picture = "speech_assembly"	
+
+	trigger = {
+	tag = SCA
+    has_country_flag = haggislads
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+
+	option = { 
+	name = "HAGGIS02.A"
+	clr_country_flag = haggislads
+	set_country_flag = haggisladscouncil
+	prestige = -2
+	any_pop = { limit = { culture = scottish } militancy = 2 consciousness = 4 }
+	}
+}
+
+### The Council itself ####
+
+country_event = { 
+
+	id = 48268
+	title = "HAGGIS03.T"
+	desc = "HAGGIS03.D"
+	picture = "spanish_glorious_revolution"	
+	
+    major = yes
+
+	trigger = {
+	tag = SCA
+    has_country_flag = haggisladscouncil
+	}
+	
+	mean_time_to_happen = { 
+	months = 6
+	}
+
+	option = { 
+	name = "HAGGIS03.A"
+	RAP = {	
+	set_variable = {
+		which = SCO_SCA_score
+		value = 5
+	    }
+	}
+    clr_country_flag = haggisladscouncil
+	set_global_flag = LOUDBAGPIPES
+	}
+}
+
+#### THE BAGPIPES ARE LOUD. THE VARIOUS VARIANTS OF BAGPIPES ####
+
+### LADDIE, YOU ARE NOT A GREATER POWER ####
+
+country_event = { 
+
+	id = 48269
+	title = "HAGGIS04.T"
+	desc = "HAGGIS04.D"
+	picture = "rhapsody"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_country_flag = haggis1 }
+	is_greater_power = no
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS04.A"
+    set_country_flag = haggis1
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -1
+	       }
+	   }
+   }
+}
+
+### YOU THREW AWAY OUR DYNASTY, YOU RIGHT MORONS ####
+
+country_event = { 
+
+	id = 48270
+	title = "HAGGIS05.T"
+	desc = "HAGGIS05.D"
+	picture = "norwegian_storting"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_country_flag = haggis2 }
+	NOT = {
+	   OR = {
+	      government = absolute_monarchy         
+	      government = prussian_constitutionalism
+	      government = hms_government
+		  government = fascist_monarchy
+       }
+    }	   
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS05.A"
+	set_country_flag = haggis2
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -1
+	       }
+	   }
+   }
+}
+
+### DON'T LOSE YOUR CONQUESTS, OR YOU LOSE YOUR RELEVENCE ####
+
+country_event = { 
+
+	id = 48271
+	title = "HAGGIS06.T"
+	desc = "HAGGIS06.D"
+	picture = "conscription_marching"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_country_flag = haggis3 }
+	NOT = { any_owned_province = { is_core = POM } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS06.A"
+	set_country_flag = haggis3
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -1
+	       }
+	   }
+   }
+}
+
+country_event = { 
+
+	id = 48272
+	title = "HAGGIS07.T"
+	desc = "HAGGIS07.D"
+	picture = "conscription_marching"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_country_flag = haggis4 }
+    NOT = { any_owned_province = { is_core = LAT } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS07.A"
+	set_country_flag = haggis4
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -1
+	       }
+	   }
+   }
+}
+
+### LADDIE. SUPREME LEADER, CHAIRMAN OR PRESIDENT-FOR-LIFE. IT REALLY DOES NOT MATTER. YOU DESERVE NOTHING. ####
+
+country_event = { 
+
+	id = 48273
+	title = "HAGGIS08.T"
+	desc = "HAGGIS08.D"
+	picture = "autocracy"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_country_flag = haggis5 }
+	OR = {
+	government = fascist_dictatorship
+    government = proletarian_dictatorship
+    government = presidential_dictatorship
+	government = bourgeois_dictatorship
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS08.A"
+	set_country_flag = haggis5
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -2
+	       }
+	   }
+   }
+}
+
+### WE WOULD PREFER TO DEAL WITH THE ENGLISH RATHER THEN THE DANES ####
+
+country_event = { 
+
+	id = 48274
+	title = "HAGGIS09.T"
+	desc = "HAGGIS09.D"
+	picture = "English_resistance"	
+
+	trigger = {
+	tag = SCA
+	NOT = { has_country_flag = haggis6 }
+    has_global_flag = LOUDBAGPIPES
+	ENL = { exists = yes }
+    NOT = { ENL = { is_vassal = yes } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS09.A"
+	set_country_flag = haggis6
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -2
+	       }
+	   }
+   }
+}
+
+### THIS COUNCIL IS A FOREGONE CONCLUSION. WALTER SCOTT IS HERE AND HE HAS SUPPLIES ####
+
+country_event = { 
+
+	id = 48275
+	title = "HAGGIS10.T"
+	desc = "HAGGIS10.D"
+	picture = "barricade_red"	
+
+	trigger = {
+	tag = SCA
+	NOT = { has_country_flag = haggis7 }
+    has_global_flag = LOUDBAGPIPES
+    has_global_flag = ENL_help_SCO 
+	NOT = { ENL = { is_vassal = yes } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS10.A"
+	set_country_flag = haggis7
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -4
+	       }
+	   }
+   }
+}
+
+### THE DUAL MONARCHY ARE LADS ####
+### -4 with English Integration, -2 with Anglois Success, French Integration or Failure does FUCK ALL ###
+
+country_event = { 
+
+	id = 48276
+	title = "HAGGIS11.T"
+	desc = "HAGGIS11.D"
+	picture = "deliberation"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	NOT = { has_global_flag = DUA_SCO_Council }
+	NOT = { has_country_flag = haggis8 }
+	DUA = {
+	exists = yes
+	OR = {
+	has_global_flag = english_int
+	has_country_flag = Anglois_accepted
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS11.A"
+	set_global_flag = DUA_SCO_Council
+   }
+}
+
+country_event = { 
+
+	id = 48277
+	title = "HAGGIS12.T"
+	desc = "HAGGIS12.D"
+	picture = "deliberation"	
+
+	trigger = {
+	tag = DUA
+    has_global_flag = LOUDBAGPIPES
+	has_global_flag = DUA_SCO_Council
+	DUA = {
+	exists = yes
+	has_country_flag = Anglois_accepted
+	      }
+    }
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS12.A"
+	prestige = 10
+	relation = { who = SCA value = -400 }
+	SCA = { set_country_flag = haggis8 }
+	set_country_flag = Helping_HAGGIS
+    clr_global_flag = DUA_SCO_Council
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -2
+	       }
+	   }
+	 ai_chance = { 
+		factor = 50 
+	  }
+   }
+	option = { 
+	name = "HAGGIS12.B"
+	prestige = 5
+	relation = { who = SCA value = 50 }
+	SCA = { set_country_flag = haggis8 }
+    clr_global_flag = DUA_SCO_Council
+	ai_chance = { 
+		factor = 50 
+	  }
+   }
+}
+
+country_event = { 
+
+	id = 48278
+	title = "HAGGIS13.T"
+	desc = "HAGGIS13.D"
+	picture = "deliberation"	
+
+	trigger = {
+	tag = DUA
+    has_global_flag = LOUDBAGPIPES
+	has_global_flag = DUA_SCO_Council
+	DUA = {
+	exists = yes
+	has_global_flag = english_int
+	      }
+    }
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = { 
+	name = "HAGGIS13.A"
+	prestige = 10
+	relation = { who = SCA value = -400 }
+	SCA = { set_country_flag = haggis8 }
+	set_country_flag = Helping_HAGGIS
+    clr_global_flag = DUA_SCO_Council
+	RAP = {	
+	change_variable = {
+		which = SCO_SCA_score
+		value = -4
+	       }
+	   }
+	ai_chance = { 
+		factor = 90 
+		}
+    }
+	option = { 
+	name = "HAGGIS13.B"
+	prestige = 5
+	relation = { who = SCA value = 50 }
+	SCA = { set_country_flag = haggis8 }
+    clr_global_flag = DUA_SCO_Council
+    ai_chance = { 
+		factor = 10 
+		}
+   }
+}
+
+#### THE POSSIBLE SOLUTIONS ####
+
+#### The Council Fails - Scotland is fully integrated and SCA is able to claim Ireland and Northumberland (if it exists) ####
+
+country_event = { 
+
+	id = 48279
+	title = "HAGGIS14.T"
+	desc = "HAGGIS14.D"
+	picture = "norwegian_storting"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	RAP = {	
+	check_variable = {
+		which = SCO_SCA_score
+		value = 3
+	       }
+	   }
+    }
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+
+	option = { 
+	name = "HAGGIS14.A"
+	prestige = 25
+	any_pop = { limit = { culture = scottish } militancy = -5 consciousness = -5 }
+	clr_global_flag = LOUDBAGPIPES
+	clr_country_flag = haggis1
+    clr_country_flag = haggis2
+	clr_country_flag = haggis3
+	clr_country_flag = haggis4	
+	clr_country_flag = haggis5
+    clr_country_flag = haggis6
+	clr_country_flag = haggis7
+	clr_country_flag = haggis8	
+	set_country_flag = SCA_danelaw
+	set_global_flag = BAGPIPESAREOVER
+    }
+}
+
+#### The Regional Government agrees with the Council on Autonomy. Autonomy demand is sent to SCA. Crisis triggers if it fails. ####
+
+country_event = { 
+
+	id = 48280
+	title = "HAGGIS15.T"
+	desc = "HAGGIS15.D"
+	picture = "senate_debate"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES
+	RAP = {	
+	check_variable = {
+		which = SCO_SCA_score
+		value = 1
+	       }
+	   }
+	NOT = {
+	RAP = {	
+	check_variable = {
+		which = SCO_SCA_score
+		value = 3
+	          }
+	      }
+	   }
+    }
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+
+	option = { 
+	name = "HAGGIS15.A"
+	prestige = -10
+	any_pop = { limit = { culture = scottish } militancy = -10 consciousness = -10 }
+	any_owned = { 
+	    limit = { 
+	    is_core = SCO
+		   }
+	    secede_province = SCO
+	}
+	set_country_flag = SCO_decisions_held
+	SCO = {
+	capital = 269
+	government = hms_government
+    ruling_party_ideology = conservative
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	set_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+    clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+    clr_country_flag = democracy_gov
+	election = yes
+	}
+	country_event = { id = 48281 days = 3 }
+	clr_global_flag = LOUDBAGPIPES
+	clr_country_flag = haggis1
+    clr_country_flag = haggis2
+	clr_country_flag = haggis3
+	clr_country_flag = haggis4	
+	clr_country_flag = haggis5
+    clr_country_flag = haggis6
+	clr_country_flag = haggis7
+	clr_country_flag = haggis8
+	set_global_flag = BAGPIPESAREOVER
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+				OR = {
+				government = hms_government
+				government = prussian_constitutionalism
+				government = democracy
+				       }
+			       }
+			   }
+		   }
+	}
+
+	option = { 
+	name = "HAGGIS15.B"
+	prestige = 5
+	any_pop = { limit = { culture = scottish } militancy = 5 consciousness = 5 }
+	set_global_flag = BLOCK_ENG
+	any_country = { 
+	limit = { 
+	OR = {
+	has_country_flag = Helping_HAGGIS
+    AND = {
+    tag = ENL
+    exists = yes
+	is_vassal = no
+          }
+       } 
+    }	   
+	country_event = { id = 48283 days = 1 }
+    }
+	any_owned = { 
+	limit = { 
+	is_core = SCO
+	   }
+	secede_province = SCO
+	}
+	relation = { who = SCO value = -400 }
+	diplomatic_influence = { who = SCO value = -200 }
+	set_country_flag = SCO_decisions_held
+	SCO = {
+	capital = 269
+	government = hms_government
+    ruling_party_ideology = conservative
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	set_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+    clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+    clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+    clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+	clr_global_flag = LOUDBAGPIPES
+	clr_country_flag = haggis1
+    clr_country_flag = haggis2
+	clr_country_flag = haggis3
+	clr_country_flag = haggis4	
+	clr_country_flag = haggis5
+    clr_country_flag = haggis6
+	clr_country_flag = haggis7
+	clr_country_flag = haggis8
+	set_global_flag = BAGPIPESAREOVER
+    set_global_flag = SCOTTISHWARBEGINS
+    ai_chance = {
+			factor = 50
+		 }
+    }
+}
+
+country_event = { 
+
+	id = 48281
+	title = "HAGGIS16.T"
+	desc = "HAGGIS16.D"
+	picture = "spanish_glorious_revolution"	
+	
+	is_triggered_only = yes
+
+	option = { 
+	name = "HAGGIS16.A"
+	prestige = 1
+	any_owned = { 
+	    limit = { 
+	    is_core = SCO
+		   }
+	    secede_province = SCO
+	}
+	create_vassal = SCO
+	any_owned = { 
+	    limit = { 
+	    is_core = SCO
+		   }
+	    secede_province = SCO
+	}
+	relation = { who = SCO value = 400 }
+	diplomatic_influence = { who = SCO value = 200 }
+	clr_country_flag = SCO_decisions_held
+    }
+}
+
+#### The Regional Government agrees with the Council on Independence. Crisis triggers. ####
+
+country_event = { 
+
+	id = 48282
+	title = "HAGGIS17.T"
+	desc = "HAGGIS17.D"
+	picture = "big_parade"	
+
+	trigger = {
+	tag = SCA
+    has_global_flag = LOUDBAGPIPES		  
+	NOT = {
+	RAP = {	
+	check_variable = {
+		which = SCO_SCA_score
+		value = 1
+	          }
+	      }
+	   }
+    }
+	
+	mean_time_to_happen = { 
+	months = 2
+	}
+
+	option = { 
+	name = "HAGGIS17.A"
+	prestige = -20
+	any_pop = { limit = { culture = scottish } militancy = 8 consciousness = 8 }
+	set_global_flag = BLOCK_ENG
+	any_country = { 
+	limit = { 
+	OR = {
+	has_country_flag = Helping_HAGGIS
+    AND = {
+    tag = ENL
+    exists = yes
+	is_vassal = no
+          }
+       } 
+    }	   
+	country_event = { id = 48283 days = 1 }
+    }
+	any_owned = { 
+	limit = { 
+	is_core = SCO
+	   }
+	secede_province = SCO
+	}
+	relation = { who = SCO value = -400 }
+	diplomatic_influence = { who = SCO value = -200 }
+	set_country_flag = SCO_decisions_held
+	SCO = {
+	capital = 269
+	government = hms_government
+    ruling_party_ideology = conservative
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	set_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+    clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+    clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+    clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+	clr_global_flag = LOUDBAGPIPES
+	clr_country_flag = haggis1
+    clr_country_flag = haggis2
+	clr_country_flag = haggis3
+	clr_country_flag = haggis4	
+	clr_country_flag = haggis5
+    clr_country_flag = haggis6
+	clr_country_flag = haggis7
+	clr_country_flag = haggis8
+	set_global_flag = BAGPIPESAREOVER
+    set_global_flag = SCOTTISHWARBEGINS
+    }
+}
+
+
+### The Crisis in Scotland - Creates Alliances between supporting powers. ###
+
+country_event = { 
+
+	id = 48283
+	title = "HAGGIS18.T"
+	desc = "HAGGIS18.D"
+	picture = "Outsidepowers_BOH"	
+
+	is_triggered_only = yes
+
+	option = { 
+	name = "HAGGIS18.A"
+	create_alliance = SCO 
+	clr_country_flag = Helping_HAGGIS
+	relation = { who = SCO value = 400 }
+	diplomatic_influence = { who = SCO value = 200 }
+	ai_chance = { 
+	factor = 100 
+		}
+	}
+	
+	option = { 
+	name = "HAGGIS18.B"
+	clr_country_flag = Helping_HAGGIS
+	ai_chance = { 
+	factor = 0
+		}
+	}
+}
+
+### If all else fails: ###
+### The Scottish Rebellion ###
+
+country_event = { 
+
+	id = 48284
+	title = "HAGGIS19.T"
+	desc = "HAGGIS19.D"
+	picture = "spanish_glorious_revolution"	
+	
+	major = yes
+
+	trigger = {
+	tag = SCA
+    has_global_flag = SCOTTISHWARBEGINS
+    }
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "HAGGIS19.A"
+    clr_country_flag = SCO_decisions_held	
+	remove_accepted_culture = scottish
+    clr_global_flag = SCOTTISHWARBEGINS
+	set_country_flag = scottish_failure
+	SCO = { 
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			 }
+    }
+	war = {
+			target = SCO
+			attacker_goal = {
+				casus_belli = annex_core_country
+	        }
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	}
+    clr_global_flag = BLOCK_ENG
+    }
+}
+
+### Core Removal is dealt with via Decision in SCANewStuff (moved from England.txt) ###
+
+### The Angleterre Declaration ###
+
+country_event = { 
+
+	id = 48285
+	title = "ENLFRA1.T"
+	desc = "ENLFRA1.D"
+	picture = "spanish_glorious_revolution"	
+
+
+	trigger = {
+	OR = {
+	tag = ENL
+	tag = ENG
+	}
+    NOT = { has_global_flag = AEN_triggered }
+	all_core = { owned_by = THIS }
+    }
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+
+	option = { 
+	name = "ENLFRA1.A"
+	prestige = -1
+	any_pop = {
+			limit = {
+				culture = anglois
+				location = {
+					is_core = AEN
+				}
+			}
+			militancy = 2
+			consciousness = 4
+	}
+    set_global_flag = AEN_triggered
+	ENG_296 = { add_core = AEN }
+	ENG_300 = { add_core = AEN }
+	ENG_273 = { add_core = AEN }
+	ENG_291 = { add_core = AEN }
+	286 = { add_core = AEN }
+	286 = { add_core = WLS }
+	287 = { add_core = AEN }
+	289 = { add_core = AEN }	
+    }
+}

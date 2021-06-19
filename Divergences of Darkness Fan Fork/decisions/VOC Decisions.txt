@@ -1,0 +1,730 @@
+political_decisions = {
+
+#### VOC RELATED DECISIONS ###
+	
+	voc_annex_java = {
+		picture = java_map
+
+		potential = {
+			OR = {
+				tag = BRG
+				tag = PBG
+			}
+			OR = {
+				YOG = { vassal_of = THIS exists = yes civilized = no }
+				BTM = { vassal_of = THIS exists = yes civilized = no }
+				PLM = { vassal_of = THIS exists = yes civilized = no }
+			}
+			OR = {
+				has_global_flag = BRG_VOC
+				has_global_flag = BCW_AVOIDED
+			}
+		}	
+
+		allow = {
+			is_greater_power = yes
+			NOT = { war = yes }
+			owns = 1413
+			nationalism_n_imperialism  = 1
+		}
+		
+		effect = {
+			badboy = 1
+		    any_country = {
+		    limit = {
+		      OR = {
+			  tag = YOG
+			  tag = BTM
+			  tag = PLM
+			  }
+		      has_country_flag = VOC_vassal
+			  exists = yes
+			}
+			country_event = { id = 333276 days = 1 }
+		    }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	voc_short_declaration = {
+		picture = DIM_korte_verklaring
+
+		potential = {
+			OR = {
+				tag = BRG
+				tag = PBG
+			}
+			OR = { 
+				TNJ = { vassal_of = THIS exists = yes civilized = no }
+				BLG = { vassal_of = THIS exists = yes civilized = no }
+				GOW = { vassal_of = THIS exists = yes civilized = no }
+				BUT = { vassal_of = THIS exists = yes civilized = no }
+			}
+			OR = {
+				has_global_flag = BRG_VOC
+				has_global_flag = BCW_AVOIDED
+			}
+		}	
+
+		allow = {
+			is_greater_power = yes
+			NOT = { war = yes }
+			owns = 1413
+			nationalism_n_imperialism  = 1
+			OR = {
+			   investment_banks = 1
+			   military_logistics = 1
+			}
+		}
+		
+		effect = {
+		   badboy = 1
+		   any_country = {
+		   limit = {
+		      OR = {
+			  tag = TNJ
+			  tag = BLG
+			  tag = GOW
+			  tag = BUT
+			  }
+		      has_country_flag = VOC_vassal
+			  exists = yes
+			}
+			country_event = { id = 333276 days = 1 }
+		    }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	voc_claims = {
+		picture = map_east_indies
+
+		potential = {
+			tag = VOC
+			has_global_flag = VOC_FREE
+			NOT = { has_country_flag = voc_claims }
+		}	
+
+		allow = {
+			NOT = { war = yes }
+			VOC = { all_core = { owned_by = THIS } }
+			nationalism_n_imperialism  = 1
+		}
+		
+		effect = {
+			NUS = { all_core = { add_core = THIS } }
+			set_country_flag = voc_claims
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	voc_claims_2 = {
+		picture = map_east_indies
+
+		potential = {
+			tag = VOC
+			has_global_flag = VOC_FREE
+			has_country_flag = voc_claims
+		}	
+
+		allow = {
+			NOT = { war = yes }
+			nationalism_n_imperialism  = 1
+			OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			   NUS = { all_core = { owned_by = THIS } }
+            }			
+		}
+		
+		effect = {
+		    clr_country_flag = voc_claims
+			prestige = 10
+			country_event = 333293
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+#### COLONIAL TAG CREATION EVENTS ###
+	
+	organize_indonesia = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			NOT = { has_country_flag = post_colonial_era }
+			NOT = {
+				exists = IND
+				tag = VOC
+				has_global_flag = indonesia_organized
+				has_global_flag = VOC_indonesia
+				is_culture_group = southeast_asian
+			}
+			state_n_government = 1
+			owns = 1413
+		}
+		
+		allow = {
+			war = no
+			nationalism_n_imperialism = 1
+			YOG = { all_core = { owned_by = THIS } }
+			CRB = { all_core = { owned_by = THIS } }
+			owns = 1413
+		}
+		
+		effect = {
+			set_global_flag = indonesia_organized
+			set_country_flag = indonesia_master
+			prestige = 5
+			any_owned = {
+				limit = {
+					OR = {
+						region = NET_1414 
+						region = NET_1421 
+						region = NET_1419
+					    region = PAG_1408
+					    region = NET_1398
+					}
+				}
+				add_core = IND
+				remove_core = MLY
+				remove_core = CRB
+				remove_core = YOG
+				remove_core = BTM
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+			
+			IND = {
+				set_country_flag = post_colonial_country
+				#set_country_flag = civilize_after_release
+				primary_culture = THIS
+				add_accepted_culture = javan
+				tech_school = developing_tech_school
+			}
+		}
+	}
+	
+	reorganize_indonesia = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			has_global_flag = indonesia_organized
+			NOT = {
+				tag = VOC
+				is_culture_group = southeast_asian			
+				has_global_flag = VOC_indonesia
+				has_country_flag = indonesia_master
+				has_country_flag = post_colonial_era
+			}	
+			owns = 1413
+			IND = {
+				exists = no
+				NOT = { is_culture_group = THIS }
+			}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			owns = 1413
+		}
+		
+		effect = {
+			prestige = 5
+			any_country = { limit = { has_country_flag = indonesia_master } clr_country_flag = indonesia_master }
+			set_country_flag = indonesia_master
+			IND = {
+				primary_culture = THIS
+				add_accepted_culture = javan
+			}
+			any_pop = {
+				limit = {
+					location = { is_core = IND }
+				}
+				militancy = -3
+			}
+		}	
+	}
+	
+	organize_borneo = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			NOT = {
+				exists = BOR
+				tag = VOC
+				owns = 1413
+				has_global_flag = born_organized
+				has_country_flag = post_colonial_era		
+				has_country_flag = born_master
+				has_country_flag = indonesia_master
+				has_country_flag = malay_master
+				is_culture_group = southeast_asian
+			}
+			state_n_government = 1
+			any_owned_province = {
+			   is_core = PON
+			   is_core = TNJ
+			   is_core = BRI
+			   is_core = SUL
+			   is_core = BNJ
+			   is_core = BLG
+            }
+		}
+		
+		allow = {
+			war = no
+			nationalism_n_imperialism = 1
+			owns = 1393
+			NOT = { owns = 1388 }
+		}
+		
+		effect = {
+			set_global_flag = born_organized
+			set_country_flag = born_master
+			prestige = 5
+			BRU_1394 = { add_core = BOR }
+            TNJ_1427 = { add_core = BOR }
+            BLG_1429 = { add_core = BOR }
+            SUL_1459 = { add_core = BOR }
+			any_owned = {
+				limit = {
+					OR = {
+                       region = BRU_1394
+                       region = TNJ_1427
+                       region = BLG_1429
+                       region = SUL_1459
+					}
+				}
+				add_core = BOR
+				remove_core = IND
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+			
+			BOR = {
+				set_country_flag = post_colonial_country
+				#set_country_flag = civilize_after_release
+				primary_culture = THIS
+				add_accepted_culture = malay
+				tech_school = developing_tech_school
+			}
+		}
+	}
+	
+	reorganize_borneo = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			has_global_flag = born_organized
+			NOT = {
+				tag = VOC
+				owns = 1413
+				has_country_flag = post_colonial_era
+				has_country_flag = born_master
+				has_country_flag = indonesia_master
+				has_country_flag = malay_master
+				is_culture_group = southeast_asian
+			}	
+			owns = 1393
+			BOR = {
+				exists = no
+				NOT = { is_culture_group = THIS }
+			}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			owns = 1393
+		}
+		
+		effect = {
+			prestige = 5
+			any_country = { limit = { has_country_flag = born_master } clr_country_flag = born_master }
+			set_country_flag = born_master
+			BOR = {
+				primary_culture = THIS
+				add_accepted_culture = malay
+			}
+			any_pop = {
+				limit = {
+					location = { is_core = BOR }
+				}
+				militancy = -3
+			}
+		}	
+	}
+	
+	organize_malaysia = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			NOT = {
+			    exists = MLY
+				tag = VOC
+				owns = 1413
+				has_global_flag = malay_organized
+				has_country_flag = post_colonial_era				
+				has_country_flag = indonesia_master
+				has_country_flag = malay_master
+				is_culture_group = southeast_asian
+			}
+			state_n_government = 1
+			any_owned_province = {
+			   is_core = JOH
+			   is_core = PAT
+			   is_core = LYM
+            }
+		}
+		
+		allow = {
+			war = no
+			nationalism_n_imperialism = 1
+			owns = 1386
+			owns = 1388
+		}
+		
+		effect = {
+			set_global_flag = malay_organized
+			set_country_flag = malay_master
+			prestige = 5
+			LYM_2576 = { add_core = MLY }
+            JOH_1387 = { add_core = MLY }
+            ENG_1392 = { add_core = MLY }
+			any_owned = {
+				limit = {
+					OR = {
+                       region = LYM_2576
+                       region = JOH_1387
+                       region = ENG_1392
+					   region = PAG_1408
+					   region = NET_1398
+					}
+				}
+				add_core = MLY
+				remove_core = IND
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+			
+			MLY = {
+				set_country_flag = post_colonial_country
+				#set_country_flag = civilize_after_release
+				primary_culture = THIS
+				add_accepted_culture = malay
+				tech_school = developing_tech_school
+			}
+		}
+	}
+	
+	reorganize_malaysia = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			has_global_flag = malay_organized
+			NOT = {
+				tag = VOC
+				owns = 1413
+				has_country_flag = post_colonial_era
+				has_country_flag = indonesia_master
+				has_country_flag = malay_master
+				is_culture_group = southeast_asian
+			}	
+			any_owned_province = {
+			   is_core = JOH
+			   is_core = PAT
+            }
+			MLY = {
+				exists = no
+				NOT = { is_culture_group = THIS }
+			}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			owns = 1386
+			owns = 1388
+		}
+		
+		effect = {
+			prestige = 5
+			any_country = { limit = { has_country_flag = malay_master } clr_country_flag = malay_master }
+			set_country_flag = malay_master
+			MLY = {
+				primary_culture = THIS
+				add_accepted_culture = malay
+			}
+			any_pop = {
+				limit = {
+					location = { is_core = MLY }
+				}
+				militancy = -3
+			}
+		}	
+	}
+	
+	# The Spice must flow
+	
+	organize_the_spice = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			NOT = {
+			    exists = SPI
+				tag = VOC
+				owns = 1413
+				has_global_flag = spice_organized
+				has_country_flag = post_colonial_era
+				has_country_flag = spice_master
+				has_country_flag = indonesia_master
+				is_culture_group = southeast_asian
+			}
+			state_n_government = 1
+			any_owned_province = {
+			   is_core = BIM
+			   is_core = GOW
+			   is_core = BUT
+			   is_core = TER
+			   is_core = TMR
+			   is_core = PAL
+            }
+		}
+		
+		allow = {
+			war = no
+			nationalism_n_imperialism = 1
+			owns = 1430
+		}
+		
+		effect = {
+			set_global_flag = spice_organized
+			set_country_flag = spice_master
+			prestige = 5
+            NET_1430 = { add_core = SPI }
+            NET_1433 = { add_core = SPI }
+			any_owned = {
+				limit = {
+					OR = {
+                       region = BAL_1438
+                       region = NET_1430
+                       region = NET_1433
+					   region = NET_1449
+		               region = BIM_1439
+					   region = BAL_1446
+					}
+				}
+				add_core = SPI
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}			
+			SPI = {
+				set_country_flag = post_colonial_country
+				#set_country_flag = civilize_after_release
+				primary_culture = THIS
+				add_accepted_culture = moluccan
+				tech_school = developing_tech_school
+			}
+		}
+	}
+	
+	reorganize_the_spice = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			has_global_flag = spice_organized
+			NOT = {
+				tag = VOC
+				owns = 1413
+				has_country_flag = post_colonial_era
+				has_country_flag = indonesia_master
+				has_country_flag = spice_master
+				is_culture_group = southeast_asian
+			}	
+			any_owned_province = {
+			   is_core = BIM
+			   is_core = GOW
+			   is_core = BUT
+			   is_core = TER
+			   is_core = TMR
+			   is_core = PAL
+            }
+			SPI = {
+				exists = no
+				NOT = { is_culture_group = THIS }
+			}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			owns = 1430
+		}
+		
+		effect = {
+			prestige = 5
+			any_country = { limit = { has_country_flag = spice_master } clr_country_flag = spice_master }
+			set_country_flag = spice_master
+			SPI = {
+				primary_culture = THIS
+				add_accepted_culture = moluccan
+			}
+			any_pop = {
+				limit = {
+					location = { is_core = SPI }
+				}
+				militancy = -3
+			}
+		}	
+	}
+	
+	# You can still create this even if you own Indonesia. However, the AI won't.
+
+
+	organize_christiania = {
+		picture = map_east_indies
+		potential = {
+			civilized = yes
+			NOT = {
+			    exists = SPI
+				tag = VOC
+				has_global_flag = christiania_organized
+				has_country_flag = post_colonial_era
+				has_country_flag = christiania_master
+				is_culture_group = southeast_asian
+			}
+			state_n_government = 1
+			any_owned_province = {
+			   is_core = TON
+			   is_core = MNL
+			   is_core = SUL
+			   is_core = MAG
+            }
+		}
+		
+		allow = {
+			war = no
+			nationalism_n_imperialism = 1
+			owns = 1460
+		}
+		
+		effect = {
+			set_global_flag = christiania_organized
+			set_country_flag = christiania_master
+			prestige = 5
+			any_owned = {
+				limit = {
+					OR = {
+						region = SPA_1463 
+						region = SPA_1460
+						region = SPA_1455 
+					}
+				}
+				add_core = CHR
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = catholic } } } CHR = { religion = catholic } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = protestant } } } CHR = { religion = protestant } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = orthodox } } } CHR = { religion = orthodox } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = sunni } } } CHR = { religion = sunni } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = shiite } } } CHR = { religion = shiite } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = mahayana } } } CHR = { religion = mahayana } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = shinto } } } CHR = { religion = shinto } }
+			CHR = {
+				set_country_flag = post_colonial_country
+				#set_country_flag = civilize_after_release
+				primary_culture = THIS
+				add_accepted_culture = filipino 
+				tech_school = developing_tech_school
+			}
+		}
+		
+        ai_will_do = {
+            factor = 1
+			modifier = {
+			factor = 0
+			owns = 1413
+			}
+        }
+	}
+	
+	reorganize_christiania = {
+		picture = map_east_indies
+		potential = {
+			has_global_flag = christiania_organized
+			civilized = yes
+			NOT = {
+				tag = VOC
+				has_country_flag = post_colonial_era
+				has_country_flag = christiania_master
+				is_culture_group = southeast_asian
+			}				
+			any_owned_province = {
+			   is_core = TON
+			   is_core = MNL
+			   is_core = SUL
+			   is_core = MAG
+            }
+			CHR = {
+				exists = no
+				NOT = { is_culture_group = THIS }
+			}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			owns = 1460
+		}
+		
+		effect = {
+			prestige = 5
+			any_country = { limit = { has_country_flag = christiania_master } clr_country_flag = christiania_master }
+			set_country_flag = christiania_master
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = catholic } } } CHR = { religion = catholic } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = protestant } } } CHR = { religion = protestant } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = orthodox } } } CHR = { religion = orthodox } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = sunni } } } CHR = { religion = sunni } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = shiite } } } CHR = { religion = shiite } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = mahayana } } } CHR = { religion = mahayana } }
+			random_owned = { limit = { owner = { capital_scope = { pop_majority_religion = shinto } } } CHR = { religion = shinto } }
+			CHR = {
+				primary_culture = THIS
+				add_accepted_culture = filipino 
+			}
+			any_pop = {
+				limit = {
+					location = { is_core = CHR }
+				}
+				militancy = -3
+			}
+		}
+        ai_will_do = {
+            factor = 1
+			modifier = {
+			factor = 0
+			owns = 1413
+			}
+        }	
+	}	
+}

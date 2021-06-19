@@ -1,0 +1,401 @@
+#### Indochina Stuff #####
+
+#### Khmer is fucking crazy ####
+
+political_decisions = { 
+
+	reclaim_old_empire = { 
+	picture = "Khmer_exp"
+	potential = {
+	tag = CAM 
+	has_global_flag = deadchampa
+	NOT = { has_country_flag = khmer_empire_1 }
+	}
+	
+	allow = {
+	CAM = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	CHP = { all_core = { add_core = THIS } }
+	SIA = { all_core = { add_core = THIS } }
+	badboy = 15 
+	set_country_flag = khmer_empire_1
+	}
+	
+	}
+	
+	become_sole_leader = { 
+	picture = "Khmer_exp"
+	potential = { 
+	tag = CAM 
+	has_country_flag = khmer_empire_1 
+	NOT = { has_country_flag = sole_leader_indochi }
+	}
+	
+	allow = { 
+	CAM = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	badboy = 21 
+	BUR = { all_core = { add_core = THIS } }
+	DAI = { all_core = { add_core = THIS } }
+	set_country_flag = sole_leader_indochi
+		}
+	}
+
+#### Concession of Champa - Any Great Power ####
+
+	concession_of_champa = { 
+	picture = "Khmer_exp"
+	potential = {
+    has_global_flag = indochina_has_returned
+	NOT = { has_country_flag = CHP_concession }
+    NOT = { owns = 1379 }	
+	owns = 1380
+	capital_scope = { continent = europe }
+	any_owned_province = { port = yes }
+	civilized = yes
+	}
+	
+	allow = {
+	war = no
+	is_disarmed = no
+	is_vassal = no
+	}
+	
+	effect = { 
+	prestige = 1
+    set_country_flag = CHP_concession
+	1379 = { owner = { country_event = { id = 95610 days = 3 } } }
+	}
+	
+	ai_will_do = {
+	factor = 1
+    	}
+	}
+
+#### Thai Awakening  ####
+
+	thai_awakening = { 
+	picture = "Khmer_exp"
+	potential = {
+    NOT = { has_global_flag = thai_awakening }
+	OR = {
+	  AND = {
+	  tag = SIA
+	  civilized = yes
+      }
+	  AND = {
+	  owns = 1380
+	  has_global_flag = indochina_has_returned
+	  capital_scope = { continent = europe }
+	  any_owned_province = { port = yes }
+	  civilized = yes
+	        }
+	    }
+	}
+	
+	allow = {
+	war = no
+	is_disarmed = no
+	is_vassal = no
+	}
+	
+	effect = { 
+	prestige = 10
+	1351 = { add_core = SIA }
+	SIA_1355 = { add_core = SIA }	
+ 	SIA_1358 = { add_core = SIA }
+	SIA_1358 = { add_core = SIA }
+	1363 = { remove_core = SIA }
+    set_global_flag = thai_awakening
+	    }
+    }
+	
+#### An Unequal Treaty ####
+
+	unequal_treaty_DAI = {
+		picture = unequal_treaty
+
+		potential = {
+		is_greater_power = yes
+		NOT = { has_country_flag = a_very_unequal_treaty }
+		1369 = { owner = { civilized = no } }
+	    owns = 1380
+		owns = 1379
+	    has_global_flag = indochina_has_returned
+	    capital_scope = { continent = europe }
+	    any_owned_province = { port = yes }
+	    civilized = yes
+		}
+		
+		allow = {
+	    war = no
+	    is_disarmed = no
+	    is_vassal = no		
+		}
+		
+	    effect = { 
+	    prestige = 1
+        set_country_flag = a_very_unequal_treaty
+	    1369 = { owner = { country_event = { id = 95611 days = 3 } } }
+	    }
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+#### Form Indochina - The last and most horrible event that unlocks the CB - This decisions are ported from HPM #####
+	
+	form_french_indochina = {
+		picture = map_indochina
+		potential = {
+		    NOT = { has_country_flag = unequal_doom_murderer }
+			NOT = {
+				primary_culture = lao
+				primary_culture = khmer
+				primary_culture = vietnamese
+				is_vassal = yes
+			}
+			any_owned_province = {
+				is_core = DAI
+				is_colonial = yes
+			}
+			NOT = { has_country_flag = created_my_indochina }
+		}
+		
+		allow = {
+			OR = {
+				owns = 1380
+				owns = 1369
+			}
+			revolution_n_counterrevolution = 1
+		}
+		
+		effect = {
+			set_country_flag = created_my_indochina
+			prestige = 10
+			DAI = { tech_school = developing_tech_school }
+			LUA = { tech_school = developing_tech_school }
+			CHP = { tech_school = developing_tech_school }
+			any_neighbor_country = {
+				limit = {
+					OR = {
+						primary_culture = vietnamese
+						primary_culture = thai
+						primary_culture = lao
+						primary_culture = khmer
+					}
+					civilized = no
+					NOT = { alliance_with = THIS }
+				}
+				relation = { who = THIS value = -100 }
+			}
+			random_country = {
+				limit = {
+					tag = DAI
+					OR = {
+						AND = {
+							in_sphere = THIS
+							relation = { who = THIS value = 190 }
+						}
+						vassal_of = THIS
+					}
+				}
+				annex_to = THIS
+			}
+		}
+	}
+	
+	create_champa_protectorate = {
+		picture = unequal_treaty
+		potential = {
+			has_country_flag = created_my_indochina
+			OR = {
+				AND = {
+					capital_scope = { continent = europe }
+					NOT = {
+						tag = TUR
+						tag = RUS
+					}
+				}
+				primary_culture = japanese
+				tech_school = naval_tech_school
+			}
+			OR = {
+				is_secondary_power = yes
+				is_greater_power = yes
+			}
+			CHP = {
+				exists = yes
+				neighbour = THIS
+				civilized = no
+				ai = yes
+			}
+			NOT = { has_global_flag = created_cambodian_protectorate }
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			CHP = {
+				war = no
+				OR = {
+					part_of_sphere = no
+					in_sphere = THIS
+				}
+				OR = {
+					is_vassal = no
+					vassal_of = THIS
+				}
+			}
+		}
+		
+		effect = {
+			set_global_flag = created_cambodian_protectorate
+			prestige = 10
+			random = {
+				chance = 50
+				badboy = 1
+			}
+			inherit = CHP
+			CHP = { tech_school = developing_tech_school }
+		}
+	}
+	
+	create_laos_protectorate = {
+		picture = unequal_treaty
+		potential = {
+			has_country_flag = created_my_indochina
+			OR = {
+				AND = {
+					capital_scope = { continent = europe }
+					NOT = {
+						tag = TUR
+						tag = RUS
+					}
+				}
+				primary_culture = japanese
+				tech_school = naval_tech_school
+			}
+			OR = {
+				is_secondary_power = yes
+				is_greater_power = yes
+			}
+			LUA = {
+				NOT = { has_country_flag = annexed_to_FRA }
+				neighbour = THIS
+				civilized = no
+				ai = yes
+				war = no
+				OR = {
+					part_of_sphere = no
+					in_sphere = THIS
+				}
+				OR = {
+					is_vassal = no
+					vassal_of = THIS
+					}
+				}
+		}
+		
+		allow = {
+			war = no
+			revolution_n_counterrevolution = 1
+			any_owned_province = {
+				any_neighbor_province = { region = LUA_1356 }
+				OR = {
+					is_core = DAI
+					is_core = SIA
+				}
+			}
+		}
+		
+		effect = {
+			prestige = 5
+			random = {
+				chance = 50
+				badboy = 1
+			}
+			random_owned = {
+				limit = { owner = { NOT = { has_country_flag = attempt_to_form_laos } } }
+				owner = { set_country_flag = attempt_to_form_laos }
+			}
+			any_neighbor_country = {
+				limit = {
+					ai = yes
+					war = no
+					civilized = no
+					NOT = { has_country_flag = annexed_to_FRA }
+					primary_culture = lao
+					OR = {
+						part_of_sphere = no
+						in_sphere = THIS
+					}
+					OR = {
+						is_vassal = no
+						vassal_of = THIS
+					}
+				}
+				set_country_flag = annexed_to_FRA
+				tech_school = developing_tech_school
+				annex_to = THIS
+			}
+		}
+	}
+	
+	create_vietnamese_protectorate = {
+		picture = unequal_treaty
+		potential = {
+			has_country_flag = created_my_indochina
+			OR = {
+				AND = {
+					capital_scope = { continent = europe }
+					NOT = {
+						tag = TUR
+						tag = RUS
+					}
+				}
+				primary_culture = japanese
+				tech_school = naval_tech_school
+			}
+			is_greater_power = yes
+			DAI = {
+				exists = yes
+				neighbour = THIS
+				civilized = no
+				ai = yes
+			}
+			NOT = { has_global_flag = created_vietnamese_protectorate }
+		}
+		
+		allow = {
+			war = no
+			mass_politics = 1
+			DAI = {
+				war = no
+				OR = {
+					AND = {
+						in_sphere = THIS
+						is_vassal = no
+					}
+					vassal_of = THIS
+				}
+			}
+		}
+		
+		effect = {
+			set_global_flag = created_vietnamese_protectorate
+			prestige = 10
+			random = {
+				chance = 50
+				badboy = 1
+			}
+			inherit = DAI
+			DAI = { tech_school = developing_tech_school }
+		}
+	}
+}

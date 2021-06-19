@@ -1,0 +1,771 @@
+country_event = {
+	id = 44140
+	title = "EVTNAME44140" #Young China Movement
+	desc = "EVTDESC44140"
+	picture = "xinhai"
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		OR = {
+			AND = {
+				tag = TAI
+	            OR = {
+	            TNG = { NOT = { any_owned_province = { is_core = CHI } } }
+	            NOT = { exists = TNG }
+	            }
+				NOT = { exists = CHI }
+				NOT = { exists = MIG }
+			}
+			AND = {
+				tag = TNG
+				NOT = { exists = MIG }
+				NOT = { exists = CHI }
+				NOT = { exists = TAI }
+			}
+			AND = {
+				tag = MIG
+	            OR = {
+	            TNG = { NOT = { any_owned_province = { is_core = CHI } } }
+	            NOT = { exists = TNG }
+	            }
+				NOT = { exists = CHI }
+				NOT = { exists = TAI }
+			}
+			    tag = CHI
+		}
+		OR = { 
+			civilized = yes
+			year = 1900
+		}
+		OR = {
+			government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+			government = theocracy
+			government = fascist_monarchy
+		}
+		NOT = { has_country_flag = tongmenghui }
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+		modifier = {
+			factor = 1.2
+			is_greater_power = yes
+		}
+		modifier = {
+			factor = 0.9
+			has_recently_lost_war = yes
+		}
+		modifier = {
+			factor = 0.5
+			vote_franschise = none_voting
+		}
+		modifier = {
+			factor = 0.5
+			vote_franschise = landed_voting
+		}
+		modifier = {
+			factor = 1.5
+			vote_franschise = universal_weighted_voting
+		}
+		modifier = {
+			factor = 2
+			vote_franschise = universal_voting
+		}
+		modifier = {
+			factor = 1.5
+			ruling_party_ideology = liberal
+		}
+		modifier = {
+			factor = 0.8
+			ruling_party_ideology = reactionary
+		}
+		modifier = {
+			factor = 0.8
+			political_parties = underground_parties
+		}
+		modifier = {
+			factor = 1.5
+			OR = {
+				political_parties = non_secret_ballots
+				political_parties = secret_ballots
+			}
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { OR = { liberal = 10 anarcho_liberal = 10 } }
+		}
+		modifier = {
+			factor = 0.5
+			year = 1890
+		}
+		modifier = {
+			factor = 0.1
+			year = 1900
+		}
+		modifier = {
+			factor = 0.01
+			year = 1910
+		}
+	}
+	
+	immediate = {
+		set_country_flag = tongmenghui 
+	}
+	
+	option = {
+		name = "EVT44140OPTA"
+		set_country_flag = appease_societies
+		prestige = -10
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 2
+			ideology = {
+				value = liberal
+				factor = 0.08
+			}
+		}
+		middle_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 4
+			ideology = {
+				value = liberal
+				factor = 0.12
+			}
+		}
+	}
+	
+	option = {
+		name = "EVT44140OPTB"
+		poor_strata = {
+			limit = {
+				is_culture_group = chinese
+				is_primary_culture = no
+			}
+			militancy = 3
+		}
+		random_state = {
+			limit = {
+				OR = {
+				    anarcho_liberal = 10
+					liberal = 10
+					socialist = 10
+					communist = 10
+					fascist = 10
+				}
+				any_owned_province = { is_core = CHI }
+			}
+			any_pop = {
+				limit = { is_culture_group = chinese }
+				militancy = 3
+			}
+			any_owned = {
+				add_province_modifier = {
+					name = peasant_revolt
+					duration = 365
+				}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 44141
+	title = "EVTNAME44141" #Revolutionary Uprising in $STATENAME$
+	desc = "EVTDESC44141"
+	
+	trigger = {
+		is_core = CHI
+		NOT = { has_province_modifier = peasant_revolt }
+		NOT = { owner = { government = hms_government } }
+		NOT = { owner = { government = democracy } }
+		NOT = { owner = { government = socialist_republic } }
+		NOT = { owner = { government = parliamentary_republic   } }
+		OR = {
+			anarcho_liberal = 10
+			liberal = 10
+			socialist = 10
+			communist = 10
+			fascist = 10
+			average_militancy = 4
+		}
+		owner = {
+			has_country_flag = tongmenghui
+			war = no
+			OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+			    government = theocracy
+			    government = fascist_monarchy
+			}
+			NOT = { has_country_flag = revolutionary_uprising_qing }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 150
+		modifier = {
+			factor = 3
+			NOT = { controlled_by = THIS }
+		}
+		modifier = {
+			factor = 1.2
+			owner = {
+				NOT = { part_of_sphere = yes }
+			}
+		}
+		modifier = {
+			factor = 0.8
+			OR = {
+			    anarcho_liberal = 20
+				liberal = 20
+				socialist = 20
+				communist = 20
+				fascist = 20
+			}
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 2
+			is_primary_culture = yes
+		}
+		modifier = {
+			factor = 0.8
+			owner = { vote_franschise = none_voting }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { vote_franschise = landed_voting }
+		}
+		modifier = {
+			factor = 1.5
+			owner = { vote_franschise = universal_weighted_voting }
+		}
+		modifier = {
+			factor = 2
+			owner = { vote_franschise = universal_voting }
+		}
+		modifier = {
+			factor = 0.8
+			owner = { political_parties = underground_parties }
+		}
+		modifier = {
+			factor = 1.5
+			owner = { has_country_flag = appease_societies }
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = { has_province_modifier = peasant_revolt }
+		}
+		modifier = {
+			factor = 0.8
+			year = 1900
+		}
+		modifier = {
+			factor = 0.8
+			year = 1905
+		}
+		modifier = {
+			factor = 0.8
+			year = 1910
+		}
+	}
+	
+	option = {
+		name = "EVT44141OPTA"
+		set_country_flag = revolutionary_uprising_qing
+		random_pop = {
+			limit = {
+				is_culture_group = chinese
+				OR = {
+				    anarcho_liberal = 10
+					liberal = 10
+					socialist = 10
+					communist = 10
+					fascist = 10
+					militancy = 4
+				}
+			}
+			reduce_pop = 0.95
+			militancy = 5
+			consciousness = 6
+		}
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 5
+		}
+		state_scope = {
+			any_pop = {
+				limit = {
+					is_culture_group = chinese
+					OR = {
+					    anarcho_liberal = 10
+						liberal = 10
+						socialist = 10
+						communist = 10
+						fascist = 10
+						militancy = 4
+					}
+				}
+				militancy = 5
+				consciousness = 5
+			}
+			any_owned = {
+				add_province_modifier = {
+					name = peasant_revolt
+					duration = 365
+				}
+			}
+		}
+		ai_chance = { factor = 80 }
+	}
+	
+	option = {
+		name = "EVT44141OPTB"
+		owner = { prestige = -4 }
+		set_country_flag = revolutionary_uprising_qing
+		state_scope = {
+			poor_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.05
+				}
+			}
+			middle_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.1
+				}
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 8
+			}
+		}
+		ai_chance = { factor = 20 }
+	}
+}
+
+
+#The Young China Revolution
+country_event = {
+	id = 44142
+	title = "EVTNAME44142"
+	desc = "EVTDESC44142"
+	picture = "xinhai"
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		civilized = yes
+		has_global_flag = the_new_army
+		NOT = { has_global_flag = warlord_era_has_begun }
+		OR = {
+			AND = {
+				tag = TAI
+	            OR = {
+	            TNG = { NOT = { any_owned_province = { is_core = CHI } } }
+	            NOT = { exists = TNG }
+	            }
+				NOT = { exists = CHI }
+				NOT = { exists = MIG }
+			}
+			AND = {
+				tag = TNG
+				NOT = { exists = MIG }
+				NOT = { exists = CHI }
+				NOT = { exists = TAI }
+			}
+			AND = {
+				tag = MIG
+	            OR = {
+	            TNG = { NOT = { any_owned_province = { is_core = CHI } } }
+	            NOT = { exists = TNG }
+	            }
+				NOT = { exists = CHI }
+				NOT = { exists = TAI }
+			}
+			    tag = CHI
+		}
+		
+		capital_scope = {
+			OR = {
+				controlled_by = THIS
+				controlled_by_rebels = yes
+			}
+		}
+		
+		OR = {
+			revolt_percentage = 0.30
+			average_militancy = 6
+			capital_scope = { controlled_by_rebels = yes }
+			AND = {
+				has_recently_lost_war = yes
+				war_exhaustion = 15
+				average_militancy = 2
+			}
+			has_country_modifier = the_terror
+			has_country_modifier = totalitarian_system
+			has_country_modifier = political_education
+			has_country_modifier = cult_of_personality
+			AND = { ruling_party_ideology = fascist average_militancy = 2 }
+			AND = { ruling_party_ideology = communist average_militancy = 2 }
+			AND = { ruling_party_ideology = anarcho_liberal average_militancy = 2 }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+		modifier = {
+			factor = 0.025
+			capital_scope = { controlled_by_rebels = yes }
+		}
+		modifier = {
+			factor = 0.05
+			NOT = { capital_scope = { controlled_by_rebels = yes } }
+			revolt_percentage = 0.30
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.85
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.95
+			average_militancy = 9
+		}
+		modifier = {
+			factor = 0.7
+			year = 1890
+		}		
+		modifier = {
+			factor = 0.8
+			year = 1900
+		}
+		modifier = {
+			factor = 0.8
+			year = 1905
+		}
+		modifier = {
+			factor = 0.5
+			year = 1910
+		}
+	}
+	
+	immediate = { 
+		set_country_flag = xinhai_revolution
+	}
+
+	option = {
+		name = "EVT44142OPTA"
+		prestige = -25
+		remove_country_modifier = the_terror
+		clr_country_flag = the_terror
+		remove_country_modifier = totalitarian_system
+		remove_country_modifier = political_education
+		remove_country_modifier = cult_of_personality
+		random_owned = {
+			limit = {
+				is_capital = yes
+				controlled_by_rebels = yes
+			}
+			change_controller = THIS
+		}
+		random_country = {
+			limit = {
+				tag = MGL
+				vassal_of = THIS
+			}
+			relation = { who = THIS value = 100 }
+			THIS = { release_vassal = MGL }
+		}
+		random_owned = {
+			limit = {
+				province_id = 1465
+				NOT = { exists = MGL }
+			}
+			owner = {
+				any_owned = {
+					limit = {
+						is_core = MGL
+						NOT = { region = CHI_1532 }
+					}
+					secede_province = MGL
+				}
+				relation = { who = MGL value = 100 }
+				MGL = { civilized = yes }
+			}
+		}
+		random_country = {
+			limit = {
+				tag = TIB
+				vassal_of = THIS
+			}
+			THIS = { release_vassal = TIB }
+		}
+		random_owned = {
+			limit = {
+				province_id = 1587
+				NOT = { exists = TIB }
+			}
+			owner = {
+				any_owned = {
+					limit = {
+						OR = {
+							region = TIB_1588
+							region = TIB_1591
+						}
+					}
+					secede_province = TIB
+				}
+			}
+		}
+		government = presidential_dictatorship
+		ruling_party_ideology = reactionary
+		political_reform = unitary
+		political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = no_trade_unions
+		political_reform = underground_parties
+		country_event = 800050
+		random_owned = {
+			limit = { owner = { NOT = { tag = CHI } } }
+			owner = {
+				change_tag = CHI
+				primary_culture = beifaren
+				add_accepted_culture = min
+				add_accepted_culture = hakka
+				capital = 1612
+	            CHI_1618 = { remove_core = HUI }
+		        CHI_1618 = { remove_core = XBI }
+		        CHI_1618 = { remove_core = SZC }	
+		        CHI_1618 = { remove_core = SXI }
+			}
+		}
+		any_pop = {
+			limit = { has_pop_culture = beifaren }
+			militancy = -2
+		}
+		any_pop = {
+			limit = { has_pop_culture = min }
+			militancy = -1
+		}
+		any_pop = {
+			limit = { has_pop_culture = hakka }
+			militancy = -1
+		}
+		any_owned = { remove_province_modifier = peasant_revolt }
+		add_country_modifier = {
+			name = national_confusion
+			duration = 365
+		}
+		any_country = {
+			limit = { is_greater_power = yes }
+			diplomatic_influence = { who = THIS value = -200 }
+		}
+		ai_chance = { factor = 75 }
+	}
+	
+	
+	option = {
+		name = "EVT44142OPTB"
+		prestige = -25
+		random_owned = {
+			limit = {
+				is_capital = yes
+				controlled_by_rebels = yes
+			}
+			change_controller = THIS
+		}
+		random_country = {
+			limit = {
+				tag = MGL
+				vassal_of = THIS
+			}
+			relation = { who = THIS value = 100 }
+			THIS = { release_vassal = MGL }
+		}
+		random_owned = {
+			limit = {
+				province_id = 1465
+				NOT = { exists = MGL }
+			}
+			owner = {
+				any_owned = {
+					limit = {
+						is_core = MGL
+						NOT = { region = CHI_1532 }
+					}
+					secede_province = MGL
+				}
+				relation = { who = MGL value = 100 }
+				MGL = { civilized = yes }
+			}
+		}
+		random_country = {
+			limit = {
+				tag = TIB
+				vassal_of = THIS
+			}
+			THIS = { release_vassal = TIB }
+		}
+		random_owned = {
+			limit = {
+				province_id = 1587
+				NOT = { exists = TIB }
+			}
+			owner = {
+				any_owned = {
+					limit = {
+						OR = {
+							region = TIB_1588
+							region = TIB_1591
+						}
+					}
+					secede_province = TIB
+				}
+			}
+		}
+		government = democracy
+        political_reform = federalism
+		ruling_party_ideology = liberal
+		political_reform = universal_weighted_voting
+		political_reform = party_appointed
+		political_reform = yes_meeting
+		political_reform = state_press
+		political_reform = state_controlled
+		political_reform = harassment
+		country_event = 800054
+		CHI = {
+			all_core = { add_core = KMT }
+		}
+		change_tag = KMT
+		CHI = { political_reform = unitary }
+		primary_culture = nanfaren
+		add_accepted_culture = beifaren
+		any_pop = {
+			limit = { has_pop_culture = nanfaren }
+			militancy = -8
+		}
+		any_pop = {
+			limit = { has_pop_culture = beifaren }
+			militancy = -4
+		}
+		random_owned = {
+			limit = {
+				province_id = 1612
+				is_capital = no
+			}
+			owner = { capital = 1612 }
+		}
+	    CHI_1618 = { remove_core = HUI }
+		CHI_1618 = { remove_core = XBI }
+		CHI_1618 = { remove_core = SZC }	
+		CHI_1618 = { remove_core = SXI }
+		any_owned = {
+			remove_province_modifier = peasant_revolt
+		}
+		add_country_modifier = {
+			name = national_confusion
+			duration = 365
+		}
+		any_country = {
+			limit = { is_greater_power = yes }
+			diplomatic_influence = {
+				who = THIS
+				value = -200
+		   }
+	   }
+   }
+}
+
+country_event = {
+	id = 44144
+	title = "EVTNAME44144" #The Fall of Chinese Dynasties
+	desc = "EVTDESC44144"
+	picture = "xinhai"
+	
+	fire_only_once = yes 
+	
+	trigger = {
+	OR = {
+	tag = CHI
+	tag = KMT
+	}
+    civilized = yes
+	NOT = {
+	OR = {
+	   government = absolute_monarchy
+	   government = prussian_constitutionalism
+	   government = hms_government
+	   government = fascist_monarchy
+       government = theocracy
+	     }
+	}
+	all_core = { owned_by = THIS }
+	OR = {
+	TNG = { NOT = { any_owned_province = { is_core = CHI } } }
+	NOT = { exists = TNG }
+	}
+	NOT = { exists = MIG }
+	NOT = { exists = TAI }
+	NOT = { exists = DAX }
+	NOT = { exists = SHU }
+	NOT = { has_global_flag = Chinaiswholeagain }
+	}
+			  
+    mean_time_to_happen = { months = 12	}
+	
+	option = { 
+	name = "EVTOPTA44144"
+	KMT = { all_core = { remove_core = MIG } }
+	KMT = { all_core = { remove_core = TAI } } 
+	KMT = { all_core = { remove_core = DAX } } 
+	KMT = { all_core = { remove_core = SHU } } 
+	KMT = { all_core = { remove_core = TNG } } 
+	CHI = { all_core = { remove_core = MIG } }
+	CHI = { all_core = { remove_core = TAI } } 
+	CHI = { all_core = { remove_core = DAX } } 
+	CHI = { all_core = { remove_core = SHU } } 
+	CHI = { all_core = { remove_core = TNG } } 
+	CHI_1487 = { add_core = TNG }
+	set_global_flag = Chinaiswholeagain
+	}
+}
+
+# So, with a MTTH of 12 Months a event called: "Fall of the Chinese Dynasties" and removes all the dynastic cores off of China. The event refers to a empowerment of regional governance and the fact that the state is starting to display potencial weaknesses due to this. It can only happen after the Young China revolution.
+# If QNG does not own any chinese cores it switches to MCK with a MTTH of 100 months which decreases by 0.5 if they are westernized and a further 0.5 if it is 1890. This should ensure that the Warlord Era events are not as messy.
+# This leads into the Warlord Era Events which will utterly trash china in 200 different ways.
+# The potencial issues are in regards to what china actually owns and it is highly reccomended that decisions are added so the regional winner is able to conquest the steppe.
+
+
+# Claim Inner Mongolia (Begin the Conquest of the Steppe/Add MNG's Cores to Altai)
+# Claim Qinghai (Claim the Old Tungut Borders) EVTNAME131736
+# Claim Tamir Basin (Secure Kashgar)
+# FINAL: Claim End/Dunzgar Dunzgaria (End the Dunzgar Legacy)
+
+# Once the the conquest has been completed and the Revolution has happened then it has a chance of triggering the Warlord Era. Which is the clusterfuck that needs to happen to dramatically fuck over the AI in every possible way. Yes, I'm a terrible person and should feel bad.

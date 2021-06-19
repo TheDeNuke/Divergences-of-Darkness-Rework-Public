@@ -1,0 +1,180 @@
+political_decisions = {
+	declare_neutrality = {
+		potential = {
+		 OR = {
+			AND = {
+			tag = SWI
+			has_country_flag = SWI_neutral
+			}
+			AND = { 
+			tag = GNV
+			has_country_flag = GNV_neutral
+			}
+		}
+		NOT = {
+			has_country_modifier = neutrality
+			has_country_flag = abandoned_neutrality
+			has_country_flag = neutrality_violated
+		}	
+		}
+		allow = {
+			NOT = { any_owned_province = { is_core = THIS } }
+			NOT = { badboy = 1 }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = neutrality
+				duration = -1
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = { factor = 0 government = fascist_dictatorship }
+			modifier = { factor = 0 government = fascist_monarchy }
+			modifier = { factor = 0 government = proletarian_dictatorship }
+		}
+	}
+
+
+	abandon_neutrality = {
+		picture = declare_neutrality
+		potential = {
+		    OR = {
+			AND = {
+			tag = SWI
+			has_country_flag = SWI_neutral
+			}
+			AND = { 
+			tag = GNV
+			has_country_flag = GNV_neutral
+			}
+			}
+			has_country_modifier = neutrality
+			NOT = { has_country_flag = abandoned_neutrality }
+		}
+		
+		allow = {
+			prestige = 20
+		}
+		
+		effect = {
+			set_country_flag = abandoned_neutrality
+			prestige = -20
+			badboy = 5
+			remove_country_modifier = neutrality
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = {
+					OR = {
+						badboy = 0.75
+						government = fascist_dictatorship
+						government = fascist_monarchy
+						government = proletarian_dictatorship
+					}
+				}
+			}
+		}
+	}
+	
+	violate_neutrality_SWI = {
+		picture = declare_neutrality
+		alert = no
+		potential = {
+			ai = no
+			SWI = {
+				neighbour = THIS
+				has_country_modifier = neutrality
+			}
+		}
+		
+		allow = {
+			SWI = { has_country_modifier = neutrality }
+			war_policy = jingoism
+			NOT = {
+				is_sphere_leader_of = SWI
+				truce_with = SWI
+				alliance_with = SWI
+			}
+		}
+		
+		effect = {
+			badboy = 25
+			SWI = {
+				set_country_flag = neutrality_violated
+				remove_country_modifier = neutrality
+				relation = { who = THIS value = -200 }
+			}
+			diplomatic_influence = { who = SWI value = -200 }
+			any_country = {
+				limit = {
+					OR = {
+						alliance_with = SWI
+						is_sphere_leader_of = SWI
+						relation = { who = SWI value = 50 }
+					}
+				}
+				leave_alliance = THIS
+				relation = { who = THIS value = -200 }
+				casus_belli = {
+					target = THIS
+					type = cut_down_to_size
+					months = 60
+				}
+			}
+		}
+	}
+	
+	violate_neutrality_GNV = {
+		picture = declare_neutrality
+		alert = no
+		potential = {
+			ai = no
+			GNV = {
+				neighbour = THIS
+				has_country_modifier = neutrality
+			}
+		}
+		
+		allow = {
+			GNV = { has_country_modifier = neutrality }
+			war_policy = jingoism
+			NOT = {
+				is_sphere_leader_of = GNV
+				truce_with = GNV
+				alliance_with = GNV
+			}
+		}
+		
+		effect = {
+			badboy = 25
+			GNV = {
+				set_country_flag = neutrality_violated
+				remove_country_modifier = neutrality
+				relation = { who = THIS value = -200 }
+			}
+			diplomatic_influence = { who = GNV value = -200 }
+			any_country = {
+				limit = {
+					OR = {
+						alliance_with = GNV
+						is_sphere_leader_of = GNV
+						relation = { who = GNV value = 50 }
+					}
+				}
+				leave_alliance = THIS
+				relation = { who = THIS value = -200 }
+				casus_belli = {
+					target = THIS
+					type = cut_down_to_size
+					months = 60
+				}
+			}
+		}
+	}
+}

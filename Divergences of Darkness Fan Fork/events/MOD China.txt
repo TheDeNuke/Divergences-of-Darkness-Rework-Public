@@ -1,0 +1,2431 @@
+
+##############################################
+#       Treaty Ports from China.txt          #
+##############################################
+
+#########The Canton Treaty ########
+country_event = { 
+
+	id = 44201 
+	title = "CHI1.T" 
+	desc = "CHI1.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "44201.A"
+	relation = { who = FROM value = -200 }
+	SPA = { country_event = 44202 }
+	ai_chance = { 
+	factor = 5 
+		}
+	}
+	
+	option = { 
+	name = "44201.B"
+	1498 = { secede_province = SPA }
+	SPA = { country_event = 44203 }
+	ai_chance = { 
+	factor = 35 
+		}
+	}
+	
+	option = { 
+	name = "44201.C"
+	1498 = { secede_province = SPA }
+	1496 = { secede_province = SPA }	
+	SPA = { country_event = 44204 }
+	ai_chance = { 
+	factor = 60 
+		}
+	}
+}
+
+country_event = { 
+
+	id = 44202
+	title = "CHI2.T" 
+	desc = "CHI2.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "44202.A"
+	SPA = { 
+			casus_belli = {
+				target = FROM 
+				type = treaty_port_casus_belli
+				months = 60
+			}
+		}
+	prestige = -10
+	
+	}
+	
+}
+
+country_event = { 
+
+	id = 44203
+	title = "CHI3.T" 
+	desc = "CHI3.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "44203.A"
+	prestige = 5
+	diplomatic_influence = { who = GNG value = 50 }
+	}
+	
+}
+
+country_event = { 
+
+	id = 44204
+	title = "CHI4.T" 
+	desc = "CHI4.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "333033.A"
+	prestige = 15
+	diplomatic_influence = { who = GNG value = 150 }
+	}
+	
+}
+
+#### This event cannot be triggered any more. The decisions required to trigger this event have been disabled for the time being so it does not conflict with MOD Treaty Ports #####
+
+country_event = {
+	id = 1316082
+	title = "EVTNAME1316082" #The Unequal Treaty (with other countries -- if war still ongoing)
+	desc = "EVTDESC1316082"
+	picture = "Opiumwar"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "1316082.A"
+		FROM = { country_event = 1316083 }
+		prestige = -5
+		treasury = -200000
+		capital_scope = {
+			add_province_modifier = {
+				name = legation_quarter
+				duration = -1
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { has_country_modifier = uncivilized_isolationism }
+			}
+			owner = {
+				remove_country_modifier = uncivilized_isolationism
+				add_country_modifier = {
+					name = "western_influences"
+					duration = -1
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { diplomatic_reform = isolationism }
+			}
+			owner = {
+				economic_reform = interactive
+				activate_technology = classicism_n_early_romanticism
+				any_pop = {
+					scaled_militancy = {
+						ideology = liberal
+						factor = -10
+					}
+					scaled_militancy = {
+						ideology = conservative
+						factor = 3
+					}
+					scaled_militancy = {
+						ideology = reactionary
+						factor = 6
+					}
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+		name = "1316082.B"
+		FROM = { country_event = 1316084 }
+		prestige = 5
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+country_event = {
+	id = 1316083
+	title = "EVTNAME1316083" #The Qing Emperor Agrees
+	desc = "EVTDESC1316083"
+#	news = yes
+#	news_title = "EVTNAME1316083_NEWS_TITLE"
+#	news_desc_long = "EVTDESC1316083_NEWS_LONG"
+#	news_desc_medium = "EVTDESC1316083_NEWS_MEDIUM"
+#	news_desc_short = "EVTDESC1316083_NEWS_SHORT"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "97086.A"
+		clr_country_flag = negotiate_unequal_treaty
+		FROM = {
+			clr_country_flag = negotiate_unequal_treaty
+			end_war = THIS
+		}
+		treasury = 200000
+		relation = { who = FROM value = 300 }
+		diplomatic_influence = { who = FROM value = 50 }
+		random_owned = {
+			limit = {
+				owner = { tag = ENG }
+				FROM = { NOT = { owns = 1496 } }
+			}
+			FROM = {
+				random_owned = {
+					limit = {
+						OR = {
+							province_id = 1498
+							province_id = 1538
+							province_id = 1566
+							province_id = 1481
+							province_id = 1569
+							province_id = 1606
+							province_id = 2674
+						}
+					}
+					secede_province = THIS
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { tag = ENG }
+				FROM = { owns = 1496 }
+			}
+			1496 = { secede_province = ENG }
+		}
+		random_owned = {
+			limit = {
+				owner = { tag = RUS }
+				FROM = { NOT = { owns = 1481 } }
+			}
+			FROM = {
+				random_owned = {
+					limit = {
+						OR = {
+							province_id = 1498
+							province_id = 1538
+							province_id = 1566
+							province_id = 1569
+							province_id = 1606
+							province_id = 1496
+							province_id = 2674
+						}
+					}
+					secede_province = THIS
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { tag = RUS }
+				FROM = { owns = 1481 }
+			}
+			1481 = { secede_province = RUS }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+					NOT = { tag = ENG }
+					NOT = { tag = RUS }
+				}
+			}
+			FROM = {
+				random_owned = {
+					limit = {
+						OR = {
+							province_id = 1498
+							province_id = 1538
+							province_id = 1496
+							province_id = 1566
+							province_id = 1481
+							province_id = 1569
+							province_id = 1606
+							province_id = 2674
+						}
+					}
+					secede_province = THIS
+				}
+			}
+		}
+		FROM = {
+			any_owned = {
+				limit = { is_core = THIS }
+				secede_province = THIS
+			}
+		}
+		any_country = {
+			limit = {
+				OR = {
+					in_sphere = THIS
+					vassal_of = THIS
+					is_greater_power = no
+				}
+				alliance_with = THIS
+				war_with = FROM
+			}
+			end_war = FROM
+			end_war = KOR
+			end_war = TIB
+			end_war = MGL
+		}
+		any_country = {
+			limit = {
+				OR = {
+					vassal_of = FROM
+					substate_of = FROM
+					alliance_with = FROM
+				}
+				war_with = THIS
+			}
+			end_war = THIS
+		}
+	}
+}
+
+country_event = {
+	id = 1316084
+	title = "EVTNAME1316084" #The Qing Emperor has Refused!
+	desc = "EVTDESC1316084"
+	picture = "Opiumwar"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "1316084.A"
+		FROM = { clr_country_flag = negotiate_unequal_treaty }
+		casus_belli = {
+			target = FROM
+			type = humiliate
+			months = 100
+		}
+	}
+}
+
+
+##############################################
+# Treaty Ports from Japanese_events - 3343XX #
+##############################################
+
+#Europeans interested in China
+
+country_event = {
+	id = 334330
+	title = "334330.T" #The Kowloon incident
+	desc = "334330.D"
+	picture = "Opiumwar"
+
+	trigger = {
+		tag = GNG
+		war = no 
+		part_of_sphere = no
+		owns = 1496
+		NOT = { has_global_flag = kowloon_incident }
+		BRG = {
+			NOT = { war_with = THIS truce_with = THIS }
+			exists = yes
+			is_greater_power = yes
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 7
+		modifier = {
+			factor = 0.8
+			year = 1838
+		}
+		modifier = {
+			factor = 0.8
+			year = 1839
+		}
+		modifier = {
+			factor = 0.5
+			year = 1840
+		}
+	}
+
+	immediate = {
+		set_global_flag = kowloon_incident
+	}
+	
+	option = {
+		name = "334330.A"
+		BRG = { country_event = 334331 }
+		ai_chance = { factor = 30 }
+	}
+	option = {
+		name = "334330.B"
+		1496 = { secede_province = BRG }
+		1496 = { trade_goods = precious_goods } 
+		BRG = { country_event = 334332 }
+		BRG = { relation = { who = THIS value = 100 } }
+		any_pop = {
+			limit = { is_primary_culture = no }
+			militancy = 3
+		}
+		ai_chance = { factor = 70 }
+	}
+}
+country_event = {
+	id = 334331
+	title = "334331.T" #Response from Burgundy
+	desc = "334331.D"
+	news = yes
+	news_desc_long = "334331_NEWS_LONG"
+	news_desc_medium = "334331_NEWS_MEDIUM"
+	news_desc_short = "334331_NEWS_SHORT"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334331.A"
+		leave_alliance = FROM
+		end_military_access = FROM
+		war = {
+			target = FROM
+			attacker_goal = { 
+				casus_belli = treaty_port_casus_belli
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = no
+		}
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334331.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 334332
+	title = "334332.T" #Hong Kong acquired in peace
+	desc = "334332.D"
+	news = yes
+	news_desc_long = "334332_NEWS_LONG"
+	news_desc_medium = "334332_NEWS_MEDIUM"
+	news_desc_short = "334332_NEWS_SHORT"
+	picture = "Unequal_Treaty_CHI"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "334332.A"
+	prestige = 5
+	}
+}	
+
+country_event = {
+	id = 334333
+	title = "334333.T" #Getting Kwangchowan 
+	desc = "334333.D"
+	picture = "Opiumwar"
+
+	trigger = {
+		tag = SCA
+		war = no 
+		GNG = { owns = 2674 }
+		has_global_flag = kowloon_incident
+		NOT = { has_country_flag = southern_concession }
+		1496 = { owned_by = BRG }
+		is_greater_power = yes
+		NOT = { war_with = GNG truce_with = GNG }
+	}
+	
+	mean_time_to_happen = {
+		months = 70
+		modifier = {
+			factor = 0.8
+			year = 1840
+		}
+		modifier = {
+			factor = 0.8
+			year = 1845
+		}
+		modifier = {
+			factor = 0.5
+			year = 1850
+		}
+		modifier = {
+			factor = 0.5
+			year = 1852
+		}
+		modifier = {
+			factor = 0.5
+			year = 1854
+		}
+		modifier = {
+			factor = 0.1
+			year = 1856
+		}
+	}
+
+	immediate = {
+		set_country_flag = southern_concession
+	}
+	
+	option = {
+		name = "334333.A"
+		GNG = { country_event = 334334 }
+		ai_chance = { factor = 99 }
+	}
+	option = {
+		name = "334333.B"
+		ai_chance = { factor = 1 }
+	}
+}
+country_event = {
+	id = 334334
+	title = "334334.T" #Taiping weights its options
+	desc = "334334.D"
+	picture = "Opiumwar"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334334.A"
+		prestige = -5 
+		2674 = { secede_province = FROM }
+		2674 = { trade_goods = precious_goods } 
+		FROM = { country_event = 334335 }
+		FROM = { relation = { who = THIS value = 100 } }
+		money = 100000
+		any_pop = {
+			limit = { is_primary_culture = no }
+			militancy = 3
+		}
+		ai_chance = { factor = 70 }
+	}
+
+	option = {
+		name = "334334.B"
+		FROM = { country_event = 334336 }
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+country_event = {
+	id = 334335
+	title = "334335.T" #Kwangchowan acquired in peace
+	desc = "334335.D"
+	news = yes
+	news_desc_long = "334335_NEWS_LONG"
+	news_desc_medium = "334335_NEWS_MEDIUM"
+	news_desc_short = "334335_NEWS_SHORT"
+	picture = "Unequal_Treaty_CHI"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "334335.A"
+	prestige = 5
+	money = -100000
+	}
+}
+
+country_event = {
+	id = 334336
+	title = "334336.T" #Response from Scandinavia
+	desc = "334336.D"
+	news = yes
+	news_desc_long = "334336_NEWS_LONG"
+	news_desc_medium = "334336_NEWS_MEDIUM"
+	news_desc_short = "334336_NEWS_SHORT"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334336.A"
+		leave_alliance = FROM
+		end_military_access = FROM
+		war = {
+			target = FROM
+			attacker_goal = { 
+				casus_belli = treaty_port_casus_belli
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = no
+		}
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334336.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}	
+
+#Shanghai Crisis 
+
+country_event = { 
+	id = 334337 
+	title = "334337.T" #DUA seeks a port
+	desc = "334337.D"
+	
+	trigger = { 
+	tag = DUA 
+	has_global_flag = kowloon_incident 
+	1496 = { owned_by = BRG }
+	NOT = { has_country_flag = seeking_port_china }
+	NOT = { any_owned_province = { is_core = CHI } } 
+	}
+	
+	mean_time_to_happen = {
+		months = 80
+		modifier = {
+			factor = 0.8
+			year = 1840
+		}
+		modifier = {
+			factor = 0.8
+			year = 1845
+		}
+		modifier = {
+			factor = 0.5
+			year = 1850
+		}
+		modifier = {
+			factor = 0.5
+			year = 1852
+		}
+		modifier = {
+			factor = 0.5
+			year = 1854
+		}
+		modifier = {
+			factor = 0.1
+			year = 1856
+		}
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "334337.A" 
+	set_country_flag = seeking_port_china
+	badboy = 1 
+	ai_chance = {
+			factor = 80
+		}
+	}
+	
+	option = { 
+	name = "334337.B"
+	prestige = -2
+	ai_chance = {
+		factor = 20
+		}
+	}
+}
+
+country_event = { 
+	id = 334338 
+	title = "334338.T" #DUA seeks Shanghai -JAP not Great Power
+	desc = "334338.D"
+	
+	trigger = { 
+	OR = {
+	tag = MIG
+    tag = TNG 
+    }	
+	civilized = no 
+	DUA = { exists = yes has_country_flag = seeking_port_china }
+	owns = 1538 
+	owns = 1606 
+	war = no
+	OR = { 
+	JAP = { is_greater_power = no }
+	1624 = { NOT = { owned_by = JAP } } 
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 12 
+	}
+	
+	immediate = { 
+	clr_country_flag = seeking_port_china
+	}
+	
+	option = { 
+	name = "334338.A"
+	prestige = -5 
+	1538 = { secede_province = DUA }
+	1538 = { trade_goods = precious_goods } 
+	DUA = { country_event = 334339 }
+	DUA = { relation = { who = THIS value = 100 } }
+	money = 100000
+	any_pop = {
+		limit = { is_primary_culture = yes }
+		militancy = 3
+		}
+	ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	name = "334338.B"
+	DUA = { country_event = 334340 }
+	relation = {
+		who = DUA
+		value = -50
+	}
+	ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+country_event = { 
+	id = 334339 
+	title = "334339.T" #DUA obtains Shanghai
+	desc = "334339.D" 
+	news = yes 
+	news_desc_long = "334339_NEWS_LONG"
+	news_desc_medium = "334339_NEWS_MEDIUM"
+	news_desc_short = "334339_NEWS_SHORT"
+	picture = "Unequal_Treaty_CHI"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334339.T"
+	prestige = 5 
+	money = -100000
+	}
+} 
+
+country_event = {
+	id = 334340
+	title = "334340.T" #Response from DUA
+	desc = "334340.D"
+	news = yes
+	news_desc_long = "334340_NEWS_LONG"
+	news_desc_medium = "334340_NEWS_MEDIUM"
+	news_desc_short = "334340_NEWS_SHORT"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334340.A"
+		leave_alliance = FROM
+		end_military_access = FROM
+		war = {
+			target = FROM
+			attacker_goal = { 
+				casus_belli = treaty_port_casus_belli
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = no
+		}
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334340.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}	
+
+
+country_event = { 
+	id = 334341 
+	title = "334341.T" #DUA seeks Shanghai -JAP is GP
+	desc = "334341.D"
+	picture = "Japanese_CHI"
+	
+	trigger = { 
+	tag = JAP 
+	OR = {
+	MIG = { civilized = no exists = yes war = no }
+	TNG = { civilized = no exists = yes war = no }
+	}
+	DUA = { exists = yes has_country_flag = seeking_port_china }
+	OR = {
+	AND = {
+	1538 = { owned_by = MIG }
+	1606 = { owned_by = MIG }
+	   }
+	AND = {
+	1538 = { owned_by = TNG }
+	1606 = { owned_by = TNG }
+       }
+    }	   
+	war = no
+	OR = { 
+	is_greater_power = yes
+	1624 = { owned_by = JAP } 
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	immediate = { 
+	clr_country_flag = seeking_port_china
+	}
+	
+	option = { 
+	name = "334341.A" #Protect MIG
+	prestige = 5
+	any_country = {
+	limit = { owns = 1538 }
+	create_alliance = THIS
+	relation = { who = THIS value = 100 }
+	}
+	DUA = { country_event = 334342 }
+	ai_chance = {
+			factor = 40
+		}
+	}
+	
+	option = { 
+	name = "334341.B" #Offer to carve MIG 
+	DUA = { country_event = 334345 }
+	ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	name = "334341.C" #Leave MIG alone
+	any_country = {
+	limit = { owns = 1538 }
+	country_event = 334351
+	}
+	prestige = -5
+	ai_chance = {
+		factor = 10
+		modifier = {
+			factor = 30
+			any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 334342 
+	title = "334342.T" #JAP protects MIG
+	desc = "334342.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334342.A" #DUA goes anyway 
+	leave_alliance = FROM
+	end_military_access = FROM
+	any_country = {
+	limit = { owns = 1538 }
+	war = {
+			target = DUA
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = {
+				casus_belli = treaty_port_casus_belli
+			}
+			call_ally = no
+    }
+    country_event = 334343
+	}
+	ai_chance = { 
+	factor = 80 	
+		}
+	}
+	
+	option = { 
+	name = "334342.B"
+	JAP = { country_event = 334344 }
+	prestige = -5 
+	ai_chance = { 
+	factor = 20 	
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 334343 
+	title = "334343.T" #MIG informed of war by DUA
+	desc = "334343.D"
+	picture = "Opiumwar"
+	news = yes 
+	news_desc_long = "334343_NEWS_LONG"
+	news_desc_medium = "334343_NEWS_MEDIUM"
+	news_desc_short = "334343_NEWS_SHORT"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334343.A"
+	}
+}
+
+country_event = { 
+	id = 334344 
+	title = "334344.T" #JAP learns that DUA backs down
+	desc = "334344.D"
+	picture = "Japanese_CHI"
+	news = yes 
+	news_desc_long = "334344_NEWS_LONG"
+	news_desc_medium = "334344_NEWS_MEDIUM"
+	news_desc_short = "334344_NEWS_SHORT"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334344.A"
+	prestige = 20
+	}
+}
+
+country_event = { 
+	id = 334345
+	title = "334345.T" #CO-sovereignity in the East
+	desc = "334345.D"
+	picture = "Unequal_Treaty_CHI"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334345.A" #Accept the Treaty
+	relation = { who = JAP value = 100 }
+	prestige = 3
+	any_country = {
+	limit = { owns = 1538 }
+	country_event = 334346
+	}
+	ai_chance = { 
+	factor = 60
+	modifier = { 
+		factor = 1.3
+		relation = { who = JAP value = 100 }
+			}
+	modifier = { 
+		factor = 0.7
+		NOT = { relation = { who = JAP value = 0 } }
+			}
+	modifier = { 
+		factor = 1.5
+		JAP = { rank = 4 }
+			}
+		}
+	}
+	
+	option = { 
+	name = "334345.B" #War for Shanghai
+	relation = { who = FROM value = -150}
+	leave_alliance = FROM
+	end_military_access = FROM
+	any_country = {
+	limit = { owns = 1538 }
+	war = {
+			target = DUA
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = {
+				casus_belli = treaty_port_casus_belli
+			}
+			call_ally = no
+    }
+    country_event = 334343
+	}
+	JAP = { country_event = 334352 }
+	ai_chance = { 
+	factor = 40
+		}
+	}
+}
+
+country_event = { 
+	id = 334346
+	title = "334346.T" #CO-sovereignity in the East
+	desc = "334346.D"
+	picture = "Unequal_Treaty_CHI"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334346.A"
+	1538 = { secede_province = JAP }
+	1538 = { trade_goods = precious_goods } 
+	1606 = { secede_province = DUA }
+	1606 = { trade_goods = precious_goods } 
+	prestige = -5 
+	any_pop = { 
+	militancy = 4 
+		}
+	JAP = { country_event = 334347 }
+	DUA = { country_event = 334348 }
+	ai_chance = { 
+	factor = 99
+		}
+	}
+	
+	option = { 
+	name = "334346.B"
+	JAP = { country_event = 334349 }
+	DUA = { country_event = 334350 }
+	ai_chance = { 
+	factor = 1
+		}
+	}
+}
+
+country_event = { 
+	id = 334347
+	title = "334347.T" #Shanghai is JAP
+	desc = "334347.D"
+	picture = "Japanese_CHI"
+	news = yes 
+	news_desc_long = "334347_NEWS_LONG"
+	news_desc_medium = "334347_NEWS_MEDIUM"
+	news_desc_short = "334347_NEWS_SHORT"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334347.A"
+	prestige = 5 
+	}
+	
+}
+
+country_event = { 
+	id = 334348
+	title = "334348.T" #Jiaxing is DUA
+	desc = "334348.D"
+	picture = "Unequal_Treaty_CHI"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "334348.A"
+	prestige = 5 
+	}	
+}
+
+country_event = {
+	id = 334349
+	title = "334349.T" #Response from JAP
+	desc = "334349.D"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334349.A"
+		leave_alliance = FROM
+		end_military_access = FROM
+		war = {
+			target = FROM
+			attacker_goal = { 
+				casus_belli = treaty_port_casus_belli
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = no
+		}
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334349.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 334350
+	title = "334350.T" #Response from DUA
+	desc = "334350.D"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334350.A"
+		leave_alliance = FROM
+		end_military_access = FROM
+		war = {
+			target = FROM
+			attacker_goal = { 
+				casus_belli = treaty_port_casus_belli
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = no
+		}
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334350.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}	
+
+
+country_event = { 
+	id = 334351
+	title = "334338.T" #DUA seeks Shanghai -JAP not Great Power
+	desc = "334338.D"
+	
+	is_triggered_only = yes 
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	immediate = { 
+	clr_country_flag = seeking_port_china
+	}
+	
+	option = { 
+	name = "334338.A"
+	prestige = -5 
+	1538 = { secede_province = DUA }
+	1538 = { trade_goods = precious_goods } 
+	DUA = { country_event = 334339 }
+	DUA = { relation = { who = THIS value = 100 } }
+	money = 100000
+	any_pop = {
+		limit = { is_primary_culture = yes }
+		militancy = 3
+		}
+	ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	name = "334338.B"
+	DUA = { country_event = 334340 }
+	relation = {
+		who = DUA
+		value = -50
+	}
+	ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+country_event = {
+	id = 334352
+	title = "334352.T" #Response from JAP
+	desc = "334352.D"
+	picture = "Opiumwar"
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "334352.A"
+	    any_country = {
+	    limit = { owns = 1538 }
+	   	leave_alliance = JAP
+		end_military_access = JAP
+	    war = {
+			target = JAP
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = {
+				casus_belli = treaty_port_casus_belli
+			}
+			call_ally = no
+        }
+	    }
+		ai_chance = { factor = 99 }
+	}
+
+	option = {
+		name = "334352.B"
+		prestige = -10
+		relation = {
+			who = FROM
+			value = -50
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 30
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+}	
+
+#######################################################
+# Collapse of the Dzungar Khanate and Rise of Turania #
+#######################################################
+
+country_event = { 
+	id = 48901 
+	title = "DZG1.T"
+	desc = "DZG1.D"
+	picture = "oirat_khanate"
+	
+	
+	trigger = { 
+	tag = CHG 
+	NOT = { has_country_flag = turania_presentation }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 }
+	
+	option = {
+	name = "48901.A"
+	set_country_flag = turania_presentation 
+	}
+}
+
+country_event = { 
+	id = 48902 
+	title = "DZG2.T"
+	desc = "DZG2.D"
+	picture = "oirat_khanate"
+	
+	trigger = { 
+	tag = CHG 
+	year = 1850 
+	NOT = { has_country_flag = empire_dislocated }
+	NOT = { year = 1860 }
+	NOT = { 
+	OR = { 
+	AND = { 
+		owns = 1557 
+		owns = 1492 
+		owns = 1561		
+				}
+	owns = 1575
+	owns = 1511
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	option = { 
+	name = "48902.A"
+	set_country_flag = empire_dislocated
+	political_reform = confederalism
+	remove_country_modifier = neutrality
+	
+	1469 = { remove_core = ALT }
+	CHI_2608 = { add_core = TNT }	
+	CHI_1600  = { add_core = TNT }
+	
+	any_owned = { 
+	limit = { OR = { is_core = TNT is_core = UGH is_core = ZHE is_core = MGL is_core = BUK is_core = KHI is_core = BDK is_core = KOK is_core = NOG } }
+	remove_core = CHG
+		}
+	government = absolute_monarchy 
+	remove_country_modifier = feudal
+	random_owned = { limit = { owner = { admin_reform = yes_admin_reform } } owner = { economic_reform = advanced_admin_reform activate_technology = ideological_thought  }  }
+	random_owned = { limit = { owner = { admin_reform = no_admin_reform } } owner = { economic_reform = yes_admin_reform activate_technology = enlightenment_thought}  }
+	
+	1192 = { add_core = KHI }
+	release = KHI	
+
+    release = NOG	
+	release = ZHE
+	
+	release = ALT
+	release = BRY
+	release = MGL
+	
+	1200 = { add_core = BDK }	
+	release = BDK 	
+
+	release = UGH 
+	any_owned = { limit = { is_core = CHI } secede_province = MGL }
+	any_owned = { limit = { is_core = TIB } secede_province = UGH }
+	release = BUK 
+	release = KOK
+
+	CHI_1600  = { add_core = UGH }
+	CHI_2608  = { add_core = MGL }
+	MGL = { capital = 1465 }
+	
+    1197 = { add_core = ZHE }
+    1195 = { add_core = ZHE }
+    1189 = { add_core = ZHE }	
+
+    RUS_1185 = { add_core = KOK }	
+	1208 = { add_core = KOK }
+	1195 = { add_core = KOK }
+	1197 = { add_core = KOK }
+	1207 = { add_core = KOK }
+	
+	1200 = { add_core = BDK }
+	1200 = { add_core = ARY }
+	
+	1201 = { add_core = BUK }
+	1202 = { add_core = BUK }
+	1207 = { add_core = BUK }		
+	1210 = { add_core = BUK }	
+	
+	1191 = { remove_core = BUK }	
+	
+	remove_accepted_culture = uzbek 
+	remove_accepted_culture = uighur 
+	remove_accepted_culture = kazak  
+	
+	change_tag = TNT
+	
+	ALT = { all_core = { remove_core = TNT } }
+	CHI_1600  = { add_core = CHG }
+	1469 = { add_core = ALT }
+	
+	ai_chance = { factor = 60 }
+	}
+	
+	option = { 
+	name = "48902.B"
+	set_country_flag = empire_dislocated
+	1469 = { remove_core = ALT }
+	CHI_2608 = { add_core = TNT }	
+	TNT = { capital = 2608 }
+	any_owned = { 
+	limit = { OR = { is_core = ZHE is_core = MGL is_core = BUK is_core = KHI is_core = BDK is_core = KOK is_core = NOG } }
+	remove_core = CHG
+		}
+	government = absolute_monarchy 
+	remove_country_modifier = feudal
+	
+	1192 = { add_core = KHI }
+	release = KHI
+	
+    release = NOG	
+	release = ZHE
+	
+	release = ALT
+	release = BRY
+	release = MGL 
+	
+	1200 = { add_core = BDK }	
+	release = BDK 
+ 
+	release = UGH 
+	any_owned = { limit = { is_core = CHI } secede_province = MGL }
+	any_owned = { limit = { is_core = TIB } secede_province = UGH }
+	release = BUK 
+	release = KOK
+	
+	CHI_1600  = { add_core = UGH }
+	CHI_2608  = { add_core = MGL }
+	MGL = { capital = 1465 }
+	
+    1197 = { add_core = ZHE }
+    1195 = { add_core = ZHE }
+    1189 = { add_core = ZHE }	
+
+    RUS_1185 = { add_core = KOK }	
+	1208 = { add_core = KOK }
+	1195 = { add_core = KOK }
+	1197 = { add_core = KOK }
+	1207 = { add_core = KOK }
+	
+	1200 = { add_core = BDK }
+	1200 = { add_core = ARY }
+	
+	1201 = { add_core = BUK }
+	1202 = { add_core = BUK }
+	1207 = { add_core = BUK }		
+	1210 = { add_core = BUK }	
+	
+	1191 = { remove_core = BUK }	
+	
+	1469 = { add_core = ALT }
+	
+	war = {
+			target = UGH
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = ALT
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	ai_chance = { factor = 30 }
+	}
+	
+	option = { 
+	name = "48902.C"
+	set_country_flag = empire_dislocated
+	CHI_2608 = { add_core = TNT }	
+	1469 = { remove_core = ALT }
+	TNT = { capital = 2608 }
+	
+	1192 = { add_core = KHI }
+	release = KHI	
+
+    release = NOG	
+	release = ZHE	
+	
+	release = ALT
+	release = BRY
+	release = MGL
+	
+    1200 = { add_core = BDK }	
+	release = BDK 
+	
+	release = UGH 
+	any_owned = { limit = { is_core = CHI } secede_province = MGL }
+	any_owned = { limit = { is_core = TIB } secede_province = UGH }
+	release = BUK 
+	release = KOK
+	
+	CHI_1600  = { add_core = UGH }
+	CHI_2608  = { add_core = MGL }
+	MGL = { capital = 1465 }
+	
+    1197 = { add_core = ZHE }
+    1195 = { add_core = ZHE }
+    1189 = { add_core = ZHE }	
+
+    RUS_1185 = { add_core = KOK }	
+	1208 = { add_core = KOK }
+	1195 = { add_core = KOK }
+	1197 = { add_core = KOK }
+	1207 = { add_core = KOK }
+	
+	1200 = { add_core = ARY }
+	
+	1201 = { add_core = BUK }
+	1202 = { add_core = BUK }
+	1207 = { add_core = BUK }		
+	1210 = { add_core = BUK }	
+	
+	1191 = { remove_core = BUK }
+	1469 = { add_core = ALT }
+	war = {
+			target = UGH
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = ALT
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = BDK
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = MGL
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = BUK
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = ZHE
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = NOG
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = KHI
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = BRY
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	war = {
+			target = KOK
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+		}
+	ai_chance = { factor = 10 }
+	}
+}
+
+country_event = { 
+	id = 48903
+	title = "DZG3.T"
+	desc = "DZG3.D"
+	picture = "oirat_khanate"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = empire_dislocated 
+	NOT = { owns = 1594 }
+	UGH = { exists = yes NOT = { vassal_of = CHG } }
+	war = no 
+	NOT = { has_country_flag = kashgar }
+	}
+	
+	mean_time_to_happen = { months = 35 }
+	
+	option = { 
+	name = "48903.A"
+	set_country_flag = kashgar
+	badboy = 12
+	casus_belli = {
+			target = UGH
+			type = conquest
+			months = 24
+		}
+		war = {
+			target = UGH
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { 
+	id = 48904
+	title = "DZG4.T"
+	desc = "DZG4.D"
+	picture = "oirat_khanate"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = empire_dislocated 
+	owns = 1594 
+	NOT = { owns = 1465 }
+	MGL = { exists = yes NOT = { vassal_of = CHG } }
+	war = no 
+	NOT = { has_country_flag = urga }
+	}
+	
+	mean_time_to_happen = { months = 48 }
+	
+	option = { 
+	name = "48904.A"
+	badboy = 12
+	set_country_flag = urga
+	casus_belli = {
+			target = MGL
+			type = conquest
+			months = 24
+		}
+		war = {
+			target = MGL
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	ai_chance = { factor = 95 }
+	}
+}
+
+country_event = { 
+	id = 48905
+	title = "DZG5.T"
+	desc = "DZG5.D"
+	picture = "oirat_khanate"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = empire_dislocated 
+	owns = 1594 
+	NOT = { owns = 1186 }
+	owns = 1465
+	ZHE = { exists = yes NOT = { vassal_of = CHG } }
+	war = no 
+	}
+	
+	mean_time_to_happen = { months = 47 }
+	
+	option = { 
+	name = "48905.A"
+	badboy = 15
+	casus_belli = {
+			target = ZHE
+			type = conquest
+			months = 24
+		}
+		war = {
+			target = ZHE
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	ai_chance = { factor = 95 }
+	}
+}
+
+country_event = { 
+	id = 48906
+	title = "DZG6.T"
+	desc = "DZG6.D"
+	picture = "oirat_khanate"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = empire_dislocated 
+	owns = 1594 
+	NOT = { owns = 1469 }
+	TNT = { exists = yes NOT = { vassal_of = CHG } }
+	war = no 
+	}
+	
+	mean_time_to_happen = { months = 50 }
+	
+	option = { 
+	name = "48906.A"
+	badboy = 5
+	casus_belli = {
+			target = TNT
+			type = conquest
+			months = 24
+		}
+		war = {
+			target = TNT
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	ai_chance = { factor = 95 }
+	}
+	
+	option = { 
+	name = "48906.B"
+	ai_chance = { factor = 5 }
+	}
+}
+
+country_event = { 
+	id = 48907
+	title = "DZG7.T"
+	desc = "DZG7.D"
+	picture = "central_asia"
+	
+	trigger = { 
+	tag = CHG
+	civilized = no 
+	year = 1860 
+	NOT = { has_country_flag = modernization_CHG }
+	NOT = { TAR = { exists = yes } }
+	}
+	
+	mean_time_to_happen = { months = 8 }
+	
+	option = { 
+	name = "48907.A"
+	set_country_flag = modernization_CHG
+	country_event = { id = 48908 days = 487 }
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "48907.B"
+	set_country_flag = modernization_CHG
+	JAP = { country_event = { id = 48930 days = 50 } }
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "48907.C"
+	set_country_flag = modernization_CHG
+	random_country = { limit = { continent = europe any_owned_province = { OR = { is_core = HND is_core = DRA } } } country_event = { id = 48940 days = 275 } }
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 48909
+	title = "DZG9.T"
+	desc = "DZG9.D"
+	picture = "minister_romanov"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = mad_baron
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 32
+	}
+	
+	option = { 
+	name = "48909.A"
+	prestige = -3 
+	any_pop = { 
+	limit = { type = aristocrats } militancy = 4 
+		}
+	add_country_modifier = { 
+	name = stroganov_romanov
+	duration = 9125
+		}
+	ai_chance = { 
+		factor = 1
+		}
+	}
+	
+	option = { 
+	name = "48909.B"
+	prestige = -2
+	define_general = {
+		name = "Roman Stroganov-Romanov"
+		personality = inspiring
+		background = natural_born_leader
+		}
+	}
+	
+	option = { 
+	name = "48909.C"
+	set_country_flag = steppe_madness
+	prestige = 3 
+	}
+}
+
+country_event = { 
+	id = 48910
+	title = "DZG10.T"
+	desc = "DZG10.D"
+	picture = "tibet"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_modifier = stroganov_romanov
+	TIB = { exists = yes NOT = { vassal_of = CHG } }
+	NOT = { owns = 1587 }
+	}
+	
+	mean_time_to_happen = { months = 15 }
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "48910.A"
+	war = {
+			target = TIB
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}
+	}
+	
+	option = { 
+	name = "48910.B"
+	relation = { who = TIB value = 100 }
+	}
+}
+
+country_event = { 
+	id = 48911
+	title = "DZG11.T"
+	desc = "DZG11.D"
+	picture = "tibet"
+
+	trigger = { 
+	tag = TIB 
+	vassal_of = CHG
+	owns = 1556
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "48911.A"
+	any_owned = { limit = { is_core = XBI } secede_province = CHG }
+	CHG = { country_event =  48912 }
+	}
+}
+
+country_event = { 
+	id = 48912
+	title = "DZG12.T"
+	desc = "DZG12.D"
+	picture = "tibet"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "190441.A"
+	}
+}
+
+country_event = { 
+	id = 48913
+	title = "DZG13.T"
+	desc = "DZG13.D"
+	picture = "minister_romanov"
+	
+	trigger = { 
+	tag = CHG 
+	civilization_progress = 0.5
+	has_country_modifier = stroganov_romanov
+	}
+	
+	mean_time_to_happen = { 
+	months = 25 
+	}
+	
+	option = { 
+	name = "48913.A"
+	random_owned = { limit = { owner = { army_schools = no_army_schools } } owner = { military_reform = yes_army_schools   activate_technology = bronze_muzzle_loaded_artillery  }  }
+	random_owned = { limit = { owner = { army_schools = yes_army_schools } } owner = { military_reform = army_academies   activate_technology = iron_muzzle_loaded_artillery }  }
+	random_owned = { limit = { owner = { foreign_training = no_foreign_training  } } owner = { military_reform = yes_foreign_training  activate_technology = military_staff_system  }  }
+	random_owned = { limit = { owner = { foreign_training = yes_foreign_training } } owner = { military_reform = advanced_foreign_training  activate_technology = military_plans }  }
+	any_pop = { 
+	scaled_militancy = {
+		ideology = reactionary
+		factor = 6
+			}
+		}
+	any_pop = { 
+	limit = { type = officers }
+	ideology = {
+		value = reactionary
+		factor = 0.20
+			}
+		}
+	any_pop = { 
+	limit = { type = soldiers }
+	ideology = {
+		value = liberal
+		factor = 0.20
+			}
+		}
+	}
+	
+	option = { 
+	name = "48913.B"
+	prestige = -5
+	}
+}
+
+country_event = { 
+	id = 48914
+	title = "DZG14.T"
+	desc = "DZG14.D"
+	picture = "cossack_baron"
+	
+	trigger = { 
+	tag = MGL 
+	war =  no 
+	CHG = { has_country_flag = steppe_madness }
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "48914.A"
+	war = {
+			target = CHG
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	CHG = { country_event = 48915 }
+	ai_chance = { 
+	factor = 100	
+		}
+	}
+	
+	option = { 
+	name = "48914.B"
+	ai_chance = { 
+	factor = 0	
+		}
+	}
+}
+
+country_event = { 
+	id = 48915
+	title = "DZG15.T"
+	desc = "DZG15.D"
+	picture = "cossack_baron"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "97430.A"
+	}
+}
+
+country_event = { 
+	id = 48920 #Urumqi university
+	title = "DZG20.T"
+	desc = "DZG20.D"
+	picture = "Western_education"
+	
+	trigger = { 
+	tag = CHG
+	civilized = no 
+	has_country_flag = modernization_CHG
+	}
+	
+	mean_time_to_happen = { 
+	months = 150 
+	}
+	
+	option = { 
+	name = "48920.A"
+	political_reform = federalism
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+	
+	option = { 
+	name = "48920.B"
+	set_country_flag = script_question
+	money = -100000
+	any_pop = { literacy = 0.05 }
+	random_owned = { limit = { owner = { education_reform = yes_education_reform } } owner = { economic_reform = advanced_education_reform activate_technology = positivism  }  }
+	random_owned = { limit = { owner = { education_reform = no_education_reform } } owner = { economic_reform = yes_education_reform activate_technology = malthusian_thought }  }
+	political_reform = federalism
+	ai_chance = { 
+	factor = 40 
+	modifier = { 
+	factor = 0 
+	NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = { 
+	name = "48920.C"
+	set_country_flag = university_urumqi
+	set_country_flag = script_question
+	money = -1000000
+	any_pop = { literacy = 0.1  }
+	random_owned = { limit = { owner = { education_reform = yes_education_reform } } owner = { economic_reform = advanced_education_reform activate_technology = positivism  }  }
+	random_owned = { limit = { owner = { education_reform = no_education_reform } } owner = { economic_reform = yes_education_reform activate_technology = malthusian_thought }  }
+	random_owned = { limit = { owner = { academic_institutions = universities  } } owner = { research_points = 8000 }  }
+	random_owned = { limit = { owner = { academic_institutions = madrasahs } } owner = { economic_reform = universities  activate_technology = idealism }  }
+	political_reform = federalism
+	ai_chance = { 
+	factor = 40 
+	modifier = { 
+	factor = 0 
+	NOT = { money = 1000000 }
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 48921 #Archaelogical findings
+	title = "DZG21.T"
+	desc = "DZG21.D"
+	picture = "tocharians"	
+	
+	trigger = { 
+	civilized = yes 
+	has_country_flag = university_urumqi 
+	empiricism = 1
+	owns = 1594
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "48921.A"
+	ai_chance = { 
+	factor = 25 
+		}
+	}
+	
+	option = { 
+	name = "48921.B"
+	money = -10000
+	set_country_flag = tocharians
+	ai_chance = { 
+	factor = 75 
+		}
+	}
+	
+}
+
+
+country_event = { 
+	id = 48922 #Archaelogical findings revealed
+	title = "DZG22.T"
+	desc = "DZG22.D"
+	picture = "tocharians"	
+
+	major = yes
+		
+	fire_only_once = yes 	
+		
+	trigger = { 
+	has_country_flag = tocharians
+	owns = 1594
+	}
+	
+	mean_time_to_happen = { 
+	months = 43 
+	}
+	
+	option = { 
+	name = "48922.A"
+	prestige = 40 
+	}
+	
+}	
+country_event = { 
+	id = 48923 #Choice of Script
+	title = "DZG23.T"
+	desc = "DZG23.D"
+	picture = "oirat_script"
+	
+	trigger = { 
+	tag = CHG
+	civilized = no 
+	has_country_flag = script_question
+	}
+	
+	mean_time_to_happen = { 
+	months = 22 
+	}
+	
+	option = { 
+	name = "48923.A"
+	clr_country_flag = script_question
+	any_pop = { literacy = 0.01 }
+	ai_chance = { 
+	factor = 60 
+		}
+	}
+	
+	option = { 
+	name = "48923.B"
+	clr_country_flag = script_question
+	any_pop = { literacy = 0.01  }
+	ai_chance = { 
+	factor = 25 	
+		}
+	}
+	
+	option = { 
+	name = "48923.C"
+	any_pop = { literacy = 0.01  }
+	clr_country_flag = script_question 
+	ai_chance = { 
+	factor = 15 	
+		}
+	}
+}
+
+country_event = {
+	id = 48930
+	title = "DZG30.T"
+	desc = "DZG30.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48930.A"
+	diplomatic_influence = { who = CHG value = 150 }
+	relation = { who = CHG value = 150 }
+	CHG = { country_event = 48931 }
+	}
+}
+
+country_event = { 
+	id = 48931
+	title = "DZG31.T"
+	desc = "DZG31.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "97391.A"
+	research_points = 11000
+	set_country_flag = kawaguchi
+	}
+}
+
+country_event = { 
+	id = 48932
+	title = "DZG32.T"
+	desc = "DZG32.D"
+	picture = "japanese_lama"
+	
+	trigger = { 
+	tag = CHG
+	has_country_flag = kawaguchi
+	war = no 
+	neighbour = TIB 
+	NOT = { TIB = { vassal_of = CHG } }
+	}
+	
+	mean_time_to_happen = { 
+	months = 25
+	}
+	
+	option = { 
+	name = "48932.A" 
+	TIB = { country_event = 48933 }
+	relation = { who = TIB value = 200 }
+	relation = { who = JAP value = 50 }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = { 
+	name = "48932.B"
+	clr_country_flag = kawaguchi
+	relation = { who = JAP value = -50 }
+	relation = { who = TIB value = -50 }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+}
+
+country_event = { 
+	id = 48933
+	title = "DZG33.T"
+	desc = "DZG33.D"
+	picture = "japanese_lama"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48933.A"
+	JAP = { country_event = 48934 }
+	relation = { who = JAP value = 50 }
+	}
+}
+
+country_event = { 
+	id = 48934
+	title = "DZG34.T"
+	desc = "DZG34.D"
+	picture = "japanese_lama"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48934.A"
+	prestige = 4 
+	}
+}
+
+country_event = { 
+	id = 48935 #Operation Tsunami
+	title = "DZG35.T"
+	desc = "DZG35.D"
+	picture = "central_asia"
+	
+	trigger = { 
+	tag = JAP 
+	neighbour = CHG
+	CHG = { civilized = no }
+	NOT = { CHG = { has_country_flag = kawaguchi } }
+	NOT = { 1186 = { owned_by = CHG } 1465 = { owned_by = CHG }}
+	NOT = { relation = { who = CHG value = 100 } } 
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "48935.A" 
+	CHG = { country_event = 48936 }
+	war = {
+			target = CHG
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}
+	ai_chance = { factor = 80 }
+	}
+	
+	option = { 
+	name = "48935.B"
+	prestige = 2 
+	ai_chance = { 
+	factor = 20 
+	modifier = { 
+	factor = 3 
+	alliance_with = CHG 
+			}
+	modifier = { 
+	factor = 2 
+	is_greater_power = no 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 48936 #Operation Tsunami
+	title = "DZG36.T"
+	desc = "DZG36.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48915.A"
+	}
+}
+
+country_event = { 
+	id = 48937 
+	title = "DZG37.T"
+	desc = "DZG37.D"
+	
+	trigger = { 
+	tag = CHG 
+	vassal_of = JAP 
+	OR = { owns = 1469 owns = 1075 }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "48937.A"
+	any_owned = { limit = { OR = { region = MON_1075 region = RUS_1469 } } secede_province = JAP }
+	JAP = { country_event = 48938 }
+	}
+}
+
+country_event = { 
+	id = 48938 
+	title = "DZG38.T"
+	desc = "DZG38.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "97087.A"
+	}
+}
+
+country_event = { 
+	id = 48940
+	title = "DZG40.T"
+	desc = "DZG40.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48940.A"
+	CHG = { country_event = { id = 48941 days = 150 } }
+	ai_chance = { 
+	factor = 70 
+		}
+	}
+	
+	option = { 
+	name = "48940.B"
+	ai_chance = { 
+	factor = 30 
+		}
+	}
+}
+
+country_event = { 
+	id = 48941
+	title = "DZG41.T"
+	desc = "DZG41.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48941.A"
+	research_points = 15000
+	set_country_flag = europe_travel
+	}
+}
+
+country_event = { 
+	id = 48942
+	title = "DZG42.T"
+	desc = "DZG42.D"
+	picture = "central_asia"
+	
+	trigger = { 
+	tag = CHG 
+	civilization_progress = 0.5
+	has_country_flag = europe_travel
+	}
+	
+	option = { 
+	name = "48942.A"
+	any_pop = { 
+	literacy = 0.01 
+	ideology = {
+		value = liberal
+		factor = 0.10
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 48908
+	title = "DZG8.T"
+	desc = "DZG8.D"
+	picture = "cossack_baron"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48908.A"
+	research_points = 8000 
+	set_country_flag = foreign_adviser
+	set_country_flag = mad_baron
+	}
+}
+	

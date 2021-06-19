@@ -1,0 +1,3770 @@
+### German Council has been modified to not touch north germans beyond neutrality. North Germans in SGF causes a inability for the Bohemian AI to form CAE ###
+
+
+country_event = {
+
+	id = 123100 #Council of Munich, First Part
+	major = yes
+	
+	trigger = {
+		NOT = {
+			OR = {
+				exists = GER
+				exists = SGF
+				exists = HLR
+			}
+		}
+		ai = yes
+		exists = yes
+		has_global_flag = HUNAUS_resolved
+		has_global_flag = liberal_revolutions_should_now_fire
+		NOT = { has_global_flag = SGF_revolution_is_dead }
+		NOT = { has_global_flag = revolution_germany }
+		OR = {
+			tag = DUA
+			tag = SPA
+			tag = SPC
+			tag = PLC
+			tag = ARA
+			tag = ARI
+		}
+	}
+
+	fire_only_once = yes
+ 
+	mean_time_to_happen =  {
+		months = 500 #roughly within 20 years, considering four countries can trigger it
+
+		modifier = {
+			factor = 0.75 #increase likelihood to happen
+			year = 1845
+		}
+		modifier = {
+			factor = 0.50 #increase likelihood to happen
+			year = 1855
+		}
+		modifier = {
+			factor = 0.25 #increase likelihood to happen
+			year = 1865
+		}
+		modifier = {
+			factor = 50 #If it somehow has not triggered by 75. Then I refuse to allow it to happen for less then obvious balance reasons.
+			year = 1875
+		}
+		modifier = {
+			factor = 0.7 #increase likelihood to happen
+			tag = DUA
+		}
+	}
+
+	title = "EVTNAME123100"
+	desc = "EVTDESC123100"
+	picture = "?"
+
+	option = {
+		name = "EVTOPTA123100" 
+		prestige = 3
+		any_country = { 
+			limit = {
+				exists = yes
+				part_of_sphere = yes
+				OR = { 
+					primary_culture = south_german
+					tag = FRM
+					tag = HES
+				}
+			}
+			country_event = 123102
+		}
+		any_country = { 
+			limit = {
+				exists = yes
+				NOT = { part_of_sphere = yes }
+				OR = { 
+					primary_culture = south_german
+					tag = HES
+					tag = FRM
+				}
+			}
+			country_event = 123108
+		}
+		any_country = { 
+			limit = {
+				exists = yes
+				part_of_sphere = yes
+				NOT = {
+					tag = HES
+					tag = FRM
+					tag = KRL
+					tag = PRU
+				}
+				OR = { 
+					primary_culture = north_german
+					primary_culture = rheinish
+				}
+			}
+			country_event = 123107
+		}
+		set_global_flag = first_council_of_munich
+	}
+}
+
+country_event = { #Leave SoI? - SG
+	id = 123102
+	title = "EVTNAME123102"
+	desc = "EVTDESC123102"
+	picture = "prussian_constitution"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA123102" #Leave it and join the united front!
+		sphere_owner = {
+			diplomatic_influence = {
+				who = THIS
+				value = -200
+			}
+			#add_casus_belli = {	
+			#	target = THIS
+			#	type = cut_down_to_size
+			#}
+		}
+		prestige = 5
+		set_country_flag = united_front
+		any_owned = { 
+			limit = {
+				is_core = THIS 
+			}
+			add_core = SGF
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				ruling_party_ideology = reactionary
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTB123102" #Leave it but remain neutral
+		sphere_owner = {
+			diplomatic_influence = {
+				who = THIS
+				value = -200
+			}
+			#add_casus_belli = {	
+			#	target = THIS
+			#	type = cut_down_to_size
+			#}
+		}
+		prestige = 2
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = reactionary
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTC123102" #We are just humble servants..
+		prestige = -5
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+		}
+	}
+}
+
+country_event = { #Leave SoI? - NG
+	id = 123107
+	title = "EVTNAME123102"
+	desc = "EVTDESC123102"
+	picture = "prussian_constitution"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTB123102" #Leave it but remain neutral
+		sphere_owner = {
+			diplomatic_influence = {
+				who = THIS
+				value = -400
+			}
+			#add_casus_belli = {	
+			#	target = THIS
+			#	type = cut_down_to_size
+			#	months = 12
+			#}
+		}
+		prestige = 2
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 3
+				ruling_party_ideology = anarcho_liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = reactionary
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTC123102" #We are just humble servants..
+		prestige = -5
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 0.5
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+		}
+	}
+}
+
+country_event = { #United Front - SG
+	id = 123108
+	title = "EVTNAME123102"
+	desc = "EVTDESC123102"
+	picture = "prussian_constitution"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA123102" #Join the united front!
+		prestige = 5
+		set_country_flag = united_front
+		any_owned = { 
+			limit = {
+				is_core = THIS 
+				}
+			add_core = SGF
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				ruling_party_ideology = reactionary
+			}
+		}
+	}
+	option = {
+		name = "EVTOPTB123102" #Remain neutral
+		prestige = -5
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+		}
+	}
+}
+
+# 123109 has been removed.
+
+##############################################
+
+country_event = {
+
+	id = 123106 #Council of Munich,Second Part
+	major = yes
+	
+	trigger = {
+		has_global_flag = first_council_of_munich
+		OR = {
+			tag = DUA
+			tag = SPA
+			tag = SPC
+			tag = PLC
+			}
+		exists = yes
+		NOT = { exists = SGF }
+		NOT = { exists = GER }
+		NOT = { exists = HLR }
+		ai = yes
+		}
+
+	fire_only_once = yes
+ 
+	mean_time_to_happen =  {
+		months = 1
+	}
+
+	title = "EVTNAME123106"
+	desc = "EVTDESC123106"
+	picture = "?"
+
+	option = {
+		name = "EVTOPTA123106" 
+		prestige = 2
+		random_country = { 
+			limit = {
+				OR = {
+					government = absolute_monarchy
+					government = hms_government
+					government = prussian_constitutionalism
+					government = fascist_monarchy
+				}
+				NOT = { part_of_sphere = yes }
+				NOT = { has_country_flag = crown_offered }
+				primary_culture = south_german
+				number_of_states = 2
+			}
+			country_event = 123101
+		}		
+	}
+}
+
+country_event = {
+
+	id = 123101 #The Offer
+	is_triggered_only = yes
+
+	title = "EVTNAME123101"
+	desc = "EVTDESC123101"
+	picture = "prussian_constitution"
+
+	option = { #Accept
+		name = "EVTOPTA123101" 
+		prestige = 10
+		set_global_flag = german_council_accepted
+		set_global_flag = wait_infamy_council
+		set_country_flag = crown_offered
+		any_country = {
+				limit = {
+					primary_culture = south_german
+					in_sphere = THIS
+					NOT = {
+						tag = THIS
+					}
+				}
+				annex_to = THIS
+			}
+		any_country = {
+			limit = {
+				primary_culture = south_german
+				vassal_of = THIS
+				NOT = {
+					tag = THIS
+				}
+			}
+			annex_to = THIS
+		}
+		any_country = {
+			limit = {
+				has_country_flag = united_front
+				NOT = {
+					tag = THIS
+				}
+			}
+			annex_to = THIS
+		}
+		#Austria
+		AUS = {
+			all_core = {
+				limit = {
+					is_core = GER
+				}
+				add_core = SGF
+			}
+		}
+		#Bavaria
+		BAV = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Wurzburg
+		FRW = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Franconia
+		FRE = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Wurtemberg
+		WUR = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Baden
+		BAD = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Swiss
+		SWI = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Tirol
+		AUS_612 = {
+			add_core = SGF
+		}
+		change_tag = SGF
+		political_reform = federalism
+		# Countries in Germany are VERY angry at you for now.
+        diplomatic_influence = { who = HUA value = -200 }
+		diplomatic_influence = { who = HUN value = -200 }
+		diplomatic_influence = { who = BOH value = -200 }
+		diplomatic_influence = { who = BRG value = -200 }
+		diplomatic_influence = { who = PBG value = -200 }
+		relation = { who = HUA value = -400 }
+		relation = { who = HUN value = -400 }
+		relation = { who = BOH value = -400 }
+		relation = { who = BRG value = -400 }
+		relation = { who = PBG value = -400 }
+		leave_alliance = BOH
+		leave_alliance = HUA
+		leave_alliance = BRG
+		leave_alliance = PBG
+		leave_alliance = HUN
+		# This prevents it getting stuck in a sphere and breaking things for whatever reason
+		any_country = { 
+		limit = {
+		is_greater_power = yes
+		NOT = { tag = ITA }
+		}
+		diplomatic_influence = { who = SGF value = -400 }
+		}
+		set_country_flag = check_for_HUA
+		BOH = { 
+			country_event = { id = 123156 days = 1 }
+		}
+		#BRG = { 
+		#	country_event = { id = 123105 days = 20 }
+		#}
+		political_reform = wealth_voting
+		political_reform = state_equal_weight
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = non_socialist
+		political_reform = secret_ballots
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				ruling_party_ideology = reactionary
+			}
+			modifier = {
+				factor = 2
+				tag = BAV
+				exists = HUA
+			}
+			modifier = {
+				factor = 2
+				tag = AUS
+				NOT = { exists = HUA }
+			}
+			modifier = {
+				factor = 1.7
+				number_of_states = 3
+			}
+			modifier = {
+				factor = 1.7
+				number_of_states = 5
+			}
+			modifier = {
+				factor = 1.7
+				number_of_states = 8
+			}
+			modifier = {
+				factor = 1.4
+				prestige = 35
+			}
+			modifier = {
+				factor = 1.4
+				prestige = 60
+			}
+			modifier = {
+				factor = 1.5
+				military_score = 15
+			}
+			modifier = {
+				factor = 1.5
+				military_score = 30
+			}
+			modifier = {
+				factor = 1.2
+				exists = BRG
+				BRG = { NOT = { is_greater_power = yes } }
+			}
+			modifier = {
+				factor = 1.2
+				exists = PBG
+			    PBG = { NOT = { is_greater_power = yes } }
+			}
+			modifier = {
+				factor = 1.2
+				BOH = { NOT = { is_greater_power = yes } }
+			}
+			modifier = {
+				factor = 0.5
+				war_exhaustion = 50
+			}
+			modifier = {
+				factor = 0
+				war = yes
+			}
+		}
+	}
+	option = { #Decline
+		name = "EVTOPTB123101" 
+		prestige = -10
+		set_country_flag = crown_offered
+		random_country = { 
+			limit = {
+				NOT = { has_country_flag = crown_offered }
+				primary_culture = south_german
+				number_of_states = 2
+				}
+			country_event = 123101
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+			modifier = {
+				factor = 0
+				is_greater_power = yes
+			}
+		}
+	}
+}
+
+## The Bohemian-Confederate War ###
+
+country_event = {
+	id = 123104 #Response of BOH against SGF
+	title = "EVTNAME123104"
+	desc = "EVTDESC123104"
+	picture = "prussian_constitution"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA123104" #Let's teach them a lesson in equality!
+		set_global_flag = BOH_break_SGF
+        clr_global_flag = wait_infamy_council
+		war = {
+			target = SGF
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+
+			defender_goal = {
+				casus_belli = humiliate
+			}
+		}
+		SGF = {
+			add_country_modifier = {
+				name = taiping_draft
+				duration = 365
+			}
+		}
+		ai_chance = {
+			factor = 99
+			#modifier = {
+			#	factor = 0
+			#	war = yes
+			#}
+			modifier = {
+				factor = 0
+				NOT = { is_greater_power = yes }
+			}
+		}	
+	}
+	option = {
+		name = "EVTOPTB123104" #Just a minute...
+        clr_global_flag = wait_infamy_council
+		FROM = {
+			add_casus_belli = {
+				target = THIS
+				type = acquire_state
+				months = 24
+			}
+		}
+		prestige = -10
+		ai_chance = {
+			factor = 1
+		}	
+	}
+}
+
+country_event = {
+	id = 123105 #Response of BRG against BOH
+	title = "EVTNAME123105"
+	desc = "EVTDESC123105"
+	picture = "prussian_constitution"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA123105" #Bohemia must be stopped
+		create_alliance = SGF
+		relation = { who = SGF value = 400 }
+		diplomatic_influence = { who = SGF value = 400 }
+		SGF = {
+		    country_event = { id = 123109 days = 1 }
+			add_country_modifier = {
+				name = taiping_draft
+				duration = 365
+			}
+		}
+		ai_chance = {
+			factor = 95
+			modifier = {
+				factor = 0
+				war_with = PBG
+			}
+			modifier = {
+				factor = 0
+				DUA = { has_country_flag = secret_pact_ITA }
+			}		
+			modifier = {
+				factor = 0
+				NOT = { is_greater_power = yes }
+			}
+			modifier = {
+				factor = 0.5
+				war_exhaustion = 5
+			}
+			modifier = {
+				factor = 0
+				war_exhaustion = 25
+			}
+			modifier = {
+				factor = 0
+				DUA = { has_country_flag = global_revolt }
+			}
+		}
+		
+	}
+	
+	option = {
+		name = "EVTOPTC123105" #Let's teach them a lesson in equality!
+		set_global_flag = BRG_break_SGF
+		war = {
+			target = SGF
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+
+			defender_goal = {
+				casus_belli = humiliate
+			}
+		}
+		SGF = {
+			add_country_modifier = {
+				name = taiping_draft
+				duration = 365
+			}
+		}
+		ai_chance = {
+			factor = 50
+		    modifier = {
+				factor = 0
+				war_with = PBG
+			}
+			modifier = {
+				factor = 0
+			    DUA = { NOT = { has_country_flag = secret_pact_ITA } }
+			}
+			modifier = {
+				factor = 0
+				NOT = { is_greater_power = yes }
+			}
+		}	
+	}
+	
+	option = {
+		name = "EVTOPTB123105" #Just a minute...
+		SGF = {
+			add_casus_belli = {
+				target = THIS
+				type = acquire_state
+				months = 24
+			}
+		}
+		prestige = -10
+		ai_chance = {
+			factor = 5
+		}	
+	}
+}
+
+country_event = {
+	id = 123109 #SGF feedback
+	title = "EVTNAME123109"
+	desc = "EVTDESC123109"
+	picture = "prussian_constitution"
+	
+	is_triggered_only = yes
+	
+    option = {
+	name = "EVTOPTA123109" #Bohemia must be stopped	
+	prestige = 10
+	}
+}
+
+### SGF Fails to not get disarmed by nearby greater powers.
+country_event = {
+	id = 123150 #The Treaty of $CAPITAL$
+	title = "EVTNAME123150"
+	desc = "EVTDESC123150"
+	picture = "?"
+	
+	major = yes
+	
+	trigger = {
+	    tag = SGF
+		exists = yes
+		NOT = { has_country_flag = dismantling_treaty }
+		BOH = { exists = yes }
+		OR = { 
+		   BRG = { exists = yes }
+		   PBG = { exists = yes }
+		}
+		OR = { 
+		   has_global_flag = BRG_break_SGF 
+		   has_global_flag = BOH_break_SGF
+		   has_global_flag = SGF_crisis
+		}
+		NOT = {
+		   AND = {
+		      BOH = { has_country_flag = berlin_commune }
+		      exists = NGF
+		   }
+		}
+        is_disarmed = yes
+		
+	}
+			
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = {
+		name = "EVTOPTA123150" #We have no choice but to agree.
+		end_war = CRO
+		end_war = HUN
+		end_war = HUA
+		end_war = AUS
+		end_war = BOH
+		end_war = BRG
+		end_war = PBG
+		BRG = { end_war = BOH }
+		set_global_flag = SGF_revolution_is_dead
+		clr_global_flag = second_german_revoultion
+		#clr_global_flag = BRG_break_SGF
+		clr_global_flag = BOH_break_SGF	
+		clr_global_flag = SGF_crisis
+		BOH = { set_country_flag = ban_CAE_formation }
+		relation = { who = HUA value = 200 }
+		relation = { who = HUN value = 200 }
+		relation = { who = BOH value = 200 }
+		relation = { who = BRG value = 200 }
+		relation = { who = PBG value = 200 }
+        diplomatic_influence = { who = HUA value = 100 }
+		diplomatic_influence = { who = HUN value = 100 }
+		diplomatic_influence = { who = BOH value = 100 }
+		diplomatic_influence = { who = BRG value = 100 }
+		diplomatic_influence = { who = PBG value = 100 }
+		# Inherit Wuttemburg as a "just in case"
+		inherit = WUR
+		prestige = -30
+        any_owned = { 
+	    limit = { 
+	    is_core = HUA
+		   }
+		remove_core = SGF
+	    secede_province = HUA
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SAL
+		}
+		remove_core = SGF
+	    secede_province = SAL
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SLO
+		   }
+	    secede_province = SLO
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = AUS
+		   }
+		remove_core = SGF
+	    secede_province = AUS
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = HEK
+		   }
+		remove_core = SGF
+	    secede_province = HEK
+	    }
+		HEK = { 
+		all_core = { remove_core = HEK }
+		change_tag = WES
+		}
+		WES = {
+		PRU_581 = { add_core = WES }
+		HES_566 = { add_core = WES }
+		capital = 566
+		}
+        any_owned = { 
+	    limit = { 
+	    is_core = TIR
+		   }
+		remove_core = SGF
+	    secede_province = TIR
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = SWI
+		   }
+		remove_core = SGF
+	    secede_province = SWI
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = BAV
+		   }
+		remove_core = SGF
+	    secede_province = BAV
+	    }
+        any_owned = { 
+	    limit = { 
+	    is_core = FRW
+		   }
+		remove_core = SGF
+	    secede_province = FRW
+	    }		
+        any_owned = { 
+	    limit = { 
+	    is_core = FRE
+		   }
+		remove_core = SGF
+	    secede_province = FRE
+	    }
+		#596 = { remove_core = BAV }
+		#597 = { remove_core = BAV }
+		any_owned = {
+		limit = {
+		NOT = { is_core = SGF }	
+		NOT = { is_core = SLO }	
+		   }
+		secede_province = NGF
+		add_core = NGF
+		}
+		PRU_581 = { add_core = NGF }	#Westphalia
+		HAN_534 = { add_core = NGF }	#East Frisia
+		HAM_528 = { add_core = NGF }	#Hanover
+		PRU_546 = { add_core = NGF }	#Pomerania
+		SAX_1 = { add_core = NGF }		#Thuringia
+		HOL_369 = { add_core = NGF }	#Holstein
+		PRU_553 = { add_core = NGF }	#Anhalt
+		PRU_549 = { add_core = NGF }	#Brandenburg
+		SAX_558 = { add_core = NGF }	#Saxony		
+		AUS = { all_core = { remove_core = SGF }   }
+		#SWI = { all_core = { remove_core = SGF }   }
+		#SWI = { all_core = { remove_core = GER }   }		
+		#GNV = { all_core = { add_core = SWI }   }
+		#SAR_466 = { add_core = SWI }
+		#SWI = {
+		#country_event = { id = 123151 days = 3 }
+		#primary_culture = romand
+	    #add_accepted_culture = south_german
+	    #add_accepted_culture = rheinish	
+		#}
+		capital = 589
+		FRW = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		}
+        NGF = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    political_reform = confederalism
+		}
+		SGF = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    political_reform = confederalism
+		country_event = 10051
+		}
+		BAV = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		capital = 599
+		diplomatic_influence = { who = BOH value = 400 }
+		relation = { who = BOH value = 400 }
+		create_alliance = BOH
+		}
+		FRE = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		diplomatic_influence = { who = BOH value = 400 }
+		relation = { who = BOH value = 400 }
+		create_alliance = BOH
+		}
+		BOH = {
+        country_event = { id = 123200 days = 30 }
+		}
+		AUS = {
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		capital = 619
+		diplomatic_influence = { who = BOH value = 400 }
+		relation = { who = BOH value = 400 }
+		create_alliance = BOH
+		}
+     }
+}
+
+# The Treaty of Frankfurt
+
+country_event = { 
+	id = 123153
+	title = "EVTNAME123153"
+	desc = "EVTDESC123153"
+	
+	major = yes
+	
+	trigger = {
+	    tag = BOH
+		exists = yes
+		NOT = { has_country_flag = dismantling_treaty }
+		BOH = { exists = yes }
+		OR = { 
+		   BRG = { exists = yes }
+		   PBG = { exists = yes }
+		}
+		OR = { 
+		   has_global_flag = BRG_break_SGF 
+		   has_global_flag = BOH_break_SGF
+		   has_global_flag = SGF_crisis
+		}		
+        SGF = { 
+		   AND = { 
+		      NOT = { is_disarmed = yes } 
+			  NOT = { war = yes }
+		   }
+		}
+	}
+
+    option = { 
+	name = "EVTOPTA123153"
+	prestige = -20
+	end_war = SGF
+	end_war = BRG
+	end_war = PBG
+	clr_global_flag = second_german_revoultion
+	clr_global_flag = BRG_break_SGF
+	clr_global_flag = BOH_break_SGF	
+	clr_global_flag = SGF_crisis
+	clr_global_flag = wait_infamy_council
+	set_country_flag = SGF_south
+	set_global_flag = CFR_exists
+	set_global_flag = third_german_treaty
+	BOH = { set_country_flag = ban_CAE_formation }
+	# ADD CFR Cores to North
+	HES_566 = { add_core = CFR }	#Hessen
+	PRU_575 = { add_core = CFR }	#Nordrhein	
+	PRU_581 = { add_core = CFR }    #Westfalen
+	HAN_534 = { add_core = CFR }	#East Frisia
+	# Remove/ADD CFR cores on Specific Territory
+	OLD = { all_core = { remove_core = CFR } }
+	564 = { remove_core = SGF }
+	# Ensure that BOH gives all territory it owns to CFR and SGF
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+    }
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+	# Ensure that BRG gives all territory it owns to CFR and SGF
+    BRG = { 
+	# Burgundian Influence Everywhere
+	diplomatic_influence = { who = CFR value = 400 }
+	relation = { who = CFR value = 400 }
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+    }	
+    PBG = { 
+	# Burgundian Influence Everywhere
+	diplomatic_influence = { who = CFR value = 400 }
+	relation = { who = CFR value = 400 }
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+    }
+	# Remove all SGF cores from CFR
+	CFR = { all_core = { remove_core = SGF } }
+	# SGF relation boosts
+	SGF = {
+	relation = { who = HUA value = 200 }
+	relation = { who = HUN value = 200 }
+	relation = { who = BOH value = 200 }
+	relation = { who = BRG value = 200 }
+	relation = { who = PBG value = 200 }
+    diplomatic_influence = { who = HUA value = 200 }
+    diplomatic_influence = { who = HUN value = 200 }
+    diplomatic_influence = { who = BOH value = 200 }
+	diplomatic_influence = { who = BRG value = 200 }
+	diplomatic_influence = { who = PBG value = 200 }
+	# Inherit Stuff as a "just in case"
+    inherit = WUR
+	inherit = BAV
+	inherit = BAD
+	inherit = FRW
+	inherit = FRE
+	# SGF Capital is now in Munich
+	capital = 599
+    any_owned = {
+	limit = {
+	NOT = { is_core = CFR }	
+	NOT = { is_core = SGF }	
+	NOT = { is_core = SLO }	
+	}
+	secede_province = BOH
+	}
+    # Secede all CFR stuff to CFR
+	any_owned = { 
+	limit = { 
+	is_core = FRM
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+    secede_province = CFR
+	}
+	}	
+	CFR = {
+	inherit = FRM
+	capital = 565
+	government = prussian_constitutionalism
+    political_reform = landed_voting
+	political_reform = party_appointed
+    political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	political_reform = confederalism
+	primary_culture = rheinish
+	# Burgundian Influence Everywhere
+	diplomatic_influence = { who = BRG value = 400 }
+	relation = { who = BRG value = 400 }
+	diplomatic_influence = { who = PBG value = 400 }
+	relation = { who = PBG value = 400 }
+	# Free Tech School Change
+	tech_school = culture_tech_school
+	# Annex all northern Rhenish States
+	country_event = 123228
+    }
+	PRU_581 = { add_core = NGF }	#Westphalia
+	HAN_534 = { add_core = NGF }	#East Frisia
+	HAM_528 = { add_core = NGF }	#Hanover
+	PRU_546 = { add_core = NGF }	#Pomerania
+	SAX_1 = { add_core = NGF }		#Thuringia
+	HOL_369 = { add_core = NGF }	#Holstein
+	PRU_553 = { add_core = NGF }	#Anhalt
+	PRU_549 = { add_core = NGF }	#Brandenburg
+	SAX_558 = { add_core = NGF }	#Saxony		
+    }
+}
+   
+########################################################################################################### REMOVED PROTECOTRATE EVENTS AND REPLACED THEM WITH "CONFEDERATION OF THE RHINE" ###########################################################################################################
+
+country_event = {
+	id = 123110 # Dissolution of HRE
+	title = "EVTNAME123110"
+	desc = "EVTDESC123110"
+	picture = "?"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "123110.A"
+		
+		BOH = {
+			prestige = -50
+		}
+		BRG = {
+			prestige = -25
+		}
+		PBG = {
+			prestige = -25
+		}
+		SCA = {
+			prestige = -25
+		}
+		any_owned = {
+			limit = {
+				OR = {
+					is_core = BRN
+					is_core = SAX
+					#is_core = MEI
+					is_core = HEK
+					is_core = NAS
+					is_core = AUS
+					is_core = BAV
+					is_core = SWI
+					is_core = WUR
+					is_core = BAD
+					is_core = WES
+					is_core = RHI
+					is_core = HAN
+					is_core = PRU
+					is_core = POM
+					is_core = GER
+					is_core = FRE
+					is_core = FRW
+				}
+			}
+			remove_core = BRG
+			remove_core = PBG
+			remove_core = SCA
+			remove_core = BOH
+		}
+		#country_event = 1231110
+		# Moved to Decision that can be used after solving Austrian question.
+	}
+}
+
+country_event = {
+	id = 1231110 
+	title = "EVTNAME123111"
+	desc = "EVTDESC123111"
+	picture = "?"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+	name = "1231110.A"
+	set_country_flag = GER_claims_confirmed
+	SAX = { all_core = { add_core = THIS } }
+	ai_chance = { 
+	factor = 29
+		}
+	}
+	
+	option = { 
+	name = "1231110.B"
+	badboy = 5 
+	set_country_flag = GER_claims_confirmed
+	SAX = { all_core = { add_core = THIS }}
+	682 = { add_core = THIS  }
+	683 = { add_core = THIS  }
+	ai_chance = { 
+	factor = 50
+		}
+	}
+	
+	option = { 
+	name = "1231110.C"
+	badboy = 12
+	set_country_flag = GER_claims_confirmed
+	SAX = { all_core = { add_core = THIS }}
+	SIL = { all_core = { add_core = THIS }}
+	ai_chance = { 
+	factor = 20
+		}
+	}
+	
+	option = { 
+	name = "1231110.E"
+	badboy = 50
+	set_country_flag = hitlersfriend
+	set_country_flag = GER_claims_confirmed
+	FRA_412 = { add_core = GER } 
+	SAX = { all_core = { add_core = THIS }}
+	#SWI = { all_core = { add_core = THIS }}
+	BOH = { all_core = { add_core = THIS }}
+    RHI = { all_core = { add_core = THIS }}
+	ai_chance = { 
+	factor = 1
+		}
+	}
+}
+
+#########################
+# 	Danubian Revolution	
+#123111 = Etruria welcomes the German Revolutionaries
+#123112 = Etruria decides whether to strike a deal with the DUA 
+#123113 = DUA choice
+#123114 = DUA accepts 
+#123115 = DUA refuses
+#123116 = Proper Revolution in Bavaria (more central than Vienna)
+#123117 = Danubian States join the new Federation 
+#123118 = Rhenish states choices
+#123119 = DUA attack on the Burgundians 
+#123120 = Burgundy is informed of Anglois attack	
+#	North German League 
+#123131 = Proclamation of the North German league
+#2) Expansion of the League ?
+#####################
+
+country_event = {
+	id = 123113 # A Pact with Italia ?
+	title = "GER3.T"
+	desc = "GER3.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "123113.A"
+	set_country_flag = secret_pact_ITA
+	FROM = { country_event = 123114 }
+	ai_chance = { 
+	factor = 70 
+		}
+	}
+	
+	option = { 
+	name = "123113.B"
+	FROM = { country_event = 123115 }
+	ai_chance = { 
+	factor = 30
+	modifier = { 
+	factor = 2 
+	NOT = { relation = { who = FROM value = -100 } }
+			}
+	modifier = { 
+	factor = 1.5 
+	NOT = { relation = { who = FROM value = 0 } }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 123114 # Secret Pact with Paris
+	title = "GER4.T"
+	desc = "GER4.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "123114.A"
+	relation = { who = DUA value = 75 }
+	}
+}
+
+country_event = {
+	id = 123115 # Paris refused
+	title = "GER5.T"
+	desc = "GER5.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "123115.A"
+	relation = { who = DUA value = -75 }
+	set_country_flag = never_forget_DUA
+	}
+}
+
+# Standard Version by Italy
+
+country_event = { 
+	id = 123116 #The Bavarian Republic - This forms the full SGF as it is supported by Italy. 
+	title = "GER6.T"
+	desc = "GER6.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "123116.A"
+	set_global_flag = second_german_revoultion
+    set_global_flag = wait_infamy_council
+	government = democracy 
+	political_reform = federalism
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	country_event = 800054
+	relation = { who = FROM value = 300 }
+	create_alliance = FROM 
+	add_country_modifier = { name = taiping_draft duration = 1200 }
+	add_accepted_culture = rheinish 
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	#Austria
+		AUS = {
+			all_core = {
+				limit = {
+					is_core = GER
+				}
+				add_core = SGF
+			}
+		}
+		#Bavaria
+		BAV = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+	    #Wurzburg
+		FRW = {
+		all_core = {
+			add_core = SGF
+			}
+		}
+	    #Franconia
+		FRE = {
+		all_core = {
+			add_core = SGF
+			}
+		}
+		#Wurtemberg
+		WUR = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Baden
+		BAD = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Swiss
+		SWI = {
+			all_core = {
+				add_core = SGF
+			}
+		}
+		#Tirol
+		AUS_612 = {
+			add_core = SGF
+		}
+	
+	    change_tag = SGF
+
+        diplomatic_influence = { who = HUA value = -200 }
+		diplomatic_influence = { who = HUN value = -200 }
+		diplomatic_influence = { who = BOH value = -200 }
+		diplomatic_influence = { who = BRG value = -200 }
+		diplomatic_influence = { who = PBG value = -200 }
+		relation = { who = HUA value = -400 }
+		relation = { who = HUN value = -400 }
+		relation = { who = BOH value = -400 }
+		relation = { who = BRG value = -400 }
+		relation = { who = PBG value = -400 }
+		leave_alliance = BOH
+		leave_alliance = HUA
+		leave_alliance = BRG
+		leave_alliance = PBG
+		leave_alliance = HUN
+
+		# This prevents it getting stuck in a sphere and breaking things for whatever reason
+		any_country = { 
+		limit = {
+		is_greater_power = yes
+		NOT = { tag = ITA }
+		}
+		diplomatic_influence = { who = SGF value = -400 }
+		}
+	
+	random_country = {
+		limit = { 
+			is_sphere_leader_of = THIS
+			NOT = { is_our_vassal = THIS }
+			}
+			diplomatic_influence = {
+				who = THIS
+				value = -400
+			}
+			relation = {
+				who = THIS
+				value = -400
+			}
+			leave_alliance = THIS
+	}
+	
+	any_country = { limit = { primary_culture = south_german } country_event = 123117 } 
+	any_country = { limit = { primary_culture = rheinish } country_event = 123118 } 
+	any_country = { limit = { has_country_flag = anschluss_DUA } create_alliance = THIS }
+	set_country_flag = check_for_HUA
+	BOH = { 
+			country_event = { id = 123104 days = 30 }
+		}
+	any_country = {
+	   limit = {
+	      exists = yes 
+	      tag = BRG
+	   }
+	   country_event = { id = 123105 days = 20 }
+	}
+	any_country = {
+	   limit = {
+	      exists = yes
+	      tag = PBG
+	      owns = 411
+	   }
+	   country_event = { id = 123105 days = 20 }
+	}
+	}
+}
+
+# Special Version triggered by Total Revolution - This is the full SGF due to complete chaos.
+
+# This need to be rewritten at some point.
+
+### This is a exclusively Bavarian Revolt. They must form republican SGF to trigger foreign responces.
+
+country_event = { 
+	id = 123126 #The Bavarian Republic
+	title = "GER31.T"
+	desc = "GER31.D"
+	
+	trigger = { 
+	tag = BAV 
+	has_global_flag = first_council_of_munich
+	NOT = { has_global_flag = second_german_revoultion }
+	NOT = { has_global_flag = german_council_accepted }
+	NOT = { has_global_flag = SGF_revolution_is_dead }
+	NOT = { exists = SGF }
+	NOT = { ITA = { is_greater_power = yes } }	
+	NOT = { exists = GER }
+	}
+	
+	mean_time_to_happen = { 
+	months = 12
+	}
+	
+	major = yes 
+	
+	option = { 
+	name = "123126.A"
+	set_global_flag = second_german_revoultion
+    set_country_flag = crazy_BAV
+	government = democracy 
+	political_reform = unitary
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	country_event = 800054
+	add_country_modifier = { name = taiping_draft duration = 1200 }
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	#Austria
+		AUS = {
+			all_core = {
+				limit = {
+					is_core = GER
+				}
+				add_core = BAV
+			}
+		}
+	    #Wurzburg
+		FRW = {
+		all_core = {
+			add_core = BAV
+			}
+		}
+	    #Franconia
+		FRE = {
+		all_core = {
+			add_core = BAV
+			}
+		}
+		#Wurtemberg
+		WUR = {
+			all_core = {
+				add_core = BAV
+			}
+		}
+		#Baden
+		BAD = {
+			all_core = {
+				add_core = BAV
+			}
+		}
+		#Swiss
+		SWI = {
+			all_core = {
+				add_core = BAV
+			}
+		}
+		#Tirol
+		AUS_612 = {
+			add_core = BAV
+		}
+        diplomatic_influence = { who = HUA value = -200 }
+		diplomatic_influence = { who = HUN value = -200 }
+		diplomatic_influence = { who = BOH value = -200 }
+		diplomatic_influence = { who = BRG value = -200 }
+		diplomatic_influence = { who = PBG value = -200 }
+		relation = { who = HUA value = -400 }
+		relation = { who = HUN value = -400 }
+		relation = { who = BOH value = -400 }
+		relation = { who = BRG value = -400 }
+		relation = { who = PBG value = -400 }
+		leave_alliance = BOH
+		leave_alliance = HUA
+		leave_alliance = BRG
+		leave_alliance = PBG
+		leave_alliance = HUN
+		
+		# This prevents it getting stuck in a sphere and breaking things for whatever reason
+		any_country = { 
+		limit = {
+		is_greater_power = yes
+		NOT = { tag = ITA }
+		}
+		diplomatic_influence = { who = SGF value = -400 }
+		}
+
+	   random_country = {
+		limit = { 
+			is_sphere_leader_of = THIS
+			NOT = { is_our_vassal = THIS }
+			}
+			diplomatic_influence = {
+				who = THIS
+				value = -400
+			}
+			relation = {
+				who = THIS
+				value = -400
+			}
+			leave_alliance = THIS
+	   }	
+	}
+}
+
+country_event = { 
+	id = 123117 #The Danubian options
+	title = "GER7.T"
+	desc = "GER7.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123117.A"
+	FROM = { inherit = THIS }
+	ai_chance = { factor = 100 }
+	}
+	
+	option = { 
+	name = "123117.B"
+	}
+}
+
+country_event = { 
+	id = 123118 #The Rhenish options
+	title = "GER8.T"
+	desc = "GER8.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123118.A"
+	FROM = { inherit = THIS }
+	ai_chance = { factor = 35 
+	modifier = {
+	factor = 0
+	ruling_party_ideology = reactionary
+			}
+	modifier = {
+	factor = 0
+	government = theocracy
+			}
+	modifier = {
+	factor = 0
+	government = absolute_monarchy
+			}
+	modifier = {
+	factor = 2.5
+	government = democracy
+			}
+	modifier = {
+	factor = 2.5
+	government = socialist_republic
+			}
+	modifier = {
+	factor = 2.5
+	government = parliamentary_republic
+			}
+		}
+	}
+	
+	option = { 
+	name = "123118.B"
+	relation = { who = FROM value = -100}
+	ai_chance = {
+			factor = 65
+			modifier = {
+				factor = 0
+				ruling_party_ideology = liberal
+			}
+			modifier = {
+				factor = 0
+				ruling_party_ideology = anarcho_liberal
+			}
+			modifier = {
+				factor = 0
+				is_greater_power = yes
+			}
+		}
+	}
+}	
+
+country_event = { 
+	id = 123119 #Anglois intervention in Burgundy
+	title = "GER9.T"
+	desc = "GER9.D"	
+	
+	trigger = { 
+	tag = DUA 
+	has_country_flag = secret_pact_ITA 
+	BRG = { war_with = SGF }
+	NOT = { owns = 428 } #Dijon
+	NOT = { BOG = { owns = 428 } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+	
+	option = { 
+	name = "123119.A"
+	clr_country_flag = secret_pact_ITA
+	end_war = SGF
+	end_war = ITA
+	relation = { who = ITA value = 150 }
+	relation = { who = SGF value = 150 }
+	badboy = 5
+	BRG = { country_event = 123120 }
+	casus_belli = {
+				target = BRG
+				type = acquire_state
+				months = 24
+		}
+	war = {
+		target = BRG
+			attacker_goal = {
+				casus_belli = acquire_state
+				state_province_id = 428
+			}
+		}
+	}
+	
+	option = { 
+	name = "123119.B"
+	clr_country_flag = secret_pact_ITA
+	relation = { who = ITA value = -150 }
+	relation = { who = SGF value = -150 }
+	relation = { who = BRG value = 50 }
+	relation = { who = BOH value = 50 }
+	prestige = -20
+	}
+}
+
+country_event = { 
+	id = 1231191 #Anglois intervention in Burgundy
+	title = "GER9.T"
+	desc = "GER9.D"	
+	
+	trigger = { 
+	tag = DUA 
+	has_country_flag = secret_pact_ITA 
+	PBG = { war_with = SGF }
+	NOT = { owns = 428 } #Dijon
+	NOT = { BOG = { owns = 428 } }
+	}
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+	
+	option = { 
+	name = "123119.A"
+	clr_country_flag = secret_pact_ITA
+	end_war = SGF
+	end_war = ITA
+	relation = { who = ITA value = 150 }
+	relation = { who = SGF value = 150 }
+	badboy = 5
+	PBG = { country_event = 123120 }
+	casus_belli = {
+				target = PBG
+				type = acquire_state
+				months = 24
+		}
+	war = {
+		target = PBG
+			attacker_goal = {
+				casus_belli = acquire_state
+				state_province_id = 428
+			}
+		}
+	}
+	
+	option = { 
+	name = "123119.B"
+	clr_country_flag = secret_pact_ITA
+	relation = { who = ITA value = -150 }
+	relation = { who = SGF value = -150 }
+	relation = { who = PBG value = 50 }
+	relation = { who = BOH value = 50 }
+	prestige = -20
+	}
+}
+
+country_event = { 
+	id = 123120 #Anglois attacks Burgundy
+	title = "GER10.T"
+	desc = "GER10.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123120.A"
+	}
+}
+
+#North German League
+
+country_event = { 
+	id = 123135
+	title = "GER25.T"
+	desc = "GER25.D"
+	
+	trigger = { 
+	tag = SGF 
+	year = 1880 
+	NGF = { exists = yes war = no }
+	NOT = { has_country_flag = berlin_compromise }
+	}
+	
+	mean_time_to_happen = { 
+	months = 300
+	modifier = { 
+	factor = 0.5 
+	is_greater_power = yes 
+		}
+	modifier = { 
+	factor = 0.5 
+	rank = 4 
+		}
+	modifier = { 
+	factor = 0.01						
+	NGF = { in_sphere = THIS }
+		}		
+	}	
+	
+	option = { 
+	name = "123135.A"
+	NGF = { country_event = 123136 }
+	set_country_flag = berlin_compromise
+	ai_chance = { factor = 100 }
+	}
+	
+	option = { 
+	name = "123135.B"
+	set_country_flag = berlin_compromise
+	ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 123136
+	title = "GER26.T"
+	desc = "GER26.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123136.A"
+	SGF = { inherit = NGF add_accepted_culture = north_german }
+	FROM = { country_event = 123137 }
+	ai_chance = { 
+	factor = 75 
+	modifier = { 
+	factor = 0 
+	FROM = { is_greater_power = no }
+			}
+	modifier = { 
+	factor = 2 
+	THIS = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }	
+	FROM = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }	
+			}
+	modifier = { 
+	factor = 2 
+	THIS = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }
+	FROM = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}	
+	modifier = { 
+	factor = 0.5
+	THIS = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }
+	FROM = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}
+	modifier = { 
+	factor = 0.5
+	FROM = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }
+	THIS = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}
+	
+	modifier = { 
+	factor = 2
+	FROM = { OR = { government = socialist_republic government = proletarian_dictatorship } }
+	THIS = { OR = { government = socialist_republic government = proletarian_dictatorship } }	
+			}
+	modifier = { 
+	factor = 0
+	FROM = { government = proletarian_dictatorship }
+	THIS = { OR = { government = democracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government }}	
+			}
+	modifier = { 
+	factor = 0
+	THIS = { government = proletarian_dictatorship }
+	FROM = { OR = { government = democracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government }}
+			}
+		}
+	}
+	
+	option = { 
+	name = "123136.B"
+	ai_chance = { factor = 25 }
+	}
+	
+	option = { 
+	name = "123136.C"
+	NGF = { inherit = SGF add_accepted_culture = south_german add_accepted_culture = rheinish}
+	country_event = 123137
+	ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 123137
+	title = "GER27.T"
+	desc = "GER27.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123137.A"
+	}
+}
+
+country_event = { 
+	id = 123143
+	title = "GER43.T"
+	desc = "GER43.D"
+	
+	trigger = { 
+	tag = NGF
+	year = 1880 
+	SGF = { exists = yes war = no }
+	NOT = { has_country_flag = berlin_compromise }
+	}
+	
+	mean_time_to_happen = { 
+	months = 300
+	modifier = { 
+	factor = 0.5 
+	is_greater_power = yes 
+		}
+	modifier = { 
+	factor = 0.5 
+	rank = 4 
+		}
+	modifier = { 
+	factor = 0.01						
+	SGF = { in_sphere = THIS }
+		}		
+	}	
+	
+	option = { 
+	name = "123143.A"
+	SGF = { country_event = 123144 }
+	set_country_flag = berlin_compromise
+	ai_chance = { factor = 100 }
+	}
+	
+	option = { 
+	name = "123143.B"
+	set_country_flag = berlin_compromise
+	ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 123144
+	title = "GER44.T"
+	desc = "GER44.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123144.A"
+	NGF = { inherit = SGF add_accepted_culture = south_german }
+	FROM = { country_event = 123145 }
+	ai_chance = { 
+	factor = 75 
+	modifier = { 
+	factor = 0 
+	FROM = { is_greater_power = no }
+			}
+	modifier = { 
+	factor = 2 
+	THIS = { OR = { government = parliamentary_republic government = democracy government = socialist_republic} }	
+	FROM = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }	
+			}
+	modifier = { 
+	factor = 2 
+	THIS = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }
+	FROM = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}	
+	modifier = { 
+	factor = 0.5
+	THIS = { OR = { government = parliamentary_republic government = democracy  government = socialist_republic} }
+	FROM = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}
+	modifier = { 
+	factor = 0.5
+	FROM = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }
+	THIS = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }	
+			}
+	
+	modifier = { 
+	factor = 2
+	FROM = { OR = { government = proletarian_dictatorship government = socialist_republic } }
+	THIS = { OR = { government = proletarian_dictatorship government = socialist_republic } }	
+			}
+	modifier = { 
+	factor = 0
+	FROM = { government = proletarian_dictatorship }
+	THIS = { OR = { government = democracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government }}	
+			}
+	modifier = { 
+	factor = 0
+	THIS = { government = proletarian_dictatorship }
+	FROM = { OR = { government = democracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government }}
+			}
+		}
+	}
+	
+	option = { 
+	name = "123144.B"
+	ai_chance = { factor = 25 }
+	}
+	
+	option = { 
+	name = "123144.C"
+	SGF = { inherit = NGF add_accepted_culture = north_german add_accepted_culture = rheinish }
+	country_event = 123145
+	ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 123145
+	title = "GER45.T"
+	desc = "GER45.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "123145.A"
+	}
+}
+
+country_event = { 
+	id = 123138
+	title = "GER28.T"
+	desc = "GER28.D"
+	
+	trigger = { 
+	tag = SGF
+	NOT = { has_country_flag = cleanupSGF }
+	owns = 595
+	owns = 599
+	owns = 613
+	owns = 619 
+	owns = 612 
+	owns = 589 
+	owns = 586 
+	owns = 605
+	SGF = {
+		all_core = {
+			owned_by = THIS
+	      }
+	}	
+	war = no 
+	}
+	
+	mean_time_to_happen =  { months = 12 }
+	
+	option = { 
+	name = "123138.A"
+	prestige = 2 
+	SWI = { all_core = { add_core = GNV }   }	
+	set_country_flag = cleanupSGF
+	any_owned = { 
+	remove_core = TIR 
+	remove_core = SAL 
+	remove_core = BAD 
+	remove_core = WUR 
+	remove_core = SWI
+	remove_core = FRW
+	remove_core = FRE
+		}
+	}
+}
+
+###### The Third German Council #####
+
+country_event = { 
+	id = 123156 
+	title = "GER36.T"
+	desc = "GER36.D"
+	
+	is_triggered_only = yes
+
+    option = { 
+	name = "GER36.A"
+	prestige = 5
+	SGF = { country_event = { id = 123157 days = 3 } }
+	any_pop = {
+	scaled_militancy = {
+			factor = 3
+			ideology = reactionary
+	}
+	scaled_militancy = {
+			factor = -3
+			ideology = liberal
+	}
+	scaled_militancy = {
+			factor = -3
+			ideology = anarcho_liberal
+	}
+	}
+    ai_chance = {
+	factor = 60
+	     }
+	}	
+	
+    option = { 
+	name = "GER36.B" 
+	prestige = -5
+	any_pop = {
+	scaled_militancy = {
+			factor = -3
+			ideology = reactionary
+	}
+	scaled_militancy = {
+			factor = 3
+			ideology = liberal
+	}
+	scaled_militancy = {
+			factor = 3
+			ideology = anarcho_liberal
+	}
+	}
+	country_event = { id = 123104 days = 30 }
+	any_country = {
+	limit = {
+	exists = yes 
+	tag = BRG
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+	any_country = {
+	limit = {
+	exists = yes
+	tag = PBG
+	owns = 411
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+    ai_chance = {
+	factor = 40
+	     }
+	}	
+}
+
+country_event = { 
+	id = 123157
+	title = "GER37.T"
+	desc = "GER37.D"
+	
+	is_triggered_only = yes
+
+    option = { 
+	name = "GER37.A"
+	BOH = { country_event = { id = 123158 days = 3 } }
+    ai_chance = {
+	factor = 90
+	     }
+	}	
+	
+    option = { 
+	name = "GER37.B" 
+	prestige = 5
+	BOH = { 
+	country_event = { id = 123104 days = 30 }
+	}
+	any_country = {
+	limit = {
+	exists = yes 
+	tag = BRG
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+	any_country = {
+	limit = {
+	exists = yes
+	tag = PBG
+	owns = 411
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+    ai_chance = {
+	factor = 10
+	     }
+	}	
+}
+
+country_event = { 
+	id = 123158
+	title = "GER38.T"
+	desc = "GER38.D"
+	
+	is_triggered_only = yes
+
+    option = { 
+	name = "GER38.A"
+	prestige = 5
+	SGF = { country_event = { id = 123159 days = 3 } }
+    }
+}
+
+country_event = { 
+	id = 123159
+	title = "GER39.T"
+	desc = "GER39.D"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+    option = { 
+	name = "GER39.A"
+	prestige = -20
+	end_war = HUN
+	end_war = HUA
+	end_war = BOH
+	end_war = BRG
+	end_war = PBG
+	clr_global_flag = second_german_revoultion
+	clr_global_flag = BRG_break_SGF
+	clr_global_flag = BOH_break_SGF	
+	clr_global_flag = SGF_crisis
+	clr_global_flag = wait_infamy_council
+	set_country_flag = SGF_south
+	set_global_flag = CFR_exists
+	set_global_flag = third_german_treaty
+	BOH = { set_country_flag = ban_CAE_formation }
+	political_reform = confederalism
+	relation = { who = HUA value = 200 }
+	relation = { who = HUN value = 200 }
+	relation = { who = BOH value = 200 }
+	relation = { who = BRG value = 200 }
+	relation = { who = PBG value = 200 }
+    diplomatic_influence = { who = HUA value = 200 }
+    diplomatic_influence = { who = HUN value = 200 }
+    diplomatic_influence = { who = BOH value = 200 }
+	diplomatic_influence = { who = BRG value = 200 }
+	diplomatic_influence = { who = PBG value = 200 }
+	# Inherit Stuff as a "just in case"
+    inherit = WUR
+	inherit = BAV
+	inherit = BAD
+	inherit = FRW
+	inherit = FRE
+	# SGF Capital is now in Munich
+	capital = 599
+	# ADD CFR Cores to North
+	HES_566 = { add_core = CFR }	#Hessen
+	PRU_575 = { add_core = CFR }	#Nordrhein	
+	PRU_581 = { add_core = CFR }    #Westfalen
+	HAN_534 = { add_core = CFR }	#East Frisia
+	# Remove/ADD CFR cores on Specific Territory
+	OLD = { all_core = { remove_core = CFR } }
+	564 = { remove_core = SGF }
+	# Ensure that BOH gives all territory it owns to CFR and SGF
+	BOH = { 
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+    }
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+    }
+	# Ensure that BRG gives all territory it owns to CFR and SGF
+    BRG = { 
+	# Burgundian Influence Everywhere
+	diplomatic_influence = { who = CFR value = 400 }
+	relation = { who = CFR value = 400 }
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+    }	
+    PBG = { 
+	# Burgundian Influence Everywhere
+	diplomatic_influence = { who = CFR value = 400 }
+	relation = { who = CFR value = 400 }
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = SGF
+	}
+	secede_province = SGF
+    }
+    }
+	# Remove all SGF cores from CFR
+	CFR = { all_core = { remove_core = SGF } }	
+	# HUA gets its shit back
+    any_owned = { 
+	limit = { 
+	is_core = HUA
+	}
+    secede_province = HUA
+	}
+    # HEK is flipped to WES 
+    any_owned = { 
+	limit = { 
+	is_core = HEK
+	}
+    secede_province = HEK
+	}
+    #any_owned = { 
+    #limit = { 
+	#is_core = SWI
+    #}
+    #secede_province = SWI
+	#}
+    any_owned = { 
+	limit = { 
+	NOT = { is_core = SGF }	
+	is_core = SLO
+    }
+    secede_province = SLO
+	}
+    any_owned = {
+	limit = {
+	NOT = { is_core = CFR }	
+	NOT = { is_core = SGF }	
+	NOT = { is_core = SLO }	
+	}
+	secede_province = BOH
+	}
+    # Secede all CFR stuff to CFR
+	any_owned = { 
+	limit = { 
+	is_core = FRM
+	}
+	secede_province = CFR
+	}
+    any_owned = { 
+	limit = { 
+	is_core = CFR
+	}
+    secede_province = CFR
+	}	
+	CFR = {
+	inherit = FRM
+	capital = 565
+	government = prussian_constitutionalism
+    political_reform = landed_voting
+	political_reform = party_appointed
+    political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	political_reform = confederalism
+	primary_culture = rheinish
+	# Free Tech School Change
+	tech_school = culture_tech_school
+	# Annex all northern Rhenish States
+	country_event = 123228
+    }
+	PRU_581 = { add_core = NGF }	#Westphalia
+	HAN_534 = { add_core = NGF }	#East Frisia
+	HAM_528 = { add_core = NGF }	#Hanover
+	PRU_546 = { add_core = NGF }	#Pomerania
+	SAX_1 = { add_core = NGF }		#Thuringia
+	HOL_369 = { add_core = NGF }	#Holstein
+	PRU_553 = { add_core = NGF }	#Anhalt
+	PRU_549 = { add_core = NGF }	#Brandenburg
+	SAX_558 = { add_core = NGF }	#Saxony	
+    any_pop = {	
+	scaled_consciousness = {
+			factor = -3
+			ideology = conservative
+	}
+	scaled_consciousness = {
+			factor = -3
+			ideology = market_liberal
+	}	
+	scaled_consciousness = {
+			factor = 5
+			ideology = liberal
+	}
+	scaled_consciousness = {
+			factor = 8
+			ideology = anarcho_liberal
+	}
+	scaled_militancy = {
+			factor = -3
+			ideology = conservative
+	}
+	scaled_militancy = {
+			factor = -3
+			ideology = market_liberal
+	}
+	scaled_militancy = {
+			factor = 5
+			ideology = liberal
+	}
+	scaled_militancy = {
+			factor = 8
+			ideology = anarcho_liberal
+	}
+	}
+    ai_chance = {
+	factor = 75
+	     }		
+    }
+	
+    option = { 
+	name = "GER39.B"
+    badboy = 1
+	prestige = 25
+	any_pop = {
+	scaled_consciousness = {
+			factor = 6
+			ideology = reactionary
+	}
+	scaled_consciousness = {
+			factor = 3
+			ideology = conservative
+	}
+	scaled_consciousness = {
+			factor = 3
+			ideology = market_liberal
+	}
+	scaled_militancy = {
+			factor = 6
+			ideology = reactionary
+	}
+	scaled_militancy = {
+			factor = 3
+			ideology = conservative
+	}
+	scaled_militancy = {
+			factor = 3
+			ideology = market_liberal
+	}
+	}
+	relation = { who = HUA value = -400 }
+	relation = { who = HUN value = -400 }
+	relation = { who = BOH value = -400 }
+	relation = { who = BRG value = -400 }
+	relation = { who = PBG value = -400 }
+    diplomatic_influence = { who = HUA value = -400 }
+    diplomatic_influence = { who = HUN value = -400 }
+    diplomatic_influence = { who = BOH value = -400 }
+	diplomatic_influence = { who = BRG value = -400 }
+	diplomatic_influence = { who = PBG value = -400 }
+	any_country = {
+	limit = {
+	exists = yes 
+	tag = BRG
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+	any_country = {
+	limit = {
+	exists = yes
+	tag = PBG
+	owns = 411
+	}
+	country_event = { id = 123105 days = 20 }
+	}
+	BOH = { 
+	country_event = { id = 123104 days = 30 }
+	}
+    ai_chance = {
+	factor = 25
+	     }
+    }
+}
+
+###### Late German Events Trigger ####
+
+country_event = { 
+	id = 123099
+	title = "GER40.T"
+	desc = "GER40.D"
+	picture = "prussian_constitution"
+	
+	major = yes
+
+	trigger = { 
+	exists = yes
+	year = 1900
+	mass_politics = 1
+	OR = { 
+	primary_culture = north_german
+	primary_culture = south_german
+	primary_culture = rheinish
+	tag = CAE
+	}
+	NOT = { exists = GER }
+	NOT = { exists = HLR }
+	NOT = { has_global_flag = PreubensGloria }
+	}
+
+	mean_time_to_happen = { 
+	months = 12
+	modifier = { 
+	factor = 5 
+	tag = CAE
+	}
+	modifier = { 
+	factor = 0.5 
+	tag = CFR
+	}
+	modifier = { 
+	factor = 0.25
+	tag = SGF		
+	}
+	modifier = { 
+	factor = 0.25
+	tag = NGF
+	}
+	modifier = { 
+	factor = 0.5
+	year = 1905
+		}
+	}	
+	
+    option = { 
+	name = "GER40.A"
+	prestige = 10
+	set_global_flag = PreubensGloria
+	}
+}
+
+country_event = { 
+	id = 123174
+	title = "GER41.T"
+	desc = "GER41.D"
+	picture = "prussian_constitution"
+
+	trigger = { 
+	tag = CAE
+	exists = yes
+	has_global_flag = PreubensGloria
+	NOT = { has_country_flag = CAELATECHECK }
+	}
+
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+    option = { 
+	name = "GER41.A"
+	prestige = -10
+	any_pop = {
+			limit = {
+				culture = rheinish
+			}
+			militancy = 3
+	}
+	any_pop = {
+			limit = {
+				culture = south_german
+			}
+			militancy = 5
+	}
+	any_pop = {
+			limit = {
+				culture = north_german
+			}
+			militancy = 1
+	}
+	set_country_flag = CAELATECHECK
+	}
+}
+
+###### New German Council in $CAPITAL$ #####
+
+country_event = { 
+	id = 123170
+	title = "GER32.T"
+	desc = "GER32.D"
+	picture = "prussian_constitution"
+
+	trigger = { 
+	tag = BAV
+	year = 1900 
+	has_global_flag = PreubensGloria
+	exists = yes
+	NOT = { has_global_flag = third_german_treaty }
+	OR = { 
+    has_global_flag = CFR_exists
+	has_global_flag = CFRSGF_died
+	}
+	NOT = { 
+	OR = {
+	government = fascist_dictatorship
+	government = fascist_monarchy
+    government = proletarian_dictatorship
+    government = presidential_dictatorship
+	government = bourgeois_dictatorship
+	government = absolute_monarchy
+	     }
+    }
+	NOT = { has_global_flag = third_german_nation }
+	NOT = { has_global_flag = third_german_council }
+	NOT = { has_country_flag = third_german_council_start }
+	NOT = { has_country_flag = no_third_german_council }
+	NOT = { HLR = { exists = yes } }
+	NOT = { GER = { exists = yes } }
+    NOT = { SGF = { exists = yes } }
+	}
+	
+	mean_time_to_happen = { 
+	months = 48
+	modifier = { 
+	factor = 0.1
+	is_greater_power = yes 
+		}
+	modifier = { 
+	factor = 0.5 
+	is_secondary_power = yes 
+		}
+	modifier = { 
+	factor = 0.5 
+	AUS = { exists = yes }
+		}
+	modifier = { 
+	factor = 0.8
+	year = 1905
+		}
+	modifier = { 
+	factor = 0.8
+	year = 1910
+		}
+	modifier = { 
+	factor = 0.5
+	year = 1920
+		}
+	}
+	
+    option = { 
+	name = "GER32.A"
+	set_country_flag = third_german_council_start
+	prestige = 10
+    ai_chance = {
+	factor = 100
+	     }
+	}
+   
+    option = { 
+	name = "GER32.B"
+	set_country_flag = no_third_german_council
+    ai_chance = {
+	factor = 0
+	     }
+	}
+}
+	
+country_event = { 
+	id = 123171
+	title = "GER33.T"
+	desc = "GER33.D"
+	
+	major = yes
+	
+    trigger = { 
+	tag = BAV
+	has_country_flag = third_german_council_start
+	NOT = { has_global_flag = third_german_council }
+	NOT = { has_global_flag = third_german_nation }
+	}	
+	
+	mean_time_to_happen = { 
+    months = 1
+    }	
+	
+    option = { 
+	name = "GER33.A"
+	clr_country_flag = third_german_council_start
+	set_global_flag = third_german_council
+	any_country = { 
+		limit = {
+			exists = yes
+            OR = { 
+			tag = TIR
+			tag = AUS
+			tag = WUR
+			tag = FRE
+			tag = FRW
+			tag = BAD
+			tag = SAL
+			tag = SWI
+			tag = GRB
+				}
+			}
+			country_event = 123172
+	    }
+    }
+}
+
+country_event = { 
+	id = 123172
+	title = "GER34.T"
+	desc = "GER34.D"
+	
+    is_triggered_only = yes
+	
+    option = { 
+	name = "GER34.A"
+	set_country_flag = third_german_front
+	any_owned = { 
+		limit = {
+		is_core = THIS 
+		}
+	    add_core = SGF
+	    }
+    ai_chance = {
+	factor = 100
+	     }
+    }	
+	
+    option = { 
+	name = "GER34.B"	
+	prestige = 5
+    ai_chance = {
+	factor = 0
+	     }
+    }	
+}
+
+country_event = { 
+	id = 123173
+	title = "GER35.T"
+	desc = "GER35.D"
+	picture = "prussian_constitution"	
+		
+	trigger = { 
+	tag = BAV
+	has_global_flag = third_german_council
+	NOT = { has_global_flag = third_german_nation }
+	}
+	
+	mean_time_to_happen = { 
+    days = 14
+    }
+
+    option = { 
+	name = "GER35.A"
+	clr_global_flag = third_german_council
+	set_global_flag = third_german_nation
+	political_reform = confederalism
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots	
+	any_country = {
+		limit = {
+			has_country_flag = third_german_front
+			NOT = {
+				tag = THIS
+			}
+		}
+		annex_to = THIS
+	}
+	#Austria
+		AUS = {
+		all_core = {
+			limit = {
+				is_core = GER
+			}
+			add_core = SGF
+			}
+		}
+	#Wurzburg
+		FRW = {
+		all_core = {
+			add_core = SGF
+			}
+		}
+	#Franconia
+		FRE = {
+		all_core = {
+			add_core = SGF
+			}
+		}
+	#Bavaria
+		BAV = {
+		all_core = {
+			add_core = SGF
+		    }
+	    }
+	#Tirol
+		AUS_612 = {
+			add_core = SGF
+		}
+   change_tag = SGF
+   }
+}
+	
+### Baden, Austria, Switzerland, Grissons and Wuttemburg must use the "Join the New German Confederation" decisions to join the new SGF. They won't do this if they are a dictatorship or a non HM monarchy. New SGF gets a decision to deal with HUA ###
+	
+### Fake Confederation at the Elbe Conference - Triggers Munich Councils ###
+
+country_event = { 
+	id = 123175
+	title = "GER46.T"
+	desc = "GER46.D"
+	picture = "prussian_constitution"	
+		
+	is_triggered_only = yes
+	
+    option = { 
+	name = "GER46.A"
+	set_country_flag = ban_CAE_formation
+	prestige = -10
+	any_country = {
+	   limit = {
+	      owns = 425
+	   }
+	   country_event = 123100
+       }
+    }	
+}		
+	
+	
+###### FINAL GERMAN FORMATION #####
+
+country_event = { 
+	id = 123139 
+	title = "GER29.T"
+	desc = "GER29.D"
+	
+	major = yes 
+	
+	trigger = { 
+	year = 1900 
+	has_global_flag = PreubensGloria
+	OR = { 
+	primary_culture = south_german
+	primary_culture = rheinish 
+	primary_culture = north_german 
+		}
+	is_greater_power = yes 
+	
+	NOT = { GER = { exists = yes } }
+	NOT = { CAE = { exists = yes } } 
+	NOT = { HLR = { exists = yes } }
+	NOT = { BRG = { rank = 4 } }
+	NOT = { PBG = { rank = 4 } }
+	NOT = { SCA = { rank = 4 } }
+	NOT = { BOH = { rank = 4 } }
+	NOT = { has_country_flag = german_crown }
+	}
+	
+	mean_time_to_happen = { 
+	months = 300
+	modifier = { 
+	factor = 0.7 
+	tag = NGF 
+		}
+	modifier = {
+	factor = 0.7
+	tag = SGF 
+		}
+	modifier = { 
+	factor = 0.7
+	has_country_flag = CFR_GER
+		}
+	modifier = { 
+	factor = 0.5 
+	is_greater_power = yes 
+		}
+	modifier = { 
+	factor = 0.5 
+	rank = 4 
+		}
+	}
+	
+	immediate = { 
+	set_country_flag = german_crown
+	}
+	
+	option = { 
+	name = "GER29.A"
+	change_tag = GER 
+	political_reform = federalism	
+	prestige = 20
+	add_accepted_culture = rheinish 
+	add_accepted_culture = south_german 
+	add_accepted_culture = north_german
+	any_country = { 
+	limit = { is_greater_power = yes continent = europe NOT = { alliance_with = THIS } } 
+	relation = { who = THIS value = -150 }
+		}
+	any_country = { 
+	limit = { 
+		in_sphere = THIS 
+		OR = { 
+			primary_culture = south_german
+			primary_culture = rheinish 
+			primary_culture = north_german 
+				}		
+			}
+	annex_to = THIS
+		}
+	any_country = { 
+	limit = { 
+		AND = {
+		    OR = {
+			   primary_culture = south_german
+			   primary_culture = rheinish 
+			   primary_culture = north_german 
+			}
+			is_greater_power = no 
+		    }		
+	    }
+	country_event = 11106
+		}
+	any_country = {
+				limit = {
+					is_culture_group = germanic
+					exists = no
+					NOT = { has_country_flag = post_colonial_country }
+					OR = {
+						all_core = { owned_by = THIS }
+						tag = NGF
+						tag = SGF
+					}
+				}
+	country_event = 11105
+		}
+	ai_chance = { 
+	factor = 100
+		}
+	}
+	
+	option = { 
+	name = "GER29.B"
+	prestige = -5
+    any_pop = {	
+	militancy = 5 
+	   }
+	}	
+}
+
+###### INITIAL BOHEMIAN CHAIN - THE DEATH OF THE HRE #####
+
+country_event = { 
+	id = 123180 
+	title = "BOH1.T" #Wenceslaus place
+	desc = "BOH1.D"
+	picture = "rhapsody"
+	
+	trigger = { 
+	tag = BOH 
+	year = 1838
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 4 
+	} 
+	
+	option = { 
+	name = "BOH1.A"
+	prestige = 2 
+	any_pop = { 
+	   limit = { 
+	      pop_type = soldiers
+	   }
+	   militancy = -2 
+	   ideology = {
+			value = reactionary
+			factor = 0.2
+	   }
+	}
+	any_pop = { 
+		limit = { 
+		culture = czech
+			}
+		dominant_issue = {
+				factor = 0.05
+				value = jingoism
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123181 
+	title = "BOH2.T" #Character of Sigismund 
+	desc = "BOH2.D"
+	picture = "autocracy"
+	
+	trigger = { 
+	tag = BOH 
+	government = absolute_monarchy
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 12 
+	}
+	
+	option = { 
+	name = "BOH2.A"
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+	ideology = {
+			value = reactionary
+			factor = 0.4
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123182
+	title = "BOH3.T" #Die Zeil Oath commemoration -Frankfurt
+	desc = "BOH3.D"
+	picture = "BOH_oath"
+
+	trigger = { 
+	tag = FRM 
+	year = 1840 
+	NOT = { has_country_flag = zeil_oath } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	option = { 
+	name = "BOH3.A"
+	set_country_flag = zeil_oath
+	prestige = -1 
+	any_pop = { 
+	militancy = 2 
+	ideology = {
+			value = liberal
+			factor = 0.2
+			}
+		}
+	BRG = { country_event = 123183 } 
+	BOH = { country_event = 123184 }
+	any_country = { 
+		limit = { 
+			OR = { 
+			primary_culture = north_german
+			primary_culture = south_german 
+			primary_culture = rheinish
+				}
+			}
+		country_event = 123185
+		}
+	}
+}
+
+country_event = { 
+	id = 123183
+	title = "BOH4.T" #Die Zeil Oath commemoration -BRG
+	desc = "BOH4.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH4.A" 
+	prestige = -1 
+	any_pop = { 
+		limit = {
+		OR = {
+		   culture = north_german
+		   culture = rheinish 
+		   culture = south_german
+		   }	
+		}
+		consciousness = 3
+		ideology = {
+			value = liberal
+			factor = 0.02
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123184
+	title = "BOH5.T" #Die Zeil Oath commemoration -BOH
+	desc = "BOH5.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH5.A" 
+	prestige = -1 
+	any_pop = { 
+		limit = {
+		OR = {
+		   culture = north_german
+		   culture = rheinish 
+		   culture = south_german
+		   }	
+		}
+		consciousness = 3
+		ideology = {
+			value = liberal
+			factor = 0.04
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123185
+	title = "BOH6.T" #Die Zeil Oath commemoration -German states
+	desc = "BOH6.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH5.A" 
+	prestige = -1 
+	any_pop = { 
+		consciousness = 3
+		militancy = 1
+		ideology = {
+			value = liberal
+			factor = 0.05
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123186
+	title = "BOH7.T" #Creation of the Ludwig Society by Wolfgang Jagiellon-Karlstein 
+	desc = "BOH7.D"
+	picture = "banquet"
+	
+	trigger = { 
+	tag = BOH 
+	year = 1842 
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	option = { 
+	name = "BOH7.A" 
+	prestige = 1 
+	any_pop = { 
+	scaled_consciousness = {
+			factor = 3
+			ideology = liberal
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 123187
+	title = "BOH8.T" #The Franconian Charter
+	desc = "BOH8.D"	
+	picture = "german_radicals"
+	
+	trigger = { 
+	tag = FRE     
+	NOT = { has_country_flag = charter_FRE }
+	year = 1844 
+	}
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	option = { 
+	name = "BOH8.A"
+	set_country_flag = charter_FRE
+	government = hms_government
+	political_reform = wealth_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	relation = { who = BOH value = -200 } 
+	BOH = { diplomatic_influence = { who = THIS value = -400 } 
+	country_event = 123188
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 123188
+	title = "BOH9.T" #The Franconian Charter -BOH response
+	desc = "BOH9.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH9.A"
+	war = {
+		target = FRE
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+	}	
+	prestige = 4
+	set_country_flag = nuremberg_will_burn
+	ai_chance = { 
+	factor = 100
+		}
+	}
+	
+	option = { 
+	name = "BOH9.B" 
+	country_event = 123189
+	prestige = -1
+	any_pop = { 
+	scaled_militancy = {
+			factor = 3
+			ideology = reactionary
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123189
+	title = "BOH10.T" #The Franconian Charter -Sigismund forces war
+	desc = "BOH10.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH10.A"
+	war = {
+		target = FRE
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+	}	
+	prestige = 4
+	set_country_flag = nuremberg_will_burn
+	}
+}
+
+country_event = { 
+	id = 123190 #Burning of Nuremberg
+	title = "BOH11.T" 
+	desc = "BOH11.D" 
+	
+	trigger = { 
+	tag = BOH
+	has_country_flag = nuremberg_will_burn
+	OR = { 
+		AND = { 
+			war_with = FRE 
+			595 = { controlled_by = THIS } 
+			}
+		FRE = { vassal_of = THIS }
+		}
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	days = 1 
+	} 
+	
+	option = { 
+	name = "BOH11.A" 
+	set_global_flag = nuremberg_burnt
+	end_war = FRE 
+	create_vassal = FRE 
+	clr_country_flag = nuremberg_will_burn
+	FRE = { 
+	government = absolute_monarchy 
+	political_reform = none_voting
+	political_reform = no_meeting
+	political_reform = censored_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+    clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+    clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	}
+	badboy = 6 
+	595 = { 
+	    any_pop = { 
+		    limit = { 
+	           culture = south_german
+		     }
+			 reduce_pop = 0.1
+		     consciousness = 1
+		     militancy = 1
+	    }
+	}
+	any_country = { 
+	    limit = {
+	       OR = {
+	           primary_culture = north_german
+	           primary_culture = south_german
+	           primary_culture = rheinish
+	           }
+			}
+		relation = { who = THIS value = -100 } 
+		}
+	}
+	
+	
+}
+	
+country_event = { 
+	id = 123191 #The Song of Nuremberg
+	title = "BOH12.T" 
+	desc = "BOH12.D" 	
+	picture = "BOH_Nuremberg_Burning"
+	
+	trigger = { 
+	NOT = { has_global_flag = nuremburg_lied }
+	has_global_flag = nuremberg_burnt
+	primary_culture = south_german 
+	NOT = {
+		government = absolute_monarchy 
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 20 
+        modifier = {
+            factor = 0.1
+            has_country_flag = liberal_revolution_in_progress
+        }
+        modifier = {
+            factor = 0.01
+            has_country_modifier = springtime_of_nations
+        }
+	}
+	
+	option = { 
+	name = "BOH12.A" 
+	set_global_flag = nuremburg_lied
+	prestige = 5 
+	any_country = { 
+	    limit = {
+			OR = { 
+				primary_culture = rheinish 
+				primary_culture = south_german
+				primary_culture = north_german 
+			}
+	    }
+	    country_event = 123192
+    }
+	any_country = {
+	   limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			}
+       country_event = 123193 
+	} 
+	any_country = {
+	    limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			}
+        country_event = 123193 
+	    }
+	}
+}
+	
+country_event = { 
+	id = 123192 #The Song of Nuremberg -other Germans
+	title = "BOH13.T" 
+	desc = "BOH13.D" 
+	picture = "BOH_Nuremberg_Burning"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH13.A" 
+	any_pop = { 
+	consciousness = 3 
+		}
+	prestige = 1
+	}
+}
+
+country_event = { 
+	id = 123193 #The Song of Nuremberg -BOH/CAE
+	title = "BOH14.T" 
+	desc = "BOH14.D" 
+	picture = "BOH_Nuremberg_Burning"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH14.A" 
+	prestige = -5
+	}
+}
+
+country_event = { 
+	id = 123194 #Defenestration of Sigismund
+	title = "BOH15.T"
+	desc = "BOH15.D"
+	picture = "communist_riot"
+	
+	trigger = { 
+	tag = BOH 
+	has_country_flag = liberal_revolution_in_progress
+	NOT = { OR = { government = hms_government government = democracy } }
+	OR = {
+			AND = { 
+				government = absolute_monarchy 
+				year = 1848
+			}
+            AND = {
+                average_militancy = 4
+                has_country_modifier = springtime_of_nations
+            }
+            any_owned_province = {
+                is_capital = yes
+                controlled_by = REB
+            }
+            revolt_percentage = 0.50
+        }
+	}
+	
+	mean_time_to_happen =  {
+        months = 1
+        modifier = {
+            factor = 0.5
+            has_country_modifier = springtime_of_nations
+        }
+        modifier = {
+            factor = 1.5
+            NOT = { has_country_modifier = springtime_of_nations }
+        }
+        modifier = {
+            factor = 0.05
+            capital_scope = { controlled_by = REB }
+        }
+        modifier = {
+            factor = 0.8
+            average_militancy = 6
+        }
+        modifier = {
+            factor = 0.8
+            average_militancy = 7
+        }
+        modifier = {
+            factor = 0.8
+            average_militancy = 8
+        }
+        modifier = {
+            factor = 0.8
+            average_militancy = 9
+        }
+        modifier = {
+            factor = 0.6
+            revolt_percentage = 0.60
+        }
+        modifier = {
+            factor = 0.6
+            revolt_percentage = 0.70
+        }
+        modifier = {
+            factor = 0.6
+            revolt_percentage = 0.80
+        }
+    }
+	
+	immediate = {
+        clr_country_flag = liberal_revolution_fired
+        clr_country_flag = liberal_revolution_in_progress
+        set_country_flag = had_liberal_revolution
+    }
+	
+	option = { 
+	name = "BOH15.A" #What just happened ?
+	country_event = { id = 123195 days = 3 }
+	random_owned = {
+		limit = {
+			is_capital = yes
+			controlled_by = REB
+		}
+		change_controller = THIS
+	}
+	any_pop = { 
+		militancy = -5 
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 123195 #Coronation of Wolfgang as Ludwig I of Bohemia
+	title = "BOH16.T"
+	desc = "BOH16.D" 
+	
+	major = yes	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	set_global_flag = end_HRE
+	name = "BOH16.A" 
+    prestige_factor = -0.8
+            random_owned = {
+                limit = { owner = { government = prussian_constitutionalism } }
+                owner = { government = hms_government }
+            }
+			random_owned = {
+                limit = { owner = { government = absolute_monarchy } }
+                owner = { government = prussian_constitutionalism }
+            }
+	political_reform = wealth_voting
+    political_reform = population_equal_weight
+    political_reform = yes_meeting
+    political_reform = free_press
+    election = yes		
+	any_pop = {
+			limit = {
+				has_pop_culture = czech
+			}
+			ideology = { factor = -0.20 value = liberal } 
+			ideology = { factor = -0.10 value = reactionary  } 
+			ideology = { factor = 0.30 value = conservative } 
+	}
+	any_owned = {
+			limit = { 
+			is_colonial = no
+			}
+			any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = separatist
+				factor = -4
+			}
+		}
+		remove_province_modifier = liberal_agitation
+	   }
+	   remove_country_modifier = global_liberal_agitation
+	   remove_country_modifier = springtime_of_nations
+	   clr_country_flag = liberal_revolution_in_progress
+	   clr_country_flag = liberal_revolution_fired
+	   set_country_flag = had_liberal_revolution
+       country_event = { id = 123197 days = 14 }	
+       country_event = { id = 123198 days = 1 }	   
+	}
+}
+
+country_event = { 
+	id = 123196 #End of HRE event if someone avoided the Ludwig defenestration 
+	title = "BOH17.T"
+	desc = "BOH17.D" 
+	
+	major = yes 
+	
+	trigger = { 
+	tag = BOH 
+	OR = { 
+	AND = { government = democracy NOT = { has_global_flag = end_HRE } }
+	AND = { has_country_flag = had_liberal_revolution NOT = { has_global_flag = end_HRE } }
+		}
+	}
+	
+	mean_time_to_happen = { 
+	days = 3 
+	}
+	
+	option = { 
+	name = "BOH17.A" 
+	set_global_flag = end_HRE
+    prestige_factor = -0.8
+	country_event = { id = 123198 days = 1 }	
+	}
+}
+
+country_event = { 
+	id = 123197 #Trial of 37
+	title = "BOH18.T"
+	desc = "BOH18.D" 
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "BOH18.A" 
+    prestige = 5	
+	any_pop = {
+			limit = {
+				has_pop_culture = czech
+			}
+			ideology = { factor = -0.1 value = anarcho_liberal } 
+	}
+	any_owned = {
+			limit = { 
+			is_colonial = no
+			}
+			any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 5
+			   }
+		   }
+	   }
+   }
+}
+
+country_event = { 
+	id = 123198 #End of Franconian Puppet
+	title = "BOH19.T"
+	desc = "BOH19.D" 
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "BOH19.A" 
+    prestige = -2	
+	release_vassal = FRE
+    }
+}
+	
+	

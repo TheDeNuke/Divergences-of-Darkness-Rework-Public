@@ -1,0 +1,1614 @@
+### Tale of the Two Capitals ####
+### Triggered after the end of the Columbian War. This ultimately effects the civil war event chain if it ever occurs. ###
+
+######### MOVED TO SPCCommonwealth ########################
+
+#### Triggers ####
+#### Decline Trigger ####
+
+country_event = { 
+
+	id = 47001
+	title = "SPACW02.T"
+	desc = "SPACW02.D"
+	picture = "streetriot"	
+
+	trigger = {
+	tag = SPA
+    year = 1860	
+	NOT = { OR = { government = parliamentary_republic government = democracy government = socialist_republic } }
+	NOT = { exists = POR }	
+	NOT = { has_country_flag = SPA_CWTRIGGER }
+    NOT = { has_global_flag = SPA_CWACTIVE }
+    NOT = { has_global_flag = SPA_CWENDED }
+	OR = {
+	NOT = { rank = 16 }
+	NOT = { any_owned_province = { is_overseas = yes } }
+	has_country_flag = Colombian_loss
+	has_country_flag = dismantle_SPA
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 24
+		modifier = {
+			factor = 0.25 
+			NOT = { rank = 16 }
+		}
+		modifier = {
+			factor = 0.01
+			has_country_flag = dismantle_SPA
+		}
+	}
+
+	option = { 
+	name = "SPACW02.A"
+	prestige = -10
+	set_country_flag = SPA_CWTRIGGER
+	set_global_flag = SPA_CWACTIVE
+	}
+}
+
+country_event = { 
+
+	id = 47016
+	title = "SPACW17.T"
+	desc = "SPACW17.D"
+	picture = "alfonso_xii_bourbon"	
+
+	trigger = {
+	tag = SPA
+    year = 1860	
+	has_global_flag = SPA_CWACTIVE
+	OR = {
+	government = hms_government
+	government = prussian_constitutionalism
+	}	
+	NOT = { exists = POR }	
+    NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_country_flag = GLORYTOTHESPA }
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+
+	option = { 
+	name = "SPACW17.A"
+	prestige = 15
+	government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = mandatory_service
+	country_event = 800050
+	add_country_modifier = { 
+	name = calm_before_storm
+	duration = -1
+	}
+    set_country_flag = GLORYTOTHESPA
+	}
+}
+
+#### Democracy Lead-Up (Depends on the Capital) ####
+
+### The Federal Review ( Portugal Spain ) ###
+
+country_event = { 
+
+	id = 47002
+	title = "SPACW03.T"
+	desc = "SPACW03.D"
+	picture = "election"	
+
+	trigger = {
+	tag = SPA
+    year = 1860
+	NOT = { exists = POR }	
+	NOT = { has_country_flag = SPA_FEDREVIEW }
+	NOT = { has_country_flag = SPA_CWTRIGGER }
+    NOT = { has_global_flag = SPA_CWACTIVE }
+    NOT = { has_global_flag = SPA_CWENDED }
+    has_country_flag = SPA_LISBON
+	OR = {
+    government = democracy
+    government = parliamentary_republic
+	government = socialist_republic
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 24
+		modifier = {
+			factor = 0.25 
+			NOT = { rank = 16 }
+		}
+	}
+
+	option = { 
+	name = "SPACW03.A"
+	prestige = -5
+	set_country_flag = SPA_FEDREVIEW 
+	}
+}
+
+country_event = { 
+
+	id = 47003
+	title = "SPACW04.T"
+	desc = "SPACW04.D"
+	picture = "people_revolution"	
+
+	trigger = {
+	tag = SPA
+    year = 1860	
+	NOT = { exists = POR }
+	NOT = { has_country_flag = SPA_CWTRIGGER }
+    NOT = { has_global_flag = SPA_CWACTIVE }
+    NOT = { has_global_flag = SPA_CWENDED }
+    has_country_flag = SPA_FEDREVIEW 
+	OR = {
+    government = democracy
+    government = parliamentary_republic
+	government = socialist_republic
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+
+	option = { 
+	name = "SPACW04.A"
+	prestige = -10
+	remove_accepted_culture = castilian
+    add_country_modifier = { 
+	name = calm_before_storm
+	duration = -1
+	}
+    clr_country_flag = SPA_FEDREVIEW 
+	set_country_flag = SPA_CWTRIGGER
+	set_global_flag = SPA_CWACTIVE
+	}
+}
+
+### The Coup d'etat ( Castillian Spain ) ###
+
+country_event = { 
+
+	id = 47004
+	title = "SPACW05.T"
+	desc = "SPACW05.D"
+	picture = "fascist_march"	
+
+	trigger = {
+	tag = SPA
+    year = 1860	
+	NOT = { exists = POR }
+	NOT = { has_country_flag = SPA_FEDREVIEW }
+	NOT = { has_country_flag = SPA_CWTRIGGER }
+    NOT = { has_global_flag = SPA_CWACTIVE }
+    NOT = { has_global_flag = SPA_CWENDED }
+    has_country_flag = SPA_MADRID
+	OR = {
+    government = democracy
+    government = parliamentary_republic
+	government = socialist_republic
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 24
+		modifier = {
+			factor = 0.25 
+			NOT = { rank = 16 }
+		}
+	}
+
+	option = { 
+	name = "SPACW05.A"
+	prestige = -5
+	set_country_flag = SPA_ZAVALA
+	}
+}
+
+country_event = { 
+
+	id = 47005
+	title = "SPACW06.T"
+	desc = "SPACW06.D"
+	picture = "big_parade"	
+
+	trigger = {
+	tag = SPA
+    year = 1860	
+	NOT = { exists = POR }
+	NOT = { has_country_flag = SPA_FEDREVIEW }
+	NOT = { has_country_flag = SPA_CWTRIGGER }
+    NOT = { has_global_flag = SPA_CWACTIVE }
+    NOT = { has_global_flag = SPA_CWENDED }
+    has_country_flag = SPA_ZAVALA
+	OR = {
+    government = democracy
+    government = parliamentary_republic
+	government = socialist_republic
+	}
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+
+	option = { 
+	name = "SPACW06.A"
+	country_event = 60010
+    political_reform = mandatory_service
+	remove_accepted_culture = portuguese
+    add_country_modifier = { 
+	name = calm_before_storm
+	duration = -1
+	}
+    clr_country_flag = SPA_ZAVALA
+	set_country_flag = SPA_CWTRIGGER
+	set_global_flag = SPA_CWACTIVE
+	}
+}
+
+
+### SPANISH CIVIL WAR ###
+
+### $CAPITAL$ has gone silent - Warning of inevitable civil war ###
+
+country_event = { 
+
+	id = 47006
+	title = "SPACW07.T"
+	desc = "SPACW07.D"
+	picture = "spanish_glorious_revolution"	
+
+	trigger = {
+	tag = SPA
+	NOT = { exists = POR }
+	has_country_flag = SPA_CWTRIGGER
+	NOT = { has_country_flag = SPA_CWTRIGGERKEY }
+	war = no
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+
+	option = { 
+	name = "SPACW07.A"
+	prestige = -1
+	set_country_flag = SPA_CWTRIGGERKEY
+	}
+}
+
+### Variant 1: Portugal Spain ###
+
+country_event = { 
+
+	id = 47007
+	title = "SPACW08.T"
+	desc = "SPACW08.D"
+	picture = "spanish_glorious_revolution"	
+
+	major = yes
+	
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+    has_global_flag = SPA_CWACTIVE 
+	has_country_flag = SPA_CWTRIGGER
+	has_country_flag = SPA_CWTRIGGERKEY
+	has_country_flag = SPA_LISBON
+	war = no
+	}
+
+	mean_time_to_happen = { 
+	months = 1
+	}
+
+	option = { 
+	name = "SPACW08.A"
+	clr_country_flag = SPA_CWTRIGGER
+	clr_country_flag = SPA_CWTRIGGERKEY	
+	set_global_flag = SCWARISHERE
+	set_global_flag = SPACWPOR
+    remove_country_modifier = calm_before_storm
+	any_owned = { 
+	limit = { 
+	is_core = POR
+	NOT = { is_core = GAL }
+		}
+	secede_province = POR
+	}
+	POR = { 
+	capital = 521
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	     }
+    country_event = 470018
+	}
+	capital = 487
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+    political_reform = mandatory_service
+	country_event = 800050
+	primary_culture = castilian
+	remove_accepted_culture = portuguese
+    war = {
+			target = POR
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+	}
+	ai_chance = { 
+		factor = 100
+	   }
+    }
+
+	option = { 
+	name = "SPACW08.B"
+	clr_country_flag = SPA_CWTRIGGER
+	clr_country_flag = SPA_CWTRIGGERKEY	
+	set_global_flag = SCWARISHERE
+	set_global_flag = SPACWPOR
+    remove_country_modifier = calm_before_storm
+	any_owned = { 
+	limit = { 
+	is_core = POR
+	NOT = { is_core = GAL }
+		}
+	secede_province = POR
+	}
+    POR = { 
+	capital = 521
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+	     }
+    country_event = 470018
+	}
+	capital = 487
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	primary_culture = castilian
+	remove_accepted_culture = portuguese
+	country_event = 800050
+    war = {
+			target = POR
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+	}
+    
+	change_tag_no_core_switch = POR
+	
+	POR = { country_event = 470018 }
+
+	ai_chance = { 
+		factor = 0
+	    }
+	}
+}
+	
+### The War Expands - Succession of GAL ###
+	
+country_event = { 
+
+	id = 47008
+	title = "SPACW09.T"
+	desc = "SPACW09.D"
+	picture = "spanish_moroccan_war"	
+	
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_global_flag = SPACWGAL }
+    has_global_flag = SPA_CWACTIVE 
+    has_global_flag = SCWARISHERE
+    has_country_flag = SPA_LISBON
+	}
+
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "SPACW09.A"
+	set_global_flag = SPACWGAL
+	any_owned = { 
+	limit = { 
+	is_core = GAL
+		}
+	secede_province = GAL
+	    }
+	GAL = { 
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			 }
+	}
+	war = {
+			target = GAL
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	   }
+    }
+}
+
+### Shit hits the fan - Succession of CST ###
+
+country_event = { 
+
+	id = 47009
+	title = "SPACW10.T"
+	desc = "SPACW10.D"
+	picture = "spanish_andes"	
+	
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_global_flag = SPACWCST }
+    has_global_flag = SPACWGAL
+    has_global_flag = SPA_CWACTIVE 
+    has_global_flag = SCWARISHERE
+    has_country_flag = SPA_LISBON
+	}
+
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "SPACW09.A"
+	set_global_flag = SPACWCST
+	SPA = { all_core = { add_core = CST }   }
+	POR = { all_core = { remove_core = CST }   }
+	ARA = { all_core = { remove_core = CST }   }
+	ARI = { all_core = { remove_core = CST }   }
+	CAT = { all_core = { remove_core = CST }   }
+	NAV = { all_core = { remove_core = CST }   }
+	any_owned = { 
+	limit = { 
+	is_core = CST
+	NOT = { region = SPA_512 }
+	NOT = { region = SPA_513 }
+	NOT = { region = SPA_506 }
+	NOT = { is_core = GAL }
+	NOT = { is_core = MGH }
+	NOT = { province_id = 487 }
+		}
+	secede_province = CST
+	}
+	CST = { 
+	capital = 477
+	government = hms_government
+    ruling_party_ideology = conservative
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	set_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+    clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			 }
+	}
+    war = {
+			target = CST
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+	   }
+	any_owned = { 
+	limit = { 
+	is_core = NAV
+		}
+	secede_province = NAV
+	     }
+    }
+}
+
+#### Variant 2 - Madrid Spain
+
+country_event = { 
+
+	id = 47010
+	title = "SPACW11.T"
+	desc = "SPACW11.D"
+	picture = "spanish_glorious_revolution"	
+
+	major = yes
+	
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+    has_global_flag = SPA_CWACTIVE 
+	has_country_flag = SPA_CWTRIGGER
+	has_country_flag = SPA_CWTRIGGERKEY
+	has_country_flag = SPA_MADRID
+	war = no
+	}
+
+	mean_time_to_happen = { 
+	months = 1
+	}
+
+	option = { 
+	name = "SPACW11.A"
+	clr_country_flag = SPA_CWTRIGGER
+	clr_country_flag = SPA_CWTRIGGERKEY	
+	set_global_flag = SCWARISHERE
+	set_global_flag = SCWARCST
+	SPA = { all_core = { add_core = CST }   }
+	POR = { all_core = { remove_core = CST }   }
+	ARA = { all_core = { remove_core = CST }   }
+	ARI = { all_core = { remove_core = CST }   }
+	CAT = { all_core = { remove_core = CST }   }
+	NAV = { all_core = { remove_core = CST }   }
+    remove_country_modifier = calm_before_storm
+	any_owned = { 
+	limit = { 
+	is_core = CST
+	NOT = { region = SPA_512 }
+	NOT = { region = SPA_513 }
+	NOT = { region = SPA_506 }
+	NOT = { is_core = GAL }
+    NOT = { is_core = MGH }
+	NOT = { province_id = 487 }
+		}
+	secede_province = CST
+	}
+	CST = { 
+	capital = 477
+	government = hms_government
+    ruling_party_ideology = conservative
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	set_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+    clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			 }
+	}
+    war = {
+			target = CST
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+	   }
+   }
+}
+
+### The War Expands - Succession of POR+GAL ###
+
+country_event = { 
+
+	id = 47011
+	title = "SPACW12.T"
+	desc = "SPACW12.D"
+	picture = "spanish_moroccan_war"	
+	
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_global_flag = SPACWGAL }
+	NOT = { has_global_flag = SPACWPOR }
+    has_global_flag = SPA_CWACTIVE 
+    has_global_flag = SCWARISHERE
+    has_country_flag = SPA_MADRID
+	}
+
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "SPACW12.A"
+	set_global_flag = SPACWGAL
+	set_global_flag = SPACWPOR
+    set_global_flag = SCWARPORINDIE
+	any_owned = { 
+	limit = { 
+	is_core = POR
+		}
+	secede_province = POR
+	}
+	POR = { 
+	government = democracy
+    ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1825
+			 }
+	}
+	war = {
+			target = POR
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	   }
+    }
+}
+
+#### Automatic Succession of Catalonia and Navarra (Collapse of Spain) - This event can trigger once CST, POR and GAL are gone regardless of the variant. Does not result in a war since its the last part of the chaos.
+
+country_event = { 
+
+	id = 470012
+	title = "SPACW13.T"
+	desc = "SPACW13.D"
+	picture = "carlists"	
+	
+	major = yes
+	
+	trigger = {
+	tag = SPA
+	NOT = { exists = CAT }
+	NOT = { exists = ARA }
+	NOT = { exists = ARI }
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_global_flag = SPACWCAT }
+	has_global_flag = SPACWPOR
+	has_global_flag = SPACWCST
+    has_global_flag = SPACWGAL
+    has_global_flag = SPA_CWACTIVE 
+    has_global_flag = SCWARISHERE
+    has_country_flag = iberian_union
+	}
+
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "SPACW13.A"
+	set_global_flag = SPACWCAT
+	any_owned = { 
+	limit = { 
+	is_core = CAT
+		}
+	secede_province = CAT
+	}
+	CAT = { 
+    government = presidential_dictatorship
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+       }
+    }
+}
+
+### Kingdom of Zanzibar breaks off ###
+
+country_event = { 
+
+	id = 470017
+	title = "SPACW18.T"
+	desc = "SPACW18.D"
+	picture = "boer_war"	
+
+	trigger = {
+	tag = SPA
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { has_country_flag = SPACWZAN }
+	NOT = { exists = ZAN }
+    any_owned_province = { is_core = ZAN }
+	has_global_flag = SPACWPOR
+	has_global_flag = SPACWCST
+    has_global_flag = SPACWGAL
+    has_global_flag = SPA_CWACTIVE 
+    has_global_flag = SCWARISHERE
+	}
+
+	mean_time_to_happen = { 
+	days = 3
+	}
+
+	option = { 
+	name = "SPACW18.A"
+	set_country_flag = SPACWZAN
+	any_owned = { 
+	limit = { 
+	is_core = ZAN
+		}
+	secede_province = ZAN
+	}
+	2045 = { add_core = ZAN }
+	2047 = { add_core = ZAN }
+	2041 = { add_core = ZAN }
+	2040 = { add_core = ZAN }
+	any_owned = { 
+	limit = { 
+	is_core = MOZ
+		}
+	secede_province = ZAN
+	}
+	any_owned = { 
+	limit = { 
+	is_core = KNY
+		}
+	secede_province = ZAN
+	}	
+	any_owned = { 
+	limit = { 
+	is_core = BUG
+		}
+	secede_province = ZAN
+	}
+	any_owned = { 
+	limit = { 
+	is_core = ZAM
+		}
+	secede_province = ZAN
+	}
+	any_owned = { 
+	limit = { 
+	is_core = TNZ
+		}
+	secede_province = ZAN
+	}	
+	any_owned = { 
+	limit = { 
+	is_core = CNG
+		}
+	secede_province = ZAN
+	}	
+	any_owned = { 
+	limit = { 
+	is_core = SHO
+		}
+	secede_province = ZAN
+	}	
+	ZAN = { 
+    government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+    }
+	any_country = { 
+	limit = {
+	owns = 300
+	is_greater_power = yes
+	}
+	country_event = { id = 470020 days = 2 }
+	}	
+    }
+}
+
+country_event = { 
+
+	id = 470020
+	title = "SPACW22.T"
+	desc = "SPACW22.D"
+	picture = "boer_war"	
+
+    is_triggered_only = yes
+	
+	option = { 
+	name = "SPACW22.A"
+	prestige = 5
+	casus_belli = {
+		target = ZAN
+		type = colonial_conquest_full
+		months = 24
+	}	
+	war = {
+		target = ZAN
+		attacker_goal = { casus_belli = colonial_conquest_full }
+		defender_goal = { casus_belli = cut_down_to_size }
+	}
+	ai_chance = { factor = 90 }
+    }
+	
+	option = { 
+	name = "SPACW22.B"
+	prestige = -1
+	diplomatic_influence = { who = ZAN value = 400 }
+	relation = { who = ZAN value = 400 }
+	create_alliance = ZAN
+	ai_chance = { factor = 10 }		 
+    }
+}
+
+country_event = { 
+
+	id = 470018
+	title = "SPACW19.T"
+	desc = "SPACW19.D"
+	picture = "speech_assembly"	
+
+    is_triggered_only = yes
+
+	option = { 
+	name = "SPACW19.A"
+    government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	ai_chance = { factor = 50
+	modifier = {
+		factor = 2
+		SPA = { has_country_flag = GLORYTOTHESPA }
+		   }
+	modifier = {
+		factor = 0
+		NOT = { SPA = { has_country_flag = GLORYTOTHESPA } }
+		   }
+		}
+    }
+	
+	option = { 
+	name = "SPACW19.B"
+	government = democracy
+    ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	ai_chance = { factor = 50
+	modifier = {
+		factor = 2
+		NOT = { SPA = { has_country_flag = GLORYTOTHESPA } }
+		   }
+	modifier = {
+		factor = 0
+		SPA = { has_country_flag = GLORYTOTHESPA }
+		    }
+		 }
+      }
+   }
+   
+  ### Andalucía Surrenders ###
+   
+  province_event = {
+
+	id = 470019
+
+	title = "SPACW20.T"
+	desc = "SPACW20.D"
+
+	trigger = {
+		is_core = SPA
+		NOT = { province_id = 487 }
+		NOT = { is_core = MGH }
+	    NOT = { region = SPA_513 }
+	    NOT = { region = SPA_506 }
+		owner = {
+				tag = SPA
+		}
+		controller = {
+		    tag = POR
+			has_global_flag = SPACWPOR
+	        NOT = { has_global_flag = SPA_CWENDED }
+			NOT = { has_global_flag = SCWARPORINDIE }	
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "SPACW20.A"
+		POR = { prestige = 1 }
+		secede_province = POR
+	 }
+ }
+
+### The End of the War (CST wins by annexing SPA. SPA dies and must be reformed}
+
+### The Death of Spain ###
+
+country_event = { 
+
+	id = 470013
+	title = "SPACW14.T"
+	desc = "SPACW14.D"
+	picture = "spanish_glorious_revolution"	
+	
+	major = yes
+	
+	trigger = {
+	tag = CST
+	OR = { 
+	has_global_flag = SCWARPORINDIE
+	NOT = { POR = { any_owned_province = { is_core = CST } } }
+	}
+	NOT = { has_global_flag = SPA_CWENDED }
+    has_global_flag = SCWARISHERE
+	war = no
+	SPA = { exists = no }	
+    }
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "SPACW14.A"
+	prestige = 50
+	SPA_512 = { add_core = AND }
+	SPA_513 = { add_core = AND }
+	SPA_506 = { add_core = AND }
+	MOR_1688 = { add_core = AND }
+	477 = { add_core = GAL }
+	475 = { add_core = GAL }
+	518 = { add_core = GAL }
+	519 = { add_core = GAL }
+	481 = { add_core = NAV }
+	479 = { add_core = NAV }
+	478 = { add_core = NAV }
+	477 = { add_core = ATR }
+	479 = { add_core = ATR }
+	480 = { add_core = ATR }
+	481 = { add_core = ATR }
+	capital = 487
+	AND = { capital = 516 }
+	clr_global_flag = SPA_CWACTIVE 
+    clr_global_flag = SCWARISHERE
+	clr_global_flag = SPACWPOR
+	clr_global_flag = SPACWCST
+    clr_global_flag = SPACWGAL
+	set_global_flag = SPA_CWENDED
+	set_global_flag = SPA_CANBEREFORMED
+	remove_country_modifier = taiping_draft
+	POR = { remove_country_modifier = taiping_draft }
+	GAL = { remove_country_modifier = taiping_draft }
+    } 	
+}
+
+### The End of the War {Scenario One POR annexes SPA. Gets a choice to go after CST or give all CST territory to CST and deal with being Portugal}
+
+country_event = { 
+
+	id = 470014
+	title = "SPACW15.T"
+	desc = "SPACW15.D"
+	picture = "big_parade"	
+
+	trigger = {
+	tag = POR
+	NOT = { has_global_flag = SCWARPORINDIE }
+	NOT = { has_global_flag = SPA_CWENDED }
+    has_global_flag = SCWARISHERE
+	war = no
+    any_owned_province = { is_core = CST }
+	SPA = { exists = no }	
+	CST = { exists = yes }
+    }
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "SPACW15.A"
+	prestige = 10
+	clr_global_flag = SPA_CWACTIVE 
+    clr_global_flag = SCWARISHERE
+	clr_global_flag = SPACWPOR
+	clr_global_flag = SPACWCST
+    clr_global_flag = SPACWGAL
+	set_global_flag = SPA_CWENDED
+	set_global_flag = SPA_CANBEREFORMED
+	any_owned = { 
+	limit = { 
+	is_core = CST
+	NOT = { is_core = GAL }
+		}
+	secede_province = CST
+	}
+	remove_country_modifier = taiping_draft
+	CST = { remove_country_modifier = taiping_draft }
+	GAL = { remove_country_modifier = taiping_draft }
+	ai_chance = {
+			factor = 20
+		}
+    } 
+
+	option = { 
+	name = "SPACW15.B"
+	badboy = 2
+	prestige = 20
+	war_exhaustion = -25
+	clr_global_flag = SPA_CWACTIVE 
+    clr_global_flag = SCWARISHERE
+	clr_global_flag = SPACWPOR
+	clr_global_flag = SPACWCST
+    clr_global_flag = SPACWGAL
+	set_global_flag = POR_Reconquesta
+	set_global_flag = SPA_CWENDED
+	set_global_flag = SPA_CANBEREFORMED
+
+	remove_country_modifier = taiping_draft
+	CST = { remove_country_modifier = taiping_draft }
+	GAL = { remove_country_modifier = taiping_draft }
+	GAL = {
+	any_owned = { 
+	limit = { 
+	is_core = GAL
+	}
+	add_core = POR
+	    }
+	}
+	war = {
+			target = CST
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	    }
+	ai_chance = {
+			factor = 80
+		}
+    } 	
+}
+
+### The End of the War {SPA practically wins by annexing CST}
+
+country_event = { 
+
+	id = 470015
+	title = "SPACW16.T"
+	desc = "SPACW16.D"
+	picture = "war_ended"	
+
+	trigger = {
+	tag = SPA
+	#NOT = { has_global_flag = SCWARPORINDIE }
+	NOT = { has_global_flag = SPA_CWENDED }
+	NOT = { exists = CST }
+    has_global_flag = SCWARISHERE
+	war = no
+    exists = yes
+    }
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "SPACW15.A"
+	prestige = 50
+	clr_country_flag = GLORYTOTHESPA
+	clr_global_flag = SPA_CWACTIVE 
+    clr_global_flag = SCWARISHERE
+	clr_global_flag = SPACWPOR
+	clr_global_flag = SPACWCST
+    clr_global_flag = SPACWGAL
+	set_global_flag = SPA_CWENDED
+	set_global_flag = SPA_CANBEREFORMED
+	CST = { remove_country_modifier = taiping_draft }
+	POR = { remove_country_modifier = taiping_draft }
+	GAL = { remove_country_modifier = taiping_draft }
+	}
+}
+
+### The End of the War {Spain collapses due to being unable to take CST and loses Madrid}
+
+country_event = { 
+
+	id = 470016
+	title = "SPACW21.T"
+	desc = "SPACW21.D"
+	picture = "war_ended"
+
+	major = yes	
+
+	trigger = {
+	tag = SPA
+	#NOT = { has_global_flag = SCWARPORINDIE }
+	NOT = { has_global_flag = SPA_CWENDED }
+    exists = CST
+    has_global_flag = SCWARISHERE
+	war = no
+    exists = yes
+    }
+	
+	mean_time_to_happen = { 
+	days = 3
+	}
+	
+	option = { 
+	name = "We completely blew it."
+	prestige = -25
+	SPA_512 = { add_core = AND }
+	SPA_513 = { add_core = AND }
+	SPA_506 = { add_core = AND }
+	MOR_1688 = { add_core = AND }
+	477 = { add_core = GAL }
+	475 = { add_core = GAL }
+	518 = { add_core = GAL }
+	519 = { add_core = GAL }
+	481 = { add_core = NAV }
+	479 = { add_core = NAV }
+	478 = { add_core = NAV }
+	477 = { add_core = ATR }
+	479 = { add_core = ATR }
+	480 = { add_core = ATR }
+	481 = { add_core = ATR }
+	CST = { capital = 487 }
+	capital = 516
+	any_owned = { 
+	limit = { 
+	is_core = CST
+	NOT = { is_core = AND }
+	}
+	secede_province = CST
+	}
+	SPA = { all_core = { remove_core = SPA } }
+	change_tag = AND
+	AND = { all_core = { add_core = SPA } }
+	CST = { all_core = { add_core = SPA } }
+	POR = { all_core = { add_core = SPA } }
+	random_owned = {
+			limit = {
+				owner = { has_country_flag = iberian_union }
+			}
+			CAT = { all_core = { add_core = SPA } }
+	}
+	clr_country_flag = GLORYTOTHESPA
+	clr_global_flag = SPA_CWACTIVE 
+    clr_global_flag = SCWARISHERE
+	clr_global_flag = SPACWPOR
+	clr_global_flag = SPACWCST
+    clr_global_flag = SPACWGAL
+	set_global_flag = SPA_CWENDED
+	set_global_flag = SPA_CANBEREFORMED
+	CST = { remove_country_modifier = taiping_draft }
+	POR = { remove_country_modifier = taiping_draft }
+	GAL = { remove_country_modifier = taiping_draft }
+	}
+}
+
+#### That's it. Localization, Decisions, Validation, Testing and finally Pictures and that should be it ####
+
+### Add decisions to reform SPA and re-add Portuguese Culture to Dictatorship Spain ###
+
+
+#########Start-up events ########
+
+
+country_event = { 
+
+	id = 470021
+	title = "SPACW32.T"
+	desc = "SPACW32.D"
+	picture = "war_ended"
+	
+	trigger = { 
+	tag = SPA 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SPACW32.A"
+	any_pop = { 
+		limit = { 
+			location = { is_core = POR }
+			}
+		ideology = {
+				value = liberal
+				factor = 0.15
+			}
+		}
+	}
+}
+	
+country_event = { 
+
+	id = 470022
+	title = "SPACW33.T"
+	desc = "SPACW33.D"
+	picture = "SPA_dual_monarchs"
+	
+	trigger = { 
+	tag = SPA 
+	NOT = { has_global_flag = death_Jose } 
+	year = 1837 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 7
+	}
+	
+	option = { 
+	name = "SPACW33.A"
+	any_pop = { 
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+	set_global_flag = death_Jose 
+	}
+}
+
+
+country_event = { 
+
+	id = 470023
+	title = "SPACW34.T"
+	desc = "SPACW34.D"
+	picture = "SPA_dual_monarchs" 
+	
+	trigger = { 
+	tag = CLM 
+	has_global_flag = death_Jose 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "SPACW34.A" 
+	clr_global_flag = death_Jose
+	
+	any_pop = { 
+	scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+	}
+}
+
+## Haha. Fuck off Spain. - CLM War WE Ticker ##
+
+country_event = {
+
+	id = 470024
+	title = "SPACW35.T"
+	desc = "SPACW35.D"
+	picture = "streetriot" 
+	
+	trigger = { 
+	tag = SPA
+	war_with = CLM
+	exists = CLM
+	has_country_flag = let_it_burn_SPA
+	NOT = { has_country_modifier = SPA_free_WE }
+	NOT = { has_global_flag = congress_of_panama }
+	NOT = { has_global_flag = congress_of_panama_over }
+	NOT = { MEX = { any_core = { controlled_by = THIS } } }
+	NOT = { LST = { any_core = { controlled_by = THIS } } }
+	NOT = { UCA = { any_core = { controlled_by = THIS } } }
+	}
+		
+	mean_time_to_happen = { 
+	days = 7
+	}
+
+	option = { 
+	name = "SPACW35.A"
+	clr_country_flag = let_it_burn_SPA
+	add_country_modifier = {
+		name = SPA_free_WE
+		duration = -1
+		}	
+	}
+}
+
+country_event = {
+
+	id = 470025
+	title = "SPACW36.T"
+	desc = "SPACW36.D"
+	picture = "spanish_glorious_revolution" 
+	
+	trigger = { 
+	   tag = SPA	
+       has_country_modifier = SPA_free_WE
+	   NOT = { war_with = CLM }
+	}
+		
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	option = { 
+	name = "SPACW36.A"
+	remove_country_modifier = SPA_free_WE
+	}
+}

@@ -1,0 +1,149 @@
+country_event = {
+	
+	id = 95600
+	title = "EVTNAME95600" #The Selon Treaty
+	desc = "EVTDESC95600"
+	picture = "explorers"
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = "We must civilize all of India"
+		prestige = 25
+	}
+}
+
+country_event = {
+	
+	id = 95620
+	title = "EVTNAME95620" #The Selon Stagnation
+	desc = "EVTDESC95620"
+	picture = "india"
+
+	trigger = {
+	  exists = yes
+	  year = 1837	  
+      OR = {
+	    is_culture_group = dravidian
+	    is_culture_group = south_asian
+	    is_culture_group = chinese
+	    is_culture_group = southeast_asian
+	    is_culture_group = austronesian
+	    is_culture_group = central_asian
+	  }
+	  NOT = { year = 1860 }
+	  NOT = { has_country_modifier = selon_stagnation }
+	  NOT = { has_global_flag = selon_treaty }
+	  NOT = { has_global_flag = hindustan_conference } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = {
+		name = "The Spanish have saved us all"
+	    add_country_modifier = {
+			name = selon_stagnation
+			duration = -1
+	   }
+	}
+}
+
+country_event = {
+	
+	id = 95621
+	title = "EVTNAME95621" #Selon Treaty Abolished
+	desc = "EVTDESC95621"
+	picture = "india"
+
+	trigger = {
+	  exists = yes
+	  OR = {
+	  year = 1860
+	  has_global_flag = selon_treaty
+	  has_global_flag = hindustan_conference
+	  }
+      has_country_modifier = selon_stagnation
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = {
+		name = "The storm has arrived"
+		remove_country_modifier = selon_stagnation
+		prestige = -1
+	}
+}
+
+country_event = {
+	
+	id = 95622
+	title = "EVTNAME95622" #The Nightmare in the West
+	desc = "EVTDESC95622"
+	picture = "ARC_WEST"
+
+	trigger = {
+	  exists = yes
+	  year = 1837
+	  OR = {
+	        primary_culture = afro_south_african
+	        is_culture_group = boer_cultures
+			capital_scope = { continent = north_america }
+			capital_scope = { continent = south_america }
+	   }
+	   NOT = { year = 1850 }
+	   NOT = { has_country_modifier = newworld_immigration_blocker }
+	   NOT = { has_country_flag = western_insanity_over }	   
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+
+	option = {
+		name = "The new world is a dangerous place"
+	    add_country_modifier = {
+			name = newworld_immigration_blocker
+			duration = -1
+	   }
+	}
+}
+
+country_event = {
+	
+	id = 95623
+	title = "EVTNAME95623" #The insanity has ended
+	desc = "EVTDESC95623"
+	picture = "ARC_WEST"
+
+	trigger = {
+	   exists = yes
+	   NOT = { has_country_flag = western_insanity_over }
+	   has_country_modifier = newworld_immigration_blocker
+	   AMA = { NOT = { has_country_modifier = initial_amerigan_immigration } }
+	   OR = {
+	   CLM = { war = no }
+       CLM = { exists = no }
+	   }
+	   LOT = { war = no }
+	   AMA = { war = no }
+       VIN = { war = no } 
+       NBG = { war = no }
+       PLA = { war = no }	  
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	option = {
+		name = "We await the arrival of new immigrants"
+		set_country_flag = western_insanity_over
+		ARA = { nationalvalue = nv_equality }		
+        remove_country_modifier = newworld_immigration_blocker
+	}
+}

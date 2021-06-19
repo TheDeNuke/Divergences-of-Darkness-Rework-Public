@@ -1,0 +1,7649 @@
+###################################### Northern Russia Events (Check SCAFinland for Pskov related events) #######################################################
+
+### Ivan the Terrible was a mistake ###
+
+###### Opening Event for NOV ######
+
+country_event = {
+	id = 232500
+	title = "NRUS1.T"
+	desc = "NRUS1.D"
+	picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NRUS1.A"
+		prestige = 1
+		treasury = 100
+		relation = { who = SCA value = 50 }
+		relation = { who = PLC value = -100 }
+		relation = { who = MUS value = -400 }
+		relation = { who = TVE value = -400 }
+		relation = { who = RYA value = -400 }
+		relation = { who = NZH value = -400 }
+		relation = { who = SMO value = -400 }
+	    set_variable = {
+		   which = NOV_polar
+		   value = 3
+	    }
+	    country_event = { id = 232515 days = 84 }
+	}
+}
+
+#####################################
+#### Polarization Event Chains ######
+#####################################
+
+#### Non-Russians ####
+
+country_event = {
+	id = 232501
+	title = "NRUS2.T"
+	desc = "NRUS2.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = VYA
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = VYA_nonrussians }
+	NOT = { has_country_flag = VYA_nonrussians_end }
+	NOV = { NOT = { has_country_flag = NOV_blocker } }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 0.5
+            year = 1840
+		}
+		modifier = {
+			factor = 0.1
+            year = 1842
+		}
+		modifier = {
+			factor = 0.01
+            year = 1845
+		}
+	}
+
+	option = {
+	name = "NRUS2.A"
+    set_country_flag = VYA_nonrussians
+    NOV = { set_country_flag = NOV_blocker country_event = { id = 232504 days = 7 } }
+	MAR = { country_event = { id = 232502 days = 2 } }
+	add_accepted_culture = volgaic
+	add_accepted_culture = permic
+	political_reform = all_voting_pops
+	ai_chance = {
+	factor = 75
+	   }
+   }
+
+  	option = {
+	name = "NRUS2.B"
+    set_country_flag = VYA_nonrussians
+	set_country_flag = VYA_cringe
+    NOV = { set_country_flag = NOV_blocker }
+	ai_chance = {
+	factor = 25
+	   }
+   }
+}
+
+### A brief diversion into Mari ###
+
+country_event = {
+	id = 232502
+	title = "NRUS3.T"
+	desc = "NRUS3.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS3.A"
+    2680 = { add_core = NOV add_core = VYA }
+	VYA = { prestige = 5 inherit = THIS }
+	ai_chance = {
+	factor = 50
+	   }
+   }
+
+  	option = {
+	name = "NRUS3.B"
+    prestige = 5
+	ai_chance = {
+	factor = 30
+	   }
+   }
+
+  	option = {
+	name = "NRUS3.C"
+    NOV = { country_event = { id = 232503 days = 2 } }
+	ai_chance = {
+	factor = 20
+	   }
+   }
+}
+
+country_event = {
+	id = 232503
+	title = "NRUS4.T"
+	desc = "NRUS4.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS4.A"
+	prestige = 5
+	2680 = { add_core = NOV }
+    create_vassal = MAR
+	change_variable = {
+		which = NOV_polar
+		value = -1
+	   }
+    }
+}
+
+### Back to dealing with non-russians
+
+country_event = {
+	id = 232504
+	title = "NRUS5.T"
+	desc = "NRUS5.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Your laws are cringe
+
+	option = {
+	name = "NRUS5.A"
+	prestige = 5
+	relation = { who = BLO value = 100 }
+	relation = { who = UGG value = 100 }
+	relation = { who = VYA value = -25 }
+	relation = { who = KTK value = -25 }
+	relation = { who = KOM value = -25 }
+	relation = { who = PRM value = -25 }
+	relation = { who = NTS value = -25 }
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 4
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+	}
+	VYA = { relation = { who = NOV value = -25 } country_event = { id = 232505 days = 3 } }
+	ai_chance = {
+	factor = 45
+	   }
+   }
+
+   # Eh
+
+  	option = {
+	name = "NRUS5.B"
+	VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end }
+	set_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_blocker
+    prestige = -5
+	relation = { who = BLO value = -25 }
+	relation = { who = UGG value = -25 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+	}
+	change_variable = {
+		which = NOV_polar
+		value = -1
+	}
+	ai_chance = {
+	factor = 30
+	   }
+   }
+
+   # HOLY SHIT THE LIBERALS ARE BURSTING THROUGH THE DOORS PLEASE STOP THEM
+
+  	option = {
+	name = "NRUS5.C"
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_AUTOTRIGGER has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_AUTOTRIGGER }
+	}
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = KTK_created_end } } }
+		owner = { set_country_flag = KTK_created }
+	}
+	set_country_flag = VYA_nonrussians_end
+	VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end }
+	clr_country_flag = NOV_blocker
+    prestige = -20
+	add_accepted_culture = ugrian
+	add_accepted_culture = permic
+	add_accepted_culture = samoyedic
+	add_country_modifier = {
+		name = dangerous_reform_NOV
+		duration = 365
+	}
+	relation = { who = BLO value = -100 }
+	relation = { who = UGG value = -100 }
+	relation = { who = VYA value = 100 }
+	relation = { who = KTK value = 100 }
+	relation = { who = KOM value = 100 }
+	relation = { who = PRM value = 100 }
+	relation = { who = NTS value = 100 }
+	any_pop = {
+	limit = { pop_type = aristocrats }
+		ideology = {
+			value = reactionary
+			factor = 0.2
+				}
+	}
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 4
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+	}
+	change_variable = {
+		which = NOV_polar
+		value = 1
+	}
+	ai_chance = {
+	factor = 25
+	   }
+   }
+}
+
+country_event = {
+	id = 232505
+	title = "NRUS6.T"
+	desc = "NRUS6.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Yes daddy
+
+	option = {
+	name = "NRUS6.A"
+	set_country_flag = VYA_cringe
+	remove_accepted_culture = volgaic
+	remove_accepted_culture = permic
+	relation = { who = NOV value = 25 }
+	political_reform = primary_culture_only
+	ai_chance = {
+	factor = 33
+	   }
+   }
+
+   # No daddy
+
+  	option = {
+	name = "NRUS6.B"
+    prestige = -1
+	relation = { who = NOV value = -50 }
+	political_reform = culture_voting_only
+	clr_country_flag = VYA_nonrussians
+	set_country_flag = VYA_nonrussians_end
+	NOV = { set_country_flag = VYA_nonrussians_end clr_country_flag = NOV_blocker }
+	ai_chance = {
+	factor = 66
+	   }
+   }
+}
+
+# Vyatka decided to commit cringe and will now be getting punished for it.
+
+country_event = {
+	id = 232506
+	title = "NRUS7.T"
+	desc = "NRUS7.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = VYA
+	war = no
+	has_country_flag = VYA_nonrussians
+	has_country_flag = VYA_cringe
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = VYA_nonrussians_end }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+	}
+
+	option = {
+	name = "NRUS7.A"
+      clr_country_flag = VYA_cringe
+	  country_event = { id = 232507 days = 7 }
+	  any_pop = {
+	      limit = {
+	         location = { is_core = UDM }
+	      }
+	      militancy = 4
+		  consciousness = 4
+	      ideology = { factor = 0.2 value = separatist }
+	  }
+   }
+}
+
+country_event = {
+	id = 232507
+	title = "NRUS8.T"
+	desc = "NRUS8.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+    all_core = { remove_core = NOV }
+	NOV = { release_vassal = VYA leave_alliance = VYA relation = { who = VYA value = -200 } }
+	}
+
+	option = {
+	name = "NRUS8.A"
+	    set_global_flag = UDM_WAR
+		add_country_modifier = {
+		   name = taiping_draft
+		   duration = 720
+		}
+	    any_owned = {
+	    limit = { is_core = UDM }
+	    secede_province = UDM
+	    }
+	    any_owned = {
+	    limit = { is_core = MAR }
+		remove_core = NOV
+	    secede_province = UDM
+	    }
+		UDM = {
+		   add_country_modifier = {
+					name = taiping_draft
+					duration = 720
+		   }
+		   all_core = { remove_core = NOV }
+		   government = absolute_monarchy
+		   ruling_party_ideology = conservative
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   clr_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   set_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   clr_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       treasury = 10000
+	       ammunition = 100
+	       small_arms = 100
+	       artillery = 100
+	       canned_food = 100
+	       regular_clothes = 100
+		}
+	    war = {
+			target = UDM
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+        NOV = { country_event = { id = 232508 days = 0 } }
+   }
+}
+
+country_event = {
+	id = 232508
+	title = "NRUS9.T"
+	desc = "NRUS9.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+
+	option = {
+	name = "NRUS9.A"
+	    UDM = { all_core = { add_core = NOV } }
+	    war = {
+			target = UDM
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	   }
+	   ai_chance = {
+	   factor = 85
+	   }
+   }
+
+	option = {
+	name = "NRUS9.B"
+	   prestige = -1
+ 	   ai_chance = {
+	   factor = 15
+	   }
+   }
+}
+
+country_event = {
+	id = 232509
+	title = "NRUS10.T"
+	desc = "NRUS10.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	has_global_flag = UDM_WAR
+	UDM = { exists = yes }
+	VYA = { war_with = UDM }
+    NOT = { war_with = UDM }
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = VYA_nonrussians_end }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+	}
+
+	option = {
+	name = "NRUS10.A"
+	    UDM = { all_core = { add_core = NOV } }
+	    war = {
+			target = UDM
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+	   }
+   }
+}
+
+# Vyatka War - BAD ENDING FOR NOV
+
+country_event = {
+	id = 232510
+	title = "NRUS11.T"
+	desc = "NRUS11.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+    has_global_flag = UDM_WAR
+	UDM = { exists = yes }
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = VYA_nonrussians_end }
+	}
+
+	mean_time_to_happen = {
+	months = 6
+		modifier = {
+			factor = 0.01
+			NOT = { VYA = { war_with = UDM } }
+		}
+	}
+
+	immediate = {
+       end_war = UDM
+	   VYA = { end_war = UDM }
+	   UDM = { all_core = { remove_core = VYA remove_core = NOV add_core = PRM } }
+    }
+
+	option = {
+	name = "NRUS11.A"
+       clr_global_flag = UDM_WAR
+	   clr_country_flag = NOV_blocker
+	   clr_country_flag = VYA_nonrussians
+	   set_country_flag = VYA_nonrussians_end
+	   random_owned = {
+		 limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		 owner = { set_country_flag = POMOR_CHECK }
+	   }
+	   random_owned = {
+		 limit = { owner = { NOT = { has_country_flag = KTK_created_end } } }
+		 owner = { set_country_flag = KTK_created }
+	   }
+	   VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end }
+	   prestige = -20
+	   create_vassal = VYA
+	   any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+	   }
+	   change_variable = {
+		  which = NOV_polar
+		  value = 2
+	   }
+	   country_event = { id = 232512 days = 1 }
+   }
+}
+
+# Vyatka War - GOOD ENDING FOR NOV
+
+country_event = {
+	id = 232511
+	title = "NRUS12.T"
+	desc = "NRUS12.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+    has_global_flag = UDM_WAR
+	UDM = { exists = no }
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = VYA_nonrussians_end }
+	}
+
+	mean_time_to_happen = {
+	   days = 1
+	}
+
+	option = {
+	name = "NRUS12.A"
+	   prestige = 10
+	   create_vassal = VYA
+       clr_global_flag = UDM_WAR
+	   clr_country_flag = NOV_blocker
+	   clr_country_flag = VYA_nonrussians
+	   set_country_flag = VYA_nonrussians_end
+	   VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end }
+	   country_event = { id = 232513 days = 1 }
+   }
+}
+
+# Vyatka War - Vyatkan Aftermath - Bad Ending
+
+country_event = {
+	id = 232512
+	title = "NRUS13.T"
+	desc = "NRUS13.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Military Government
+
+	option = {
+	name = "NRUS13.A"
+	   1028 = { add_core = NOV }
+	   any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+	   }
+		VYA = {
+		   government = presidential_dictatorship
+		   ruling_party_ideology = conservative
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   clr_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   clr_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   set_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	   }
+	   ai_chance = {
+	   factor = 40
+	   }
+   }
+
+   # Let Vyakata go Bankrupt
+
+   option = {
+	name = "NRUS14.B"
+	   prestige = -5
+	   1028 = { add_core = NOV }
+	   UDM = { all_core = { add_core = VYA } }
+       clr_global_flag = UDM_WAR
+	   clr_country_flag = NOV_blocker
+	   clr_country_flag = VYA_nonrussians
+	   set_country_flag = VYA_nonrussians_end
+	   VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end country_event = { id = 232514 days = 31 } }
+	   ai_chance = {
+	   factor = 60
+	   }
+   }
+}
+
+# Vyatka War - Vyatkan Aftermath - Good Ending
+
+country_event = {
+	id = 232513
+	title = "NRUS14.T"
+	desc = "NRUS14.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Military Government
+
+	option = {
+	name = "NRUS14.A"
+	   prestige = 5
+	   1028 = { add_core = NOV }
+	   UDM = { all_core = { remove_core = VYA add_core = NOV } }
+	   any_pop = {
+	      consciousness = -2
+	   }
+	   any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+	   }
+	   VYA = {
+		   government = presidential_dictatorship
+		   ruling_party_ideology = conservative
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   clr_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   clr_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   set_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	   }
+	   change_variable = {
+		  which = NOV_polar
+		  value = 1
+	   }
+	   ai_chance = {
+	   factor = 30
+	   }
+   }
+
+   # Let Vyakata go Bankrupt
+
+   option = {
+	name = "NRUS14.B"
+	   prestige = -5
+	   1028 = { add_core = NOV }
+	   UDM = { all_core = { add_core = VYA add_core = NOV } }
+       clr_global_flag = UDM_WAR
+	   clr_country_flag = NOV_blocker
+	   clr_country_flag = VYA_nonrussians
+	   set_country_flag = VYA_nonrussians_end
+	   VYA = { clr_country_flag = VYA_nonrussians set_country_flag = VYA_nonrussians_end country_event = { id = 232514 days = 31 } }
+	   ai_chance = {
+	   factor = 70
+	   }
+   }
+}
+
+# Vyakata completely collapses - Sad Violin
+
+country_event = {
+	id = 232514
+	title = "NRUS15.T"
+	desc = "NRUS15.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+
+	option = {
+	name = "NRUS15.A"
+	   prestige_factor = -0.99
+	   NOV = { inherit = THIS }
+    }
+}
+
+#### GUESS WHAT. ITS THAT WONDERFUL SUBJECT AGAIN. YOU KNOW WHAT I'M TALKING ABOUT. SERFDOM! ####
+
+### Publishing of the Serfdom Book ###
+
+country_event = {
+	id = 232515
+	title = "NRUS16.T"
+	desc = "NRUS16.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS16.A"
+	   prestige = -1
+	   any_pop = {
+	     consciousness = 1
+		 dominant_issue = {		    
+			value = peonage
+			factor = 0.2
+			}
+	   }
+   }
+}
+
+# The issue is finally brought up
+
+country_event = {
+	id = 232516
+	title = "NRUS17.T"
+	desc = "NRUS17.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	year = 1840
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = NOV_serfs }
+	NOT = { has_country_flag = NOV_serfs_end }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 36
+		modifier = {
+			factor = 0.5
+            year = 1845
+		}
+		modifier = {
+			factor = 0.1
+            year = 1848
+		}
+		modifier = {
+			factor = 0.01
+            year = 1850
+		}
+	}
+
+	option = {
+	name = "NRUS2.A"
+    set_country_flag = NOV_serfs
+    set_country_flag = NOV_blocker
+    country_event = { id = 232517 days = 7 }
+	}
+}
+
+# The Amendment
+
+country_event = {
+	id = 232517
+	title = "NRUS18.T"
+	desc = "NRUS18.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Initial Draft
+
+	option = {
+	name = "NRUS18.A"
+    prestige = -5
+    random_list = {
+		75 = { country_event = { id = 232520 days = 3 } }
+		25 = { country_event = { id = 232518 days = 3 } }
+	 }
+	 ai_chance = {
+	   factor = 60
+	   }
+    }
+
+	# Super Laws
+
+	option = {
+	name = "NRUS18.B"
+    prestige = 10
+    random_list = {
+		95 = { country_event = { id = 232520 days = 3 } }
+		5 = { country_event = { id = 232519 days = 3 } }
+	 }
+	 ai_chance = {
+	   factor = 40
+	   }
+    }
+}
+
+# Original Draft was passed
+
+country_event = {
+	id = 232518
+	title = "NRUS19.T"
+	desc = "NRUS19.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Initial Draft
+
+	option = {
+	name = "NRUS19.A"
+    prestige = -5
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	#set_country_flag = NOV_Muzhikate
+	relation = { who = BLO value = -25 }
+	relation = { who = UGG value = -25 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -4
+		}
+	}
+	change_variable = {
+		  which = NOV_polar
+		  value = -1
+	      }
+	}
+}
+
+
+# Super-Draft was passed
+
+country_event = {
+	id = 232519
+	title = "NRUS20.T"
+	desc = "NRUS20.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS20.A"
+    prestige = 10
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	#set_country_flag = NOV_Muzhikate_Super
+	relation = { who = BLO value = -100 }
+	relation = { who = UGG value = -100 }
+	relation = { who = VYA value = 100 }
+	relation = { who = KTK value = 100 }
+	relation = { who = KOM value = 100 }
+	relation = { who = PRM value = 100 }
+	relation = { who = NTS value = 100 }
+	add_country_modifier = {
+		name = dangerous_reform_NOV
+		duration = 365
+	}
+	any_pop = {
+	    consciousness = 4
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -8
+		}
+	}
+	change_variable = {
+		  which = NOV_polar
+		  value = 1
+	   }
+	}
+}
+
+# It failed to pass
+
+country_event = {
+	id = 232520
+	title = "NRUS21.T"
+	desc = "NRUS21.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Postpone the Question
+
+	option = {
+	name = "NRUS21.A"
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	prestige = -10
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+	}
+	relation = { who = VYA value = -25 }
+	relation = { who = KTK value = -25 }
+	relation = { who = KOM value = -25 }
+	relation = { who = PRM value = -25 }
+	relation = { who = NTS value = -25 }
+	ai_chance = {
+	   factor = 50
+	   }
+    }
+
+	# Take it to the Prince
+
+	option = {
+	name = "NRUS21.B"
+    random_list = {
+		60 = { country_event = { id = 232521 days = 3 } }
+		20 = { country_event = { id = 232522 days = 3 } }
+		20 = { country_event = { id = 232523 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 50
+	   }
+    }
+}
+
+# The Prince Refused
+
+country_event = {
+	id = 232521
+	title = "NRUS22.T"
+	desc = "NRUS22.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Postpone the Question
+
+	option = {
+	name = "NRUS22.A"
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	prestige = -15
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+	}
+	relation = { who = VYA value = -25 }
+	relation = { who = KTK value = -25 }
+	relation = { who = KOM value = -25 }
+	relation = { who = PRM value = -25 }
+	relation = { who = NTS value = -25 }
+    }
+}
+
+# The Prince went wacko and forced the Amendment through
+
+country_event = {
+	id = 232522
+	title = "NRUS23.T"
+	desc = "NRUS23.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS23.A"
+    prestige = 5
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	#set_country_flag = NOV_Muzhikate_Super
+	relation = { who = BLO value = -100 }
+	relation = { who = UGG value = -100 }
+	relation = { who = VYA value = 100 }
+	relation = { who = KTK value = 100 }
+	relation = { who = KOM value = 100 }
+	relation = { who = PRM value = 100 }
+	relation = { who = NTS value = 100 }
+	add_country_modifier = {
+		name = dangerous_reform_NOV
+		duration = 365
+	}
+	any_pop = {
+	    consciousness = 4
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -8
+		}
+	}
+	change_variable = {
+		  which = NOV_polar
+		  value = 1
+	    }
+	}
+}
+
+# The Prince actually decided to be smart and push the original document though.
+
+country_event = {
+	id = 232523
+	title = "NRUS24.T"
+	desc = "NRUS24.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Initial Draft
+
+	option = {
+	name = "NRUS24.A"
+    prestige = -5
+    clr_country_flag = NOV_serfs
+    clr_country_flag = NOV_blocker
+	set_country_flag = NOV_serfs_end
+	#set_country_flag = NOV_Muzhikate
+	relation = { who = BLO value = -25 }
+	relation = { who = UGG value = -25 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -4
+		  }
+	   }
+	   change_variable = {
+		  which = NOV_polar
+		  value = -1
+	    }
+	}
+}
+
+#### Siberian Trade or CAPITALISM THE EVENT CHAIN ####
+
+# Guild Introduction Event
+
+country_event = {
+	id = 232524
+	title = "NRUS25.T"
+	desc = "NRUS25.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	year = 1840
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = NOV_trading }
+	NOT = { has_country_flag = NOV_capitalism }
+	NOT = { has_country_flag = NOV_capitalism_end }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 0.5
+            year = 1842
+		}
+		modifier = {
+			factor = 0.1
+            year = 1844
+		}
+		modifier = {
+			factor = 0.01
+            year = 1845
+		}
+	}
+
+	option = {
+	name = "NRUS25.A"
+	set_country_flag = NOV_trading
+	prestige = 1
+	treasury = 1000
+	}
+}
+
+# Main Chain Introduction Event
+
+country_event = {
+	id = 232525
+	title = "NRUS26.T"
+	desc = "NRUS26.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	year = 1845
+	has_country_flag = NOV_trading
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = NOV_capitalism }
+	NOT = { has_country_flag = NOV_capitalism_end }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 24
+	}
+
+	option = {
+	name = "NRUS25.A"
+	clr_country_flag = NOV_trading
+	set_country_flag = NOV_capitalism
+	set_country_flag = NOV_blocker
+	prestige = -1
+	treasury = -1000
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+	}
+	country_event = { id = 232526 days = 7 }
+	}
+}
+
+# Choices
+
+country_event = {
+	id = 232526
+	title = "NRUS27.T"
+	desc = "NRUS27.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Lets play monopoly
+
+	option = {
+	name = "NRUS27.A"
+	prestige = 5
+    random_list = {
+	    75 = { country_event = { id = 232527 days = 3 } }
+		25 = { country_event = { id = 232528 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 50
+	   }
+	}
+
+	# You should actually be competitive
+
+	option = {
+	name = "NRUS27.B"
+    random_list = {
+	    45 = { country_event = { id = 232533 days = 3 } }
+		55 = { country_event = { id = 232534 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 30
+	   }
+	}
+
+	# A inevitable bankruptcy
+
+	option = {
+	name = "NRUS27.C"
+	prestige = -5
+	country_event = { id = 232538 days = 3 }
+	ai_chance = {
+	   factor = 20
+	   }
+	}
+}
+
+# OKTAN.PNG
+
+country_event = {
+	id = 232527
+	title = "NRUS28.T"
+	desc = "NRUS28.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS28.A"
+    prestige = 10
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	}
+	NTS = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+	PRM = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+	KTK = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+	relation = { who = VYA value = -50 }
+	relation = { who = KTK value = -50 }
+	relation = { who = KOM value = -50 }
+	relation = { who = PRM value = -50 }
+	relation = { who = NTS value = -50 }
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+	}
+	   change_variable = {
+		  which = NOV_polar
+		  value = 1
+	      }
+	}
+}
+
+# They are only slightly more capable then the Polish Sejm
+
+country_event = {
+	id = 232528
+	title = "NRUS29.T"
+	desc = "NRUS29.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# The Status Quo
+
+	option = {
+	name = "NRUS29.A"
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -5
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+	}
+	   change_variable = {
+		  which = NOV_polar
+		  value = 1
+	      }
+	ai_chance = {
+	   factor = 15
+	   }
+    }
+
+# The Prince has a habit of doing loony things. You really should not...
+
+	option = {
+	name = "NRUS29.B"
+    random_list = {
+	    40 = { country_event = { id = 232530 days = 3 } }
+		40 = { country_event = { id = 232531 days = 3 } }
+        20 = { country_event = { id = 232532 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 85
+	   }
+	}
+}
+
+# ... and as expected the prince did nothing.
+
+country_event = {
+	id = 232530
+	title = "NRUS30.T"
+	desc = "NRUS30.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS30.A"
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -5
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+	}
+	   change_variable = {
+		  which = NOV_polar
+		  value = 1
+	   }
+    }
+}
+
+# ... and as expected the Prince actually supported the Amendment.
+
+country_event = {
+	id = 232531
+	title = "NRUS31.T"
+	desc = "NRUS31.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS31.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = 10
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+		}
+	}
+	relation = { who = BLO value = -50 }
+	relation = { who = UGG value = -50 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+    }
+}
+
+# ... and as expected the Prince was a incredible loonball who gets it right
+
+country_event = {
+	id = 232532
+	title = "NRUS32.T"
+	desc = "NRUS32.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS32.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = 20
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	   change_variable = {
+		  which = NOV_polar
+		  value = -1
+	    }
+    }
+}
+
+# Stop passing stupid legislation. At least you are rich this time.
+
+country_event = {
+	id = 232533
+	title = "NRUS33.T"
+	desc = "NRUS33.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS33.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = 10
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	any_pop = {
+	    consciousness = 3
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+		}
+	}
+	relation = { who = BLO value = -100 }
+	relation = { who = UGG value = -100 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+	   change_variable = {
+		  which = NOV_polar
+		  value = 1
+	   }
+	}
+}
+
+# Its good that the lords stopped you there. Oh wait. Now you have to appeal to... oh no.
+
+country_event = {
+	id = 232534
+	title = "NRUS34.T"
+	desc = "NRUS34.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS34.B"
+    random_list = {
+	    45 = { country_event = { id = 232535 days = 3 } }
+		30 = { country_event = { id = 232536 days = 3 } }
+        25 = { country_event = { id = 232537 days = 3 } }
+	}
+	}
+}
+
+# Nothing happened
+
+country_event = {
+	id = 232535
+	title = "NRUS35.T"
+	desc = "NRUS35.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS35.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -10
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+	}
+	}
+}
+
+# You successfully built some forts and pissed off the Pomors. What a waste of time.
+
+country_event = {
+	id = 232536
+	title = "NRUS36.T"
+	desc = "NRUS36.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS36.A"
+    prestige = 5
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	}
+	NTS = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+	PRM = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+	KTK = {
+	any_owned = {
+		limit = {
+			NOT = { has_building = fort }
+			is_core = NTS
+            is_core = PRM
+			is_core = KTK
+			}
+			fort = 1
+	   }
+	}
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+	relation = { who = VYA value = -10 }
+	relation = { who = KTK value = -10 }
+	relation = { who = KOM value = -10 }
+	relation = { who = PRM value = -10 }
+	relation = { who = NTS value = -10 }
+	relation = { who = BLO value = -10 }
+	relation = { who = UGG value = -10 }
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+	}
+	}
+}
+
+# Wacky Prince did the smart action and formed a Company
+
+country_event = {
+	id = 232537
+	title = "NRUS37.T"
+	desc = "NRUS37.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS37.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = 10
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+		}
+	}
+	relation = { who = BLO value = -50 }
+	relation = { who = UGG value = -50 }
+	relation = { who = VYA value = 25 }
+	relation = { who = KTK value = 25 }
+	relation = { who = KOM value = 25 }
+	relation = { who = PRM value = 25 }
+	relation = { who = NTS value = 25 }
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+    }
+}
+
+## I'm sorry. You thought you could create a company on the watch of the LORDS in LORD NOVOGROD THE GREAT.
+
+country_event = {
+	id = 232538
+	title = "NRUS38.T"
+	desc = "NRUS38.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS30.A"
+	any_pop = {
+	    consciousness = 1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+	}
+    country_event = { id = 232539 days = 3 }
+    }
+}
+
+## Laptev Denouncement
+
+country_event = {
+	id = 232539
+	title = "NRUS39.T"
+	desc = "NRUS39.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS39.A"
+    random_list = {
+	    50 = { country_event = { id = 232540 days = 3 } }
+		50 = { country_event = { id = 232541 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 40
+	   }
+	}
+
+	option = {
+	name = "NRUS39.B"
+    random_list = {
+	    45 = { country_event = { id = 232542 days = 3 } }
+		25 = { country_event = { id = 232543 days = 3 } }
+        30 = { country_event = { id = 232544 days = 3 } }
+	}
+	ai_chance = {
+	   factor = 60
+	   }
+	}
+}
+
+# Two different ways to piss off groups and result in no polarization difference.
+
+# Nuke Guild Rights. You really piss off the Feudals and pull off a economic reform but at least the Polarization does not go up or down in the long run.
+
+country_event = {
+	id = 232540
+	title = "NRUS40.T"
+	desc = "NRUS40.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS40.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -10
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	any_pop = {
+	    consciousness = 4
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -4
+		}
+	}
+	relation = { who = BLO value = -100 }
+	relation = { who = UGG value = -100 }
+	relation = { who = VYA value = 50 }
+	relation = { who = KTK value = 50 }
+	relation = { who = KOM value = 50 }
+	relation = { who = PRM value = 50 }
+	relation = { who = NTS value = 50 }
+	}
+}
+
+# Status Quo. You really piss off the Free States but at least the Polarization does not go up or down in the long run.
+
+country_event = {
+	id = 232541
+	title = "NRUS41.T"
+	desc = "NRUS41.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS41.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = 10
+	any_pop = {
+	    consciousness = 4
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+	}
+	relation = { who = BLO value = 50 }
+	relation = { who = UGG value = 50 }
+	relation = { who = VYA value = -100 }
+	relation = { who = KTK value = -100 }
+	relation = { who = KOM value = -100 }
+	relation = { who = PRM value = -100 }
+	relation = { who = NTS value = -100 }
+	}
+}
+
+# Nuke the Guilds Completely. Piss off nobody, waste a lot of money and cause nothing to really change in the long run.
+
+country_event = {
+	id = 232542
+	title = "NRUS42.T"
+	desc = "NRUS42.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS42.A"
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -10
+	any_pop = {
+	    consciousness = 1
+	}
+    random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 51000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 51000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 51 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 51000 } }
+        owner = { treasury = -51000 }
+    }
+    }
+}
+
+# You literally just decided to prove that you support feudalism. Piss off all the free states and trigger the Pomors and Kondia. INCREASE POLARIZATION. What are you doing?
+
+country_event = {
+	id = 232543
+	title = "NRUS43.T"
+	desc = "NRUS43.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS43.A"
+	set_country_flag = NOV_capitalism_end
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_CHECK }
+	}
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = KTK_created_end } } }
+		owner = { set_country_flag = KTK_created }
+	}
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	prestige = -20
+	any_pop = {
+	    consciousness = 5
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -5
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 5
+		}
+	}
+	relation = { who = BLO value = 100 }
+	relation = { who = UGG value = 100 }
+	relation = { who = VYA value = -200 }
+	relation = { who = KTK value = -200 }
+	relation = { who = KOM value = -200 }
+	relation = { who = PRM value = -200 }
+	relation = { who = NTS value = -200 }
+	change_variable = {
+		which = NOV_polar
+		value = 1
+	    }
+	}
+}
+
+# The Prince refused, but instead of just being a idiot who supported feudalism he decided to compromise and create a functional economic system. Nobody is annoyed and POLARIZATION DECREASED.
+
+country_event = {
+	id = 232544
+	title = "NRUS44.T"
+	desc = "NRUS44.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "NRUS44.A"
+	prestige = 20
+	set_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_capitalism
+	clr_country_flag = NOV_blocker
+	add_country_modifier = {
+		name = economic_reform_NOV
+		duration = 12775
+	}
+	   change_variable = {
+		  which = NOV_polar
+		  value = -1
+	   }
+    }
+}
+
+#####################################
+#### Kondia and the Pomors ##########
+#####################################
+
+# Whoops. I slipped and some empty land was passed onto a tribal kingdom. Good Job Breaking it.
+
+country_event = {
+	id = 232545
+	title = "NRUS45.T"
+	desc = "NRUS45.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+    has_country_flag = KTK_created
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = KTK_created_end }
+	NOT = { has_country_flag = POMOR_TIER_THREE }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+		modifier = {
+			factor = 0.1
+			has_country_flag = POMOR_TRIGGER_TWO
+		}
+		modifier = {
+			factor = 0.01
+			has_country_flag = POMOR_AUTOTRIGGER
+		}
+	}
+
+	immediate = {
+	    any_owned = {
+	    limit = { is_core = KTK }
+	    secede_province = KTK
+	    }
+		create_vassal = KTK
+    }
+
+	option = {
+	name = "NRUS45.A"
+	   clr_country_flag = KTK_created
+	   set_country_flag = KTK_created_end
+	   any_owned = {
+	    limit = { is_core = KTK }
+	    secede_province = KTK
+	   }
+       prestige = -5
+	   any_pop = {
+	      consciousness = 2
+	   }
+	   KTK = {
+		   government = absolute_monarchy
+		   ruling_party_ideology = reactionary
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   clr_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   set_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   clr_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       treasury = 10000
+	       ammunition = 100
+	       small_arms = 100
+	       artillery = 100
+	       canned_food = 100
+	       regular_clothes = 100
+	  }
+      PRM = { country_event = 232546 }
+      SIB = { country_event = 232546 }
+   }
+}
+
+country_event = {
+	id = 232546
+	title = "NRUS46.T"
+	desc = "NRUS46.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+	    any_owned = {
+	    limit = { is_core = KTK }
+	    secede_province = KTK
+	    }
+    }
+
+	option = {
+	name = "NRUS46.A"
+       prestige = -1
+   }
+}
+
+# Pomor Check T1 - You made them notice the Imperialism
+
+country_event = {
+	id = 232547
+	title = "NRUS47.T"
+	desc = "NRUS47.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+    has_country_flag = POMOR_CHECK
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = POMOR_AUTOTRIGGER }
+	NOT = { has_country_flag = POMOR_TIER_ONE }
+	NOT = { has_country_flag = POMOR_TIER_TWO }
+	NOT = { has_country_flag = POMOR_TIER_THREE }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+	}
+
+	immediate = {
+	   any_pop = {
+	      limit = {
+	         location = { is_core = PMY }
+	      }
+	      militancy = 2
+		  consciousness = 2
+	      ideology = { factor = 0.1 value = separatist }
+	   }
+	}
+
+	# Attempt to deal with them
+
+	option = {
+	name = "NRUS47.A"
+	   clr_country_flag = POMOR_CHECK
+	   set_country_flag = POMOR_TIER_ONE
+	   any_pop = {
+	      consciousness = 2
+	   }
+	   any_pop = {
+	      limit = {
+	         location = { is_core = PMY }
+	      }
+	      militancy = 2
+		  consciousness = 2
+	      ideology = { factor = 0.1 value = separatist }
+	  }
+	  ai_chance = {
+	  factor = 50
+	  }
+    }
+
+	# Take the "Economic Benefits" or really just a rather large bribe to shut up and go away.
+
+  	option = {
+	name = "NRUS47.B"
+	   clr_country_flag = POMOR_CHECK
+	   set_country_flag = POMOR_TIER_ONE
+	   any_pop = {
+	      consciousness = 1
+	   }
+       treasury = 200000
+	   ai_chance = {
+	   factor = 50
+	   }
+   }
+}
+
+# Pomor Check T2 - You've made all the locals get up and leave.
+
+country_event = {
+	id = 232548
+	title = "NRUS48.T"
+	desc = "NRUS48.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	OR = {
+	  has_country_flag = POMOR_CHECK
+      has_country_flag = POMOR_AUTOTRIGGER
+	}
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = POMOR_TIER_TWO }
+	NOT = { has_country_flag = POMOR_TIER_THREE }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+		modifier = {
+			factor = 0.01
+			has_country_flag = POMOR_AUTOTRIGGER
+		}
+	}
+
+	immediate = {
+	    random_owned = {
+		limit = { owner = { NOT = { has_country_flag = KTK_created_end } } }
+		owner = { set_country_flag = KTK_created }
+	    }
+	    any_owned = {
+	    limit = { is_core = KOM }
+	    secede_province = KOM
+	    }
+		create_vassal = KOM
+	    any_owned = {
+	    limit = { is_core = NTS }
+	    secede_province = NTS
+	    }
+		create_vassal = NTS
+    }
+
+	option = {
+	name = "NRUS48.A"
+	   clr_country_flag = POMOR_CHECK
+	   clr_country_flag = POMOR_TIER_ONE
+	   set_country_flag = POMOR_TIER_TWO
+       prestige = -10
+	   any_pop = {
+	      consciousness = 3
+	   }
+	   any_owned = {
+	    limit = { is_core = KOM }
+	    secede_province = KOM
+	   }
+	   any_owned = {
+	    limit = { is_core = NTS }
+	    secede_province = NTS
+	   }
+	   NTS = {
+		   government = theocracy
+		   ruling_party_ideology = reactionary
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   set_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   clr_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   clr_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       treasury = 10000
+	       ammunition = 100
+	       small_arms = 100
+	       artillery = 100
+	       canned_food = 100
+	       regular_clothes = 100
+	  }
+   }
+}
+
+# Pomor Check T3 - At this point you might as well call yourself HRE 2.0
+
+country_event = {
+	id = 232549
+	title = "NRUS49.T"
+	desc = "NRUS49.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	exists = KTK
+	has_global_flag = finnish_chain_ended
+	OR = {
+	  has_country_flag = POMOR_CHECK
+      has_country_flag = POMOR_AUTOTRIGGER
+	}
+	has_country_flag = POMOR_TIER_TWO
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+	NOT = { has_country_flag = POMOR_TIER_THREE }
+	NOT = { has_country_flag = NOV_blocker }
+	}
+
+	mean_time_to_happen = {
+	months = 1
+	}
+
+	immediate = {
+	    any_owned = {
+	    limit = { is_core = PMY NOT = { is_core = KAR } }
+	    secede_province = PMY
+	    }
+		create_vassal = PMY
+    }
+
+	option = {
+	name = "NRUS48.A"
+	   clr_country_flag = POMOR_CHECK
+	   clr_country_flag = POMOR_AUTOTRIGGER
+	   clr_country_flag = POMOR_TIER_ONE
+	   clr_country_flag = POMOR_TIER_TWO
+	   set_country_flag = POMOR_TIER_THREE
+       prestige = -15
+	   any_pop = {
+	      consciousness = 5
+	   }
+	   any_owned = {
+	    limit = { is_core = PMY NOT = { is_core = KAR } }
+	    secede_province = PMY
+	   }
+	   PMY = {
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = appointed
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    treasury = 10000
+	    ammunition = 100
+	    small_arms = 100
+	    artillery = 100
+	    canned_food = 100
+	    regular_clothes = 100
+	  }
+	  ai_chance = {
+	  factor = 25
+	  }
+   }
+
+	option = {
+	name = "NRUS48.B"
+	   clr_country_flag = POMOR_CHECK
+	   clr_country_flag = POMOR_AUTOTRIGGER
+	   clr_country_flag = POMOR_TIER_ONE
+	   clr_country_flag = POMOR_TIER_TWO
+	   set_country_flag = POMOR_TIER_THREE
+       prestige = -15
+	   any_pop = {
+	      consciousness = 5
+	   }
+	   any_owned = {
+	    limit = { is_core = PMY NOT = { is_core = KAR } }
+	    secede_province = PMY
+	   }
+	   PMY = {
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = universal_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = non_socialist
+	    political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    set_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    set_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    treasury = 10000
+	    ammunition = 100
+	    small_arms = 100
+	    artillery = 100
+	    canned_food = 100
+	    regular_clothes = 100
+	  }
+	  ai_chance = {
+	  factor = 75
+	  }
+   }
+}
+
+################################
+# SCANDINAVIA INVADES NOVOGROD #
+################################
+
+# Both of these are triggered via the SCAFinland Event file. Check that event file for the events that start the wars (either via Pskov or Karelia) #
+
+# Novogrod is invading to take back Pskov
+
+country_event = {
+	id = 232550
+	title = "NRUS50.T"
+	desc = "NRUS50.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+	    set_global_flag = NOV_PSKOV_WAR
+		set_country_flag = NOV_blocker
+    }
+
+	option = {
+	name = "NRUS50.A"
+	prestige = 1
+	# Strong NOV is annoyed
+	random_owned = {
+		limit = { NOT = { owner = { check_variable = { which = NOV_polar value = 2 } } } }
+		owner = { add_country_modifier = { name = taiping_draft duration = 720 } add_country_modifier = { name = too_weak_BCW duration = 720 } political_reform = mandatory_service }
+	}
+    }
+}
+
+# Karelia Variables - 6
+# No Variable is checked here and Novogrod instantly surrenders its territory. They are fatally wounded and the variable is set to 12 if the three other chains have ended to make recovery impossible.
+
+country_event = {
+	id = 232551
+	title = "NRUS51.T"
+	desc = "NRUS51.D"
+    picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+	end_war = SCA
+ 	any_owned = {
+	limit = { is_core = KAR }
+	secede_province = SCA
+	}
+    }
+
+	option = {
+	name = "NRUS51.A"
+	prestige_factor = -0.50
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	add_country_modifier = { name = neutrality duration = -1 }
+	random_owned = {
+		limit = { owner = { has_country_flag = VYA_nonrussians_end has_country_flag = NOV_capitalism_end has_country_flag = NOV_serfs_end } }
+		owner = { set_variable = { which = NOV_polar value = 12 } }
+	}
+    }
+}
+
+# Karelia Variables - 5-4
+# Winning reduces polarity by two.
+
+country_event = {
+	id = 232552
+	title = "NRUS52.T"
+	desc = "NRUS52.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	owns = 995
+    has_global_flag = NOV_KAR_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 4
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 6
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS52.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	prestige = 20
+	add_country_modifier = { name = neutrality duration = -1 }
+	change_variable = {
+		  which = NOV_polar
+		  value = -2
+	   }
+	}
+}
+
+# Losing sets the Pomor question autotrigger if Tier Three has not been reached.
+
+country_event = {
+	id = 232553
+	title = "NRUS53.T"
+	desc = "NRUS53.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { owns = 995 }
+    has_global_flag = NOV_KAR_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 4
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 6
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS53.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	prestige = -20
+	add_country_modifier = { name = neutrality duration = -1 }
+	random_owned = {
+		limit = { owner = { NOT = { has_country_flag = POMOR_AUTOTRIGGER has_country_flag = POMOR_TIER_THREE } } }
+		owner = { set_country_flag = POMOR_AUTOTRIGGER }
+	}
+	}
+}
+
+# Karelia Variables - 3-2 does nothing at all. The consequences for losing a war in Victoria 2 are bad enough.
+
+country_event = {
+	id = 232554
+	title = "NRUS54.T"
+	desc = "NRUS54.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+    has_global_flag = NOV_KAR_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 4
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS54.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	add_country_modifier = { name = neutrality duration = -1 }
+	}
+}
+
+# Karelia Variables - 1-0.
+# Winning decreases the polarity to below zero if all all three main chains have ended and gives 50 prestige.
+
+country_event = {
+	id = 232555
+	title = "NRUS55.T"
+	desc = "NRUS55.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	owns = 995
+    has_global_flag = NOV_KAR_WAR
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS55.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	prestige = 50
+	add_country_modifier = { name = neutrality duration = -1 }
+	remove_country_modifier = taiping_draft
+	remove_country_modifier = too_weak_BCW
+	random_owned = {
+		limit = { owner = { has_country_flag = VYA_nonrussians_end has_country_flag = NOV_capitalism_end has_country_flag = NOV_serfs_end } }
+		owner = { change_variable = { which = NOV_polar value = -6 } }
+	}
+	}
+}
+
+# Losing results in nothing. You get a nice economic and equipment boost along with War Exhaustion being cleared.
+
+country_event = {
+	id = 232556
+	title = "NRUS56.T"
+	desc = "NRUS56.D"
+    picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { owns = 995 }
+    has_global_flag = NOV_KAR_WAR
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS56.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_KAR_WAR
+	prestige = -10
+	add_country_modifier = { name = neutrality duration = -1 }
+	remove_country_modifier = taiping_draft
+	remove_country_modifier = too_weak_BCW
+	war_exhaustion = -90
+	treasury = 200000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 500
+	canned_food = 500
+	regular_clothes = 500
+	}
+}
+
+# Pskov Variables - 6-5
+# MAJOR/GLOBAL EVENT - Losing instantly kills Novogord and ends all Novogord content for good. It also results in the destruction of Novogord City and sets the failstate flag for NOV. Ivan IV would be proud.
+
+country_event = {
+	id = 232557
+	title = "NRUS57.T"
+	desc = "NRUS57.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { owns = 996 }
+    has_global_flag = NOV_PSKOV_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 5
+	}
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+	immediate = {
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	#any_owned = {
+	#  limit = { is_core = KAR }
+	#  secede_province = KAR
+	#}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	release_vassal = UGG
+	release_vassal = BLO
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS57.A"
+	prestige_factor = -0.99
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	remove_country_modifier = neutrality
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	# Oh no. The poor people. Oh the humanity
+	1003 = {
+		poor_strata = {
+            reduce_pop = 0.2
+	    }
+		middle_strata = {
+			reduce_pop = 0.2
+	    }
+		rich_strata = {
+			reduce_pop = 0.2
+	       }
+	}
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = failstate_NOV
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	#any_owned = {
+	#  limit = { is_core = KAR }
+	#  secede_province = KAR
+	#}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	release_vassal = UGG
+	release_vassal = BLO
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+	SCA = {
+	   relation = { who = NOV value = 400 }
+	   diplomatic_influence = { who = NOV value = 400 }
+	   relation = { who = PMY value = 400 }
+	   diplomatic_influence = { who = PMY value = 400 }
+	   set_country_flag = PSV_chain_end_ING
+	}
+	PSV = { all_core = { add_core = ING remove_core = NOV remove_core = PSV } }
+	ING = { all_core = { remove_core = PSV remove_core = NOV } }
+	}
+}
+
+# Winning results in the loss of three levels of Polarization and 500k worth of reparations from Scandinavia
+
+country_event = {
+	id = 232558
+	title = "NRUS58.T"
+	desc = "NRUS58.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	owns = 996
+    has_global_flag = NOV_PSKOV_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 5
+	}
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS58.A"
+	994 = { change_province_name = "Nevskoye" }
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	prestige = 50
+	treasury = 500000
+	add_country_modifier = { name = neutrality duration = -1 }
+	SCA = {
+    any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = NOV
+	}
+	set_country_flag = PSV_chain_end_PSV
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 500000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 500 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 500000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 500 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 500000 } }
+        owner = { treasury = -500000 }
+    }
+	}
+
+	change_variable = {
+		  which = NOV_polar
+		  value = -3
+	   }
+   }
+}
+
+# Pskov Variables - 4-3-2
+# Losing results in Novogord handing Scandinavia basically the cost of the entire Suez Canal in Loans for the rest of history (1M) Polarization is increased by 1.
+
+country_event = {
+	id = 232559
+	title = "NRUS59.T"
+	desc = "NRUS59.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { owns = 996 }
+    has_global_flag = NOV_PSKOV_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 5
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS59.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	prestige = -25
+	add_country_modifier = { name = neutrality duration = -1 }
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 1000000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 1000000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 1000000 } }
+        owner = { treasury = -1000000 }
+    }
+	996 = { add_core = ING }
+	994 = { add_core = ING }
+	SCA = {
+	set_country_flag = PSV_chain_end_ING
+	treasury = 1000000
+	# Agree to the Treaty?
+	country_event = { id = 2325611 days = 0 }
+	}
+	change_variable = {
+		  which = NOV_polar
+		  value = 1
+	   }
+	}
+}
+
+# Winning results in Scandinavia being forced to pay what is basically the cost of the entire Suez Canal in loans for quite a while (1M) Polarization is decreased by 1.
+
+country_event = {
+	id = 232560
+	title = "NRUS60.T"
+	desc = "NRUS60.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	owns = 996
+    has_global_flag = NOV_PSKOV_WAR
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 5
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS60.A"
+	994 = { change_province_name = "Nevskoye" }
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	prestige = 25
+	add_country_modifier = { name = neutrality duration = -1 }
+	treasury = 1000000
+	SCA = {
+    any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = NOV
+	}
+	set_country_flag = PSV_chain_end_PSV
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 1000000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 1000000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 1000000 } }
+        owner = { treasury = -1000000 }
+    }
+    }
+	change_variable = {
+		  which = NOV_polar
+		  value = -1
+	   }
+	}
+}
+
+# Pskov Variables - 1-0
+# Losing Results in Novogord "losing" its national treasure (500K) but somehow having its prestige increase and its War Exhaustion instantly cleared.
+
+country_event = {
+	id = 232561
+	title = "NRUS61.T"
+	desc = "NRUS61.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { owns = 996 }
+    has_global_flag = NOV_PSKOV_WAR
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS61.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	# What?
+	prestige = 10
+	# How?
+	war_exhaustion = -90
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 500
+	canned_food = 500
+	regular_clothes = 500
+	remove_country_modifier = taiping_draft
+	remove_country_modifier = too_weak_BCW
+    add_country_modifier = { name = neutrality duration = -1 }
+	# At least they lost a lot of money
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 500000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 500 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 500000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 500 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 500000 } }
+        owner = { treasury = -500000 }
+    }
+	996 = { add_core = ING }
+	994 = { add_core = ING }
+	SCA = {
+	set_country_flag = PSV_chain_end_ING
+	treasury = 500000
+	# Agree to the Treaty?
+	country_event = { id = 2325611 days = 0 }
+	}
+	# Urm
+	372 = {
+		poor_strata = {
+            reduce_pop = 0.1
+	    }
+		middle_strata = {
+			reduce_pop = 0.1
+	    }
+		rich_strata = {
+			reduce_pop = 0.1
+	       }
+	    }
+	}
+}
+
+# The Treaty of Ingria
+
+country_event = {
+	id = 2325611
+	title = "NRUS611.T"
+	desc = "NRUS611.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS61.A"
+	prestige = 1
+	# Boost Relations
+	relation = { who = NOV value = 125 }
+	diplomatic_influence = { who = NOV value = 125 }
+	any_owned = {
+	  limit = { is_core = PSV NOT = { is_core = ING } }
+	  secede_province = NOV
+	}
+	ai_chance = {
+	factor = 75
+	   }
+	}
+	
+    option = {
+	name = "NRUS61.B"
+	prestige = -1
+	badboy = 5
+	994 = { add_core = ING }
+	996 = { add_core = ING }
+	997 = { add_core = ING }
+	1006 = { add_core = ING }
+	ai_chance = {
+	factor = 25
+	   }	
+	}
+}
+
+# MAJOR/GLOBAL EVENT - Winning results in the instant centralization of Novogord and the Pan-Russian Flag being set along with all positive modifiers for a Pan-Russian Novogord. A second event abolishes serfdom.
+
+country_event = {
+	id = 232562
+	title = "NRUS62.T"
+	desc = "NRUS62.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	owns = 996
+    has_global_flag = NOV_PSKOV_WAR
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	      }
+	   }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS62.A"
+	clr_country_flag = NOV_blocker
+	clr_global_flag = NOV_PSKOV_WAR
+	994 = { change_province_name = "Nevskoye" }
+	remove_country_modifier = taiping_draft
+	remove_country_modifier = too_weak_BCW
+	# Scandinavia gets fucked
+	treasury = 1000000
+	SCA = {
+    any_owned = { 
+	   limit = { province_id = 994 }
+	   secede_province = NOV
+	}
+	set_country_flag = PSV_chain_end_PSV
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 1000000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 1000000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 1000 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 1000000 } }
+        owner = { treasury = -1000000 }
+    }
+    }
+	# EVERYONE liked this
+	any_pop = {
+	    consciousness = -5
+	}
+	any_pop = {
+	    militancy = -5
+	}
+    country_event = { id = 232563 days = 1 }
+	}
+}
+
+# Millenial Charter
+
+country_event = {
+	id = 232563
+	title = "NRUS63.T"
+	desc = "NRUS63.D"
+    #picture = "ambush_army"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS63.A"
+	prestige = 40
+    # Clear leftover flags to keep things clean
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  panrussian_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Merchant Republic abolished offically
+	government = democracy
+    political_reform = appointed
+    political_reform = wealth_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = gerrymandering
+	political_reform = federalism
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+    # SERFDOM IS DEAD
+	political_reform = debtors_prisons
+	# Lose a lot of money to delete serfdom
+	random_owned = {
+        limit = {
+                owner = {
+                NOT = { treasury = 100000 }
+                check_variable = { which = owed_cash_money value = 9 }
+            }
+        }
+        owner = { change_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = {
+            owner = {
+                NOT = { treasury = 100000 }
+                NOT = { check_variable = { which = owed_cash_money value = 1 } }
+            }
+        }
+        owner = { set_variable = { which = owed_cash_money value = 100 } }
+    }
+    random_owned = {
+        limit = { owner = { treasury = 100000 } }
+        owner = { treasury = -100000 }
+    }
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# New Elections
+	election = yes	
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+
+################################
+# Northern Russia END-OF-CHAIN #
+################################
+
+########### Level 6 ###########
+
+country_event = {
+	id = 232564
+	title = "NRUS64.T"
+	desc = "NRUS64.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	has_global_flag = finnish_chain_ended
+	has_country_flag = VYA_nonrussians_end
+	has_country_flag = NOV_capitalism_end
+	has_country_flag = NOV_serfs_end
+    has_country_flag = finnish_diet_concluded
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+    NOT = { has_country_flag = NOV_blocker }
+	check_variable = {
+		which = NOV_polar
+		value = 6
+	   }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_CHECK
+		}
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_AUTOTRIGGER
+		}
+		modifier = {
+			factor = 0.5
+            year = 1852
+		}
+		modifier = {
+			factor = 0.1
+            year = 1853
+		}
+		modifier = {
+			factor = 0.01
+            year = 1855
+		}
+	}
+
+    option = {
+	name = "NRUS64.A"
+	# Remove Neutrality
+	remove_country_modifier = neutrality
+	# Stage Blocker
+	set_global_flag = NOV_STAGE_ONE
+	# Clear leftover flags to keep things clean
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	# Pissed off Reactionaries and annoyed conservatives.
+	any_pop = {
+	    consciousness = 6
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+		}
+	}
+	# Triggers the Siege
+	country_event = { id = 232565 days = 7 }
+	}
+}
+
+country_event = {
+	id = 232565
+	title = "NRUS65.T"
+	desc = "NRUS65.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Surrender
+
+    option = {
+	name = "NRUS65.A"
+	prestige = -10
+	country_event = { id = 232566 days = 14 }
+	ai_chance = {
+	factor = 35
+	   }
+	}
+
+	# Endure
+
+    option = {
+	name = "NRUS65.B"
+	prestige = 10
+	country_event = { id = 232567 days = 14 }
+	ai_chance = {
+	factor = 65
+	   }
+	}
+}
+
+# 232566 - MAJOR - The Death of the Confederation
+
+country_event = {
+	id = 232566
+	title = "NRUS66.T"
+	desc = "NRUS66.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+	any_country = {
+	   limit = {
+	      OR = {
+	        tag = VYA
+			tag = KTK
+			tag = PRM
+			tag = KOM
+			tag = NTS
+			tag = MAR
+		  }
+		  OR = {
+			   NOT = { exists = yes }
+			   is_vassal = yes
+		  }
+	   }
+	   set_country_flag = free_state_NOV
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+    all_core = {
+	   limit = { OR = { is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = MAR } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS66.A"
+	prestige_factor = -0.75
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = failstate_NOV
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+    all_core = {
+	   limit = { OR = { is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = MAR } }
+	   remove_core = NOV
+	}
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+    }
+	PRM = { country_event = { id = 232610 days = 1 } }
+	}
+}
+
+# 232567 - MAJOR - The Storming of Novogorod - FAILSTATE ENDING
+
+country_event = {
+	id = 232567
+	title = "NRUS67.T"
+	desc = "NRUS67.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+	any_country = {
+	   limit = {
+	      OR = {
+	        tag = VYA
+			tag = KTK
+			tag = PRM
+			tag = KOM
+			tag = NTS
+			tag = KAR
+			tag = PMY
+			tag = MAR
+		  }
+		  OR = {
+			   NOT = { exists = yes }
+			   is_vassal = yes
+		  }
+		  NOT = { vassal_of = SCA }
+	   }
+	   set_country_flag = free_state_NOV
+	}
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+	release_vassal = UGG
+	release_vassal = BLO
+	release_vassal = PSV
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS67.A"
+	prestige_factor = -0.90
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	1003 = {
+		poor_strata = {
+            reduce_pop = 0.2
+	    }
+		middle_strata = {
+			reduce_pop = 0.2
+	    }
+		rich_strata = {
+			reduce_pop = 0.2
+	    }
+	}
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = failstate_NOV
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	release_vassal = UGG
+	release_vassal = PSV
+	release_vassal = BLO
+	release_vassal = VYA
+	release_vassal = KTK
+    release_vassal = PRM
+    release_vassal = KOM
+    release_vassal = NTS
+	release_vassal = PMY
+	release_vassal = MAR
+	any_country = {
+	   limit = {
+			has_country_flag = free_state_NOV
+	   }
+	   clr_country_flag = free_state_NOV
+       country_event = 232568
+	   }
+	}
+}
+
+country_event = {
+	id = 232568
+	title = "NRUS68.T"
+	desc = "NRUS68.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Military Coup
+
+    option = {
+	name = "NRUS68.A"
+	prestige = -10
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	ai_chance = {
+	factor = 25
+	   }
+	}
+
+	# Absolute Monarchy
+
+    option = {
+	name = "NRUS68.B"
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	ai_chance = {
+	factor = 40
+	   }
+	}
+
+	# Do nothing
+
+    option = {
+	name = "NRUS68.C"
+	prestige = 10
+	random_owned = {
+		limit = { owner = { government = merchant_republic } }
+		owner = { government = democracy }
+	}
+	ai_chance = {
+	factor = 35
+	   }
+	}
+}
+
+########### Level 5-4 ###########
+
+
+country_event = {
+	id = 232569
+	title = "NRUS69.T"
+	desc = "NRUS69.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	has_global_flag = finnish_chain_ended
+	has_country_flag = VYA_nonrussians_end
+	has_country_flag = NOV_capitalism_end
+	has_country_flag = NOV_serfs_end
+	has_country_flag = finnish_diet_concluded
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+    NOT = { has_country_flag = NOV_blocker }
+	check_variable = {
+		which = NOV_polar
+		value = 4
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 6
+	      }
+       }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_CHECK
+		}
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_AUTOTRIGGER
+		}
+		modifier = {
+			factor = 0.5
+            year = 1852
+		}
+		modifier = {
+			factor = 0.1
+            year = 1853
+		}
+		modifier = {
+			factor = 0.01
+            year = 1855
+		}
+	}
+
+    option = {
+	name = "NRUS69.A"
+	remove_country_modifier = neutrality
+	# Stage Blocker
+	set_global_flag = NOV_STAGE_ONE
+	# Clear leftover flags to keep things clean
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	#Everyone is not happy at the Bishop Veche
+	any_pop = {
+	    consciousness = 2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 6
+		}
+	}
+
+	# Triggers the "Bishops Candidate"
+	country_event = { id = 232570 days = 7 }
+	}
+}
+
+country_event = {
+	id = 232570
+	title = "NRUS70.T"
+	desc = "NRUS70.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Feudal Faction
+
+    option = {
+	name = "NRUS70.A"
+	country_event = { id = 232571 days = 14 }
+	ai_chance = {
+	factor = 35
+	modifier = {
+	factor = 0
+    in_sphere = SCA
+          }
+	   }
+	}
+
+	# Count the Votes
+
+    option = {
+	name = "NRUS70.B"
+	prestige = -10
+	country_event = { id = 232578 days = 14 }
+	ai_chance = {
+	factor = 65
+	   }
+	}
+
+	# Vacant Throne
+
+    option = {
+	name = "NRUS70.B"
+	prestige = -20
+	country_event = { id = 232586 days = 14 }
+	ai_chance = {
+	factor = 65
+	   }
+	}
+}
+
+# Feudal - Holy Wisdom Cathedral Explosion and Reaction - Switch Vassals and temp remove NOV cores on PRM. Give "no_more_war to NOV"
+
+country_event = {
+	id = 232571
+	title = "NRUS71.T"
+	desc = "NRUS71.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+  	immediate = {
+    release_vassal = PRM
+	PRM = {
+    all_core = {
+	   limit = { is_core = PRM }
+	   remove_core = NOV
+	   }
+	}
+	}
+
+    option = {
+	name = "NRUS71.A"
+	prestige = -10
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	SCA = {
+	   relation = { who = NOV value = -200 }
+	   diplomatic_influence = { who = NOV value = -200 }
+	   relation = { who = PRM value = -200 }
+	   diplomatic_influence = { who = PRM value = -200 }
+	   leave_alliance = NOV
+	   leave_alliance = PRM
+	}
+    add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+    }
+    add_country_modifier = {
+			   name = calm_before_storm
+			   duration = 7
+    }
+	any_country = {
+	   limit = {
+	      vassal_of = NOV
+		  NOT = {
+		     tag = BLO
+			 tag = UGG
+			 tag = PSV
+	      }
+	   }
+	   country_event = { id = 232572 days = 4 }
+	}
+	country_event = { id = 232573 days = 7 }
+	}
+
+    option = {
+	name = "NRUS71.B"
+	prestige = -10
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	SCA = {
+	   relation = { who = NOV value = -200 }
+	   diplomatic_influence = { who = NOV value = -200 }
+	   relation = { who = PRM value = -200 }
+	   diplomatic_influence = { who = PRM value = -200 }
+	   leave_alliance = NOV
+	   leave_alliance = PRM
+	}
+    add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+    }
+    add_country_modifier = {
+			   name = calm_before_storm
+			   duration = 7
+    }
+	any_country = {
+	   limit = {
+	      vassal_of = NOV
+		  NOT = {
+		     tag = BLO
+			 tag = UGG
+			 tag = PSV
+	      }
+	   }
+	   country_event = { id = 232572 days = 4 }
+	}
+	country_event = { id = 232573 days = 7 }
+	change_tag_no_core_switch = PRM
+	ai_chance = {
+	factor = 0
+	   }
+	}
+}
+
+# Vassal switch event
+
+country_event = {
+	id = 232572
+	title = "NRUS72.T"
+	desc = "NRUS72.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS72.A"
+    set_country_flag = party_to_45A
+	PRM = { create_vassal = THIS }
+	}
+}
+
+# The Novogrodian Civil War - 4-5-A
+
+country_event = {
+	id = 232573
+	title = "NRUS73.T"
+	desc = "NRUS73.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	major = yes
+
+    option = {
+	name = "NRUS71.A"
+	set_global_flag = NCW_54A_BEGIN
+	PRM = {
+    all_core = {
+	   limit = { is_core = PRM }
+	   add_core = NOV
+	   }
+	}
+	war = {
+		target = PRM
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal =  {
+                casus_belli = make_puppet
+			}
+			call_ally = yes
+	}
+	badboy = -10
+	PRM = { badboy = -10 }
+	}
+}
+
+# 4-5-A - Feudals Victory - PANRUSSIAN ENDING
+
+country_event = {
+	id = 232574
+	title = "NRUS74.T"
+	desc = "NRUS74.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { exists = PRM }
+	has_global_flag = NCW_54A_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS74.A"
+	prestige = 30
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	clr_global_flag = NCW_54A_BEGIN
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  panrussian_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Instant Stablity
+	any_pop = {
+	    consciousness = -5
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -10
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -8
+		}
+	}
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# Inherit EVERYTHING
+	any_country = {
+	limit = {
+	   has_country_flag = party_to_45A
+    }
+	clr_country_flag = party_to_45A
+	}
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# 4-5-A - Free State Victory - ISOLATIONALIST ENDING
+
+country_event = {
+	id = 232575
+	title = "NRUS75.T"
+	desc = "NRUS75.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = PRM
+	war = no
+	NOV = { is_vassal = yes }
+	has_global_flag = NCW_54A_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+	immediate = {
+	neutrality = yes
+	}
+
+    option = {
+	name = "NRUS75.A"
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	clr_global_flag = NCW_54A_BEGIN
+	# Instant Stablity
+	any_pop = {
+	    consciousness = -5
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = -8
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -10
+		}
+	}
+	# Destroy Feudal States and set Novogrod Flags
+	NOV = { remove_country_modifier = neutrality remove_country_modifier = unstable_confederation set_country_flag = time_limited_NOV set_country_flag = staraya_NOV inherit = UGG inherit = BLO }
+	# Swap Vassals
+	any_country = {
+	limit = {
+	   has_country_flag = party_to_45A
+    }
+	clr_country_flag = party_to_45A
+	country_event = { id = 232576 days = 0 }
+	}
+	# Puppet Event for PRM
+	country_event = { id = 232576 days = 1 }
+	# Switch Player to NOV
+	random_owned = {
+		limit = { owner = { ai = no } }
+		owner = { change_tag_no_core_switch = NOV }
+	}
+	}
+}
+
+# Vassal switch event
+
+country_event = {
+	id = 232576
+	title = "NRUS76.T"
+	desc = "NRUS76.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS76.A"
+	NOV = { create_vassal = THIS }
+	}
+}
+
+# Decision - Second Staraya Russa Oath requires state and government. If the substates have not been annexed by the time Muscovy invades then the NOV flag will switch to failstate and NOV will collapse on the spot.
+
+# 4-5-A - White Peace or MUS Intervention Ending - FAILSTATE ENDING
+
+country_event = {
+	id = 232577
+	title = "NRUS77.T"
+	desc = "NRUS77.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	OR = {
+	   AND = {
+	      PRM = { exists = yes }
+	      is_vassal = no
+	   }
+	   AND = {
+	      has_country_flag = NOV_CHAIN_TRIGGER
+	      has_global_flag = GO_NORTH_YOUNG_MAN
+	   }
+	}
+	has_global_flag = NCW_54A_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+	immediate = {
+	PRM = { neutrality = yes }
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS77.A"
+	prestige_factor = -0.50
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+    }
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	clr_global_flag = NCW_54A_BEGIN
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	#set_global_flag = GPE_EMERGENCY_FORMATION
+	set_global_flag = failstate_NOV
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	}
+}
+
+# Vote Counting - The Bakers Coup - Release UGG and BLO. Vassal BLO.
+
+country_event = {
+	id = 232578
+	title = "NRUS78.T"
+	desc = "NRUS78.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+  	immediate = {
+    release_vassal = UGG
+	release_vassal = BLO
+	BLO = {
+    all_core = {
+	   limit = { is_core = BLO }
+	   remove_core = NOV
+	   }
+	}
+	}
+
+    option = {
+	name = "NRUS78.A"
+	prestige = 5
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	SCA = {
+	   relation = { who = NOV value = -200 }
+	   diplomatic_influence = { who = NOV value = -200 }
+	   relation = { who = BLO value = -200 }
+	   diplomatic_influence = { who = BLO value = -200 }
+	   leave_alliance = NOV
+	   leave_alliance = BLO
+	}
+	BLO = {
+	create_vassal = UGG
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 365
+	}
+	}
+    add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+    }
+    add_country_modifier = {
+			   name = calm_before_storm
+			   duration = 7
+    }
+	country_event = { id = 232579 days = 7 }
+	}
+
+    option = {
+	name = "NRUS78.B"
+	prestige = 5
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	SCA = {
+	   relation = { who = NOV value = -200 }
+	   diplomatic_influence = { who = NOV value = -200 }
+	   relation = { who = BLO value = -200 }
+	   diplomatic_influence = { who = BLO value = -200 }
+	   leave_alliance = NOV
+	   leave_alliance = BLO
+	}
+	BLO = {
+	create_vassal = UGG
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 365
+	}
+	}
+    add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+    }
+    add_country_modifier = {
+			   name = calm_before_storm
+			   duration = 7
+    }
+	country_event = { id = 232579 days = 7 }
+	change_tag_no_core_switch = BLO
+	ai_chance = {
+	factor = 0
+	   }
+	}
+}
+
+# The Novogrodian Civil War - 4-5-B
+
+country_event = {
+	id = 232579
+	title = "NRUS79.T"
+	desc = "NRUS79.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	major = yes
+
+    option = {
+	name = "NRUS79.A"
+	set_global_flag = NCW_54B_BEGIN
+	BLO = {
+    all_core = {
+	   limit = { is_core = BLO }
+	   add_core = NOV
+	   }
+	}
+	war = {
+		target = BLO
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal =  {
+                casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	}
+	badboy = -10
+	BLO = { badboy = -10 }
+	}
+}
+
+# 4-5-B - Dictator Victory - ISOLAT ENDING
+
+country_event = {
+	id = 232580
+	title = "NRUS80.T"
+	desc = "NRUS80.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { exists = BLO }
+	has_global_flag = NCW_54B_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS80.A"
+	prestige = 20
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	clr_global_flag = NCW_54B_BEGIN
+	set_global_flag = NOV_END_STAGE_ONE
+	set_country_flag = time_limited_NOV
+	set_country_flag = tl_dictatorship_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Instant Stablity but the conservatives only really like it here.
+	any_pop = {
+	    consciousness = -3
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = conservative
+				factor = -3
+		}
+	}
+	# Inherit UGG and propose to states to join new union.
+	inherit = UGG
+	any_country = {
+	limit = {
+	   vassal_of = NOV
+    }
+	country_event = { id = 232581 days = 0 }
+	}
+	}
+}
+
+# Choice to be annexed or not.
+
+country_event = {
+	id = 232581
+	title = "NRUS81.T"
+	desc = "NRUS81.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS81.A"
+	NOV = { inherit = THIS }
+	ai_chance = {
+	factor = 65
+	modifier = { 
+	factor = 2
+	tag = PSV
+		 }
+	   }
+	}
+
+    option = {
+	name = "NRUS81.B"
+	prestige = 5
+	NOV = { release_vassal = THIS relation = { who = THIS value = -400 } leave_alliance = THIS }
+	ai_chance = {
+	factor = 45
+	modifier = { 
+	factor = 0
+	tag = PSV
+		 }
+	   }
+	}
+}
+
+# If no rebel states exist then confirm the New Confederation Charter
+
+country_event = {
+	id = 232582
+	title = "NRUS82.T"
+	desc = "NRUS82.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	has_country_flag = time_limited_NOV
+	has_country_flag = tl_dictatorship_NOV
+	NOT = { exists = BLO }
+	NOT = { exists = UGG }
+	NOT = { exists = VYA }
+	NOT = { exists = KTK }
+	NOT = { exists = PRM }
+	NOT = { exists = KOM }
+	NOT = { exists = NTS }
+	NOT = { exists = PMY }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS82.A"
+	prestige = 10
+	set_global_flag =  isolat_NOV
+  	clr_country_flag = time_limited_NOV
+	clr_country_flag = tl_dictatorship_NOV
+	}
+}
+
+# 4-5-B - Feudal Victory - ISOLAT ENDING - This needs to be reworked as soon as I can be bothered - DeNuke
+
+country_event = {
+	id = 232583
+	title = "NRUS83.T"
+	desc = "NRUS83.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	is_disarmed = yes
+	war = no
+	has_global_flag = NCW_54B_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS83.A"
+	prestige = -20
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	clr_global_flag = NCW_54B_BEGIN
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Inherit UGG and propose to states to join new union.
+	inherit = UGG	
+	inherit = VYA
+	inherit = KTK
+    inherit = PRM
+    inherit = KOM
+    inherit = NTS
+	inherit = PMY
+	any_country = { 
+	  limit = {
+	    exists = yes
+		OR = {
+	       tag = VYA
+		   tag = KTK
+		   tag = PRM
+		   tag = KOM
+		   tag = NTS
+		   tag = PMY
+		}
+	  }
+	  country_event = { id = 2325840 days = 1 }
+	}
+	# Switch Player to NOV
+	BLO = {
+	random_owned = {
+		limit = { owner = { ai = no } }
+		owner = { change_tag_no_core_switch = NOV }
+	}
+	country_event = { id = 232584 days = 0 }
+	}
+	}
+}
+
+# Generic AI Only BLO annexation event
+
+country_event = {
+	id = 232584
+	title = "NRUS84.T"
+	desc = "NRUS84.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS84.A"
+	NOV = { inherit = BLO }
+	}
+}
+
+# Reorganization Event for Feudals
+
+country_event = {
+	id = 2325840
+	title = "NRUS840.T"
+	desc = "NRUS840.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS840.A"
+	NOV = { create_vassal = THIS }
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	}
+}
+
+# Decision - A better union requires state and government. If the substates have not been annexed by the time Muscovy invades then the NOV flag will switch to failstate and NOV will collapse on the spot.
+
+# 4-5-B - White Peace or MUS Intervention Ending - FAILSTATE ENDING
+
+country_event = {
+	id = 232585
+	title = "NRUS85.T"
+	desc = "NRUS85.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	OR = {
+	   AND = {
+	      is_disarmed = no
+	      BLO = { exists = yes }
+	   }
+	   AND = {
+	      has_country_flag = NOV_CHAIN_TRIGGER
+	      has_global_flag = GO_NORTH_YOUNG_MAN
+	   }
+	}
+	has_global_flag = NCW_54B_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+	immediate = {
+	BLO = { release_vassal = UGG }
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS85.A"
+	prestige_factor = -0.50
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	clr_global_flag = NCW_54B_BEGIN
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	#set_global_flag = GPE_EMERGENCY_FORMATION
+	set_global_flag = failstate_NOV
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	}
+}
+
+# Council of Lords is dissolved by Veche - Release UGG and BLO. Vassal BLO - The best 4/5 ending even if its isolat
+
+country_event = {
+	id = 232586
+	title = "NRUS86.T"
+	desc = "NRUS86.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+  	immediate = {
+    release_vassal = UGG
+	release_vassal = BLO
+	BLO = {
+    all_core = {
+	   limit = { is_core = BLO }
+	   remove_core = NOV
+	   }
+	}
+	}
+
+    option = {
+	name = "NRUS86.A"
+	prestige = 20
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	government = democracy
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+    political_reform = secret_ballots
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	set_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	set_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+			 tag = PSV
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+    }
+	SCA = {
+	   relation = { who = NOV value = -200 }
+	   diplomatic_influence = { who = NOV value = -200 }
+	   relation = { who = BLO value = -200 }
+	   diplomatic_influence = { who = BLO value = -200 }
+	   leave_alliance = NOV
+	   leave_alliance = BLO
+	}
+	BLO = {
+	create_vassal = UGG
+	add_country_modifier = {
+		name = taiping_draft
+		duration = 365
+	}
+	}
+    add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+    }
+    add_country_modifier = {
+			   name = calm_before_storm
+			   duration = 7
+    }
+	country_event = { id = 232587 days = 7 }
+	}
+}
+
+# The Novogrodian Civil War - 4-5-C
+
+country_event = {
+	id = 232587
+	title = "NRUS87.T"
+	desc = "NRUS87.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	major = yes
+
+    option = {
+	name = "NRUS87.A"
+	set_global_flag = NCW_54C_BEGIN
+	BLO = {
+    all_core = {
+	   limit = { is_core = BLO }
+	   add_core = NOV
+	   }
+	}
+	war = {
+		target = BLO
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal =  {
+                casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	}
+	badboy = -10
+	BLO = { badboy = -10 }
+	}
+}
+
+# 4-5-C - Democratic Victory - ISOLAT ENDING
+
+country_event = {
+	id = 232588
+	title = "NRUS88.T"
+	desc = "NRUS88.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	NOT = { exists = BLO }
+	has_global_flag = NCW_54C_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS88.A"
+	prestige = 30
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	clr_global_flag = NCW_54C_BEGIN
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# SERFDOM IS DEAD
+	political_reform = debtors_prisons
+	# Instant Stability but the liberals only really like it here.
+	any_pop = {
+	    consciousness = -3
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+		}
+	}
+	# Inherit UGG to ensure that both of the princedoms are dead.
+	inherit = UGG
+	}
+}
+
+# Turns UGG and BLO into Vassals - This has been redacted as 4-5 C should remain the best ending.
+
+#country_event = {
+#	id = 2325890
+#	title = "NRUS890.T"
+#	desc = "NRUS890.D"
+#   #picture = "ambush_army"
+#
+#	is_triggered_only = yes
+#
+#	immediate = {
+#	any_owned = {
+#	  limit = { is_core = UGG }
+#	  secede_province = UGG
+#	}
+#	any_owned = {
+#	  limit = { is_core = BLO }
+#	  secede_province = BLO
+#	}
+#	create_vassal = UGG
+#	create_vassal = BLO
+#	}
+#
+#   option = {
+#	name = "NRUS890.B"
+#	any_owned = {
+#	  limit = { is_core = UGG }
+#	  secede_province = UGG
+#	}
+#	any_owned = {
+#	  limit = { is_core = BLO }
+#	  secede_province = BLO
+#	}
+#	}
+#}
+
+# 4-5-C - Feudal Victory - FEUDAL FAILSTATE ENDING
+
+country_event = {
+	id = 2325888
+	title = "NRUS888.T"
+	desc = "NRUS888.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	is_disarmed = yes
+	war = no
+	has_global_flag = NCW_54C_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+    option = {
+	name = "NRUS888.A"
+	BLO = { release_vassal = UGG }
+	prestige = 30
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	clr_global_flag = NCW_54C_BEGIN
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = failstate_NOV
+	# Back to Merchant Republic
+	government = merchant_republic
+	ruling_party_ideology = conservative
+	political_reform = wealth_weighted_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = non_secret_ballots
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	set_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	set_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	# Add Unstable Confederation again. No. Really
+	add_country_modifier = {
+	   name = unstable_confederation
+	   duration = 18250
+    }
+	# Event to turn UGG and BLO into vassals again
+	any_country = {
+	limit = {
+	   OR = {
+	      tag = UGG
+	      tag = BLO
+	   }
+    }
+	country_event = { id = 232589 days = 0 }
+	}
+	}
+}
+
+# Vassal switch event but ensure governments don't switch.
+
+country_event = {
+	id = 232589
+	title = "NRUS89.T"
+	desc = "NRUS89.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS89.A"
+	NOV = { create_vassal = THIS }
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	}
+}
+
+# 4-5-C - White Peace or MUS Intervention Ending - TOTAL FAILSTATE ENDING
+
+country_event = {
+	id = 232590
+	title = "NRUS90.T"
+	desc = "NRUS90.D"
+    #picture = "ambush_army"
+
+	major = yes
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	OR = {
+	   AND = {
+	      is_disarmed = no
+	      BLO = { exists = yes }
+	   }
+	   AND = {
+	      has_country_flag = NOV_CHAIN_TRIGGER
+	      has_global_flag = GO_NORTH_YOUNG_MAN
+	   }
+	}
+	has_global_flag = NCW_54C_BEGIN
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+
+	immediate = {
+	BLO = { release_vassal = UGG }
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	   }
+	}
+
+    option = {
+	name = "NRUS90.A"
+	prestige_factor = -0.50
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	remove_country_modifier = economic_reform_NOV
+	clr_global_flag = NCW_54C_BEGIN
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	#set_global_flag = GPE_EMERGENCY_FORMATION
+	set_global_flag = failstate_NOV
+	any_owned = {
+	  limit = { is_core = UGG }
+	  secede_province = UGG
+	}
+	any_owned = {
+	  limit = { is_core = BLO }
+	  secede_province = BLO
+	}
+	any_owned = {
+	  limit = { is_core = VYA }
+	  secede_province = VYA
+	}
+	any_owned = {
+	  limit = { is_core = KTK }
+	  secede_province = KTK
+	}
+	any_owned = {
+	  limit = { is_core = PRM }
+	  secede_province = PRM
+	}
+	any_owned = {
+	  limit = { is_core = KOM }
+	  secede_province = KOM
+	}
+	any_owned = {
+	  limit = { is_core = NTS }
+	  secede_province = NTS
+	}
+	any_owned = {
+	  limit = { is_core = KAR }
+	  secede_province = KAR
+	}
+	any_owned = {
+	  limit = { is_core = PMY }
+	  secede_province = PMY
+	}
+	any_owned = {
+	  limit = { is_core = MAR }
+	  secede_province = MAR
+	}
+	any_owned = {
+	  limit = { is_core = PSV }
+	  secede_province = PSV
+	}
+    all_core = {
+	   limit = { OR = { is_core = UGG is_core = BLO is_core = VYA is_core = KTK is_core = PRM is_core = KOM is_core = NTS is_core = KAR is_core = PMY is_core = MAR is_core = PSV } }
+	   remove_core = NOV
+	}
+	}
+}
+
+# Level 3-2
+
+# The Death of the Old Prince and the Election of a New
+
+country_event = {
+	id = 232591
+	title = "NRUS91.T"
+	desc = "NRUS91.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	has_global_flag = finnish_chain_ended
+	has_country_flag = VYA_nonrussians_end
+	has_country_flag = NOV_capitalism_end
+	has_country_flag = NOV_serfs_end
+	has_country_flag = finnish_diet_concluded
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+    NOT = { has_country_flag = NOV_blocker }
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	}
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 4
+	      }
+       }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_CHECK
+		}
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_AUTOTRIGGER
+		}
+		modifier = {
+			factor = 0.5
+            year = 1852
+		}
+		modifier = {
+			factor = 0.1
+            year = 1853
+		}
+		modifier = {
+			factor = 0.01
+            year = 1855
+		}
+	}
+
+    option = {
+	name = "NRUS91.A"
+	remove_country_modifier = neutrality
+	# Stage Blocker
+	set_global_flag = NOV_STAGE_ONE
+	# Clear leftover flags to keep things clean
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	#Everyone is Neutral
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -1
+		}
+	}
+	# Triggers the "Posadnik Selection"
+	country_event = { id = 232592 days = 7 }
+	}
+}
+
+country_event = {
+	id = 232592
+	title = "NRUS92.T"
+	desc = "NRUS92.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Anisimov becomes Posadnik
+
+    option = {
+	name = "NRUS92.A"
+	country_event = { id = 232593 days = 14 }
+	#A obvious reactionary
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 2
+		}
+	}
+	ai_chance = {
+	factor = 60
+	   }
+	}
+
+	# Nobody Wins
+
+    option = {
+	name = "NRUS92.B"
+	prestige = -2
+	country_event = { id = 232598 days = 14 }
+	#Elect someone you fucks
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+	}
+	ai_chance = {
+	factor = 40
+	   }
+	}
+}
+
+# HIS HOLYNESS THE PRINCE CAN SAVE US FROM THE IN... yep... clearly a reactionary. Did not see that one coming.
+
+country_event = {
+	id = 232593
+	title = "NRUS93.T"
+	desc = "NRUS93.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS93.A"
+	any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 1
+		}
+	}
+    random_list = {
+	    30 = { country_event = { id = 232594 days = 3 } }
+		70 = { country_event = { id = 232596 days = 3 } }
+	}
+    }
+}
+
+# The Prince Accepted and the liberals are even more pissed off.
+
+country_event = {
+	id = 232594
+	title = "NRUS94.T"
+	desc = "NRUS94.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS94.A"
+	  any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 1
+		}
+	  }
+	  government = prussian_constitutionalism
+      political_reform = appointed
+      political_reform = landed_voting
+      political_reform = yes_meeting
+      political_reform = state_press
+      political_reform = no_trade_unions
+      political_reform = first_past_the_post
+      political_reform = underground_parties
+	  clr_country_flag = theocratic_government
+	  clr_country_flag = merchantrepublic_gov
+	  clr_country_flag = parliamentary_republic_gov
+	  clr_country_flag = communist_gov
+	  clr_country_flag = absolute_monarchy_gov
+	  set_country_flag = semi_constitutional_monarchy_gov
+	  clr_country_flag = constitutional_monarchy_gov
+	  clr_country_flag = presidential_dictatorship_gov
+	  clr_country_flag = fascist_gov
+	  clr_country_flag = anarcho_liberal_gov
+	  clr_country_flag = socialist_republic_gov
+	  clr_country_flag = fascist_monarchy_gov
+	  clr_country_flag = democracy_gov
+	  country_event = { id = 232595 days = 31 }
+    }
+}
+
+# END OF CHAIN - Isolationalist NOV - PRUCON
+
+country_event = {
+	id = 232595
+	title = "NRUS95.T"
+	desc = "NRUS95.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS95.A"
+	prestige = 20
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Instant Stablity but the conservatives only really like it here.
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -10
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -10
+		}
+	}
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# The Prince denied the reactionary and thus bad stuff occurred.
+
+country_event = {
+	id = 232596
+	title = "NRUS96.T"
+	desc = "NRUS96.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Shoot everyone that's a problem
+
+    option = {
+	name = "NRUS96.A"
+	  1003 = {
+		rich_strata = {
+			reduce_pop = 0.1
+	    }
+	  }
+	  any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+		}
+      }
+  	  government = presidential_dictatorship
+	  ruling_party_ideology = conservative
+	  political_reform = none_voting
+	  political_reform = party_appointed
+	  political_reform = no_meeting
+	  political_reform = state_press
+	  political_reform = state_controlled
+	  political_reform = underground_parties
+	  political_reform = closed_borders
+	  political_reform = mandatory_service
+	  political_reform = primary_culture_only
+	  clr_country_flag = tory_election_win
+	  clr_country_flag = socialist_election_win
+	  clr_country_flag = liberal_election_win
+	  clr_country_flag = communist_election_win
+	  clr_country_flag = fascist_election_win
+	  clr_country_flag = reactionary_election_win
+	  clr_country_flag = anarcho_liberal_election_win
+	  clr_country_flag = social_liberal_election_win
+	  clr_country_flag = market_liberal_election_win
+	  clr_country_flag = theocratic_government
+	  clr_country_flag = merchantrepublic_gov
+	  clr_country_flag = communist_gov
+	  clr_country_flag = absolute_monarchy_gov
+	  clr_country_flag = semi_constitutional_monarchy_gov
+	  clr_country_flag = constitutional_monarchy_gov
+	  clr_country_flag = parliamentary_republic_gov
+	  clr_country_flag = democracy_gov
+	  set_country_flag = presidential_dictatorship_gov
+	  clr_country_flag = fascist_gov
+	  clr_country_flag = anarcho_liberal_gov
+	  clr_country_flag = socialist_republic_gov
+	  clr_country_flag = fascist_monarchy_gov
+	  country_event = { id = 2325970 days = 3 }
+	  ai_chance = {
+	  factor = 50
+	  }
+    }
+
+	# Everything is fine
+
+    option = {
+	name = "NRUS96.B"
+	  any_pop = {
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+      }
+	  country_event = { id = 232597 days = 7 }
+	  ai_chance = {
+	  factor = 50
+	  }
+   }
+}
+
+# END OF CHAIN - FAILSTATE NOV - Dictatorship
+
+country_event = {
+	id = 2325970
+	title = "NRUS970.T"
+	desc = "NRUS970.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	immediate = {
+	release_vassal = UGG
+	release_vassal = BLO
+	release_vassal = PSV
+    all_core = {
+	   limit = { OR = { is_core = PSV is_core = UGG is_core = BLO } }
+	   remove_core = NOV
+	}
+	}
+
+    option = {
+	name = "NRUS97.A"
+	prestige = -10
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag = failstate_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+    }
+	# The Feudal States leave and NOV loses cores on them.
+	release_vassal = PSV
+	release_vassal = UGG
+	release_vassal = BLO
+	}
+}
+
+# END OF CHAIN - PANRUSSIAN NOV - Absolute Monarchy
+
+country_event = {
+	id = 232597
+	title = "NRUS97.T"
+	desc = "NRUS97.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS97.A"
+	prestige = 30
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  panrussian_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Create Absolute Monarchy
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	# Instant Stablity
+	any_pop = {
+	    consciousness = -5
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -10
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -8
+		}
+	}
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# Madness Everywhere
+
+country_event = {
+	id = 232598
+	title = "NRUS98.T"
+	desc = "NRUS98.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS98.A"
+	1003 = {
+       rich_strata = {
+	      reduce_pop = 0.05
+	   }
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 3
+		}
+	}
+    country_event = { id = 232599 days = 3 }
+    }
+}
+
+# What Now?
+
+country_event = {
+	id = 232599
+	title = "NRUS99.T"
+	desc = "NRUS99.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# The Prince was killed and Levashov had taken over
+
+    option = {
+	name = "NRUS99.A"
+	prestige = -1
+    country_event = { id = 232600 days = 31 }
+	ai_chance = {
+	factor = 70
+	}
+    }
+
+	# A extremely hard stance but at least the prince is alive.
+
+    option = {
+	name = "NRUS99.B"
+    country_event = { id = 232601 days = 3 }
+	ai_chance = {
+	factor = 30
+	}
+    }
+}
+
+# END OF CHAIN - Isolationalist NOV - PRESDICTATORSHIP
+
+country_event = {
+	id = 232600
+	title = "NRUS100.T"
+	desc = "NRUS100.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS100.A"
+	prestige = 20
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Merchant Republic abolished offically
+  	government = presidential_dictatorship
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = closed_borders
+	political_reform = mandatory_service
+	political_reform = primary_culture_only
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+		     tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# OK. Prince is alive, but there is another Prince in town. What now?
+
+country_event = {
+	id = 232601
+	title = "NRUS101.T"
+	desc = "NRUS101.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# ITS A TRAP which results in a true democracy
+
+    option = {
+	name = "NRUS101.A"
+	prestige = -1
+    country_event = { id = 232602 days = 31 }
+	ai_chance = {
+	factor = 70
+	}
+    }
+
+	# ITS A ANOTHER TRAP which results in a Parl Mon.
+
+    option = {
+	name = "NRUS101.B"
+    country_event = { id = 232603 days = 31 }
+	ai_chance = {
+	factor = 30
+	}
+    }
+}
+
+# END OF CHAIN - Isolationalist NOV - DEMOCRATIC REPUBLIC
+
+country_event = {
+	id = 232602
+	title = "NRUS102.T"
+	desc = "NRUS102.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS102.A"
+	prestige = 25
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Democracy Established
+	government = democracy
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	set_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+    clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	set_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	# Instant Stablity
+	any_pop = {
+	    consciousness = -2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -5
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -10
+		}
+	}
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# New Elections
+	election = yes
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# END OF CHAIN - PANRUSSIAN NOV - HMS Government
+
+country_event = {
+	id = 232603
+	title = "NRUS103.T"
+	desc = "NRUS103.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS103.A"
+	prestige = 30
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  panrussian_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Merchant Republic abolished offically
+	government = hms_government
+    political_reform = appointed
+    political_reform = wealth_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	# Instant Stablity
+	any_pop = {
+	    consciousness = -2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = conservative
+				factor = -3
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -4
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+		}
+	}
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# New Elections
+	election = yes
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# Level 1-0
+
+# We tried to have a election but the main candidate was shot.
+
+country_event = {
+	id = 232604
+	title = "NRUS104.T"
+	desc = "NRUS104.D"
+    #picture = "ambush_army"
+
+	trigger = {
+	exists = yes
+	tag = NOV
+	war = no
+	has_global_flag = finnish_chain_ended
+	has_country_flag = VYA_nonrussians_end
+	has_country_flag = NOV_capitalism_end
+	has_country_flag = NOV_serfs_end
+	has_country_flag = finnish_diet_concluded
+	NOT = { has_global_flag = NOV_END_STAGE_ONE }
+	NOT = { has_global_flag = NOV_STAGE_ONE }
+    NOT = { has_country_flag = NOV_blocker }
+	NOT = {
+	check_variable = {
+		which = NOV_polar
+		value = 2
+	      }
+       }
+	}
+
+	mean_time_to_happen = {
+	months = 12
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_CHECK
+		}
+		modifier = {
+			factor = 8
+            has_country_flag = POMOR_AUTOTRIGGER
+		}
+		modifier = {
+			factor = 0.5
+            year = 1852
+		}
+		modifier = {
+			factor = 0.1
+            year = 1853
+		}
+		modifier = {
+			factor = 0.01
+            year = 1855
+		}
+	}
+
+    option = {
+	name = "NRUS104.A"
+	remove_country_modifier = neutrality
+	# Stage Blocker
+	set_global_flag = NOV_STAGE_ONE
+	# Clear leftover flags to keep things clean
+	clr_country_flag = finnish_diet_concluded
+	clr_country_flag = VYA_nonrussians_end
+	clr_country_flag = NOV_capitalism_end
+	clr_country_flag = NOV_serfs_end
+	clr_country_flag = POMOR_CHECK
+	clr_country_flag = POMOR_AUTOTRIGGER
+	clr_country_flag = KTK_created
+	clr_country_flag = KTK_created_end
+	clr_country_flag = POMOR_TIER_ONE
+	clr_country_flag = POMOR_TIER_TWO
+	clr_country_flag = POMOR_TIER_THREE
+	#Everyone is annoyed
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 1
+		}
+	}
+	# Triggers the "Exile of Levashov"
+	country_event = { id = 232605 days = 7 }
+	}
+}
+
+# Levashov was clearly behind that bullshit. Exile and replace him. Then call a Assembly for a new constitution in two months where everyone can be heard.
+
+country_event = {
+	id = 232605
+	title = "NRUS105.T"
+	desc = "NRUS105.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS105.A"
+	#Everyone is pleased
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -1
+		}
+	}
+    country_event = { id = 232606 days = 60 }
+    }
+}
+
+# The Assembly
+
+country_event = {
+	id = 232606
+	title = "NRUS106.T"
+	desc = "NRUS106.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+	# Populist Constitution
+
+    option = {
+	name = "NRUS106.A"
+	any_pop = {
+	    consciousness = -1
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -5
+		}
+	}
+    country_event = { id = 232607 days = 31 }
+	ai_chance = {
+	factor = 40
+	}
+    }
+	
+    # Monarchist Constitution
+	
+    option = {
+	name = "NRUS106.B"
+	any_pop = {
+	    consciousness = -2
+	}
+	any_pop = {
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 2
+		}
+	}
+    country_event = { id = 232608 days = 31 }
+	ai_chance = {
+	factor = 60
+	}
+    }
+}
+
+# END OF CHAIN - ISOLATIONALIST NOV - Democracy
+
+country_event = {
+	id = 232607
+	title = "NRUS107.T"
+	desc = "NRUS107.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS107.A"
+	prestige = 40
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  isolat_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Merchant Republic abolished offically
+	government = democracy
+	ruling_party_ideology = liberal
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+    political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	set_country_flag = democracy_gov
+	# New Elections
+	election = yes
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# END OF CHAIN - PANRUSSIAN NOV - HMS Government
+
+country_event = {
+	id = 232608
+	title = "NRUS108.T"
+	desc = "NRUS108.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS108.A"
+	prestige = 40
+	# End stage 1
+	clr_global_flag = NOV_STAGE_ONE
+	set_global_flag = NOV_END_STAGE_ONE
+	set_global_flag =  panrussian_NOV
+	# Ensure cleared modifiers
+	remove_country_modifier = neutrality
+	remove_country_modifier = unstable_confederation
+	# Merchant Republic abolished offically
+	government = hms_government
+    political_reform = appointed
+    political_reform = wealth_voting
+    political_reform = yes_meeting
+    political_reform = state_press
+    political_reform = no_trade_unions
+    political_reform = first_past_the_post
+    political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	set_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	# Add PaNRUSsian Modifier
+	add_country_modifier = {
+		name = the_inevitable_war_NOV
+		duration = 7300
+	}
+	# New Elections
+	election = yes
+	# Inherit All States
+	any_country = {
+	   limit = {
+	   AND = {
+	      exists = yes
+	      vassal_of = NOV
+	      OR = {
+	         tag = UGG
+		     tag = BLO
+			 tag = PSV
+		     tag = VYA
+		     tag = KTK
+		     tag = PRM
+		     tag = KOM
+		     tag = NTS
+		     tag = PMY
+			 tag = MAR
+	      }
+	  }
+      }
+	  country_event = { id = 232609 days = 0 }
+   }
+   }
+}
+
+# Generic Vassal Inheritance Event for all End-Of-Chain Events
+
+country_event = {
+	id = 232609
+	title = "NRUS109.T"
+	desc = "NRUS109.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS109.A"
+	NOV = { inherit = THIS }
+	ai_chance = {
+	factor = 100
+	}	
+	}
+	
+    option = {
+	name = "NRUS109.A"
+	NOV = { release_vassal = THIS }
+	ai_chance = {
+	factor = 0
+	}	
+	}	
+}
+
+# ITS DONE. GLORY GLORY HALLELUJAH!
+
+# 232610 and 232611  - The Punctuation of Tikhvin - Level 6 Aftermath
+
+country_event = {
+	id = 232610
+	title = "NRUS110.T"
+	desc = "NRUS110.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS110.A"
+	prestige = 10
+	political_reform = debtors_prisons	
+	set_country_flag = PRM_GPE
+	all_core = { add_core = GPE }
+	any_country = { 
+	  limit = {
+        has_country_flag = free_state_NOV
+	  }
+	  political_reform = debtors_prisons	
+	  clr_country_flag = free_state_NOV  
+	  country_event = { id = 232611 days = 1 }
+	}
+    }	
+}
+
+country_event = {
+	id = 232611
+	title = "NRUS111.T"
+	desc = "NRUS111.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS111.A"
+	all_core = { add_core = GPE }
+	PRM = { create_vassal = THIS }	
+    }	
+}
+
+# Millennium of Novogrod
+
+country_event = {
+	id = 232612
+	title = "NRUS112.T"
+	desc = "NRUS112.D"
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "NRUS112.A"
+	  prestige = 10
+	  ai_chance = {
+	  factor = 20
+	  }	  
+    }	
+	
+    option = {
+	name = "NRUS112.B"
+	  prestige = 20
+	  1003 = {
+	     life_rating = 5
+	  }
+	  random_owned = {
+         limit = {
+            owner = {
+               NOT = { treasury = 450000 }
+               check_variable = { which = owed_cash_money value = 9 }
+            }
+         }
+         owner = { change_variable = { which = owed_cash_money value = 450 } }
+       }
+       random_owned = {
+          limit = {
+             owner = {
+               NOT = { treasury = 450000 }
+               NOT = { check_variable = { which = owed_cash_money value = 1 } }
+             }
+          }
+          owner = { set_variable = { which = owed_cash_money value = 450 } }
+       }
+       random_owned = {
+         limit = { owner = { treasury = 450000 } }
+         owner = { treasury = -450000 }
+       }	
+	   ai_chance = {
+	   factor = 50
+	   }
+    }
+	
+    option = {
+	name = "NRUS112.C"
+	  prestige = 30
+	  1003 = {
+	     life_rating = 10
+	  }
+	  random_owned = {
+         limit = {
+            owner = {
+               NOT = { treasury = 950000 }
+               check_variable = { which = owed_cash_money value = 9 }
+            }
+         }
+         owner = { change_variable = { which = owed_cash_money value = 950 } }
+       }
+       random_owned = {
+          limit = {
+             owner = {
+               NOT = { treasury = 950000 }
+               NOT = { check_variable = { which = owed_cash_money value = 1 } }
+             }
+          }
+          owner = { set_variable = { which = owed_cash_money value = 950 } }
+       }
+       random_owned = {
+         limit = { owner = { treasury = 950000 } }
+         owner = { treasury = -950000 }
+       }
+	   ai_chance = {
+	   factor = 30
+	   }	   
+    }
+}

@@ -1,0 +1,2285 @@
+####
+#With a MTTH of 12 months after 1850. An event triggers in the Mughal Empire that tears the empire to pieces as it practically dissolves and during the war a few chunks of land are annexed by GP's.
+#Inside of a MTTH of 1 month beyond that. A event triggers called the "The Hindustan Conference of @STATENAME@" and gives the ability for the GP's that still own land in India to annex their SOIs. 
+
+#With a MTTH of 6 Months. A event triggers that randomly gives a GP the ability to annex Bengal under the pretence of "Protecting Western Assets"
+
+#### Bengal Neutrality - To prevent Bengal killing everyone in India before 1850 ####
+
+country_event = { 
+	id = 8910016
+	title = "HND23.T"
+	desc = "HND23.D"
+	picture = "india"
+
+	trigger = {
+	tag = BEN
+	NOT = { has_country_flag = neutral_tiger }
+	}
+
+	mean_time_to_happen = {
+	days = 1
+	}
+	
+	option = {
+	name = "HND23.A"
+	prestige = -1
+	set_country_flag = neutral_tiger
+ 	add_country_modifier = {
+		name = neutrality
+			duration = -1
+	   }
+    }
+}
+
+############ THE BENGAL AFFAIR #######
+
+country_event = { 
+	id = 891000
+	title = "HND01.T"
+	desc = "HND01.D"
+	picture = "delhi_sultan"
+
+	trigger = {
+	tag = MUG
+	exists = BEN
+	year = 1849
+	NOT = { has_country_flag = a_mughal_affair }
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+
+	mean_time_to_happen = {
+		months = 18
+	}
+	
+	option = {
+	name = "HND01.A"
+	prestige = 10
+	set_country_flag = a_mughal_affair
+	set_country_flag = a_foolish_war
+    
+	BEN = { country_event = 891002 }
+	
+	casus_belli = {
+				target = BEN
+				type = conquest_any
+				months = 60
+	}
+
+	war = {
+		target = BEN
+		attacker_goal = {
+		casus_belli = conquest_any
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	         }
+        } 
+}
+		
+country_event = { 
+	id = 891001
+	title = "HND02.T"
+	desc = "HND02.D"
+	picture = "delhi_sultan"
+
+	trigger = {
+	tag = MUG
+	year = 1849
+	NOT = { exists = BEN }
+	NOT = { any_owned_province = { is_core = BEN } }
+	NOT = { has_country_flag = a_mughal_affair }
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+
+	mean_time_to_happen = {
+		months = 18
+	}
+	
+	option = {
+	name = "HND02.A"
+	prestige = -25
+	set_country_flag = a_mughal_affair
+	set_country_flag = Mughals_unstable
+	}
+}
+
+country_event = { 
+	id = 891002
+	title = "HND03.T"
+	desc = "HND03.D"
+    picture = "delhi_sultan"
+
+	is_triggered_only = yes
+	
+	option = {
+	name = "HND03.A"
+	remove_country_modifier = neutrality
+	add_country_modifier = {
+		name = taiping_draft
+			duration = 1095
+	  }
+   }
+}
+
+############# THE MUGHAL COLLAPSE ##############
+
+country_event = { 
+	id = 891003
+	title = "HND04.T"
+	desc = "HND04.D"
+	picture = "india"
+
+	trigger = {
+	tag = MUG
+	has_country_flag = a_foolish_war
+	NOT = { has_country_flag = Mughals_unstable }
+	NOT = { has_country_flag = Mughals_doomed }
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "HND04.A"
+	prestige = -25
+	set_country_flag = Mughals_unstable
+
+	any_pop = {
+			limit = {
+				NOT = { culture = avadhi }
+			}
+			militancy = 3
+		}
+	}
+}
+
+country_event = { 
+	id = 891004
+	title = "HND05.T"
+	desc = "HND05.D"
+	picture = "national_congress"
+
+	trigger = {
+	tag = MUG
+	has_country_flag = Mughals_unstable
+	NOT = { has_country_flag = Mughals_doomed }
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "HND05.A"
+	prestige = -10
+	set_country_flag = Mughals_doomed
+	clr_country_flag = Mughals_unstable
+	remove_accepted_culture = panjabi
+    remove_accepted_culture = telegu
+    remove_accepted_culture = marathi
+    remove_accepted_culture = rajput
+    remove_accepted_culture = gujarati   
+ 		
+	any_pop = {
+			limit = {
+				NOT = { culture = avadhi }
+			}
+			militancy = 3
+		}
+	any_owned = {
+			 limit = { 
+				NOT = { culture = avadhi }
+			 }
+			 add_province_modifier = {
+		      name = nationalist_agitation
+			   duration = 1095
+		      }
+         }
+    }
+}
+
+country_event = { 
+	id = 891005
+	title = "HND06.T"
+	desc = "HND06.D"
+	
+	major = yes
+
+	trigger = {
+	tag = MUG
+	has_country_flag = Mughals_doomed
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+	name = "HND06.A"
+	clr_country_flag = Mughals_doomed
+	set_global_flag = MythicalRealmofHindustan
+ 		
+	any_owned = { 
+	limit = { 
+	is_core = GWA 
+		}
+	secede_province = GWA 
+	}
+	any_owned = { 
+	limit = { 
+	is_core = BUN
+		}
+	secede_province = BUN 
+	}
+	any_owned = { 
+	limit = { 
+	is_core = BIH
+		}
+	secede_province = BIH 
+	}
+	any_owned = { 
+	limit = { 
+	is_core = ORI 
+		}
+	secede_province = ORI 
+	}
+	any_owned = { 
+	limit = { 
+	province_id = 1282 
+		}
+	secede_province = NAG 
+	}
+	
+    1282 = { remove_core = MUG }
+
+    end_war = BEN	
+	
+    BEN = {
+	remove_country_modifier = taiping_draft
+	}
+
+    GWA = { 
+	government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+			}
+	}
+
+	BUN = { 
+	government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+			}
+	}
+
+	BIH = { 
+	government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+			}
+	}
+
+	ORI = { 
+	government = absolute_monarchy
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = underground_parties 
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	treasury = 10000
+	ammunition = 1000
+	small_arms = 1000
+	artillery = 1000
+	canned_food = 1000
+	regular_clothes = 1000
+	add_country_modifier = {
+				name = taiping_draft
+				duration = 1095
+			    }
+	     }	
+	war = {
+			target = GWA
+			attacker_goal = {
+			casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	war = {
+			target = BUN 
+			attacker_goal = {
+			casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	war = {
+			target = BIH 
+			attacker_goal = {
+			casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	war = {
+			target = ORI
+			attacker_goal = {
+			casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+       }
+   }
+}   
+
+country_event = { 
+	id = 891006
+	title = "HND07.T"
+	desc = "HND07.D"
+	picture = "national_congress"
+
+	trigger = {
+	OR = { 
+	tag = GWA
+	tag = BUN
+	tag = BIH
+	tag = ORI
+    }	
+	has_global_flag = MythicalRealmofHindustan
+	NOT = { has_country_flag = removing_mughal_cores }
+	NOT = { war = yes }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+	name = "HND07.A"
+    set_country_flag = removing_mughal_cores 
+	any_owned = { 
+	limit = { 
+	is_core = MUG 
+		}
+	remove_core = MUG
+	   }
+   } 
+}
+
+############# THE HINDUSTAN CONFERENCE ##############
+
+country_event = {
+	
+	id = 891007
+	title = "HND08.T" #The Hindustan Conference
+	desc = "HND08.D"
+	major = yes
+
+	trigger = {	exists = yes
+		OR = {
+			is_greater_power = yes
+			AND = {
+				colonial_nation = yes
+				any_owned_province = { is_core = HND }
+			}
+			AND = {
+				colonial_nation = yes
+				any_owned_province = { is_core = DRA }
+			}
+		}
+	    has_global_flag = MythicalRealmofHindustan
+		OR = {
+		capital_scope = { continent = europe }
+		tag = JAP
+		}	
+		NOT = { has_global_flag = hindustan_conference }
+	}
+	
+	allow_multiple_instances = no
+
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+		name = "We will solve the Hindustan situation."
+		set_global_flag = hindustan_conference
+		set_global_flag = selon_treaty
+		prestige = 25
+	}
+}
+
+country_event = {
+	id = 891008
+	title = "HND09.T" #Imperialism Comes to $COUNTRY$
+	desc = "HND09.D"
+	picture = "india"
+	
+	trigger = {	exists = yes
+		has_global_flag = hindustan_conference
+		NOT = {
+		    OR = {
+		      has_country_flag = princely_BHO
+		      has_country_flag = princely_HYD
+		      has_country_flag = princely_GWA
+			  has_country_flag = princely_BEN
+			  has_country_flag = MUG_gambit
+			  has_country_flag = HND_Concessions
+		    }	
+        }
+        OR = {
+		is_culture_group = dravidian
+		is_culture_group = south_asian
+		}			 
+		civilized = no
+		part_of_sphere = yes
+		OR = {
+			any_owned_province = { port = yes }
+			sphere_owner = { neighbour = THIS }
+		}
+		sphere_owner = {
+			is_disarmed = no
+			OR = {
+			capital_scope = { continent = europe }
+			tag = JAP
+			}
+			OR = {
+				NOT = { tag = RUS }
+				neighbour = THIS
+			}
+			NOT = {
+				war_policy = pacifism
+				num_of_revolts = 1
+			}
+		}
+		NOT = { has_country_flag = refused_protectorate }
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "We have no choice but to submit."
+		sphere_owner = { country_event = 891009 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.5
+				number_of_states = 3
+			}
+			modifier = {
+				factor = 0.5
+				total_amount_of_divisions = 6
+			}
+			modifier = {
+				factor = 0.5
+				total_amount_of_divisions = 12
+			}
+			modifier = {
+				factor = 2
+				NOT = { civilization_progress = 0.5 }
+			}
+		}
+	}
+	
+	option = {
+		name = "Attempting to fight them would be suicide. Grant them any concessions they need for us to maintain autonomy."
+		sphere_owner = { create_vassal = THIS }
+		prestige = -50
+		money = -500000
+		set_country_flag = HND_Concessions     		
+		ai_chance = {
+			factor = 0
+		}
+	}
+
+	option = {
+		name = "Throw the Europeans out!"
+		prestige = 10
+		any_greater_power = {
+			limit = {
+				NOT = { is_sphere_leader_of = THIS }
+				diplomatic_influence = { who = THIS value = -100 }
+			}
+		}
+		sphere_owner = {
+			prestige = -10
+			leave_alliance = THIS
+			diplomatic_influence = { who = THIS value = -300 }
+			country_event = 891010
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				number_of_states = 3
+			}
+			modifier = {
+				factor = 2
+				number_of_states = 5
+			}
+			modifier = {
+				factor = 0
+				NOT = { total_amount_of_divisions = 3 }
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { total_amount_of_divisions = 6 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 891009
+	title = "HND10.T" #The $FROMCOUNTRY_ADJ$ Protectorate
+	desc = "HND10.D"
+	picture = "india"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "We will not force ourselves upon $FROMCOUNTRY$."
+		FROM = { set_country_flag = refused_protectorate }
+		badboy = -2
+		relation = { who = FROM value = 50 }
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 0
+				NOT = { badboy = 0.92 }
+			}
+		}
+	}
+
+	option = {
+		name = "Let us establish a protectorate."
+		badboy = 2
+		prestige = 5
+		inherit = FROM
+		ai_chance = {
+			factor = 95
+			modifier = {
+				factor = 0
+				badboy = 0.92
+			}
+		}			
+	}
+}
+
+country_event = {
+
+	id = 891010
+	title = "HND11.T" #Nationals Expelled
+	desc = "HND11.D"
+	picture = "india"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "HND11.A"
+        release_vassal = FROM
+		relation = { who = FROM value = -400 }
+		random_owned = {
+			limit = {
+				owner = { has_global_flag = hindustan_conference }
+			}
+			owner = {
+				casus_belli = {
+					target = FROM
+					type = establish_protectorate_casus_belli
+					months = 60
+				}
+				war = {
+					target = FROM
+					attacker_goal = {
+						casus_belli = establish_protectorate_casus_belli
+					}
+				}
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { NOT = { has_global_flag = hindustan_conference } }
+			}
+			owner = {
+				casus_belli = {
+					target = FROM
+					type = establish_protectorate_casus_belli
+					months = 60
+				}
+				war = {
+					target = FROM
+					attacker_goal = {
+						casus_belli = establish_protectorate_casus_belli
+					}
+				}
+			}
+		}
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0.5
+				any_greater_power = { war_with = THIS }
+			}
+		}
+	}
+	
+	option = {
+		name = "HND11.B"
+		prestige = -25
+		relation = { who = FROM value = 50 }
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 5
+				any_greater_power = { war_with = THIS }
+			}
+			modifier = {
+				factor = 0
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = pro_military
+			}
+		}
+	}
+}
+
+###### General European Indian Conquest #######
+
+country_event = { 
+	id = 891011
+	title = "HND12.T"
+	desc = "HND12.D"
+	picture = "india"
+
+	trigger = {
+	tag = DUA
+	exists = MDR
+	MYS = { civilized = no }
+	year = 1840
+	NOT = { has_country_flag = mysore_spices }
+	NOT = { has_global_flag = MythicalRealmofHindustan }
+	}
+
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+	name = "HND12.A"
+	prestige = 1
+	set_country_flag = mysore_spices
+  
+
+	war = {
+		target = MDR
+		attacker_goal = {
+		casus_belli = establish_protectorate_casus_belli
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	         }
+	ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+	name = "HND12.B"
+	prestige = -1
+	set_country_flag = mysore_spices
+	ai_chance = {
+			factor = 0
+		}	
+	}
+}
+
+country_event = { 
+	id = 891012
+	title = "HND13.T"
+	desc = "HND13.D"
+	picture = "delhi_sultan"
+
+	trigger = {	
+	    exists = yes
+	    NOT = { has_global_flag = BEN_invasion }
+		has_global_flag = hindustan_conference
+		BEN = { 
+		AND = { 
+		exists = yes 
+	    part_of_sphere = no
+		    }
+		}		
+		capital_scope = { continent = europe }
+		is_greater_power = yes
+		total_amount_of_ships = 20
+		OR = {
+			war_policy = jingoism
+			war_policy = pro_military
+		}
+		war = no
+		is_disarmed = no
+		is_vassal = no
+		any_owned_province = { port = yes }
+		NOT = {
+			average_militancy = 5
+			num_of_revolts = 1
+			war_exhaustion = 10
+			year = 1900
+			tag = RUS
+			tag = MUS
+			tag = NOV
+			tag = RYA
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = "We must act at once!"
+	    set_global_flag = BEN_invasion
+		BEN = { country_event = { id = 891036 days = 2 } }
+	    prestige = 1
+		casus_belli = {
+			target = BEN
+			type = establish_protectorate_casus_belli
+			months = 60
+		}
+	    war = {
+		target = BEN
+		attacker_goal = {
+		casus_belli = establish_protectorate_casus_belli
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	    }
+	}
+
+	option = {
+		name = "We don't think that's a good idea."
+		prestige = 1
+	}
+} 
+
+# New Bengal Event Chain 891036-40 HND30-34
+
+country_event = { 
+	id = 891036
+	title = "HND30.T"
+	desc = "HND30.D"
+	picture = "india"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "A valuable plan"
+	prestige = -5
+    FROM = { country_event = { id = 891037 days = 2 } }	         
+	ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+	name = "We have no need for this plan."
+	prestige = 10
+	FROM = {
+	casus_belli = {
+			target = BEN
+			type = establish_protectorate_casus_belli
+			months = 60
+	}
+	 war = {
+		target = BEN
+		attacker_goal = {
+		casus_belli = establish_protectorate_casus_belli
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	      }
+	}
+	ai_chance = {
+			factor = 0
+		}	
+	}
+}
+
+# Reminder to the player: Getting a good deal that effectively resembles the point of the Hindustan conference and then snubbing it because you want land equals a lot of badboy.
+
+country_event = { 
+	id = 891037
+	title = "HND31.T"
+	desc = "HND31.D"
+	picture = "india"
+
+	is_triggered_only = yes
+
+	option = {
+	name = "The Sultan shall have his autonomy"
+	prestige = -5
+    create_vassal = BEN
+    BEN = {
+	    set_country_flag = princely_BEN
+		capital = 1254
+        any_owned = { 
+	    limit = { 
+	    NOT = { region = ENG_1252 }	
+        }	    
+	    secede_province = THIS
+	    }
+		
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+    }	      	
+	ai_chance = {
+			factor = 100
+		}
+	}
+	
+	
+	option = {
+	name = "Bengal is a exception"
+	badboy = 15
+	any_country = { 
+		limit = {
+		is_greater_power = yes
+		}
+		relation = { who = THIS value = -150 }		
+	}
+	prestige = -10
+	casus_belli = {
+			target = BEN
+			type = establish_protectorate_casus_belli
+			months = 60
+		}
+	 war = {
+		target = BEN
+		attacker_goal = {
+		casus_belli = establish_protectorate_casus_belli
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	}
+	ai_chance = {
+			factor = 0
+		}	
+	}
+}
+
+# Bengal is not Free
+
+country_event = { 
+	id = 891038
+	title = "HND32.T"
+	desc = "HND32.D"
+	picture = "india"
+
+	trigger = {
+	BEN = {	in_sphere = THIS }
+	capital_scope = { continent = europe }
+    has_global_flag = hindustan_conference
+	NOT = { has_global_flag = BEN_invasion }
+	}
+
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+	name = "The Sultan shall have his autonomy"
+	prestige = -5
+	set_global_flag = BEN_invasion
+    create_vassal = BEN
+    BEN = {
+	    set_country_flag = princely_BEN
+		capital = 1254
+        any_owned = { 
+	    limit = { 
+	    NOT = { region = ENG_1252 }	
+        }	    
+	    secede_province = THIS
+	    }
+		
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+    }	   	
+	ai_chance = {
+			factor = 100
+		}
+	}
+	
+	
+	option = {
+	name = "Bengal is a exception"
+	set_global_flag = BEN_invasion
+	badboy = 15	
+	any_country = { 
+		limit = {
+		is_greater_power = yes
+		}
+		relation = { who = THIS value = -150 }		
+	}
+	prestige = -10
+	diplomatic_influence = { who = BEN value = -400 }
+	relation = { who = BEN value = -400 }
+	leave_alliance = BEN		
+	casus_belli = {
+			target = BEN
+			type = establish_protectorate_casus_belli
+			months = 60
+		}
+	 war = {
+		target = BEN
+		attacker_goal = {
+		casus_belli = establish_protectorate_casus_belli
+		                }
+		defender_goal = {
+		casus_belli = status_quo
+			            }
+	}
+	ai_chance = {
+			factor = 0
+		}	
+	}
+}
+
+#Trade Company Manipulation or why western influences turn against you.
+country_event = { 
+	id = 891013
+	title = "HND14.T"
+	desc = "HND14.D"
+	picture = "ahmet_muhtar_pasa_sanaa"
+
+	trigger = {	
+	    exists = yes
+	    has_country_modifier = western_influences
+		has_global_flag = hindustan_conference
+        OR = {
+		is_culture_group = dravidian
+		is_culture_group = south_asian
+		}
+		NOT = { part_of_sphere = yes }
+		NOT = { has_country_flag = MUG_gambit }
+		civilized = no
+		is_vassal = no
+		any_owned_province = {
+			    OR = {
+				port = yes
+				AND = {
+				any_neighbor_province = { owner = { capital_scope = { continent = europe } } }
+				any_neighbor_province = { owner = { is_greater_power = yes } }
+			  }
+		  }
+	  }
+   }
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = "We have no choice but to comply."
+		random_country = {
+		limit = {
+		OR = {
+		neighbour = THIS
+		THIS = { any_owned_province = { port = yes } }
+		}
+		is_greater_power = yes
+        capital_scope = { continent = europe }
+		any_owned_province = { port = yes }
+		NOT = {
+		tag = RUS
+		tag = MUS
+		tag = NOV
+		tag = RYA
+		      }
+		 }
+		country_event = 891014
+       }
+   }
+}
+
+
+country_event = { 
+	id = 891014
+	title = "HND15.T"
+	desc = "HND15.D"
+	picture = "india"
+	
+    is_triggered_only = yes
+
+	option = {
+		name = "Another success for civilization."
+		create_vassal = FROM
+			FROM = {
+			diplomatic_influence = {
+				who = THIS
+				value = 800
+			}
+			relation = {
+				who = THIS
+				value = 400
+			   }
+            create_alliance = THIS
+			}
+			
+			ai_chance = {
+			factor = 100
+		    }				
+    }
+	   
+
+	option = {
+		name = "I don't want any indians in my sphere."
+		prestige = -1
+	    ai_chance = {
+			factor = 0
+		}	
+	}
+}       
+
+country_event = { 
+	id = 891015
+	title = "HND16.T"
+	desc = "HND16.D"
+	picture = "india"
+	
+	trigger = {
+	   NOT = { has_global_flag = the_other_BUR }
+	   owns = 1330
+	   year = 1845
+	   exists = BUR
+	   capital_scope = { continent = europe }
+	   war = no
+    }     
+
+	mean_time_to_happen = {
+		months = 12
+	}	
+
+	option = {
+	   name = "These savage lands shall be tamed"
+	   set_global_flag = the_other_BUR
+	   war = {
+	   target = BUR
+	   attacker_goal = {
+	   casus_belli = establish_protectorate_casus_belli
+		               }
+	   defender_goal = {
+	   casus_belli = status_quo
+			           }
+	   }
+	   ai_chance = {
+		factor = 100
+	   }	
+	}
+
+	option = {
+		name = "We don't think that's a good idea."
+		prestige = 1
+	    ai_chance = {
+		factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 891032
+	title = "HND29.T"
+	desc = "HND29.D"
+	picture = "sikkim_dalai_lama"
+	
+	trigger = {
+	   NOT = { has_global_flag = PNJsGreatestGame }
+	   PNJ = {
+	   exists = yes
+	   war = no 
+	   }
+	   owns = 1228
+	   has_global_flag = hindustan_conference
+	   capital_scope = { continent = europe }
+	   war = no
+    }     
+
+	mean_time_to_happen = {
+		days = 14
+	}	
+
+	option = {
+	   name = "These savage lands shall be tamed"
+	   set_global_flag = PNJsGreatestGame
+	   PNJ = { remove_country_modifier = taiping_draft }
+	   war = {
+	   target = PNJ
+	   attacker_goal = {
+	   casus_belli = establish_protectorate_casus_belli
+		               }
+	   defender_goal = {
+	   casus_belli = status_quo
+			           }
+	   }
+	   ai_chance = {
+		factor = 100
+	   }	
+	}
+
+	option = {
+		name = "We don't think that's a good idea."
+		prestige = 1
+	    ai_chance = {
+		factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 891033
+	title = "The Nation of Hindustan"
+	desc = "For some unknown reason, uncivilized Hindustan has been released from a greater power by a crisis and is in the sphere of a European Power. This must be addressed..."
+	picture = "india"
+	
+	trigger = {
+	   tag = HND
+	   has_global_flag = hindustan_conference
+	   sphere_owner = { capital_scope = { continent = europe } }  
+	   NOT = { has_country_modifier = colony_to_be_annexed }
+	   NOT = { has_country_flag = colony_to_be_annexed_flag }
+	   civilized = no   
+	}    
+
+	mean_time_to_happen = {
+		days = 31
+	}	
+
+	option = {
+	   name = "We really should have thought about this."
+	   sphere_owner = { inherit = THIS }	   
+	}
+}
+
+country_event = { 
+	id = 891034
+	title = "The Nation of Dravida"
+	desc = "For some unknown reason, uncivilized Hindustan has been released from a greater power by a crisis and is in the sphere of a European Power. This must be addressed..."
+	picture = "india"
+	
+	trigger = {
+	   tag = DRA
+	   has_global_flag = hindustan_conference
+	   sphere_owner = { capital_scope = { continent = europe } }  
+	   NOT = { has_country_modifier = colony_to_be_annexed }
+	   NOT = { has_country_flag = colony_to_be_annexed_flag }
+	   civilized = no   
+	}    
+
+	mean_time_to_happen = {
+		days = 31
+	}	
+
+	option = {
+	   name = "We really should have thought about this."
+	   sphere_owner = { inherit = THIS }	   
+	}
+}
+
+#### The Princely States - A few indian states that release how screwed they are and give concessions to the colonial empires ####
+
+country_event = { 
+	id = 891016
+	title = "HND17.T"
+	desc = "HND17.D"
+	picture = "delhi_sultan"
+	
+	trigger = {
+       has_global_flag = hindustan_conference
+	   BHO = { NOT = { has_country_flag = princely_BHO } }
+	   NOT = { has_country_flag = princelyBHOdenied }
+	   owns = 1303
+	   exists = VIJ
+	   capital_scope = { continent = europe }
+    }     
+
+	mean_time_to_happen = {
+		days = 1
+	}	
+
+	option = {
+	   name = "We accept his concessions."
+	   BHO = { tech_school = developing_tech_school }
+       1297 = { trade_goods = precious_goods }
+	   VIJ = { country_event = 891017 }
+	   ai_chance = {
+	   factor = 100
+	   }
+	}
+
+	option = {
+		name = "All Indians must be civilized"
+		set_country_flag = princelyBHOdenied
+		prestige = 1
+	    ai_chance = {
+		factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 891017
+	title = "HND18.T"
+	desc = "HND18.D"
+	picture = "india"
+	
+	is_triggered_only = yes
+	
+	option = {
+	   name = "Traitor! We will return one day."
+       any_owned = { 
+	    limit = { 
+	    province_id = 1301
+		   }
+	    secede_province = FROM
+	   }
+       any_owned = { 
+	    limit = { 
+	    province_id = 1297
+		   }
+	    secede_province = FROM
+	   }
+       any_owned = { 
+	    limit = { 
+	    province_id = 1302
+		   }
+	    secede_province = FROM
+	   }
+	   any_owned = { 
+	     limit = { 
+	     is_core = BHO
+		 }
+	     secede_province = BHO
+	   }	 
+       FROM = { create_vassal = BHO }
+	   BHO = { set_country_flag = princely_BHO }	   
+	   any_owned = { 
+	     limit = { 
+	     is_core = BHO
+		 }
+	     secede_province = BHO
+	    } 
+	}	
+	option = {
+	   name = "Switch to the Princely State"
+       any_owned = { 
+	    limit = { 
+	    province_id = 1301
+		   }
+	    secede_province = FROM
+	   }
+       any_owned = { 
+	    limit = { 
+	    province_id = 1297
+		   }
+	    secede_province = FROM
+	   }
+       any_owned = { 
+	    limit = { 
+	    province_id = 1302
+		   }
+	    secede_province = FROM
+	   }
+	   any_owned = { 
+	     limit = { 
+	     is_core = BHO
+		 }
+	     secede_province = BHO
+	   }	 
+       FROM = { create_vassal = BHO }
+	   BHO = { set_country_flag = princely_BHO }	   
+	   any_owned = { 
+	     limit = { 
+	     is_core = BHO
+		 }
+	     secede_province = BHO
+	    }
+        change_tag_no_core_switch = BHO	
+	}
+}
+
+country_event = { 
+	id = 891018
+	title = "HND19.T"
+	desc = "HND19.D"
+	picture = "delhi_sultan"
+	
+	trigger = {
+       has_global_flag = hindustan_conference
+	   HYD = { NOT = { has_country_flag = princely_HYD } }
+	   NOT = { has_country_flag = princelyHYDdenied }
+	   owns = 1306
+	   exists = HYD
+	   capital_scope = { continent = europe }
+    }     
+
+	mean_time_to_happen = {
+		days = 1
+	}	
+
+	option = {
+	   name = "We accept his concessions."
+	   HYD = { tech_school = developing_tech_school }
+       1306 = { trade_goods = precious_goods }
+	   HYD = { country_event = 891019 }
+	   ai_chance = {
+	   factor = 100
+	   }
+	}
+
+	option = {
+		name = "All Indians must be civilized"
+		set_country_flag = princelyHYDdenied
+		prestige = 1
+	    ai_chance = {
+		factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 891019
+	title = "HND20.T"
+	desc = "HND20.D"
+	picture = "india"
+	
+	is_triggered_only = yes
+	
+	option = {
+	   name = "It seems that we have no choice here."
+       any_owned = { 
+	    limit = { 
+	    province_id = 1305
+		   }
+	    secede_province = FROM
+	   }
+       any_owned = { 
+	    limit = { 
+	    province_id = 1279
+		   }
+	    secede_province = FROM
+	   }
+       FROM = { create_vassal = HYD }
+	   set_country_flag = princely_HYD	   
+	}
+}
+
+country_event = { 
+	id = 891020
+	title = "HND21.T"
+	desc = "HND21.D"
+	picture = "delhi_sultan"
+	
+	allow_multiple_instances = no
+	
+	trigger = {
+       has_global_flag = hindustan_conference
+	   GWA = { NOT = { has_country_flag = princely_GWA } }
+	   NOT = { has_country_flag = princelyGWAdenied }
+	   OR = {
+	   owns = 1295
+	   owns = 1282
+	   owns = 1243
+	   }
+	   exists = GWA
+	   capital_scope = { continent = europe }
+    }     
+
+	mean_time_to_happen = {
+		days = 2
+	}	
+
+	option = {
+	   name = "We accept his concessions."
+	   GWA = { tech_school = developing_tech_school }
+       any_owned = { 
+	    limit = { 
+	    is_core = GWA
+		   }
+	    secede_province = GWA
+	   }
+	   GWA = { country_event = 891021 }
+	   ai_chance = {
+	   factor = 75
+	   }
+	}
+
+	option = {
+		name = "All Indians must be civilized"
+		set_country_flag = princelyGWAdenied
+		prestige = 1
+	    ai_chance = {
+		factor = 25
+		}
+	}
+}
+
+country_event = { 
+	id = 891021
+	title = "HND22.T"
+	desc = "HND22.D"
+	picture = "india"
+	
+	is_triggered_only = yes
+	
+	option = {
+	   name = "It seems that we have no choice here."
+       FROM = { create_vassal = GWA }
+	   set_country_flag = princely_GWA	   
+	}
+}
+
+####################################################################### Hindustan Colonies ####################################################
+
+### Creation of the Princely Confederation ###
+
+country_event = { 
+	id = 891022
+	title = "HND24.T"
+	desc = "HND24.D"
+	picture = "national_congress"
+
+	trigger = {
+	   NOT = { has_global_flag = PRF_formed }
+       has_global_flag = hindustan_conference
+	   capital_scope = { continent = europe }
+	   OR = {
+	   GWA = { has_country_flag = princely_GWA } 
+	   HYD = { has_country_flag = princely_HYD } 
+	   BHO = { has_country_flag = princely_BHO } 
+	   }
+	   OR = {
+	   GWA = { vassal_of = THIS }
+	   HYD = { vassal_of = THIS }
+	   BHO = { vassal_of = THIS }
+	   }
+    } 
+
+	mean_time_to_happen = {
+		days = 31
+	}	
+	
+	option = {
+	   name = "Indians with organization? Why I never."
+       prestige = 10  
+	   set_global_flag = PRF_formed
+	   ### Perma ###
+	   ENG_1297 = { add_core = PRF }
+	   HYD_1283 = { add_core = PRF }
+	   ## Removable ###
+	   ENG_1264 = { add_core = PRF }
+	   ENG_1261 = { add_core = PRF }
+	   NAG_1277 = { add_core = PRF }
+	   ENG_1275 = { add_core = PRF }
+	   MUG_3 = { add_core = PRF }
+	   ENG_1291 = { add_core = PRF }
+	   ENG_1305 = { add_core = PRF }
+	   PRF = {
+	   set_country_flag = post_colonial_country
+	   #set_country_flag = civilize_after_release
+	   capital = 1285
+	   primary_culture = marathi
+	   add_accepted_culture = telegu
+	   add_accepted_culture = kannada
+	   add_accepted_culture = oriya # Can be removed
+	   add_accepted_culture = kanauji # Can be removed
+	   add_accepted_culture = gujarati # Can be removed
+	   tech_school = developing_tech_school
+	   government = prussian_constitutionalism
+	   political_reform = wealth_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = no_trade_unions
+	   political_reform = first_past_the_post
+	   political_reform = underground_parties 
+	   ruling_party_ideology = conservative
+	   }	   
+   }
+}
+
+### Anti-Princely Core Spread Events ###
+
+## Tranvacore ###
+
+province_event = {
+	id = 891023
+	title = "HND24.T"
+	desc = "HND25.D"
+	
+	trigger = {
+		region = ENG_1305
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = TRA
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 2012 }
+				TRA = { exists = no }
+			}
+			TRA = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = TRA
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = TRA }
+				}
+				add_core = TRA
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+		TRA = { add_accepted_culture = telegu }
+	}
+}
+
+#### Mughalstan ####
+
+## Orissia ##
+
+province_event = {
+	id = 891024
+	title = "HND24.T"
+	desc = "HND26.D"
+	
+	trigger = {
+		region = ENG_1261
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = MUG
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1236 }
+				MUG = { exists = no }
+			}
+			MUG = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = MUG
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = MUG }
+				}
+				add_core = MUG
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+		PRF = { remove_accepted_culture = oriya }
+		MUG = { add_accepted_culture = oriya }
+	}
+}
+
+## Central India ##
+
+province_event = {
+	id = 891025
+	title = "HND24.T"
+	desc = "HND26.D"
+	
+	trigger = {
+		region = ENG_1275
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = MUG
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1236 }
+				MUG = { exists = no }
+			}
+			MUG = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = MUG
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = MUG }
+				}
+				add_core = MUG
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+		PRF = { remove_accepted_culture = kanauji }
+	}
+}
+
+#### Kashmir ####
+
+province_event = {
+	id = 891035
+	title = "HND24.T"
+	desc = "HND26.D"
+	
+	trigger = {
+		region = PAN_1224
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = MUG
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1236 }
+				MUG = { exists = no }
+			}
+			MUG = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = MUG
+			MUG = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = MUG }
+				}
+				add_core = MUG
+				remove_core = AFG
+				remove_core = PNJ
+				remove_core = DUR
+				any_pop = { militancy = -3 }
+			}
+		}
+		MUG = { add_accepted_culture = kashmiri }
+	}
+}	
+
+## Nagpur ##
+
+province_event = {
+	id = 891026
+	title = "HND24.T"
+	desc = "HND26.D"
+	
+	trigger = {
+		region = NAG_1277
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = MUG
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1236 }
+				MUG = { exists = no }
+			}
+			MUG = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = MUG
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = MUG }
+				}
+				add_core = MUG
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+	}
+}	 
+
+#### The Raj ####
+
+province_event = {
+	id = 891027
+	title = "HND24.T"
+	desc = "HND27.D"
+	
+	trigger = {
+		region = MUG_3
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = RAJ
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1266 }
+				RAJ = { exists = no }
+			}
+			RAJ = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = RAJ
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = RAJ }
+				}
+				add_core = RAJ
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 891028
+	title = "HND24.T"
+	desc = "HND27.D"
+	
+	trigger = {
+		region = ENG_1291
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = RAJ
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1266 }
+				RAJ = { exists = no }
+			}
+			RAJ = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = RAJ
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = RAJ }
+				}
+				add_core = RAJ
+				remove_core = PRF
+				any_pop = { militancy = -3 }
+			}
+		}
+		PRF = { remove_accepted_culture = gujarati }
+		RAJ = { add_accepted_culture = gujarati }
+	}
+}	
+
+
+#### Pakistan ####
+
+province_event = {
+	id = 891029
+	title = "HND24.T"
+	desc = "HND28.D"
+	
+	trigger = {
+		region = PAN_1227
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = PAK
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1288 }
+				PAK = { exists = no }
+			}
+			PAK = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = PAK
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = PAK }
+				}
+				add_core = PAK
+				remove_core = HND
+				remove_core = AFG
+				remove_core = DUR
+				any_pop = { militancy = -3 }
+			}
+		}
+		PAK = { add_accepted_culture = panjabi }
+	}
+}	
+
+province_event = {
+	id = 891030
+	title = "HND24.T"
+	desc = "HND28.D"
+	
+	trigger = {
+		region = PAN_1233
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = PAK
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1288 }
+				PAK = { exists = no }
+			}
+			PAK = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = PAK
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = PAK }
+				}
+				add_core = PAK
+				remove_core = HND
+				remove_core = AFG
+				remove_core = DUR
+				any_pop = { militancy = -3 }
+			}
+		}
+		PAK = { add_accepted_culture = panjabi }
+	}
+}	
+
+province_event = {
+	id = 891031
+	title = "HND24.T"
+	desc = "HND28.D"
+	
+	trigger = {
+		region = PAN_1224
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = PAK
+		}
+		owner = {
+			civilized = yes
+			NOT = { capital_scope = { continent = asia } }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1288 }
+				PAK = { exists = no }
+			}
+			PAK = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = PAK
+			PRF = {
+				vassal_of = THIS
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	    modifier = {
+			factor = 0.5
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.1
+			year = 1880
+		}
+	}
+	
+	option = {
+		name = "An excellent development!"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = PAK }
+				}
+				add_core = PAK
+				remove_core = AFG
+				remove_core = DUR
+				remove_core = PNJ
+				any_pop = { militancy = -3 }
+			}
+		}
+		PAK = { add_accepted_culture = kashmiri }
+	}
+}	

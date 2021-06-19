@@ -1,0 +1,713 @@
+political_decisions = {
+form_iberia = {
+picture = create_iberia
+		potential = {
+			tag = SPA
+			NOT = {
+				exists = POR
+			}
+			NOT = { has_country_flag = iberian_union }
+		}
+		
+		allow = {
+			NOT = { war = yes }
+			prestige = 80
+			is_greater_power = yes
+			NOT = { exists = ARI }
+			SPA = {
+				all_core = {
+					owned_by = THIS
+				}
+			}
+			OR = {
+				CAT = {
+					all_core = {
+						owned_by = THIS
+					}
+					NOT = {
+						exists = yes
+					}
+				}
+				AND = {
+					CAT = {
+						all_core = {
+							OR = {
+								owned_by = THIS
+								owned_by = CAT
+							}
+						}
+					}
+					CAT = {
+						exists = yes
+						in_sphere = THIS
+					}
+				}
+			}
+							
+		}
+		
+		effect = {
+			prestige = 20
+			set_country_flag = iberian_union
+			any_country = {
+				limit = {
+					tag = CAT
+					in_sphere = THIS
+				}
+				annex_to = THIS
+			}
+			any_owned = {
+				limit = {
+					is_core = CAT
+				}
+				add_core = THIS
+			}
+			country_event = 3332200
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	integrate_navarra = { 
+    picture = french_catalonia
+	potential = {
+	    OR = {
+		tag = SPA
+		tag = SPC
+		}
+		OR = { 
+		exists = NAV
+		owns = 492
+		}
+		OR = {
+		has_country_flag = iberian_union
+		has_global_flag = end_bourbon
+		NOT = { exists = DUA }
+		}
+		NOT = { has_country_flag = basqueland }
+	}
+		
+	allow = { 
+	OR = { 
+	NAV = {	in_sphere = THIS }
+	owns = 492
+		}
+	}
+		
+	effect = { 
+	set_country_flag = basqueland
+	diplomatic_influence = { who = NAV value = -400 }
+	relation = { who = NAV value = -400 }
+	ESK_1 = { add_core = THIS }
+	ESK_1 = { add_core = SPA }
+	any_country = { 
+	limit = {
+	tag = NAV
+	vassal_of = SPA
+	}
+	country_event = 11101
+	}
+	any_country = { 
+	limit = {
+	tag = NAV
+	vassal_of = SPC
+	}
+	country_event = 11101
+	}
+	}	
+	}
+	
+	integrate_catalans = {
+	picture = french_catalonia
+		potential = {
+			tag = SPA
+			has_country_flag = iberian_union
+			NOT = { exists = CAT }
+			NOT = { has_country_flag = catalan_integration }
+			NOT = { accepted_culture = catalan }
+		}
+		
+		allow = {
+			CAT = {
+				all_core = {
+					owned_by = THIS
+				}
+			}
+			nationalism_n_imperialism = 1
+			OR = {
+				rank = 4
+				revolution_n_counterrevolution = 1
+			}
+		}
+		
+		effect = {
+			prestige = 5
+			add_accepted_culture = catalan
+			set_country_flag = catalan_integration
+			
+			any_pop = {
+				limit = {
+					has_pop_culture = catalan
+				}
+				militancy = -2
+				consciousness = 2
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	reintegrate_portugese = {
+	
+	picture = "spain_reconquest"
+	
+		potential = {
+			tag = SPA
+			has_global_flag = SPA_CWENDED
+			NOT = { accepted_culture = portuguese }
+			OR = {
+			government = democracy
+			government = hms_government
+			government = parliamentary_republic
+			government = socialist_republic
+			}
+		}
+		
+		allow = {
+			POR = {
+				all_core = {
+					owned_by = THIS
+				}
+			}
+		}
+		
+		effect = {
+			prestige = 5
+			add_accepted_culture = portuguese 
+			any_pop = {
+				limit = {
+					has_pop_culture = portuguese 
+				}
+				militancy = -2
+				consciousness = 2
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	reintegrate_castilian = {
+	
+	picture = "spanish_restoration"
+	
+		potential = {
+			tag = SPA
+			has_global_flag = SPA_CWENDED
+			NOT = { accepted_culture = castilian }
+			OR = {
+			government = democracy
+			government = hms_government
+			government = parliamentary_republic
+			government = socialist_republic
+			}
+		}
+		
+		allow = {
+			CST = {
+				all_core = {
+					owned_by = THIS
+				}
+			}
+		}
+		
+		effect = {
+			prestige = 5
+			add_accepted_culture = castilian
+			any_pop = {
+				limit = {
+					has_pop_culture = castilian
+				}
+				militancy = -2
+				consciousness = 2
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	reform_spain = {
+	
+	picture = "emperor_of_india"	
+	
+		potential = {
+			OR = {
+			tag = AND
+			tag = CST
+			tag = GAL
+			tag = ATR
+			tag = POR
+			tag = CAT
+			}
+			has_global_flag = SPA_CWENDED
+			has_global_flag = SPA_CANBEREFORMED
+			NOT = { exists = SPA }
+		}
+		
+		allow = {
+                CST = {
+				    OR = {
+					in_sphere = THIS
+					vassal_of = THIS
+					all_core = { owned_by = THIS }
+					}
+				}
+                POR = {
+				    OR = {
+					in_sphere = THIS
+					vassal_of = THIS
+					all_core = { owned_by = THIS }
+					}
+				}
+		}
+		
+		effect = {
+			prestige = 20
+			change_tag = SPA
+				any_country = {
+					limit = {
+					    OR = {
+						tag = AND
+						tag = CST
+						tag = POR
+						tag = GAL
+						tag = ATR
+						tag = CAT
+						}
+						OR = { 
+						vassal_of = THIS
+						in_sphere = THIS
+						}
+					}
+					country_event = 11101
+				}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	emperor_of_india = { 
+	
+	picture = "emperor_of_india"
+	
+	potential = { 
+	OR = {
+	tag = SPA 
+    tag = SPC
+    }	
+	OR = { 
+	has_global_flag = spaCLM.Occupation
+	has_global_flag = spaCLM_divided
+	has_global_flag = spaCLM_Vice_royalties
+	has_country_flag = partial_peace_MEX
+	}
+	NOT = { has_country_flag = emperor_of_india }
+	}
+	
+	allow = { 
+	nationalism_n_imperialism = 1 
+	2172 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	2254 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	2191 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	2264 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	133 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	2279 = {
+		OR = { 
+	owned_by = THIS 
+	owner = { vassal_of = SPA }
+			} 
+		} 
+	}
+	
+	effect = { 
+	prestige = 100 
+	set_country_flag = emperor_of_india 
+	}	
+	}
+	
+	mancomunidad_de_naciones = { 
+	potential = { 
+	tag = SPA  
+	has_country_flag = spaCLM
+	NOT = { has_country_flag = Columbian_loss }
+	NOT = { has_country_flag = mancomunidad }
+	government = hms_government
+	}
+	
+	allow = { 
+	revolution_n_counterrevolution = 1 
+	}
+	
+	effect = {
+	set_country_flag = mancomunidad	
+	any_country = { 
+	limit = { 
+		vassal_of = SPA 		
+			}
+		country_event = 333222
+			}
+		}
+	}
+	
+#################### Spanish Commonwealth Decisions ######################
+
+SPC_form_commonwealth = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPA  
+	NOT = { has_country_flag = SPC_form_soon }
+	NOT = { has_country_flag = iberian_union }
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_global_flag = SPC_formation_check }
+	}
+	
+	allow = {
+	is_greater_power = yes
+	ideological_thought = 1
+	steamers = 1
+	has_global_flag = SPACapitalChoice
+	has_global_flag = spanish_vic
+	OR = {
+	   has_global_flag = spaCLM.Occupation 
+	   has_country_flag = lib_CLM
+    }	
+	OR = {
+	   has_global_flag = spaCLM.Occupation 
+	   has_global_flag = spaCLM_Vice_royalties
+    }	
+    CUB = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}			
+  			}
+		}
+	}
+  	MEX = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+				is_core = PLA	
+				is_core = DIN					
+  			}
+		}
+	}
+  	GRA = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+                is_core = ARE	
+                is_core = GUY				
+  			}
+		}
+	}
+  	UCA = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}				
+  			}
+		}
+	}
+  	LST = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+				is_core = PLA
+				is_core = DIN				
+  			}
+		}
+	}
+	}
+	
+	effect = {
+	set_country_flag = SPC_form_soon
+	country_event = { id = 47020 days = 31 }
+	}
+}
+
+SPC_annex_upper_granada = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPC
+	has_global_flag = SPC_formation_check
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_country_flag = SPC_GRAannex }
+	}
+	
+	allow = {
+	#is_greater_power = yes
+	state_n_government = 1
+	late_classical_theory = 1
+  	GRA = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+                is_core = ARE		
+                is_core = AMA				
+  				}
+		}
+	}
+	}
+	
+	effect = {
+	set_country_flag = SPC_GRAannex
+	add_accepted_culture = granadan
+	inherit = GRA
+	inherit = QUI
+    GRA = { all_core = { add_core = SPC } }
+	QUI = { all_core = { remove_core = SPC } }
+	release_vassal = QUI
+	diplomatic_influence = { who = QUI value = 300 }
+	}
+}
+
+SPC_annex_VGS = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPC
+	has_global_flag = SPC_formation_check
+	has_country_flag = SPC_GRAannex
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_country_flag = SPC_VGSannex }
+	}
+	
+	allow = {
+	#is_greater_power = yes
+	state_n_government = 1
+	raider_group_doctrine = 1
+  	UCA = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}		
+  				}
+		}
+	}
+	}
+	
+	effect = {
+	set_country_flag = SPC_VGSannex
+	add_accepted_culture = central_american
+	inherit = UCA
+    UCA = { all_core = { add_core = SPC } }
+	}
+}
+
+SPC_annex_VMEX = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPC
+	has_global_flag = SPC_formation_check
+	has_country_flag = SPC_VGSannex
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_country_flag = SPC_VMEXannex }
+	}
+	
+	allow = {
+	#is_greater_power = yes
+	nationalism_n_imperialism = 1
+	the_historical_theory = 1
+  	MEX = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+				is_core = PLA
+				is_core = DIN					
+  				}
+		}
+	}
+	}
+	
+	effect = {
+	set_country_flag = SPC_VMEXannex
+	add_accepted_culture = mexican
+	inherit = MEX
+    MEX = { all_core = { add_core = SPC } }
+	LST = { all_core = { remove_core = SPC } }
+	}
+}
+
+SPC_annex_VLST = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPC
+	has_global_flag = SPC_formation_check
+	has_country_flag = SPC_VMEXannex
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_country_flag = SPC_VLSTannex }
+	}
+	
+	allow = {
+	#is_greater_power = yes
+	revolution_n_counterrevolution = 1
+	steel_steamers = 1
+  	LST = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+				is_core = PLA
+				is_core = DIN					
+  				}
+		}
+	}
+	}
+	
+	effect = {
+	clr_global_flag = spaCLM_Vice_royalties
+	set_global_flag = spaCLM.Occupation 
+	set_country_flag = SPC_VLSTannex
+	add_accepted_culture = lusitanian
+	inherit = LST
+    LST = { all_core = { add_core = SPC } }
+	}
+}
+
+SPC_annex_VQUI = { 
+	
+	picture = "hispania_2"
+
+	potential = { 
+	tag = SPC
+	has_global_flag = SPC_formation_check
+	has_country_flag = SPC_VLSTannex
+	NOT = { has_country_flag = Colombian_loss }
+	NOT = { has_country_flag = SPC_VQUIannex }
+	}
+	
+	allow = {
+	#is_greater_power = yes
+	mass_politics = 1
+	is_canal_enabled = 3
+  	QUI = {
+		all_core = {
+			OR = {
+  				owned_by = THIS
+  				owner = {
+  					in_sphere = THIS
+  				}
+  				owner = {
+  					vassal_of = THIS
+  				}
+                is_core = ARE				
+  				}
+		}
+	}
+	}
+	
+	effect = {
+	set_country_flag = SPC_VQUIannex
+	set_country_flag = SPC_is_complete
+	inherit = QUI
+    QUI = { all_core = { add_core = SPC } }
+	}
+}
+
+}
+
+
+
