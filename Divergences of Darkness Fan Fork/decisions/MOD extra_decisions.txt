@@ -38,136 +38,9 @@ political_decisions = {
 	#	}
 	#}
 	
-	whistlestop_tour = {
-		alert = yes
-		potential = {
-			experimental_railroad = 1
-			civilized = yes
-			NOT = { has_country_modifier = tour }
-			NOT = {	has_country_modifier = national_instability }
-			OR = {
-				government = absolute_monarchy
-				government = prussian_constitutionalism
-				government = hms_government
-				government = fascist_monarchy
-			}
-		}
-		
-		allow = {
-			experimental_railroad = 1
-		}
-		effect = {
-			random_owned = {
-				limit = {
-					owner = {
-						OR = {
-							is_greater_power = yes
-							is_secondary_power = yes
-						}
-					}
-				}
-				owner = { prestige = 4 }
-			}
-			random_owned = {
-				limit = {
-					owner = { 
-						is_greater_power = no
-						is_secondary_power = no
-					}
-				}
-				owner = { prestige = 2 }
-			}
-			poor_strata = {
-				militancy = -1
-			}
-			add_country_modifier = {
-				name = tour
-				duration = 3650
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				any_owned_province = {
-					is_colonial = no
-					controlled_by = REB
-				}
-			}
-			modifier = {
-				factor = 0
-				average_militancy = 2
-				any_state = {
-					is_colonial = no
-					average_militancy = 5
-				}
-			}
-		}
-	}	
-	address_the_nation = {
-		alert = yes
-		potential = {
-			civilized = yes
-			assembly_line = 1
-			NOT = {
-				has_country_modifier = address
-			}
-			OR = {
-				government = hms_government
-				government = prussian_constitutionalism
-				government = absolute_monarchy
-				government = fascist_monarchy
-			}
-		}
-		allow = {
-			invention = national_radio_networks 
-		}
-		effect = {
-			prestige = 5
-
-			add_country_modifier = {
-			name = address
-			duration = 3650
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}	
-	gesture_of_defiance = {
-		alert = yes
-		potential = {
-			civilized = no
-			NOT = {
-				has_country_modifier = futile
-			}
-			flintlock_rifles = 1
-		}
-		allow = {
-
-			military_score = 25
-		}
-		effect = {
-			prestige = 5
-			any_pop = { militancy = -2 }
-			any_greater_power = {
-				relation = {
-					who = THIS
-					value = -20
-				}
-			}
-			add_country_modifier = {
-				name = futile
-				duration = 3650
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			}
-	}	
-	
 	exhibition = {
 		alert = yes
+		picture = exhibition
 		potential = {
 			civilized = yes
 			is_greater_power = no
@@ -354,6 +227,7 @@ political_decisions = {
 	
 	grand_exhibition = {
 		alert = yes
+		picture = grand_exhibition
 		potential = {
 			civilized = yes
 			is_greater_power = no
@@ -715,6 +589,37 @@ political_decisions = {
 		ai_will_do = {
 			factor = 1
 		}
+	}
+
+	conduct_census = {
+		alert = yes
+		potential = {
+			civilized = yes
+			OR = {
+				is_greater_power = yes
+				is_secondary_power = yes
+			}
+			NOT = {
+				has_country_modifier = census
+			}
+		}
+		allow = {
+			money = 50000
+			war = no
+			state_n_government = 1
+			empiricism = 1
+		}
+		effect = {
+			treasury = -50000
+			prestige = 3
+			add_country_modifier = {
+				name = census
+				duration = 3650
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
 	}	
 		
 	the_open_door = {
@@ -770,293 +675,7 @@ political_decisions = {
 				average_militancy = 2
 			}
 		}
-	}
-	
-	#purge_the_traitors = {
-	#	alert = yes
-	#	potential = {
-	#		government = proletarian_dictatorship
-	#		NOT = {
-	#			has_country_modifier = purge
-	#		}
-	#	}
-	#	allow = {
-	#		revolution_n_counterrevolution = 1
-	#	}
-	#	effect = {
-	#		add_country_modifier = {
-	#			name = purge
-	#			duration = 1825
-	#		}
-	#	}
-	#	ai_will_do = {
-	#		factor = 1
-	#		modifier = {
-	#			factor = 0
-	#			not = { 
-	#				average_militancy = 2
-	#			}
-	#		}
-	#	}
-	#}
-	
-	conference1 = {
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			year = 1840
-			late_enlightenment_philosophy = 1
-			NOT = {
-				idealism = 1
-			}				
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 25
-		}
-		effect = {
-			prestige = -5
-			years_of_research = 0.5
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 50 }
-			}
-		}
 	}	
-	
-	conference2 = {
-		picture = conference1
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			idealism = 1
-			year = 1840
-			NOT = {
-				empiricism = 1
-			}				
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 50
-		}
-		effect = {
-			prestige = -10
-			years_of_research = 0.55
-
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 100 }
-			}
-		}
-	}	
-	conference3 = {
-		picture = conference1
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			empiricism = 1
-			year = 1840
-			NOT = {
-				analytic_philosophy = 1
-			}				
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 75
-		}
-		effect = {
-			prestige = -15
-			years_of_research = 0.6
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 150 }
-			}
-		}
-	}	
-	
-	conference4 = {
-		picture = conference1
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			year = 1840
-			analytic_philosophy = 1
-			NOT = {
-				phenomenology_n_hermeneutic = 1
-			}				
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 100
-		}
-		effect = {
-			prestige = -20
-			years_of_research = 0.65
-
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 200 }
-			}
-			}
-	}	
-	
-	conference5 = {
-		picture = conference1
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			phenomenology_n_hermeneutic = 1
-			NOT = {
-				anti__rationalism = 1
-			}				
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 125
-		}
-		effect = {
-			prestige = -25
-			years_of_research = 0.7
-
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 250 }
-			}
-			}
-	}	
-	
-	conference6 = {
-		picture = conference1
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			anti__rationalism  = 1
-			NOT = {
-				has_country_modifier = conference
-			}
-		}
-		allow = {
-			prestige = 150
-		}
-		effect = {
-			prestige = -30
-			years_of_research = 0.75
-
-			add_country_modifier = {
-				name = conference
-				duration = 5400
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				not = { prestige = 300 }
-			}
-		}
-	}	
-
-	military_parade = {
-		alert = yes
-		potential = {
-			civilized = yes
-			is_secondary_power = yes
-			NOT = {
-				has_country_modifier = parade
-			}
-			flintlock_rifles = 1
-		}
-		allow = {
-			is_vassal = no
-			military_score = 50
-		}
-		effect = {
-			prestige = 5
-			any_country = {
-				limit = { is_greater_power = yes }
-				relation = {
-					who = THIS
-					value = -20
-				}
-			}
-			add_country_modifier = {
-				name = parade
-				duration = 3650
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
 	
 	citizenship_tests = {
 		alert = yes
@@ -1117,36 +736,7 @@ political_decisions = {
 		}
 	}
 
-	conduct_census = {
-		alert = yes
-		potential = {
-			civilized = yes
-			OR = {
-				is_greater_power = yes
-				is_secondary_power = yes
-			}
-			NOT = {
-				has_country_modifier = census
-			}
-		}
-		allow = {
-			money = 50000
-			war = no
-			state_n_government = 1
-			empiricism = 1
-		}
-		effect = {
-			treasury = -50000
-			prestige = 3
-			add_country_modifier = {
-				name = census
-				duration = 3650
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
+
 	
 	the_rights_of_man = {
 		alert = yes
