@@ -749,21 +749,16 @@ country_event = {
 	name = "TAR25.A"
 	badboy = 10 
 	set_country_flag = dismantling_CSK
-	casus_belli = { 
-				target = CSK
-				type = cut_down_to_size 
-				months = 24
-			}
 	war = {
 			target = CSK
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = custom_treaty_cb
 			}
 			defender_goal = { 
 				casus_belli = acquire_core_state
 				state_province_id = 977
 			}
-		}
+	}
 	ai_chance = { 
 	factor = 100 
 		}
@@ -787,6 +782,7 @@ country_event = {
 	
 	option = {
 	name = "TAR26.A"
+	clr_country_flag = custom_treaty_loser
 	prestige = 20 
 	inherit = CSK 
 	any_owned = { 
@@ -1071,7 +1067,7 @@ country_event = {
 				casus_belli = conquest
 			}
 			defender_goal = { 
-			casus_belli = cut_down_to_size
+			casus_belli = custom_treaty_cb
 			}
 		}
 	
@@ -1111,7 +1107,7 @@ country_event = {
 				casus_belli = conquest
 			}
 			defender_goal = { 
-			casus_belli = cut_down_to_size
+			casus_belli = custom_treaty_cb
 			}
 		}
 	}
@@ -1150,7 +1146,7 @@ country_event = {
 				casus_belli = conquest
 			}
 			defender_goal = { 
-			casus_belli = cut_down_to_size
+			casus_belli = custom_treaty_cb
 			}
 		}
 	}
@@ -1165,8 +1161,7 @@ country_event = {
 	trigger = { 
 	tag = KHK 
 	government = presidential_dictatorship 
-	AND = { has_recently_lost_war = yes
-	is_disarmed = yes }
+	has_country_flag = custom_treaty_loser
 	OR = { 
 	truce_with = DON 
 	truce_with = ZAZ
@@ -1183,6 +1178,7 @@ country_event = {
 	end_war = ZAZ
 	end_war = KHK 
 	end_war = DON 
+	clr_country_flag = custom_treaty_loser
 	any_owned = { 
 	limit = { 
 		is_core = DON	
@@ -2002,7 +1998,7 @@ country_event = {
 					casus_belli = annex_core_country
 				}
 				defender_goal = {
-					casus_belli = cut_down_to_size
+					casus_belli = custom_treaty_cb
 				}
 		}
 	}	
@@ -2018,7 +2014,7 @@ country_event = {
 					casus_belli = annex_core_country
 				}
 				defender_goal = {
-					casus_belli = cut_down_to_size
+					casus_belli = custom_treaty_cb
 				}
 		}
 	}
@@ -2034,7 +2030,7 @@ country_event = {
 					casus_belli = annex_core_country
 				}
 				defender_goal = {
-					casus_belli = cut_down_to_size
+					casus_belli = custom_treaty_cb
 				}
 		}
 	}
@@ -2174,9 +2170,9 @@ country_event = {
 	
 	trigger = { 
 	tag = CSK 
-	war = no 
+	#war = no 
 	has_country_flag = CSK_CW 
-	is_disarmed = yes
+	has_country_flag = custom_treaty_loser
 	OR = {
 		DON = { exists = yes } 
 		VOR = { exists = yes } 
@@ -2190,7 +2186,12 @@ country_event = {
 	
 	option = { 
 	name = "TAR57.A" 
+	any_country = {
+	   limit = { war_with = THIS }
+	   end_war = THIS
+	}
 	clr_country_flag = CSK_CW
+	clr_country_flag = custom_treaty_loser
 	remove_country_modifier = economic_nerf_CSK 
 	remove_country_modifier = military_nerf_CSK 
 	remove_country_modifier = political_nerf_CSK

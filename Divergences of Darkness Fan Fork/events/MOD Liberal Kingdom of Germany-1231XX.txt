@@ -591,7 +591,7 @@ country_event = {
 		war = {
 			target = SGF
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = custom_treaty_cb
 			}
 
 			defender_goal = {
@@ -689,7 +689,7 @@ country_event = {
 		war = {
 			target = SGF
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = custom_treaty_cb
 			}
 
 			defender_goal = {
@@ -761,7 +761,8 @@ country_event = {
 	trigger = {
 	    tag = SGF
 		exists = yes
-		NOT = { has_country_flag = dismantling_treaty }
+		war = no
+		NOT = { has_country_flag = dismantling_treaty }		
 		BOH = { exists = yes }
 		OR = { 
 		   BRG = { exists = yes }
@@ -778,7 +779,10 @@ country_event = {
 		      exists = NGF
 		   }
 		}
-        is_disarmed = yes
+		OR = {
+           has_country_flag = custom_treaty_loser
+		   is_disarmed = yes
+		}
 		
 	}
 			
@@ -796,6 +800,7 @@ country_event = {
 		end_war = BRG
 		end_war = PBG
 		BRG = { end_war = BOH }
+		clr_country_flag = custom_treaty_loser
 		set_global_flag = SGF_revolution_is_dead
 		clr_global_flag = second_german_revoultion
 		#clr_global_flag = BRG_break_SGF
@@ -1016,6 +1021,7 @@ country_event = {
 	trigger = {
 	    tag = BOH
 		exists = yes
+		war = no
 		NOT = { has_country_flag = dismantling_treaty }
 		BOH = { exists = yes }
 		OR = { 
@@ -1028,10 +1034,8 @@ country_event = {
 		   has_global_flag = SGF_crisis
 		}		
         SGF = { 
-		   AND = { 
-		      NOT = { is_disarmed = yes } 
-			  NOT = { war = yes }
-		   }
+		   NOT = { is_disarmed = yes }
+		   NOT = { has_country_flag = custom_treaty_loser }
 		}
 	}
 

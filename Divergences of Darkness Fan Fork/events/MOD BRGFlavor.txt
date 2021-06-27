@@ -2904,7 +2904,7 @@ country_event = {
 		}
 		war = no
 		NOT = { exists = NET }
-		NOT = { is_disarmed = yes }
+		NOT = { has_country_flag = custom_treaty_loser }
 		has_global_flag = DUTCH_REVOLT
 		NOT = { has_global_flag = DUTCH_OVER }
 		NOT = { has_global_flag = DUTCH_COUNCIL }
@@ -2974,8 +2974,9 @@ country_event = {
 		}
 		war = no
 		exists = NET
-		NOT = { is_disarmed = yes }
 		has_global_flag = DUTCH_REVOLT
+		NOT = { has_country_flag = custom_treaty_loser }
+		NOT = { is_disarmed = yes }
 		NOT = { has_global_flag = DUTCH_OVER }
 		NOT = { has_global_flag = DUTCH_COUNCIL }
 		NOT = { has_global_flag = DUTCH_COUNCIL_HOSTED }
@@ -3031,7 +3032,10 @@ country_event = {
 		   tag = BRG
 	       tag = PBG
 		}
-		is_disarmed = yes
+		OR = {
+		  has_country_flag = custom_treaty_loser
+		  is_disarmed = yes
+		}
 		has_global_flag = DUTCH_REVOLT
 		NOT = { has_global_flag = DUTCH_OVER }
 		NOT = { has_global_flag = DUTCH_COUNCIL }
@@ -3064,6 +3068,7 @@ country_event = {
 	option = {
 	name = "653091.A" 
 	prestige = -40
+	clr_country_flag = custom_treaty_loser
 	clr_global_flag = DUTCH_REVOLT
 	set_global_flag = DUTCH_OVER
 	# Peace with various tags
@@ -3341,11 +3346,16 @@ country_event = {
 	option = {
 	name = "653110.A" 
 	remove_country_modifier = the_new_order_BRG
+	set_country_flag = PBG_PJC
+	nationalvalue = nv_liberty
 	add_country_modifier = { 
 	   name = national_confusion
 	   duration = 1825
 	}
-	set_country_flag = PBG_CHAINBROKE
+	add_country_modifier = {
+		name = nv_liberty_modifier
+		duration = 1
+	}
     change_tag = PBG
 	}
 }
@@ -3383,11 +3393,16 @@ country_event = {
 	option = {
 	name = "653110.A" 
 	remove_country_modifier = the_new_order_BRG
+	set_country_flag = PBG_PJC
+	nationalvalue = nv_liberty
 	add_country_modifier = { 
 	   name = national_confusion
 	   duration = 1825
 	}
-	set_country_flag = PBG_CHAINBROKE
+	add_country_modifier = {
+		name = nv_liberty_modifier
+		duration = 1
+	}
 	government = parliamentary_republic
 	ruling_party_ideology = socialist
     political_reform = population_equal_weight
@@ -3448,11 +3463,16 @@ country_event = {
 	option = {
 	name = "653111.B" 
 	remove_country_modifier = the_new_order_BRG
+	set_country_flag = PBG_PJC
+	nationalvalue = nv_liberty
 	add_country_modifier = { 
 	   name = national_confusion
 	   duration = 1825
 	}
-	set_country_flag = PBG_CHAINBROKE
+	add_country_modifier = {
+		name = nv_liberty_modifier
+		duration = 1
+	}
 	government = parliamentary_republic
 	ruling_party_ideology = socialist
     political_reform = population_equal_weight
@@ -3666,7 +3686,7 @@ country_event = {
 	}
 }
 
-### BRG gets declared war on with Cut down to Size. JUST AS PLANNED ###
+### Isolate DUA and BRG alliances to Europe and clear spheres. BRG gets declared war on with Cut down to Size. JUST AS PLANNED ###
 
 country_event = {
 	id = 653116
@@ -3677,7 +3697,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
-	name = "653116.A" 
+	name = "653116.A" 		
 	set_global_flag = THE_FRENCH_FOLLY
 	BRG = {
 	add_country_modifier = { 
@@ -3685,18 +3705,13 @@ country_event = {
 	   duration = 1000
 	}
 	}
-	casus_belli = { 
-			target = BRG
-			type = cut_down_to_size
-			months = 60
-	}	
 	war = {
 			target = BRG
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = custom_treaty_cb
 			}
 			defender_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = custom_treaty_cb
 			}
 			call_ally = yes
 		}
@@ -3717,7 +3732,7 @@ country_event = {
 	    exists = yes	
 		tag = DUA
 		OR = {
-		   is_disarmed = yes
+		   has_country_flag = custom_treaty_loser
 		   BRG = { owns = 406 }
 		}
 		NOT = { war_with = BRG }
@@ -3732,6 +3747,7 @@ country_event = {
 	name = "653117.A" 
 	war_exhaustion = -50
 	clr_global_flag = THE_FRENCH_FOLLY	
+	clr_country_flag = custom_treaty_loser
 	set_country_flag = PLOMBLERES
 	BRG = {
 	   prestige = 40
@@ -3801,7 +3817,8 @@ country_event = {
 	}
 	secede_province = AQT
 	}
-	AQT = { diplomatic_influence = { who = BRG value = 400 } relation  = { who = BRG value = 400 } capital = 455 create_alliance = BRG }
+	AQT = { relation  = { who = BRG value = 400 } capital = 455 create_alliance = BRG }
+	diplomatic_influence = { who = AQT value = 400 }
 	any_owned = {
 	limit = {
 	   is_core = NTL
@@ -3809,7 +3826,8 @@ country_event = {
 	}
 	secede_province = NTL
 	}	   
-	NTL = { diplomatic_influence = { who = BRG value = 400 } relation  = { who = BRG value = 400 } capital = 277 create_alliance = BRG }
+	NTL = { relation  = { who = BRG value = 400 } capital = 277 create_alliance = BRG }
+	diplomatic_influence = { who = NTL value = 400 }
 	any_country = {
 	   limit = {
 	   tag = BRG
@@ -3838,8 +3856,11 @@ country_event = {
 	trigger = {	
 	    exists = yes
 		tag = BRG
-		is_disarmed = yes
-		NOT = { war_with = DUA }
+		OR = {
+		   is_disarmed = yes
+		   has_country_flag = custom_treaty_loser
+		}
+		NOT = { war_with = DUA }		
 		has_global_flag = THE_FRENCH_FOLLY		
 	}
 	
@@ -3870,6 +3891,7 @@ country_event = {
 	option = {
 	name = "653119.A" 
 	war_exhaustion = -50
+	clr_country_flag = custom_treaty_loser
 	clr_global_flag = THE_FRENCH_FOLLY	
 	set_country_flag = NEUCHATEL	
 	DUA = { set_country_flag = ITALY_OPEN war_exhaustion = -50 prestige = 30 country_event = { id = 650360 days = 1 } }		
@@ -3894,9 +3916,9 @@ country_event = {
 	    exists = yes
 		war = no
 		tag = BRG
-		is_disarmed = no
-		DUA = { is_disarmed = no }
-		has_global_flag = THE_FRENCH_FOLLY		
+		has_global_flag = THE_FRENCH_FOLLY	
+		NOT = { has_country_flag = custom_treaty_loser }
+		NOT = { DUA = { has_country_flag = custom_treaty_loser } }			
 	}
 	
 	mean_time_to_happen = {
