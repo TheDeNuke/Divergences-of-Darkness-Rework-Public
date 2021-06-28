@@ -14,41 +14,39 @@ Disclaimers:
 Credits:
 
 Mods:
-Ported Content from HPM. Credits are listed on their pages
-Ported Content from HFM. Credits are listed on their pages
-Ported Content from PDM Divide by Zero. Credits are listed on their page.
-… and of course PDM itself which was the original base of “Divergences of Darkness”
+- Ported Content from HPM. Credits are listed on their pages
+- Ported Content from HFM. Credits are listed on their pages
+- Ported Content from PDM Divide by Zero. Credits are listed on their page.
+- … and of course PDM itself which was the original base of “Divergences of Darkness”
 
 The mod team:
 
-DeNuke - Project Manager
-Attalus - The Co-Project Manager/Consul of Divergences
+- DeNuke - Project Manager
+- Attalus - The Co-Project Manager/Consul of Divergences
 
-NPMister - Concept Designer and Localization
-Periares - Concept Designer, Coder and Localization
-Zeeloat - Concept Designer and Localization
-Arleck - Concept Designer and Localization
-J Master - Concept Designer and Localization
-Athmos - Concept Designer
-Polyfox - Concept Designer
-Conquest - Coder/Scripter and the developer of the Popularizer tool.
-Ddima - Localization
-Tecumseh - Localization
-Ataru - Localization
-Ania - Localization
-Epstine Thrawn - Localization
-Norman_Scopes - Localization
+- NPMister - Concept Designer and Localization
+- Periares - Concept Designer, Coder and Localization
+- Zeeloat - Concept Designer and Localization
+- Arleck - Concept Designer and Localization
+- J Master - Concept Designer and Localization
+- Athmos - Concept Designer
+- Polyfox - Concept Designer
+-  Conquest - Coder/Scripter and the developer of the Popularizer tool.
+-  Ddima - Localization
+-  Tecumseh - Localization
+-  Ataru - Localization
+-  Ania - Localization
+-  Epstine Thrawn - GFX Changes
+-  Norman_Scopes - Localization
 
 Special Thanks to:
 
-Kinniken - The original founder of Divergences
-Athalcor - The second mod lead of Divergences
-Razgriz 2K9 - Responsible for most of the old lore
-Attalus - The third mod lead. Still here.
-
-All other previous developers of Divergences (you can see most of the list on the PDXPlaza page).
-
-MajorMajor - DoD HPM’s Lead and a good reason why there has been a resurgence in this mod.
-The HOI4 Mod (Divergences) - For a lot of very important lore suggestions that were implemented in this project.
-HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
-Bsharri/Flyrion - The original DoD FF founder
+- Kinniken - The original founder of Divergences
+- Athalcor - The second mod lead of Divergences
+- Razgriz 2K9 - Responsible for most of the old lore
+- Attalus - The third mod lead. Obviously still at this project.
+- All other previous developers of Divergences (you can see most of the list on the PDXPlaza page).
+- MajorMajor - DoD HPM’s Lead and a good reason why there has been a resurgence in this mod.
+- The HOI4 Mod (Divergences) - For a lot of very important lore suggestions that were implemented in this project.
+- HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
+- Bsharri/Flyrion - The original DoD FF founder
