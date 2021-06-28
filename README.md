@@ -1,31 +1,4 @@
-
-
-The Divergence of Darkness Rework team is proud to present:
-
-The First Public Release
-
-“According to quantum theory, every decision made in the universe creates an alternative universe where all the following events take a different way. The first decision that diverged the timeline is called the Point of Divergence.”
-
-I’m DeNuke. Project Manager of DoDRW and I’m here to introduce DoDRW to you.
-
-Divergence of Darkness Rework or alternatively “Fan Fork'' was a version of Divergences that started as a personal pet project of mine back in 2017. It would continue to remain a personal project until 2020, when the formation of a discord group by Bsharri had spurred me along to join the project and contribute my efforts. These efforts prior to the Discord server were enormous and a lot of content in this version will reflect the changes that I had made on my own accord prior to 2020.
-
-Of course, when that fateful date in 2020 had rolled around I was granted an opportunity to work alongside some of the older Divergences developers which in turn had allowed far more complex concepts and ideas to be created and added to this project.
-
-Entire regions would undergo total reworks to make the scenario somewhat more plausible and entertaining with the goal of far more story driven content that had previously been considered impossible by the limited developmental resources that I and other members of this team had previously.
-
-The regions reworked for the first Public Release are:
-
-Burgundy - The so-called champion of Liberalism in Europe is in peril: can the monarchy reassert its powers or will Parliament overcome tradition?
-East Indies - The VOC rules over the various sultanates of Indonesia with an iron fist but perhaps there is a path for the Natives to throw off the colonial yoke? 
-South Africa- The conflict between the Geus states and the Burgundian colony of the Cape must be resolved 
-Italy (Partially)
-
- …and most importantly:
-
-The entirety of Eastern Europe- Unify the Eastern Slavs for the first time in their history as the Southern Russian principalities, Novgorod or even a Cossack Host. Alternatively, you can play the Commonwealth and attempt to crush the dreams of the Eastern Slavs by centralizing the “Sick Man of Eastern Europe”.
-
-There is a lot of present content that’s unrelated to the above items so feel free to explore and discover it at your own pace.
+Divergence of Darkness Rework
 
 Disclaimers:
 
