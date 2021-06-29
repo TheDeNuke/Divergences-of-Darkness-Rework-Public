@@ -257,6 +257,7 @@ country_event = {
 
 	option = { 
 	name = "SAFN05.A"
+	clr_country_flag = SAFWPCheck
 	clr_global_flag = LWE_BRG_War
 	clr_global_flag = SAFFGW
 	set_global_flag = SAFFGWEnd
@@ -292,6 +293,7 @@ country_event = {
 
 	option = { 
 	name = "SAFN06.A"
+	clr_country_flag = SAFWPCheck
 	clr_global_flag = LWE_BRG_War
 	clr_global_flag = SAFFGW
 	set_global_flag = SAFFGWEnd
@@ -879,6 +881,7 @@ country_event = {
 	    prestige = 5
 		clr_country_flag = the_boer_warning
 		clr_country_flag = SAFN_break
+		clr_country_flag = SAFWPCheck
 	    clr_global_flag = SAFFGW
 	    clr_global_flag = SAFSGW
         clr_global_flag = SAFSGWA
@@ -898,7 +901,8 @@ country_event = {
 				remove_core = PBG
 			}
 		}	
-        remove_country_modifier = geus_status_quo		
+        remove_country_modifier = geus_status_quo	
+        remove_country_modifier = war_justification_blocked	
 	    any_country = {
 	    limit = {
 	    OR = {
@@ -907,6 +911,7 @@ country_event = {
 	       }
 	    }
 	    remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked	
 	    } 
         any_country = {
 	    limit = {
@@ -1688,10 +1693,11 @@ country_event = {
 	}
 	has_global_flag = SAFFGW
 	NOT = { has_global_flag = SAFFGWEnd }
+	NOT = { has_country_flag = SAFWPCheck }
 	}
 	
 	mean_time_to_happen = { 
-	days = 2
+	days = 7
 	}
 	
 	option = { 
@@ -1701,18 +1707,46 @@ country_event = {
 	end_war = LWE
 	end_war = TRN
 	end_war = NFL
+	any_country = {
+	   limit = { 
+	      tag = LWE
+		  exists = yes
+	   }
+	   country_event = { id = 3332350 days = 0 }
+	}	
 	ai_chance = { 
-	factor = 60
+	factor = 80
 		}
 	}
 	
 	option = { 
 	name = "SAFN35.B"
+	set_country_flag = SAFWPCheck
 	prestige = -10 
 	ai_chance = { 
-	factor = 40
+	factor = 20
 		}
 	}
+}
+
+#### The First Geuzen War - LWE is informed of WP if they still exist and given disabled justification until Hoop Event Chain ####
+
+country_event = {
+	id = 3332350
+	title = "SAFN350.T"
+	desc = "SAFN350.D"
+	picture = "trekboers_crossing_the_karoo"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SAFN35.B"
+	prestige = 20
+	add_country_modifier = { 
+		name = war_justification_blocked
+		duration = -1 
+	}
+	}		
 }
 
 #### The First Geuzen War - BRG is dead or a normal WP occurred ####
@@ -1925,6 +1959,7 @@ country_event = {
 	}
 	}
 	clr_global_flag = SAFFGW
+	clr_country_flag = SAFWPCheck
 	set_global_flag = SAFFGWEnd
 	set_global_flag = SAFFGWWhitePeace	
 	}	
@@ -2150,6 +2185,7 @@ country_event = {
 	}
 	}
 	clr_global_flag = SAFFGW
+	clr_country_flag = SAFWPCheck
 	set_global_flag = SAFFGWEnd
 	set_global_flag = SAFFGWWhitePeace	
 	}	
@@ -2187,6 +2223,7 @@ country_event = {
 	prestige = 20
 	war_exhaustion = -25
 	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked
 	any_country = {
 	    limit = {
 	    OR = {
@@ -2195,8 +2232,10 @@ country_event = {
 	       }
 	    }
 	    remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	}
 	clr_global_flag = SAFFGW
+	clr_country_flag = SAFWPCheck
 	set_global_flag = SAFFGWEnd
 	}	
 }
@@ -2235,6 +2274,7 @@ country_event = {
 	option = { 
 	name = "SAFN39.A"
 	prestige = 10
+	LWE = { remove_country_modifier = war_justification_blocked }
 	set_country_flag = BoerNHC
 	any_country = { 
 	limit = {
@@ -2645,6 +2685,7 @@ country_event = {
 	option = { 
 	name = "SAFN48.A"
 	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked
 	any_country = {
 	    limit = {
 	    OR = {
@@ -2653,6 +2694,7 @@ country_event = {
 	       }
 	    }
 	    remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	} 
 	clr_country_flag = SAF_murder_prosp
 	set_global_flag = SAFSGW
@@ -2706,6 +2748,7 @@ country_event = {
 	clr_global_flag = SAFFGW
 	clr_global_flag = SAFSGW
     clr_global_flag = SAFSGWA
+	clr_country_flag = SAFWPCheck
 	set_global_flag = SAFFGWEnd
 	set_global_flag = SAFSGWEnd
 	set_global_flag = SAFSGWBRGWins
@@ -2865,6 +2908,7 @@ country_event = {
 	option = { 
 	name = "SAFN71.A"
 	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked
 	any_country = {
 	    limit = {
 	    OR = {
@@ -2873,6 +2917,7 @@ country_event = {
 	       }
 	    }
 	    remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	} 
 	clr_global_flag = BTV_southern_raid
 	set_global_flag = SAFSGWA
@@ -2925,6 +2970,7 @@ country_event = {
 	option = { 
 	name = "SAFN72.A"
 	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked
 	any_country = {
 	    limit = {
 	    OR = {
@@ -2933,6 +2979,7 @@ country_event = {
 	       }
 	    }
 	    remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	} 
 	clr_global_flag = BTV_southern_raid
 	set_global_flag = SAFSGWA
@@ -2987,6 +3034,7 @@ country_event = {
 	clr_global_flag = SAFFGW
 	clr_global_flag = SAFSGW
     clr_global_flag = SAFSGWA
+	clr_country_flag = SAFWPCheck
 	set_global_flag = SAFFGWEnd
 	set_global_flag = SAFSGWEnd
 	set_global_flag = SAFSGWBRGWins
@@ -3017,6 +3065,7 @@ country_event = {
 	option = {
 		name = "98247.A"
 		prestige = -50
+		clr_country_flag = SAFWPCheck
 	    clr_global_flag = SAFFGW
 	    set_global_flag = SAFFGWEnd
 	    clr_global_flag = SAFSGW
@@ -3035,6 +3084,7 @@ country_event = {
 			}
 		}
 		remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	    any_country = {
 		   limit = {
 	       OR = {
@@ -3043,6 +3093,7 @@ country_event = {
 	       }
 		   }
 	       remove_country_modifier = geus_status_quo
+		   remove_country_modifier = war_justification_blocked
 	    }
 		random_country = {
 			limit = {
@@ -3067,12 +3118,14 @@ country_event = {
 	option = {
 		name = "98247.B"
 		prestige = -25
+		clr_country_flag = SAFWPCheck
 	    clr_global_flag = SAFFGW
 	    set_global_flag = SAFFGWEnd
 	    clr_global_flag = SAFSGW
         clr_global_flag = SAFSGWA
 	    set_global_flag = SAFSGWEnd
 		remove_country_modifier = geus_status_quo
+		remove_country_modifier = war_justification_blocked
 	    any_country = {
 	       limit = {
 	       OR = {
@@ -3081,6 +3134,7 @@ country_event = {
 	          }
 	       }
 	       remove_country_modifier = geus_status_quo
+		   remove_country_modifier = war_justification_blocked
 	    }
 		random_country = {
 			limit = {
@@ -3390,6 +3444,7 @@ country_event = {
 	TRN = { clr_country_flag = line_is_drawn_here }
 	LWE = { clr_country_flag = line_is_drawn_here }
 	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked	
 	any_country = {
 	   limit = {
 	   OR = {
@@ -3398,6 +3453,7 @@ country_event = {
 	      }
 	   }
 	   remove_country_modifier = geus_status_quo
+	   remove_country_modifier = war_justification_blocked	
 	}
 	set_global_flag = Geus_Civil_War
 	any_country = {

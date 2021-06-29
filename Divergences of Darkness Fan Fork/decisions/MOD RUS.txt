@@ -1898,6 +1898,55 @@ political_decisions = {
 			}
 	}
 	
+	#Player Only Decision to go south as Novogrod
+	
+	player_NOV_goes_south = {	
+	        picture = military_parade
+			potential = {
+				tag = NOV
+                ai = no
+                has_country_flag = panrussian_NOV
+                NOT = { has_country_flag = panrussian_NOV_warning }				
+			}			
+			allow = {	
+			   war = no
+               MOS = { has_country_modifier = MOS_cooldown }				
+			}		
+			effect = {
+			   set_country_flag = panrussian_NOV_warning
+ 	           any_country = {
+		           limit = { 
+		              exists = yes
+			          owns = 1008
+		              OR = { 
+			             tag = CSK 
+			             tag = MOS 
+			          }
+		          }
+		          country_event = { id = 222626 days = 1 }
+               }
+               random_owned = {
+	           limit = { owner = { OR = { government = proletarian_dictatorship government = fascist_dictatorship government = presidential_dictatorship government = bourgeois_dictatorship } } }
+	           owner = { set_global_flag = NOV_DICTATORSHIP }
+	           }				
+	           random_owned = {
+	           limit = { owner = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+	           owner = { set_global_flag = NOV_DEMOCRACY }
+	           }
+	           random_owned = {
+	           limit = { owner = { OR = { government = merchant_republic government = hms_government government = prussian_constitutionalism } } }
+	           owner = { set_global_flag = NOV_CONMON }
+	           }
+	           random_owned = {
+	           limit = { owner = { OR = { government = absolute_monarchy government = fascist_monarchy } } }
+	           owner = { set_global_flag = NOV_ABMON }
+	           }				
+			}			
+			ai_will_do = {
+				factor = 0
+			}
+	}
+	
 	# This removes the minor princedoms. Note: MOS and NOV cores remain on the map.
 	
 	# Tier 1 Expansion
@@ -2067,6 +2116,7 @@ political_decisions = {
 			   prestige = 10
 			   badboy = 5
 			   set_country_flag = panslavic_focus
+			   country_event = { id = 812845 days = 1 }
 			   
 			}
 			
@@ -3648,8 +3698,8 @@ political_decisions = {
                limit = { owner = { treasury = 2000000 } }
                owner = { treasury = -2000000 }
             }			
-			capital = 1038
-			1038 = {
+			capital = 1039
+			1039 = {
 				    life_rating = 15
 				    change_province_name = "Volograd" 
 				    add_province_modifier = {
@@ -3822,8 +3872,8 @@ political_decisions = {
                limit = { owner = { treasury = 2000000 } }
                owner = { treasury = -2000000 }
             }			
-			capital = 1038
-			1038 = {
+			capital = 1039
+			1039 = {
 				    life_rating = 15
 				    change_province_name = "Slavjansk" 
 				    add_province_modifier = {
@@ -4528,6 +4578,7 @@ political_decisions = {
 		potential = { 
 		primary_culture = cossack 
 		NOT = { tag = CSK }
+		NOT = { tag = RUS }
 		NOT = { CSK = { exists = yes } }
 		}
 		
@@ -4593,11 +4644,11 @@ political_decisions = {
 	
 		potential = { 
 		tag = CSK 
-		NOT = {
-		has_global_flag = panrussian_CSK
-		has_country_flag = CSK_tier_1
-	    has_global_flag = panrussian_NOV
-	    MOS = { exists = yes } 
+		NOT = {		
+		   has_country_flag = CSK_tier_1
+	  	   has_global_flag = panrussian_CSK
+	       has_global_flag = panrussian_NOV
+	       MOS = { exists = yes } 
 	    }
 		}
 		
