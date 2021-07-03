@@ -1022,6 +1022,30 @@ country_event = {
 		secede_province = KUG
 	}
 }
+
+### KZG Governorate Transfer Event ###
+
+ province_event = {
+	id = 8128230
+	title = "URUS04.T"
+	desc = "URUS04.D"
+
+	trigger = {
+		owner = { tag = RUS }
+		is_core = TSG
+		NOT = { is_core = RUS }
+		TSG = {	vassal_of = THIS }	
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "URUS04.A"
+		secede_province = TSG
+	}
+}
  
 ################ Russian Governorate Integration Events ###################
 
@@ -1034,6 +1058,7 @@ country_event = {
 	picture = "deliberation"
 	
 	trigger = { 
+	   vassal_of = RUS
 	   has_country_flag = active_russian_governorate
 	   has_country_flag = russian_integration_one
 	   NOT = { has_country_flag = tierthree_blocker }
@@ -1129,6 +1154,7 @@ country_event = {
 	picture = "deliberation"
 	
 	trigger = { 
+	   vassal_of = RUS
 	   has_country_flag = active_russian_governorate
 	   has_country_flag = russian_integration_two
 	   NOT = { has_country_flag = tierthree_blocker }
@@ -1223,6 +1249,7 @@ country_event = {
 	picture = "deliberation"
 	
 	trigger = { 
+	   vassal_of = RUS
 	   has_country_flag = active_russian_governorate
 	   has_country_flag = russian_integration_three
 	   NOT = { has_country_flag = tierthree_blocker }
@@ -1342,6 +1369,10 @@ country_event = {
 		     RUS = { government = proletarian_dictatorship }
 	      }
 		  AND = { 
+		     NOT = { OR = { government = proletarian_dictatorship government = democracy government = parliamentary_republic government = presidential_dictatorship } }
+		     RUS = { government = socialist_republic }
+	      }
+		  AND = { 
 		     NOT = { government = fascist_dictatorship }
 		     RUS = { government = fascist_dictatorship }
 	      }
@@ -1355,7 +1386,7 @@ country_event = {
 	      }	
 		  AND = { 
 		     NOT = { OR = { government = democracy government = parliamentary_republic government = socialist_republic government = presidential_dictatorship } }
-		     RUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic government = presidential_dictatorship } }
+		     RUS = { OR = { government = democracy government = parliamentary_republic government = presidential_dictatorship } }
 	      }
        }		  
 	}
@@ -1451,6 +1482,11 @@ country_event = {
 	random_owned = {
 		limit = { owner = { capital = 354 } }
 		owner = { capital = 357 country_event = { id = 812841 days = 0 } }
+	}
+	# TSG
+	random_owned = {
+		limit = { owner = { capital = 1195 } }
+		owner = { capital = 1195 country_event = { id = 812842 days = 0 } }
 	}
 	}
 }
@@ -3107,10 +3143,371 @@ country_event = {
 	}
 }
 
-# Russian Governorate Update Event
+# TSG - Collapses into UZB, TJK and KYR
 
 country_event = { 
 	id = 812842
+	title = "URUS10.T"
+	desc = "URUS10.D"
+	picture = "crisis_revolution_enabled"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "URUS10.A"
+	any_country = {
+	   limit = { 
+	      tag = UZB
+		  NOT = { exists = yes }
+	   }
+       random_list = {
+	   30 = {
+	   government = democracy
+	   ruling_party_ideology = liberal
+	   political_reform = universal_voting
+	   political_reform = state_equal_weight
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_socialist
+       political_reform = secret_ballots
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   set_country_flag = democracy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = conservative_party_in_power
+	   set_country_flag = liberal_party_in_power
+	   clr_country_flag = reactionary_party_in_power
+	   clr_country_flag = socialist_party_in_power
+	   clr_country_flag = communist_party_in_power
+	   clr_country_flag = fascist_party_in_power
+	   clr_country_flag = anarcho_liberal_party_in_power
+	   clr_country_flag = tory_election_win
+	   set_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = market_liberal_party_in_power						
+	   }
+	   20 = { 
+	   government = presidential_dictatorship
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = democracy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   }  
+	   50 = { 
+	   government = absolute_monarchy
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   set_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov
+	   }  
+	   }
+	}
+	any_country = {
+	   limit = { 
+	      tag = KYR
+		  NOT = { exists = yes }
+	   }
+       random_list = {
+	   30 = {
+	   government = democracy
+	   ruling_party_ideology = liberal
+	   political_reform = universal_voting
+	   political_reform = state_equal_weight
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_socialist
+       political_reform = secret_ballots
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   set_country_flag = democracy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = conservative_party_in_power
+	   set_country_flag = liberal_party_in_power
+	   clr_country_flag = reactionary_party_in_power
+	   clr_country_flag = socialist_party_in_power
+	   clr_country_flag = communist_party_in_power
+	   clr_country_flag = fascist_party_in_power
+	   clr_country_flag = anarcho_liberal_party_in_power
+	   clr_country_flag = tory_election_win
+	   set_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = market_liberal_party_in_power						
+	   }
+	   20 = { 
+	   government = presidential_dictatorship
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = democracy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   }  
+	   50 = { 
+	   government = absolute_monarchy
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   set_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov
+	   }  
+	   }
+	}
+	any_country = {
+	   limit = { 
+	      tag = TJK
+		  NOT = { exists = yes }
+	   }
+       random_list = {
+	   30 = {
+	   government = democracy
+	   ruling_party_ideology = liberal
+	   political_reform = universal_voting
+	   political_reform = state_equal_weight
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_socialist
+       political_reform = secret_ballots
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   set_country_flag = democracy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = conservative_party_in_power
+	   set_country_flag = liberal_party_in_power
+	   clr_country_flag = reactionary_party_in_power
+	   clr_country_flag = socialist_party_in_power
+	   clr_country_flag = communist_party_in_power
+	   clr_country_flag = fascist_party_in_power
+	   clr_country_flag = anarcho_liberal_party_in_power
+	   clr_country_flag = tory_election_win
+	   set_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = market_liberal_party_in_power						
+	   }
+	   20 = { 
+	   government = presidential_dictatorship
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = democracy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   }  
+	   50 = { 
+	   government = absolute_monarchy
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   set_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov
+	   }  
+	   }
+	}
+	any_owned = { 
+	   limit = { 
+	   NOT = { province_id = 1195 }
+	   is_core = TJK
+	   }
+	   secede_province = TJK
+	}
+	any_owned = { 
+	   limit = { 
+	   NOT = { province_id = 1195 }
+	   is_core = KYR
+	   }
+	   secede_province = KYR
+	}
+	any_owned = { 
+	   limit = { 
+	   NOT = { province_id = 1195 }
+	   is_core = UZB
+	   }
+	   secede_province = UZB
+	}
+	UZB = { inherit = THIS capital = 1195 }
+	}
+}
+
+# Russian Governorate Update Event
+
+country_event = { 
+	id = 812843
 	title = "URUS11.T"
 	desc = "URUS11.D"
 	picture = "vozhd"
@@ -3932,7 +4329,7 @@ country_event = {
 ### Tatar Integration Event ###
  
 country_event = { 
-	id = 812843
+	id = 812844
 	title = "URUS12.T"
 	desc = "URUS12.D"
 	picture = "Crimean_school"
@@ -3977,7 +4374,7 @@ country_event = {
 ### AI Only Event for Governorate Creation ###
 
 country_event = { 
-	id = 812844
+	id = 812845
 	title = "AI ONLY Country wants to eat shit"
 	desc = "Lets get them boys"
 	picture = "Crimean_school"
@@ -4006,7 +4403,7 @@ country_event = {
 ### PLC Warning Event for RUS ####
 
 country_event = { 
-	id = 812845
+	id = 812846
 	title = "URUS13.T"
 	desc = "URUS13.D"
 	picture = "partition_of_PLC"

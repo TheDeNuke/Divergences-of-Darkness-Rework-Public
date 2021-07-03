@@ -1011,6 +1011,10 @@ political_decisions = {
 							}
 							province_id = 977
 							province_id = 1018
+							province_id = 1037
+							province_id = 1035
+							province_id = 1033
+							province_id = 2654
 						}
 					}
 				}
@@ -1026,6 +1030,10 @@ political_decisions = {
 							}
 							province_id = 977
 							province_id = 1018
+							province_id = 1037
+							province_id = 1035
+							province_id = 1033
+							province_id = 2654
 						}
 					}
 				}
@@ -1041,6 +1049,10 @@ political_decisions = {
 							}
 							province_id = 977
 							province_id = 1018
+							province_id = 1037
+							province_id = 1035
+							province_id = 1033
+							province_id = 2654
 						}
 					}
 				}
@@ -1056,6 +1068,10 @@ political_decisions = {
 							}
 							province_id = 977
 							province_id = 1018
+							province_id = 1037
+							province_id = 1035
+							province_id = 1033
+							province_id = 2654
 						}
 					}
 				}
@@ -2124,7 +2140,7 @@ political_decisions = {
 			   prestige = 10
 			   badboy = 5
 			   set_country_flag = panslavic_focus
-			   country_event = { id = 812845 days = 1 }
+			   country_event = { id = 812846 days = 1 }
 			   
 			}
 			
@@ -2223,6 +2239,64 @@ political_decisions = {
 	# Western Plan T2
 	
 	# Conquest of SAM and Lithuania Decisions is under MOD Baltic
+	
+	# The Deluge - This has a big warning sign on it saying that if PLC wins the war then it will auto-trigger the Good Sejm. AI will only do this if PLC is not allied to SCA, HUN, HUA or any German tag.
+	
+	the_western_deluge = {
+	         picture = greater_ukraine
+			
+		    potential = {
+		       tag = RUS
+			   exists = PLC
+			   has_global_flag = THE_WESTERN_BEAR
+			   has_country_flag = panslavic_focus
+			   NOT = { has_global_flag = NOBILITY_ARE_GONE }	   
+               NOT = { has_country_flag = the_western_deluge }	
+               NOT = { PLC = { has_country_flag = Sejm_1880s } }			   
+		    }
+		
+			allow = {
+			    NOT = { PLC = { is_greater_power = yes } }
+			    OR = {
+				   is_greater_power = yes
+			       is_secondary_power = yes
+				}
+				owns = 946
+			}
+		
+			effect = {
+			   badboy = 5
+	           relation = { who = PLC value = -400 }
+	           diplomatic_influence = { who = PLC value = -400 }
+			   PLC = { country_event = { id = 222338 days = 14 } }	
+               set_country_flag = the_western_deluge			   
+			}
+			
+		    ai_will_do = {
+			   factor = 1
+	              modifier = {
+	                 factor = 0
+	                 badboy = 0.75
+			      }
+	              modifier = {
+	                 factor = 0
+	                 PLC = {
+					    OR = {
+						  stronger_army_than = RUS
+					      alliance_with = GER
+						  alliance_with = CAE
+						  alliance_with = HUN
+						  alliance_with = HUA
+						  alliance_with = ROM
+						  alliance_with = SCA
+						  alliance_with = SGF
+						  alliance_with = NGF
+						  alliance_with = HLR
+						}
+				     }
+			      }
+		    }
+	}
 	
 	# Failsafe if PLC is doing well and has not dealt with Russia
 	
@@ -3491,6 +3565,45 @@ political_decisions = {
 				factor = 1
 			}
 	}
+	
+    # Formation of TSG
+
+	create_TSG_gov = {
+	         #picture = siberiatime
+			
+		    potential = {
+		       tag = RUS
+			   NOT = { exists = TSG }
+			   NOT = { 1195 = { is_core = RUS } }
+			   any_owned_province = { is_core = TSG }  
+		    }
+		
+			allow = {
+				war = no
+                owns = 1195           			
+			}
+		
+			effect = {
+	        any_owned = { 
+	           limit = { is_core = TSG }
+	           secede_province = TSG
+	        }
+			TSG = { 
+			   capital = 1195
+			   clr_country_flag = active_russian_governorate
+	           clr_country_flag = russian_integration_zero
+			   clr_country_flag = russian_integration_one
+			   clr_country_flag = russian_integration_two
+			   clr_country_flag = russian_integration_three
+ 	           remove_country_modifier = russian_governorate_modifier
+			   country_event = 812810 
+			}
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	}
 
 # Next Step: Moving the Capital. This needs Stage 2 to be completed for the respective direction of the tag.	
  
@@ -3516,7 +3629,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3525,14 +3638,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 1000 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 1000000 } }
+               limit = { owner = { money = 1000000 } }
                owner = { treasury = -1000000 }
             }			
 			capital = 994
@@ -3573,7 +3686,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 500000 }
+                     NOT = { money = 500000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3582,14 +3695,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 500000 }
+                     NOT = { money = 500000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 500 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 1000000 } }
+               limit = { owner = { money = 1000000 } }
                owner = { treasury = -1000000 }
             }			
 			1008 = {
@@ -3629,7 +3742,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3638,20 +3751,20 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 1000 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 1000000 } }
+               limit = { owner = { money = 1000000 } }
                owner = { treasury = -1000000 }
             }			
 			capital = 979
 			979 = {
 				    life_rating = 15
-				    change_province_name = "Novorossiysk" 
+				    change_province_name = "Alexandrovsk" 
 				    add_province_modifier = {
 				    	name = gateway_to_russia
 						duration = 7300
@@ -3687,7 +3800,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 2000000 }
+                     NOT = { money = 2000000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3696,14 +3809,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 2000000 }
+                     NOT = { money = 2000000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 2000 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 2000000 } }
+               limit = { owner = { money = 2000000 } }
                owner = { treasury = -2000000 }
             }			
 			capital = 1039
@@ -3744,7 +3857,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 250000 }
+                     NOT = { money = 250000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3753,14 +3866,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 250000 }
+                     NOT = { money = 250000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 250 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 250000 } }
+               limit = { owner = { money = 250000 } }
                owner = { treasury = -250000 }
             }			
 			1003 = {
@@ -3803,7 +3916,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3812,14 +3925,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 1000000 }
+                     NOT = { money = 1000000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 1000 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 1000000 } }
+               limit = { owner = { money = 1000000 } }
                owner = { treasury = -1000000 }
             }			
 			capital = 958
@@ -3861,7 +3974,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 2000000 }
+                     NOT = { money = 2000000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3870,14 +3983,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 2000000 }
+                     NOT = { money = 2000000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 2000 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 2000000 } }
+               limit = { owner = { money = 2000000 } }
                owner = { treasury = -2000000 }
             }			
 			capital = 1039
@@ -3919,7 +4032,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 50000 }
+                     NOT = { money = 50000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3928,14 +4041,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 50000 }
+                     NOT = { money = 50000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 50 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 50000 } }
+               limit = { owner = { money = 50000 } }
                owner = { treasury = -50000 }
             }			
 			set_global_flag = NOV_millenium
@@ -3967,7 +4080,7 @@ political_decisions = {
 	        random_owned = {
                limit = {
                   owner = {
-                     NOT = { treasury = 50000 }
+                     NOT = { money = 50000 }
                      check_variable = { which = owed_cash_money value = 9 }
                   }
                }
@@ -3976,14 +4089,14 @@ political_decisions = {
             random_owned = {
                 limit = {
                   owner = {
-                     NOT = { treasury = 50000 }
+                     NOT = { money = 50000 }
                      NOT = { check_variable = { which = owed_cash_money value = 1 } }
                    }
                 }
                 owner = { set_variable = { which = owed_cash_money value = 50 } }
             }
             random_owned = {
-               limit = { owner = { treasury = 50000 } }
+               limit = { owner = { money = 50000 } }
                owner = { treasury = -50000 }
             }			
 			set_global_flag = NOV_millenium
@@ -4033,7 +4146,7 @@ political_decisions = {
         allow = { war = no }
 
         effect = {
-           country_event = { id = 812842 days = 0 }
+           country_event = { id = 812843 days = 0 }
         }
 		
         ai_will_do = { factor = 0 }
@@ -4074,6 +4187,10 @@ political_decisions = {
                  NOT = { capital = 1181 }
               }	
               AND = {
+                 tag = TSG
+                 NOT = { capital = 1195 }
+              }
+              AND = {
                  tag = KUG
                  NOT = { capital = 1049 }
               }	
@@ -4106,6 +4223,7 @@ political_decisions = {
            TRG = { capital = 1041 }
            CPL = { capital = 706 }
            BLT = { capital = 354 }
+		   TSG = { capital = 1195 }
         }
 		
         ai_will_do = { factor = 1 }
@@ -4219,6 +4337,7 @@ political_decisions = {
 			  any_owned_province = { is_core = CPL }
 			  any_owned_province = { is_core = BLT }
 			  any_owned_province = { is_core = KZG }
+			  any_owned_province = { is_core = TSG }
 		   }
 		   OR = {
 		      neighbour = RUS
@@ -4233,6 +4352,7 @@ political_decisions = {
 			  neighbour = CPL
 			  neighbour = BLT
 			  neighbour = KZG
+			  neighbour = TSG
 		   }
            OR = {
               tag = LIV
@@ -4257,6 +4377,9 @@ political_decisions = {
 			  tag = ZHE
 			  tag = NOG
 			  tag = KZH
+			  tag = UZB
+			  tag = TJK
+			  tag = KYR
 		   }
 		   NOT = { has_global_flag = RUS_holding_pattern }
 		}               				 
@@ -4264,7 +4387,7 @@ political_decisions = {
         allow = { war = no }
 
         effect = {
-           RUS = { country_event = { id = 812844 days = 1 }	}
+           RUS = { country_event = { id = 812845 days = 1 }	}
 		   set_global_flag = RUS_holding_pattern
         }
 		
@@ -4445,7 +4568,6 @@ political_decisions = {
 			tag = RUS
 			has_country_flag = panslavic_focus
 			NOT = { accepted_culture = ruthenian }
-			NOT = { accepted_culture = belarusian }
 		}
 
 		allow = {
@@ -5093,39 +5215,39 @@ political_decisions = {
 		}
 	}	
 	
-	the_great_game_askhabad = {
-		picture = gtfo
-		potential = {
-			has_country_flag = siberia
-			has_country_flag = RUS_CA_CONQUEST
-			has_global_flag = hindustan_conference
-			is_greater_power = yes
-			tag = RUS
-			OR = {
-			DUR = { owns = 1204 }
-			AFG = { owns = 1204 }
-			exists = AFS
-			}
-			AFS = {
-				civilized = no
-				ai = yes
-		    }
-		}
-		
-		allow = {
-			AFS = {
-				OR = {
-					in_sphere = RUS
-					vassal_of = RUS
-				}
-			}
-		}
-		
-		effect = {
-		    AFS = { tech_school = developing_tech_school }
-			AFS = { annex_to = THIS }
-		}
-	}
+	#the_great_game_askhabad = {
+	#	picture = gtfo
+	#	potential = {
+	#		has_country_flag = siberia
+	#		has_country_flag = RUS_CA_CONQUEST
+	#		has_global_flag = hindustan_conference
+	#		is_greater_power = yes
+	#		tag = RUS
+	#		OR = {
+	#		DUR = { owns = 1204 }
+	#		AFG = { owns = 1204 }
+	#		exists = AFS
+	#		}
+	#		AFS = {
+	#			civilized = no
+	#			ai = yes
+	#	    }
+	#	}
+	#	
+	#	allow = {
+	#		AFS = {
+	#			OR = {
+	#				in_sphere = RUS
+	#				vassal_of = RUS
+	#			}
+	#		}
+	#	}
+	#	
+	#	effect = {
+	#	    AFS = { tech_school = developing_tech_school }
+	#		AFS = { annex_to = THIS }
+	#	}
+	#}
 	
 	mongolian_protectorate = {
 		potential = {
@@ -5222,7 +5344,6 @@ political_decisions = {
                 is_greater_power = yes
                 is_secondary_power = yes
             }
-            nationalism_n_imperialism = 1
 			NOG = { exists = no }
 			ZHE = { exists = no }
 			KZH = { exists = no }
@@ -5249,14 +5370,14 @@ political_decisions = {
 			NOG = { all_core = { remove_core = NOG } }
 			ZHE = { all_core = { remove_core = ZHE } }
 
-            KHI_1191 = { add_core = UZB }
-			KOK_1190 = { add_core = KYR }
-			1192 = { add_core = UZB }
+            KHI_1191 = { add_core = TSG add_core = UZB }
+			KOK_1190 = { add_core = TSG add_core = KYR }
+			1192 = { add_core = TSG add_core = UZB }
 
-			1201 = { add_core = TJK }
-			1208 = { add_core = TJK }
-			1210 = { add_core = TJK }
-			1207 = { change_province_name = "Dushanbe" add_core = TJK }
+			1201 = { add_core = TSG add_core = TJK }
+			1208 = { add_core = TSG add_core = TJK }
+			1210 = { add_core = TSG add_core = TJK }
+			1207 = { change_province_name = "Dushanbe" add_core = TSG add_core = TJK }
 
             UZB = { tech_school = developing_tech_school }
             KYR = { tech_school = developing_tech_school }

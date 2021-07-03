@@ -641,6 +641,8 @@ country_event = {
 		has_country_flag = SMO_REP
 	    has_country_flag = BLR_attempt_one 
 		any_owned_province = { is_core = BLR }
+		NOT = { has_country_flag = SMO_MON_WAIT }
+		NOT = { has_country_flag = SMO_endwar }
 		NOT = { has_global_flag = RUS_STAGE_ONE }
 	}
 	
@@ -993,7 +995,7 @@ country_event = {
 		    limit = { 
 	           culture = belarusian
 		     }
-			 reduce_pop = 0.05
+			 reduce_pop = 0.85
 		     consciousness = 3
 		     militancy = 3
 	    }
@@ -1121,7 +1123,7 @@ country_event = {
 		    limit = { 
 	           culture = belarusian
 		     }
-			 reduce_pop = 0.05
+			 reduce_pop = 0.85
 		     consciousness = 5
 		     militancy = 5
 	          }
@@ -6078,4 +6080,329 @@ country_event = {
 	}
 	set_country_flag = the_great_trial
     }
+}
+
+##########################
+#####	Zemstvo chain ####
+##########################
+
+country_event = {
+	id = 222630 	#Death of Konstantin IV because smallpox
+	title = "CRUS129.T"
+	desc = "CRUS129.D"
+    picture = "mother_anarchy"
+	
+	trigger = { 
+	tag = TVE
+	has_global_flag = MUS_TVE_WAR_END
+	government = absolute_monarchy
+	NOT = { 
+		OR = { 
+		   1020 = { owned_by = THIS } 
+		   NZH = { is_puppet = THIS }
+	    }
+    }
+	NOT = { has_country_flag = TVE_CHAIN_END }
+	NOT = { has_country_flag = Zemstvo_chain } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "CRUS129.A" 
+	set_country_flag = Zemstvo_chain 
+	add_country_modifier = { 
+	name = destitution_and_poverty 
+	duration = 2500
+	}
+	1001 = { add_province_modifier = { name = smallpox duration = 365 } }
+	any_pop = {
+	consciousness = 1 
+		}
+	}
+}
+
+country_event = {
+	id = 222631		#Zemtsvo established
+	title = "CRUS130.T"
+	desc = "CRUS130.D"
+    picture = "mother_anarchy"
+	
+	trigger = { 
+	tag = TVE
+	has_country_flag = Zemstvo_chain
+	NOT = { has_country_flag = TVE_CHAIN_END }
+	NOT = { has_country_flag = Zemstvo_established } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "CRUS130.A" 
+	set_country_flag = Zemstvo_established
+	add_country_modifier = { 
+	name = power_vacuum  duration = 2500
+		}
+	any_pop = {
+	consciousness = 1 
+	ideology = { 
+	value = liberal factor = 0.1
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 222632		#Zemtsvo established
+	title = "CRUS131.T"
+	desc = "CRUS131.D"
+    picture = "mother_anarchy"
+	
+	trigger = { 
+	tag = TVE
+	has_country_flag = Zemstvo_established
+	NOT = { has_country_flag = TVE_CHAIN_END }
+	NOT = { OR = { has_country_flag = Paul_choose_Zemstov has_country_flag = Paul_refuses_Zemtsvo } }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1
+	}
+	
+	option = { 
+	name = "CRUS131.A" 
+	set_country_flag = Paul_choose_Zemstov
+	country_event = 222639
+	ai_chance = { 
+	factor = 35
+		}
+	}
+	
+	option = { 
+	name = "CRUS131.B" 
+	set_country_flag = Paul_Rostov_Edicts
+	country_event = 222638 
+	ai_chance = { 
+	factor = 65
+		}
+	}
+	
+	
+}
+
+
+country_event = {
+	id = 222633	#Paul is not couped : Prince allows some concessions
+	title = "CRUS132.T"
+	desc = "CRUS132.D"
+    picture = "mother_anarchy"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS132.A"
+	set_country_flag = TVE_CHAIN_END
+	clr_country_flag = Zemstvo_chain
+	clr_country_flag = Zemstvo_established
+	clr_country_flag = Paul_choose_Zemstov
+	clr_country_flag = Paul_Rostov_Edicts
+	government = prussian_constitutionalism 
+	political_reform = wealth_voting 
+	political_reform = free_press
+	political_reform = yes_meeting
+	any_pop = { 
+		ideology = { 
+			value = liberal factor = 0.05
+			}
+		}
+	any_pop = { 
+	consciousness = 2 
+		}
+	scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+		}
+	} 
+}
+
+country_event = {
+	id = 222634	#Paul is couped : Dimitri takes power
+	title = "CRUS133.T"
+	desc = "CRUS133.D"
+    picture = "mother_anarchy"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS133.A"
+	set_country_flag = TVE_CHAIN_END
+	clr_country_flag = Zemstvo_chain
+	clr_country_flag = Zemstvo_established
+	clr_country_flag = Paul_choose_Zemstov
+	clr_country_flag = Paul_Rostov_Edicts
+	government = absolute_monarchy 
+	ruling_party_ideology = reactionary
+	scaled_militancy = {
+				ideology = reactionary
+				factor = -8
+		}
+	scaled_militancy = {
+				ideology = liberal
+				factor = 5
+		}
+	add_country_modifier = { 
+	name = backed_down_on_promise duration = 1200
+		}
+	} 
+}
+
+country_event = {
+	id = 222635 #Paul is couped : Republican TVE
+	title = "CRUS134.T"
+	desc = "CRUS134.D"
+    picture = "mother_anarchy"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS134.A"
+	set_country_flag = TVE_CHAIN_END
+	clr_country_flag = Zemstvo_chain
+	clr_country_flag = Zemstvo_established
+	clr_country_flag = Paul_choose_Zemstov
+	clr_country_flag = Paul_Rostov_Edicts
+	government = democracy 
+	political_reform = wealth_voting 
+	political_reform = free_press
+	political_reform = yes_meeting
+	any_pop = { 
+		ideology = { 
+			value = liberal factor = 0.05
+			}
+		}
+	scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+	scaled_militancy = {
+				ideology = liberal
+				factor = -5
+		}
+	add_country_modifier = { 
+	name = power_vacuum duration = 400
+		}
+	} 
+}
+
+country_event = {
+	id = 222636	#Paul did reforms : it failed
+	title = "CRUS135.T"
+	desc = "CRUS135.D"
+    picture = "mother_anarchy"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS135.A"
+	set_country_flag = TVE_CHAIN_END
+	clr_country_flag = Zemstvo_chain
+	clr_country_flag = Zemstvo_established
+	clr_country_flag = Paul_choose_Zemstov
+	clr_country_flag = Paul_Rostov_Edicts
+	any_pop = { 
+		ideology = { 
+			value = liberal factor = 0.05
+			}
+		}
+	scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		}
+	scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	add_country_modifier = { 
+	name = power_vacuum duration = 400
+		}
+	} 
+}
+
+country_event = {
+	id = 222637	#Paul did reforms : success!
+	title = "CRUS136.T"
+	desc = "CRUS136.D"
+    picture = "mother_anarchy"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS136.A"
+	set_country_flag = TVE_CHAIN_END
+	clr_country_flag = Zemstvo_chain
+	clr_country_flag = Zemstvo_established
+	clr_country_flag = Paul_choose_Zemstov
+	clr_country_flag = Paul_Rostov_Edicts
+	political_reform = peonage #Yeah it can screw TVE when forming MOS, that's the point
+	scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+	scaled_militancy = {
+				ideology = liberal
+				factor = -5
+		}
+	add_country_modifier = { 
+	name = success_TVE duration = 1500
+		}
+	} 
+}
+
+country_event = {
+	id = 222638	#I forgot Rostov Edicts had a ton of loc so here is the event before the two before
+	title = "CRUS137.T"
+	desc = "CRUS137.D"
+    picture = "mother_anarchy"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS137.A" 
+	random_list = {
+			70 = { 
+			country_event = { id = 222636 days = 90 }
+			}
+			30 = { 
+			country_event = { id = 222637 days = 90 }
+			}
+		}
+	} 
+}
+
+country_event = {
+	id = 222639	#Well the coup also had a ton of loc so here is another poorly planned event
+	title = "CRUS138.T"
+	desc = "CRUS138.D"
+    picture = "mother_anarchy"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "CRUS137.A" 
+	random_list = {
+			30 = { 
+			country_event = { id = 222633 days = 3 } #Coup fails
+			}
+			40 = { 
+			country_event = { id = 222634 days = 3 } #Coup succeeds
+			}
+			30 = { 
+			country_event = { id = 222635 days = 15 }
+			}
+		}
+	} 
 }

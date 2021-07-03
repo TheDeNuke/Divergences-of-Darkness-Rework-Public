@@ -1104,7 +1104,7 @@ country_event = {
 	trigger = {
     tag = BRG
 	year = 1860
-	month = 4
+	month = 8
 	has_country_flag = the_boer_warning
 	LWE = { exists = yes }
 	NOT = { has_country_flag = SAFN_break }
@@ -1381,7 +1381,7 @@ country_event = {
 	option = { 
 	name = "SAFN26.B"
 	prestige = -5
-	THIS = { end_war = BRG }
+	end_war = BRG
 	relation = { who = LWE value = -100 }
 	ai_chance = { 
 	factor = 25
@@ -1479,7 +1479,7 @@ country_event = {
 	option = { 
 	name = "SAFN29.B"
 	prestige = 10
-	THIS = { end_war = BRG }
+	end_war = BRG
 	relation = { who = LWE value = -400 }
 	leave_alliance = LWE
 	war = { 
@@ -1501,7 +1501,7 @@ country_event = {
 	option = { 
 	name = "SAFN29.C"
 	prestige = -5
-	THIS = { end_war = BRG }
+	end_war = BRG
 	relation = { who = LWE value = -100 }
 	ai_chance = { 
 	factor = 10
@@ -1714,6 +1714,9 @@ country_event = {
 	   }
 	   country_event = { id = 3332350 days = 0 }
 	}	
+	# Treaty Borders
+	SAF = { all_core = { remove_core = BTV } }
+	ENG_2087 = { remove_core = BTV  }
 	ai_chance = { 
 	factor = 80
 		}
@@ -2386,7 +2389,6 @@ country_event = {
 	clr_country_flag = BoerNHC
 	clr_global_flag = SAFFGWWhitePeace
 	set_global_flag = SAFNHConcluded
-	SAF = { all_core = { remove_core = BTV } }
 	any_country = { 
 	limit = {
 	primary_culture = boer
@@ -2396,7 +2398,19 @@ country_event = {
 	all_core = { add_core = BTV } 
 	annex_to = THIS
 	}
-    change_tag = BTV  
+    change_tag = BTV
+	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked	
+	any_country = {
+	   limit = {
+	   OR = {
+	      primary_culture = boer
+	      primary_culture = afro_south_african
+	      }
+	   }
+	   remove_country_modifier = geus_status_quo
+	   remove_country_modifier = war_justification_blocked	
+	}	
     } 	
 }
 
@@ -2440,7 +2454,6 @@ country_event = {
 	clr_global_flag = SAFFGWWhitePeace
 	clr_global_flag = BTV_conference_collapse
 	set_global_flag = SAFNHCWar
-	SAF = { all_core = { remove_core = BTV } }
 	relation = { who = LWE value = -400 }
 	relation = { who = TRN value = -400 }
 	any_country = { 
@@ -2542,6 +2555,18 @@ country_event = {
 	clr_global_flag = SAFNHCWar
 	set_global_flag = SAFNHConcluded
 	change_tag = BTV
+	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked	
+	any_country = {
+	   limit = {
+	   OR = {
+	      primary_culture = boer
+	      primary_culture = afro_south_african
+	      }
+	   }
+	   remove_country_modifier = geus_status_quo
+	   remove_country_modifier = war_justification_blocked	
+	}
 	}
 }
 
@@ -2699,8 +2724,7 @@ country_event = {
 	clr_country_flag = SAF_murder_prosp
 	set_global_flag = SAFSGW
 	SAF = { all_core = { add_core = BTV } }
-	2093 = { add_core = BTV }
-	2088 = { add_core = BTV }
+	ENG_2087 = { add_core = BTV }
 	    war = { 
 		target = BTV
 		    attacker_goal = {
@@ -2922,7 +2946,6 @@ country_event = {
 	clr_global_flag = BTV_southern_raid
 	set_global_flag = SAFSGWA
 	set_country_flag = ASGW_BRG
-	SAF = { all_core = { add_core = BTV } }
 	any_owned = {
 	   limit = { 
 	      province_id = 2096
@@ -2941,8 +2964,8 @@ country_event = {
 	   }
 	   secede_province = FROM
 	}
-	2093 = { add_core = BTV }
-	2088 = { add_core = BTV }
+	SAF = { all_core = { add_core = BTV } }
+	ENG_2087 = { add_core = BTV }
 	war = { 
 		target = FROM
 		    attacker_goal = {
@@ -2985,6 +3008,7 @@ country_event = {
 	set_global_flag = SAFSGWA
 	set_country_flag = ASGW_BRG
 	SAF = { all_core = { add_core = BTV } }
+	ENG_2087 = { add_core = BTV }
 	war = { 
 		target = FROM
 		    attacker_goal = {
@@ -3074,6 +3098,7 @@ country_event = {
 		SAF = {
 			all_core = {
 				limit = { continent = africa }
+				add_core = BTV
 				remove_core = THIS
 			}
 		}
@@ -3487,29 +3512,40 @@ country_event = {
 	NOT = { has_global_flag = GCWConcluded }
 	NOT = { has_global_flag = SAFNHConcluded }
 	OR = {
+	   AND = { 
+	      tag = BTV
+	      NOT = { exists = NFL }
+	      NOT = { exists = ORA }
+	      NOT = { exists = TRN }
+		  NOT = { exists = LWE }
+	   }
 	   AND = {
-	   tag = ORA
-	   NOT = { exists = LWE }
-	   NOT = { exists = NFL }
-	   NOT = { exists = TRN }
+	      tag = ORA
+	      NOT = { exists = LWE }
+	      NOT = { exists = NFL }
+	      NOT = { exists = TRN }
+		  NOT = { exists = BTV }
 	   }
 	   AND = { 
-	   tag = NFL 
-	   NOT = { exists = LWE }
-	   NOT = { exists = ORA }
-	   NOT = { exists = TRN }
+	      tag = NFL 
+	      NOT = { exists = LWE }
+	      NOT = { exists = ORA }
+	      NOT = { exists = TRN }
+		  NOT = { exists = BTV }
 	   }
 	   AND = { 
-	   tag = TRN
-	   NOT = { exists = LWE }
-	   NOT = { exists = ORA }
-	   NOT = { exists = NFL }
+	      tag = TRN
+	      NOT = { exists = LWE }
+	      NOT = { exists = ORA }
+	      NOT = { exists = NFL }
+		  NOT = { exists = BTV }
 	   }
 	   AND = { 
-	   tag = LWE 
-	   NOT = { exists = NFL }
-	   NOT = { exists = ORA }
-	   NOT = { exists = TRN }
+	      tag = LWE 
+	      NOT = { exists = NFL }
+	      NOT = { exists = ORA }
+	      NOT = { exists = TRN }
+		  NOT = { exists = BTV }
 	   }	   
     }	
 	}
@@ -3523,7 +3559,22 @@ country_event = {
 	prestige = 20
 	clr_global_flag = Geus_Civil_War
 	set_global_flag = GCWConcluded
+	random_owned = { 
+	limit = { owner = { NOT = { tag = BTV } } }
 	change_tag = BTV
+	}
+	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked	
+	any_country = {
+	   limit = {
+	   OR = {
+	      primary_culture = boer
+	      primary_culture = afro_south_african
+	      }
+	   }
+	   remove_country_modifier = geus_status_quo
+	   remove_country_modifier = war_justification_blocked	
+	}
 	}
 }
 
