@@ -2085,6 +2085,8 @@ country_event = {
 	prestige = 5
 	relation = { who = SCA value = -400 }
 	diplomatic_influence = { who = SCA value = -400 }	
+    relation = { who = PSV value = -400 }
+    diplomatic_influence = { who = PSV value = -400 }	
 	country_event = { id = 191966 days = 3 }
 	ai_chance = {
 	factor = 40
@@ -2156,12 +2158,13 @@ country_event = {
     trigger = {	
         tag = SCA	
 		war = no
-		NOT = { exists = PSV }	
+		NOT = { exists = PSV }
+        NOT = { PSV = { war_with = RUS } }			
 		has_global_flag = THE_PSKOV_WAR		
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 7
 	}
 
 	option = {
@@ -2191,11 +2194,12 @@ country_event = {
         tag = SCA	
 		war = no
 		exists = PSV
+		NOT = { PSV = { war_with = RUS } }	
 		has_global_flag = THE_PSKOV_WAR		
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 7
 	}
 
 	option = {
@@ -2285,6 +2289,8 @@ country_event = {
 
 	option = {
 	name = "SCAFIN55.A"
+	relation = { who = ING value = -400 }
+    diplomatic_influence = { who = ING value = -400 }
 	relation = { who = SCA value = -10 }
 	diplomatic_influence = { who = SCA value = -10 }		
 	SCA = { country_event = { id = 191971 days = 3 } }
@@ -2300,7 +2306,12 @@ country_event = {
 	option = {
 	name = "SCAFIN55.B"
 	prestige = 5
+	relation = { who = ING value = -400 }
+    diplomatic_influence = { who = ING value = -400 }
     SCA = {	
+	   release_vassal = ING
+	   relation = { who = ING value = 400 }
+	   diplomatic_influence = { who = ING value = 400 }
 	   relation = { who = RUS value = -400 }
 	   diplomatic_influence = { who = RUS value = -400 }
   	   any_owned = { 
@@ -2374,8 +2385,11 @@ country_event = {
 	}
 
 	option = {
-	name = "SCAFIN56.B"
+	name = "SCAFIN56.B"	
 	prestige = 5
+	release_vassal = ING
+	relation = { who = ING value = 400 }
+	diplomatic_influence = { who = ING value = 400 }
 	relation = { who = SCA value = -10 }
 	diplomatic_influence = { who = SCA value = -10 }	
   	any_owned = { 
@@ -2407,6 +2421,8 @@ country_event = {
 
 	option = {
 	name = "SCAFIN57.A"
+	relation = { who = ING value = -400 }
+    diplomatic_influence = { who = ING value = -400 }
 	relation = { who = SCA value = 50 }
 	diplomatic_influence = { who = SCA value = 50 }	
 	SCA = { country_event = { id = 191973 days = 3 } }
@@ -2422,11 +2438,17 @@ country_event = {
     picture = "ambush_army"
 
 	is_triggered_only = yes
+	
+	immediate = {
+	   release_vassal = ING
+	}
 
 	option = {
 	name = "SCAFIN58.A"
 	relation = { who = RUS value = -400 }
 	diplomatic_influence = { who = RUS value = -400 }	
+	relation = { who = ING value = 400 }
+	diplomatic_influence = { who = ING value = 400 }	
 	RUS = { country_event = { id = 191974 days = 3 } }
 	}
 }
@@ -2446,6 +2468,16 @@ country_event = {
 	option = {
 	name = "SCAFIN74.A"
 	    set_global_flag = THE_INGRIAN_WAR
+	    SCA = {
+  	    any_owned = { 
+	      limit = { province_id = 1006 }
+	      secede_province = ING
+	    }
+  	    any_owned = { 
+	      limit = { province_id = 997 }
+	      secede_province = ING
+	    }
+	    }
 	    ING = { add_country_modifier = { name = taiping_draft duration = 720 } }
 	    war = {
 			target = ING
@@ -2472,11 +2504,12 @@ country_event = {
         tag = SCA	
 		war = no
 		NOT = { exists = ING }	
+		NOT = { ING = { war_with = RUS } }	
 		has_global_flag = THE_INGRIAN_WAR	
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 7
 	}
 
 	option = {
@@ -2507,11 +2540,16 @@ country_event = {
         tag = SCA	
 		war = no
 		exists = ING
+		NOT = { ING = { war_with = RUS } }		
 		has_global_flag = THE_INGRIAN_WAR	
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 7
+	}
+	
+	immediate = {
+	   create_vassal = ING   
 	}
 
 	option = {
@@ -2544,6 +2582,6 @@ country_event = {
 	1006 = { add_core = ING remove_core = PSV remove_core = RUS } 
     ING = {
 	any_owned = { add_province_modifier = { name = ingrian_integration duration = 36500 } }
-	}    	
+	} 	
 	}
 }
