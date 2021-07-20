@@ -2700,7 +2700,14 @@ country_event = {
 	    exists = yes
         tag = MUS
 		war = no
-		owns = 1020
+		NOT = { TVE = { owns = 1025 } }
+		OR = {
+		   owns = 1020
+		   AND = {
+		     truce_with = RYA
+			 owns = 1025
+           }
+		}
 		has_global_flag = MUS_TVE_WAR
 		NOT = { has_global_flag = MUS_TVE_WAR_END }
 	}
@@ -2713,8 +2720,22 @@ country_event = {
 		name = "CRUS62.A"
 		clr_global_flag = MUS_TVE_WAR
 		set_global_flag = MUS_TVE_WAR_END
+		any_owned = {
+		   limit = {
+		      limit = { is_core = RYA }
+			  secede_province = RYA
+	       }
+		}
+		TVE = {
+		prestige = -20
+		any_owned = {
+		   limit = {
+		      limit = { is_core = NZH }
+			  secede_province = MUS
+	       }
+		}
+        }					  
 		prestige = 20	
-		TVE = { prestige = -20 }
 		NZH = { all_core = { remove_core = TVE } all_core = { remove_core = NZH } }
 		1022 = { add_core = TVE }
     }
@@ -2732,7 +2753,14 @@ country_event = {
 	    exists = yes
         tag = TVE
 		war = no
-		owns = 1020
+		NOT = { MUS = { owns = 1025 } }
+		OR = {
+		   owns = 1020
+		   AND = {
+		     truce_with = RYA
+			 owns = 1025
+           }
+		}
 		has_global_flag = MUS_TVE_WAR
 		NOT = { has_global_flag = MUS_TVE_WAR_END }
 	}
@@ -2745,8 +2773,22 @@ country_event = {
 		name = "CRUS63.A"
 		clr_global_flag = MUS_TVE_WAR
 		set_global_flag = MUS_TVE_WAR_END
+		any_owned = {
+		   limit = {
+		      limit = { is_core = RYA }
+			  secede_province = RYA
+	       }
+		}
+		MUS = {
+		prestige = -20
+		any_owned = {
+		   limit = {
+		      limit = { is_core = NZH }
+			  secede_province = TVE
+	       }
+		}
+        }
 		prestige = 20	
-		MUS = { prestige = -20 }
 		NZH = { all_core = { remove_core = MUS } all_core = { remove_core = NZH } }
     }
 }
@@ -3480,6 +3522,7 @@ country_event = {
 		   exists = NZH
 		   exists = SMO
 		}
+		NOT = { is_vassal = yes }
 	}
 	
 	mean_time_to_happen = {
@@ -4451,7 +4494,7 @@ country_event = {
 	remove_country_modifier = neutrality
 	remove_country_modifier = unstable_confederation
 	remove_country_modifier = economic_reform_NOV
-	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED country_event = { id = 222590 days = 0 } }
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED set_country_flag = fucking_wait_RUS country_event = { id = 222590 days = 0 } }
 	ai_chance = { 
 	   factor = 50
 	   }
@@ -4524,7 +4567,7 @@ country_event = {
 	name = "CRUS91.A"
 	relation = { who = FROM value = 400 }
 	diplomatic_influence = { who = FROM value = 400 }
-	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG set_country_flag = GO_NORTH_ENDED }
+	FROM = { inherit = THIS clr_country_flag = GO_NORTH_TAG clr_country_flag = fucking_wait_RUS set_country_flag = GO_NORTH_ENDED }
 	ai_chance = { 
 	   factor = 50
 	   }
@@ -4541,6 +4584,7 @@ country_event = {
 	}
 	relation = { who = FROM value = -400 }
 	diplomatic_influence = { who = FROM value = -400 }
+	FROM = { clr_country_flag = fucking_wait_RUS }
 	# Nobody is going to protect some siberian substate against Russia
 	any_country = { 
 		limit = {
@@ -5715,7 +5759,7 @@ country_event = {
 		war = no
 		has_global_flag = GO_SOUTH_YOUNG_MAN
         has_global_flag = panrussian_NOV	
-		NOT = { has_country_flag = panrussian_NOV_warning }
+		NOT = { has_global_flag = panrussian_NOV_warning }
 	}
 	
 	mean_time_to_happen = {
@@ -5725,7 +5769,7 @@ country_event = {
 	option = {
 	name = "CRUS124.A"
 	prestige = 1
-	set_country_flag = panrussian_NOV_warning
+	set_global_flag = panrussian_NOV_warning
  	any_country = {
 		limit = { 
 		    exists = yes
@@ -5761,7 +5805,7 @@ country_event = {
 	option = {
 	name = "CRUS124.B"
 	prestige = -1
-	set_country_flag = panrussian_NOV_warning
+	set_global_flag = panrussian_NOV_warning
 	ai_chance = { 
 	   factor = 0
 	   }	

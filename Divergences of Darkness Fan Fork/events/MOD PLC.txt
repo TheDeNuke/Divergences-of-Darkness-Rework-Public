@@ -567,6 +567,9 @@ country_event = {
 	option = { 
 	name = "PLC22.A"
 	set_country_flag = march_PRU
+	leave_alliance = PRU
+	relation = { who = PRU value = -400 }
+	diplomatic_influence = { who = PRU value = -400 }	
 	release_vassal = PRU
 	PRU = {
 	any_owned = { 
@@ -575,7 +578,6 @@ country_event = {
 			}
 		remove_core = PLC
     }
-	leave_alliance = PLC
 	relation = { who = PLC value = -400 }
 	diplomatic_influence = { who = PLC value = -400 }	
 	}
@@ -601,6 +603,9 @@ country_event = {
 	name = "PLC13.A"
 	set_country_flag = march_RUT
 	set_country_flag = march_PRU
+	leave_alliance = PRU
+	relation = { who = PRU value = -400 }
+	diplomatic_influence = { who = PRU value = -400 }	
 	release_vassal = KIE
 	KIE = {
 	any_owned = { 
@@ -609,7 +614,6 @@ country_event = {
 			}
 		remove_core = PLC
 	}
-	leave_alliance = PLC
 	relation = { who = PLC value = -400 }
 	diplomatic_influence = { who = PLC value = -400 }	
 	}
@@ -659,16 +663,24 @@ country_event = {
 			NOT = { exists = CAE }
 			NOT = { exists = HLR }
 			}
-    country_event = 222438 
+    country_event = { id = 222438 days = 3 }
 	} 
+	any_country = {
+			limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			NOT = { exists = HLR }
+			}
+    country_event = { id = 222438 days = 3 } 
+	}
 	any_country = {
 			limit = { 
 			tag = HLR
 			NOT = { exists = BOH }
 			NOT = { exists = CAE }
 			}
-    country_event = 222438 
-		}
+        country_event = { id = 222438 days = 3 }
+		}   
 	}
 }
 	
@@ -745,6 +757,7 @@ country_event = {
 	name = "PLC18.A"
 	prestige = 40	
 	set_country_flag = treaty_hadiach
+	set_country_flag = lublin_new
 	add_accepted_culture = lithuanian
 	add_accepted_culture = ruthenian
 	add_accepted_culture = belarusian
@@ -765,6 +778,7 @@ country_event = {
 	PLC = { exists = yes war = yes }
 	OR = { 
 	   BOH = { exists = yes war = yes }
+	   CAE = { exists = yes war = yes }
 	   HLR = { exists = yes war = yes }
     }
 	NOT = { has_country_flag = SCA_intervened_early_liberal }
@@ -893,6 +907,8 @@ country_event = {
 	option = { 
 	name = "PLC21.A"
 	end_war = BOH
+	end_war = CAE
+	end_war = HLR
 	end_war = SCA
 	political_reform = unitary
 	clr_country_flag = custom_treaty_loser
@@ -4737,6 +4753,13 @@ country_event = {
 	   NOT = { has_country_flag = lublin_new }
 	   NOT = { is_greater_power = yes } 
 	}
+	OR = { 
+	   BOH = { owns = 549 }
+	   exists = HLR
+	   exists = CAE
+	   exists = GER
+	   exists = NGF
+	}
 	NOT = { exists = KHK }
 	NOT = { exists = CSK }
 	NOT = { has_global_flag = NOBILITY_ARE_GONE }
@@ -4881,8 +4904,9 @@ country_event = {
 	
 	trigger = { 
 	tag = KIE
-	has_global_flag = first_partition_start
 	RUS = { war = no }
+	has_global_flag = first_partition_start
+	NOT = { has_country_flag = FPS_KIE }	
 	}
 	
 	mean_time_to_happen = { 
@@ -4891,6 +4915,7 @@ country_event = {
 	
 	option = { 
 	name = "222420.A"
+	set_country_flag = FPS_KIE
 	clr_country_flag = kiev_accepts_part
 	add_country_modifier = { name = taiping_draft duration = 1200 } 
 	PLC = { 
@@ -6162,6 +6187,18 @@ country_event = {
 	set_global_flag = final_partition
 	prestige = 25
 	POL = {	
+	any_owned = { 
+	   limit = { is_core = BLR }
+	   secede_province = RUS
+	}
+	any_owned = { 
+	   limit = { is_core = UKR }
+	   secede_province = RUS
+	}
+	any_owned = { 
+	   limit = { is_core = SAM }
+	   secede_province = RUS
+	}
     any_owned = { 
 	   limit = { is_core = POL }
 	   add_core = CPL
