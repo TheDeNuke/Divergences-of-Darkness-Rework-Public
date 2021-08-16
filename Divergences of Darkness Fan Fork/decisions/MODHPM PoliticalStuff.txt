@@ -1026,12 +1026,60 @@ political_decisions = {
 		}
 	}
 	
+	the_show_trials_early = {
+		picture = state_of_emergency
+		potential = {
+			exists = yes
+			has_country_flag = show_trials_possible
+		    NOT = { is_ideology_enabled = communist }
+		    NOT = { is_ideology_enabled = fascist }
+		}
+		
+		allow = {
+		   OR = {
+			  government = democracy
+			  government = parliamentary_republic
+			  government = socialist_republic
+           } 
+           NOT = { ruling_party_ideology = reactionary }           			  
+        }           			
+		
+		effect = {	
+			clr_country_flag = show_trials_possible
+			set_country_flag = no_maelstrom_for_now 
+			plurality = 50
+			any_pop = { limit = { pop_majority_ideology = reactionary } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
+			any_pop = { 
+				limit = { social_movement = yes political_movement = yes } 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }
+			}
+			any_pop = {
+				    limit = {
+					    OR = { type = soldiers type = officers }
+					    pop_majority_ideology = reactionary
+					}
+					militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                    random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }									
+			}			
+			any_pop = { ideology = { factor = -0.5 value = reactionary } }
+			clr_country_flag = charismatic_leader_reactionary
+			remove_country_modifier = charismatic_leader_reactionary		
+            any_pop = { militancy = -5 }          			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	the_show_trials = {
 		picture = state_of_emergency
 		potential = {
 			exists = yes
 			has_country_flag = show_trials_possible
-			NOT = { mass_politics = 1 }
+		    is_ideology_enabled = communist
+		    NOT = { is_ideology_enabled = fascist }
 		}
 		
 		allow = {
@@ -1043,7 +1091,6 @@ political_decisions = {
            NOT = { 
 		      OR = {
 		         ruling_party_ideology = communist
-                 ruling_party_ideology = fascist
                  ruling_party_ideology = reactionary
               }
            }			  
@@ -1052,8 +1099,9 @@ political_decisions = {
 		effect = {	
 			clr_country_flag = show_trials_possible
 			set_country_flag = no_maelstrom_for_now 
+			set_country_flag = communist_purge
 			plurality = 50
-			any_pop = { limit = { OR = { pop_majority_ideology = fascist pop_majority_ideology = communist pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
+			any_pop = { limit = { OR = { pop_majority_ideology = communist pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
 			any_pop = { 
 				limit = { social_movement = yes political_movement = yes } 
 				militancy = -7
@@ -1062,20 +1110,21 @@ political_decisions = {
 			any_pop = {
 				    limit = {
 					    OR = { type = soldiers type = officers }
-					    OR = { pop_majority_ideology = fascist pop_majority_ideology = communist pop_majority_ideology = reactionary }
+					    OR = { pop_majority_ideology = communist pop_majority_ideology = reactionary }
 					}
 					militancy = -9 ideology = { factor = 0.35 value = conservative }	
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }									
 			}			
-			any_pop = { ideology = { factor = -0.3 value = fascist } }
-			any_pop = { ideology = { factor = -0.3 value = communist } }
-			any_pop = { ideology = { factor = -0.3 value = reactionary } }
-			clr_country_flag = charismatic_leader_fascist
-			remove_country_modifier = charismatic_leader_fascist
+			any_pop = { ideology = { factor = -0.5 value = communist } }
+			any_pop = { ideology = { factor = -0.5 value = reactionary } }
 			clr_country_flag = charismatic_leader_reactionary
 			remove_country_modifier = charismatic_leader_reactionary	
 			clr_country_flag = charismatic_leader_communist
 			remove_country_modifier = charismatic_leader_communist	
+            add_country_modifier = {
+                name = the_red_scare
+                duration = 3650
+            }
             any_pop = { militancy = -5 }          			
 		}
 		
@@ -1089,7 +1138,8 @@ political_decisions = {
 		potential = {
 			exists = yes
 			has_country_flag = show_trials_possible
-			mass_politics = 1
+		    is_ideology_enabled = communist
+		    is_ideology_enabled = fascist
 		}
 		
 		allow = {
@@ -1127,9 +1177,9 @@ political_decisions = {
 					militancy = -9 ideology = { factor = 0.35 value = conservative }	
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }									
 			}			
-			any_pop = { ideology = { factor = -0.3 value = fascist } }
-			any_pop = { ideology = { factor = -0.3 value = communist } }
-			any_pop = { ideology = { factor = -0.3 value = reactionary } }
+			any_pop = { ideology = { factor = -0.5 value = fascist } }
+			any_pop = { ideology = { factor = -0.5 value = communist } }
+			any_pop = { ideology = { factor = -0.5 value = reactionary } }
 			clr_country_flag = charismatic_leader_fascist
 			remove_country_modifier = charismatic_leader_fascist
 			clr_country_flag = charismatic_leader_reactionary
