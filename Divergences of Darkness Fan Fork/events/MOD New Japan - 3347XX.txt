@@ -1,0 +1,6299 @@
+###################################### NEW JAPAN EVENTS #######################################################
+
+### Unsheathing your swords glistening like a gem, Go forth, resolved to die! ###
+
+# Japanese Introduction Event
+
+country_event = {
+	id = 334700
+	title = "NJAP1.T"
+	desc = "NJAP1.D"
+	picture = "sunset"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP1.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 1 }
+	    set_variable = {
+		   which = JAP_reformism
+		   value = 4
+	    }
+	}
+}
+
+# Return of the Admiral
+
+country_event = {
+	id = 334701
+	title = "NJAP2.T"
+	desc = "NJAP2.D"
+	picture = "japanese_warship"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1836
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+
+	option = {
+		name = "NJAP2.A"
+		prestige = -5
+		set_country_flag = JAP_admiral_returns    
+	}
+}
+
+# The Regent rants about some shit in regards to honor and glory or whatever.
+
+country_event = {
+	id = 334702
+	title = "NJAP3.T"
+	desc = "NJAP3.D"
+	picture = "military_question"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = JAP_admiral_returns 
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NJAP3.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 1 }
+		any_pop = { limit = { pop_type = aristocrats } consciousness = 3 }		
+	    clr_country_flag = JAP_admiral_returns
+        set_country_flag = prepare_daiko_jan		
+	}
+}
+
+# DAIKO-JAN - THE FIRST CHOICE
+
+country_event = {
+	id = 334703
+	title = "NJAP4.T"
+	desc = "NJAP4.D"
+	picture = "kyotopalace_gate"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1837
+		has_country_flag = prepare_daiko_jan
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+		   modifier = {
+		      factor = 0.1
+			  year = 1843
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1845
+		   }
+	}
+
+	option = {
+		name = "NJAP4.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 4 }
+		any_pop = { limit = { pop_type = officers } militancy = 4 ideology = { value = reactionary factor = 0.4 } }		
+		any_pop = { limit = { pop_type = soldiers } militancy = 2 ideology = { value = reactionary factor = 0.2 } }		
+		clr_country_flag = prepare_daiko_jan
+		set_global_flag = samurai_revolting
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }
+		remove_country_modifier = samurai_weak
+		add_country_modifier = {
+			name = samurai_revolting
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = samurai_weak
+			add_country_modifier = {
+				name = samurai_revolting
+				duration = -1
+			}
+		}
+		set_country_flag = the_first_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	option = {
+		name = "NJAP4.B"
+		clr_country_flag = prepare_daiko_jan
+        any_pop = { limit = { pop_type = aristocrats } militancy = 1 }	
+        set_country_flag = the_first_seal	
+        set_global_flag = samurai_weak
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	option = {
+		name = "NJAP4.C"
+		clr_country_flag = prepare_daiko_jan	
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+		remove_country_modifier = samurai_weak
+		add_country_modifier = {
+			name = samurai_strong
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = samurai_weak
+			add_country_modifier = {
+				name = samurai_strong
+				duration = -1
+			}
+		}
+		set_country_flag = the_first_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+# THE OSAKA INCIDENT - Sonno Joi
+
+country_event = {
+	id = 334704
+	title = "NJAP5.T"
+	desc = "NJAP5.D"
+	picture = "osaka_incident"
+	
+	fire_only_once = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1845
+		NOT = { has_country_flag = osaka_incident }
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+		   modifier = {
+		      factor = 0.1
+			  year = 1849
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1850
+		   }
+	}
+
+	option = {
+		name = "NJAP5.A"
+		set_country_flag = osaka_incident
+		relation = { who = DUA value = -50 }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = liberal
+	       }
+	    }	
+        country_event = { id = 334705 days = 31 }	
+	}
+}
+
+# What do do about the Murderers?
+
+country_event = {
+	id = 334705
+	title = "NJAP6.T"
+	desc = "NJAP6.D"
+	picture = "crime_punishment"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP6.A"
+		prestige = -1
+		relation = { who = DUA value = 50 }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = -2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -2
+			   ideology = liberal
+	       }
+	    }
+        country_event = { id = 334706 days = 31 }			
+	}
+	
+	option = {
+		name = "NJAP6.B"
+		prestige = 1
+		relation = { who = DUA value = 50 }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = -2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -2
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	    }
+        country_event = { id = 334706 days = 31 }		
+	}
+}
+
+# The Limits of Kaikoku - THE SECOND CHOICE
+
+country_event = {
+	id = 334706
+	title = "NJAP7.T"
+	desc = "NJAP7.D"
+	picture = "kyotopalace_gate"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP7.A"
+		prestige = -10
+		set_country_flag = kaikoku
+		any_pop = { limit = { pop_type = artisans } militancy = 2 ideology = { value = reactionary factor = 0.2 } }			
+		political_reform = open_borders
+		money = 10000
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }
+		remove_country_modifier = kaikoku
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku
+		}
+		any_country = {
+			limit = {
+				is_greater_power = yes
+			}
+			relation = { who = THIS value = 50 }
+		}
+		set_country_flag = the_second_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	option = {
+		name = "NJAP7.B"
+		set_country_flag = kaikoku
+		money = 5000
+        any_pop = { limit = { pop_type = aristocrats } militancy = 1 }	
+        set_country_flag = the_second_seal		
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	option = {
+		name = "NJAP7.C"
+		prestige = 10
+		money = -10000
+		set_country_flag = kaikoku
+		any_pop = { limit = { pop_type = artisans } militancy = -2 ideology = { value = conservative factor = 0.2 } }
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+		remove_country_modifier = kaikoku
+		add_country_modifier = {
+			name = kaikoku_reversed
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku
+			add_country_modifier = {
+				name = kaikoku_reversed
+				duration = -1
+			}
+		}
+		any_country = {
+			limit = {
+				is_greater_power = yes
+			}
+			relation = { who = THIS value = -100 }
+		}
+		set_country_flag = the_second_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+# The Place of Christanity in Japan
+
+country_event = {
+	id = 334707
+	title = "NJAP8.T"
+	desc = "NJAP8.D"
+	picture = "japanese_missionaries"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = kaikoku
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 6
+		   modifier = {
+		      factor = 0.1
+			  year = 1849
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1850
+		   }
+	}
+
+	option = {
+		name = "NJAP8.A"
+		clr_country_flag = kaikoku
+        set_country_flag = another_japanese_incident		
+	}
+}
+
+# Hiroshima or Sadao Incident
+
+country_event = {
+	id = 334708
+	title = "NJAP9.T"
+	desc = "NJAP9.D"
+	picture = "sadao_incident"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = another_japanese_incident
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NJAP9.A"
+		clr_country_flag = another_japanese_incident
+		prestige = -5
+		relation = { who = SPA value = -50 }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = -2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -2
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	    }
+        country_event = { id = 334709 days = 31 }	
+	}
+}
+
+# Religion in the Empire of Japan - THE THIRD CHOICE
+
+country_event = {
+	id = 334709
+	title = "NJAP10.T"
+	desc = "NJAP10.D"
+	picture = "kyotopalace_gate"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP10.A"
+		prestige = -15				
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }	
+		remove_country_modifier = shinto_religion
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = shinto_religion
+		}
+		any_country = {
+			limit = {
+				is_greater_power = yes
+			}
+			relation = { who = THIS value = 50 }
+		}
+	    any_pop = {
+		ideology = {
+			value = liberal
+			factor = 0.1
+		    }
+	    }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = -2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -2
+			   ideology = liberal
+	       }		   
+	    }
+		any_pop = { limit = { pop_type = clergymen religion = shinto } militancy = 8 ideology = { value = reactionary factor = 0.5 } }
+		any_pop = { limit = { NOT = { religion = shinto } } militancy = -10 }
+		set_country_flag = the_third_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	option = {
+		name = "NJAP10.B"
+        any_pop = { limit = { pop_type = aristocrats } militancy = 1 }	
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.05
+		    }
+		ideology = {
+			value = liberal
+			factor = 0.05
+		    }
+	    }	
+        set_country_flag = the_third_seal		
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	option = {
+		name = "NJAP10.C"
+		prestige = 15
+		set_country_flag = god_emperor
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+		remove_country_modifier = shinto_religion
+		add_country_modifier = {
+			name = emperor_cult
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = shinto_religion
+			add_country_modifier = {
+				name = emperor_cult
+				duration = -1
+			}
+		}
+		any_country = {
+			limit = {
+				is_greater_power = yes
+			}
+			relation = { who = THIS value = -100 }
+		}
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.1
+		    }
+	    }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = -8
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -8
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 4
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 4
+			   ideology = liberal
+	       }
+	    }
+		any_pop = { limit = { pop_type = clergymen NOT = { religion = shinto } } reduce_pop = 0.01 }
+		any_pop = { limit = { NOT = { religion = shinto } } militancy = 5 reduce_pop = 0.7 }
+		any_pop = { limit = { pop_type = clergymen religion = shinto } militancy = -8 ideology = { value = reactionary factor = 0.5 } }	
+		set_country_flag = the_third_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+# Education Reforms in Japan
+
+country_event = {
+	id = 334710
+	title = "NJAP11.T"
+	desc = "NJAP11.D"
+	picture = "temple_school"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1850
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 12
+		   modifier = {
+		      factor = 0.1
+			  year = 1854
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1855
+		   }
+	}
+
+	option = {
+		name = "NJAP11.A"
+		country_event = { id = 334711 days = 31 }	
+	}
+}
+
+# The Fukuzawa Mission
+
+country_event = {
+	id = 334711
+	title = "NJAP12.T"
+	desc = "NJAP12.D"
+	picture = "fukuzawa_mission"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP12.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 1 }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	    }
+		country_event = { id = 334712 days = 31 }	
+	}
+}
+
+# The Education of the Imperial Heir - THE FOURTH CHOICE
+
+country_event = {
+	id = 334712
+	title = "NJAP13.T"
+	desc = "NJAP13.D"
+	picture = "kyotopalace_gate"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP13.A"
+		prestige = -5
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }
+		activate_technology = malthusian_thought
+		activate_technology = positivism
+		money = -10000
+		any_pop = { limit = { pop_type = aristocrats } militancy = 3 ideology = { value = reactionary factor = 0.2 } }
+		any_country = {
+			limit = {
+				is_greater_power = yes
+			}
+			relation = { who = THIS value = 10 }
+		}
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = -3
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -3
+			   ideology = liberal
+	       }
+	    }	 
+        set_country_flag = the_fourth_seal		
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	option = {
+		name = "NJAP13.B"
+		activate_technology = malthusian_thought
+		money = -1000
+        any_pop = { limit = { pop_type = aristocrats } militancy = 1 ideology = { value = reactionary factor = 0.1 } }		
+		set_country_flag = the_fourth_seal	
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	option = {
+		name = "NJAP13.C"
+		prestige = 5
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = -8
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -8
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 4
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 4
+			   ideology = liberal
+	       }
+	    }
+		set_country_flag = the_fourth_seal	
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+# The Decline of the Guilds
+
+country_event = {
+	id = 334713
+	title = "NJAP14.T"
+	desc = "NJAP14.D"
+	picture = "japanese_waterfront"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1855
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 6
+		   modifier = {
+		      factor = 0.1
+			  year = 1858
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1859
+		   }
+	}
+
+	option = {
+		name = "NJAP14.A"
+		money = -10000
+		any_pop = { limit = { pop_type = aristocrats } militancy = 3 }
+		remove_country_modifier = recession
+		add_country_modifier = {
+			name = recession
+			duration = -1
+		}	
+        country_event = { id = 334714 days = 31 }		
+	}
+}
+
+# Recently published book on trade comes to the limelight during Recession
+
+country_event = {
+	id = 334714
+	title = "NJAP15.T"
+	desc = "NJAP15.D"
+	picture = "mizuno_heihachiro"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP15.A"
+	    any_pop = {
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = liberal
+	       }
+	    }
+        country_event = { id = 334715 days = 31 }			
+	}
+}
+
+# Local Businessman inspired by book opens bank in Osaka in defence of the Guilds. Guilds continued existence is questioned.
+
+country_event = {
+	id = 334715
+	title = "NJAP16.T"
+	desc = "NJAP16.D"
+	picture = "osaka_bank"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP16.A"
+	    money = 10000
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	    }
+        country_event = { id = 334716 days = 31 }		
+	}
+}
+
+# The Future of the Guilds - THE FIFTH CHOICE
+
+country_event = {
+	id = 334716
+	title = "NJAP17.T"
+	desc = "NJAP17.D"
+	picture = "kyotopalace_gate"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP17.A"
+		prestige = -10
+        money = 100000
+        remove_country_modifier = recession		
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }	
+		remove_country_modifier = imperial_guilds_weak
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = imperial_guilds_weak
+		}
+		any_pop = { limit = { pop_type = artisans } militancy = 5 ideology = { value = reactionary factor = 0.2 } }
+		set_country_flag = the_fifth_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	option = {
+		name = "NJAP17.B"
+        any_pop = { limit = { pop_type = aristocrats } militancy = 3 }	
+		any_pop = { limit = { pop_type = artisans } militancy = -1 ideology = { value = conservative factor = 0.2 } }
+		money = 10000
+		remove_country_modifier = recession	
+		add_country_modifier = {
+			name = recession
+			duration = 1825
+		}	
+		set_country_flag = the_fifth_seal
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	option = {
+		name = "NJAP17.C"
+		prestige = 10
+		money = -10000
+		remove_country_modifier = recession	
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+		remove_country_modifier = imperial_guilds_weak
+		add_country_modifier = {
+			name = imperial_guilds_strong
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = imperial_guilds_weak
+			add_country_modifier = {
+				name = imperial_guilds_strong
+				duration = -1
+			}
+		}
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	    } 
+		any_pop = { limit = { pop_type = artisans } militancy = -5 ideology = { value = reactionary factor = 0.2 } }
+		set_country_flag = the_fifth_seal
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+##### The Emperor is Dying #####
+
+country_event = {
+	id = 334717
+	title = "NJAP18.T"
+	desc = "NJAP18.D"
+	picture = "sunset"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1860
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 31
+		   modifier = {
+		      factor = 0.01
+			  year = 1861
+		   }
+	}
+
+	option = {
+		name = "NJAP18.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 2 }		
+        set_country_flag = its_going_to_leak		
+	}
+}
+
+### The fact that the emperor is on his last legs is leaked and thus Freedom and People's Rights Movement is founded ###
+
+country_event = {
+	id = 334718
+	title = "NJAP19.T"
+	desc = "NJAP19.D"
+	picture = "scholars"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = its_going_to_leak
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+		   modifier = {
+		      factor = 0.01
+			  year = 1861
+		   }
+	}
+
+	option = {
+		name = "NJAP18.A"
+		clr_country_flag = its_going_to_leak
+		add_country_modifier = {
+			name = liberal_reaction
+			duration = -1
+		}
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = anarcho_liberal
+	       }
+	    }	
+        country_event = { id = 334719 days = 31 }			
+	}
+}
+
+# The Kimimasa Draft
+
+country_event = {
+	id = 334719
+	title = "NJAP20.T"
+	desc = "NJAP20.D"
+	picture = "kimimasa_draft"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP20.A"
+		clr_country_flag = its_going_to_leak
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = anarcho_liberal
+	       }
+	    }	
+        country_event = { id = 334720 days = 31 }		
+	}
+}
+
+#The Obama Uprising
+
+country_event = {
+	id = 334720
+	title = "NJAP21.T"
+	desc = "NJAP21.D"
+	picture = "thanks_obama"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP21.A"
+		prestige = -5
+		1647 = {	
+		any_pop = {
+		  reduce_pop = 0.95
+		}
+		add_province_modifier = {
+			name = loss_of_support
+			duration = 365
+		}
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+		}
+		add_province_modifier = {
+			name = peasant_revolt
+			duration = 31
+		}
+		}
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = anarcho_liberal
+	       }
+	    }
+        country_event = { id = 334721 days = 31 }		
+	}
+}
+
+# The Purge - THE SIXTH CHOICE
+
+country_event = {
+	id = 334721
+	title = "NJAP22.T"
+	desc = "NJAP22.D"
+	picture = "kyotopalace_gate"
+
+	is_triggered_only = yes
+	
+	# No Purge
+
+	option = {
+		name = "NJAP22.A"
+		prestige = -20
+	    change_variable = {
+		   which = JAP_reformism
+		   value = 1
+	    }	
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 4
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 4
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+	       }
+		}
+		set_country_flag = the_emperor_can_die
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+	
+	# Arrests and Executions focused on the military
+	
+	option = {
+		name = "NJAP22.B"
+        prestige = -10
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }						
+		}
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = anarcho_liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }						
+		}		
+		any_pop = { ideology = { factor = -0.05 value = liberal } }
+		any_pop = { ideology = { factor = -0.10 value = anarcho_liberal } }
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 3
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 3
+			   ideology = anarcho_liberal
+	       }
+		}
+		set_country_flag = the_emperor_can_die
+	    ai_chance = {
+	       factor = 40
+	    }
+	}
+	
+	# Total Purge
+	
+	option = {
+		name = "NJAP22.C"
+		set_global_flag = the_liberals_are_pissed
+		prestige = 10
+		badboy = 2
+	    change_variable = {
+		   which = JAP_reformism
+		   value = -1
+	    }
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = anarcho_liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.65 } 50 = { reduce_pop = 0.45 } }							
+		}		
+		any_pop = { 
+				limit = {
+					OR = {
+						social_movement = yes
+						political_movement = yes
+						}
+					} 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+		}
+		any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.75 }
+		any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.95 }
+		any_pop = { ideology = { factor = -0.1 value = liberal } }
+		any_pop = { ideology = { factor = -0.2 value = anarcho_liberal } }
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -4
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -4
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 6
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 6
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 8
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 8
+			   ideology = anarcho_liberal
+	       }
+		}
+		set_country_flag = the_emperor_can_die
+	    ai_chance = {
+	       factor = 30
+	    }
+	}
+}
+
+####### DOOMSDAY HAS ARRIVED - THE EMPEROR IS DEAD #######
+
+country_event = {
+	id = 3347220
+	title = "NJAP230.T"
+	desc = "NJAP230.D"
+	picture = "emperor_funeral"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		year = 1862
+		has_country_flag = the_first_seal
+		has_country_flag = the_second_seal
+		has_country_flag = the_third_seal
+		has_country_flag = the_fourth_seal
+		has_country_flag = the_fifth_seal
+		has_country_flag = the_emperor_can_die
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		days = 62
+		   modifier = {
+		      factor = 0.01
+			  year = 1863
+		   }
+	}
+
+	option = {
+		name = "NJAP230.A"
+		any_pop = { limit = { pop_type = aristocrats } militancy = 8 }
+		add_country_modifier = {
+			name = national_tragedy
+			duration = -1
+		}
+		remove_country_modifier = liberal_reaction
+	    clr_country_flag = the_first_seal
+		clr_country_flag = the_second_seal
+		clr_country_flag = the_third_seal
+		clr_country_flag = the_fourth_seal
+		clr_country_flag = the_fifth_seal
+		clr_country_flag = the_emperor_can_die
+		set_country_flag = THE_SEVENTH_SEAL       
+	}
+}
+
+################## Peaceful Endings ######################
+
+## 9-7 - The Start of the Meiji Era ##
+
+country_event = {
+	id = 334722
+	title = "NJAP23.T"
+	desc = "NJAP23.D"
+	picture = "meiji_parliament"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = THE_SEVENTH_SEAL
+	    check_variable = {
+		   which = JAP_reformism
+		   value = 7
+	    }
+	    NOT = {
+	       check_variable = {
+		      which = JAP_reformism
+		      value = 10
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP23.A"
+		clr_country_flag = THE_SEVENTH_SEAL
+		clr_global_flag = samurai_weak
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		remove_country_modifier = national_tragedy
+		# Remove Regency
+		remove_country_modifier = the_imperial_regency
+		any_country = {
+		   limit = {
+		      has_country_modifier = the_imperial_regency
+		   }
+		   remove_country_modifier = the_imperial_regency
+		}
+		# Open up the country for good
+		political_reform = open_borders
+		remove_country_modifier = kaikoku_reversed
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku_reversed
+		}
+		remove_country_modifier = kaikoku
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku
+		}		
+		# I'm not a god emperor so fuck off with your cult.
+		remove_country_modifier = emperor_cult
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = emperor_cult
+		}
+        # If Samurai are weak then they will need to be removed last	
+		# Reform the Government to HMS level
+	    government = hms_government
+        political_reform = appointed
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = liberal
+		any_pop = { militancy = -8 consciousness = -8 }		
+	    set_global_flag = THE_SUNRISE_OF_JAPAN   
+	}
+}
+
+## 6 - Stalemate. The Emperor must choose. ##
+
+country_event = {
+	id = 334723
+	title = "NJAP24.T"
+	desc = "NJAP24.D"
+	picture = "emperor_funeral"
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = THE_SEVENTH_SEAL
+	    check_variable = {
+		   which = JAP_reformism
+		   value = 6
+	    }
+	    NOT = {
+	       check_variable = {
+		      which = JAP_reformism
+		      value = 7
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "NJAP24.A"
+		prestige = 10
+		country_event = { id = 334722 days = 0 }	
+        clr_country_flag = THE_SEVENTH_SEAL		
+	    ai_chance = {
+	       factor = 50
+	    }		
+	}
+	
+	option = {
+		name = "NJAP24.B"
+		prestige = 10
+		country_event = { id = 334724 days = 0 }
+		clr_country_flag = THE_SEVENTH_SEAL
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+## 5-3 - The Start of the Tensho Era ##
+
+country_event = {
+	id = 334724
+	title = "NJAP25.T"
+	desc = "NJAP25.D"
+	picture = "genroin_officers"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = THE_SEVENTH_SEAL
+	    check_variable = {
+		   which = JAP_reformism
+		   value = 3
+	    }
+	    NOT = {
+	       check_variable = {
+		      which = JAP_reformism
+		      value = 6
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP25.A"
+		clr_country_flag = THE_SEVENTH_SEAL
+		clr_global_flag = samurai_weak
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		remove_country_modifier = national_tragedy
+		# Remove Regency
+		remove_country_modifier = the_imperial_regency
+		any_country = {
+		   limit = {
+		      has_country_modifier = the_imperial_regency
+		   }
+		   remove_country_modifier = the_imperial_regency
+		}
+		# Open up the country for good
+		political_reform = open_borders
+		remove_country_modifier = kaikoku_reversed
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku_reversed
+		}
+		remove_country_modifier = kaikoku
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku
+		}		
+		# I'm not god emperor so fuck off with your cult. Instead we are going to make sure we have state shintoism.
+		remove_country_modifier = emperor_cult
+		add_country_modifier = {
+			name = shinto_religion
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = emperor_cult
+			add_country_modifier = {
+				name = shinto_religion
+				duration = -1
+			}
+		}
+        # If Samurai are weak then they will need to be removed last	
+		# Reform the Government to Prussian Constitutionalism
+	    government = prussian_constitutionalism
+        political_reform = appointed
+        political_reform = landed_voting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = underground_parties
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = conservative
+		any_pop = { militancy = -8 consciousness = -8 }		
+	    set_global_flag = THE_SUNRISE_OF_JAPAN   
+	}
+}
+
+################## Bad Endings ######################
+
+## 2 or Less - The Start of the Kyowa Era ##
+
+country_event = {
+	id = 334725
+	title = "NJAP26.T"
+	desc = "NJAP26.D"
+	picture = "kyowa_era"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = THE_SEVENTH_SEAL
+	    NOT = {
+	       check_variable = {
+		      which = JAP_reformism
+		      value = 3
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP26.A"
+		clr_country_flag = THE_SEVENTH_SEAL
+		set_country_flag = DOOMSDAY_HAS_ARRIVED_REACTIONARY
+		# Remove Regency
+		remove_country_modifier = the_imperial_regency
+		any_country = {
+		   limit = {
+		      has_country_modifier = the_imperial_regency
+		   }
+		   remove_country_modifier = the_imperial_regency
+		}
+	    
+	}
+}
+
+# The Great Affirmation of Divinity
+
+country_event = {
+	id = 334726
+	title = "NJAP27.T"
+	desc = "NJAP27.D"
+	picture = "affirmation_divinity"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = DOOMSDAY_HAS_ARRIVED_REACTIONARY
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "NJAP27.A"
+		clr_country_flag = DOOMSDAY_HAS_ARRIVED_REACTIONARY
+		ruling_party_ideology = reactionary
+		# I'M LITERALLY FUCKING GOD
+		remove_country_modifier = shinto_religion
+		add_country_modifier = {
+			name = emperor_cult
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = shinto_religion
+			add_country_modifier = {
+				name = emperor_cult
+				duration = -1
+			}
+		}
+		# The Borders are now closed
+		political_reform = closed_borders
+		remove_country_modifier = kaikoku
+		add_country_modifier = {
+			name = kaikoku_reversed
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku
+			add_country_modifier = {
+				name = kaikoku_reversed
+				duration = -1
+			}
+		}
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = 7
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 7
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = 9
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 9
+			   ideology = anarcho_liberal
+	       }
+		}
+        all_core = { limit = { NOT = { owned_by = JAP } } remove_core = JAP }        
+		country_event = { id = 334727 days = 1 }
+	}
+}
+
+# The Emperor is declared insane by Liberal Daiymos for effectively losing the plot and Japan Collapses. Capitals of the liberal faction breaks off. Other Daiymos are sent event to vassal swap.
+
+country_event = {
+	id = 334727
+	title = "NJAP28.T"
+	desc = "NJAP28.D"
+	picture = "hiroshima_memorial"
+	
+	is_triggered_only = yes
+	
+	immediate = { release_vassal = KAM release_vassal = RYU }
+	
+	option = {
+		name = "NJAP28.A"
+        leave_alliance = MSH
+		relation = { who = MSH value = -400 }
+        diplomatic_influence = { who = MSH value = -400 }		
+		release_vassal = MSH
+		MSH = {
+		set_country_flag = traitor_JAP
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+	    ruling_party_ideology = conservative
+	    }
+        leave_alliance = KOR
+		relation = { who = KOR value = -400 }
+        diplomatic_influence = { who = KOR value = -400 }	
+		KOR = { country_event = { id = 334751 days = 2 } }
+        any_owned = {
+		   limit = {
+		        is_core = KOR
+		   }
+		   secede_province = KOR
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+				NOT = { tag = KAM }
+				NOT = { tag = MSH }
+				NOT = { tag = RYU }
+			}
+			country_event = { id = 334728 days = 0 }
+		}
+        country_event = { id = 334729 days = 7 }		
+	}
+}
+
+# Choose your enemies
+
+country_event = {
+	id = 334728
+	title = "NJAP29.T"
+	desc = "NJAP29.D"
+	picture = "boshin_war"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP29.A"	
+		prestige = 10
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		set_country_flag = traitor_JAP
+        JAP = { leave_alliance = THIS relation = { who = THIS value = -200 } diplomatic_influence = { who = THIS value = -200 }	release_vassal = THIS }			
+		MSH = { create_vassal = THIS }	
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+	    ai_chance = {
+	       factor = 20
+		   modifier = { factor = 0 OR = { tag = KAG tag = AIN } }
+		   modifier = { factor = 3 tag = SAT }
+		   modifier = { factor = 0.5 tag = SEN }
+	    }		
+	}
+	
+	option = {
+		name = "NJAP29.B"	
+		prestige = 10
+		set_country_flag = neutral_JAP
+		JAP = { leave_alliance = THIS relation = { who = THIS value = -150 } diplomatic_influence = { who = THIS value = -150 } release_vassal = THIS }	
+	    ai_chance = {
+	       factor = 40
+		   modifier = { factor = 0 OR = { tag = MOI tag = TKG tag = AIA } }
+		   modifier = { factor = 0 tag = KAG }
+		   modifier = { factor = 0 AND = { tag = HAC JAP = { has_global_flag = samurai_revolting } } }
+		   modifier = { factor = 1.5 tag = SEN }
+	    }
+	}
+	
+	option = {
+		name = "NJAP28.C"	
+		prestige = 10
+		set_country_flag = loyal_JAP
+	    ai_chance = {
+	       factor = 40		   
+		   modifier = { factor = 0 OR = { tag = MOI tag = TKG tag = AIA } }
+		   modifier = { factor = 0 AND = { tag = HAC JAP = { has_global_flag = samurai_revolting } } }
+		   modifier = { factor = 0 OR = { tag = SAT tag = AIN } }
+		   modifier = { factor = 1.5 tag = SEN }
+	    }
+	}
+}
+
+# THE SECOND WAR OF THE RISING SUN
+
+country_event = {
+	id = 334729
+	title = "NJAP30.T"
+	desc = "NJAP30.D"
+	picture = "boshin_war"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP30.A"	
+        set_country_flag = JAP_reactionary_civil_war	
+        MSH = { all_core = { add_core = JAP } }		
+		1661 = { remove_core = JAP }
+		1651 = { remove_core = JAP }
+	    war = {
+			target = MSH
+			attacker_goal =  { 
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }		
+	}
+}
+
+# Imperial Victory - This can be caused by either MSH getting destroyed or failing to depose the emperor.
+
+country_event = {
+	id = 334730
+	title = "NJAP31.T"
+	desc = "NJAP31.D"
+	picture = "reactionary_victory"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		war = no
+		NOT = { has_country_flag = custom_treaty_loser }
+		has_country_flag = JAP_reactionary_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NJAP31.A"	
+		prestige = 20
+		clr_country_flag = JAP_reactionary_civil_war
+	    clr_global_flag = samurai_weak
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = loyal_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			clr_country_flag = loyal_JAP
+		} 		
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = traitor_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334731 days = 0 }
+		} 
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = neutral_JAP
+				exists = yes
+			}
+			country_event = { id = 334732 days = 2 }
+		}
+        set_global_flag = THE_SUNRISE_OF_JAPAN  
+		clr_global_flag = samurai_revolting
+		clr_global_flag = the_liberals_are_pissed 		
+	}
+}
+
+# You fought honourably but its time to commit Seppuku
+
+country_event = {
+	id = 334731
+	title = "NJAP32.T"
+	desc = "NJAP32.D"
+	picture = "seppuku"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP32.A"	
+		prestige_factor = -1
+		prestige = 1
+		clr_country_flag = traitor_JAP
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = reactionary
+		JAP = { inherit = THIS }
+	}
+}
+
+# Neutrals are given the opportunity to rejoin
+
+country_event = {
+	id = 334732
+	title = "NJAP33.T"
+	desc = "NJAP33.D"
+	picture = "japanese_waterfront"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP33.A"	
+		clr_country_flag = neutral_JAP
+		JAP = { create_vassal = THIS }
+	    ai_chance = {
+	       factor = 100
+		}
+	}
+	
+	option = {
+		name = "NJAP33.B"	
+		clr_country_flag = neutral_JAP
+		all_core = { add_core = JAP }
+		1661 = { remove_core = JAP }
+	    1651 = { remove_core = JAP }
+	    ai_chance = {
+	       factor = 0
+		}
+	}
+}
+
+# Republican Victory - Holy Shit. What the fuck just happened.
+
+country_event = {
+	id = 334733
+	title = "NJAP34.T"
+	desc = "NJAP34.D"
+	picture = "japanese_fireworks"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		war = no
+		has_country_flag = custom_treaty_loser
+		has_country_flag = JAP_reactionary_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NJAP34.A"			
+		prestige = -20
+		ruling_party_ideology = liberal
+		clr_global_flag = samurai_weak		
+		clr_country_flag = JAP_reactionary_civil_war
+		clr_country_flag = custom_treaty_loser
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_revolting
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		# Reform the Government to HMS level
+	    government = hms_government
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = non_secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		create_vassal = MSH
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }		
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = neutral_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334732 days = 0 }
+		}
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = traitor_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334734 days = 0 }
+		} 
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = loyal_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334735 days = 0 }
+		}
+        set_global_flag = THE_SUNRISE_OF_JAPAN  
+		clr_global_flag = samurai_revolting
+		clr_global_flag = the_liberals_are_pissed 	
+	    ai_chance = {
+	       factor = 80
+		   modifier = { factor = 0.5 has_global_flag = the_liberals_are_pissed }
+		   modifier = { factor = 0.75 has_global_flag = samurai_revolting }
+		}		
+	}
+	
+	option = {
+		name = "NJAP34.B"	
+		prestige = -20
+		ruling_party_ideology = liberal
+		clr_country_flag = JAP_reactionary_civil_war
+		clr_country_flag = custom_treaty_loser
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_revolting
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		# Abolish the Monarchy and set a flag
+		set_country_flag = new_japanese_system
+		set_country_flag = JAP_the_republican_trap
+	    government = democracy
+		political_reform = open_borders
+   	    political_reform = state_equal_weight
+	    political_reform = universal_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = non_secret_ballots
+	    political_reform = first_past_the_post
+		create_vassal = MSH
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }	
+        # Neutrals refuse to have anything to do with this republican insanity		
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = neutral_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			clr_country_flag = neutral_JAP
+		}
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = traitor_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334734 days = 0 }
+		} 
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = loyal_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334735 days = 0 }
+		} 
+        set_global_flag = THE_SUNRISE_OF_JAPAN  
+	    ai_chance = {
+	       factor = 20
+		   modifier = { factor = 2 has_global_flag = the_liberals_are_pissed  }
+		   modifier = { factor = 1.5 has_global_flag = samurai_revolting }
+		}		
+	}
+}
+
+# Allies are switched back to vassals
+
+country_event = {
+	id = 334734
+	title = "NJAP35.T"
+	desc = "NJAP35.D"
+	picture = "japanese_waterfront"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP35.A"	
+		clr_country_flag = traitor_JAP
+		JAP = { create_vassal = THIS }
+	}
+}
+
+# Loyalists are deposed and exiled
+
+country_event = {
+	id = 334735
+	title = "NJAP36.T"
+	desc = "NJAP36.D"
+	picture = "emperor_funeral"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP36.A"	
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting		
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		prestige_factor = -1
+		clr_country_flag = loyal_JAP
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+		JAP = { inherit = THIS }
+	}
+}
+
+## 10 or More - The Start of the Koshi Era ##
+
+country_event = {
+	id = 334736
+	title = "NJAP37.T"
+	desc = "NJAP37.D"
+	picture = "koshi"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = THE_SEVENTH_SEAL
+	    check_variable = {
+		      which = JAP_reformism
+		      value = 10
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP37.A"
+		prestige = -10
+		clr_country_flag = THE_SEVENTH_SEAL
+		set_country_flag = DOOMSDAY_HAS_ARRIVED_LIBERAL	    
+		# Remove Regency
+		remove_country_modifier = the_imperial_regency
+		any_country = {
+		   limit = {
+		      has_country_modifier = the_imperial_regency
+		   }
+		   remove_country_modifier = the_imperial_regency
+		}
+	}
+}
+ 
+# The Great Reform - Japanese Emperor effectively signs away the government to a democratic, pacifist and liberal government. The entire nobility is furious.
+
+country_event = {
+	id = 334737
+	title = "NJAP38.T"
+	desc = "NJAP38.D"
+	picture = "meiji_parliament"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = DOOMSDAY_HAS_ARRIVED_LIBERAL
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "NJAP38.A"
+		clr_country_flag = DOOMSDAY_HAS_ARRIVED_LIBERAL
+		set_country_flag = the_situation_is_worse_JAP
+		prestige = -10
+		# Open up the country for good
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = kaikoku
+		remove_country_modifier = shinto_religion
+		remove_country_modifier = emperor_cult
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			remove_country_modifier = kaikoku_reversed
+			remove_country_modifier = kaikoku
+			remove_country_modifier = shinto_religion
+			remove_country_modifier = emperor_cult
+		}		
+	    government = hms_government
+		ruling_party_ideology = liberal
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov	
+        any_pop = { limit = { pop_type = aristocrats } militancy = 9 }
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = 9
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = 9
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -2
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -2
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = -10
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -10
+			   ideology = liberal
+	       }
+	       scaled_militancy = {
+			   factor = -10
+			   ideology = anarcho_liberal
+	       }
+	       scaled_consciousness = {
+			   factor = -10
+			   ideology = anarcho_liberal
+	       }
+		}		
+	}
+}
+
+# The Regent marches on Kyoto
+
+country_event = {
+	id = 334738
+	title = "NJAP39.T"
+	desc = "NJAP39.D"
+	picture = "japanese_battle"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = the_situation_is_worse_JAP
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "NJAP39.A"
+		clr_country_flag = the_situation_is_worse_JAP
+		set_country_flag = the_great_mistake_JAP
+		prestige = -1
+		add_country_modifier = {
+			name = calm_before_storm
+			duration = -1
+		}
+    }
+}
+
+##### THE UNTHINKABLE #####
+
+country_event = {
+	id = 334739
+	title = "NJAP40.T"
+	desc = "NJAP40.D"
+	picture = "japanese_assassination"
+	
+	major = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		has_country_flag = the_great_mistake_JAP
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "NJAP40.A"
+		clr_country_flag = the_great_mistake_JAP
+		remove_country_modifier = calm_before_storm
+		prestige_factor = -0.3
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = reactionary
+		# I'M LITERALLY FUCKING GOD	
+		add_country_modifier = {
+			name = emperor_cult
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			add_country_modifier = {
+				name = emperor_cult
+				duration = -1
+			}
+		}
+		add_country_modifier = {
+			name = kaikoku_reversed
+			duration = -1
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+			}
+			add_country_modifier = {
+				name = kaikoku_reversed
+				duration = -1
+			}
+		}		
+        all_core = { limit = { NOT = { owned_by = JAP } } remove_core = JAP }        
+		country_event = { id = 334740 days = 1 }
+    }
+}
+
+# The Regent is declared insane by PRACTICALLY EVERYONE for effectively betraying the Japanese people. The player is given a choice to play the head of various factions.
+
+country_event = {
+	id = 334740
+	title = "NJAP41.T"
+	desc = "NJAP41.D"
+	picture = "kegare"
+	
+	is_triggered_only = yes
+	
+	immediate = { release_vassal = KAM release_vassal = RYU }
+	
+	option = {
+		name = "NJAP41.A"
+        leave_alliance = MSH
+		relation = { who = MSH value = -400 }
+        diplomatic_influence = { who = MSH value = -400 }		
+		release_vassal = MSH
+		MSH = {
+		set_country_flag = traitor_JAP
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+	    ruling_party_ideology = conservative
+	    }
+        leave_alliance = SAT
+		relation = { who = SAT value = -400 }
+        diplomatic_influence = { who = SAT value = -400 }		
+		release_vassal = SAT
+		SAT = {
+		set_country_flag = loyalist_JAP
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult		
+	    government = hms_government
+		ruling_party_ideology = conservative
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = secret_ballots    
+	    }
+        leave_alliance = KOR
+		relation = { who = KOR value = -400 }
+        diplomatic_influence = { who = KOR value = -400 }	
+		KOR = { country_event = { id = 334751 days = 2 } }
+        any_owned = {
+		   limit = {
+		        is_core = KOR
+		   }
+		   secede_province = KOR
+		}
+		any_country = {
+			limit = {
+				primary_culture = japanese
+				NOT = { tag = KAM }
+				NOT = { tag = MSH }
+				NOT = { tag = SAT }
+				NOT = { tag = RYU }
+			}
+			country_event = { id = 334741 days = 0 }
+		}
+        country_event = { id = 334742 days = 7 }		
+	}
+}
+
+# Choose your enemies
+
+country_event = {
+	id = 334741
+	title = "NJAP42.T"
+	desc = "NJAP42.D"
+	picture = "boshin_war"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP42.A"	
+		prestige = 10
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		set_country_flag = traitor_JAP
+        JAP = { leave_alliance = THIS relation = { who = THIS value = -200 } diplomatic_influence = { who = THIS value = -200 }	release_vassal = THIS }			
+		MSH = { create_vassal = THIS }
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service		
+	    ai_chance = {
+	       factor = 1
+		   modifier = { factor = 20 tag = AIA }
+		   modifier = { factor = 0 OR = { tag = KAG tag = AIN } }		   
+	    }		
+	}
+	
+	option = {
+		name = "NJAP42.B"	
+		prestige = 10
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		set_country_flag = loyalist_jap
+		JAP = { leave_alliance = THIS relation = { who = THIS value = -150 } diplomatic_influence = { who = THIS value = -150 } release_vassal = THIS }	
+		SAT = { create_vassal = THIS }
+	    government = hms_government
+		ruling_party_ideology = conservative
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = secret_ballots   
+	    ai_chance = {
+	       factor = 89
+		   modifier = { factor = 0.8 tag = AIA }
+		   modifier = { factor = 0 OR = { tag = KAG tag = TKG } }
+		   modifier = { factor = 0 AND = { tag = HAC JAP = { has_global_flag = samurai_revolting } } }
+	    }
+	}
+	
+	option = {
+		name = "NJAP42.C"	
+		prestige = 10
+		set_country_flag = regent_JAP
+	    ai_chance = {
+	       factor = 10	   
+		   modifier = { factor = 2 tag = SEN }
+		   modifier = { factor = 0 OR = { tag = MOI tag = AIA tag = TKG } }
+		   modifier = { factor = 0 AND = { tag = HAC JAP = { has_global_flag = samurai_revolting } } }
+	    }
+	}
+}
+
+# THE SECOND WAR OF THE RISING SUN
+
+country_event = {
+	id = 334742
+	title = "NJAP43.T"
+	desc = "NJAP43.D"
+	picture = "boshin_war"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP43.A"	
+        set_country_flag = JAP_liberal_civil_war
+        SAT = { all_core = { add_core = JAP } }
+        MSH = { all_core = { add_core = JAP } }
+		1661 = { remove_core = JAP }
+		1651 = { remove_core = JAP }		
+	    war = {
+			target = MSH
+			attacker_goal =  { 
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }	
+	    war = {
+			target = SAT
+			attacker_goal =  { 
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }
+		SAT = {
+	    war = {
+			target = MSH
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+			call_ally = yes
+	    }
+        }		
+	}
+}
+
+# Imperial Victory - This is if JAP defeats both MSH and SAT or both failed to take down Japan.
+
+country_event = {
+	id = 334743
+	title = "NJAP44.T"
+	desc = "NJAP44.D"
+	picture = "reactionary_victory"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		war = no
+		NOT = { has_country_flag = custom_treaty_loser }
+		has_country_flag = JAP_liberal_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NJAP44.A"	
+		prestige = 20
+		clr_global_flag = samurai_weak
+		clr_country_flag = JAP_liberal_civil_war
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = regent_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			clr_country_flag = regent_JAP
+		} 		
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				OR = {
+				   has_country_flag = traitor_JAP
+				   has_country_flag = loyalist_JAP
+				}
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334744 days = 0 }
+		} 
+        set_global_flag = THE_SUNRISE_OF_JAPAN  
+		clr_global_flag = the_liberals_are_pissed 		
+	}
+}
+
+# You fought honourably but its time to commit Seppuku
+
+country_event = {
+	id = 334744
+	title = "NJAP45.T"
+	desc = "NJAP45.D"
+	picture = "seppuku"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP45.A"	
+		prestige_factor = -1
+		prestige = 1
+		clr_country_flag = traitor_JAP
+		clr_country_flag = loyalist_JAP
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = reactionary
+		JAP = { inherit = THIS }
+	}
+}
+
+# Loyalist Victory - This will happen if Satsuma enforces the treaty on Japan and either WPs or annexes Tokyo. 
+
+country_event = {
+	id = 334745
+	title = "NJAP46.T"
+	desc = "NJAP46.D"
+	picture = "japanese_fireworks"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		war = no
+		exists = SAT
+		has_country_flag = custom_treaty_loser
+		has_country_flag = JAP_liberal_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NJAP46.A"	
+		prestige = -20
+		clr_global_flag = samurai_weak
+		ruling_party_ideology = liberal
+		clr_country_flag = JAP_liberal_civil_war
+		clr_country_flag = custom_treaty_loser
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		# Reform the Government to HMS level
+	    government = hms_government
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = non_secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		create_vassal = SAT
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }		
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = loyalist_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334746 days = 0 }
+		}
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				OR = {
+				   has_country_flag = traitor_JAP
+				   has_country_flag = regent_JAP
+				}
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334747 days = 0 }
+		} 
+        set_global_flag = THE_SUNRISE_OF_JAPAN  
+		clr_global_flag = samurai_revolting
+		clr_global_flag = the_liberals_are_pissed 			
+	}
+}
+
+# Allies are switched back to vassals
+
+country_event = {
+	id = 334746
+	title = "NJAP47.T"
+	desc = "NJAP47.D"
+	picture = "japanese_waterfront"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP47.A"	
+		clr_country_flag = traitor_JAP
+		JAP = { create_vassal = THIS }
+	}
+}
+
+# Traitors and Reactionaries are deposed and exiled
+
+country_event = {
+	id = 334747
+	title = "NJAP48.T"
+	desc = "NJAP48.D"
+	picture = "emperor_funeral"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP48.A"	
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		prestige_factor = -1
+		clr_country_flag = regent_JAP
+		clr_country_flag = traitor_JAP
+	    government = hms_government
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = non_secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		JAP = { inherit = THIS }
+	}
+}
+
+# Ezo Victory - This is the single hardest ending for Japan. This needs Satsuma to not exist and the treaty enforced on Japan. This is a extremely conservative republic that has Shinto and Strong Samurai.
+
+country_event = {
+	id = 334748
+	title = "NJAP49.T"
+	desc = "NJAP49.D"
+	picture = "samurai_victory"
+	
+	trigger = {	
+	    exists = yes
+	    tag = JAP
+		war = no
+		NOT = { exists = SAT }
+		has_country_flag = custom_treaty_loser
+		has_country_flag = JAP_liberal_civil_war
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NJAP49.A"	
+		prestige = -20
+		set_country_flag = JAP_the_republican_trap
+		clr_country_flag = JAP_liberal_civil_war
+		clr_country_flag = custom_treaty_loser
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		ruling_party_ideology = liberal
+		create_vassal = MSH
+		# Give the Sunrise Modifier for 10 years
+		add_country_modifier = {
+			name = japanese_sunrise
+			duration = 3650
+		}
+		war_exhaustion = -90
+		any_pop = { militancy = -8 consciousness = -8 }	
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				has_country_flag = traitor_JAP
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334749 days = 0 }
+		}
+ 		any_country = {
+			limit = {
+				primary_culture = japanese
+				OR = {
+				   has_country_flag = loyalist_JAP
+				   has_country_flag = regent_JAP
+				}
+				exists = yes
+			}
+			all_core = { add_core = JAP }
+		    1661 = { remove_core = JAP }
+		    1651 = { remove_core = JAP }
+			country_event = { id = 334750 days = 0 }
+		} 
+        set_global_flag = THE_SUNRISE_OF_JAPAN  		
+   }
+}
+
+# Allies are switched back to vassals
+
+country_event = {
+	id = 334749
+	title = "NJAP50.T"
+	desc = "NJAP50.D"
+	picture = "japanese_waterfront"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP50.A"	
+		clr_country_flag = traitor_JAP
+		JAP = { create_vassal = THIS }
+	}
+}
+
+# Loyalists and Reactionaries are deposed and exiled
+
+country_event = {
+	id = 334750
+	title = "NJAP51.T"
+	desc = "NJAP51.D"
+	picture = "emperor_funeral"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP50.A"	
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		prestige_factor = -1
+		clr_country_flag = regent_JAP
+		clr_country_flag = loyalist_JAP
+	    government = democracy
+   	    political_reform = population_equal_weight
+	    political_reform = wealth_weighted_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = no_trade_unions
+	    political_reform = gerrymandering
+	    political_reform = first_past_the_post
+	    political_reform = mandatory_service
+	    ruling_party_ideology = conservative
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		JAP = { inherit = THIS }
+	}
+}
+
+##### Korean Independence Chain - This occurs if Korea is given independence during the civil war chains ####
+
+country_event = {
+	id = 334751
+	title = "NJAP52.T"
+	desc = "NJAP52.D"
+	picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP52.A"
+        prestige = 5		
+		JAP = { release_vassal = THIS }
+		GOY = { country_event = { id = 334752 days = 0 } }
+	}
+}
+
+### Goryeo immediately invades Joeson - Grand Invasion of the South
+
+country_event = {
+	id = 334752
+	title = "NJAP53.T"
+	desc = "NJAP53.D"
+	picture = "grand_invasion"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP53.A"	
+	    war = {
+			target = KOR
+			attacker_goal =  { 
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+##### Ending the Han System (Kill non-RYA or AIN substates/vassals ) ####
+
+country_event = {
+	id = 334753
+	title = "NJAP54.T"
+	desc = "NJAP54.D"
+	picture = "meiji_constitution"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP54.A"	
+	    all_core = { add_core = JAP remove_core = THIS }
+		1661 = { remove_core = JAP }
+		1651 = { remove_core = JAP }
+		JAP = { inherit = THIS }
+	}
+}
+
+##### Inheriting Ryukyu and Ainu ####
+
+country_event = {
+	id = 334754
+	title = "NJAP55.T"
+	desc = "NJAP55.D"
+	picture = "japanese_diplomat"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP55.A"	
+	    all_core = { add_core = JAP }
+		JAP = { inherit = THIS }
+	}
+}
+
+### Dealing with the Koreans ###
+
+country_event = {
+	id = 334755
+	title = "NJAP56.T"
+	desc = "NJAP56.D"
+	picture = "japanese_diplomat"
+	
+	is_triggered_only = yes
+	
+	immediate = { JAP = { release_vassal = KOR } }
+	
+	# Eat me daddy
+	
+	option = {
+		name = "NJAP56.A"
+        prestige_factor = -0.5		
+		JAP = { inherit = THIS }
+	    ai_chance = {
+	       factor = 95
+		}
+	}
+	
+	# Actually just fuck off
+	
+	option = {
+		name = "NJAP56.B"	
+		country_event = { id = 334756 days = 3 }
+        leave_alliance = KOR
+		relation = { who = KOR value = -400 }
+        diplomatic_influence = { who = KOR value = -400 }			
+	    ai_chance = {
+	       factor = 5
+		}
+	}
+}
+
+# Japan if Korea tells them to fuck off.
+
+country_event = {
+	id = 334756
+	title = "NJAP57.T"
+	desc = "NJAP57.D"
+	picture = "japanese_warship"
+	
+	is_triggered_only = yes
+
+	# battotai intensifies
+	
+	option = {
+		name = "NJAP57.A"
+ 	    war = {
+			target = KOR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+			call_ally = yes
+	    }       
+	    ai_chance = {
+	       factor = 100
+		}
+	}
+	
+	# why?
+	
+	option = {
+		name = "NJAP57.B"	
+		prestige = -10		
+	    ai_chance = {
+	       factor = 0
+		}
+	}
+}
+
+# Independent Korea is more or less told to just die
+
+country_event = {
+	id = 334757
+	title = "NJAP58.T"
+	desc = "NJAP58.D"
+	picture = "japanese_diplomat"
+	
+	is_triggered_only = yes
+	
+	# Eat me daddy
+	
+	option = {
+		name = "NJAP58.A"
+        prestige_factor = -0.5		
+		JAP = { inherit = THIS }
+	    ai_chance = {
+	       factor = 10
+		}
+	}
+	
+	# Actually just fuck off
+	
+	option = {
+		name = "NJAP58.B"	
+		JAP = {
+        leave_alliance = KOR
+		relation = { who = KOR value = -400 }
+        diplomatic_influence = { who = KOR value = -400 }	
+ 	    war = {
+			target = KOR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+			call_ally = yes
+	    }
+        }		
+	    ai_chance = {
+	       factor = 90
+		}
+	}
+}
+
+# Goryeo informed of invasion
+
+country_event = {
+	id = 334758
+	title = "NJAP59.T"
+	desc = "NJAP59.D"
+	picture = "japanese_warship"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP59.A"
+
+	}
+}
+
+##### Inheriting KAM
+
+country_event = {
+	id = 334759
+	title = "NJAP60.T"
+	desc = "NJAP60.D"
+	picture = "japanese_diplomat"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP60.A"	
+		JAP = { inherit = THIS }
+	}
+}
+
+##### The Tokushima Rebellion - Triggered with the Samurai Revolting Modifier or Flag after centralization in Any Japan ####
+
+country_event = {
+	id = 334760
+	title = "NJAP61.T"
+	desc = "NJAP61.D"
+	picture = "tokushima_rebellion"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = goodbye_han
+		owns = 1667
+		HAC = { exists = no }
+		OR = {
+		    has_global_flag = samurai_revolting
+			has_country_modifier = samurai_revolting
+	    }
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+		modifier = {
+			factor = 0.5
+			average_militancy = 3
+		}
+		modifier = {
+			factor = 0.5
+			NOT = { government = absolute_monarchy }
+		}
+		modifier = {
+			factor = 0.01
+			has_country_flag = quick_samurai_revolt
+		}
+	}
+	
+	option = {
+		name = "NJAP61.A"
+		remove_country_modifier = samurai_revolting
+		any_country = {
+		   limit = {
+		      has_country_modifier = samurai_revolting
+		   }
+		   remove_country_modifier = samurai_revolting
+		}
+		clr_global_flag = samurai_revolting
+		clr_country_flag = quick_samurai_revolt
+		set_country_flag = tokushima_rebellion_happened
+		prestige = -10
+		aristocrats = {
+			ideology = {
+				value = reactionary
+				factor = 0.4
+			}
+		}
+		officers = {
+			ideology = {
+				value = reactionary
+				factor = 0.4
+			}
+		}
+		soldiers = {
+			ideology = {
+				value = reactionary
+				factor = 0.2
+			}
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+		}
+		JAP_1665 = { add_core = HAC }
+		release = HAC
+		war = {
+			target = HAC
+			attacker_goal = {
+				casus_belli = civil_war
+			}		
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		HAC = {
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = closed_borders
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+			iron = 10
+			wool = 10
+			timber = 25
+			small_arms = 10
+			leadership = 20
+			define_general = {
+				name = "Hozumi Takemori"
+				personality = skilled
+				background = old_school
+			}
+			add_country_modifier = {
+				name = small_country_draft
+				duration = 365
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+country_event = {
+	id = 334761
+	title = "NJAP62.T"
+	desc = "NJAP62.D"
+	picture = "shiroyama"
+	
+	trigger = {
+		tag = JAP
+		war = no
+		has_country_flag = tokushima_rebellion_happened
+		HAC = { exists = no }
+		owns = 1667
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "NJAP62.A"
+		clr_country_flag = tokushima_rebellion_happened
+		JAP_1665 = { remove_core = HAC }
+		any_pop = {
+			limit = { is_primary_culture = yes }
+			ideology = {
+				value = liberal
+				factor = 0.05
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -3
+			}
+		}
+	}
+}
+
+##### Edo Commune - Triggered with the Liberals are pissed modifier after centralization in Any Japan ####
+
+country_event = {
+	id = 334762
+	title = "NJAP63.T"
+	desc = "NJAP63.D"
+	picture = "edo_commune"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = goodbye_han
+		owns = 1649
+		MSH = { exists = no }
+		has_global_flag = the_liberals_are_pissed
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = "NJAP63.A"
+		clr_global_flag = the_liberals_are_pissed
+		set_country_flag = edo_commune_happened
+		prestige = -5
+		any_pop = {
+			scaled_militancy = {
+				ideology = liberal
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 6
+			}
+		}
+		1649 = { add_core = MSH }
+		release = MSH
+		war = {
+			target = MSH
+			attacker_goal = {
+				casus_belli = civil_war
+			}		
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		MSH = {
+	        government = democracy
+			ruling_party_ideology = anarcho_liberal
+   	        political_reform = population_equal_weight
+	        political_reform = wealth_weighted_voting
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = no_trade_unions
+	        political_reform = gerrymandering
+	        political_reform = first_past_the_post
+	        political_reform = mandatory_service
+			treasury = 10000
+			iron = 10
+			wool = 10
+			timber = 25
+			small_arms = 10
+			leadership = 20
+			define_general = {
+				name = "Nomura Ujikore"
+				personality = skilled
+				background = natural_born_leader
+			}
+			add_country_modifier = {
+				name = small_country_draft
+				duration = 365
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+country_event = {
+	id = 334763
+	title = "NJAP64.T"
+	desc = "NJAP64.D"
+	picture = "shinsengumi"
+	
+	trigger = {
+		tag = JAP
+		war = no
+		has_country_flag = edo_commune_happened
+		MSH = { exists = no }
+		owns = 1649
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "NJAP64.A"
+		clr_country_flag = edo_commune_happened
+		1649 = { remove_core = MSH }
+		any_pop = {
+			limit = { is_primary_culture = yes }
+			ideology = {
+				value = conservative
+				factor = 0.05
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+		}
+	}
+}
+
+##### Japan wants its ports back. Will give money. You don't get to say no. ####
+
+country_event = {
+	id = 334764
+	title = "NJAP65.T"
+	desc = "NJAP65.D"
+	picture = "yokohama"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NJAP65.A"
+		money = 10000
+		relation = { who = JAP value = 50 }
+		badboy = -1
+        any_owned = {
+		   limit = {
+		        province_id = 1661
+		   }
+		   secede_province = JAP
+		}
+        any_owned = {
+		   limit = {
+		        province_id = 1651
+		   }
+		   secede_province = JAP
+		}
+		1651 = { add_core = JAP }
+		1661 = { add_core = JAP }
+		ai_chance = {
+			factor = 100
+		}		
+	}
+	
+	option = {
+		name = "NJAP65.B"
+		JAP = { money = 10000 }
+		badboy = 1
+        any_owned = {
+		   limit = {
+		        province_id = 1661
+		   }
+		   secede_province = JAP
+		}
+        any_owned = {
+		   limit = {
+		        province_id = 1651
+		   }
+		   secede_province = JAP
+		}
+		1651 = { add_core = JAP }
+		1661 = { add_core = JAP }
+		leave_alliance = JAP
+		relation = { who = JAP value = -400 }
+		casus_belli = { 
+				target = JAP
+				type = war_reparations
+				months = 60
+		}
+ 	    war = {
+			target = JAP
+			attacker_goal =  { 
+				casus_belli = war_reparations
+			}
+			defender_goal = {
+				casus_belli = war_reparations
+			}	
+			call_ally = yes
+	    }
+		ai_chance = {
+			factor = 0
+		} 		
+	}
+}
+
+##### Japan has come to kill off TNG - Should we retreat to Tondo ####
+
+country_event = {
+	id = 334765
+	title = "NJAP66.T"
+	desc = "NJAP66.D"
+	picture = "japanesefight_taiwan"
+	
+	is_triggered_only = yes
+	
+	# FUCK THIS SHIT I'M OUT
+
+	option = {
+		name = "NJAP66.A"
+		end_war = JAP
+        any_owned = {
+		   limit = {
+		        province_id = 1485
+		   }
+		   secede_province = JAP
+		}
+        any_owned = {
+		   limit = {
+		        province_id = 2562
+		   }
+		   secede_province = JAP
+		}
+		capital = 1460
+		all_core = { remove_core = TNG }
+		change_tag = TON
+		primary_culture = filipino
+		add_accepted_culture = min	
+        remove_accepted_culture = beifaren 		
+		1485 = { add_core = TNG }
+		2562 = { add_core = TNG }
+	    CHI_1487 = { add_core = TNG }
+		CHI_2562 = { add_core = TNG }
+		CHI_1611 = { add_core = TNG }
+		ai_chance = {
+			factor = 100
+		}		
+	}
+	
+	# I have a deathwish
+	
+	option = {
+		name = "NJAP66.B"
+		prestige = 10
+		ai_chance = {
+			factor = 0
+		} 		
+	}
+}
+
+##### Japan has come to kill off TNG and we don't own Tondo. We are fucked. ####
+
+country_event = {
+	id = 334766
+	title = "NJAP67.T"
+	desc = "NJAP67.D"
+	picture = "japanesefight_taiwan"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NJAP67.A"
+		prestige = 10		
+	}
+}
+
+#### The Republican Problem #####
+
+#### The Republican Problem - Samurai are dead + Liberals are dead - Presidential Dictatorship - This will end up triggering both revolts as nobody is happy.
+
+country_event = {
+	id = 334767
+	title = "NJAP68.T"
+	desc = "NJAP68.D"
+	picture = "saigo_coup"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = JAP_the_republican_trap
+		has_country_flag = goodbye_han	
+		has_global_flag = the_liberals_are_pissed	
+		NOT = { has_global_flag = samurai_revolting }
+		NOT = { has_global_flag = samurai_weak }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP68.A"
+		prestige = -10
+		clr_country_flag = JAP_the_republican_trap
+		#clr_global_flag = samurai_weak
+		#clr_global_flag = the_liberals_are_pissed
+		set_global_flag = samurai_revolting
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting
+		add_country_modifier = {
+			name = samurai_revolting
+			duration = -1
+		}		
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_go       		
+	}
+}
+
+#### The Republican Problem - Liberals are alive and samurai are weak or dead - Liberal Republic Survives and the remaining Samurai go into full revolt which will trigger the Tokushima Revolt above here.
+
+country_event = {
+	id = 334768
+	title = "NJAP69.T"
+	desc = "NJAP69.D"
+	picture = "crime_punishment"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = JAP_the_republican_trap
+		has_country_flag = goodbye_han		
+		NOT = { has_global_flag = the_liberals_are_pissed }
+		OR = {
+		   has_global_flag = samurai_weak
+		   AND = {
+		      NOT = { has_global_flag = samurai_weak }
+			  NOT = { has_global_flag = samurai_revolting }
+		   }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP69.A"
+		prestige = 10
+		clr_country_flag = JAP_the_republican_trap
+		clr_global_flag = samurai_weak
+		clr_global_flag = the_liberals_are_pissed
+		set_global_flag = samurai_revolting
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting
+		add_country_modifier = {
+			name = samurai_revolting
+			duration = -1
+		}
+	}
+}
+
+#### The Republican Problem - Liberals are dead and samurai are weak. Alternatively the liberals are alive and the samurai are strong - The Samurai Republic Coup
+
+country_event = {
+	id = 334769
+	title = "NJAP70.T"
+	desc = "NJAP70.D"
+	picture = "tokushima_rebellion"
+
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = JAP_the_republican_trap
+		has_country_flag = goodbye_han		
+		OR = {
+		   AND = {
+		      has_global_flag = samurai_weak
+			  has_global_flag = the_liberals_are_pissed
+		   }
+		   AND = {
+              has_global_flag = samurai_revolting
+			  NOT = { has_global_flag = the_liberals_are_pissed }
+		   }
+	    }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP70.A"
+		prestige = 10
+		clr_country_flag = JAP_the_republican_trap
+		clr_global_flag = samurai_weak	
+		clr_global_flag = samurai_revolting
+		set_global_flag = the_liberals_are_pissed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting	
+		add_country_modifier = {
+			name = samurai_strong
+			duration = -1
+		}
+		remove_country_modifier = shinto_religion
+		remove_country_modifier = emperor_cult
+		add_country_modifier = {
+			name = shinto_religion
+			duration = -1
+		}
+	    government = democracy
+		political_reform = open_borders
+        political_reform = party_appointed
+        political_reform = landed_voting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = underground_parties
+		ruling_party_ideology = conservative
+	}
+}
+
+#### The Republican Problem - Liberals are dead and samurai are weak. Alternatively the liberals are alive and the samurai are strong - The Samurai Emperor-Shogun. This is absolutely the worst ending for Japan.
+
+country_event = {
+	id = 334770
+	title = "NJAP71.T"
+	desc = "NJAP71.D"
+	picture = "nightmare_mode"
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		war = no
+		tag = JAP
+		has_country_flag = JAP_the_republican_trap
+		has_country_flag = goodbye_han		
+		has_global_flag = samurai_revolting
+		has_global_flag = the_liberals_are_pissed
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NJAP71.A"
+		clr_country_flag = JAP_the_republican_trap
+		clr_global_flag = samurai_weak	
+		clr_global_flag = samurai_revolting
+		set_global_flag = the_liberals_are_pissed
+		remove_country_modifier = kaikoku_reversed
+		remove_country_modifier = samurai_strong
+		remove_country_modifier = samurai_weak
+		remove_country_modifier = samurai_revolting	
+		remove_country_modifier = imperial_guilds_strong
+		remove_country_modifier = emperor_cult
+		prestige_factor = -0.5
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		ruling_party_ideology = reactionary
+		# This is the nightmare scenario. All reactionary modifiers are selected.	
+		add_country_modifier = {
+			name = emperor_cult
+			duration = -1
+		}
+		add_country_modifier = {
+			name = kaikoku_reversed
+			duration = -1
+		}
+		add_country_modifier = {
+			name = samurai_strong
+			duration = -1
+		}
+		add_country_modifier = {
+			name = imperial_guilds_strong
+			duration = -1
+		}
+	}
+}
+
+#### Pope #####
+
+country_event = {   
+
+    id = 334900
+
+    title = "FJAP1.T" #Canonization of Francisco Garupe
+    desc = "FJAP1.T"
+    picture = ""
+    
+    trigger = { 
+    tag = PAP 
+    year = 1842
+    NOT = { has_country_flag = canonization_JAP } 
+    }
+    
+    mean_time_to_happen = { 
+    months = 4
+    }
+
+    option = {
+		set_country_flag = canonization_JAP
+        name = "FJAP1.A"
+        scaled_consciousness = {
+                ideology = reactionary
+                factor = 4
+            }
+        scaled_militancy = {
+                ideology = reactionary
+                factor = 1
+            }
+        SPA = { country_event = 334901 } 
+        JAP = { country_event = 334902 } 
+        relation = { who = JAP value = 20 }
+        relation = { who = SPA value = 50 }
+        relation = { who = AIA value = 150 }
+    }
+}
+
+country_event = {   
+
+    id = 334901
+
+    title = "FJAP1.T" #Canonization of Francisco Garupe : crowds in Nagasaki
+    desc = "FJAP1.D"
+    picture = ""
+    
+    is_triggered_only = yes 
+    
+    option = { 
+    name = "FJAP2.A"
+    prestige = 1 
+    any_pop = { 
+    limit = { 
+    has_pop_culture = japanese 
+    has_pop_religion = catholic 
+            }
+    militancy = -1
+        }
+    }
+}
+
+country_event = {   
+
+    id = 334902
+
+    title = "FJAP1.T" #Canonization of Francisco Garupe : crowds in Nagasaki
+    desc = "FJAP1.D"
+    picture = ""
+    
+    is_triggered_only = yes 
+    
+    option = { 
+    name = "FJAP3.A"
+    prestige = -1 
+    any_pop = { 
+    limit = { 
+    has_pop_religion = catholic 
+            }
+    militancy = -1
+        }
+    }
+}
+
+#Post Unification Japan Conquest Events by Zerzura
+
+##ASIAN CONTENT##
+
+#Japan is "asking" to buy Formosa
+country_event = {
+	id = 334790
+	title = "JPC19.T"
+	desc = "JPC19.D"
+	picture = "exemplar_colony"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC19.A"#Fine
+		JAP = {
+			money = -250000
+			relation = { who = THIS value = 100 }
+		}
+		money = 250000
+		1485 = {
+			secede_province = JAP
+		}
+		2562 = {
+			secede_province = JAP
+		}
+		ai_chance = {
+			factor = 90
+		}
+	}
+	
+	option = {
+		name = "JPC19.B"#COME AND TAKE IT
+		leave_alliance = JAP
+		relation = { who = JAP value = -100 }
+		1485 = { add_core = JAP }
+		2562 = { add_core = JAP }
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+#Japan wants to buy Brunei
+country_event = {
+	id = 334791
+	title = "JPC20.T"
+	desc = "JPC20.D"
+	picture = "exemplar_colony"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC18.A"#Cash register sound
+		JAP = {
+			money = -250000
+			country_event = 334792
+		}
+		money = 250000
+		any_owned = {
+			limit = {
+				is_core = BOR
+			}
+			secede_province = JAP 
+		}
+		any_owned = {
+			limit = {
+				is_core = BRI 
+			}
+			secede_province = JAP 
+		}
+		any_owned = {
+			limit = {
+				is_core = SUL
+			}
+			secede_province = JAP 
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+		name = "JPC18.B"#MI ARCILLA
+		JAP = {
+			country_event = 334793 
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#Spain Agrees
+country_event = {
+	id = 334792
+	title = "JPC21.T"
+	desc = "JPC21.D"
+	picture = "DIM_banjar"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC21.A"
+		prestige = 5
+		relation = { who = FROM value = 100 }
+	}
+}
+
+#Spain Refused
+country_event = {
+	id = 334793
+	title = "JPC22.T"
+	desc = "JPC22.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC22.A"
+		relation = { who = FROM value = -50 }
+		casus_belli = {
+			target = FROM 
+			type = place_in_the_sun 
+			months = 48
+	    }
+	}
+}
+
+#We have taken Rusun! Now people are apathetic about it. 
+country_event = {
+	id = 334794
+	title = "JPC23.T"
+	desc = "JPC23.D"
+	picture = "DIM_buitenzorg_2"
+
+	trigger = {
+	    SPA_1455 = { owned_by = THIS }	     
+		has_country_flag = rusun_prioritized
+	}
+			
+	mean_time_to_happen = { 
+		days = 1
+	}
+
+	option = {
+		name = "JPC23.A"
+		clr_country_flag = rusun_prioritized
+		set_country_flag = rusun_denied
+		any_owned = {
+			limit = {
+				is_core = TON 
+				is_core = THIS 
+			}
+			remove_core = THIS 
+		}
+	}
+}
+
+#Japan wants the Maniolas. This is a threat. 
+country_event = {
+	id = 334795
+	title = "JPC24.T"
+	desc = "JPC24.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC24.A"#I am a cuckold
+		prestige = -20
+		any_owned = {
+			limit = {
+				OR = {
+					is_core = TON 
+					is_core = MAG
+					is_core = CHR
+				}
+			}
+			secede_province = JAP 
+		}
+		relation = { who = JAP value = -400 }
+		any_pop = {
+			limit = {
+				OR = {
+					is_primary_culture = yes 
+					is_accepted_culture = yes 
+				}
+			}
+			scaled_militancy = {
+				factor = 2
+				ideology = reactionary
+			}
+			scaled_militancy = {
+				factor = 1
+				ideology = conservative
+			}
+			scaled_militancy = {
+				factor = 1 
+				ideology = liberal
+			}
+		}
+		set_global_flag = manioras_to_JAP
+		ai_chance = {
+			factor = 100
+			   modifier = { 
+			      factor = 0.5
+				  NOT = { total_amount_of_ships = 10 }
+			   }
+			   modifier = { 
+			      factor = 0.5
+				  war_exhaustion = 75
+			   }
+			   modifier = { 
+			      factor = 0.5
+				  war_exhaustion = 100
+			   }
+			   modifier = { 
+			      factor = 0.75
+				  NOT = { stronger_army_than = JAP } 
+			   }
+		}
+	}
+	option = {
+		name = "JPC24.B"#THIS IS AN ANIME FREE SERVER
+		set_country_flag = holding_the_maniolas
+		prestige = 2
+		JAP = {
+			country_event = { id = 334796 days = 1 }
+		}
+		ai_chance = {
+			factor = 20
+			   modifier = { 
+			      factor = 2
+				  NOT = { total_amount_of_ships = 10 }
+			   }
+			   modifier = { 
+			      factor = 2
+				  war_exhaustion = 75
+			   }
+			   modifier = { 
+			      factor = 2
+				  war_exhaustion = 100
+			   }
+			   modifier = { 
+			      factor = 1.5
+				  NOT = { stronger_army_than = JAP } 
+			   }
+		}
+	}
+}
+
+#The Nordic-Japanese War 
+country_event = {
+	id = 334796
+	title = "JPC25.T"
+	desc = "JPC25.D"
+	picture = "namazu"
+
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = "JPC25.A"
+		set_global_flag = nordic_japanese_war
+		relation = { who = FROM value = -100 }
+		war = {
+			target = FROM 
+			attacker_goal = {
+				casus_belli = custom_treaty_cb 
+			}
+			defender_goal = {
+				casus_belli = status_quo 
+			}
+			call_ally = yes
+		}
+	}
+}
+
+#Nords got BTFO by Japan. For the first time, Japan has won a great victory over a European power
+country_event = {
+	id = 334797
+	title = "JPC26.T"
+	desc = "JPC26.D"
+	picture = "reactionary_victory"
+	
+	trigger = {
+	    tag = SCA
+	    has_country_flag = holding_the_maniolas
+		exists = yes
+		war = no
+		NOT = { has_country_flag = dismantling_treaty }		
+		JAP = { exists = yes }
+		has_global_flag = nordic_japanese_war
+		OR = {
+           has_country_flag = custom_treaty_loser
+		   is_disarmed = yes
+		}		
+	}
+			
+	mean_time_to_happen = { 
+		days = 1
+	}
+
+	option = {
+		name = "JPC26.A"#Our holdings in the Maniolas are forfeit
+		JAP = { prestige = 30 }
+		prestige = -30
+		clr_global_flag = nordic_japanese_war
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = holding_the_maniolas
+		set_global_flag = JAP_maniolas
+		any_owned = {
+			limit = {
+				OR = {
+					is_core = TON 
+					is_core = MAG 
+					is_core = MNL
+					is_core = SUL 
+					is_core = CHR
+				}
+			}
+			secede_province = JAP 
+		}
+		set_global_flag = manioras_to_JAP
+	}
+}
+
+#Japan failed to defeat Scandinavia
+country_event = {
+	id = 3347970
+	title = "JPC260.T"
+	desc = "JPC260.D"
+	picture = "seppuku"
+	
+	trigger = {
+	    tag = JAP
+		exists = yes
+		war = no
+		has_global_flag = nordic_japanese_war
+		SCA = { 
+		   has_country_flag = holding_the_maniolas
+           NOT = {		
+		      OR = {
+		         has_country_flag = dismantling_treaty
+                 has_country_flag = custom_treaty_loser
+		         is_disarmed = yes
+		      }		
+		   }
+		}
+	}
+			
+	mean_time_to_happen = { 
+		days = 1
+	}
+
+	option = {
+		name = "JPC260.A"#Holy shit we suck
+		clr_global_flag = nordic_japanese_war
+	    JAP = { prestige = -30 }
+		prestige = 30
+	}
+}
+
+
+#Formation of the Kyōwakai Society
+country_event = {
+	id = 334798
+	title = "JPC27.T"
+	desc = "JPC27.D"
+	picture = "genroin_officers"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC27.A"#Oh god oh fuck 
+		relation = { who = JAP value = -50 }
+	}
+}
+
+#The Kyowakai Targets Us - Unciv
+country_event = {
+	id = 334799
+	title = "JPC28.T"
+	desc = "JPC28.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC28.A"#I can't wait for your demography to collapse you bastards
+		JAP = {
+			casus_belli = {
+				target = THIS 
+				type = treaty_port_casus_belli
+				months = 48
+			}
+		}
+	}
+}
+
+#The Kyowakai Targets Us - Civ
+country_event = {
+	id = 334800
+	title = "JPC29.T"
+	desc = "JPC29.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC29.A"#I can't wait for your demography to collapse you bastards
+		JAP = {
+			casus_belli = {
+				target = THIS 
+				type = place_in_the_sun
+				months = 48
+			}
+		}
+	}
+}
+
+#The Nagoya Conference - Japan has decided that they should "steward" Chinese port cities
+country_event = {
+	id = 334801
+	title = "JPC30.T"
+	desc = "JPC30.D"
+	picture = "great_powers"
+
+	is_triggered_only = yes
+
+	
+	option = {
+		name = "JPC30.A" #Oh yes Nippon-kun! 
+		prestige = -10
+		relation = { who = FROM value = 200 }
+		FROM = { change_variable = { which = yes_to_nagoya value = 1 } }
+		set_country_flag = yes_to_nagoya	
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 3 war_policy = anti_military relation = { who = FROM value = 150 } }
+			modifier = { factor = 4 war_policy = pacifism relation = { who = FROM value = 150 } }
+			modifier = { factor = 5 NOT = { war_policy = jingoism } OR = { relation = { who = FROM value = 200 } alliance_with = FROM } }
+			modifier = { factor = 0.5 war_policy = pro_military }
+			modifier = { factor = 0 war_policy = jingoism }		
+		}
+	}
+	
+	option = {
+		name = "JPC30.B" #ARE YOU FUCKING KIDDING ME? GET THIS SHIT OUT OF MY FACE
+		relation = { who = FROM value = -100 }
+		diplomatic_influence = { who = FROM value = -25 }
+		FROM = { change_variable = { which = no_to_nagoya value = 1 } }	
+		ai_chance = {
+			factor = 90
+			modifier = { factor = 0.7 war_policy = anti_military relation = { who = FROM value = 150 } }
+			modifier = { factor = 0.6 war_policy = pacifism relation = { who = FROM value = 150 } }
+			modifier = { factor = 0.5 NOT = { war_policy = jingoism } OR = { relation = { who = FROM value = 200 } alliance_with = FROM } }
+			modifier = { factor = 1.5 war_policy = pro_military }
+			modifier = { factor = 2 war_policy = jingoism }	
+		}
+	}
+}
+	
+#The Nagoya Conference Succeeds - How the hell did you get this outcome? Praying to the kami?
+country_event = {
+	id = 334802
+	title = "JPC31.T"
+	desc = "JPC31.D"
+	
+	major = yes
+	
+	trigger = {
+		tag = JAP
+		OR = {
+			check_variable = { which = yes_to_nagoya value = 4 }
+			AND = {
+				check_variable = { which = yes_to_nagoya value = 3 }
+				NOT = { check_variable = { which = no_to_nagoya value = 3 } }
+			}
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { months = 1 }
+	
+	option = {
+		name = "JPC31.A"
+		prestige = 30
+		set_country_flag = JAP_chinese_trademonger		
+		any_owned = {
+			limit = {
+				owner = { has_country_flag = yes_to_nagoya }
+				is_core = CHI 
+				is_colonial = yes 
+				has_province_modifier = chinese_treaty_port
+			}
+			secede_province = THIS 
+		}
+		1498 = { add_core = THIS }#Macao 
+		1538 = { add_core = THIS }#Shanghai 
+		1496 = { add_core = THIS }#Hong Kong 
+		1566 = { add_core = THIS }#Qingdao 
+		1481 = { add_core = THIS }#Lushun - Port Arthur
+		1569 = { add_core = THIS }#Weihai 
+		1606 = { add_core = THIS }#Jiaxing 
+		1485 = { add_core = THIS }#Taibei
+		2562 = { add_core = THIS }#Tainan
+		1499 = { add_core = THIS }#Hainan
+		2674 = { add_core = THIS }#Kwangchowan
+		1608 = { add_core = THIS }#Ningbo
+	}
+}
+
+#The Nagoya Conference Fails - The negotiations were short
+country_event = {
+	id = 334803
+	title = "JPC32.T"
+	desc = "JPC32.D"
+	major = yes
+	
+	trigger = {
+		tag = JAP
+		OR = {
+			check_variable = { which = no_to_nagoya value = 4 }
+			AND = {
+				check_variable = { which = no_to_nagoya value = 3 }
+				NOT = { check_variable = { which = yes_to_nagoya value = 3 } }
+			}
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { months = 1 }
+	
+	option = {
+		name = "JPC32.A"#I WASN'T ASKING
+		1498 = { add_core = THIS }#Macao 
+		1538 = { add_core = THIS }#Shanghai 
+		1496 = { add_core = THIS }#Hong Kong 
+		1566 = { add_core = THIS }#Qingdao 
+		1481 = { add_core = THIS }#Lushun - Port Arthur
+		1569 = { add_core = THIS }#Weihai 
+		1606 = { add_core = THIS }#Jiaxing 
+		1485 = { add_core = THIS }#Taibei
+		2562 = { add_core = THIS }#Tainan
+		1499 = { add_core = THIS }#Hainan
+		2674 = { add_core = THIS }#Kwangchowan
+		1608 = { add_core = THIS }#Ningbo
+	}
+}
+
+#Republican Japan has announced their intention to "liberate" Asian colonies
+country_event = {
+	id = 334804
+	title = "JPC33.T" #Sangoku
+	desc = "JPC33.D"
+	picture = "saigo_coup"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "JPC33.A"#This is the most insane thing that I have ever heard
+		relation = { who = FROM value = -200 }
+	}
+}
+	
+#Sangoku - Beat the drums of war in Asia
+country_event = {
+	id = 334805
+	title = "JPC34.T" #Sangoku
+	desc = "JPC34.D"
+	picture = "deliberation"
+
+	trigger = {
+		owns = 1485 #Taipei
+		war = no
+		is_disarmed = no
+		is_greater_power = yes
+		tag = JAP
+		revolution_n_counterrevolution = 1
+		has_country_flag = sangoku
+		any_neighbor_country = {
+			civilized = yes
+			is_vassal = no
+			OR = {
+				NOT = { capital_scope = { continent = asia } }
+				is_culture_group = iranian#In case a player Aryanam takes land in Asia
+				primary_culture = korean
+			}
+			NOT = {
+				in_sphere = THIS
+				truce_with = THIS
+			}
+		}
+		NOT = {
+			has_country_flag = no_more_sangoku
+			has_country_modifier = punitive_effects
+			war_policy = pacifism
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+		
+		modifier = {
+			factor = 0.75
+			revolution_n_counterrevolution = 1
+		}
+		
+		modifier = {
+			factor = 0.5
+			mass_politics = 1
+		}
+	}
+
+	option = {
+		name = "JPC34.A"#THE AGE OF THE EUROPEAN IS OVER, THE AGE OF THE ASIAN IS AT HAND
+		badboy = 4
+		random_country = {
+			limit = {
+				NOT = { capital_scope = { continent = asia } }
+				any_owned_province = { 
+					is_colonial = yes
+					continent = asia 
+				}
+				is_vassal = no
+				exists = yes
+				neighbour = THIS
+				NOT = {
+					truce_with = THIS
+					in_sphere = THIS
+				}
+			}
+			leave_alliance = THIS
+			relation = {
+				who = THIS
+				value = -100
+			}
+			add_casus_belli = {
+				target = THIS
+				type = place_in_the_sun
+				months = 48
+			}
+		}
+		
+		ai_chance = {
+			factor = 95
+			modifier = {
+				factor = 0
+				badboy = 0.92
+			}
+		}
+	}
+	
+	option = {
+		name = "JPC34.B"#Let us bide our time
+		prestige = -5
+		any_neighbor_country = {
+			limit = {
+				NOT = { capital_scope = { continent = asia } }
+				any_owned_province = { 
+					is_colonial = yes
+					continent = asia 
+				}
+				is_vassal = no
+				exists = yes
+				neighbour = THIS
+				NOT = {
+					truce_with = THIS
+					in_sphere = THIS
+				}
+			}
+			relation = {
+				who = THIS
+				value = 25
+			}
+		}
+		ai_chance = {
+			factor = 5
+		}
+	}
+	
+	option = {
+		name = "JPC34.C"#Actually those white women are kinda hot
+		prestige = -10
+		set_country_flag = no_more_sangoku
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+	
+##END OF ASIAN CONTENT##
+
+##OCEANIAN CONTENT##
+
+#A Japanese-Zhourao Alliance?
+country_event = {
+	id = 334806
+	title = "JPC35.T"
+	desc = "JPC35.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC35.A"#Of course
+		relation = { who = JAP value = 400 }
+		JAP = { diplomatic_influence = { who = THIS value = 400 } }
+		create_alliance = JAP 
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 2
+				in_sphere = JAP 
+			}
+			modifier = {
+				factor = 0.5
+				truce_with = JAP
+			}
+		}
+	}
+	option = {
+		name = "JPC35.B"#We can't trust those shady Asians
+		relation = { who = JAP value = -50 }
+		ai_chance = {
+			factor = 40 
+			modifier = {
+				factor = 2
+				truce_with = JAP
+			}
+			modifier = {
+				factor = 0.5
+				in_sphere = JAP 
+			}
+		}
+	}
+}
+
+#Japan Offers to Help Us Conquer Zuharra
+country_event = {
+	id = 334807
+	title = "JPC36.T"
+	desc = "JPC36.D"
+	picture = "samurai_plans"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC36.A"#LET'S GO
+		relation = { who = JAP value = 400 }
+		create_alliance = JAP 
+		2497 = { owner = { country_event = { id = 334808 days = 3 } } }
+		ai_chance = {
+			factor = 60
+			modifier = {
+				factor = 2
+				in_sphere = JAP 
+			}
+			modifier = {
+				factor = 0.5
+				truce_with = JAP
+			}
+		}
+	}
+	option = {
+		name = "JPC36.B"#We don't need their help
+		relation = { who = JAP value = -50 }
+		ai_chance = {
+			factor = 40 
+			modifier = {
+				factor = 2
+				truce_with = JAP
+			}
+			modifier = {
+				factor = 0.5
+				in_sphere = JAP 
+			}
+		}
+	}
+}
+
+#The Zuharra War
+country_event = {
+	id = 334808
+	title = "JPC37.T"
+	desc = "JPC37.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = "JPC37.A"#All this for a bunch of sand??
+		GAN = {
+			war = {
+				target = THIS 
+				attacker_goal = {
+					casus_belli = acquire_all_cores
+				}
+				defender_goal = {
+					casus_belli = status_quo
+				}
+				call_ally = yes 
+			}
+		}
+	}
+}
+
+#Japanese Sunrise Over Zhourao
+country_event = {
+	id = 334809
+	title = "JPC38.T"
+	desc = "JPC38.D"
+	picture = "sunrise"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC38.A"#The coup is successful
+		JAP = { create_vassal = THIS }
+		ai_chance = { factor = 75 }
+	}
+	
+	option = {
+		name = "JPC38.A"#The coup is defeated, but Japan is coming...
+		JAP = {
+			casus_belli = {
+				target = THIS 
+				type = make_puppet
+				months = 48
+			}
+			war = {
+				target = THIS 
+				attacker_goal = {
+					casus_belli = make_puppet
+				}
+				defender_goal = {
+					casus_belli = status_quo
+				}
+				call_ally = yes 
+			}
+		}
+		ai_chance = { factor = 25 }
+	}	
+}
+
+#The Japanese-Zhourao War
+country_event = {
+	id = 334810
+	title = "JPC39.T"
+	desc = "JPC39.D"
+	picture = "boshin_war"
+
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = "JPC39.A"#Fight Work or Perish
+		JAP = {
+			war = {
+				target = THIS 
+				attacker_goal = {
+					casus_belli = conquest_any
+				}
+				defender_goal = {
+					casus_belli = status_quo
+				}
+				call_ally = yes 
+			}
+		}
+	}
+}
+
+##ARCADIAN CONTENT##
+
+#We took Xiazhou, but Hokkaigan should probably have it
+
+country_event = { 
+	id = 334771
+	title = "JPC1.T"
+	desc = "JPC1.D"
+	picture = "sunrise"
+	
+	trigger = {
+		tag = JAP
+		has_country_flag = back_to_xiazhou
+		13 = {
+			is_core = THIS 
+			owned_by = THIS 
+		}
+		KKN = {
+			exists = yes 
+			is_vassal = yes 
+			vassal_of = THIS 
+		}
+		war = no 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = JPC1.A#Okay, hand it over
+		badboy = -1
+		any_owned = {
+			limit = {
+				is_core = KKN 
+			}
+			remove_core = THIS 
+			secede_province = KKN 
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+	
+	option = {
+		name = JPC1.B#MY PRECIOUS
+		any_owned = {
+			limit = {
+				is_core = KKN 
+			}
+			remove_core = THIS 
+		}
+		any_pop = {
+			limit = {
+				culture = qingqiuan
+			}
+			militancy = 3
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#Japan has conquered Qingqiu, should we create Dayan?
+
+country_event = {
+	id = 334772
+	title = "JPC2.T"
+	desc = "JPC2.D"
+	picture = "sunrise"
+
+	trigger = {
+		tag = JAP 
+		owns = 111				
+		war = no 
+		has_global_flag = high_castle
+		NOT = { exists = DNG }	
+		NOT = {
+		   OR = {
+		      has_country_flag = JAP_pacific_states
+			  has_country_flag = JAP_arcadian_overextension
+			  has_country_flag = DNG_revolt_imminent
+			  has_country_flag = east_qingqiu_rebellion
+			  has_country_flag = JAP_never_learns
+			  has_country_flag = JAP_second_catastrophe
+		   }
+        }			  
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = {
+		days = 7 
+	}
+
+	option = {
+		name = "JPC2.A"#Japanese cowboy time
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			secede_province = DAY 
+		}
+		create_vassal = DAY 
+		DAY = {
+			government = presidential_dictatorship
+			primary_culture = japanese
+			add_accepted_culture = qingqiuan
+			capital = 113
+		}
+		badboy = -3
+		set_country_flag = JAP_pacific_states 
+		ai_chance = {
+			factor = 90
+		}
+	}
+	
+	option = {
+		name = "JPC2.B"#NO I MUST BLOB
+		any_pop = {
+			limit = {
+				culture = qingqiuan
+			}
+			militancy = 4
+			consciousness = 4
+		}
+		DNG_4 = { add_core = KKN }
+		set_country_flag = JAP_arcadian_overextension
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+#Not setting up Dayan was a bad idea
+
+country_event = {
+	id = 334773
+	title = "JPC3.T"
+	desc = "JPC3.D"
+	picture = "sunset"
+	
+	fire_only_once = yes
+
+	trigger = {	
+	    tag = JAP
+		owns = 111
+		DAY = { exists = no }
+		has_country_flag = JAP_arcadian_overextension		
+	}
+	
+	mean_time_to_happen = {
+		months = 9
+		   modifier = {
+		      factor = 0.1
+			  year = 1860
+		   }
+		   modifier = {
+		      factor = 0.01
+			  year = 1870
+		   }
+	}
+
+	option = {
+		name = "JPC3.A"#Fine I'll create Dayan
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			secede_province = DAY 
+		}
+		create_vassal = DAY 
+		DAY = {
+			government = presidential_dictatorship
+			primary_culture = japanese
+			add_accepted_culture = qingqiuan
+			capital = 113
+		}
+		badboy = -3
+		set_country_flag = JAP_pacific_states 	
+		ai_chance = {
+			factor = 20
+		}
+	}
+	
+	option = {
+		name = "JPC3.B"#Ok and?
+		clr_country_flag = JAP_arcadian_overextension
+		set_country_flag = DNG_revolt_imminent
+	    any_pop = {
+			limit = {
+				culture = qingqiuan
+			}
+			scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_militancy = {
+			   factor = -1
+			   ideology = liberal
+			}
+			scaled_consciousness = {
+			   factor = -1
+			   ideology = liberal
+			}
+	    }
+		country_event = { id = 334774 days = 31 }	
+		ai_chance = {
+			factor = 80 
+		}
+	}
+}
+
+# Anarchy in the Hinterlands
+
+country_event = {
+	id = 334774
+	title = "JPC4.T"
+	desc = "JPC4.D"
+	picture = "black_flag_army"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "JPC4.A"#Didn't we kill these guys already?
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			add_core = DNG
+			secede_province = DNG
+		}
+		DNG = {
+			government = presidential_dictatorship
+			ruling_party_ideology = conservative
+			political_reform = party_appointed
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = mandatory_service
+			political_reform = state_press
+			political_reform = first_past_the_post
+			political_reform = underground_parties
+			clr_country_flag = theocratic_government
+			clr_country_flag = merchantrepublic_gov
+			clr_country_flag = communist_gov
+			clr_country_flag = absolute_monarchy_gov
+			clr_country_flag = semi_constitutional_monarchy_gov
+			clr_country_flag = constitutional_monarchy_gov
+			clr_country_flag = parliamentary_republic_gov
+			clr_country_flag = democracy_gov
+			set_country_flag = presidential_dictatorship_gov
+			clr_country_flag = fascist_gov
+			clr_country_flag = anarcho_liberal_gov
+			clr_country_flag = socialist_republic_gov
+			clr_country_flag = fascist_monarchy_gov
+			clr_country_flag = election_started
+			clr_country_flag = tory_election_win
+			clr_country_flag = socialist_election_win
+			clr_country_flag = liberal_election_win
+			clr_country_flag = communist_election_win
+			clr_country_flag = fascist_election_win
+			clr_country_flag = reactionary_election_win
+			clr_country_flag = anarcho_liberal_election_win
+			clr_country_flag = social_liberal_election_win
+			clr_country_flag = market_liberal_election_win
+			clr_country_flag = conservative_party_in_power
+			clr_country_flag = liberal_party_in_power
+			clr_country_flag = reactionary_party_in_power
+			clr_country_flag = socialist_party_in_power
+			clr_country_flag = communist_party_in_power
+			clr_country_flag = fascist_party_in_power
+			clr_country_flag = anarcho_liberal_party_in_power
+			clr_country_flag = market_liberal_party_in_power
+			capital = 113
+			add_country_modifier = {
+				name = small_country_draft
+				duration = 1095
+			}
+			money = 500000
+			artillery = 1000
+			canned_food = 1000
+			regular_clothes = 1000
+			small_arms = 1000
+		}
+        country_event = { id = 334775 days = 31 }		
+	}
+}
+
+# The East Qingqiu Rebellion
+
+country_event = {
+	id = 334775
+	title = "JPC5.T"
+	desc = "JPC5.D"
+	picture = "grand_invasion"
+
+	is_triggered_only = yes 
+
+	option = {
+		name = "JPC5.A"#FIGHT FIGHT FIGHT
+		clr_country_flag = DNG_revolt_imminent
+		set_country_flag = east_qingqiu_rebellion
+		war = {
+			target = DNG
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+			}	
+			call_ally = yes
+	    }	
+	}
+}
+
+# The Rebellion is Crushed - Hokkaigan does not exist
+
+country_event = {
+	id = 3347760
+	title = "JPC6.T"
+	desc = "JPC6.D"
+	picture = "japanese_battle"
+
+	fire_only_once = yes
+
+	trigger = {	
+	    tag = JAP
+		has_country_flag = east_qingqiu_rebellion
+		DNG = { exists = no }
+		war = no 
+		OR = {
+			NOT = { exists = KKN }
+			NOT = { KKN = { vassal_of = THIS } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		clr_country_flag = east_qingqiu_rebellion
+	}
+
+	option = {
+		name = "JPC6.A"#Yeah maybe we DO need Dayan after all
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			secede_province = DAY
+		}
+		create_vassal = DAY 
+		DAY = {
+			government = presidential_dictatorship
+			primary_culture = japanese
+			add_accepted_culture = qingqiuan
+			capital = 113
+		}
+		badboy = -3
+		set_country_flag = JAP_pacific_states 	
+		ai_chance = {
+			factor = 70
+		}	
+	}
+	
+	option = {
+		name = "JPC6.B"#Let's create Dayan, and Hokkaigan as well
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			secede_province = DAY
+		}
+		create_vassal = DAY 
+		DAY = {
+			government = presidential_dictatorship
+			primary_culture = japanese
+			add_accepted_culture = qingqiuan
+			capital = 113
+		}
+		release_vassal = KKN 
+		badboy = -6
+		set_country_flag = JAP_pacific_states	
+		ai_chance = {
+			factor = 20
+		}
+    }		
+	
+	option = {
+		name = "JPC6.B"#I have learned absolutely nothing
+		set_country_flag = JAP_never_learns
+		DNG_4 = { remove_core = KKN }
+		prestige = 10 
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+# The Rebellion is Crushed - Hokkaigan exists
+
+country_event = {
+	id = 334776
+	title = "JPC6.T"
+	desc = "JPC6.D"
+	picture = "japanese_battle"
+
+	fire_only_once = yes
+
+	trigger = {	
+	    tag = JAP
+		has_country_flag = east_qingqiu_rebellion
+		DNG = { exists = no }
+		war = no 
+		KKN = { 
+			exists = yes 
+			is_vassal = yes
+			vassal_of = THIS
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "JPC6.A"#Create Dayan and give Xiazhou to Hokkaigan
+		any_owned = { 
+			limit = { 
+				is_core = DNG
+				NOT = {
+				    OR = {
+					   region = DNG_4#Xiazhou
+					   region = NA_15#San Bao 
+					   region = DNG_88#Yongle (find the relevant code)
+					}
+				}
+			}
+			add_core = DAY
+			secede_province = DAY
+		}
+		create_vassal = DAY 
+		DAY = {
+			government = presidential_dictatorship
+			primary_culture = japanese
+			add_accepted_culture = qingqiuan
+			capital = 113
+		}
+		any_owned = { 
+			limit = {
+				region = DNG_4#Xiazhou
+			}
+			secede_province = KKN
+		}
+		badboy = -3.00
+		set_country_flag = JAP_pacific_states 
+		ai_chance = {
+			factor = 70
+		}	
+	}
+	
+	option = {
+		name = "JPC6.B"#I have learned absolutely nothing
+		prestige = 10 
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#Stalemate = You're all losers
+
+country_event = {
+	id = 334777
+	title = "JPC7.T"
+	desc = "JPC7.D"
+	picture = "japanese_battle"
+
+	fire_only_once = yes
+
+	trigger = {	
+	    tag = JAP
+		has_country_flag = east_qingqiu_rebellion
+		DNG = { exists = yes }
+		war = no 
+		NOT = { NA_15 = { owned_by = DNG } }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "JPC7.A"#Japan lost control of most of Qingqiu, making the Tenno tonight's biggest loser
+		prestige = -15
+		set_country_flag = JAP_pacific_states 
+	}
+}
+
+#Qingqiu won, get rekt Japan lmao
+
+country_event = {
+	id = 334778
+	title = "JPC8.T"
+	desc = "JPC8.D"
+	picture = "grand_invasion"
+
+	fire_only_once = yes
+
+	trigger = {	
+	    tag = DNG
+		JAP = { has_country_flag = east_qingqiu_rebellion }
+		NA_15 = { owned_by = THIS }
+		war = no 
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "JPC8.A"#WEEEEEE ARE THE CHAMPIONS
+		prestige = 40
+		JAP = {
+			prestige = -20
+			clr_country_flag = east_qingqiu_rebellion
+			any_owned = {
+				limit = {
+					is_core = DNG 
+				}
+				remove_core = JAP
+			    secede_province = DNG 
+			}
+			
+		}
+		random_country = {
+			limit = {
+				primary_culture = kaiganese
+				vassal_of = JAP
+			}
+			any_owned = {
+				limit = {
+					is_core = DNG 
+				}
+				remove_core = JAP
+			    secede_province = DNG 
+			}		
+		}
+	    any_pop = {
+			limit = {
+				culture = japanese
+			}
+			militancy = -3
+		}
+		set_country_flag = JAP_second_catastrophe
+	}
+}
+
+#Japan has claimed the Galapagos??
+
+country_event = {
+	id = 334779
+	title = "JPC9.T"
+	desc = "JPC9.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC9.A"#What in the fuck
+		any_pop = {
+			limit = {
+				culture = japanese 
+			}
+			consciousness = 1
+		}
+	}
+}
+
+#Japan Demands Andagoya From Us
+
+country_event = {
+	id = 334780
+	title = "JPC10.T"
+	desc = "JPC10.D"
+	picture = "solanto_lopez"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC10.A"#Come at me bro
+		prestige = 5
+		JAP = {
+			casus_belli = { target = THIS type = liberate_country months = 60 }
+		}
+		ai_chance = {
+			factor = 80
+		}
+	}
+	
+	option = {
+		name = "JPC10.B" #I don't fuck with Japan
+		prestige = -10
+		any_owned = {
+			limit = {
+				is_core = PNM
+			}
+			remove_core = THIS 
+			secede_province = JAP
+		}
+		JAP = { 
+			release_vassal = PNM
+		}
+		any_pop = {
+			scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+			}
+			scaled_consciousness = {
+			   factor = 2
+			   ideology = reactionary
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+			}
+	    }
+		ai_chance = {
+			factor = 20
+		}
+	}
+}
+
+#The Andagoyan Coup
+
+country_event = {
+	id = 334781
+	title = "JPC11.T"
+	desc = "JPC11.D"
+	picture = "solanto_lopez"
+
+	is_triggered_only = yes
+	
+	immediate = {
+		release_vassal = PNM
+		PNM = { 
+			government = presidential_dictatorship
+			ruling_party_ideology = conservative
+			political_reform = party_appointed
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = mandatory_service
+			political_reform = state_press
+			political_reform = first_past_the_post
+			political_reform = underground_parties
+			clr_country_flag = theocratic_government
+			clr_country_flag = merchantrepublic_gov
+			clr_country_flag = communist_gov
+			clr_country_flag = absolute_monarchy_gov
+			clr_country_flag = semi_constitutional_monarchy_gov
+			clr_country_flag = constitutional_monarchy_gov
+			clr_country_flag = parliamentary_republic_gov
+			clr_country_flag = democracy_gov
+			set_country_flag = presidential_dictatorship_gov
+			clr_country_flag = fascist_gov
+			clr_country_flag = anarcho_liberal_gov
+			clr_country_flag = socialist_republic_gov
+			clr_country_flag = fascist_monarchy_gov
+			clr_country_flag = election_started
+			clr_country_flag = tory_election_win
+			clr_country_flag = socialist_election_win
+			clr_country_flag = liberal_election_win
+			clr_country_flag = communist_election_win
+			clr_country_flag = fascist_election_win
+			clr_country_flag = reactionary_election_win
+			clr_country_flag = anarcho_liberal_election_win
+			clr_country_flag = social_liberal_election_win
+			clr_country_flag = market_liberal_election_win
+			clr_country_flag = conservative_party_in_power
+			clr_country_flag = liberal_party_in_power
+			clr_country_flag = reactionary_party_in_power
+			clr_country_flag = socialist_party_in_power
+			clr_country_flag = communist_party_in_power
+			clr_country_flag = fascist_party_in_power
+			clr_country_flag = anarcho_liberal_party_in_power
+			clr_country_flag = market_liberal_party_in_power
+			money = 500000
+			artillery = 1000
+			canned_food = 1000
+			regular_clothes = 1000
+			small_arms = 1000
+			add_country_modifier = { 
+				name = small_country_draft
+				duration = 1095
+			}
+		}
+	    any_country = { 
+		   limit = {
+		      is_greater_power = yes
+		   }
+		   diplomatic_influence = { who = PNM value = -400 }
+		   relation = { who = PNM value = -400 }
+	       leave_alliance = PNM	
+	    }
+		JAP = {
+			relation = { who = PNM value = 400 }
+			diplomatic_influence = { who = PNM value = 400 }
+			create_alliance = PNM 
+		}
+	}
+	
+	option = {
+		name = "JPC11.A"#THERE WILL BE HELL TO PAY
+		release_vassal = PNM
+		prestige = 5
+		casus_belli = { target = PNM type = make_puppet months = 60 }
+		war = {
+			target = PNM
+			attacker_goal =  { 
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+		}
+		ai_chance = {
+			factor = 90
+		}
+	}
+	
+	option = {
+		name = "JPC11.B" #I never liked Andagoya anyway
+		release_vassal = PNM
+		prestige = -10
+		any_pop = {
+			scaled_militancy = {
+			   factor = 2
+			   ideology = reactionary
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = reactionary
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+			}
+	    }
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+#Pro-Japanese Coup Attempt!
+country_event = {
+	id = 334782
+	title = "JPC12.T"
+	desc = "JPC12.D"
+	picture = "solanto_lopez"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "JPC12.A"#The coup is defeated but Japan is coming...
+		JAP = {
+		    casus_belli = { target = PNM type = make_puppet months = 60 }
+			war = {
+				target = PNM
+				attacker_goal =  { 
+					casus_belli = make_puppet
+				}
+				defender_goal = {
+					casus_belli = status_quo
+				}	
+				call_ally = yes
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = {
+		name = "JPC12.B" #Tennhoku Banzai, I guess
+		prestige = -10
+	    any_country = { 
+		   limit = {
+		      is_greater_power = yes
+		   }
+		   diplomatic_influence = { who = PNM value = -400 }
+		   relation = { who = PNM value = -400 }
+	       leave_alliance = PNM	
+	    }
+		JAP = {
+			relation = { who = PNM value = 400 }
+			diplomatic_influence = { who = PNM value = 400 }
+			create_alliance = PNM 
+		}
+		any_pop = {
+			scaled_militancy = {
+			   factor = -1
+			   ideology = reactionary
+			}
+			scaled_consciousness = {
+			   factor = -1
+			   ideology = reactionary
+			}
+			scaled_militancy = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_consciousness = {
+			   factor = 1
+			   ideology = conservative
+			}
+			scaled_militancy = {
+			   factor = 2
+			   ideology = liberal
+			}
+			scaled_consciousness = {
+			   factor = 2
+			   ideology = liberal
+			}
+	    }
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+#Japan Declares Moratorium on Andagoya Canal
+country_event = {
+	id = 334783
+	title = "JPC13.T"
+	desc = "JPC13.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC13.A"#Why tho?
+		relation = { who = JAP value = -100 }
+	}
+}
+
+#Japan Declares Moratorium on Andagoya Canal
+country_event = {
+	id = 3347830
+	title = "JPC130.T"
+	desc = "JPC130.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC13.A"#Why tho?
+		random_owned = {
+		    limit = {
+		       owner = { capital_scope = { continent = north_america } }
+			}
+		    relation = { who = JAP value = -200 }
+	    }
+		random_owned = {
+		    limit = {
+		       owner = { capital_scope = { continent = south_america } }
+			}
+		    relation = { who = JAP value = 100 }
+	    }
+	}
+}
+
+#Japan Declares Moratorium on Andagoya Canal
+country_event = {
+	id = 3347831
+	title = "JPC131.T"
+	desc = "JPC131.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC13.A"#Why tho?
+		relation = { who = JAP value = 400 }
+	}
+}
+
+#A Country Has Demanded that the Andagoya Moratorium End
+country_event = {
+	id = 334784
+	title = "JPC14.T"
+	desc = "JPC14.D"
+	picture = "deliberation"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC14.A"#f-fine baka
+		prestige = -44
+		any_pop = {
+			militancy = 1 
+			consciousness = 4 
+		}
+		FROM = { country_event = 334785 }
+		ai_chance = {
+			factor = 5
+		}
+	}
+	
+	option = {
+		name = "JPC14.B"#YOU'LL TAKE MY ANDAGOYA WHEN YOU PRY IT FROM MY COLD, DEAD HANDS!
+		FROM = { country_event = 334786 }
+		ai_chance = {
+			factor = 95
+		}
+	}
+}
+
+#Japan Agreed
+country_event = {
+	id = 334785
+	title = "JPC15.T"
+	desc = "JPC15.D"
+	picture = "Panama13"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC15.A"#Get dabbed on kiddo
+		prestige = 20
+		clr_global_flag = no_andagoya_canal 
+		JAP = {
+			release_vassal = PNM 
+		}
+		relation = { who = PNM value = 400 }
+		diplomatic_influence = { who = PNM value = 400 }
+	}
+}
+
+#Japan Said No 
+country_event = {
+	id = 334786
+	title = "JPC16.T"
+	desc = "JPC16.D"
+	picture = "japanese_warship"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC16.A"#WE MUST BUILD A CANAL
+		set_country_flag = must_have_andagoya
+		casus_belli = { target = PNM type = make_puppet months = 60 }
+		war = {
+			target = PNM
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+#We have taken Balboa
+country_event = {
+	id = 3347850
+	title = "JPC17.T"
+	desc = "JPC17.D"
+	picture = "usa_ship"
+
+	trigger = {	
+	    has_country_flag = must_have_andagoya
+		JAP = { truce_with = THIS }
+		has_recently_lost_war = no 
+		1723 = { owned_by = THIS }
+		war = no 
+		has_global_flag = no_andagoya_canal
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "JPC17.A"#Rev up those shovels
+		prestige = 20
+		clr_global_flag = no_andagoya_canal
+        release_vassal = PNM		
+		JAP = {
+			relation = { who = PNM value = -400 }
+			diplomatic_influence = { who = PNM value = -400 }
+		}
+		relation = { who = PNM value = 400 }
+		diplomatic_influence = { who = PNM value = 400 }
+		any_country = {
+			limit = {
+				OR = {
+					is_greater_power = yes 
+					is_secondary_power = yes 
+					capital_scope = { continent = north_america }
+				}
+			}
+			country_event = 3347860
+		}
+	}
+}
+
+#Andagoya Moratorium Ended
+country_event = {
+	id = 3347860
+	title = "JPC18.T"
+	desc = "JPC18.D"
+	picture = "Panama13"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "JPC18.A"#This was such a dumb idea
+		relation = { who = FROM value = 20 }
+	}
+}
+
+
+
+
+

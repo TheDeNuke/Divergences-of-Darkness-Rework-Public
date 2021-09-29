@@ -1,0 +1,648 @@
+country_event = { 
+	id = 335000
+	title = "HAW1.T" #'Dingyuan' ship tries to smuggle goods into Fāng hú
+	desc = "HAW1.D" 
+	
+	trigger = { 
+	tag = HAW 
+	government = merchant_republic
+	year = 1839 
+	NOT = { has_country_flag = ship_DNG }
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "HAW1.A" 
+	set_country_flag = ship_DNG
+	DNG = { country_event = 335001 }
+	}
+
+}
+
+country_event = { 
+	id = 335001
+	title = "HAW2.T" #DNG event
+	desc = "HAW2.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW2.A" 
+	}
+}
+
+country_event = { 
+	id = 335002
+	title = "HAW3.T" #Royal Mau'i island family flees aboard a Scandinavian ship
+	desc = "HAW3.D" 
+	
+	trigger = { 
+	tag = HAW 
+	government = merchant_republic
+	year = 1860
+	NOT = { has_country_flag = maui_royals }
+	}
+	
+	mean_time_to_happen = { 
+	months = 10 
+	modifier = { 
+	factor = 0.1 
+	year = 1861 
+		}
+	}
+	
+	option = { 
+	set_country_flag = maui_royals
+	name = "HAW3.A"
+	SCA = { country_event = 335003 } 
+	any_pop = { 
+	militancy = 1 
+		}
+	}
+}
+	
+country_event = { 
+	id = 335003
+	title = "HAW4.T" #SCA event about the Hawaian royals
+	desc = "HAW4.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW4.A" 
+	set_country_flag = maui_royals
+	relation = { who = HAW value = -20 } 
+	}
+}
+
+country_event = { 
+	id = 335004
+	title = "HAW5.T" #Death of the Grand Marshal of Qingqiu
+	desc = "HAW5.D" 
+
+	major = yes 
+	
+	trigger = { 
+	tag = HAW 
+	government = merchant_republic 
+	year = 1866
+	NOT = { has_global_flag = death_marshall_HAW } 
+	} 
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW5.A" 
+	set_global_flag = death_marshall_HAW 
+	} 
+}
+
+
+country_event = { 
+	id = 335005
+	title = "HAW6.T" #Scandinavia decides to intervene or not
+	desc = "HAW6.D" 
+	
+	trigger = { 
+	tag = SCA 
+	has_country_flag = maui_royals
+	has_global_flag = death_marshall_HAW 
+	} 
+	
+	mean_time_to_happen = { 
+	months = 3 
+	} 
+	
+	option = { 
+	name = "HAW6.A" #nah, it's too far
+	set_global_flag = SCA_not_intervention_HAW
+	}
+	
+	option = { 
+	name = "HAW6.B" #LET US GO
+	set_global_flag = SCA_intervention_HAW
+	}
+}
+
+country_event = { 
+	id = 335006
+	title = "HAW7.T" #Successor decides to rejoin Qingqiu
+	desc = "HAW7.D" 
+	
+	trigger = { 
+	tag = HAW 
+	government = merchant_republic 
+	has_global_flag = SCA_not_intervention_HAW 
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW7.A" 
+	DNG = { country_event = 335007 }
+	} 
+}
+
+country_event = { 
+	id = 335007
+	title = "HAW8.T" #Successor decides to rejoin Qingqiu -DNG event
+	desc = "HAW8.D" 
+
+	is_triggered_only = yes 
+
+	#surfin D-N-G 
+	option = { 
+	name = "HAW8.A" 
+	inherit = FROM
+	JAP = { country_event = 335009 }
+	} 
+	
+	#nah
+	option = {
+	name = "HAW8.B"
+	relation = { who = FROM value = -50 }
+	JAP = { country_event = 335008 }
+	}
+}
+
+country_event = {
+	id = 335008
+	title = "HAW9.T" #Qingqiu and Scandinavia both left us Hawaii
+	desc = "HAW9.D" 
+
+	is_triggered_only = yes 
+
+	#lmao
+	option = { 
+	name = "HAW8.A" 
+	inherit = HAW
+	ai_chance = {
+		factor = 95
+	}
+	} 
+	
+	#I prefer to leave the unicorn in the wild
+	option = {
+	name = "HAW8.B"
+	relation = { who = HAW value = -50 }
+	ai_chance = {
+		factor = 5 
+	}
+	}
+}
+
+country_event = { 
+	id = 335009
+	title = "HAW10.T" #Successor decides to rejoin Qingqiu -Jap event (they have some traders there I'd say)
+	desc = "HAW10.D" 
+
+	is_triggered_only = yes 
+
+
+	option = { 
+	name = "HAW10.A" #Our interests prevail
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 658
+			}
+		}
+	DNG = { country_event = 335010 } 
+	} 
+	
+	option = { 
+	name = "HAW10.B" # We want to reconcile with Qingqiu
+	relation = { 
+	who = FROM value = 200
+		}
+	set_country_flag = not_HAW_claim 
+	DNG = { country_event = 335011 } 
+	}
+}
+
+country_event = { 
+	id = 335010
+	title = "HAW11.T" #Japan attacked us AGAIN
+	desc = "HAW11.D" 
+
+	is_triggered_only = yes 
+	
+
+	option = { 
+	name = "HAW11.A" 
+	} 
+}
+
+country_event = { 
+	id = 335011
+	title = "HAW12.T" #Japan left us Fāng hú !
+	desc = "HAW12.D" 
+
+	is_triggered_only = yes 
+	
+
+	option = { 
+	name = "HAW12.A" 
+	} 
+}
+
+country_event = { 
+	id = 335012
+	title = "HAW13.T" #Successor ousted by 'Iolani (not sure what regnal name he could have, like Kamehameha was specific I think)
+	desc = "HAW13.D" 
+	
+	trigger = { 
+	tag = HAW 
+	government = merchant_republic 
+	has_global_flag = SCA_intervention_HAW 
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW13.A" 
+	government = prussian_constitutionalism
+	relation = { who = SCA value = 200 }
+	SCA = { diplomatic_influence = { who = THIS value = 300 } }
+	DNG = { country_event = 335013 }
+	JAP = { country_event = 335014 } 
+	} 
+}
+
+country_event = { 
+	id = 335013
+	title = "HAW14.T" #Qingqiu isn't happy with the whole thing of course
+	desc = "HAW14.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW14.A" #Claim the islands!
+	set_global_flag = DNG_claim_HAW
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = { 
+	name = "HAW14.B" #Let them go
+	set_global_flag = DNG_let_go_claim_HAW 
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+}
+
+country_event = { 
+	id = 335014
+	title = "HAW15.T" #Neither is Japan
+	desc = "HAW15.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW15.A" #Claim the islands!
+	set_global_flag = JAP_claim_HAW
+	ai_chance = { 
+	factor = 60 
+		}
+	}
+	
+	option = { 
+	name = "HAW15.B" #Let them go
+	set_global_flag = JAP_let_go_claim_HAW 
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+}
+
+country_event = { 
+	id = 335015
+	title = "HAW16.T" #Hawai annexed by SCA after both refused to go to war
+	desc = "HAW16.D" 
+	
+	trigger = { 
+	tag = SCA 
+	has_global_flag = SCA_intervention_HAW 
+	has_global_flag = DNG_let_go_claim_HAW
+	has_global_flag = JAP_let_go_claim_HAW
+	NOT = { has_global_flag = resolve_HAW }
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW16.A" 
+	set_global_flag = resolve_HAW
+	inherit = HAW
+	relation = { who = JAP value = 50 }
+	relation = { who = DNG value = 50 }
+	} 
+}
+
+country_event = { 
+	id = 335016
+	title = "HAW17.T" #SCA annexes HAW because DNG will declare war
+	desc = "HAW17.D" 
+	
+	trigger = { 
+	tag = SCA 
+	has_global_flag = SCA_intervention_HAW 
+	has_global_flag = DNG_claim_HAW
+	has_global_flag = JAP_let_go_claim_HAW
+	NOT = { has_global_flag = resolve_HAW }
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW17.A" 
+	inherit = HAW
+	set_global_flag = resolve_HAW
+	relation = { who = JAP value = 50 }
+	DNG = { country_event = 335017 }
+	} 
+}
+
+country_event = { 
+	id = 335017
+	title = "HAW18.T" #Qingqiu will declare war!
+	desc = "HAW18.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW18.A" 
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 658
+			}
+		}	
+	} 
+}
+
+country_event = { 
+	id = 335018
+	title = "HAW19.T" #SCA annexes HAW because Japan will declare war
+	desc = "HAW19.D" 
+	
+	trigger = { 
+	tag = SCA 
+	has_global_flag = SCA_intervention_HAW 
+	has_global_flag = DNG_let_go_claim_HAW
+	has_global_flag = JAP_claim_HAW
+	NOT = { has_global_flag = resolve_HAW }
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW19.A" 
+	inherit = HAW
+	set_global_flag = resolve_HAW
+	relation = { who = DNG value = 50 }
+	JAP = { country_event = 335019 }
+	} 
+}
+
+country_event = { 
+	id = 335019
+	title = "HAW20.T" #Japan will declare war!
+	desc = "HAW20.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW20.A" 
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 658
+			}
+		}	
+	} 
+}
+
+country_event = { 
+	id = 335020
+	title = "HAW21.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality
+	desc = "HAW21.D" 
+	
+	trigger = { 
+	tag = SCA 
+	has_global_flag = SCA_intervention_HAW 
+	has_global_flag = DNG_claim_HAW
+	has_global_flag = JAP_claim_HAW
+	NOT = { has_global_flag = resolve_HAW }
+	} 
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+
+	option = { 
+	name = "HAW20.A" #It seems like a good idea
+	set_global_flag = resolve_HAW
+	JAP = { country_event = 335021 }
+	DNG = { country_event = 335022 }
+	} 
+	
+	option = { 
+	name = "HAW20.B" #Where did he get this idea ? We are here to establish a protectorate
+	set_global_flag = resolve_HAW
+	JAP = { country_event = 335025 }
+	DNG = { country_event = 335026 }
+	} 
+}
+
+country_event = { 
+	id = 335021
+	title = "HAW21.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality -Japanese side
+	desc = "HAW21.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW21.A" #if no one gets it, we can agree
+	set_global_flag = honolulu_agreed_JAP
+	ai_chance = { 
+	factor = 80 
+		}
+	}
+	
+	option = { 
+	name = "HAW21.B" #independent Hawai, silly idea
+	set_global_flag = honolulu_refused_JAP
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 335022
+	title = "HAW22.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality -Qingqiu side
+	desc = "HAW22.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW22.A" #if no one gets it, we can agree
+	set_global_flag = honolulu_agreed_DNG
+	ai_chance = { 
+	factor = 80 
+		}
+	}
+	
+	option = { 
+	name = "HAW22.B" #independent Hawai, silly idea
+	set_global_flag = honolulu_refused_DNG
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 335023
+	title = "HAW23.T" #Protocol of Honolulu : Hawai neutrality guaranteed by all three members
+	desc = "HAW23.D" 
+	
+	major = yes 
+	
+	trigger = { 
+	tag = HAW 
+	has_global_flag = honolulu_agreed_DNG
+	has_global_flag = honolulu_agreed_JAP
+	has_global_flag = resolve_HAW
+	} 
+	
+	mean_time_to_happen = { 
+	months = 25 
+	}
+	
+	option = { 
+	name = "HAW23.A"
+	clr_global_flag = resolve_HAW
+	research_points = 5000
+	prestige = 20 
+	add_country_modifier = {
+		name = neutrality
+		duration = -1
+		}
+	relation = { who = SCA value = 200 } 
+	relation = { who = JAP value = 75 }
+	relation = { who = DNG value = 50 }
+	}
+	
+}
+
+country_event = { 
+	id = 335024
+	title = "HAW24.T" #he tried : it failed, SCA annexes HAW and is declared upon by both DNG and JAP
+	desc = "HAW24.D" 
+	
+	trigger = { 
+	tag = SCA 
+	OR = { 
+	has_global_flag = honolulu_refused_DNG
+	has_global_flag = honolulu_refused_JAP
+		}
+	} 
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+	
+	option = { 
+	name = "HAW24.A" 
+	inherit = HAW 
+	JAP = { country_event = { id = 335025 days = 2 } } 
+	DNG = { country_event = { id = 335026 days = 2 } }
+	}
+}
+
+country_event = { 
+	id = 335025
+	title = "HAW25.T" #he tried : JAP declares war
+	desc = "HAW25.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW25.A"
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 658
+			}
+		}
+	war = {
+			target = DNG
+			attacker_goal = {
+				casus_belli = humiliate
+			}
+			defender_goal = { 
+				casus_belli = humiliate
+			}
+		}
+	badboy = -4
+	}
+}
+
+country_event = { 
+	id = 335026
+	title = "HAW26.T" #he tried : DNG declares war
+	desc = "HAW26.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HAW26.A"
+	war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = acquire_any_state
+				state_province_id = 658
+			}
+		}
+	badboy = -6
+	}
+}

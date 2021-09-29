@@ -1237,7 +1237,7 @@ country_event = {
 
 ### Add decision for BLR to get itself annexed into LIT when possible. ###
 
-### A wild hapsburg
+### A wild hapsburg. See 222650 for the result of this event chain.
 
 country_event = {
 	id = 2225210
@@ -1259,6 +1259,7 @@ country_event = {
 	option = {
 		name = "CRUS220.A"
 		clr_country_flag = hapsburg_general
+		set_country_flag = MUS_MOS_TRAP
 		define_general = {
 		name = "Stanislaw Habsburg"
 		personality = inspiring
@@ -2721,18 +2722,14 @@ country_event = {
 		clr_global_flag = MUS_TVE_WAR
 		set_global_flag = MUS_TVE_WAR_END
 		any_owned = {
-		   limit = {
 		      limit = { is_core = RYA }
 			  secede_province = RYA
-	       }
 		}
 		TVE = {
 		prestige = -20
 		any_owned = {
-		   limit = {
 		      limit = { is_core = NZH }
 			  secede_province = MUS
-	       }
 		}
         }					  
 		prestige = 20	
@@ -2774,18 +2771,14 @@ country_event = {
 		clr_global_flag = MUS_TVE_WAR
 		set_global_flag = MUS_TVE_WAR_END
 		any_owned = {
-		   limit = {
 		      limit = { is_core = RYA }
 			  secede_province = RYA
-	       }
 		}
 		MUS = {
 		prestige = -20
 		any_owned = {
-		   limit = {
 		      limit = { is_core = NZH }
 			  secede_province = TVE
-	       }
 		}
         }
 		prestige = 20	
@@ -6463,3 +6456,882 @@ country_event = {
 		}
 	} 
 }
+
+###############################################################################################
+### 222650 and 150 - This is the super evil MOS-PLC chain that everyone has been waiting for ###
+###############################################################################################
+
+# MUS - PLC War
+
+country_event = {
+	id = 222650	#The Hapsburg General - Hopefully not a problem. Right?
+	title = "CRUS150.T"
+	desc = "CRUS150.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_country_flag = MUS_MOS
+	   has_country_flag = MUS_MOS_TRAP
+	   OR = { 
+		  government = absolute_monarchy
+		  government = prussian_constitutionalism
+	      government = hms_government
+       }	 
+	}
+	
+	mean_time_to_happen = { 
+	   months = 1 
+	}
+	
+	option = { 
+	name = "CRUS150.A" 
+      clr_country_flag = MUS_MOS_TRAP
+	  set_global_flag = PLC_MOS_TRIGGER
+	  any_pop = { limit = { pop_type = aristocrats } militancy = 1 }
+	  any_pop = { limit = { pop_type = aristocrats } consciousness = 3 }
+	}
+}
+
+country_event = {
+	id = 222651	#The Stanislaw Threat
+	title = "CRUS151.T"
+	desc = "CRUS151.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = PLC
+	   exists = MOS
+	   has_country_flag = MUS_MOS
+	   has_global_flag = PLC_MOS_TRIGGER
+	}
+	
+	mean_time_to_happen = { 
+	   months = 6 
+	}
+	
+	option = { 
+	name = "CRUS151.A" 
+      clr_global_flag = PLC_MOS_TRIGGER
+	  prestige = 10
+	  MOS = { country_event = { id = 222652 days = 7 } }
+	  ai_chance = { 
+	     factor = 95
+	  }
+	}
+	
+	option = { 
+	name = "CRUS151.B" 
+	   prestige_factor = -0.25
+	   clr_global_flag = PLC_MOS_TRIGGER
+	   any_pop = { limit = { pop_type = aristocrats } militancy = 3 }
+	   any_pop = { limit = { pop_type = aristocrats } consciousness = 6 }
+	   ai_chance = { 
+	     factor = 5
+	   }
+	}
+}
+
+country_event = {
+	id = 222652	#The Commonwealth has noticed you senpai
+	title = "CRUS152.T"
+	desc = "CRUS152.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+	
+	# Holy shit get fucked
+	
+	option = { 
+	name = "CRUS152.A" 
+	  clr_global_flag = PLC_MOS_TRIGGER 
+	  prestige = 10
+	  PLC = { set_country_flag = annexation_special_MOS country_event = { id = 222653 days = 7 } }
+	  ai_chance = { 
+	     factor = 80
+	  }
+	}
+	
+	# I give up this is stupid
+	
+	option = { 
+	name = "CRUS152.B" 
+	   clr_global_flag = PLC_MOS_TRIGGER
+	   set_country_flag = MOS_GET_FUCKED
+	   prestige_factor = -0.3
+	   PLC = { prestige = 20 set_country_flag = annexation_special_MOS }
+       any_owned = {
+		   limit = {
+		        is_core = SMO
+		   }
+		   secede_province = LIT
+	   }	   	   
+	   ai_chance = { 
+	     factor = 20
+	   }
+	}
+}
+
+country_event = {
+	id = 222653	#Sejm has actually agreed for once at the sheer insult. Time for COMMONWEALTH-MUSCOVY WAR.
+	title = "CRUS153.T"
+	desc = "CRUS153.D"
+    picture = "vozhd"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "CRUS153.A" 
+	   prestige = 10
+	   set_global_flag = MOS_PLC_WAR
+	   war = {
+			target = MOS
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}
+	}
+}
+
+country_event = {
+	id = 222654	# Muscovy got its ass handed to it by the Commonwealth
+	title = "CRUS154.T"
+	desc = "CRUS154.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_global_flag = MOS_PLC_WAR
+	   has_country_flag = custom_treaty_loser
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+		
+	option = { 
+	name = "CRUS154.A" 
+	   prestige_factor = -0.25
+	   clr_global_flag = MOS_PLC_WAR
+	   clr_country_flag = custom_treaty_loser	   
+	   set_country_flag = MOS_GET_FUCKED
+	   set_country_flag = MOS_DOOMED
+	   any_owned = {
+		   limit = {
+		        is_core = SMO
+		   }
+		   secede_province = LIT
+	   }
+	   PLC = { prestige = 20 }
+   }
+}
+
+country_event = {
+	id = 2226540 # Nobody won. Good Job.
+	title = "CRUS1540.T"
+	desc = "CRUS1540.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = PLC
+	   has_global_flag = MOS_PLC_WAR
+	   NOT = { has_country_flag = custom_treaty_loser }
+	   MOS = { NOT = { has_country_flag = custom_treaty_loser } }
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+		
+	option = { 
+	name = "CRUS155.A" 
+	   prestige_factor = -0.1
+	   clr_global_flag = MOS_PLC_WAR   
+	   MOS = { prestige = 10 }
+    }	   
+}
+
+country_event = {
+	id = 222655	# Holy shit - Muscovy beat the fucking Commonwealth
+	title = "CRUS155.T"
+	desc = "CRUS155.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = PLC
+	   has_global_flag = MOS_PLC_WAR
+	   has_country_flag = custom_treaty_loser
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+		
+	option = { 
+	name = "CRUS155.A" 
+	   prestige_factor = -0.5
+	   RUS_946 = { add_core = MOS }
+	   any_owned = {
+		   limit = {
+		        is_core = MOS
+		   }
+		   secede_province = MOS
+	   }
+	   LIT = {
+	   any_owned = {
+		   limit = {
+		        is_core = MOS
+		   }
+		   secede_province = MOS
+	   }	
+       }	   
+	   clr_global_flag = MOS_PLC_WAR
+	   clr_country_flag = custom_treaty_loser	   
+	   MOS = { prestige = 40 }
+    }	   
+}
+
+# The Aftermath of the War or Submission of Demands
+
+country_event = {
+	id = 222656	# Muscovy has been forced into agreeing to demands of PLC either by war or diplomacy. A coup is inevitable.
+	title = "CRUS156.T"
+	desc = "CRUS156.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_country_flag = MOS_GET_FUCKED
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+		
+	option = { 
+	name = "CRUS156.A" 
+	   clr_country_flag = MOS_GET_FUCKED
+	   set_country_flag = MOS_GET_FUCKED_TWO
+	   prestige_factor = -0.1
+       religion = uniate
+	   any_pop = { limit = { pop_type = aristocrats } militancy = -8 }
+	   any_pop = { limit = { pop_type = aristocrats } consciousness = -8 }
+	   any_pop = { limit = { pop_type = clergymen } militancy = 8 }
+	   any_pop = { limit = { pop_type = clergymen } consciousness = 8 }	   
+   }
+   
+	option = { 
+	name = "CRUS156.B" 
+	   clr_country_flag = MOS_GET_FUCKED
+	   set_country_flag = MOS_GET_FUCKED_TWO
+	   prestige_factor = -0.1
+	   money = -20000
+	   any_pop = { limit = { pop_type = aristocrats } militancy = -8 }
+	   any_pop = { limit = { pop_type = aristocrats } consciousness = -8 }
+	   any_pop = { limit = { pop_type = clergymen } militancy = 8 }
+	   any_pop = { limit = { pop_type = clergymen } consciousness = 8 }	  
+   }
+}
+
+country_event = {
+	id = 222657	# The Patriarchal Coup
+	title = "CRUS157.T"
+	desc = "CRUS157.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_country_flag = MOS_GET_FUCKED_TWO
+	   war = no
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+		
+	option = { 
+	name = "CRUS157.A" 
+	   clr_country_flag = MOS_GET_FUCKED
+	   clr_country_flag = MOS_GET_FUCKED_TWO
+       religion = orthodox
+	   any_pop = { limit = { pop_type = clergymen } militancy = -10 }
+	   any_pop = { limit = { pop_type = clergymen } consciousness = -10 }
+	   government = theocracy
+	   ruling_party_ideology = reactionary
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = tory_election_win
+       clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win
+	   set_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   set_country_flag = ARE_WE_STABLE_HERE_MOS
+   }
+}
+
+country_event = {
+	id = 222658	# Negative Stabilization - Lost to PLC
+	title = "CRUS158.T"
+	desc = "CRUS158.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   government = theocracy
+	   has_country_flag = ARE_WE_STABLE_HERE_MOS
+	   has_country_flag = MOS_DOOMED
+	   NOT = { NOV = { has_country_modifier = neutrality } }
+	   NOT = { has_country_flag = MOS_HELLISH }
+	   NOT = { has_global_flag = MOS_shattered }
+	   war = no
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   months = 2
+	}
+		
+	option = { 
+	name = "CRUS158.A" 
+	clr_country_flag = ARE_WE_STABLE_HERE_MOS
+	clr_country_flag = MOS_DOOMED
+	set_country_flag = MOS_HELLISH
+	country_event = { id = 222660 days = 14 }
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+		}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+   }	   
+   }
+}
+
+country_event = {
+	id = 222659	# Positive Stablization - RNG 20 Fail and 80 Success
+	title = "CRUS159.T"
+	desc = "CRUS159.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   government = theocracy
+	   has_country_flag = ARE_WE_STABLE_HERE_MOS
+	   NOT = { NOV = { has_country_modifier = neutrality } }
+	   NOT = { has_country_flag = MOS_DOOMED }
+	   NOT = { has_country_flag = MOS_HELLISH }
+	   NOT = { has_global_flag = MOS_shattered }	   
+	   war = no
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   months = 2
+	}
+		
+	option = { 
+	name = "CRUS159.A" 
+    clr_country_flag = ARE_WE_STABLE_HERE_MOS
+	clr_country_flag = MOS_DOOMED
+	set_country_flag = MOS_HELLISH
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -1
+		}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+   }
+   random_list = {
+		20 = { country_event = { id = 222660 days = 14 } }
+		80 = { country_event = { id = 222667 days = 14 } }
+	}	   
+    }
+}
+
+country_event = {
+	id = 222660	# Stabilization has failed and everyone hates us. What now?
+	title = "CRUS160.T"
+	desc = "CRUS160.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	option = { 
+	name = "CRUS160.A" 
+	political_reform = totalitarianism
+	clr_country_flag = MOS_HELLISH
+	set_global_flag = MOS_shattered
+	set_country_flag = MOS_its_over
+	add_country_modifier = {
+		name = completely_destablized_MOS
+		duration = -1
+	}
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 6
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 5
+		}
+   }
+   ai_chance = { 
+	  factor = 80
+   }  
+   }
+   
+   # DELCARE WAR ON LITERALLY EVERYONE
+   
+	option = { 
+	name = "CRUS160.B" 
+	political_reform = totalitarianism
+	clr_country_flag = MOS_HELLISH
+	set_global_flag = MOS_shattered
+	remove_country_modifier = MOS_cooldown
+	add_country_modifier = {
+		name = completely_destablized_MOS
+		duration = -1
+	}
+	any_country = {
+	   limit = {
+	      OR = {
+	         is_culture_group = tatar_group
+	         is_culture_group = east_slavic
+	         is_culture_group = uralic
+          }			 
+	   }
+	   country_event = { id = 222661 days = 0 }
+	}
+	any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 6
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+		}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 5
+		}
+   }	
+   ai_chance = { 
+	  factor = 20
+   }      
+   }
+}
+
+country_event = {
+	id = 222661 # Muscovy has completely lost the plot and has declared a crusade against us.
+	title = "CRUS161.T"
+	desc = "CRUS161.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "CRUS161.A" 
+	relation = { who = FROM value = -400 }
+	diplomatic_influence = { who = FROM value = -400 }
+	leave_alliance = MOS
+	MOS = { country_event = { id = 222662 days = 2 } }
+    }	
+}
+
+country_event = {
+	id = 222662 # Muscovy declares war on everyone.
+	title = "CRUS162.T"
+	desc = "CRUS162.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "CRUS162.A" 
+	   set_country_flag = THE_GLORIOUS_WAR_MOS
+	   add_casus_belli = {
+	      target = FROM
+		  type = make_puppet
+		  months = 120
+	   }	   
+	   war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		}	
+    }	
+}
+
+country_event = {
+	id = 222663 # Muscovy wins by having both Novogrod and KHK or CSK as vassals and not being under the custom treaty.
+	title = "CRUS163.T"
+	desc = "CRUS163.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_country_flag = THE_GLORIOUS_WAR_MOS
+	   OR = {
+	      is_our_vassal = CSK
+		  is_our_vassal = KHK
+	   }
+	   is_our_vassal = NOV
+	   NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+		
+	option = { 
+	name = "CRUS163.A" 
+	clr_country_flag = THE_GLORIOUS_WAR_MOS
+	any_country = {
+	   limit = {
+	     vassal_of = MOS		 
+	   }
+	   country_event = { id = 222664 days = 0 }
+	}	
+    }
+}
+
+country_event = {
+	id = 222664 # You were vassaled by Theocratic Muscovy and must now die
+	title = "CRUS164.T"
+	desc = "CRUS164.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "CRUS164.A" 
+	MOS = { inherit = THIS }
+    }	
+}
+
+### THE COMPLETE COLLAPSE OF MUSCOVY ####
+
+country_event = {
+	id = 222665	# ITS LITERALLY OVER 
+	title = "CRUS165.T"
+	desc = "CRUS165.D"
+    picture = "vozhd"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = MOS
+       OR = { 
+	      AND = {
+		     has_global_flag = PLC_MOS_SPECIAL_WAR
+	         has_country_flag = custom_treaty_loser
+		  }
+	      AND = {
+		     has_country_flag = THE_GLORIOUS_WAR_MOS
+	         has_country_flag = custom_treaty_loser
+		  }
+		  AND = {
+		     has_country_flag = THE_GLORIOUS_WAR_MOS
+			 OR = {
+		        NOT = { is_our_vassal = NOV }
+		        AND = {
+		           NOT = { exists = CSK }
+			       NOT = { is_our_vassal = KHK }
+		        }
+		        AND = {
+		           exists = CSK
+			       NOT = { is_our_vassal = CSK }
+		        }
+		    }
+		  }
+		  has_country_flag = MOS_its_over		  
+	   }
+	}
+	
+	fire_only_once = yes
+
+	option = { 
+	name = "CRUS165.A" 
+	   remove_country_modifier = taiping_draft 
+	   remove_country_modifier = completely_destablized_MOS
+	   remove_country_modifier = MOS_cooldown
+	   clr_country_flag = custom_treaty_loser
+	   clr_country_flag = MOS_its_over
+	   clr_global_flag = PLC_MOS_SPECIAL_WAR
+	   set_global_flag = MOS_shattered
+	   prestige_factor = -0.9
+       # Become Moscow again
+       change_tag = MUS	
+       # Add warlord cores back. Also add MOS cores just to be sure.
+       1020 = { add_core = MUS add_core = TVE add_core = NZH remove_core = MOS }
+       1011 = { remove_core = MUS remove_core = MOS }
+	   RUS_1008 = { add_core = MUS remove_core = MOS }
+	   RUS_1020 = { remove_core = MUS remove_core = MOS add_core = RYA  }	
+	   RUS_998 = { remove_core = MUS remove_core = MOS add_core = TVE }
+	   RUS_1015 = { remove_core = MUS remove_core = MOS add_core = SMO }  
+	   any_owned = {
+		   limit = {
+		        is_core = NZH
+		   }
+		   secede_province = NZH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = TVE
+		   }
+		   secede_province = TVE
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = SMO
+		   }
+		   secede_province = SMO
+	   }
+	   any_country = {
+	   limit = {
+	     vassal_of = MUS	 
+	   }
+	   country_event = { id = 222666 days = 1 }
+	   }	   
+    } 
+}
+
+country_event = {
+	id = 222666 # Vassals of the former Muscovy are automatically released
+	title = "CRUS166.T"
+	desc = "CRUS166.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "CRUS166.A" 
+	MUS = { release_vassal = THIS }
+    }	
+}
+
+### Muscovy has stabilized - What now? ####
+
+country_event = {
+	id = 222667
+	title = "CRUS167.T"
+	desc = "CRUS167.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+
+	# Restore Monarchy
+	
+	option = { 
+	name = "CRUS167.A" 
+    
+    ai_chance = { 
+	  factor = 30
+    } 	
+    }
+	
+	# Radicals
+	
+	option = { 
+	name = "CRUS167.B" 
+
+    ai_chance = { 
+	  factor = 30
+    } 	
+    }
+	
+	# Oligarchy?
+	
+	option = { 
+	name = "CRUS167.C" 
+
+    ai_chance = { 
+	  factor = 30
+    } 	
+    }
+	
+	# God is always right
+	
+	option = { 
+	name = "CRUS167.D" 
+	prestige = 10
+	country_event = { id = 222660 days = 7 }
+    ai_chance = { 
+	  factor = 10
+    }   	
+    }
+}
+
+### ALT-COMMONWEALTH-MUSCOVY WAR ###
+
+### Triggered by Decision ####
+
+### Hapsburg/Centralized Commonwealth has decided to kill us off for the simple fact of existing ####
+
+country_event = {
+	id = 222668 # HOLY FUCK MOBILIZE EVERYONE
+	title = "CRUS168.T"
+	desc = "CRUS168.D"
+    picture = "vozhd"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	name = "CRUS168.A" 
+	add_country_modifier = { name = taiping_draft duration = 720 } 
+    }	
+}
+
+country_event = {
+	id = 222669 # Muscovy has defeated a centralized commonwealth by defending its position.
+	title = "CRUS169.T"
+	desc = "CRUS169.D"
+    picture = "vozhd"
+	
+	trigger = { 
+	   tag = MOS
+	   has_global_flag = PLC_MOS_SPECIAL_WAR
+	   NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+		
+	option = { 
+	name = "CRUS169.A" 
+	prestige = 40
+	remove_country_modifier = taiping_draft 
+	clr_global_flag = PLC_MOS_SPECIAL_WAR	
+    }
+}
+
+## ... and that's all she wrote  ##

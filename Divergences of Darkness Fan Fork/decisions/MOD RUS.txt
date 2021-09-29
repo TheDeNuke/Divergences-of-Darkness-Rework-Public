@@ -534,6 +534,7 @@ political_decisions = {
 				add_accepted_culture = russian
 				add_accepted_culture = north_russian
 				add_accepted_culture = cossack
+				remove_country_modifier = completely_destablized_MOS
 				#THE BEAR IS VERY SCARY#
 				any_country = {
 				   limit = {
@@ -999,6 +1000,7 @@ political_decisions = {
 					exists = MOS
 					exists = RUS
 					has_country_flag = MOS_forming
+					has_global_flag = MOS_shattered
 				}
 			}
 		
@@ -1095,235 +1097,164 @@ political_decisions = {
 			}
 	}
 	
-    abolish_serfdom_PLC = {
-        picture = abolish_serfdom
-        potential = { 		
-		    tag = PLC
-            debt_law = serfdom
-            has_country_flag = serfdom_not_abolished
-        }
-        allow = {
-		    has_global_flag = NOBILITY_ARE_GONE
-            OR = {
-                average_militancy = 6
-                AND = {
-                    upper_house = { ideology = liberal value = 0.4 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    upper_house = { ideology = anarcho_liberal value = 0.4 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-				    upper_house = { ideology = liberal value = 0.2 }
-                    upper_house = { ideology = anarcho_liberal value = 0.2 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    ruling_party_ideology = anarcho_liberal
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    ruling_party_ideology = liberal
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    consciousness = 1
-                    year = 1880
-                }
-            }
-        }
-        effect = {
-            set_country_flag = serfdom_abolished_generic
-            badboy = -4
-            political_reform = debtors_prisons
-            clr_country_flag = serfdom_not_abolished
-            add_country_modifier = { name = total_reform duration = 1095 }
-            any_country = {
-                limit = {
-                    OR = {
-                        substate_of = THIS
-                        vassal_of = THIS
-                    }
-                    debt_law = serfdom
-                }
-                political_reform = debtors_prisons
-            }
-			# A lot of pissed off Nobility
-            any_pop = {
-                limit = {
-                    type = aristocrats
-                }
-                militancy = 5
-                consciousness = 5
-            }
-            any_pop = {
-                limit = {
-                    OR = {
-                        type = farmers
-                        type = labourers
-                        type = serfs
-                    }
-                }
-                militancy = -2
-                consciousness = 1
-            }
-            any_owned = {
-                limit = {
-                    has_pop_type = serfs
-                    has_pop_type = labourers
-                }
-                any_pop = { limit = { type = serfs } pop_type = labourers }
-            }
-            any_owned = {
-                limit = {
-                    has_pop_type = serfs
-                    has_pop_type = farmers
-                }
-                any_pop = { limit = { type = serfs } pop_type = farmers }
-            }
-        }
-        ai_will_do = { factor = 1 }
-    }
+	#### MUS-PLC Interactions ###
 
-    abolish_serfdom = {
-        picture = abolish_serfdom
-        potential = {    
-		    OR = {
-			   primary_culture = lithuanian
-			   AND = {
-                  is_culture_group = east_slavic
-			      tag = RUS
-			   }
-			   AND = {
-			      tag = NOV
-				  has_global_flag = NOV_END_STAGE_ONE
-			   }
-			   is_culture_group = west_slavic
-			   is_culture_group = central_slavic
+	punish_muscovy = {
+		    picture = form_moscow
+			potential = {
+				tag = PLC		
+				has_country_flag = lublin_new
+				exists = MOS
+				NOT = { year = 1900 }
+				NOT = { has_country_flag = MOS_murdering }
+				NOT = { has_global_flag = MOS_shattered }
 			}
-			NOT = { tag = PLC }
-			OR = {
-			   NOT = { has_country_flag = serfdom_locked_warlord }
-			   year = 1880
+		
+			allow = {
+				NOT = { war = yes truce_with = MOS }
+				exists = MOS				
 			}
-            debt_law = serfdom
-            has_country_flag = serfdom_not_abolished
-        }
-        allow = {
-		    NOT = { substate_of = PLC }
-			NOT = { vassal_of = PLC }
-	        NOT = { has_country_flag = VOL_WAR_INEVITABLE }
-	        NOT = { has_country_flag = VOL_WAR }
+		
+			effect = {
+			    prestige = 5
+				badboy = 10
+				set_country_flag = MOS_murdering
+				set_global_flag = PLC_MOS_SPECIAL_WAR
+	            war = {
+			       target = MOS
+			          attacker_goal = {
+				         casus_belli = custom_treaty_cb
+			          }
+			          defender_goal = {
+				         casus_belli = cut_down_to_size
+			          }
+			          call_ally = yes
+		         }
+				 MOS = { country_event = { id = 222668 days = 0 } }
+			}
 			
-            OR = {
-		     	government = hms_government
-			    government = democracy
-			    government = socialist_republic
-			    government = parliamentary_republic
-                average_militancy = 6
-                AND = {
-                    upper_house = { ideology = liberal value = 0.4 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    upper_house = { ideology = anarcho_liberal value = 0.4 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-				    upper_house = { ideology = liberal value = 0.2 }
-                    upper_house = { ideology = anarcho_liberal value = 0.2 }
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    ruling_party_ideology = anarcho_liberal
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    ruling_party_ideology = liberal
-                    OR = {
-                        average_consciousness = 6
-                        has_recently_lost_war = yes
-                    }
-                }
-                AND = {
-                    consciousness = 1
-                    year = 1880
-                }
-            }
-        }
-        effect = {
-            set_country_flag = serfdom_abolished_generic
-            badboy = -4
-            political_reform = peonage
-            clr_country_flag = serfdom_not_abolished
-            add_country_modifier = { name = total_reform duration = 1095 }
-            any_country = {
-                limit = {
-                    OR = {
-                        substate_of = THIS
-                        vassal_of = THIS
-                    }
-                    debt_law = serfdom
-                }
-                political_reform = peonage
-            }
-            any_pop = {
-                limit = {
-                    OR = {
-                        type = farmers
-                        type = labourers
-                        type = serfs
-                    }
-                }
-                militancy = -2
-                consciousness = 1
-            }
-            any_owned = {
-                limit = {
-                    has_pop_type = serfs
-                    has_pop_type = labourers
-                }
-                any_pop = { limit = { type = serfs } pop_type = labourers }
-            }
-            any_owned = {
-                limit = {
-                    has_pop_type = serfs
-                    has_pop_type = farmers
-                }
-                any_pop = { limit = { type = serfs } pop_type = farmers }
-            }
-        }
-        ai_will_do = { factor = 1 }
-    }
-
+			ai_will_do = {
+				factor = 1
+			       modifier = {
+				      factor = 0
+				      badboy = 0.5
+			      }
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 10 
+			      }
+			}
+	}
+	
+	annex_TVE = {
+		    picture = form_moscow
+			potential = {
+				tag = NOV				
+				NOT = { exists = MOS }
+				has_global_flag = MOS_shattered
+				OR = {
+				   has_global_flag = isolat_NOV
+				   has_global_flag = panrussian_NOV
+				}
+				NOT = { has_country_flag = claimed_TVE_NOV }
+			}
+		
+			allow = {
+				NOT = { war = yes truce_with = TVE }
+				exists = TVE							
+			}
+		
+			effect = {
+			    prestige = 5
+				badboy = 5
+				TVE = { all_core = { add_core = NOV } }
+				set_country_flag = claimed_TVE_NOV
+			}
+			
+			ai_will_do = {
+				factor = 1
+			       modifier = {
+				      factor = 0
+				      badboy = 0.7
+			      }
+			}
+	}
+	
+	annex_RYA = {
+		    picture = form_moscow
+			potential = {
+				tag = CSK			
+				NOT = { exists = MOS }
+				has_global_flag = MOS_shattered
+				NOT = { has_country_modifier = cossack_lifestyle }
+				NOT = { has_country_flag = claimed_RYA_CSK }
+			}
+		
+			allow = {
+				NOT = { war = yes truce_with = RYA }
+				exists = RYA	
+			}
+		
+			effect = {
+			    prestige = 5
+				badboy = 5
+				RYA = { all_core = { add_core = CSK } }
+				set_country_flag = claimed_RYA_CSK
+			}
+			
+			ai_will_do = {
+				factor = 1
+			       modifier = {
+				      factor = 0
+				      badboy = 0.7
+			      }
+			}
+	}
+	
+	the_final_attempt_RUS = {
+		    picture = RUS_tsar
+			potential = {
+			    OR = {
+				   AND = {
+				      tag = NOV
+					  owns = 1001
+				      has_global_flag = panrussian_NOV
+					  NOT = { exists = TVE }
+				   }
+				   AND = {
+				      tag = CSK
+					  owns = 1012
+				      has_global_flag = panrussian_CSK
+					  NOT = { exists = RYA }
+				   }
+			    }  
+				NOT = { exists = MOS }
+				has_global_flag = MOS_shattered
+			}
+		
+			allow = {
+			    OR = {
+				   is_greater_power = yes
+				   is_secondary_power = yes
+				}
+				NOT = { war = yes }					
+			}
+		
+			effect = {
+			    prestige = 20
+				badboy = 10
+				MOS = { all_core = { add_core = THIS } }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			       modifier = {
+				      factor = 0
+				      badboy = 0.5
+			      }
+			}
+	}	
+	
     #### STAGE ONE CONTENT
 
     blr_annex_PLC_LIT = {
@@ -1337,7 +1268,10 @@ political_decisions = {
 		
 			allow = {
 				NOT = { war = yes }
-				has_global_flag = NOBILITY_ARE_GONE
+				OR = {
+				   has_global_flag = NOBILITY_ARE_GONE
+				   has_country_flag = annexation_special_MOS
+				}
 			}
 		
 			effect = {
@@ -1362,7 +1296,10 @@ political_decisions = {
 		
 			allow = {
 				NOT = { war = yes }
-				has_global_flag = NOBILITY_ARE_GONE
+				OR = {
+				   has_global_flag = NOBILITY_ARE_GONE
+				   has_country_flag = annexation_special_MOS
+				}
 			}
 		
 			effect = {
@@ -1715,7 +1652,8 @@ political_decisions = {
 				tag = MOS
 				NOT = { has_global_flag = GO_SOUTH_YOUNG_MAN }
 				NOT = { has_country_flag = TVE_MOS }	
-				NOT = { has_global_flag = a_russian_tragedy }				
+				NOT = { has_global_flag = a_russian_tragedy }	
+                NOT = { has_global_flag = MOS_shattered	}			
 			}			
 			allow = {	
 			   war = no
@@ -1781,6 +1719,7 @@ political_decisions = {
 	            NOT = { has_country_flag = GO_NORTH_TAG }
 				NOT = { has_country_flag = GO_NORTH_ENDED }		
 				NOT = { has_global_flag = a_russian_tragedy }
+				NOT = { has_global_flag = MOS_shattered	}
 			}
 	
 			allow = {		
@@ -1837,6 +1776,7 @@ political_decisions = {
 	            NOT = { has_country_flag = GO_NORTH_TAG }
 				NOT = { has_country_flag = GO_NORTH_ENDED }
 				NOT = { has_global_flag = a_russian_tragedy }
+				NOT = { has_global_flag = MOS_shattered	}
 			}
 	
 			allow = {		
@@ -1920,13 +1860,14 @@ political_decisions = {
 				tag = NOV
                 ai = no
                 has_global_flag = panrussian_NOV
+				NOT = { has_global_flag = MOS_shattered	}
                 NOT = { has_global_flag = panrussian_NOV_warning }				
 			}
 			
 			allow = {	
 			   war = no
 			   exists = MOS
-               MOS = { has_country_modifier = MOS_cooldown }				
+               MOS = { war = no has_country_modifier = MOS_cooldown }				
 			}
 			
 			effect = {
@@ -4102,6 +4043,8 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+   ########### Governorates ################
 
    update_russian_governorate_government = {
         picture = kaitakushi

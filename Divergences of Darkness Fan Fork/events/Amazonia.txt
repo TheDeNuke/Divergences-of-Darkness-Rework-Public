@@ -602,198 +602,18 @@ country_event = { ######Notice for CLM
 	
 ################### The Amazonian Civil War ############### 
 
-country_event = { ######Possibilty of a military dictatorship if Atlantia is lost 
-		
-		id = 98426
-		title = "AMA26.T"
-		desc = "AMA26.D"
-		
-		trigger = { 
-		tag = AMA 
-		government = democracy 
-		NOT = { owns = 2447 }
-		NOT = { war = yes }
-		NOT = { has_country_flag = military_failure }
-		NOT = { has_country_flag = military_takeover }
-		}
-		
-		mean_time_to_happen = { 
-		months = 5 
-		}
-		
-		option = { 
-		name = "98426.A"
-		ATL = { all_core = { remove_core = AMA } }
-		clr_country_flag = ATL_recognized
-		set_country_flag = military_takeover
-		government = presidential_dictatorship
-		ruling_party_ideology = conservative
-		political_reform = none_voting
-		political_reform = no_meeting
-		political_reform = censored_press
-		political_reform = no_trade_unions
-		political_reform = underground_parties
-	    political_reform = closed_borders
-		political_reform = appointed
-		country_event = 800050
-		add_country_modifier = {
-				name = fight_the_power
-				duration = 2000
-			}
-		ai_chance = { 
-		factor = 70
-		modifier = { 
-		factor = 2
-		has_global_flag = compromise_set
-			    }
-			}
-		}
-		
-		option = { 
-		name = "98426.B" 
-		ATL = { all_core = { remove_core = AMA } }
-		clr_country_flag = ATL_recognized
-		leadership = -100 
-		set_country_flag = military_failure
-		ai_chance = { 
-		factor = 30 
-		modifier = { 
-		factor = 2
-		has_global_flag = compromise_set
-			    }
-			}
-		}
-	}
+country_event = { #### Choice of government  
 
-country_event = { #####Talks of secession in Equinoxia 
+	id = 98426
+	title = "AMA34.T"
+	desc = "AMA34.D" 
+	
+	is_triggered_only = yes 
 
-	id = 98427
-	title = "AMA27.T"
-	desc = "AMA27.D"
-	
-	
-	trigger = { 
-		tag = AMA 
-		NOT = { OR = { government = democracy government = parliamentary_republic } }
-		}
-	
-	fire_only_once = yes 
-	
 	option = { 
-	name = "98427.A"
-	AMA_2410 = { add_core = EQN }
-	
-	any_owned = {
-			limit = { 
-				is_core = EQN
-			}
-			any_pop = { militancy = 2 }
-			add_province_modifier = {
-				name = nationalist_agitation
-				duration = 3650
-			}
-		}
-	}
-}
-		
-country_event = { ###### The Equinoxian Secession 
-	id = 98428
-	title = "AMA28.T"
-	desc = "AMA28.D" 
-		
-	fire_only_once = yes
-
-	trigger = { 
-	tag = AMA 
-	NOT = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } }
-	NOT = { EQN = { exists = yes } } 
-	NOT = { has_country_flag = AMACivilwar }
-	any_owned_province = {
-			is_core = EQN
-			any_pop = {
-				OR = {
-					type = aristocrats
-					type = bureaucrats
-				}
-				militancy = 5
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	months = 5 
-	}
-	
-	option = { 
-	name = "98428.A"
-	set_country_flag = AMACivilwar 
-	release = EQN
-		war = {
-			target = EQN
-			attacker_goal = {
-				casus_belli = civil_war
-			}
-			
-			defender_goal = {
-				casus_belli = status_quo
-			}
-		}
-	}
-}
-
-country_event = { ########Equinoxian victory if Port-Liberté is held 
-	id = 98429 
-	title = "AMA29.T"
-	desc = "AMA29.D"
-	
-	trigger = { 
-	tag = EQN 
-	controls = 2431 
-	war_with = AMA 
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 }
-	
-	option = { 
-	name = "98429.A"
-	end_war = AMA 
-	inherit = AMA 
-	change_tag = AMA 
-	capital = 2431 
-	prestige = 25 
-	government = democracy 
-	ruling_party_ideology = liberal
-	political_reform = universal_voting
-	political_reform = population_equal_weight
-	political_reform = yes_meeting
-	political_reform = free_press
-	country_event = 800054
-	}
-}
-
-country_event = { #### End of the Civil War 
-
-	id = 98430
-	title = "AMA30.T"
-	desc = "AMA30.D" 
-		
-	fire_only_once = yes
-
-	trigger = { 
-	tag = AMA 
-	NOT = { EQN = { exists = yes } } 
-	has_country_flag = AMACivilwar 
-	}
-	
-	mean_time_to_happen = { 
-	months = 1 
-	}
-	
-	option = { 
-	name = "98430.A"
-	set_country_flag = newgov  
-	prestige = 5 
+	name = "AMA34.A"
+	prestige = -10 
+	change_tag = ANT
 	}
 }
 
@@ -806,9 +626,9 @@ country_event = { #### Monarchy ?
 	fire_only_once = yes
 
 	trigger = { 
-	tag = AMA 
-	has_country_flag = newgov
-	war = no 
+	OR = { tag = AMA tag = ANT }
+	government = presidential_dictatorship 
+	has_global_flag = AMA_RESOLVED
 	}
 	
 	mean_time_to_happen = { 
@@ -911,5 +731,34 @@ country_event = { #### Choice of government
 	country_event = 800054
 	ai_chance = { 
 	factor = 20 } 
+	}
+}
+
+country_event = { #### Ploumanao
+
+	id = 98434
+	title = "AMA34.T"
+	desc = "AMA34.D" 
+	
+	trigger = { 
+	NOT = { has_country_flag = breton_amazon } 
+	OR = { 
+	tag = EQN
+	tag = AMA 
+	tag = AZL
+	tag = GRA
+		}
+	owns = 2402
+	}
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+
+	option = { 
+	name = "AMA34.A" 
+	set_country_flag = breton_amazon
+	prestige = 1 
+	2402 = { change_province_name = "Ploumanao" } 
 	}
 }

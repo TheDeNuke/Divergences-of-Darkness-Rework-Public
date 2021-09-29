@@ -2,6 +2,237 @@
 
 political_decisions = {
 
+#### Abolition of Serfdom ####
+
+    abolish_serfdom_PLC = {
+        picture = abolish_serfdom
+        potential = { 		
+		    tag = PLC
+            debt_law = serfdom
+            has_country_flag = serfdom_not_abolished
+        }
+        allow = {
+		    has_global_flag = NOBILITY_ARE_GONE
+            OR = {
+                average_militancy = 6
+                AND = {
+                    upper_house = { ideology = liberal value = 0.4 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    upper_house = { ideology = anarcho_liberal value = 0.4 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+				    upper_house = { ideology = liberal value = 0.2 }
+                    upper_house = { ideology = anarcho_liberal value = 0.2 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    ruling_party_ideology = anarcho_liberal
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    ruling_party_ideology = liberal
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    consciousness = 1
+                    year = 1880
+                }
+            }
+        }
+        effect = {
+            set_country_flag = serfdom_abolished_generic
+            badboy = -4
+            political_reform = debtors_prisons
+            clr_country_flag = serfdom_not_abolished
+            add_country_modifier = { name = total_reform duration = 1095 }
+            any_country = {
+                limit = {
+                    OR = {
+                        substate_of = THIS
+                        vassal_of = THIS
+                    }
+                    debt_law = serfdom
+                }
+                political_reform = debtors_prisons
+            }
+			# A lot of pissed off Nobility
+            any_pop = {
+                limit = {
+                    type = aristocrats
+                }
+                militancy = 5
+                consciousness = 5
+            }
+            any_pop = {
+                limit = {
+                    OR = {
+                        type = farmers
+                        type = labourers
+                        type = serfs
+                    }
+                }
+                militancy = -2
+                consciousness = 1
+            }
+            any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = labourers
+                }
+                any_pop = { limit = { type = serfs } pop_type = labourers }
+            }
+            any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = farmers
+                }
+                any_pop = { limit = { type = serfs } pop_type = farmers }
+            }
+        }
+        ai_will_do = { factor = 1 }
+    }
+
+    abolish_serfdom = {
+        picture = abolish_serfdom
+        potential = {    
+		    OR = {
+			   primary_culture = lithuanian
+			   AND = {
+                  is_culture_group = east_slavic
+			      tag = RUS
+			   }
+			   AND = {
+			      tag = NOV
+				  has_global_flag = NOV_END_STAGE_ONE
+			   }
+			   is_culture_group = west_slavic
+			   is_culture_group = central_slavic
+			}
+			NOT = { tag = PLC }
+			OR = {
+			   NOT = { has_country_flag = serfdom_locked_warlord }
+			   year = 1880
+			}
+            debt_law = serfdom
+            has_country_flag = serfdom_not_abolished
+        }
+        allow = {
+		    NOT = { substate_of = PLC }
+			NOT = { vassal_of = PLC }
+	        NOT = { has_country_flag = VOL_WAR_INEVITABLE }
+	        NOT = { has_country_flag = VOL_WAR }
+			
+            OR = {
+		     	government = hms_government
+			    government = democracy
+			    government = socialist_republic
+			    government = parliamentary_republic
+                average_militancy = 6
+                AND = {
+                    upper_house = { ideology = liberal value = 0.4 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    upper_house = { ideology = anarcho_liberal value = 0.4 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+				    upper_house = { ideology = liberal value = 0.2 }
+                    upper_house = { ideology = anarcho_liberal value = 0.2 }
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    ruling_party_ideology = anarcho_liberal
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    ruling_party_ideology = liberal
+                    OR = {
+                        average_consciousness = 6
+                        has_recently_lost_war = yes
+                    }
+                }
+                AND = {
+                    consciousness = 1
+                    year = 1880
+                }
+            }
+        }
+        effect = {
+            set_country_flag = serfdom_abolished_generic
+            badboy = -4
+            political_reform = peonage
+            clr_country_flag = serfdom_not_abolished
+            add_country_modifier = { name = total_reform duration = 1095 }
+            any_country = {
+                limit = {
+                    OR = {
+                        substate_of = THIS
+                        vassal_of = THIS
+                    }
+                    debt_law = serfdom
+                }
+                political_reform = peonage
+            }
+            any_pop = {
+                limit = {
+                    OR = {
+                        type = farmers
+                        type = labourers
+                        type = serfs
+                    }
+                }
+                militancy = -2
+                consciousness = 1
+            }
+            any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = labourers
+                }
+                any_pop = { limit = { type = serfs } pop_type = labourers }
+            }
+            any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = farmers
+                }
+                any_pop = { limit = { type = serfs } pop_type = farmers }
+            }
+        }
+        ai_will_do = { factor = 1 }
+    }
+
 ### The Future of Poland ####
 
 ### These two decisions are to decide what path Poland can take beyond the event chains. If Poland is Commie then it will be able to take the revolutionary decions and reform the PLC. If Poland is Fascist then it will be able to make the bold nationalist claims. Normal Poland can just reform the PLC. ####
