@@ -24,11 +24,12 @@ The mod team:
 - DeNuke - Project Manager
 - Attalus - The Co-Project Manager/Consul of Divergences
 
-- NPMister - Concept Designer and Localization
 - Periares - Concept Designer, Coder and Localization
+- NPMister - Concept Designer and Localization
 - Zeeloat - Concept Designer and Localization
 - Arleck - Concept Designer and Localization
 - J Master - Concept Designer and Localization
+- Zerzura - Coder and Localization
 - Athmos - Concept Designer
 - Polyfox - Concept Designer
 -  Conquest - Coder/Scripter and the developer of the Popularizer tool.
