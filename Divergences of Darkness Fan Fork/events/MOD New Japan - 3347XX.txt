@@ -1074,68 +1074,68 @@ country_event = {
 ### The fact that the emperor is on his last legs is leaked and thus Freedom and People's Rights Movement is founded ###
 
 country_event = {
-	id = 334718
-	title = "NJAP19.T"
-	desc = "NJAP19.D"
-	picture = "scholars"
+    id = 334718
+    title = "NJAP19.T"
+    desc = "NJAP19.D"
+    picture = "scholars"
 
-	trigger = {	
-	    exists = yes
-	    tag = JAP
-		has_country_flag = its_going_to_leak
-	}
-	
-	mean_time_to_happen = {
-		days = 31
-		   modifier = {
-		      factor = 0.01
-			  year = 1861
-		   }
-	}
+    trigger = {
+        exists = yes
+        tag = JAP
+        has_country_flag = its_going_to_leak
+    }
 
-	option = {
-		name = "NJAP18.A"
-		clr_country_flag = its_going_to_leak
-		add_country_modifier = {
-			name = liberal_reaction
-			duration = -1
-		}
- 	    any_pop = {
-	       scaled_militancy = {
-			   factor = 2
-			   ideology = reactionary
-	       }
-	       scaled_consciousness = {
-			   factor = 2
-			   ideology = reactionary
-	       }
-	       scaled_militancy = {
-			   factor = 1
-			   ideology = conservative
-	       }
-	       scaled_consciousness = {
-			   factor = 1
-			   ideology = conservative
-	       }
-	       scaled_militancy = {
-			   factor = 1
-			   ideology = liberal
-	       }
-	       scaled_consciousness = {
-			   factor = 1
-			   ideology = liberal
-	       }
-	       scaled_militancy = {
-			   factor = 2
-			   ideology = anarcho_liberal
-	       }
-	       scaled_consciousness = {
-			   factor = 2
-			   ideology = anarcho_liberal
-	       }
-	    }	
-        country_event = { id = 334719 days = 31 }			
-	}
+    mean_time_to_happen = {
+        days = 31
+           modifier = {
+              factor = 0.01
+              year = 1861
+           }
+    }
+
+    option = {
+        name = "NJAP19.A"
+        clr_country_flag = its_going_to_leak
+        add_country_modifier = {
+            name = liberal_reaction
+            duration = -1
+        }
+        any_pop = {
+           scaled_militancy = {
+               factor = 2
+               ideology = reactionary
+           }
+           scaled_consciousness = {
+               factor = 2
+               ideology = reactionary
+           }
+           scaled_militancy = {
+               factor = 1
+               ideology = conservative
+           }
+           scaled_consciousness = {
+               factor = 1
+               ideology = conservative
+           }
+           scaled_militancy = {
+               factor = 1
+               ideology = liberal
+           }
+           scaled_consciousness = {
+               factor = 1
+               ideology = liberal
+           }
+           scaled_militancy = {
+               factor = 2
+               ideology = anarcho_liberal
+           }
+           scaled_consciousness = {
+               factor = 2
+               ideology = anarcho_liberal
+           }
+        }
+        country_event = { id = 334719 days = 31 }
+    }
 }
 
 # The Kimimasa Draft
@@ -3297,7 +3297,13 @@ country_event = {
 		name = "NJAP52.A"
         prestige = 5		
 		JAP = { release_vassal = THIS }
-		GOY = { country_event = { id = 334752 days = 0 } }
+	    any_country = {
+		   limit = {
+		      tag = GOY
+			  exists = yes
+		    }
+	        country_event = { id = 334752 days = 0 } 
+	    }
 	}
 }
 
@@ -4464,6 +4470,7 @@ country_event = {
 			}
 			remove_core = THIS 
 		}
+		1458 = { remove_core = THIS }
 	}
 }
 
@@ -5133,22 +5140,25 @@ country_event = {
 
 	option = {
 		name = "JPC38.A"#The coup is successful
-		JAP = { create_vassal = THIS }
+		JAP = { 
+		   create_vassal = THIS 
+		   create_alliance = THIS
+		   diplomatic_influence = { who = THIS value = 400 } 
+		   relation = { who = THIS value = 400 }
+		}	
 		ai_chance = { factor = 75 }
 	}
 	
 	option = {
 		name = "JPC38.A"#The coup is defeated, but Japan is coming...
 		JAP = {
-			casus_belli = {
-				target = THIS 
-				type = make_puppet
-				months = 48
-			}
+		    leave_alliance = THIS
+		    diplomatic_influence = { who = THIS value = -400 } 
+		    relation = { who = THIS value = -400 }
 			war = {
 				target = THIS 
 				attacker_goal = {
-					casus_belli = make_puppet
+					casus_belli = conquest_any
 				}
 				defender_goal = {
 					casus_belli = status_quo
@@ -5174,6 +5184,9 @@ country_event = {
 	option = {
 		name = "JPC39.A"#Fight Work or Perish
 		JAP = {
+		    leave_alliance = THIS
+		    diplomatic_influence = { who = THIS value = -400 } 
+		    relation = { who = THIS value = -400 }
 			war = {
 				target = THIS 
 				attacker_goal = {
