@@ -50,4 +50,4 @@ Special Thanks to:
 - MajorMajor - DoD HPM’s Lead and a good reason why there has been a resurgence in this mod.
 - The HOI4 Mod (Divergences) - For a lot of very important lore suggestions that were implemented in this project.
 - HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
-- Bsharri/Flyrion - The original DoD FF founder
+- Bsharri/Flyrion/Trask - The original DoD FF founder
