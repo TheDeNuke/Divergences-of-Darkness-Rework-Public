@@ -234,8 +234,10 @@ country_event = {
 		       government = absolute_monarchy
 			   government = prussian_constitutionalism
 			   government = hms_government
+			   has_global_flag = JEAN_CIVIL_WAR
+			   exists = PBG
            }	
-        }		
+        }	
 		NOT = { has_global_flag = BCW_AVOIDED }
 		NOT = { has_global_flag = JEAN_ENDING }		
 	}
@@ -2913,6 +2915,7 @@ country_event = {
 	    tag = PBG
 		has_global_flag = JEAN_CIVIL_WAR 
 		NOT = { exists = BRG }
+		NOT = { exists = BRB }
 		war = no		   
 		NOT = { has_global_flag = THE_BRG_CRISIS }
 		NOT = { has_global_flag = JEAN_ENDING }	
@@ -2941,7 +2944,79 @@ country_event = {
 	relation = { who = PBG value = 200 }
 	}
 	any_pop = { 
-	      militancy = -3
+	      militancy = -10
+	      ideology = { factor = 0.2 value = market_liberal } 
+		  ideology = { factor = 0.2 value = anarcho_liberal } 
+		  ideology = { factor = -0.4 value = reactionary } 
+	}
+	political_reform = no_draft
+	BRG = { all_core = { add_core = PBG } }
+	BRG = { all_core = { remove_core = BRG } }
+	set_country_flag = regency_is_now_possible
+	clr_global_flag = BRG_CIVIL_WAR
+	clr_country_flag = PBG_IC_check
+	set_global_flag = JEAN_ENDING
+	}
+}
+
+#610 - AUTOMATIC PBG VICTORY DUE TO BRG COLLAPSING
+
+country_event = { 
+
+	id = 6530590
+	title = "JEAN400.T"
+	desc = "JEAN400.D"
+	picture = "PBGvictory"
+	
+	trigger = {	
+	    exists = yes
+	    tag = PBG
+		has_global_flag = JEAN_CIVIL_WAR 
+		BRG = {
+		   NOT = {
+		      OR = { 		       
+		         government = absolute_monarchy
+		         government = prussian_constitutionalism
+		         government = hms_government
+			     government = fascist_monarchy
+              }	
+           }	
+        }		
+		NOT = { exists = BRB }
+		NOT = { has_global_flag = THE_BRG_CRISIS }
+		NOT = { has_global_flag = JEAN_ENDING }	
+        NOT = { has_global_flag = JEAN_CIVIL_WAR_BEGINNING }					
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+	
+	immediate = {
+	   end_war = BRG
+	   inherit = BRG
+	}
+	
+	option = { 
+	name = "6530590.A"
+	inherit = BRG
+	end_war = BTV
+	end_war = LWE
+	end_war = NFL
+	end_war = GRQ
+	end_war = TRN	
+	prestige = 10
+	any_country = {
+	limit = {
+	   has_country_flag = former_BRG_ally
+	}
+	clr_country_flag = former_BRG_ally
+	relation = { who = PBG value = 200 }
+	}
+	any_pop = { 
+	      militancy = -10
 	      ideology = { factor = 0.2 value = market_liberal } 
 		  ideology = { factor = 0.2 value = anarcho_liberal } 
 		  ideology = { factor = -0.4 value = reactionary } 
@@ -3030,7 +3105,146 @@ country_event = {
 	any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.75 }
 	any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.95 }
 	any_pop = { 
-	      militancy = -3
+	      militancy = -10
+		  ideology = { factor = -0.2 value = anarcho_liberal } 
+		  ideology = { factor = -0.2 value = liberal } 
+		  ideology = { factor = -0.1 value = reactionary } 
+		  ideology = { factor = 0.3 value = conservative } 
+          ideology = { factor = 0.1 value = market_liberal } 	      
+	}
+	government = prussian_constitutionalism
+	ruling_party_ideology = conservative
+	upper_house = {
+			ideology = conservative
+			value = 0.5
+	}
+	political_reform = appointed
+	political_reform = wealth_weighted_voting
+	political_reform = yes_meeting
+	political_reform = censored_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	set_country_flag = regency_is_now_possible
+	election = yes
+	PBG = { all_core = { add_core = BRG } }
+	PBG = { clr_country_flag = PBG_IC_check }
+	PBG = { all_core = { remove_core = PBG } }
+	clr_global_flag = BRG_CIVIL_WAR
+	set_global_flag = JEAN_ENDING	
+	}
+}
+
+#620 - AUTOMATIC BRG VICTORY DUE TO PBG COLLAPSING
+
+country_event = { 
+
+	id = 6530600
+	title = "JEAN410.T"
+	desc = "JEAN410.D"
+	picture = "kingjean"
+	
+	trigger = {	
+	    exists = yes
+	    tag = BRG
+		has_global_flag = JEAN_CIVIL_WAR 
+		PBG = { government = absolute_monarchy }
+		NOT = { exists = BRB }
+		NOT = { exists = NET }   
+		NOT = { has_global_flag = THE_BRG_CRISIS }
+		NOT = { has_global_flag = JEAN_ENDING }	
+        NOT = { has_global_flag = JEAN_CIVIL_WAR_BEGINNING }					
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+	
+	immediate = {
+	   end_war = PBG
+	   inherit = PBG
+	}
+
+	option = { 
+	name = "6530600.A"
+	inherit = PBG
+	prestige = 10
+	any_country = {
+	limit = {
+	   has_country_flag = former_BRG_ally
+	}
+	clr_country_flag = former_BRG_ally
+	relation = { who = BRG value = 200 }
+	}
+	capital = 390 
+	add_country_modifier = { 
+	   name = the_new_order_BRG
+	   duration = 10950
+	}
+	nationalvalue = nv_might
+	## Jean's Legal Purges
+	any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+	}
+	any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				pop_majority_ideology = anarcho_liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.65 } 50 = { reduce_pop = 0.45 } }							
+	}		
+	any_pop = { 
+				limit = {
+					OR = {
+						social_movement = yes
+						political_movement = yes
+						}
+					} 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+	}
+	any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.75 }
+	any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.95 }
+	any_pop = { 
+	      militancy = -10
 		  ideology = { factor = -0.2 value = anarcho_liberal } 
 		  ideology = { factor = -0.2 value = liberal } 
 		  ideology = { factor = -0.1 value = reactionary } 
