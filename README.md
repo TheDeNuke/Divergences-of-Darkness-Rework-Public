@@ -9,6 +9,7 @@ Disclaimers:
 - China also needs a complete rework. Likely won’t get around to either China or India until a Victoria 3 release though.
 - Germany feels a bit railroaded currently and only has a few potential outcomes but that will be addressed in release four along with Italy and the North Balkans
 - There is a general lack of event GFX and thus we are always looking for people to actually help in this particular department.
+- There is a province in Bohemia without pops. We know.
 
 Credits:
 
