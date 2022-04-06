@@ -1,144 +1,225 @@
 political_decisions = {
 	
-		cusco_capital = {
+	cusco_capital = {
 		picture = Incas
 			potential = {
-				tag = INC
-				NOT = { capital = 2302 }
-				NOT = { has_global_flag = Hispanic_Andes }
+				OR = { tag = INC tag = ARE } 
+				capital = 2302
+				NOT = { has_country_flag = restored_Cuzco }
 			}
 			allow = {
 				NOT = { war = yes }
 				2302 = { owned_by = THIS }
+				mechanized_mining = 1 
+				romanticism = 1 
+				
 			}
 			effect = {
-				prestige = 20
-				capital = 2302
-				QUI = { remove_core = 2304 }
-				QUI = { remove_core = 2578 }
-				QUI = { remove_core = 2303 }
-				QUI = { remove_core = 2297 }
-				QUI = { remove_core = 2299 }
-				QUI = { remove_core = 2301 }
-				QUI = { remove_core = 2302 }
-				ARE = { primary_culture = quechua add_accepted_culture = granadan 
-					add_country_modifier = {
-					name = inca_culture
-					duration = -1
-				    }
-			    }
+				prestige = 10
+				set_country_flag = restored_Cuzco
+				2302 = { life_rating = 10 } 
 			}
 			ai_will_do = {
 				factor = 1
 			}
 		}
 
-		empire_inca = {
-		picture = Incas
-			potential = {
-				tag = INC
-				capital = 2302
-				NOT = { has_country_flag = empire_del_inca }
-				NOT = { has_global_flag = Hispanic_Andes }
-			}
-			allow = {
-			    OR = { is_secondary_power = yes is_greater_power = yes }
-				NOT = { war = yes }
-				INC = {
-					all_core = {
-							owned_by = THIS	
-						}
-					}
-			}
-			effect = {
-				prestige = 20
-				set_global_flag = death_toGRC
-				2247 = { add_core = THIS }
-				2248 = { add_core = THIS }
-				2249 = { add_core = THIS }
-				2250 = { add_core = THIS }
-				2260 = { add_core = THIS }
-				2261 = { add_core = THIS }
-				2262 = { add_core = THIS }
-				2263 = { add_core = THIS }
-				2286 = { add_core = THIS }
-				2287 = { add_core = THIS }
-				2288 = { add_core = THIS }
-				2289 = { add_core = THIS }
-				2401 = { add_core = THIS }
-				ARE = { all_core = { remove_core = GRA } }
-				ARE = { all_core = { remove_core = CLM } }
-				QUI = { primary_culture = quechua add_accepted_culture = granadan 
-					add_country_modifier = {
-					name = inca_culture
-					duration = -1
-				    }
-			    }
-				set_country_flag = empire_del_inca
-				add_country_modifier = {
-					name = empire_del_inca
-					duration = 3650
-				}
-			}
-			ai_will_do = {
+	War_for_the_Andes = { 
+	picture = Incas
+		potential = { 
+		tag = INC 
+		QUI = { exists = yes } 
+		NOT = { has_country_flag = begin_war_Andes }
+		NOT = { has_global_flag = Washkar_WILDRIDE } 
+		}
+		
+		allow = { 
+		has_global_flag = NAN_OVER 
+		war = no 
+		QUI = { NOT = { is_vassal = yes } }
+		year = 1843
+		}
+		
+		effect = { 
+		QUI = { all_core = { add_core = INC } } 
+		set_global_flag = WAR_ANDES
+		set_country_flag = begin_war_Andes 
+		}
+		ai_will_do = {
 				factor = 1
 			}
+	} 
+	
+	War_for_the_Andes_2 = { 
+	picture = Incas
+		potential = { 
+		tag = INC 
+		NOT = { has_country_flag = begin_war_Andes }
+		QUI = { is_vassal = yes }
+		has_global_flag = NAN_OVER 
 		}
 		
-		empire_inca_2 = {
-		picture = Incas
-			potential = {
-				tag = INC
-				capital = 2302
-				has_country_flag = empire_del_inca
-				NOT = { has_country_flag = empire_del_inca_2 }
-				NOT = { has_global_flag = Hispanic_Andes }
+		allow = { 
+		OR = { 
+		is_greater_power = yes 
+		SPA = { NOT = { is_greater_power = yes } }
 			}
-			allow = {
-				NOT = { war = yes }
-				INC = {
-					all_core = {
-							owned_by = THIS
-						}
-					}
-			}
-			effect = {
-				prestige = 10
-				add_accepted_culture = granadan
-				set_country_flag = empire_del_inca_2
-			}
-			ai_will_do = {
+		}
+		
+		effect = { 
+		QUI = { all_core = { add_core = INC } } 
+		set_global_flag = WAR_ANDES_SPA
+		set_country_flag = begin_war_Andes
+		}
+		ai_will_do = {
 				factor = 1
 			}
+	} 
+	
+	War_for_the_Andes_annex_QUI = { 
+	picture = Incas
+		potential = { 
+		tag = INC 
+		war_with = QUI 
+		OR = { QUI = { is_vassal = yes } ai = yes has_global_flag = Washkar_WILDRIDE } 
 		}
 		
-	humala_mission = {
-		potential = {
-			tag = INC
-			NOT = { has_country_flag = sent_humala_mission }
-			JAP = { exists = yes }
+		allow = { 
+		war_with = QUI
+		2292 = { controlled_by = THIS }
+		2279 = { controlled_by = THIS } 
 		}
 		
-		allow = {
-			war = no
-			civilized = yes
-			idealism = 1
+		effect = { 
+		QUI = { end_war = THIS } 
+		inherit = QUI
 		}
 		
-		effect = {
-			set_country_flag = sent_humala_mission
-			JAP = { country_event = { id = 66924 days = 3 } }
-			years_of_research = 1
-			random_owned = {
-				limit = {
-					owner = { school_reforms = no_schools }
-					}
-				owner = { social_reform = low_schools }
+		ai_will_do = {
+				factor = 1
 			}
+	} 
+	
+	Amerigan_War_landing_SCA = { 
+	picture = Incas
+		potential = { 
+		tag = SCA
+		war_with = INC 
+		has_global_flag = Washkar_WILDRIDE
+		NOT = { has_country_flag = landed_Ameriga_SCA }
 		}
 		
-		ai_will_do = { factor = 1 }
+		allow = { 
+		INC = { any_core = { controlled_by = THIS } } 
+		}
+		
+		effect = { 
+		set_country_flag = landed_Ameriga_SCA
+		INC = { set_country_flag = landed_Ameriga_SCA }
+		prestige = 2 
+		}
+		ai_will_do = {
+				factor = 1
+			}
+	} 
+	
+	Amerigan_War_landing_SPA = { 
+	picture = Incas
+		potential = { 
+		tag = SPA
+		war_with = INC 
+		has_global_flag = Washkar_WILDRIDE
+		NOT = { has_country_flag = landed_Ameriga_SPA }
+		}
+		
+		allow = { 
+		INC = { any_core = { controlled_by = THIS } } 
+		}
+		
+		effect = { 
+		set_country_flag = landed_Ameriga_SPA
+		INC = { set_country_flag = landed_Ameriga_SPA }
+		prestige = 2 
+		}
+		ai_will_do = {
+				factor = 1
+			}
+	} 
+	
+	Second_sack_Cuzco = { 
+	picture = Incas
+		potential = { 
+		war_with = INC 
+		NOT = { has_global_flag = sacked_Cuzco }
+		has_global_flag = Washkar_WILDRIDE
+		}
+		
+		allow = { 
+		2302 = { controlled_by = THIS } 
+		}
+		
+		effect = { 
+		set_global_flag = sacked_Cuzco
+		INC = { country_event = 66969 } 
+		prestige = 2 
+		}
+		
+		ai_will_do = {
+				factor = 1
+			}
+	} 
+	
+	Sacking_Fort_Lothere = { 
+		potential = { 
+		tag = INC
+		NOT = { has_global_flag = sacked_Lothere }
+		has_global_flag = Washkar_WILDRIDE
+		war_with = LOT
+		}
+		
+		allow = { 
+		2463 = { controlled_by = THIS } 
+		
+		}
+		
+		effect = { 
+		set_global_flag = sacked_Lothere
+		LOT = { country_event = 66970 }
+		prestige = 2 
+		}
+		
+		ai_will_do = {
+				factor = 1
+			}
 	}
+
+	#humala_mission = {
+	#	potential = {
+	##		tag = INC
+	#		NOT = { has_country_flag = sent_humala_mission }
+	#		JAP = { exists = yes }
+	#	}
+	#	
+	#	allow = {
+	#		war = no
+	#		civilized = yes
+	#		idealism = 1
+	#	}
+	#	
+	#	effect = {
+	#		set_country_flag = sent_humala_mission
+	#		JAP = { country_event = { id = 66924 days = 3 } }
+	#		years_of_research = 1
+	#		random_owned = {
+	#			limit = {
+	#				owner = { school_reforms = no_schools }
+	#				}
+	##			owner = { social_reform = low_schools }
+		#	}
+		#}
+	#	
+	#	ai_will_do = { factor = 1 }
+	#}
 	
 	annex_easter_island = {
 		picture = annex_easter_island
@@ -168,7 +249,12 @@ political_decisions = {
 				any_pop = { limit = { is_primary_culture = no } literacy = -0.99 }
 			}
 		}
+		
+		ai_will_do = {
+				factor = 1
+			}
 	}
+	
 	
 	annex_easter_island_NAN = {
 		picture = annex_easter_island
@@ -193,9 +279,14 @@ political_decisions = {
 			prestige = 3
 			2336 = {
 				secede_province = THIS
+				change_province_name = "New Scilly"
 				any_pop = { limit = { is_primary_culture = no } literacy = -0.99 }
 			}
 		}
+		
+		ai_will_do = {
+				factor = 1
+			}
 	}
 	
 	treaty_uraycusta = { 
@@ -219,5 +310,597 @@ political_decisions = {
 	effect = { 
 	SCA = { country_event = 66967 }
 		}
+		ai_will_do = {
+				factor = 1
+			}
 	}
+	
+	industrialization_chile = { 
+	
+	potential = { 
+	tag = INC 
+	NOT = { has_country_flag = industrialization_chile_INC }
+	}
+	
+	allow = { 
+	high_pressure_steam_engine = 1 
+	interchangeable_parts = 1 
+	} 
+	
+	effect = { 
+	set_country_flag = industrialization_chile_INC
+	any_owned = { 
+		limit = { 
+		region = CHL_2322
+			}	
+		add_province_modifier = { 
+		name = colonial_recruitment
+		duration = 3650
+				}
+			}
+		}
+	ai_will_do = {
+				factor = 1
+			}
+	
+	}
+	
+	mechanizing_potosi = { 
+	
+	potential = { 
+	OR = { tag = INC tag = QUI tag = ARE } 
+	owns = 2314
+	NOT = { has_global_flag = mechanizing_potosi_dec }
+	}
+	
+	allow = { 
+	mechanized_mining = 1 
+	} 
+	
+	effect = { 
+	set_global_flag = mechanizing_potosi_dec
+	2314 = { 
+	add_province_modifier = { 
+		name = potosi_silver_mine
+		duration = 10950
+				}
+	add_province_modifier = { 
+		name = colonial_recruitment
+		duration = 3650
+				}
+			}
+		}
+	ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	secret_police_INC = { 
+	
+	picture = secret_police_INC 
+		
+	potential = { 
+	tag = INC 
+	NOT = { has_country_modifier = secret_police }
+	government = absolute_monarchy 
+	}
+	
+	allow = { 
+	state_n_government = 1  
+	}
+	
+	effect = {
+			add_country_modifier = {
+				name = secret_police 
+				duration = -1
+			}
+		
+	badboy = 5 
+		}
+	ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	Imperial_identity = { 
+		potential = { 
+		tag = INC 
+		has_country_flag = Llapa_INC
+		NOT = { has_country_flag = imperial_identity }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		revolution_n_counterrevolution = 1 
+		}
+		
+		effect = { 
+		    set_country_flag = imperial_identity
+		    remove_accepted_culture = aimara 
+		    remove_accepted_culture = diaguita 
+		    remove_accepted_culture = picunche
+		    remove_country_modifier = inca_culture
+		    any_owned = {
+				limit = {
+					is_core = INC					
+				}
+				add_province_modifier = {
+					name = INC_imperium_assim
+					duration = 14600
+				}
+			}
+		}
+	    ai_will_do = {
+				factor = 1
+		}
+	}
+	
+	# Note - I've moved this up slightly to not cause serious problems.
+	
+	claiming_Granada = { 
+		potential = { 
+		tag = INC 
+		owns = 2279 
+		NOT = { has_global_flag = claimed_GRA_INC } 
+		}
+		
+		allow = { 
+		OR = { 
+		AND = { is_greater_power = yes nationalism_n_imperialism = 1 }
+		AND = { rank = 16 revolution_n_counterrevolution = 1 } 
+			}
+		}
+		
+		effect = { 
+		set_global_flag = claimed_GRA_INC
+		SAN = { all_core = { add_core = THIS } } 
+		}
+	
+	}
+	
+	claiming_the_amazon = { 
+		potential = { 
+		tag = INC 
+		owns = 2279 
+		NOT = { has_global_flag = claimed_Amazon_INC } 
+		}
+		
+		allow = { 
+		revolution_n_counterrevolution = 1
+		} 
+		
+		effect = { 
+		set_global_flag = claimed_Amazon_INC
+		TAP = { all_core = { add_core = THIS } } 
+		}
+	}
+	
+	accepting_afro_INC = { 
+		potential = { 
+		tag = INC 
+		owns = 2279 
+		NOT = { has_country_flag = accepted_afro_INC } 
+		}
+		
+		allow = { 
+		owns = 2254 
+		owns = 2280 
+		}
+		
+		effect = { 
+		set_country_flag = accepted_afro_INC
+		add_accepted_culture = afro_latino 
+		any_pop = { 
+		limit = { culture = caladeran } 
+		militancy = 1 
+			}
+		any_pop = { 
+		limit = { culture = granadan } 
+		militancy = 2
+			}
+		}
+	}
+		
+	proclaim_the_empire_QUI = { 
+		potential = { 
+		tag = QUI 
+		has_country_flag = waiting_for_empire_QUI 
+		}
+		
+		allow = { 
+		NOT = { war = yes } 
+		INC = { exists = no }
+		2302 = { owned_by = THIS } 
+		}
+		
+		effect = { 
+		change_tag = ARE 
+		country_event = 70125
+		capital = 2302 
+		ECU_2279 = { remove_core = INC add_core = QUI } 
+		PEU_2291 = { remove_core = INC add_core = QUI } 
+		PEU_2303 = { remove_core = INC add_core = QUI } 
+		PEU_2296 = { add_core = INC } 
+		INC = { all_core = { add_core = ARE } }
+		QUI = { all_core = { add_core = ARE } }
+		government = absolute_monarchy 
+		add_accepted_culture = quechua
+		}
+	}
+	
+	Avalonia_INC = { 
+		potential = { 
+		tag = INC 
+		has_global_flag = NAN_OVER 
+		owns = 2363 
+		NAN = { exists = yes } 
+		NOT = { has_country_flag = Avalonia } 
+		}
+		
+		allow = { 
+		NOT = { war = yes } 
+		owns = 2279
+		NAN = { in_sphere = THIS } 
+		}
+		
+		effect = { 
+		set_country_flag = Avalonia
+		create_vassal = NAN
+		NAN = { government = autonomous_dependency }
+		NAN_4 = { remove_core = NAN } 
+		NAN_2 = { add_core = NAN } 
+		NAN_1 = { add_core = NAN } 
+		}
+	
+	}
+	
+	industrialization_chile_QUI = { 
+	
+	potential = { 
+	OR = { tag = ARE tag = QUI } 
+	2324 = { owned_by = THIS } 
+	NOT = { has_country_flag = industrialization_chile_QUI }
+	}
+	
+	allow = { 
+	high_pressure_steam_engine = 1 
+	interchangeable_parts = 1 
+	} 
+	
+	effect = { 
+	set_country_flag = industrialization_chile_INC
+	any_owned = { 
+		limit = { 
+		region = CHL_2322
+			}	
+		add_province_modifier = { 
+		name = colonial_recruitment
+		duration = 730
+				}
+			}
+	}
+	
+	}
+	
+	Romanticos_dream = { 
+	potential = { 
+	tag = QUI 
+	OR = { has_country_modifier = QUI_romantico_rule_terror has_country_modifier = QUI_romantico_rule }
+	NOT = { has_country_flag = ASSIMILATION_QUI } 
+	}
+	
+	allow = { 
+	biologism = 1 
+	nationalism_n_imperialism = 1 
+	}
+	
+	effect = { 
+	set_country_flag = ASSIMILATION_QUI
+	any_owned = { 
+	limit = { is_core = QUI NOT = { OR = { is_core = GRA is_core = NAN } } }
+		add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+		}
+	}
+	
+	}
+	
+	
+	claiming_Araucania_ARE = { 
+	
+	potential = { 
+	tag = ARE 
+	NOT = { has_global_flag = claiming_Mapuche } 
+	}
+	
+	allow = { 
+	war = no 
+	owns = 2314
+	ideological_thought = 1 
+	}
+	
+	effect = { 
+		set_global_flag = claiming_Mapuche
+		CHL_2322 = { add_core = THIS }
+		ARG_2387 = { add_core = THIS }
+		INC_2389 = { add_core = THIS }
+		ARU = { all_core = { add_core = THIS } }
+		}
+	
+	}
+	
+	accepting_south_cultures_ARE = { 
+		potential = { 
+		tag = ARE 
+		NOT = { has_country_flag = culture_south } 
+		}
+		
+		allow = { 
+		owns = 2387 
+		owns = 2324
+		}
+		
+		effect = { 
+		set_country_flag = culture_south 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = diaguita
+		}
+	
+	}
+	
+	rebuking_Mercian_claims = { 
+		potential = { 
+		tag = NAN 
+		ARE = { exists = yes } 
+		has_global_flag = claiming_Mapuche
+		NOT = { has_country_flag = rebuked_ARE } 
+		}
+		
+		allow = { 
+		war = no 
+		OR = { 
+		truce_with = NMC 
+		is_greater_power = yes 
+			}
+		NAN = { 
+		all_core = {
+						OR = {
+							owned_by = THIS
+							owner = {
+							is_our_vassal = THIS
+							}
+							province_id = 2131
+					}
+				}
+			}
+		}
+		
+		effect = { 
+		any_owned = { remove_core = ARE } 
+		}
+	}
+	
+	claiming_Beornia_ARE = { 
+	
+	potential = { 
+	tag = ARE 
+	owns = 2324 
+	NOT = { has_country_flag = claiming_NAN } 
+	}
+	
+	allow = { 
+	rank = 16 
+	state_n_government = 1 
+	}
+	
+	effect = { 
+	set_country_flag = claiming_NAN 
+	country_event = 70146
+	badboy = 19
+		}
+	
+	}
+	
+	forming_Avalonia_ARE = { 
+		potential = { 
+		tag = ARE 
+		owns = 2363 
+		NAN = { exists = yes } 
+		NOT = { has_country_flag = Avalonia } 
+		}
+		
+		allow = { 
+		NOT = { war = yes } 
+		owns = 2279
+		NAN = { in_sphere = THIS } 
+		}
+		
+		effect = { 
+		create_vassal = NAN
+		NAN = { government = autonomous_dependency }
+		NAN_4 = { remove_core = NAN } 
+		NAN_2 = { add_core = NAN } 
+		NAN_1 = { add_core = NAN } 
+		}
+	
+	}
+	
+	claiming_the_Amazon_ARE = { 
+	
+	potential = { 
+		tag = ARE 
+		owns = 2279 
+		NOT = { has_global_flag = claimed_Amazon_INC } 
+		}
+		
+		allow = { 
+		nationalism_n_imperialism = 1 
+		} 
+		
+		effect = { 
+		TAP = { all_core = { add_core = THIS } } 
+		}
+	}
+	
+    the_conquest_of_Granada_ARE = { 
+		potential = { 
+		tag = ARE 
+		owns = 2279 
+		NOT = { has_global_flag = claimed_GRA_ARE } 
+		}
+		
+		allow = { 
+		OR = { 
+		is_greater_power = yes 
+		AND = { rank = 16 state_n_government = 1 } 
+			}
+		}
+		
+		effect = { 
+		SAN = { all_core = { add_core = THIS } } 
+		set_global_flag = claimed_GRA_ARE
+		}
+	}
+	
+	accepting_het_ARE = { 
+		potential = { 
+		tag = ARE 
+		NOT = { has_country_flag = het_accepted } 
+		
+		}
+		
+		allow = { 
+		owns = 2376 
+		}
+		
+		effect = { 
+		add_accepted_culture = het
+		set_country_flag = het_accepted
+		}
+	}
+	
+	accepting_granadans_ARE = { 
+		potential = { 
+		tag = ARE 
+		NOT = { has_country_flag = granadan_accepted } 
+		has_global_flag = claimed_GRA_ARE
+		is_greater_power = yes 
+		}
+		
+		allow = { 
+		owns = 2254
+		mass_politics = 1 
+		}
+		
+		effect = { 
+		add_accepted_culture = granadan
+		set_country_flag = granadan_accepted
+		}
+	}
+	
+	occupation_of_araucania_ARE = {
+		picture = conquest_of_the_desert
+		potential = {
+			OR = { tag = QUI tag = ARE } 
+			OR = {
+				2332 = { empty = yes }
+				2333 = { empty = yes }
+				2334 = { empty = yes }
+				2335 = { empty = yes }
+			}
+			owns = 2329
+			NOT = { has_country_flag = occupation_of_araucania }
+		}
+		allow = {
+			OR = {
+				nationalism_n_imperialism = 1
+				2398 = { empty = no }
+			}
+		}
+		effect = {
+			set_country_flag = occupation_of_araucania
+			prestige = 5
+			random_owned = {
+				limit = {
+					2333 = { empty = yes }
+					2334 = { empty = no }
+				}
+				2333 = { secede_province = THIS }
+			}
+			random_owned = {
+				limit = {
+					2334 = { empty = yes }
+					2332 = { empty = no }
+				}
+				2334 = { secede_province = THIS }
+			}
+
+			random_owned = {
+				limit = {
+					2329 = { empty = yes }
+					2330 = { empty = no }
+					2331 = { empty = no }
+				}
+				2329 = { secede_province = THIS }
+			}		
+			random_owned = {
+				limit = {
+					2328 = { empty = yes }
+					2332 = { empty = yes }
+					2329 = { empty = no }
+				}
+				2328 = { secede_province = THIS }
+			}	
+			random_owned = {
+				limit = {
+					2332 = { empty = yes }
+					2333 = { empty = yes }
+					2334 = { empty = no }
+				}
+				2332 = { secede_province = THIS }
+			}	
+			random_owned = {
+				limit = {
+					2331 = { empty = yes }
+					2327 = { empty = no }
+					2330 = { empty = no }
+				}
+				2331 = { secede_province = THIS }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	pachamaq_capital = {
+		picture = Incas
+			potential = {
+				tag = QUI 
+				owns = 2302 
+				owns = 2295 
+				NOT = { has_country_flag = move_of_capital }
+			}
+			allow = {
+				NOT = { war = yes }
+				mechanized_mining = 1 
+				early_railroad = 1 
+				romanticism = 1 
+				
+			}
+			effect = {
+				capital = 2295
+				prestige = 10
+				set_country_flag = move_of_capital
+				2295 = { life_rating = 5 } 
+			}
+			ai_will_do = {
+				factor = 1
+			}
+	}
+
 }

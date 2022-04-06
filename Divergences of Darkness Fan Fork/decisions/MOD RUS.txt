@@ -2,7 +2,7 @@ political_decisions = {
 
 ### UNIFY THE MOTHERLAND ####
 
-	# The Glory of the Rightful Tsar	
+	# The Glory of the Rightful Tsar		
 		
 	form_russia_northern_TVE = {
 		    picture = RUS_tsar
@@ -17,6 +17,10 @@ political_decisions = {
 			    OR = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
+				}
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
 				}
 				NOT = { war = yes }
 				prestige = 40
@@ -36,6 +40,7 @@ political_decisions = {
 				clr_global_flag = panrussian_NOV
 				clr_global_flag = falistate_NOV
 				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				#EXTREME THREAT DETECTED#
 				any_country = {
 				   limit = {
@@ -163,6 +168,10 @@ political_decisions = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
 				}
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { war = yes }
 				prestige = 40
 				owns = 1003
@@ -182,6 +191,7 @@ political_decisions = {
 				clr_global_flag = panrussian_NOV
 				clr_global_flag = falistate_NOV
 				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				#THE BEAR IS VERY SCARY#
 				any_country = {
 				   limit = {
@@ -303,6 +313,10 @@ political_decisions = {
 		
 			allow = {
 				is_greater_power = yes
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { war = yes }
 				prestige = 40
 				owns = 1003
@@ -323,6 +337,7 @@ political_decisions = {
 				clr_global_flag = panrussian_NOV
 				clr_global_flag = falistate_NOV
 				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				#THE BEAR IS VERY SCARY#
 				any_country = {
 				   limit = {
@@ -452,6 +467,10 @@ political_decisions = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
 				}
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { war = yes }
 				prestige = 40
 				owns = 1003
@@ -531,6 +550,11 @@ political_decisions = {
 				prestige = 25
 				change_tag = RUS
 				set_global_flag = THE_WESTERN_BEAR
+				clr_global_flag = isolat_NOV
+				clr_global_flag = panrussian_NOV
+				clr_global_flag = falistate_NOV
+				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				add_accepted_culture = russian
 				add_accepted_culture = north_russian
 				add_accepted_culture = cossack
@@ -637,6 +661,10 @@ political_decisions = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
 				}
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { war = yes }
 				prestige = 40
 				owns = 1003
@@ -723,6 +751,7 @@ political_decisions = {
 				clr_global_flag = panrussian_NOV
 				clr_global_flag = falistate_NOV
 				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				#THE BEAR IS VERY SCARY#
 				any_country = {
 				   limit = {
@@ -820,6 +849,10 @@ political_decisions = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
 				}
+                OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { war = yes }
 				prestige = 40
 				owns = 1003
@@ -907,6 +940,7 @@ political_decisions = {
 				clr_global_flag = panrussian_NOV
 				clr_global_flag = falistate_NOV
 				clr_global_flag = panrussian_CSK
+				clr_country_flag = tatar_killing_attempt
 				#THE BEAR IS VERY SCARY#
 				any_country = {
 				   limit = {
@@ -1078,13 +1112,14 @@ political_decisions = {
 				RYA = { clr_country_flag = serfdom_locked_warlord }
 				MUS = { clr_country_flag = serfdom_locked_warlord }
 				NZH = { clr_country_flag = serfdom_locked_warlord }
+				all_core = { remove_core = RYA remove_core = TVE remove_core = MUS remove_core = NZH remove_core = SMO }
 				country_event = { id = 222572 days = 2 }	              						
 				any_country = {
 					limit = {
 						primary_culture = russian
 						OR = {
-						vassal_of = THIS
-						in_sphere = THIS
+						   vassal_of = THIS
+						   in_sphere = THIS
 						}
 					}
 					relation = { who = THIS value = 400 }
@@ -1645,11 +1680,58 @@ political_decisions = {
 			}
 	}
 	
+	# The Tatar Nightmare Scenario - Must be resolved by either Muscovy or Novogrod with Moscow prior to being able to do literally anything else ###
+	
+	the_tatar_nightmare_scenario = {	
+	        picture = tatarstan
+			potential = {
+				OR = {
+				   tag = MOS
+				   AND = { 
+				      primary_culture = north_russian
+					  owns = 1013
+			       }
+				}
+				exists = TAR
+                NOT = { has_country_flag = solving_the_nightmare }
+				NOT = { has_country_flag = TAR_attempt_failed }
+				NOT = { has_global_flag = a_russian_tragedy }	
+                NOT = { has_global_flag = MOS_shattered	}			
+			}	
+			
+			allow = {	
+			   war = no
+               NOT = { has_country_modifier = MOS_cooldown }				
+			}		
+			
+			effect = {
+				badboy = 5
+				set_country_flag = solving_the_nightmare
+                country_event = { id = 203557 days = 7 }			
+			}	
+			
+			ai_will_do = {
+				factor = 1
+			       modifier = {
+				      factor = 0
+				      badboy = 0.5
+			      }
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 1
+			      }
+			}
+	}
+	
 	#Muscovy moves south
 	MOS_southern_expansion = {	
 	        picture = military_parade
 			potential = {
 				tag = MOS
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { has_global_flag = GO_SOUTH_YOUNG_MAN }
 				NOT = { has_country_flag = TVE_MOS }	
 				NOT = { has_global_flag = a_russian_tragedy }	
@@ -1706,6 +1788,10 @@ political_decisions = {
 			}			
 			ai_will_do = {
 				factor = 1
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 5
+			      }
 			}
 	}
 	
@@ -1715,6 +1801,10 @@ political_decisions = {
 			potential = {
 				tag = MOS
 	            exists = NOV
+				OR = { 
+				   NOT = { exists = TAR }
+				   has_country_flag = TAR_attempt_failed
+				}
 				NOT = { has_global_flag = GO_NORTH_YOUNG_MAN }
 	            NOT = { has_country_flag = GO_NORTH_TAG }
 				NOT = { has_country_flag = GO_NORTH_ENDED }		
@@ -1762,6 +1852,10 @@ political_decisions = {
 			}
 			ai_will_do = {
 				factor = 1
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 5
+			      }
 			}
 	}
 	
@@ -1819,6 +1913,10 @@ political_decisions = {
 			}
 			ai_will_do = {
 				factor = 1
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 5
+			      }
 			}
 	}
 	
@@ -1849,6 +1947,10 @@ political_decisions = {
 			
 			ai_will_do = {
 				factor = 1
+			      modifier = {
+				      factor = 0
+				      war_exhaustion = 5
+			      }
 			}
 	}
 	
@@ -2006,15 +2108,39 @@ political_decisions = {
 			   1062 = { add_core = RUS }
 			   PRM = { all_core = { add_core = RUS } }
 			   SIB = { all_core = { add_core = RUS } }
-			   random_owned = {
-			      limit = { owner = { ai = yes } }
-				  owner = { 
-			         relation = { who = SIB value = 400 }
-			         diplomatic_influence = { who = SIB value = 400 }
-				  }
-			   }
-	           relation = { who = PRM value = -400 }
+			   leave_alliance = SIB
+			   relation = { who = SIB value = -400 }
+			   diplomatic_influence = { who = SIB value = -400 }
+			   relation = { who = PRM value = -400 }
 	           diplomatic_influence = { who = PRM value = -400 }
+			   random_owned = {
+			      limit = { owner = { NOT = { owns = 1066 } ai = yes } }
+				  owner = { 
+	                 war = {
+	                    target = SIB
+		                   attacker_goal =  { 
+			                  casus_belli = conquest_any
+		                   }
+		                   defender_goal = {
+			                  casus_belli = custom_treaty_cb
+		                   }
+                      }						   
+	              }
+			   }
+			   random_owned = {
+			      limit = { owner = { NOT = { owns = 1058 } ai = yes } }
+				  owner = { 
+	                 war = {
+	                    target = PRM
+		                   attacker_goal =  { 
+			                  casus_belli = conquest_any
+		                   }
+		                   defender_goal = {
+			                  casus_belli = custom_treaty_cb
+		                   }
+                      }						   
+	              }
+			   }
 			}
 			
 			ai_will_do = {
@@ -2240,7 +2366,10 @@ political_decisions = {
 		    potential = {
 		       tag = RUS
 			   exists = PLC
-			   has_global_flag = lublin_new_begin
+			   OR = {
+			      has_global_flag = lublin_new_begin
+				  PLC = { has_country_flag = lublin_new }
+			   }
 			   has_country_flag = panslavic_focus
                NOT = { has_country_flag = fuck_the_commonwealth }		
 		    }
@@ -4485,7 +4614,7 @@ political_decisions = {
 		    NOT = { has_country_modifier = tatar_intergration }
 			NOT = { exists = BAH }
 			NOT = { exists = KAZ }
-			NOT = { exists = TAR }
+		    NOT = { exists = TAR }
 		}
 		effect = {
 		    clr_country_flag = tatar_inter

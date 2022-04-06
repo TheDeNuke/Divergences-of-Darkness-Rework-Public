@@ -1,0 +1,5279 @@
+###################################### NEW COLOMBIA ######################################################
+
+### "Independence!" shouts the American world; The land of Columbus. Is bathed in heroes' blood! ###
+
+### Attalus - The QUI keys are: QUI_ROMANTIC, QUI_COUNTER_COUP, QUI_WIDE_COALTION, QUI_VICEROYALITY (Spanish Loyalists) or QUI_DICTATORSHIP
+
+###################### COLOMBIAN INITIAL EVENT CHAIN ##############################
+
+# Colombian Introduction Event
+
+country_event = {
+	id = 46401
+	title = "NCLM1.T"
+	desc = "NCLM1.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM1.A"
+        prestige = 1
+		add_country_modifier = {
+			name = the_glorious_alliance
+			duration = -1
+		}			
+	}
+}
+
+# The Reconquista
+
+country_event = {
+	id = 46402
+	title = "NCLM2.T"
+	desc = "NCLM2.D"
+	#picture = "sunset"
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		NOT = { truce_with = CLM }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		CLM = {
+		    remove_country_modifier = neutrality
+		    leave_alliance = VIN
+		    leave_alliance = NBG
+		    leave_alliance = PLA
+		    leave_alliance = DNG
+		    leave_alliance = AMA
+		    leave_alliance = LOT
+        }
+    }
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM2.A"
+		leave_alliance = DUA
+		relation = { who = DUA value = -200 }
+		set_global_flag = CLM_SCIW
+		CLM = {
+		   country_event = { id = 46403 days = 0 }
+		}
+	    war = {
+			target = CLM
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+	    }
+        ai_chance = {
+            factor = 60
+        }
+	}
+	
+	option = {
+		name = "NCLM2.B"
+		prestige = -10
+        set_global_flag = CLM_VICTORY	
+		set_global_flag = CLM_ARMISTICE
+        ai_chance = {
+            factor = 40
+        }
+	}
+}
+
+# The Second Colombian Independence War
+
+country_event = {
+	id = 46403
+	title = "NCLM3.T"
+	desc = "NCLM3.D"
+	#picture = "sunset"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM3.A"
+        prestige = 1
+	    treasury = 50000
+	    ammunition = 10
+	    small_arms = 10
+	    artillery = 10
+	    canned_food = 10
+	    regular_clothes = 10
+	    any_pop = {
+			limit = {
+				is_culture_group = latin_american
+			}
+			militancy = -10
+			consciousness = -10
+		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = -1
+		}
+	}
+}
+
+# De Blanco Flavour Event - Bombing of the Caracas Armoury 
+
+country_event = {
+	id = 46404
+	title = "NCLM4.T"
+	desc = "NCLM4.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1838	
+		war_with = CLM
+		has_global_flag = CLM_SCIW
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NCLM4.A"
+		prestige = -5
+	    ammunition = -10
+	    small_arms = -10
+	    artillery = -10
+	    canned_food = -10
+	    regular_clothes = -10
+	    any_pop = {
+			limit = {
+				culture = granadan 
+			}
+			militancy = 1
+			consciousness = 1
+		}		
+	}
+}
+
+# De Blanco Flavour Event - Revolutionaries in Maracaibo
+
+country_event = {
+	id = 46405
+	title = "NCLM5.T"
+	desc = "NCLM5.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1839
+		war_with = CLM
+		has_global_flag = CLM_SCIW
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NCLM5.A"
+		prestige = -5
+	    any_pop = {
+			limit = {
+				culture = granadan 
+			}
+			reduce_pop = 0.99
+			militancy = 2
+			consciousness = 2
+		}		
+	}
+}
+
+#### CONTINUED ARMISTICE EVENTS ####
+
+# The White Peace
+
+country_event = {
+	id = 46406
+	title = "NCLM6.T"
+	desc = "NCLM6.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		NOT = { war_with = CLM }
+		exists = CLM
+		has_global_flag = CLM_SCIW
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "NCLM2.A"
+		prestige = -10
+		clr_global_flag = CLM_SCIW
+		set_global_flag = CLM_VICTORY	
+		set_global_flag = CLM_ARMISTICE
+	}
+}
+
+# This war has gone for too long and Mexico City is not occupied+10 percent of CLM. De Blanco is going to fuck us if this goes any longer.
+
+country_event = {
+	id = 46407
+	title = "NCLM7.T"
+	desc = "NCLM7.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		OR = {
+		   year = 1840	
+           2247 = { NOT = { controlled_by = THIS } }
+		   2264 = { NOT = { controlled_by = THIS } }
+        }		   
+		war_with = CLM
+		has_global_flag = CLM_SCIW
+		CLM = { NOT = { national_provinces_occupied = 0.10 } }
+		2172 = { NOT = { controlled_by = THIS } }
+		NOT = { has_global_flag = SAN_REVOLUTION }
+		NOT = { has_global_flag = CLM_VICTORY }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NCLM7.A"
+		prestige = -10
+		clr_global_flag = CLM_SCIW
+		set_global_flag = CLM_VICTORY
+        set_global_flag = CLM_ARMISTICE		
+		CLM = { country_event = { id = 46408 days = 1 } }
+        ai_chance = {
+            factor = 30
+        }
+	}
+	
+	option = {
+		name = "NCLM7.B"
+		prestige = 10
+	    any_pop = {
+			limit = {
+				culture = granadan 
+			}
+			militancy = 2
+			consciousness = 2
+		}
+        set_country_flag = herrera_invit
+        ai_chance = {
+            factor = 70
+        }
+	}
+}
+
+# SPA has retreated to Granada
+
+country_event = {
+	id = 46408
+	title = "NCLM8.T"
+	desc = "NCLM8.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM8.A"
+		prestige = 10
+		end_war = SPA
+		end_war = QUI
+	}
+}
+
+# Continued Armistice Flavor Event - The Alliance Continues
+
+country_event = {
+	id = 46409
+	title = "NCLM9.T"
+	desc = "NCLM9.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_global_flag = CLM_ARMISTICE	
+		NOT = { has_country_flag = CLM_ALLIANCE_MAINTAINED }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NCLM9.A"
+		prestige = 10
+		set_country_flag = CLM_ALLIANCE_MAINTAINED
+    }
+}
+
+#### HERRERA REVOLUTION TRIGGERED BY SCIW ####
+
+
+# De Blanco Flavour Event - De Blanco has taken Bogota and Ballivián has marched south. This is bad.
+
+country_event = {
+	id = 464091
+	title = "NCLM910.T"
+	desc = "NCLM910.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		OR = {
+		   year = 1840	
+           2247 = { NOT = { controlled_by = THIS } }
+		   2264 = { NOT = { controlled_by = THIS } }
+        }
+		war_with = CLM
+		has_country_flag = herrera_invit
+		NOT = { has_country_flag = DE_BLANCO_HERE }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "NCLM910.A"
+		clr_country_flag = herrera_invit
+		country_event = { id = 46410 days = 1 }	
+	}
+}
+
+# MAJOR - THE HERRERA REVOLUTION
+
+country_event = {
+	id = 46410
+	title = "NCLM10.T"
+	desc = "NCLM10.D"
+	#picture = "sunset"
+
+    is_triggered_only = yes
+	
+	major = yes
+	
+	immediate = { 
+	   release_vassal = QUI
+	   leave_alliance = QUI
+	   relation = { who = QUI value = -400 }
+	   diplomatic_influence = { who = QUI value = -400 }	   
+	}
+
+	option = {
+		name = "NCLM10.A"
+		release_vassal = QUI
+		set_global_flag = SAN_REVOLUTION
+		war_exhaustion = 50
+	    any_owned = {
+			limit = {
+				is_core = SAN
+				NOT = { is_core = CAS }
+				}
+			secede_province = SAN
+		}
+		CLM = { 
+		   end_war = QUI 
+		   create_alliance = SAN
+		   relation = { who = SAN value = 400 }
+		   diplomatic_influence = { who = SAN value = 400 }		
+		}
+		QUI = { 	
+           remove_country_modifier = neutrality		
+		   create_alliance = SAN
+		   relation = { who = SAN value = 400 }
+		   diplomatic_influence = { who = SAN value = 400 }	
+           country_event = { id = 46411 days = 0 }		   
+		}
+		SAN = {
+		add_country_modifier = {
+		    name = small_country_draft
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = 720
+		}
+		set_country_flag = DE_BLANCO_HERE
+	    government = presidential_dictatorship
+	    ruling_party_ideology = liberal
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000		
+		}
+	    war = {
+			target = SAN
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }		
+	}
+}
+
+# The End of a Era in Quito
+
+country_event = {
+	id = 46411
+	title = "NCLM11.T"
+	desc = "NCLM11.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "NCLM11.A"
+		set_country_flag = QUI_DICTATORSHIP
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000	
+	}				
+}
+
+#### HERRERA REVOLUTION TRIGGERED BY TIME ####
+
+# So, De Blanco will kick of Herrera if SPA is either at war with AMA or in 1842
+
+# The 5th of March Demonstration - Occurs as a result of ATL breaking off SPA
+
+country_event = {
+	id = 464111
+	title = "NCLM110.T"
+	desc = "NCLM110.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = QUI
+		OR = {
+		   year = 1842 
+		   SPA = { war_with = AMA }
+		}
+		ATL = { NOT = { vassal_of = SPA } } 
+		has_global_flag = CLM_ARMISTICE	
+		NOT = { exists = SAN }		
+		NOT = { has_global_flag = CLM_SCIW }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "NCLM110.A"
+	    relation = { who = QUI value = -10 }
+	    any_pop = {
+			militancy = 1
+			consciousness = 1
+		}
+		SPA = { country_event = { id = 46412 days = 1 }	}
+	}
+}
+
+# Response to the 5th of March Demonstration
+
+country_event = {
+	id = 46412
+	title = "NCLM12.T"
+	desc = "NCLM12.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+
+	option = {
+		name = "NCLM12.A"
+	    relation = { who = QUI value = -50 }
+		country_event = { id = 46413 days = 1 }	
+        ai_chance = {
+            factor = 75
+        }
+	}
+	
+	option = {
+		name = "NCLM12.B"
+		relation = { who = QUI value = 50 }
+		set_country_flag = herrera_invit_alt
+        ai_chance = {
+            factor = 25
+        }
+	}
+}
+
+# Quito says get fucked. Back down or declare war.
+country_event = {
+	id = 46413
+	title = "NCLM13.T"
+	desc = "NCLM13.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM13.A"
+		prestige = -5
+		set_country_flag = herrera_invit_alt
+        ai_chance = {
+            factor = 75
+        }
+	}
+	
+	option = {
+		name = "NCLM13.B"
+		release_vassal = QUI
+		leave_alliance = QUI
+		relation = { who = QUI value = -400 }
+		diplomatic_influence = { who = QUI value = -400 }
+	    war = {
+			target = QUI
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+	    }
+		QUI = { country_event = { id = 46414 days = 1 } }	
+        ai_chance = {
+            factor = 25
+        }		
+	}
+}
+
+# QUI has a revolution with Tupac. De Blanco marches north.
+
+country_event = {
+	id = 46414
+	title = "NCLM14.T"
+	desc = "NCLM14.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM14.A"
+		SPA = { set_country_flag = herrera_invit_alt }
+		set_country_flag = QUI_WIDE_COALTION
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = mandatory_service
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		add_country_modifier = {
+		    name = taiping_draft
+			duration = 730
+		}
+	}
+}
+
+# De Blanco Flavor Event - De Blanco has raided the Caracas Armoury
+
+country_event = {
+	id = 46415
+	title = "NCLM15.T"
+	desc = "NCLM15.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1838	
+		has_global_flag = CLM_ARMISTICE	
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+		modifier = {
+			factor = 0.01
+			war_with = QUI
+		}
+	}
+
+	option = {
+		name = "NCLM15.A"
+		prestige = -5
+	    ammunition = -10
+	    small_arms = -10
+	    artillery = -10
+	    canned_food = -10
+	    regular_clothes = -10
+	    any_pop = {
+			limit = {
+				culture = granadan 
+			}
+			militancy = 1
+			consciousness = 1
+		}		
+	}
+}
+
+# De Blanco Flavor Event - De Blanco is sieging the countryside of Cartagena
+
+country_event = {
+	id = 46416
+	title = "NCLM16.T"
+	desc = "NCLM16.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1840
+		has_global_flag = CLM_ARMISTICE	
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+		modifier = {
+			factor = 0.01
+			war_with = QUI
+		}
+	}
+
+	option = {
+		name = "NCLM16.A"
+	    any_pop = {
+			limit = {
+				culture = granadan 
+			}
+			reduce_pop = 0.99
+			militancy = 2
+			consciousness = 2
+		}
+	}
+}
+
+# De Blanco Flavor Event - De Blanco has finally broken Bogota
+
+country_event = {
+	id = 46417
+	title = "NCLM17.T"
+	desc = "NCLM17.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		OR = {
+		   war_with = QUI
+		   has_country_flag = herrera_invit_alt
+		}
+		NOT = { exists = SAN }
+		NOT = { has_country_flag = DE_BLANCO_HERE }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+		modifier = {
+			factor = 0.2
+			war_with = QUI
+		}
+	}
+
+	option = {
+		name = "NCLM17.A"
+		clr_country_flag = herrera_invit_alt
+		QUI = { remove_country_modifier = neutrality }
+		country_event = { id = 46418 days = 1 }	
+	}
+}
+
+# DE BLANCO HAS DECLARED A REVOLUTION
+
+country_event = {
+	id = 46418
+	title = "NCLM18.T"
+	desc = "NCLM18.D"
+	#picture = "sunset"
+
+    is_triggered_only = yes
+
+	option = {
+		name = "NCLM18.A"	    
+		any_country = {
+		   limit = {
+		      tag = QUI
+			  NOT = { has_country_flag = QUI_WIDE_COALTION }
+	       }
+		   country_event = { id = 46419 days = 2 }
+		}
+		war_exhaustion = 50
+		CLM = { country_event = { id = 46420 days = 3 } }	
+		country_event = { id = 46421 days = 7 }
+	    any_owned = {
+			limit = {
+				is_core = SAN
+				NOT = { is_core = CAS }
+				}
+			secede_province = SAN
+		}
+		SAN = {
+		add_country_modifier = {
+		    name = small_country_draft
+			duration = 1825
+		}
+		set_country_flag = DE_BLANCO_HERE
+	    government = presidential_dictatorship
+	    ruling_party_ideology = liberal
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000		
+		}		
+	}
+}
+
+# The Dictator returns to Quito
+
+country_event = {
+	id = 46419
+	title = "NCLM19.T"
+	desc = "NCLM19.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+	
+	# He successfully coups the Government
+
+	option = {
+		name = "NCLM19.A"
+		SPA = { release_vassal = QUI diplomatic_influence = { who = QUI value = -400 } }
+		leave_alliance = SPA
+		relation = { who = SPA value = -400 }
+		create_alliance = SAN
+		relation = { who = SAN value = 400 }
+		relation = { who = SPA value = -100 }
+		set_country_flag = QUI_DICTATORSHIP
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+		random_list = {
+		25 = { prestige = 1 }
+		75 = { country_event = { id = 464190 days = 0 } }
+		}
+        ai_chance = {
+            factor = 50
+        }
+	}
+	
+	# The Coup fails.
+	
+	option = {
+		name = "NCLM19.B"
+		set_country_flag = QUI_VICEROYALITY
+        relation = { who = SPA value = 200 }
+        ai_chance = {
+            factor = 50
+        }
+	}
+}
+
+# The Dictator fails to secure the government and there is a immediate counter-coup.
+
+country_event = {
+	id = 464190
+	title = "NCLM190.T"
+	desc = "NCLM190.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+	
+	immediate = {
+		leave_alliance = SAN
+		relation = { who = SAN value = -400 }
+	}
+	
+	option = {
+		name = "NCLM190.A"
+		clr_country_flag = QUI_DICTATORSHIP
+		set_country_flag = QUI_COUNTER_COUP
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = mandatory_service
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	}
+}
+
+# Colombia and the Herrera Revolution
+
+country_event = {
+	id = 46420
+	title = "NCLM20.T"
+	desc = "NCLM20.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+
+	option = {
+		name = "NCLM20.A"
+		prestige = -10
+		create_alliance = SAN
+		relation = { who = SAN value = 400 }
+		diplomatic_influence = { who = SAN value = 400 }
+		relation = { who = SPA value = -100 }
+        ai_chance = {
+            factor = 99
+        }
+	}
+	
+	option = {
+		name = "NCLM20.B"
+        prestige = -10
+        ai_chance = {
+            factor = 1
+        }
+	}
+}
+
+
+# MAJOR - THE HERRERA REVOLUTION
+
+country_event = {
+	id = 46421
+	title = "NCLM21.T"
+	desc = "NCLM21.D"
+	#picture = "sunset"
+	
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM14.A"
+		set_global_flag = SAN_REVOLUTION
+	    war = {
+			target = SAN
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+	    }
+	}
+}
+
+# Ending One - Lost of Control in Granada
+
+# We have lost control of all relevent provinces in Granada. The war is over.
+
+country_event = {
+	id = 46422
+	title = "NCLM22.T"
+	desc = "NCLM22.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		OR = {
+		   war_with = CLM
+		   war_with = SAN
+	    }
+		OR = {
+		   has_global_flag = SAN_REVOLUTION
+		   has_global_flag = CLM_SCIW
+		}
+		NOT = {
+		   any_owned_province = {
+		      is_core = SAN
+			  controlled_by = SPA
+		   }
+	    }
+		NOT = {
+		   any_owned_province = {
+		      is_core = QUI
+			  controlled_by = SPA
+		   }
+	    }
+		NOT = { has_country_flag = custom_treaty_loser }
+		NOT = { has_global_flag = SAN_WAR_OVER }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = "NCLM12.A"
+		prestige = -35
+		clr_global_flag = CLM_SCIW
+		clr_global_flag = CLM_ARMISTICE	
+		clr_global_flag = SAN_REVOLUTION
+		set_global_flag = CLM_VICTORY
+        set_global_flag = SAN_WAR_OVER		
+		set_country_flag = SPA_CATASTROPIC_FAILURE
+		QUI = { remove_country_modifier = neutrality }
+		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+	    any_pop = {
+	    limit = { NOT = { pop_type = aristocrats } }
+		ideology = {
+			value = liberal
+			factor = 0.25
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+	    }
+		end_war = CLM
+		end_war = QUI
+		end_war = SAN
+	    any_owned = {
+			limit = {
+				is_core = GUY
+				}
+			    secede_province = GUY
+		}
+	    any_owned = {
+			limit = {
+				is_core = CAS
+				}
+			    secede_province = CAS
+		}
+		CAS = {
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+		}
+	}
+}
+
+# Ending Two - Custom Treaty CB was enforced
+
+country_event = {
+	id = 46423
+	title = "NCLM23.T"
+	desc = "NCLM23.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_country_flag = custom_treaty_loser
+		OR = {
+		   has_global_flag = SAN_REVOLUTION
+		   has_global_flag = CLM_SCIW
+		}
+		NOT = { has_global_flag = SAN_WAR_OVER }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = "NCLM23.A"
+		prestige = -30
+		clr_global_flag = CLM_SCIW
+		clr_global_flag = CLM_ARMISTICE	
+		clr_global_flag = SAN_REVOLUTION
+		set_global_flag = CLM_VICTORY
+        set_global_flag = SAN_WAR_OVER		
+		set_country_flag = SPA_CATASTROPIC_FAILURE
+		QUI = { remove_country_modifier = neutrality }
+		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+		end_war = CLM
+		end_war = QUI
+		end_war = SAN
+	    any_pop = {
+	    limit = { NOT = { pop_type = aristocrats } }
+		ideology = {
+			value = liberal
+			factor = 0.2
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+	    }
+	    any_owned = {
+			limit = {
+				is_core = GUY
+				}
+			    secede_province = GUY
+		}
+	    any_owned = {
+			limit = {
+				is_core = CAS
+				}
+			    secede_province = CAS
+		}
+		CAS = {
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+		}
+	}
+}
+
+# Ending Three - White Peace in SAN Revolution. CAS breaks free as they are scared of De Blanco. You fail.
+
+country_event = {
+	id = 46424
+	title = "NCLM24.T"
+	desc = "NCLM24.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		NOT = { war_with = SAN }	
+		exists = SAN
+		OR = {
+		   has_global_flag = SAN_REVOLUTION
+		   has_global_flag = CLM_SCIW
+		}
+		NOT = { has_global_flag = SAN_WAR_OVER }
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = "NCLM24.A"
+		prestige = -30
+		clr_global_flag = CLM_SCIW
+		clr_global_flag = CLM_ARMISTICE	
+		clr_global_flag = SAN_REVOLUTION
+		set_global_flag = CLM_VICTORY
+        set_global_flag = SAN_WAR_OVER		
+		set_country_flag = SPA_CATASTROPIC_FAILURE
+		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+	    any_pop = {
+	    limit = { NOT = { pop_type = aristocrats } }
+		ideology = {
+			value = liberal
+			factor = 0.2
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 4
+		}
+	    }
+		end_war = CLM
+		end_war = QUI
+		end_war = SAN
+	    any_owned = {
+			limit = {
+				is_core = GUY
+				}
+			    secede_province = GUY
+		}
+	    any_owned = {
+			limit = {
+				is_core = CAS
+				}
+			    secede_province = CAS
+		}
+		CAS = {
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+		}
+	}
+}
+
+# Ending Four - Spain successfully reconquers SAN and is not in the SICW. WP with CLM.
+
+country_event = {
+	id = 46425
+	title = "NCLM25.T"
+	desc = "NCLM25.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+        NOT = { exists = SAN }
+		has_global_flag = SAN_REVOLUTION
+		NOT = { has_global_flag = CLM_SCIW }
+		NOT = { has_global_flag = SAN_WAR_OVER }
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = "NCLM25.A"
+		prestige = 20
+		clr_global_flag = CLM_SCIW
+		clr_global_flag = CLM_ARMISTICE	
+		clr_global_flag = SAN_REVOLUTION
+		set_global_flag = CLM_VICTORY
+        set_global_flag = SAN_WAR_OVER		
+		set_country_flag = SPA_HALF_FAILURE		
+		end_war = CLM
+		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46429 days = 14 } }
+	    any_pop = {
+	    limit = { NOT = { pop_type = aristocrats } }
+		ideology = {
+			value = liberal
+			factor = 0.1
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+	    }		
+	}
+}
+
+# Ending FIVE - TOTAL SPANISH VICTORY IN THE NEW WORLD. 100 PRESTIGE TO YOU.
+
+country_event = {
+	id = 46426
+	title = "NCLM26.T"
+	desc = "NCLM26.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		NOT = { exists = CLM }
+		NOT = { exists = SAN }
+		has_global_flag = CLM_SCIW
+		NOT = { has_global_flag = SAN_WAR_OVER }
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	major = yes
+
+	option = {
+		name = "NCLM26.A"
+		prestige = 100
+		clr_global_flag = CLM_SCIW
+		clr_global_flag = CLM_ARMISTICE	
+		clr_global_flag = SAN_REVOLUTION
+		set_global_flag = CLM_VICTORY
+        set_global_flag = SAN_WAR_OVER		
+		set_country_flag = SPA_TOTAL_VICTORY
+		QUI = { remove_country_modifier = neutrality }
+		CLM = { remove_country_modifier = the_glorious_alliance remove_country_modifier = GREAT_CLM_WAR }
+	    any_pop = {
+	    limit = { NOT = { pop_type = aristocrats } }
+		ideology = {
+			value = conservative
+			factor = 0.2
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -5
+		}
+	    }
+	}
+}
+
+# Quito - Spain has won in Colombia and we are still a vassal
+
+country_event = {
+	id = 46427
+	title = "NCLM27.T"
+	desc = "NCLM27.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = QUI
+		vassal_of = SPA
+		SPA = { has_country_flag = SPA_TOTAL_VICTORY }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	# Assume the Position
+
+	option = {
+		name = "NCLM27.A"
+		set_country_flag = QUI_VICEROYALITY
+        relation = { who = SPA value = 200 }
+        ai_chance = {
+            factor = 90
+        }
+	}
+	
+	# Time for a suicidal war.
+	
+	option = {
+		name = "NCLM27.B"
+		set_country_flag = QUI_ROMANTIC
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = mandatory_service
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+        SPA = { country_event = { id = 46428 days = 1 } }
+        ai_chance = {
+            factor = 10
+        }
+	}
+}
+
+# Dumb AI or the Player just decided to declare independence after our total victory
+
+country_event = {
+	id = 46428
+	title = "NCLM28.T"
+	desc = "NCLM28.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM28.A"
+	    war = {
+			target = QUI
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+############################ THE COLOMBIAN ALLIANCE - ALL CONTENT FOR CLM #################################
+
+# 1 - A Coup in Mexico City - This occurs if Granada was not successfully liberated
+
+country_event = {
+	id = 46429
+	title = "NCLM29.T"
+	desc = "NCLM29.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM29.A"
+		set_country_flag = SANTANDER_CLM
+		remove_country_modifier = the_glorious_alliance
+		set_country_flag = native_policy_possible
+		ruling_party_ideology = reactionary
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }		
+	}
+}
+
+# 2 - The Fate of Vicente - This is currently AI RNG but will be replaced with a proper system in the future once we have Arcadian Content
+
+country_event = {
+	id = 46430
+	title = "NCLM30.T"
+	desc = "NCLM30.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM30.A"
+		prestige = 5
+		remove_country_modifier = the_glorious_alliance
+		set_country_flag = VICINTE_CLM
+	    any_pop = {
+		ideology = {
+			value = conservative
+			factor = 0.2
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -8
+		}
+	    }   
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -3 } 
+        any_pop = { limit = { culture = mexican } militancy = 2 }	
+        ai_chance = {
+            factor = 40
+        }		
+	}
+	
+	option = {
+		name = "NCLM30.B"
+		prestige = -10
+		remove_country_modifier = the_glorious_alliance
+		set_country_flag = DEAD_PRESIDENT_CLM
+		set_country_flag = native_policy_possible
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.1
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+	    } 
+        any_pop = { limit = { OR = { culture = mexican culture = lusitanian culture = central_american } } militancy = 1 }	
+        ai_chance = {
+            factor = 60
+        }		
+	}
+}
+
+# 3 - The President is dead and Mexico City erupts into complete chaos with people dying left and right. Who wins?
+# This event will always be RNG as the death of Vicinte will be determined by events rather then this. This is just chaos.
+
+country_event = {
+	id = 46431
+	title = "NCLM31.T"
+	desc = "NCLM31.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes	
+
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = DEAD_PRESIDENT_CLM
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	# Oh My God
+
+	option = {
+		name = "NCLM26.A"
+		clr_country_flag = DEAD_PRESIDENT_CLM
+	    2172 = {
+		   poor_strata = {
+               reduce_pop = 0.95
+			   militancy = 2
+	       }
+		   middle_strata = {
+			   reduce_pop = 0.90
+			   militancy = 2
+	       }
+		   rich_strata = {
+			   reduce_pop = 0.99
+			   militancy = 5
+	       }
+	    } 
+		random_list = {
+		   40 = { country_event = { id = 46434 days = 7 } }
+		   60 = { country_event = { id = 46432 days = 7 } }
+		}		
+	}
+}
+
+# 3A - President Piexoto's (Yeltsin) Final Solution (to the Colombia Problem)
+
+country_event = {
+	id = 46432
+	title = "NCLM32.T"
+	desc = "NCLM32.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM32.A"
+		ruling_party_ideology = liberal
+        any_pop = { limit = { OR = { culture = mexican culture = lusitanian culture = central_american } } militancy = -7 }			
+		country_event = { id = 46433 days = 14 }
+	}
+}
+
+# 3B - The Oaxaca Protocol
+# Basically Colombia's Alma-Ata Protocol where the Caudillos basically Permanently Dissolve Colombia. This will remove cores but is the peaceful ending if Casto does not walk in and coup the place.
+
+country_event = {
+	id = 46433
+	title = "NCLM33.T"
+	desc = "NCLM33.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	# Goodbye Colombia
+
+	option = {
+		name = "NCLM33.A"
+		prestige_factor = -0.25
+		set_country_flag = NEW_MEXICO_FORMED
+        LST = { 
+		   set_country_flag = Piexoto_LST
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   all_core = { remove_core = MEX }
+        }		   
+        UCA = { 
+		   set_country_flag = DeMar_UCA
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   all_core = { remove_core = MEX }
+        }
+		remove_accepted_culture = central_american
+		remove_accepted_culture = lusitanian
+	    all_core = { remove_core = CLM }
+		any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -10 } 
+	    any_owned = {
+			limit = {
+				is_core = UCA
+				}
+			    secede_province = UCA
+		}
+	    any_owned = {
+			limit = {
+				is_core = LST
+				}
+			    secede_province = LST
+		}		
+        change_tag = MEX
+        any_pop = { limit = { culture = mexican } militancy = 5 }	
+        ai_chance = {
+            factor = 60
+        }		
+	}
+	
+	# We are not repeating 1991 in the New World
+	
+	option = {
+		name = "NCLM33.B"
+		prestige = 10
+		ruling_party_ideology = conservative
+		set_country_flag = CASTO_CLM
+		set_country_flag = CASTO_CLM_STARTUP
+        any_pop = { limit = { OR = { culture = mexican culture = lusitanian culture = central_american } } militancy = 3 consciousness = 1 }	
+        ai_chance = {
+            factor = 40
+        }		
+	}
+}
+
+# 4 - President Castro has taken over.
+
+country_event = {
+	id = 46434
+	title = "NCLM34.T"
+	desc = "NCLM34.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM34.A"
+        set_country_flag = CASTO_CLM
+		set_country_flag = CASTO_CLM_STARTUP
+	    any_pop = {
+		ideology = {
+			value = conservative
+			factor = 0.2
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    } 		
+	}
+}
+
+# 4 - President Castro announces Centralization Reforms. 20 year timer starts ticking.
+
+country_event = {
+	id = 46435
+	title = "NCLM35.T"
+	desc = "NCLM35.D"
+	#picture = "sunset"
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = CASTO_CLM
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM35.A"
+		clr_country_flag = CASTO_CLM_STARTUP
+		set_country_flag = CASTO_CLM_CUBA
+		political_reform = mandatory_service
+        political_reform = unitary
+		add_country_modifier = {
+			name = the_castro_reforms
+			duration = 7300
+		}
+	    any_pop = {
+		ideology = {
+			value = conservative
+			factor = 0.2
+		}
+	    }
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }	
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } consciousness = 1 }				
+	}
+}
+
+
+# 4 - President Castro loudly announces the Colombian Claim on Cuba
+
+country_event = {
+	id = 46436
+	title = "NCLM36.T"
+	desc = "NCLM36.D"
+	#picture = "sunset"
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = CASTO_CLM
+		has_country_flag = CASTO_CLM_CUBA
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM36.A"
+		clr_country_flag = CASTO_CLM_CUBA
+		relation = { who = SPA value = -400 }
+		CUB = { all_core = { add_core = CLM } }
+	}
+}
+
+# 4 - President Castro has failed to do anything and is couped and executed by Santander. Emperor Maximilian style.
+
+country_event = {
+	id = 46437
+	title = "NCLM37.T"
+	desc = "NCLM37.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = CASTO_CLM
+		NOT = { has_country_flag = CASTO_CLM_STARTUP }
+		NOT = { has_country_flag = CLM_GRANADA_ENABLED }
+		NOT = { has_country_modifier = the_castro_reforms }
+		NOT = { government = absolute_monarchy }		
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM37.A"
+		clr_country_flag = CASTO_CLM
+		set_country_flag = SANTANDER_CLM
+		CUB = { all_core = { remove_core = CLM } }
+		ruling_party_ideology = reactionary
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }	
+	}
+}
+# 4 - Liberals have deposed Castro. Santander quickly does a counterrevolution.
+
+country_event = {
+	id = 46438
+	title = "NCLM38.T"
+	desc = "NCLM38.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = CASTO_CLM
+		NOT = { government = presidential_dictatorship }
+		NOT = { government = absolute_monarchy }
+		NOT = { has_country_flag = CLM_GRANADA_ENABLED }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM38.A"
+		remove_country_modifier = the_castro_reforms
+		clr_country_flag = CASTO_CLM
+		set_country_flag = SANTANDER_CLM
+		CUB = { all_core = { remove_core = CLM } }
+		ruling_party_ideology = reactionary
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }	
+	}
+}
+
+# 4 - Emperor (Successful) Castro has been assassinated by Republicans
+
+country_event = {
+	id = 46439
+	title = "NCLM39.T"
+	desc = "NCLM39.D"
+	#picture = "sunset"
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = IMPERIAL_CLM
+		OR = { 
+		   government = absolute_monarchy
+		   government = prussian_constitutionalism
+		   government = hms_government
+        }	
+		NOT = { has_country_flag = CLM_GRANADA_ENABLED }
+		NOT = { has_country_modifier = the_castro_reforms }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM37.A"
+		prestige = -20
+		ruling_party_ideology = reactionary
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }	
+		country_event = { id = 46440 days = 7 }
+	}
+}
+
+# 4 - The Golden Constitution (The most liberal constitution ever written to shut up the republicans)
+
+country_event = {
+	id = 46440
+	title = "NCLM40.T"
+	desc = "NCLM40.D"
+	#picture = "sunset"
+	
+	major = yes	
+	is_triggered_only = yes	
+
+	option = {
+		name = "NCLM40.A"
+		set_country_flag = CLM_GRANADA_ENABLED
+		prestige = 30
+	    government = hms_government
+	    ruling_party_ideology = liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = no_draft
+		political_reform = federalism
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    set_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    set_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power	
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -10
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -10
+		}
+	    } 		
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -10 }	
+	}
+}
+
+# 5 - Vicinte announces the creation of the Democratic Parliamentary Colombian Federation after surviving the Assassination
+
+country_event = {
+	id = 46441
+	title = "NCLM41.T"
+	desc = "NCLM41.D"
+	#picture = "sunset"
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = VICINTE_CLM
+		NOT = { has_country_flag = VICINTE_CHAIN_START }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = "NCLM41.A"
+		set_country_flag = VICINTE_CHAIN_START
+        political_reform = federalism
+		add_country_modifier = {
+			name = father_of_colombia
+			duration = -1
+		}	
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+		}
+	    } 		
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -1 }
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 3 }		
+        country_event = { id = 46442 days = 14 }		
+	}
+}
+
+# 5 - Caudillos refuse to sign the Constitution. They respect Vicinte but this is far too much
+
+country_event = {
+	id = 46442
+	title = "NCLM42.T"
+	desc = "NCLM42.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM42.A"
+		political_reform = confederalism	
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    } 		
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 1 }	
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -3 }			
+		country_event = { id = 46443 days = 7 }
+	}
+}
+
+# 5 - Vicinte is arranging the Veracruz Conference to sort out his differences with the Caudillos
+
+country_event = {
+	id = 46443
+	title = "NCLM43.T"
+	desc = "NCLM43.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM43.A"
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -3 }	
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -5 }		
+  		country_event = { id = 46444 days = 7 }
+	}
+}
+
+#################### The Veracruz Conference - Startup Event - Warning about taking too many liberal options #######################
+
+country_event = {
+	id = 46444
+	title = "NCLM44.T"
+	desc = "NCLM44.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = "NCLM44.A"
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -10
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -10
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -10
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -10
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -10
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -10
+		}
+	    } 
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -10 consciousness = -10  }	
+	    set_variable = {
+		   which = CLM_conf
+		   value = 0
+	    }
+  		country_event = { id = 46445 days = 7 }
+	}
+}
+
+# THE SCHOOLS
+
+country_event = {
+	id = 46445
+	title = "NCLM45.T"
+	desc = "NCLM45.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM45.A"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 2 consciousness = 2  }	
+		social_reform = good_schools
+	    change_variable = {
+		   which = CLM_conf
+		   value = 2
+	    }
+  		country_event = { id = 46446 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM45.B"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 1 consciousness = 1  }	
+		social_reform = low_schools
+	    change_variable = {
+		   which = CLM_conf
+		   value = 1
+	    }
+  		country_event = { id = 46446 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM45.C"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -1 consciousness = -1  }	
+  		country_event = { id = 46446 days = 7 }
+	}
+}
+
+# MIGRATION POLICY - Choice of 40 year modifier
+
+country_event = {
+	id = 46446
+	title = "NCLM46.T"
+	desc = "NCLM46.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM46.A"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 2 consciousness = 2  }	
+		add_country_modifier = {
+			name = major_immigration_CLM
+			duration = 14600
+		}	
+	    change_variable = {
+		   which = CLM_conf
+		   value = 2
+	    }
+  		country_event = { id = 464460 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM46.B"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 1 consciousness = 1  }	
+		add_country_modifier = {
+			name = minor_immigration_CLM
+			duration = 14600
+		}
+	    change_variable = {
+		   which = CLM_conf
+		   value = 1
+	    }
+  		country_event = { id = 464460 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM46.C"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -1 consciousness = -1  }	
+  		country_event = { id = 464460 days = 7 }
+	}
+}
+
+# Native Policy - The radical assimilation plan, building reservations or not caring.
+
+country_event = {
+	id = 464460
+	title = "NCLM460.T"
+	desc = "NCLM460.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM460.A"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 2 consciousness = 2  }
+		political_reform = civilizing
+		political_reform = all_voting_pops
+		set_country_flag = native_assimilation
+		set_country_flag = native_policy_possible
+		add_country_modifier = {
+			name = native_assimilation
+			duration = 3650
+		}
+	    change_variable = {
+		   which = CLM_conf
+		   value = 2
+	    }
+  		country_event = { id = 46447 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM460.B"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 1 consciousness = 1  }	
+		set_country_flag = native_reservation
+		set_country_flag = native_policy_possible
+		political_reform = settlement	
+		any_owned = {
+			limit = {
+				is_core = IRO
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 36000
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = ANI
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 36000
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = NUN
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 36000
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CHE
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 36000
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = DIN
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 36000
+			}
+		}
+		any_owned = {
+			limit = {
+				culture = native_american_minor
+			}
+			add_province_modifier = {
+				name = native_reservation
+				duration = 1825
+			}
+		}
+	    change_variable = {
+		   which = CLM_conf
+		   value = 1
+	    }
+  		country_event = { id = 46447 days = 7 }
+	}
+	
+	option = {
+		name = "NCLM460.C"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -1 consciousness = -1  }	
+		set_country_flag = native_integration
+		set_country_flag = native_policy_possible
+		add_country_modifier = {
+			name = native_integration
+			duration = 3650
+		}
+  		country_event = { id = 46447 days = 7 }
+	}
+}
+
+# The most toxic subject - The role of the military. Full Mobilization. Change nothing. Caudillos are not obligated to give troops therefore banning the draft.
+
+country_event = {
+	id = 46447
+	title = "NCLM47.T"
+	desc = "NCLM47.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM47.A"
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = 3 consciousness = 3  }	
+		political_reform = mandatory_service
+	    change_variable = {
+		   which = CLM_conf
+		   value = 2
+	    }
+		set_country_flag = VC_conference_concluded
+	}
+	
+	option = {
+		name = "NCLM47.B"
+		political_reform = two_year_draft
+	    change_variable = {
+		   which = CLM_conf
+		   value = 1
+	    }
+  		set_country_flag = VC_conference_concluded
+	}
+	
+	option = {
+		name = "NCLM47.C"		
+        any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -3 consciousness = -3  }	
+		political_reform = no_draft
+  		set_country_flag = VC_conference_concluded
+	}
+}
+
+################## The Conference was a success and a new highly conservative yet democratic federal constitution is approved. Good work. #############################
+
+country_event = {
+	id = 46448
+	title = "NCLM48.T"
+	desc = "NCLM48.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = VC_conference_concluded
+		NOT = {
+	       check_variable = {
+		      which = CLM_conf
+		      value = 6
+	       }
+        }
+		NOT = { has_country_flag = VC_conference_ending }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+
+	option = {
+		name = "NCLM48.A"
+		clr_country_flag = VC_conference_concluded
+		set_country_flag = VC_conference_ending
+		set_country_flag = VC_conference_successful
+	    government = democracy
+	    ruling_party_ideology = conservative
+	    political_reform = wealth_weighted_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = harassment
+		political_reform = federalism
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	}
+}
+
+################## You pushed too far and SANTANDER attempted to arrest the conference. Vicinte still escaped though back to Mexico City though. #############################
+
+country_event = {
+	id = 46449
+	title = "NCLM49.T"
+	desc = "NCLM49.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = VC_conference_concluded
+	    check_variable = {
+		   which = CLM_conf
+		   value = 6
+	    }
+		NOT = { has_country_flag = VC_conference_ending }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+
+	option = {
+		name = "NCLM49.A"
+		country_event = { id = 46450 days = 3 }
+		clr_country_flag = VC_conference_concluded
+		set_country_flag = VC_conference_ending
+		set_country_flag = VC_conference_failure
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -4
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -4
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -4
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    } 
+	}
+}
+
+################# The Conference was not successful ##################
+
+################## The Santander Crisis - Vicinte consults with the Caudillos and they will say that they will stop him IF they promise total autonomy  ################
+
+country_event = {
+	id = 46450
+	title = "NCLM50.T"
+	desc = "NCLM50.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	# The Caudillos take out Santander for concessions
+	
+	option = {
+		name = "NCLM50.A"
+		prestige = -10
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+		   }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+		}
+	    }
+        any_pop = { limit = { type = soldiers } militancy = -1 consciousness = -1 reduce_pop = 0.8  }	
+        any_pop = { limit = { type = officers } militancy = 2 consciousness = 2 reduce_pop = 0.6  }
+        country_event = { id = 46451 days = 3 }
+	}
+	
+	# Vicinte refuses and Santander deposes and exiles him.
+	
+	option = {
+		name = "NCLM50.B"		
+		clr_country_flag = VICINTE_CLM
+		set_country_flag = SANTANDER_CLM
+		political_reform = two_year_draft
+		political_reform = no_colonies
+		political_reform = primary_culture_only	
+		social_reform = no_schools
+		remove_country_modifier = father_of_colombia
+		remove_country_modifier = minor_immigration_CLM
+		remove_country_modifier = major_immigration_CLM
+		ruling_party_ideology = reactionary
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }	
+	}
+}
+
+################## THE VERACRUZ PLAN - RELEASE UCA AND LST AND REMOVE MEX CORES ON LST - THIS IS BAD ###################
+
+country_event = {
+	id = 46451
+	title = "NCLM51.T"
+	desc = "NCLM51.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+	any_owned = {
+	  limit = { is_core = LST }
+	  secede_province = LST
+	}
+	any_owned = {
+	  limit = { is_core = UCA }
+	  secede_province = UCA
+	}
+	}
+	
+	option = {
+		name = "NCLM51.A"
+		prestige = -10
+		set_global_flag = VERACRUZ_ACTIVE
+	    any_owned = {
+	       limit = { is_core = LST }
+	       secede_province = LST
+	    }
+	    any_owned = {
+	      limit = { is_core = UCA }
+	      secede_province = UCA
+	    }
+		remove_accepted_culture = central_american
+		remove_accepted_culture = lusitanian
+        LST = { 
+		country_event = { id = 464510 days = 0 }
+		all_core = { remove_core = MEX }
+		all_core = { remove_core = CLM }
+		add_country_modifier = {
+			name = father_of_colombia
+			duration = -1
+		}			
+		}
+        UCA = { 
+		country_event = { id = 464510 days = 0 }
+		all_core = { remove_core = MEX }
+		all_core = { remove_core = CLM }
+		add_country_modifier = {
+			name = father_of_colombia
+			duration = -1
+		}			
+		}
+	    government = democracy
+	    ruling_party_ideology = conservative
+	    political_reform = wealth_weighted_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = harassment	
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	}    
+}	
+
+country_event = {
+	id = 464510
+	title = "NCLM52.T"
+	desc = "NCLM52.D"
+	#picture = "sunset"
+
+    is_triggered_only = yes
+	
+	option = {
+		name = "NCLM52.A"
+		FROM = { create_vassal = THIS }		
+	}    
+}
+
+################## The End of Colombia - You failed to centralize under Veracruz and Colombia Collapsed ###################
+
+country_event = {
+	id = 46452
+	title = "NCLM52.T"
+	desc = "NCLM52.D"
+	#picture = "sunset"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_global_flag = VERACRUZ_ACTIVE
+		war = no
+		OR = {
+		   NOT = { LST = { vassal_of = CLM } }
+		   NOT = { UCA = { vassal_of = CLM } }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = "NCLM52.A"
+		prestige_factor = -0.25
+        UCA = { remove_country_modifier = father_of_colombia }
+		LST = { remove_country_modifier = father_of_colombia }
+		remove_country_modifier = father_of_colombia
+		clr_global_flag = VERACRUZ_ACTIVE
+		remove_accepted_culture = central_american
+		remove_accepted_culture = lusitanian
+		set_country_flag = NEW_MEXICO_FORMED
+        release_vassal = LST
+        release_vassal = UCA 
+		all_core = { remove_core = CLM }
+        change_tag = MEX		
+	}    
+}
+
+################# The Conference was successful ##################
+
+################## Santander's Fiery Speech about Vicente - A warning of what is about to come if you are not good enough ###################
+
+country_event = {
+	id = 46453
+	title = "NCLM53.T"
+	desc = "NCLM53.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		war = no
+		year = 1860
+		has_country_flag = VC_conference_successful
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+    # Can you just die already old man?
+	
+	option = {
+		name = "NCLM53.A"
+		prestige = -5
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.1
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+		}
+	    }	
+        any_pop = { limit = { type = officers } militancy = 2 consciousness = 3 }		
+	}    
+}
+
+################## Santander's Coup - One last stand against Vicente  ###################
+
+country_event = {
+	id = 46454
+	title = "NCLM54.T"
+	desc = "NCLM54.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		war = no		
+		year = 1865
+		rank = 10
+		has_country_flag = VC_conference_successful
+		NOT = { has_country_flag = SANT_FINALE }
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+    # All men must resign in time.
+	
+	option = {
+		name = "NCLM54.A"
+		set_country_flag = SANT_FINALE
+		clr_country_flag = VICINTE_CLM
+		set_country_flag = SANTANDER_CLM
+		prestige_factor = -0.1
+		plurality = -25
+	    government = presidential_dictatorship
+	    ruling_party_ideology = reactionary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+		political_reform = two_year_draft
+		political_reform = no_colonies
+		political_reform = primary_culture_only	
+		social_reform = no_schools
+		remove_country_modifier = minor_immigration_CLM
+		remove_country_modifier = major_immigration_CLM
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }
+        ai_chance = {
+            factor = 10
+        }
+	}    
+	
+	# Get fucked Santander
+	
+	option = {
+		name = "NCLM54.B"
+		set_country_flag = SANT_FINALE
+		prestige = 5
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = -0.1
+		}
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 5
+		}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+		}
+	    }	
+        any_pop = { limit = { type = officers } militancy = 2 consciousness = 4 }	
+        country_event = { id = 46456 days = 14 }	
+        ai_chance = {
+            factor = 90
+        }
+	}  	
+}
+
+################## Santander's Coup - You are not rank 10 ###################
+
+country_event = {
+	id = 46455
+	title = "NCLM55.T"
+	desc = "NCLM55.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	major = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		war = no
+		year = 1865
+		NOT = { rank = 10 }
+		has_country_flag = VC_conference_successful
+		NOT = { has_country_flag = SANT_FINALE }
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+    # Lel
+	
+	option = {
+		name = "NCLM55.A"
+		set_country_flag = SANT_FINALE
+		clr_country_flag = VICINTE_CLM
+		set_country_flag = SANTANDER_CLM
+		prestige_factor = -0.1
+		plurality = -25
+	    government = presidential_dictatorship
+	    ruling_party_ideology = reactionary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+		political_reform = two_year_draft
+		political_reform = no_colonies
+		political_reform = primary_culture_only	
+		social_reform = no_schools
+		remove_country_modifier = minor_immigration_CLM
+		remove_country_modifier = major_immigration_CLM
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = 0.2
+		}
+	    }
+        upper_house = {
+            ideology = conservative
+            value = 0.20
+        }
+        upper_house = {
+            ideology = reactionary
+            value = 0.40
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+		}
+	    }  
+        any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }
+	}    	
+}
+
+################## The Reform War - Some sort of joke in which Santander fails ###################
+
+country_event = {
+	id = 46456
+	title = "NCLM56.T"
+	desc = "NCLM56.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	immediate = {	
+        any_owned = {
+            limit = {
+                is_core = JLS
+            }
+			secede_province = JLS
+        }
+	}
+
+	option = {
+		name = "NCLM56.A"	
+        any_owned = {
+            limit = {
+                is_core = JLS
+            }
+			secede_province = JLS
+        }
+		war = {
+			target = JLS
+			attacker_goal = {
+				casus_belli = civil_war
+			}		
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		JLS = {
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   small_arms = 100
+		   leadership = 20
+		   define_general = {
+			  name = "Agustín Santander"
+			  personality = ruthless
+			  background = armchair_general
+			}
+			add_country_modifier = {
+				name = taiping_draft
+				duration = 365
+			}
+		}
+		country_event = { id = 46457 days = 14 }	
+	}
+}
+
+################## The End of a Era - Santander's Stupid Suicide War gives a excuse for a major political purge and a total reform. The dream is finally achieved. ###################
+
+country_event = {
+	id = 46457
+	title = "NCLM57.T"
+	desc = "NCLM57.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "NCLM57.A"
+		prestige = 30
+		set_country_flag = CLM_GRANADA_ENABLED
+	    government = parliamentary_republic
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+		political_reform = federalism
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+        any_pop = { limit = { type = officers } militancy = 2 consciousness = 2 reduce_pop = 0.6  }
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = -0.2
+		}
+	    }
+        upper_house = {
+            ideology = liberal
+            value = 0.30
+        }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 4
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -10
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -10
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = -10
+		   }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -10
+		   }
+	   }    	
+   }
+}
+
+#### ... and finally of course we end this set of events with the funeral of our great father of Colombia ###
+
+country_event = {
+	id = 46458
+	title = "NCLM58.T"
+	desc = "NCLM58.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		year = 1874
+		has_country_flag = VICINTE_CLM
+		has_country_modifier = father_of_colombia
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+    # Goodbye Great Leader
+	
+	option = {
+		name = "NCLM58.A"
+        UCA = { remove_country_modifier = father_of_colombia }
+		LST = { remove_country_modifier = father_of_colombia }
+		remove_country_modifier = father_of_colombia
+		prestige = 1
+		plurality = 1
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = socialist
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = -1
+		   }
+		scaled_militancy = {
+				ideology = socialist
+		 		factor = -1
+		   }
+	    }  
+	}    	
+}
+
+################################## SANTANDER'S WACKY FUN DESTRUCTION OF COLOMBIA TIME ######################################################
+
+### The Madness of Santander - Introduction Event to Santander
+
+country_event = {
+	id = 46459
+	title = "NCLM59.T"
+	desc = "NCLM59.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = SANTANDER_CLM
+		NOT = { has_country_flag = SANTANDER_BEGINS }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "NCLM59.A"
+		prestige = -1
+		plurality = -1
+		any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }
+		set_country_flag = SANTANDER_BEGINS
+        set_country_flag = WACKY_TIME_CLM
+		define_general = {
+			name = "Agustín Santander"
+			personality = madman
+			background = armchair_general
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 3
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = 3
+		   }
+	    } 
+	}    	
+}
+
+### Santander creates a conspiracy about Enemies of the Revolution being everywhere and that it should be up to the Citizenry to find and destroy them.
+
+country_event = {
+	id = 46460
+	title = "NCLM60.T"
+	desc = "NCLM60.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = WACKY_TIME_CLM
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	option = {
+		name = "NCLM60.A"
+		clr_country_flag = WACKY_TIME_CLM
+		set_country_flag = WACKY_TIME_CLM_TWO
+		prestige = -1
+		plurality = -1
+		any_pop = {  
+        limit = { OR = { culture = lusitanian culture = central_american } }
+		militancy = 2
+		ideology = {
+			value = separatist
+			factor = 0.1
+		    }
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = 1
+		   }
+	    } 
+	}    	
+}
+
+### The San Salvador Massacre - This results in a massacre taking place in San Salvador as a crowd attempts to break into De Márquez's Palace and he orders his troops to fire on the protesters.
+
+country_event = {
+	id = 46461
+	title = "NCLM61.T"
+	desc = "NCLM61.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = WACKY_TIME_CLM_TWO
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "NCLM61.A"
+		clr_country_flag = WACKY_TIME_CLM_TWO
+		prestige = -10
+	    2191 = {
+		   poor_strata = {
+               reduce_pop = 0.99
+			   militancy = 2
+	       }
+		   middle_strata = {
+			   reduce_pop = 0.95
+			   militancy = 2
+	       }
+	    } 
+		any_pop = {  
+        limit = { OR = { culture = lusitanian culture = central_american } }
+		militancy = 2
+		ideology = {
+			value = separatist
+			factor = 0.1
+		    }
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = 1
+		}	
+	    } 
+		country_event = { id = 464611 days = 7 }
+	}    	
+}
+
+### De Márquez and Piexoto denounce Santander as a madman but he responds like a absolute idiot by ordering their arrest and execution and the absolute centralization of power in Mexico City
+
+country_event = {
+	id = 464611
+	title = "NCLM611.T"
+	desc = "NCLM611.D"
+	#picture = "sunset"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "NCLM61.A"
+		prestige = -10
+		plurality = -1
+		relation = { who = LST value = -300 }
+		relation = { who = UCA value = -300 }
+		political_reform = totalitarianism
+		remove_accepted_culture = central_american
+		remove_accepted_culture = lusitanian
+		any_pop = {  
+        limit = { OR = { culture = lusitanian culture = central_american } }
+		militancy = 6
+		ideology = {
+			value = separatist
+			factor = 0.3
+		    }
+	    }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = 1
+		   }
+	    } 
+	    add_country_modifier = { 
+	          name = calm_before_storm
+	          duration = 2190
+	    }
+		country_event = { id = 46462 days = 7 }
+	}    	
+}
+
+###### THE END OF THE COLOMBIAN ALLIANCE - THE ENTIRE COUNTRY LITERALLY EXPLODES - THIS IS ALSO THE END OF ALL COLOMBIAN CONTENT ########
+
+country_event = {
+	id = 46462
+	title = "NCLM62.T"
+	desc = "NCLM62.D"
+	#picture = "sunset"
+	
+	major = yes
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "NCLM61.A"
+		prestige_factor = -0.25
+		plurality = -10
+		any_pop = {  
+        limit = { OR = { culture = lusitanian culture = central_american } }
+		militancy = -10
+		ideology = {
+			value = separatist
+			factor = -0.3
+		    }
+	    }
+		clr_country_flag = SANTANDER_CLM
+		set_country_flag = SANTANDER_MEX
+	    any_owned = {
+			limit = {
+				is_core = UCA
+				}
+			    secede_province = UCA
+		}
+	    any_owned = {
+			limit = {
+				is_core = LST
+				}
+			    secede_province = LST
+		}	
+	    any_owned = {
+			limit = {
+				is_core = DIN	
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = OUM	
+				}
+			    secede_province = OUM
+		}
+        LST = { 
+		   set_country_flag = Piexoto_LST
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   all_core = { remove_core = MEX }
+        }		   
+        UCA = { 
+		   set_country_flag = DeMar_UCA
+	       government = presidential_dictatorship
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       set_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   all_core = { remove_core = MEX }
+        }	
+	    all_core = { remove_core = CLM }	
+        change_tag = MEX
+        any_pop = { limit = { culture = mexican } militancy = 5 }		
+	}    	
+}
+
+############################ MEXICO AND OTHER POST COLOMBIAN STATES - CONTENT FOR MEX, LST AND UCA #################################
+
+######### Santander completely unable to control fracturing nation. The army is literally fighting itself. ################
+
+country_event = {
+	id = 46463
+	title = "NCLM63.T"
+	desc = "NCLM63.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		has_country_flag = SANTANDER_MEX
+		NOT = { has_country_flag = SALVATION_MEX }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "NCLM63.A"	
+        set_country_flag = SALVATION_MEX	
+        any_pop = { limit = { type = soldiers } militancy = 2 consciousness = 2 reduce_pop = 0.8  }	
+        any_pop = { limit = { type = officers } militancy = 2 consciousness = 2 reduce_pop = 0.5  }
+	    any_pop = {
+		scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 1
+			}
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+		}
+		scaled_militancy = {
+				ideology = anarcho_liberal
+		 		factor = 1
+		   }
+	    } 
+		ZAP = { all_core = { remove_core = MEX } }
+		PUR = { all_core = { remove_core = MEX } }
+		AZT = { all_core = { remove_core = MEX } }
+		country_event = { id = 46464 days = 7 }
+	}    	
+}
+
+######### The Mexican Army is so piss weak that Native Militas quite literally push Santander and his lackeys out of Key Strongholds and declare native enclaves. ################
+
+country_event = {
+	id = 46464
+	title = "NCLM64.T"
+	desc = "NCLM64.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM64.A"	
+        prestige = -5		
+	    any_owned = {
+			limit = {
+				is_core = PUR
+			}
+			secede_province = PUR
+		}
+	    any_owned = {
+			limit = {
+				is_core = ZAP
+			}
+			secede_province = ZAP
+		}
+	    any_owned = {
+			limit = {
+				is_core = AZT
+			}
+			secede_province = AZT
+		}
+		2155 = { add_core = JLS }
+		2151 = { add_core = JLS }
+		JLS = { all_core = { remove_core = MEX } }
+		country_event = { id = 46465 days = 7 }
+	}    	
+}
+
+######### Jalisco declares a revolution against Santander for the salvation of all Mexicans ################
+
+country_event = {
+	id = 46465
+	title = "NCLM65.T"
+	desc = "NCLM65.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+	    any_owned = {
+			limit = {
+				is_core = JLS
+			}
+			secede_province = JLS
+		}
+    }		
+	
+	option = {
+		name = "NCLM65.A"	
+		any_pop = {
+		   militancy = -5
+		}
+		any_pop = {
+		   consciousness = -5
+		}
+	    add_country_modifier = { 
+	       name = taiping_draft
+	       duration = 1095
+	    }		
+	    any_owned = {
+			limit = {
+				is_core = JLS
+			}
+			secede_province = JLS
+		}
+        JLS = { 
+	       government = democracy
+	       ruling_party_ideology = liberal
+	       political_reform = wealth_voting
+	       political_reform = state_equal_weight
+	       political_reform = yes_meeting
+           political_reform = free_press
+	       political_reform = non_secret_ballots
+		   political_reform = mandatory_service
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       set_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       set_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   money = 500000
+	       artillery = 300
+	       canned_food = 300
+	       regular_clothes = 300
+	       small_arms = 300
+	       add_country_modifier = { 
+	          name = small_country_draft
+	          duration = 1095
+	       }
+        }	    
+		country_event = { id = 46466 days = 7 }
+        ai_chance = {
+            factor = 100
+        }
+	} 
+
+	option = {
+		name = "NCLM65.B"
+		any_pop = {
+		   militancy = -5
+		}
+		any_pop = {
+		   consciousness = -5
+		}
+	    add_country_modifier = { 
+	       name = taiping_draft
+	       duration = 1095
+	    }		
+	    any_owned = {
+			limit = {
+				is_core = JLS
+			}
+			secede_province = JLS
+		}
+        JLS = { 
+	       government = democracy
+	       ruling_party_ideology = liberal
+	       political_reform = wealth_voting
+	       political_reform = state_equal_weight
+	       political_reform = yes_meeting
+           political_reform = free_press
+	       political_reform = non_secret_ballots
+		   political_reform = mandatory_service
+		   political_reform = unitary
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       set_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       set_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+		   money = 500000
+	       artillery = 300
+	       canned_food = 300
+	       regular_clothes = 300
+	       small_arms = 300
+	       add_country_modifier = { 
+	          name = small_country_draft
+	          duration = 1095
+	       }
+        }			
+		MEX = { country_event = { id = 46466 days = 7 } }
+		change_tag_no_core_switch = JLS	
+        ai_chance = {
+            factor = 0
+        }
+	}    	
+}
+
+######### THE MEXICAN SALVATION WAR - Santander vs Jalisco ################
+
+country_event = {
+	id = 46466
+	title = "NCLM66.T"
+	desc = "NCLM66.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM66.A"	
+		remove_country_modifier = calm_before_storm
+		set_global_flag = MEX_SALVATION_WAR		
+	    JLS = { all_core = { add_core = MEX } }
+	    war = {
+			target = JLS
+			attacker_goal =  { 
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}	
+	    }	    
+	}    	
+}
+
+######### Santander is Victorious - Adds cores back on native states - Its time to be a gamer ########
+
+country_event = {
+	id = 46467
+	title = "NCLM67.T"
+	desc = "NCLM67.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		has_global_flag = MEX_SALVATION_WAR
+		NOT = { exists = JLS }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "NCLM68.A"
+        remove_country_modifier = taiping_draft
+		prestige = 30
+		clr_global_flag = MEX_SALVATION_WAR
+		set_country_flag = MEX_GAMER
+		ZAP = { all_core = { add_core = MEX } }
+		PUR = { all_core = { add_core = MEX } }
+		AZT = { all_core = { add_core = MEX } }
+	}    	
+}
+
+######### Jalisco is Victorious - Adds cores back on native states ########
+
+country_event = {
+	id = 46468
+	title = "NCLM68.T"
+	desc = "NCLM68.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = JLS
+		has_global_flag = MEX_SALVATION_WAR
+		NOT = { exists = MEX }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "NCLM68.A"		
+		prestige = 30
+        clr_global_flag = MEX_SALVATION_WAR 
+		MEX = { remove_country_modifier = taiping_draft set_country_flag = NEW_MEXICO_FORMED clr_country_flag = SANTANDER_MEX }
+		ZAP = { all_core = { add_core = MEX } }
+		PUR = { all_core = { add_core = MEX } }
+		AZT = { all_core = { add_core = MEX } }
+		change_tag = MEX
+		set_country_flag = NEW_MEXICO_FORMED 
+		clr_country_flag = SANTANDER_MEX
+	}    	
+}
+
+######### Nobody won - Santander is deposed and JLS is annexed into MEX - Adds cores back on native states ########
+
+country_event = {
+	id = 46469
+	title = "NCLM69.T"
+	desc = "NCLM69.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		has_global_flag = MEX_SALVATION_WAR
+		OR = {
+		    AND = {
+		       exists = JLS
+		       war = no
+			}
+			NOT = { government = presidential_dictatorship }
+	    }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "NCLM69.A"		
+		prestige = -30
+		end_war = JLS
+		inherit = JLS
+		remove_country_modifier = taiping_draft
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = two_year_draft
+		political_reform = unitary
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+        clr_global_flag = MEX_SALVATION_WAR 
+		clr_country_flag = SANTANDER_MEX
+        set_country_flag = NEW_MEXICO_FORMED 	
+		ZAP = { all_core = { add_core = MEX } }
+		PUR = { all_core = { add_core = MEX } }
+		AZT = { all_core = { add_core = MEX } }
+		change_tag = MEX		
+	}    	
+}
+
+######## Santander has booked his game. Its time for some Sports #####
+
+### Lusitania tries asking PLA for a alliance as that's the only real option in the area.
+
+country_event = {
+	id = 46470
+	title = "NCLM70.T"
+	desc = "NCLM70.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	# Please save us from the scary dictator
+	
+	option = {
+		name = "NCLM70.A"	
+		prestige = -5
+		random_owned = {
+		    limit = {
+			   owner = { owns = 133 }
+			}
+			owner = { set_global_flag = DIN_IN_LST }
+	    }
+		any_country = {
+		    limit = { 
+		       OR = {
+			      tag = PLA
+				  has_country_flag = PLA_ARCADIA
+			   }
+		       NOT = { owns = 133 }
+			   has_global_flag = DIN_IN_LST
+			}
+			country_event = { id = 46471 days = 0 }
+		}
+		any_country = {
+		    limit = { 
+		       OR = {
+			      tag = PLA
+				  has_country_flag = PLA_ARCADIA
+			   }
+			   NOT = { has_global_flag = DIN_IN_LST }
+			}
+			country_event = { id = 46475 days = 0 }
+		}
+		set_country_flag = LST_CALLS_FOR_AID
+        ai_chance = {
+            factor = 90
+        }		
+	}  
+	
+	# I'm a gigachad that does not need any Frenchies saving my ass.
+
+	option = {
+		name = "NCLM70.B"	
+		prestige = 5
+        ai_chance = {
+            factor = 10
+        }			
+	}  	
+}
+
+### PLA realizes that LST holds Apache. Should we ask for it?
+
+country_event = {
+	id = 46471
+	title = "NCLM71.T"
+	desc = "NCLM71.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM71.A"			
+		any_country = {
+		   limit = { has_country_flag = LST_CALLS_FOR_AID }
+		      country_event = { id = 46472 days = 0 }
+	    }
+        ai_chance = {
+            factor = 70
+			   modifier = {
+			      factor = 0
+			      war_with = NBG
+			   }
+			   modifier = {
+			      factor = 0
+			      war_with = VIN
+			   }
+        }
+	}  
+
+	option = {
+		name = "NCLM72.B"	
+ 		any_country = {
+		   limit = { has_country_flag = LST_CALLS_FOR_AID }
+		      country_event = { id = 46473 days = 0 }
+	    }		
+        ai_chance = {
+            factor = 10
+			   modifier = {
+			      factor = 0
+			      war_with = NBG
+			   }
+			   modifier = {
+			      factor = 0
+			      war_with = VIN
+			   }
+        }		
+	}  
+
+	option = {
+		name = "NCLM72.C"	
+ 		any_country = {
+		   limit = { has_country_flag = LST_CALLS_FOR_AID }
+		      country_event = { id = 46474 days = 0 }
+	    }       	
+        ai_chance = {
+            factor = 20
+        }		
+	} 	
+}
+
+### PLA wants Apache
+
+country_event = {
+	id = 46472
+	title = "NCLM72.T"
+	desc = "NCLM72.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM71.A"		
+		clr_country_flag = LST_CALLS_FOR_AID
+		FROM = {
+		   relation = { who = THIS value = 400 }
+		   diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+	    any_owned = {
+			limit = {
+				region = TEX_134
+			}
+			secede_province = FROM
+		}
+        ai_chance = {
+            factor = 80
+        }
+	}  
+
+	option = {
+		name = "NCLM70.B"	
+		relation = { who = FROM value = -100 }
+		clr_country_flag = LST_CALLS_FOR_AID
+		prestige = 5
+        ai_chance = {
+            factor = 20
+        }			
+	}  
+}
+
+### PLA agrees with the alliance. Same event as if LST does not own APAC
+
+country_event = {
+	id = 46473
+	title = "NCLM73.T"
+	desc = "NCLM73.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM73.A"		
+		clr_country_flag = LST_CALLS_FOR_AID
+		FROM = {
+		   relation = { who = THIS value = 400 }
+		   diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+    }		
+}
+
+### PLA refuses
+
+country_event = {
+	id = 46474
+	title = "NCLM74.T"
+	desc = "NCLM74.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM74.A"		
+		clr_country_flag = LST_CALLS_FOR_AID
+		relation = { who = FROM value = -100 }
+    }		
+}
+
+### LST does not hold Apache.
+
+country_event = {
+	id = 46475
+	title = "NCLM75.T"
+	desc = "NCLM75.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "NCLM75.A"	
+ 		any_country = {
+		   limit = { has_country_flag = LST_CALLS_FOR_AID }
+		      country_event = { id = 46473 days = 0 }
+	    }		
+        ai_chance = {
+            factor = 80
+			   modifier = {
+			      factor = 0
+			      war_with = NBG
+			   }
+			   modifier = {
+			      factor = 0
+			      war_with = VIN
+			   }
+        }		
+	}  
+
+	option = {
+		name = "NCLM75.B"	
+ 		any_country = {
+		   limit = { has_country_flag = LST_CALLS_FOR_AID }
+		      country_event = { id = 46474 days = 0 }
+	    }       	
+        ai_chance = {
+            factor = 20
+        }		
+	} 	
+}
+
+### Santander invades Lusitania ###
+
+country_event = {
+	id = 46476
+	title = "NCLM76.T"
+	desc = "NCLM76.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NCLM76.A"	
+		clr_global_flag = DIN_IN_LST
+		set_global_flag = MEX_SANT_LST
+		LST = { political_reform = mandatory_service all_core = { add_core = MEX } }
+	    war = {
+			target = LST
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+            call_ally = yes			
+	    }	    
+	}    	
+}
+
+### Lusitania is completely defeated ###
+
+country_event = {
+	id = 46477
+	title = "NCLM77.T"
+	desc = "NCLM77.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		war = no
+		NOT = { exists = LST }
+		has_global_flag = MEX_SANT_LST		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NCLM77.A"	
+        clr_global_flag = MEX_SANT_LST
+        set_country_flag = can_fuck_LST		
+		prestige = 10
+		political_reform = unitary
+	    any_pop = {
+			limit = {
+				culture = mexican
+			}
+			militancy = -1
+			consciousness = -1
+		}  
+	}    	
+}
+
+### Lusitania has not been defeated. Santander is deposed due to being a laughable failure. ###
+
+country_event = {
+	id = 46478
+	title = "NCLM78.T"
+	desc = "NCLM78.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		war = no
+		exists = LST
+		NOT = { owns = 137 }
+		has_global_flag = MEX_SANT_LST		
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "NCLM77.A"	
+		LST = { all_core = { remove_core = MEX } }
+        clr_global_flag = MEX_SANT_LST	
+		prestige = -30
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = two_year_draft
+		political_reform = unitary
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		clr_country_flag = SANTANDER_MEX
+        set_country_flag = NEW_MEXICO_FORMED 
+	}    	
+}
+
+
+### Santander HAS DIED and you own LST. The Colombian Legacy continues to burn strongly but its going to be harder from now on to achieve further goals (conquest decisions will require GP status rather then 16). ###
+
+country_event = {
+	id = 46479
+	title = "NCLM79.T"
+	desc = "NCLM79.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		war = no
+		year = 1876
+		owns = 137
+		NOT = { exists = LST }
+		has_country_flag = SANTANDER_MEX			
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "NCLM79.A"	
+		prestige = 10
+	    any_pop = {
+			limit = {
+				culture = mexican
+			}
+			militancy = -1
+			consciousness = -1
+		} 
+		clr_country_flag = SANTANDER_MEX
+		set_country_flag = FORMER_SANTANDER_MEX
+	}    	
+}
+
+### Santander HAS DIED and you are CLM. Santander is now effectively treated as a greater figure then even Herrera and the Savior of Colombia regardless of how horrifically corrupt this state is. ###
+
+country_event = {
+	id = 464791
+	title = "NCLM791.T"
+	desc = "NCLM791.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		war = no
+		year = 1876
+		has_country_flag = SANTANDER_MEX			
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "NCLM791.A"	
+		prestige = 20
+	    any_pop = {
+			limit = {
+				culture = mexican
+			}
+			militancy = -2
+			consciousness = -2
+		} 
+		clr_country_flag = SANTANDER_MEX
+		set_country_flag = FORMER_SANTANDER_MEX
+	}    	
+}
+
+### Santander HAS DIED and you don't own LST. Its over for Santander Mexico. ###
+
+country_event = {
+	id = 46480
+	title = "NCLM80.T"
+	desc = "NCLM80.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		war = no
+		year = 1876
+        exists = LST	
+		NOT = { owns = 137 }
+		has_country_flag = SANTANDER_MEX	
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	option = {
+		name = "NCLM80.A"	
+		prestige = -30
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = two_year_draft
+		political_reform = unitary
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		clr_country_flag = SANTANDER_MEX
+        set_country_flag = NEW_MEXICO_FORMED 
+	}    	
+}
+
+### Santander has been deposed and you don't own LST. Its over for Santander Mexico. ###
+
+country_event = {
+	id = 46481
+	title = "NCLM81.T"
+	desc = "NCLM81.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		war = no
+        exists = LST	
+		NOT = { owns = 137 }
+        NOT = { government = presidential_dictatorship }		
+		has_country_flag = SANTANDER_MEX		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "NCLM81.A"	
+		prestige = -30
+	    government = democracy
+	    ruling_party_ideology = liberal
+	    political_reform = wealth_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+        political_reform = free_press
+	    political_reform = non_secret_ballots
+		political_reform = two_year_draft
+		political_reform = unitary
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		clr_country_flag = SANTANDER_MEX
+        set_country_flag = NEW_MEXICO_FORMED 
+	}    	
+}
+
+######### The New Mexican Republic - This enables non-CLM Mexican Content like core re-conquest and centralization ########
+
+country_event = {
+	id = 46482
+	title = "NCLM82.T"
+	desc = "NCLM82.D"
+	#picture = "sunset"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MEX
+		has_country_flag = NEW_MEXICO_FORMED 
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "NCLM82.A"		
+		prestige = 5
+	    political_reform = federalism
+		clr_country_flag = NEW_MEXICO_FORMED
+	    set_country_flag = NEW_MEXICO_ENABLED
+	}    	
+}

@@ -1,64 +1,211 @@
 ###################################### NEW POLITICS EVENTS #######################################################
 
-#############################################################################################################################################################################################
-#      Release Vassals - Ported from Victoria Univeralis as a better measure then the GTFO.txt file which is a absolute spam and requires constant maintenance. All credits to VU.		    #
-#############################################################################################################################################################################################
+##################################################################################################################
+##################################### HFM Deciding Colonial Policy ###############################################
+##################################################################################################################
 
 country_event = {
-	id = 91306
-	title = "EVTNAME91306"
-	desc = "EVTDESC91306"
-	picture = upper_house
+	id = 99801 #Deciding a Colonial Policy
+	title = "EVTNAME99801"
+	desc = "EVTDESC99801"
+	picture = "exemplar_colony"
 
-
-	is_triggered_only = yes
-
+	trigger = {
+		civilized = yes
+		money = 55000
+		colonial_policy = no_colonies
+		colonial_nation = yes
+		NOT = { has_country_flag = is_now_colonial }
+		NOT = {
+		   OR = {
+			   tag = TUR 
+			   tag = RUS
+			   tag = JAP
+			   tag = VIN
+			}
+	    }		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
 	option = {
-		name = "EVTOPTA91306"
-		any_country = {
-			limit = { vassal_of = THIS NOT = { substate_of = THIS } }
-			country_event = { id = 91307 days = 0 }
+		name = "EVT99801OPTA"
+		prestige = 10
+		treasury = -55000
+		political_reform = settlement
+		any_pop = { 
+			limit = {
+				is_primary_culture = no
+				is_accepted_culture = no
+				location = {
+					is_colonial = yes
+				}
+			}
+			militancy = 10
+		}
+		set_country_flag = is_now_colonial 
+		
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 3.5
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+				}
+			}
+			modifier = {
+				factor = 10
+				OR = { 
+					tag = RUS
+					tag = NBG
+					tag = VIN
+					tag = PLA
+				}
+			}
+			modifier = {
+				factor = 1.5
+			    government = absolute_monarchy
+			}
+			modifier = {
+				factor = 0.5
+				OR = {
+				   government = democracy
+				   government = parliamentary_republic
+				   government = socialist_republic
+				}
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 3
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 5
+			}
 		}
 	}
+	
 	option = {
-		name = "EVTOPTB91306"
+		name = "EVT99801OPTB"
+		prestige = 10
+		political_reform = exploitation
+		any_pop = { 
+			limit = {
+				is_primary_culture = no
+				is_accepted_culture = no
+				location = {
+					is_colonial = yes
+				}
+			}
+			militancy = 5
+		}
+		set_country_flag = is_now_colonial 
+		
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 2
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+				}
+			}
+			modifier = {
+				factor = 1.5
+			    government = absolute_monarchy
+			}
+			modifier = {
+				factor = 0.5
+				OR = {
+				   government = democracy
+				   government = parliamentary_republic
+				   government = socialist_republic
+				}
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 0
+				is_culture_group = east_asian
+			}
+			modifier = {
+				factor = 0
+				primary_culture = japanese
+			}
+		}
 	}
-}
-
-country_event = {
-	id = 91307
-	title = "EVTNAME91307"
-	desc = "EVTDESC91307"
-	picture = upper_house
-
-
-	is_triggered_only = yes
-
+	
 	option = {
-		name = "EVTOPTA91307"
-		overlord = { country_event = { id = 91308 days = 0 } }
-	}
-}
-
-country_event = {
-	id = 91308
-	title = "EVTNAME91308"
-	desc = "EVTDESC91308"
-	picture = upper_house
-
-	allow_multiple_instances = yes
-
-	is_triggered_only = yes
-
-	option = {
-		name = "EVTOPTA91308"
-		release_vassal = FROM
-		random_owned = { limit = { owner = { NOT = { prestige = 200 } } } owner = { prestige_factor = -0.05 } }
-		random_owned = { limit = { owner = { prestige = 200 } } owner = { prestige = -10 } }
-		diplomatic_influence = { who = FROM value = -200 }
-	}
-	option = {
-		name = "EVTOPTB91308"
+		name = "EVT99801OPTC"
+		prestige = 15
+		political_reform = civilizing
+		any_pop = { 
+			limit = {
+				is_state_religion = no
+				location = {
+					is_colonial = yes
+				}
+			}
+			militancy = 5
+		}
+		set_country_flag = is_now_colonial 
+		
+		ai_chance = {
+			factor = 40
+			modifier = {
+				factor = 0
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+				}
+			}
+			modifier = {
+				factor = 5
+				government = theocracy
+			}
+			modifier = {
+				factor = 1.5
+				OR = {
+				   government = democracy
+				   government = parliamentary_republic
+				   government = socialist_republic
+				}
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 1.5
+				religious_policy = moralism
+			}
+			modifier = {
+				factor = 0
+				primary_culture = japanese
+			}
+			modifier = {
+				factor = 0
+				is_culture_group = east_asian
+			}
+		}
 	}
 }
 
@@ -1084,6 +1231,90 @@ country_event = {
 		   }
 		}		
 	}
+}
+
+# You are a Autonomous Dependency and a puppet. Add Modifier.
+
+country_event = {
+	id = 443054
+	title = "DODFFP14.T"
+	desc = "DODFFP14.D"
+	picture = "upper_house"
+
+	trigger = {	 
+	    exists = yes
+		government = autonomous_dependency
+    	is_vassal = yes
+		NOT = { has_country_modifier = autonomous_dependency_modifier }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "DODFFP14.A"
+	    any_pop = {
+	       consciousness = -5
+	    }
+	    any_pop = {
+	       militancy = -5
+	    }
+	    add_country_modifier = {
+		   name = autonomous_dependency_modifier
+		   duration = -1
+	    }		
+	}
+}
+
+# You are a Autonomous Dependency and not a puppet. Set Government to Presidential Dictatorship
+
+country_event = {
+	id = 443055
+	title = "DODFFP15.T"
+	desc = "DODFFP15.D"
+	picture = "storming_palace_communists"
+
+	trigger = {	 
+	    exists = yes
+		government = autonomous_dependency
+        is_vassal = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "DODFFP15.A"
+		remove_country_modifier = autonomous_dependency_modifier
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		set_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = autoden_gov	
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { tag = PRV } }
+		   }
+		   owner = { government = presidential_dictatorship }
+		}	
+		random_owned = {
+		   limit = {
+		      owner = { tag = PRV }
+		   }
+		   owner = { government = absolute_monarchy }
+		}
+	}		
 }
 
 # The Maelstrom - Used to simulate political chaos after a democratic revolution post-invention of fascism/mass politics.

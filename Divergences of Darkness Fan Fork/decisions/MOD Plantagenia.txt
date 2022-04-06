@@ -1,0 +1,362 @@
+political_decisions = { 
+
+rename_cymrie = {
+		picture = Apache_decision
+		potential = {
+			OR = { tag = PLA tag = OUM tag = ARC }
+			owns = 133
+			owns = 134
+			owns = 135
+			owns = 129
+			NOT = { has_global_flag = PLA_rename_cymrie }
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 133 }
+				133 = { 
+					change_province_name = "Villeverte"
+					state_scope = { change_region_name = "Cymrie"  }
+				}
+				134 = { change_province_name = "Tudorie" }
+				135 = { change_province_name = "Fort Louis" }
+				129 = { change_province_name = "Saint Georges" }
+				owner = { set_global_flag = PLA_rename_cymrie 
+				clr_global_flag = LST_rename_apacheria
+				}
+			}
+	   }			
+
+	   ai_will_do = { factor = 1 }
+		
+}
+
+rename_apacheria = {
+		picture = Apache_decision
+		potential = {
+			OR = { tag = LST tag = MEX tag = CLM }
+			owns = 133
+			owns = 134
+			owns = 135
+			owns = 129
+			NOT = { has_global_flag = LST_rename_apacheria }
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 133 }
+				133 = { 
+					change_province_name = "Vila Verde"
+					state_scope = { change_region_name = "Apacheria"  }
+				}
+				134 = { change_province_name = "Vitoria" }
+				135 = { change_province_name = "Campo Largo" }
+				129 = { change_province_name = "São Jorge" }
+				owner = { set_global_flag = LST_rename_apacheria 
+				clr_global_flag = PLA_rename_cymrie
+				}
+			}
+	   }			
+
+	   ai_will_do = { factor = 1 }
+		
+}
+
+	capture_of_new_orleans = { 
+	picture = kill_dua
+	potential = {
+	tag = LIB 
+	NOT = { has_country_flag = capture_of_new_orleans } 
+	NOT = { has_country_flag = now_building_nation }
+	war_with = PLA 
+	}
+	
+	allow = { 
+	controls = 139 
+	}
+	
+	effect = { 
+	country_event = 78443
+	set_country_flag = capture_of_new_orleans 
+	}
+	
+			ai_will_do = { factor = 1 }
+
+	}
+
+	nouvelle_afrique_LIB = { 
+	    picture = Plantagenia
+		potential = { 
+		tag = LIB 
+		NOT = { has_country_flag = nouvelle_afrique } 
+		}
+		
+		allow = { 
+		   war = no
+		   OR = {
+		      is_greater_power = yes
+			  is_secondary_power = yes
+	       }
+		   OR = {
+		      NOT = { has_country_modifier = international_pariah_LIB }
+			  government = absolute_monarchy
+		   }
+		}
+		
+		effect = { 
+		set_country_flag = nouvelle_afrique
+		NA_199 = { add_core = THIS } 
+		PLA_139 = { add_core = THIS } 
+		PLA_190 = { add_core = THIS } 
+		PLA_214 = { add_core = THIS }
+		PLA_132 = { add_core = THIS } 
+		PLA_187 = { add_core = THIS } 
+		NBG_220 = { add_core = THIS } 
+		HAI_2213 = { add_core = THIS } 
+		SPA_2209 = { add_core = THIS } 
+		ENG_203 = { add_core = THIS } 
+		ENG_2224 = { add_core = THIS } 
+		ENG_2228 = { add_core = THIS } 
+		}
+			ai_will_do = { factor = 1 }
+	}
+	
+	university_LIB = { 
+		potential = { 
+		tag = LIB 
+		NOT = { has_country_flag = black_university }
+		}
+		
+		allow = { 
+		positivism = 1 
+		money = 50000 
+		}
+		
+		effect = { 
+		any_pop = { 
+		limit = { culture = afro_frankish }
+		literacy = 0.1 
+			}
+		prestige = 1 
+		set_country_flag = black_university
+		}
+			ai_will_do = { factor = 1 }
+	
+	}
+	
+	dec_concordate_LIB = { 
+		potential = { 
+		tag = LIB 
+		NOT = { has_country_flag = concordate_LIB } 
+		}
+		
+		allow = { 
+		OR = { 
+		relation = { who = PAP value = 150 }
+		relation = { who = ITC value = 150 }
+		AND = { PAP = { exists = no } ITC = { exists = no } state_n_government = 1 }
+			}
+		}
+		
+		effect = { 
+		set_country_flag = concordate_LIB 
+		prestige = 5 
+		scaled_militancy = { 
+		issue = moralism 
+		factor = -4 
+			}
+		}
+	}
+	
+	LIB_international_recognition = {
+		potential = {
+		tag = LIB 
+		has_country_modifier = international_pariah_LIB
+		}
+		
+		allow = { 
+		war = no 
+		OR = { 
+		   year = 1865
+		   any_greater_power = { relation = { who = THIS value = 150 } }
+		   rank = 10 
+	    }
+		}
+		
+		effect = { 
+		   any_greater_power = { relation = { who = THIS value = 50 } }
+		   remove_country_modifier = international_pariah_LIB
+		}
+	}
+
+    annex_vassal_CHE = { 
+	    picture = Cherokee_decision
+        potential = { 
+            tag = PLA 
+			has_global_flag = CHE_VASSAL_ACTIVE
+            is_our_vassal = CHE 
+        }
+        
+        allow = { 
+		   OR = {
+		      AND = {
+                 state_n_government = 1
+			     year = 1860
+		      }
+			  year = 1865
+			}
+        } 
+        
+        effect = { 
+		   clr_global_flag = CHE_VASSAL_ACTIVE
+           inherit = CHE 
+        } 
+    }	
+	
+    nuke_indipendent_CHE = {
+        picture = Cherokee_decision	
+        potential = { 
+		    OR = {
+               tag = PLA 
+			   tag = LOU
+			}
+			NOT = { has_global_flag = CHE_VASSAL_ACTIVE }
+			NOT = { has_country_flag = CHE_is_dead }
+            exists = CHE
+        }
+        
+        allow = { 
+		   OR = {
+		      AND = {
+                 state_n_government = 1
+			     year = 1860
+		      }
+			  year = 1865
+			}
+        } 
+        
+        effect = { 
+		   set_country_flag = CHE_is_dead
+		   CHE = {
+	          all_core = { add_core = PLA }
+	          all_core = { add_core = LOU }
+		   }
+	       war = {
+	          target = CHE
+		         attacker_goal =  { 
+			        casus_belli = conquest_any
+		         }
+		         defender_goal = {
+			        casus_belli = custom_treaty_cb
+		        }	
+	        }
+        } 
+    }
+	
+	# Non-Arcadian PLA coring CBV
+	
+    CORE_CBV = { 
+	    picture = SevenRep
+        potential = { 
+		     tag = PLA
+			 has_country_flag = PLA_Valois
+             owns = 212
+        }
+        
+        allow = { 
+		    mass_politics = 1
+        } 
+        
+        effect = { 
+		   prestige = 10
+           clr_country_flag = PLA_Valois
+		   CBV = { all_core = { add_core = PLA } }
+        } 
+    }
+	
+	abolish_slavery_PLA = {
+		picture = enslave_the_serfs_image
+		potential = {
+		    OR = {
+		       tag = PLA
+			   has_country_flag = PLA_ARCADIA
+			}
+		    OR = { 
+			   has_country_modifier = institutionalized_slavery	
+			   has_country_flag = PLA_institutionalized_slavery
+			   slavery = yes_slavery
+			}			
+			OR = {
+				government = hms_government
+				government = parliamentary_republic
+				government = democracy
+				government = merchant_republic
+				government = socialist_republic
+			}
+		}
+	
+		allow = {
+			war = no
+			year = 1900
+			invention = mission_to_civilize
+			NOT = { citizenship_policy = residency }
+			NOT = { ruling_party_ideology = reactionary }
+			NOT = { ruling_party_ideology = fascist }
+			OR = {
+				AND = {
+					upper_house = { ideology = liberal value = 0.1 }
+					upper_house = { ideology = socialist value = 0.1 }
+				}
+				AND = {
+					upper_house = { ideology = anarcho_liberal value = 0.1 }
+					upper_house = { ideology = socialist value = 0.1 }
+				}
+				AND = {
+					upper_house = { ideology = liberal value = 0.1 }
+					upper_house = { ideology = anarcho_liberal value = 0.1 }
+				}
+				upper_house = { ideology = liberal value = 0.2 }
+				upper_house = { ideology = anarcho_liberal value = 0.2 }
+				upper_house = { ideology = socialist value = 0.2 }
+			}
+		}
+		
+		effect = {
+		    clr_country_flag = PLA_institutionalized_slavery
+		    remove_country_modifier = institutionalized_slavery	
+			political_reform = no_slavery
+			scaled_militancy = {
+				ideology = socialist
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 5
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 8
+			}
+			any_pop = { limit = { type = aristocrats } militancy = 2 consciousness = 4 }
+			any_country = { limit = { is_greater_power = yes NOT = { rank = 4 } } relation = { who = THIS value = 20 } }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+}

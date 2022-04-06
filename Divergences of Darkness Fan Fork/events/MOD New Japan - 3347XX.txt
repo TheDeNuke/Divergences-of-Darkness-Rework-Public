@@ -4232,6 +4232,53 @@ country_event = {
 	}
 }
 
+### Failsafe Event if Japanese Substate is Free ###
+
+country_event = {
+	id = 3347710
+	title = "Our illegitimate indipendence"
+	desc = "We are rightfully part of the Japanese Empire and thus the Emperor has declared war on us to restore our rightful place as a Subject."
+	picture = "nightmare_mode"
+	
+	fire_only_once = yes
+	
+	trigger = {		
+		primary_culture = japanese
+		NOT = { year = 1862 }	
+		NOT = { tag = JAP }
+		NOT = { tag = KAM }
+		OR = {
+		   NOT = { substate_of = JAP }
+		   NOT = { vassal_of = JAP }
+		}			
+		war = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = "Oh no."
+		JAP = {		
+	    casus_belli = { 
+				target = THIS
+				type = make_puppet
+				months = 12
+        }		
+		war = {
+			target = THIS
+			attacker_goal = {
+				casus_belli = make_puppet
+			}		
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		}
+	}
+}
+
 #### Pope #####
 
 country_event = {   
@@ -6307,8 +6354,5 @@ country_event = {
 		relation = { who = FROM value = 20 }
 	}
 }
-
-
-
 
 

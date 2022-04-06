@@ -1,3 +1,76 @@
+country_event = { # Navarran Independence Expansion - Spanish Republic has occurred and the Dual Monarchy has opted to try and break through Navarra.
+	
+	id = 98740111
+	title = "NAV111.T"
+	desc = "NAV111.D" 
+	
+	is_triggered_only = yes
+	
+	# We will accept the claims of the Dual Monarchy
+	
+	option = { 
+	name = "98740111.A" 
+	set_country_flag = independence_NAV
+	DUA = { country_event = 98740222 } 
+	ai_chance = { 
+		factor =  40
+		}
+	}
+	
+	# We will remain forever loyal to Aragon
+	
+	option = { 
+	name = "98740111.B"
+	set_country_flag = independence_NAV
+	NAV = { country_event = 987417 }
+	DUA = { 
+		diplomatic_influence = { who = NAV value = -100 }
+		relation = { who = NAV value = -50 }
+	}
+	ai_chance = { 
+		factor =  60
+	}
+	}
+}
+
+country_event = { #Dual-Monarchy's answer - Puppet is the only valid option
+	
+	id = 98740222
+	title = "NAV222.T"
+	desc = "NAV222.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "98740222.A" 
+	diplomatic_influence = { who = NAV value = 200 }
+	relation = { who = NAV value = 50 }
+	NAV = { country_event = 987403 }
+	ai_chance = { 
+		factor = 100
+		}
+	}
+}
+
+country_event = { # Navarran Independence Expansion - Spanish Republic has occurred and the Dual Monarchy has not opted to try and break through Navarra - THIS IS A FAILSAFE TO PREVENT SPANISH MONARCHY RELATED EVENTS FROM TRIGGERING
+	
+	id = 98740333
+	title = "NAV333.T"
+	desc = "NAV333.D" 
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "98740333.A"
+	set_country_flag = independence_NAV
+	NAV = { country_event = 987417 }
+	DUA = { 
+		diplomatic_influence = { who = NAV value = -100 }
+		relation = { who = NAV value = -50 }
+	}
+	}
+}
+
 country_event = { #Navarran Independence 
 	
 	id = 987401
@@ -44,8 +117,9 @@ country_event = { #Navarran Independence
 			   government = fascist_monarchy
 			}
 		}
+		has_global_flag = SPA_CLEARED_INITIAL
 		NOT = { has_global_flag = NAV_resolved }
-		NOT = { has_country_flag = independence_NAV }
+		NOT = { has_country_flag = independence_NAV }		
 		}
 
 	mean_time_to_happen = { 
@@ -196,6 +270,7 @@ country_event = { #Basque Proclamation of Independence (DUA support)
 		limit = { 
 			tag = SPA
 			exists = SPA
+			NOT = { war_with = DUA }
 	    }
 	country_event = 987418
 	}
@@ -203,6 +278,7 @@ country_event = { #Basque Proclamation of Independence (DUA support)
 		limit = { 
 			tag = SPC
 			exists = SPC
+			NOT = { war_with = DUA }
 	    }
 	country_event = 987418	
 	}
@@ -240,7 +316,21 @@ country_event = { #Basque Proclamation of Independence : Aragon's reaction
 	THIS = { country_event = 987416 }
 	ai_chance = { 
 	factor = 85 
+		modifier = { 
+		factor = 0.1
+		DUA = { 
+				war_with = ENL 
+				has_country_flag = glorious_revolution
+				}
 		}
+		modifier = { 
+		factor = 0.1
+		DUA = { 
+				war_with = SPA
+				has_global_flag = spanish_revolutionary_war
+		}
+		}
+	}
 	}
 	
 	option = { 
@@ -258,17 +348,24 @@ country_event = { #Basque Proclamation of Independence : Aragon's reaction
 				casus_belli = conquest_any
 			}
 		call_ally = yes
-		}
+	}
 	ai_chance = { 
-		factor = 5
+		factor = 10
 		modifier = { 
-		factor = 0.1 
+		factor = 9
 		DUA = { 
 				war_with = ENL 
 				has_country_flag = glorious_revolution
 				}
-			}
 		}
+		modifier = { 
+		factor = 9
+		DUA = { 
+				war_with = SPA
+				has_global_flag = spanish_revolutionary_war
+				}
+		}
+	}
 	}
 }
 
@@ -563,10 +660,23 @@ country_event = {
 	       relation = { who = THIS value = -300 }
 	       diplomatic_influence = { who = THIS value = -300 }
 	    }
-        SPA = {
+		any_country = {
+		   limit = {
+		      tag = SPA
+			  government = democracy
+		   }
+	       relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+           create_alliance = THIS
+        }	
+		any_country = {
+		   limit = {
+		      tag = SPA
+			  NOT = { government = democracy }
+		   }
 	       relation = { who = THIS value = -300 }
 	       diplomatic_influence = { who = THIS value = -300 }
-	    }
+        }		
         SPC = {
 	       relation = { who = THIS value = -300 }
 	       diplomatic_influence = { who = THIS value = -300 }

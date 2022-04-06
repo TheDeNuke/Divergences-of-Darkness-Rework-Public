@@ -1,5 +1,166 @@
 ######################## ITALIAN EVENTS ##########################
 
+#### Tuscany is pretty important yo ######
+
+country_event = {
+	id = 36720
+	title = "TUS_setupT"
+	desc = "TUS_setupD"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "36720.A"
+	
+	define_general = {
+		name = "Pietro Testi"
+		personality = cool_minded 
+		background = natural_born_leader
+	}
+	
+	add_country_modifier = {
+			name = the_last_democracy
+			duration = 4380
+	}
+	
+	744 = {
+	        life_rating = 15
+			add_province_modifier = {
+					name = liberal_stronghold
+					duration = -1
+			}
+		}
+	any_pop = { 
+		ideology = {
+				value = liberal
+				factor = 0.50
+			}
+		}
+	}
+}
+	
+country_event = { ##Using the Carbonari ?
+	id = 36731
+	title = "ETR1.T"
+	desc = "ETR1.D"
+	picture = "carbonari"
+	
+	trigger = { 
+	tag = TUS 
+	has_global_flag = liberal_revolution_somewhere
+	has_country_flag = REV_TUS
+	NOT = { has_country_flag = carbonari }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = { 
+	name = "36731.A"
+	set_country_flag = carbonari
+	set_global_flag = TUS_carbonari
+	any_country = { 
+	limit = {
+	NOT = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } }
+	NOT = { tag = THIS }
+	exists = yes 
+	OR = { 
+		primary_culture = north_italian 
+		primary_culture = south_italian
+				}
+			}
+	country_event = 36732 
+		}
+	ARA = { country_event = { id = 124292 days = 1 } }
+	ai_chance = { 
+	factor = 40	
+	modifier = { 
+	factor = 2
+	ruling_party_ideology = liberal
+			}
+	modifier = { 
+	factor = 4
+	ruling_party_ideology = anarcho_liberal
+			}
+	modifier = { 
+	factor = 0.5 
+	ruling_party_ideology = market_liberal
+			}
+	modifier = { 
+	factor = 0.5 
+	ruling_party_ideology = conservative
+			}
+	modifier = { 
+	factor = 0
+	ruling_party_ideology = reactionary
+			}
+	modifier = { 
+	factor = 2
+	is_greater_power = yes
+			}
+		}
+	}
+	
+	option = { 
+	name = "36731.B"
+	set_country_flag = carbonari
+	ai_chance = { 
+	factor = 20 	
+	modifier = { 
+	factor = 2
+	ruling_party_ideology = market_liberal
+			}
+	modifier = { 
+	factor = 2
+	ruling_party_ideology = conservative
+			}
+	modifier = { 
+	factor = 4
+	ruling_party_ideology = reactionary
+			}
+		}
+	}
+}	
+
+country_event = { ##Carbonari activate 
+	id = 36732
+	title = "ETR2.T"
+	desc = "ETR2.D"
+	picture = "carbonari"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "36732.A"
+	any_owned = {
+	limit = { is_core = ITA }
+	any_pop = { 
+		ideology = {
+				value = liberal
+				factor = 0.2
+			}
+		}
+	any_pop = {
+				limit = {
+					OR = {
+						type = officers
+						type = soldiers
+					}
+				}
+				ideology = {
+				value = liberal
+				factor = 0.5
+				}
+			militancy = 5 
+			consciousness = 4 
+		}
+	}
+	capital_scope = { add_province_modifier = { name = etrurian_agitation duration = 1200 } }
+	set_country_flag = carbonari_activity 
+	}
+}	
 
 province_event = { #Spread of the Etrurian agitation
 	id = 36733
@@ -1645,6 +1806,7 @@ country_event = {
 	has_country_flag = carbonari #after event 36731	
 	NOT = { year = 1860 }
 	NOT = { has_country_flag = LUC_WIMP }
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	mean_time_to_happen = { 
@@ -1696,6 +1858,7 @@ country_event = {
 	has_country_flag = carbonari #after event 36731	
 	NOT = { year = 1860 }
 	NOT = { has_country_flag = MODPAR_WIMP }
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	mean_time_to_happen = { 
@@ -1757,6 +1920,7 @@ country_event = {
 	is_vassal = yes 
 	has_global_flag = TUS_carbonari
 	war = no 
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	fire_only_once = yes
@@ -1818,6 +1982,7 @@ country_event = {
            owns = 764
            owns = 754				  
 		}
+		NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	mean_time_to_happen = { 
@@ -1855,6 +2020,7 @@ country_event = {
 	war = no 
 	has_global_flag = TUS_carbonari
 	TUS = { exists = yes OR = { government = democracy government = parliamentary_republic government = socialist_republic } }
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	mean_time_to_happen = { 
@@ -2156,7 +2322,7 @@ country_event = {
 	option = { 
 	name = "TUS23.C"
 	set_country_flag = accepted_ITC
-	change_tag_no_core_switch = ITC
+	change_tag_no_core_switch = TUS
 	ai_chance = { 
 	factor = 0 
 	}
@@ -2187,8 +2353,11 @@ country_event = {
 	option = { 
 	name = "TUS24.A"
 	clr_country_flag = council_TUS
+	PAP = { release_vassal = AVN }
 	inherit = PAP
 	inherit = LOM
+	add_accepted_culture = central_italian
+	add_accepted_culture = north_italian
 	change_tag = ITC
 	tech_school = industrial_tech_school
 	any_owned = { limit = { is_core = ITA } add_core = ITC }
@@ -2224,7 +2393,22 @@ country_event = {
 	clr_country_flag = anarcho_liberal_gov
 	clr_country_flag = socialist_republic_gov
 	clr_country_flag = fascist_monarchy_gov
+	country_event = { id = 110660 days = 1 }
 	capital = 749
+    749 = {
+	   add_province_modifier = {
+		 name = gateway_to_harbor
+		 duration = 720
+	   } 
+	   add_province_modifier = {
+		 name = small_baby_boom
+		 duration = 14600
+	   }
+	   add_province_modifier = {
+		 name = baby_boom
+		 duration = 1825
+	   }
+    }
 	country_event = { id = 124275 days = 0 }
 	}
 }
@@ -2279,6 +2463,7 @@ country_event = {
 	739 = { owned_by = TUS }
 	NOT = { year = 1848 }
 	NOT = { vassal_of = ARI }
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 	
 	fire_only_once = yes
@@ -2376,6 +2561,7 @@ country_event = {
 	owns = 744
 	NOT = { has_country_flag = LOM_choice }
 	NOT = { vassal_of = ARI }
+	NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 	}
 
 	mean_time_to_happen = { 
@@ -2386,6 +2572,22 @@ country_event = {
 	name = "TUS29.A" #The old duke doesn't abdicate
 	set_country_flag = LOM_choice
 	inherit = PAP
+	add_accepted_culture = central_italian
+	add_accepted_culture = north_italian
+	release_vassal = AVN
+	any_country = {
+			limit = {
+			    is_our_vassal = AVN
+			    NOT = { has_global_flag = AVIGNON_CRISIS }
+		   }
+		   release_vassal = AVN
+	}
+	random_owned = {
+		limit = {
+		   owner = { NOT = { tag = PIE } NOT = { has_global_flag = AVIGNON_CRISIS } OR = { government = theocracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government government = fascist_monarchy }  }
+	    }
+	    owner =  { country_event = { id = 110660 days = 1 } }
+	}	
 	change_tag = ITC 
 	tech_school = industrial_tech_school
 	any_owned = { limit = { is_core = ITA } add_core = ITC }
@@ -2592,9 +2794,17 @@ country_event = {
 	option = { 
 	name = "TUS32.A"
 	   prestige = 30 
+	   any_country = {
+		   limit = {
+		      owns = 470
+		      NOT = { has_global_flag = AVIGNON_CRISIS }
+		   }
+		   country_event = { id = 110658 days = 0 }
+	   }
 	   change_tag = ITA 
 	   inherit = NAP 
 	   add_accepted_culture = north_italian
+	   add_accepted_culture = central_italian
 	   add_accepted_culture = south_italian		
 	   any_country = {
 			limit = {
@@ -2989,12 +3199,28 @@ country_event = {
 	is_triggered_only = yes
 
 	option = { 
-	name = "SAR8.A"	
+	name = "SAR8.A"
+	    release_vassal = AVN
+		any_country = {
+			limit = {
+			    is_our_vassal = AVN
+			    NOT = { has_global_flag = AVIGNON_CRISIS }
+			 }
+			 release_vassal = AVN
+		}
 		change_tag = ITA
 		all_core = { remove_core = ITC }
+		add_accepted_culture = north_italian
+		add_accepted_culture = central_italian
 		add_accepted_culture = south_italian	
 		remove_country_modifier = the_compromesso
 		political_reform = federalism
+		random_owned = {
+			limit = {
+			   owner = { NOT = { tag = PIE } NOT = { has_global_flag = AVIGNON_CRISIS } OR = { government = theocracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government government = fascist_monarchy }  }
+			}
+			owner =  { country_event = { id = 110660 days = 1 } }
+	     }		
 	}
 }
 
@@ -3092,6 +3318,15 @@ country_event = {
 			remove_core = PIE
 			add_core = GNV
 		}	
+		3265  = {
+			remove_core = SAR
+			remove_core = LOM
+			remove_core = ARI
+			remove_core = ITA
+			remove_core = ITC
+			remove_core = PIE
+			add_core = GNV
+		}
 	    war = {
 			target = ITC
 				attacker_goal = {
@@ -3168,6 +3403,15 @@ country_event = {
 			remove_core = PIE
 			add_core = GNV
 		}
+		3265  = {
+			remove_core = SAR
+			remove_core = LOM
+			remove_core = ARI
+			remove_core = ITA
+			remove_core = ITC
+			remove_core = PIE
+			add_core = GNV
+		}
         NAP = { all_core = { remove_core = ITA } }
         ITC = { remove_country_modifier = the_compromesso all_core = { remove_core = ITC } }		
 	    any_country = {
@@ -3179,7 +3423,16 @@ country_event = {
 		}
 		FROM = { set_country_flag = italian_sponsor create_vassal = THIS create_vassal = PAP }
         change_tag = ITA    
+	    add_accepted_culture = central_italian
+	    add_accepted_culture = north_italian
         political_reform = federalism
+		any_country = {
+		   limit = {
+		      owns = 470
+		      NOT = { has_global_flag = AVIGNON_CRISIS }
+		   }
+		   country_event = { id = 110658 days = 0 }
+		}
 	}
 }
 
@@ -3346,9 +3599,16 @@ country_event = {
 	
 	option = {
 		name = "SAR16.A"
-        ITC = { country_event = { id = 124280 days = 3 } }
+        ITC = { release_vassal = AVN country_event = { id = 124280 days = 3 } }
 		create_vassal = ITC
 		set_country_flag = savoyard_blocker
+		any_country = {
+		   limit = {
+		      owns = 470
+		      NOT = { has_global_flag = AVIGNON_CRISIS }
+		   }
+		   country_event = { id = 110658 days = 0 }
+		}
 	    ai_chance = { 
 	    factor = 80
 	    }
@@ -3356,8 +3616,15 @@ country_event = {
 	
 	option = {
 		name = "SAR16.B"
-        ITC = { country_event = { id = 124280 days = 3 } }
+        ITC = { release_vassal = AVN country_event = { id = 124280 days = 3 } }
 		create_vassal = ITC
+		any_country = {
+		   limit = {
+		      owns = 470
+		      NOT = { has_global_flag = AVIGNON_CRISIS }
+		   }
+		   country_event = { id = 110658 days = 0 }
+		}
 		set_country_flag = savoyard_blocker
 		change_tag_no_core_switch = ITC
 	    ai_chance = { 
@@ -3457,6 +3724,7 @@ country_event = {
 		prestige_factor = -0.5	
 		clr_country_flag = savoyard_blocker			
 		all_core = { remove_core = ITC }
+		remove_accepted_culture = north_italian
 		change_tag = TUS
 		TUS_744 = { add_core = TUS }	
 	    any_owned = {
@@ -3560,6 +3828,8 @@ country_event = {
 		clr_country_flag = savoyard_blocker
 		prestige = 10
 		all_core = { remove_core = ITC }
+		add_accepted_culture = north_italian
+		add_accepted_culture = central_italian
 		add_accepted_culture = south_italian	
 		political_reform = unitary	
 		change_tag = ITA	
@@ -3678,6 +3948,8 @@ country_event = {
 		clr_country_flag = savoyard_blocker
 		clr_global_flag = the_liberation_war_ITC	
 		all_core = { remove_core = ITC }
+		add_accepted_culture = north_italian
+		add_accepted_culture = central_italian
 		add_accepted_culture = south_italian	
 		political_reform = unitary	
 		change_tag = ITA			

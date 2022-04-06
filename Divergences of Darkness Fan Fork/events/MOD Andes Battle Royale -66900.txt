@@ -1,0 +1,3656 @@
+country_event = { 
+	id = 66900 
+	title = "AND1.T" #Empire of the Sun -intro event 
+	desc = "AND1.D" 
+	
+	trigger = { 
+	tag = INC 
+	NOT = { has_country_flag = INC_setup } 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND1.A"	
+	set_country_flag = INC_setup 
+	add_country_modifier = { 
+	name = INC_rule duration = -1
+		}
+	add_country_modifier = { 
+	name = INC_unrecognized	duration = -1
+	}
+	}
+}
+
+country_event = { 
+	id = 66901
+	title = "AND2.T" #End of the Mapuche Revolt
+	desc = "AND2.D" 
+	
+	trigger = { 
+	tag = INC 
+	war = no 
+	ARU = { is_vassal = yes } 
+	NOT = { has_country_flag = Mapuche_revolt_end }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "AND2.A"
+	set_country_flag = Mapuche_revolt_end
+	kill_leader = 253
+	}
+}
+
+country_event = { 
+	id = 66902
+	title = "AND3.T" #The Death of the Sapa Inca is known in Cuzco
+	desc = "AND3.D" 
+	
+	trigger = { 
+	NOT = { has_country_flag = death_INCA } 
+	has_country_flag = Mapuche_revolt_end
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "AND3.A" #Washkar is the rightful heir
+	set_country_flag = death_INCA
+	set_country_flag = Washkar_CW
+	country_event = { id = 66903 days = 15 } 
+	set_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+	
+	option = { 
+	name = "AND3.B" #Llapa Yupanki 
+	country_event = { id = 66911 days = 20 } 
+	set_country_flag = death_INCA
+	set_country_flag = Llapa_CW
+	set_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+}
+
+
+country_event = { 
+	id = 66903
+	title = "AND4.T" #Washkar and the Inti High priest
+	desc = "AND4.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND4.A" #Good option 
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	country_event = 66904 
+	}
+	
+	option = { 
+	name = "AND4.B" #Bad option : idk what it is
+	country_event = 66904 
+	}
+}
+
+country_event = { 
+	id = 66904
+	title = "AND5.T" #Washkar and the Altiplano nobility
+	desc = "AND5.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND5.A" #Good option : idk what it is about
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	country_event = 66905
+	}
+	
+	option = { 
+	name = "AND5.B" #Bad option : idk what it is
+	country_event = 66905
+	}
+}
+
+country_event = { 
+	id = 66905
+	title = "AND6.T" #The time for battle
+	desc = "AND6.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND6.A" #Bad option : we wait!
+	country_event = { id = 66906 days = 60 } 
+	}
+	
+	option = { 
+	name = "AND6.B" #Good option : we must move ahead and meet them
+	country_event = { id = 66906 days = 25 } 
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+}
+
+country_event = { 
+	id = 66906
+	title = "AND7.T" #Cavalry in battle
+	desc = "AND7.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND7.A" #CHAAAARGE
+	set_country_flag = end_INC_CW
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+	
+	option = { 
+	name = "AND7.B" #bad option : Washkar doesn't lead
+	set_country_flag = end_INC_CW
+	}
+}
+country_event = {
+	id = 66907 #The Inca Civil War : Llapa takes over and the country was fucked by the fight
+	title = "AND8.T"
+	desc = "AND8.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Washkar_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 3
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND8.A"
+		set_country_flag = Llapa_INC 
+		prestige = -5 
+		any_pop = { 
+		militancy = 2 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.8 }
+		2370 = {
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.85 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.95 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2302 } } reduce_pop = 0.85 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 100
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 66908 #The Inca Civil War : Llapa takes over and the country got it quite rough but it's alright
+	title = "AND9.T"
+	desc = "AND9.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Washkar_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+		check_variable = {
+		      which = INC_CW
+		      value = 3
+			 }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 4
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND9.A"
+		set_country_flag = Llapa_INC 
+		prestige = -2 
+		any_pop = { 
+		militancy = 1 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.9 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.95 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.97 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = {province_id = 2302 } } reduce_pop = 0.9 }
+		2302 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 66909 #The Inca Civil War : Washkar wins though it was a bit quite rough
+	title = "AND10.T"
+	desc = "AND10.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Washkar_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+		check_variable = {
+		      which = INC_CW
+		      value = 4
+			 }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 5
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND10.A"
+		set_country_flag = Washkar_INC 
+		prestige = 1
+		any_pop = { 
+		militancy = -1 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.9 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.95 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.97 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		define_general = { 
+		name = "Washkar Inka" 
+		personality = genius 
+		background = school_of_the_bayonet
+		} 
+	}
+}
+
+country_event = {
+	id = 66910 #The triumph of Washkar !
+	title = "AND11.T"
+	desc = "AND11.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Washkar_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+	       check_variable = {
+		      which = INC_CW
+		      value = 5
+	      }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND11.A"
+		set_country_flag = Washkar_INC 
+		prestige = 10
+		any_pop = { 
+		militancy = -4
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.97 } #big battle there but it's quite minimal
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.99 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 200
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.99 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 200
+			}
+		}
+		define_general = { 
+		name = "Washkar Inka" 
+		personality = genius 
+		background = school_of_the_bayonet
+		} 
+	}
+}
+
+country_event = { 
+	id = 66911
+	title = "AND12.T" #Llapa and the artillery logistics
+	desc = "AND12.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND12.A" #Good option : bring the artillery!
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	country_event = { id = 66912 days = 60 }
+	}
+	
+	option = { 
+	name = "AND12.B" #Bad option : rush towards Cuzco!
+	country_event = { id = 66912 days = 35 }
+	}
+}
+
+country_event = { 
+	id = 66912
+	title = "AND13.T" #Contacting the Altiplano communities
+	desc = "AND13.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND13.A" #Good option : idk what it is about
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	country_event = { id = 66913 days = 25 }
+	}
+	
+	option = { 
+	name = "AND13.B" #Bad option : idk what it is
+	country_event = { id = 66913 days = 25 }
+	}
+}
+
+country_event = { 
+	id = 66913
+	title = "AND14.T" #Securing the Lupaca
+	desc = "AND14.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND14.A" #Bad option : idk
+	country_event = { id = 66914 days = 5 } 
+	}
+	
+	option = { 
+	name = "AND14.B" #Good option : idk
+	country_event = { id = 66914 days = 5 } 
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+}
+
+country_event = { 
+	id = 66914
+	title = "AND15.T" #The Square formation
+	desc = "AND15.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND15.A" #Good option : yes, he is worthy of leading the counter attack against cavalry despite his defeat
+	set_country_flag = end_INC_CW
+	define_general = {
+	name = "Quizquiz" 
+	personality = resolute 
+	background = school_of_the_bayonet
+	}
+	change_variable = {
+		   which = INC_CW
+		   value = 1
+	    }
+	}
+	
+	option = { 
+	name = "AND15.B" #bad option : don't redeem the disgraced general for the fight
+	set_country_flag = end_INC_CW
+	}
+}
+
+country_event = {
+	id = 66915 #The Inca Civil War : Washkar takes over and the country was fucked by the fight
+	title = "AND16.T"
+	desc = "AND16.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Llapa_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 3
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND16.A"
+		set_country_flag = Washkar_INC 
+		prestige = -5 
+		any_pop = { 
+		militancy = 2 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.8 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.85 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.9 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		define_general = { 
+		name = "Washkar Inka" 
+		personality = genius 
+		background = school_of_the_bayonet
+		} 
+	}
+}
+
+country_event = {
+	id = 66916 #The Inca Civil War : Washkar takes over and the country got it quite rough but it's alright
+	title = "AND17.T"
+	desc = "AND17.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Llapa_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+		check_variable = {
+		      which = INC_CW
+		      value = 3
+			 }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 4
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND17.A"
+		set_country_flag = Washkar_INC 
+		prestige = -2 
+		any_pop = { 
+		militancy = 1 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.9 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.9 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.9 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		define_general = { 
+		name = "Washkar Inka" 
+		personality = genius 
+		background = school_of_the_bayonet
+		} 
+	}
+}
+
+country_event = {
+	id = 66917 #The Inca Civil War : Llapa wins though it was a bit quite rough notably when he purged Cuzco
+	title = "AND18.T"
+	desc = "AND18.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Llapa_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+		check_variable = {
+		      which = INC_CW
+		      value = 4
+			 }
+	    NOT = {
+	       check_variable = {
+		      which = INC_CW
+		      value = 5
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND18.A"
+		set_country_flag = Llapa_INC 
+		prestige = 1
+		any_pop = { 
+		militancy = -1 
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.9 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.95 }
+		2307 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.97 }
+		2310 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2302 } } reduce_pop = 0.8 }
+		2302 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 66918 #The triumph of Llapa !
+	title = "AND19.T"
+	desc = "AND19.D"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = INC
+		has_country_flag = end_INC_CW
+		has_country_flag = Llapa_CW
+		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
+	       check_variable = {
+		      which = INC_CW
+		      value = 5
+	      }
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+
+	option = {
+		name = "AND19.A"
+		set_country_flag = Llapa_INC 
+		prestige = 10
+		any_pop = { 
+		militancy = -4
+		}
+		any_pop = { limit = { location = { province_id = 2370 } } reduce_pop = 0.97 } #big battle there but it's quite minimal
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 100
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2307 } } reduce_pop = 0.99 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 100
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2310 } } reduce_pop = 0.99 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 100
+			}
+		}
+		any_pop = { limit = { location = { province_id = 2302 } } reduce_pop = 0.95 }
+		2370 = { 
+		add_province_modifier = {
+			name = war_torn
+			duration = 50
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 66919 #Both Get it : Cuzco, the Navel of the World
+	title = "AND20.T"
+	desc = "AND20.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = end_INC_CW
+	OR = { has_country_flag = Washkar_INC has_country_flag = Llapa_INC }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 15 
+	}
+	
+	option = { 
+	name = "AND20.A"
+	prestige = 1 
+	random_owned = {
+		limit = {
+			owner = { tag = INC ai = yes }
+		}
+		owner = {
+			treasury = 100000
+		}
+	} 
+	2302 = {
+	any_pop = { 
+	militancy = -4 
+	      }
+	   }
+	} 
+}
+
+country_event = {
+	id = 66920 #Both Get it : Trains
+	title = "AND21.T"
+	desc = "AND21.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = end_INC_CW
+	OR = { has_country_flag = Washkar_INC has_country_flag = Llapa_INC }
+	year = 1839
+	NOT = { has_country_flag = choochoo_INC } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "AND21.A"
+	relation = { who = BRG value = 20 }
+	activate_technology = early_railroad
+	set_country_flag = choochoo_INC
+	2307 = { infrastructure = 1 }
+	2370 = { infrastructure = 1 }
+	} 
+}
+
+country_event = {
+	id = 66921 #Both Get it : Foreigners in the Empire
+	title = "AND22.T"
+	desc = "AND22.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = end_INC_CW
+	OR = { has_country_flag = Washkar_INC has_country_flag = Llapa_INC }
+	NOT = { has_country_flag = foreigners_INC } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "AND22.A"
+	relation = { who = BRG value = 20 }
+	set_country_flag = foreigners_INC
+	research_points = 500 
+	} 
+}
+
+country_event = {
+	id = 66922 #Both Get it : Tensions in the West
+	title = "AND23.T"
+	desc = "AND23.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1838 
+	has_country_flag = end_INC_CW
+	OR = { has_country_flag = Washkar_INC has_country_flag = Llapa_INC }
+	NOT = { has_country_flag = border_patrol_INC } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "AND23.A"
+	set_country_flag = border_patrol_INC
+	relation = { who = QUI value = -50 } 
+	QUI = { country_event = 66923 } 
+	} 
+}
+
+country_event = {
+	id = 66923 #Both Get it : Tensions in the East
+	title = "AND24.T"
+	desc = "AND24.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND24.A" 
+	relation = { who = INC value = -20 }
+	}
+}
+
+country_event = {
+	id = 66924 #400 year of the Empire
+	title = "AND25.T"
+	desc = "AND25.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = end_INC_CW
+	year = 1838 
+	has_country_flag = Llapa_INC
+	NOT = { has_country_flag = 400year } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "AND25.A"
+	set_country_flag = 400year
+	any_country = { 
+	limit = { rank = 8 } 
+	relation = { who = THIS value = 50 } 
+		}
+	prestige = 5 
+	} 
+}
+
+country_event = {
+	id = 66925 #Llapa and the Mapuche
+	title = "AND26.T"
+	desc = "AND26.D"
+	
+	trigger = { 
+	tag = INC
+	has_country_flag = end_INC_CW
+	has_country_flag = Llapa_INC
+	NOT = { has_country_flag = dealing_Mapuche } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "AND26.A"
+	set_country_flag = dealing_Mapuche
+	inherit = ARU
+	2327 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = mapuche
+			}
+			reduce_pop = 0.7
+			move_pop = 2314
+		}
+	}
+	2330 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = mapuche
+			}
+			reduce_pop = 0.7
+			move_pop = 2314
+		}
+	}
+	2314 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = quechua
+			}
+			move_pop = 2330
+		}
+	}
+	2373 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = aimara
+			}
+			move_pop = 2327
+			}
+	}
+	any_pop = { 
+	limit = { location = { region = SA_6 } }
+	reduce_pop = 0.8 
+	}
+	}
+}
+
+country_event = {
+	id = 66926 #Washkar and the Mapuche
+	title = "AND27.T"
+	desc = "AND27.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1837
+	has_country_flag = end_INC_CW
+	has_country_flag = Washkar_INC
+	NOT = { has_country_flag = dealing_Mapuche } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	}
+	
+	option = { 
+	name = "AND27.A"
+	set_country_flag = dealing_Mapuche
+	ARU = { 
+	government = autonomous_dependency
+	}
+	2327 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = mapuche
+			}
+			reduce_pop = 0.9
+			move_pop = 2314
+		}
+	}
+	2330 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = mapuche
+			}
+			reduce_pop = 0.9
+			move_pop = 2314
+		}
+	}
+	2314 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = quechua
+			}
+			move_pop = 2330
+		}
+	}
+	2373 = { 
+	poor_strata = {
+			limit = {
+					has_pop_culture = aimara
+			}
+			move_pop = 2327
+			}
+		}
+	}
+}
+
+
+country_event = {
+	id = 66927 #Military reforms of Washkar
+	title = "AND28.T"
+	desc = "AND28.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1838 
+	has_country_flag = end_INC_CW
+	has_country_flag = Washkar_INC
+	NOT = { has_country_flag = MIL_reform } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 10 
+	modifier = { 
+	factor = 0.1 
+	year = 1840 
+		}
+	}
+	
+	option = { 
+	name = "AND28.A"
+	set_country_flag = MIL_reform
+	activate_technology = army_professionalism 
+	activate_technology = muzzle_loaded_rifles
+	}
+	
+}
+
+#THE BEORNIAN WAR 
+
+country_event = {
+	id = 66928 #Oh no raiders continue to be active on the border
+	title = "AND29.T"
+	desc = "AND29.D"
+	
+	trigger = { 
+	tag = NAN 
+	NOT = { has_global_flag = beginning_INCNAN_war } 
+	year = 1840
+	}
+	
+	mean_time_to_happen = { 
+	days = 20 
+	} 
+	
+	option = { 
+	name = "AND29.A" 
+	badboy = 3 
+	set_global_flag = beginning_INCNAN_war 
+	}
+}
+
+country_event = {
+	id = 66929 #Oh no raiders continue to be active on the border
+	title = "AND30.T"
+	desc = "AND30.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = beginning_INCNAN_war
+	has_country_flag = Llapa_INC 
+	NOT = { has_country_flag = choosing_NAN_WAR } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	} 
+	
+	immediate = { 
+	NAN_4 = { add_core = THIS } 
+	NAN_2 = { add_core = THIS } 
+	NAN_1 = { add_core = THIS } 
+	}
+	
+	option = { 
+	name = "AND30.A" 
+	badboy = -1 
+	set_country_flag = choosing_NAN_WAR 
+	NAN = { country_event = 66931 }
+	}
+	
+	option = { 
+	name = "AND30.B" 
+	badboy = 10
+	
+	set_country_flag = choosing_NAN_WAR 
+	war = { 
+		target = NAN
+		attacker_goal =  { 
+				casus_belli = acquire_all_cores
+				country = INC
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		}
+	NAN = { country_event = 66934 }
+	}
+	
+	option = { 
+	name = "AND30.C" #Neuter the menace
+	badboy = 19
+	random_owned = { limit = { owner = { ai = no } } NAN = { add_country_modifier = { name = taiping_draft duration = 300 } } }
+	
+	set_country_flag = choosing_NAN_WAR 
+	war = { 
+		target = NAN
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	NAN = { country_event = 66935 }
+	}
+}
+
+country_event = {
+	id = 66930 #Oh no raiders continue to be active on the border
+	title = "AND31.T"
+	desc = "AND31.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = beginning_INCNAN_war
+	has_country_flag = Washkar_INC 
+	NOT = { has_country_flag = choosing_NAN_WAR } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	} 
+	
+	immediate = { 
+	NAN_4 = { add_core = THIS } 
+	NAN_2 = { add_core = THIS } 
+	NAN_1 = { add_core = THIS } 
+	}
+	
+	option = { 
+	name = "AND31.A" #Secure the Border
+	badboy = 10
+	set_country_flag = choosing_NAN_WAR 
+	
+	NAN_4 = { add_core = THIS } 
+	NAN_2 = { add_core = THIS } 
+	NAN_1 = { add_core = THIS } 
+	war = { 
+		target = NAN
+		attacker_goal =  { 
+				casus_belli = acquire_all_cores
+				country = INC
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	}
+	
+	option = { 
+	name = "AND31.B" #Neuter the Menace
+	NAN = { country_event = 66935 }
+	badboy = 19
+	set_country_flag = choosing_NAN_WAR 
+	random_owned = { limit = { owner = { ai = no } } NAN = { add_country_modifier = { name = taiping_draft duration = 300 } } }
+	war = { 
+		target = NAN
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	}
+	
+	option = { 
+	name = "AND31.C" #Eliminate the Menace
+	badboy = 24
+	set_country_flag = choosing_NAN_WAR 
+	random_owned = { limit = { owner = { ai = no } } NAN = { add_country_modifier = { name = small_country_draft duration = 300 } } }
+	
+	NAN = { country_event = 66936 }
+	war = { 
+		target = NAN
+		
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	ai_chance = { 
+	factor = 90
+		}
+	}
+}
+
+
+country_event = {
+	id = 66931 #Llapa Inca proposes a peace offer
+	title = "AND32.T"
+	desc = "AND32.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND32.A" #ACCEPT 
+	prestige = -5 
+	INC = { country_event = 66932 } 
+	any_pop = { militancy = 4 }
+	RAP = {
+			change_variable = {
+				which = Barons_NAN
+				value = -3
+			}
+		}
+	ai_chance = { factor = 80 } 
+	}
+	
+	option = { 
+	name = "AND32.B" #So they've chosen ... death
+	prestige = 2 
+	add_country_modifier = { 
+	name = NAN_INC_warfare 
+	duration = 3600
+	}
+	INC = { country_event = 66933 }
+	set_country_flag = WAR_INC
+	ai_chance = { factor = 20 } 
+	}
+}
+
+country_event = {
+	id = 66932 #Peace accepted!
+	title = "AND33.T"
+	desc = "AND33.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "AND33.A" 
+	prestige = 1 
+	set_global_flag = NAN_OVER
+	NAN_4 = { remove_core = THIS } 
+	NAN_2 = { remove_core = THIS } 
+	NAN_1 = { remove_core = THIS } 
+	}
+}
+
+country_event = {
+	id = 66933 #Peace refused
+	title = "AND34.T"
+	desc = "AND34.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "AND34.A" 
+	random_owned = { limit = { owner = { ai = yes } } owner = { add_country_modifier = { name = small_country_draft duration = 720 } } } 
+	NAN_4 = { add_core = THIS } 
+	NAN_2 = { add_core = THIS } 
+	NAN_1 = { add_core = THIS } 
+	war = { 
+		target = NAN
+		attacker_goal =  { 
+				casus_belli = acquire_all_cores
+				country = INC
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		}
+	}
+}
+
+country_event = {
+	id = 66934 #Border WAR
+	title = "AND35.T"
+	desc = "AND35.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "AND35.A"
+	set_country_flag = WAR_INC
+	add_country_modifier = { name = NAN_INC_warfare duration = 900 }
+	}
+}
+
+country_event = {
+	id = 66935 #Uruguay WAR
+	title = "AND36.T"
+	desc = "AND36.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "AND35.A"
+	set_country_flag = WAR_INC
+	add_country_modifier = { name = NAN_INC_warfare duration = 900 }
+	}
+}
+
+country_event = {
+	id = 66936 #Total Conquest WAR
+	title = "AND37.T"
+	desc = "AND37.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "AND37.A"
+	set_country_flag = WAR_INC
+	add_country_modifier = { name = NAN_INC_warfare duration = 900 }
+	}
+}
+
+country_event = {
+	id = 66937 #Inca defeat
+	title = "AND38.T"
+	desc = "AND38.D"
+	picture = "crimean_war_defeat"
+	
+	trigger = {	
+	    exists = yes
+		tag = INC
+		has_country_flag = custom_treaty_loser
+		has_global_flag = beginning_INCNAN_war
+		truce_with = NAN
+		NOT = { has_global_flag = NAN_OVER }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+	# Release the Mapuche
+	release_vassal = ARU 
+	any_pop = { 
+	militancy = 4 
+		}	
+	}
+	
+	option = {
+	name = "AND38.A" 
+	prestige = -40
+	any_pop = { 
+	militancy = 4 
+    }	
+	any_owned = {
+			limit = {
+				OR = { 
+				region = CHL_2322
+				region = ARG_2387
+				region = INC_2389
+				}
+			}
+			secede_province = NAN
+			add_core = NAN 
+			remove_core = INC
+		}
+	NAN = { country_event = 66938 }
+	clr_country_flag = custom_treaty_loser
+	set_global_flag = NAN_OVER
+	set_country_flag = INC_defeat_NAN
+	}
+}
+
+country_event = { 
+	id = 66938 #Inca defeat - Beornian Atrocities event
+	title = "AND39.T"
+	desc = "AND39.D"
+	picture = "crimean_war_defeat"
+	
+	is_triggered_only = yes
+	
+	option = {
+	name = "AND39.A" 
+		2388 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2387 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2389 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		
+		#Catamarca pops go to Tilcara
+		2385 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2374 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2373 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2375 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2325= {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2326 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		} 
+		
+		2327 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2324 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+		
+		2330 = {
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.6 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.4 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+		add_province_modifier = { name = population_resettlement duration = 1460 }
+		remove_province_modifier = nationalist_agitation
+		}
+	}
+}
+
+country_event = { 
+	id = 66939 #White peace
+	title = "AND40.T"
+	desc = "AND40.D"
+	
+	major = yes
+	
+	trigger = { 
+	tag = NAN 
+	has_country_flag = WAR_INC
+	war = no 
+	owns = 2390
+	owns = 2381
+	NOT = { has_global_flag = NAN_OVER } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "AND40.A" 
+	prestige = 20 
+	set_global_flag = NAN_OVER
+	any_owned = { 
+	    remove_core = INC 
+    }
+	}
+}
+
+country_event = {
+	id = 66940 #Inca win - Uruguay beornia
+	title = "AND41.T"
+	desc = "AND41.D"
+	
+	trigger = {	
+	    exists = yes
+		tag = NAN
+		has_country_flag = custom_treaty_loser
+		has_global_flag = beginning_INCNAN_war
+		NOT = { has_global_flag = NAN_OVER }
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND41.A"
+	set_global_flag = NAN_OVER
+	set_global_flag = NAN_URUGUAY
+	any_owned = { 
+	limit = { NOT = { region = NAN_3 } } 
+	secede_province = INC 
+		}
+	prestige = -20 
+	any_pop = { militancy = 9 }
+	INC = { country_event = 66941 }
+	}
+	
+}
+	
+	
+country_event = {
+	id = 66941 #Inca win - Uruguay beornia
+	title = "AND42.T"
+	desc = "AND42.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "AND42.A"
+	prestige = 20 
+	any_owned = { 
+	limit = { is_core = NAN }
+	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+	add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	any_pop = { 
+	limit = { has_pop_culture = beornian } 
+	militancy = 4 
+		}
+	}
+}
+
+country_event = {
+	id = 66942 #Inca win - Border war
+	title = "AND43.T"
+	desc = "AND43.D"
+	
+	trigger = {	
+	    exists = yes
+		tag = INC
+		has_global_flag = beginning_INCNAN_war
+		NOT = { has_global_flag = NAN_OVER }
+		owns = 2390
+		owns = 2381
+		NOT = { owns = 2363 }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND43.A"
+	set_global_flag = NAN_OVER
+	prestige = 5 
+	any_owned = { 
+	limit = { is_core = NAN }
+	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+	add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	any_pop = { 
+	limit = { has_pop_culture = beornian } 
+	militancy = 4 
+		}
+	} 
+}
+
+country_event = {
+	id = 66943 #Washkar wins - INSANITY PATH
+	title = "AND44.T"
+	desc = "AND44.D"
+	
+	major = yes
+	
+	trigger = {	
+	    exists = yes
+		tag = INC
+		has_global_flag = beginning_INCNAN_war
+		NOT = { has_global_flag = NAN_OVER }
+		owns = 2348 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND44.A"
+	set_global_flag = NAN_OVER
+	set_global_flag = Washkar_WILDRIDE
+	prestige = 25
+	2348 = { 
+		poor_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.9 }
+				33 = { reduce_pop = 0.8 }
+				33 = { reduce_pop = 0.7 }
+			}
+		}
+		middle_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.4 }
+				33 = { reduce_pop = 0.5 }
+				33 = { reduce_pop = 0.6 }
+			}
+		}
+		rich_strata = { 
+			random_list = {
+				34 = { reduce_pop = 0.1 }
+				33 = { reduce_pop = 0.2 }
+				33 = { reduce_pop = 0.3 }
+			}
+		}
+	}
+	any_owned = { 
+	limit = { is_core = NAN }
+	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+	add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	any_pop = { 
+	limit = { has_pop_culture = beornian } 
+	militancy = 4 
+		}
+	} 
+}
+
+country_event = { 
+
+	id = 66944 #Over the River
+	title = "AND45.T"
+	desc = "AND45.D"
+	picture = ""
+	
+	trigger = { 
+	tag = LOT 
+	war = no 
+	has_global_flag = ATL_RESOLVED
+	NOT = { has_global_flag = LOT_RESOLVED } 
+	has_global_flag = NAN_URUGUAY
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 10 
+	modifier = { 
+	factor = 0.1 
+	year = 1842 
+		}
+	}
+	
+	option = { 
+	name = "AND45.A" 
+	set_country_flag = starting_DA_INC
+	any_pop = { 
+		limit = { culture = anglo_lotharian } 
+		consciousness = 2
+		}
+	relation = { who = INC value = -50 }
+	}
+}
+
+country_event = { 
+
+	id = 66945 #Restoring the Viceroyalty
+	title = "AND46.T"
+	desc = "AND46.D"
+	picture = ""
+	
+	trigger = { 
+	tag = LOT 
+	war = no 
+	NOT = { has_global_flag = LOT_RESOLVED } 
+	has_country_flag = starting_DA_INC
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 10 
+	modifier = { 
+	factor = 0.01 
+	INC = { war = yes}
+		}
+	}
+	
+	option = { 
+	name = "AND46.A" 
+	INC = { country_event = 66946 } 
+	NAN = { all_core = { add_core = THIS } }
+	add_country_modifier = { name = small_country_draft duration = 300 } 
+	set_global_flag = WAR_INC_LOT 
+	}
+	
+	option = { 
+	name = "AND46.B"
+	relation = { who = INC value = 100 }
+	prestige = -10 
+	relation = { who = NAN value = 100 }
+	clr_global_flag = NAN_URUGUAY
+	}
+}
+
+country_event = { 
+
+	id = 66946 #Inca reacting to De Aigle's claims
+	title = "AND47.T"
+	desc = "AND47.D"
+	picture = ""
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = { 
+	name = "AND47.A" 
+	war = { 
+		target = LOT
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = LOT
+			}	
+		} 
+	}
+
+}
+
+country_event = { 
+
+	id = 66947 #De Aigle's Triumph -Lotharingia with ATL version
+	title = "AND48.T"
+	desc = "AND48.D"
+	picture = ""
+	
+	trigger = { 
+	tag = LOT 
+	war = no 
+	NOT = { has_global_flag = LOT_RESOLVED } 
+	has_global_flag = WAR_INC_LOT
+	AND = { ATL = { exists = no } owns = 2447 } 
+	owns = 2379 
+	owns = 2384 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND48.A" #The Republican Federation is proclaimed
+	NAN = { country_event = 66948 }
+	set_global_flag = LOT_RESOLVED
+	government = democracy
+	election = yes
+	ruling_party_ideology = liberal
+	political_reform = federalism
+	political_reform = no_slavery
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	}
+	
+	option = { 
+	name = "AND48.B" #Denis I grants a Constitution 
+	NAN = { country_event = 66948 }
+	set_global_flag = LOT_RESOLVED
+	government = hms_government
+	election = yes
+	ruling_party_ideology = liberal
+	political_reform = federalism
+	political_reform = no_slavery
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	}
+	
+	option = { 
+	name = "AND48.C" #THE CHEF
+	NAN = { country_event = 66948 }
+	government = presidential_dictatorship
+	set_global_flag = LOT_RESOLVED
+	}
+	
+}
+	
+country_event = { 
+
+	id = 66948 #De Aigle's Triumph -NAN joining LOT ?
+	title = "AND49.T"
+	desc = "AND49.D"
+	picture = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND49.B" #OF COURSE THEY JOIN 
+	FROM = { country_event = 66949 } 
+	ai_chance = { 
+	factor = 100 
+		}
+	}
+	
+	option = { 
+	name = "AND49.B"
+	} 
+}
+	
+country_event = { 
+
+	id = 66949 #De Aigle's Triumph -NAN joining LOT ?
+	title = "AND50.T"
+	desc = "AND50.D"
+	picture = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND50.B" #OF COURSE THEY JOIN 
+	inherit = FROM
+	}
+}
+
+country_event = { 
+
+	id = 66950 #De Aigle triumph without ATL
+	title = "AND51.T"
+	desc = "AND51.D"
+	picture = ""
+	
+	trigger = { 
+	tag = LOT 
+	war = no 
+	NOT = { has_global_flag = LOT_RESOLVED } 
+	has_global_flag = WAR_INC_LOT
+	AND = { ATL = { exists = no } owns = 2447 } 
+	owns = 2379 
+	owns = 2384 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "ATL47.A" 
+	NAN = { country_event = 66948 }
+	set_global_flag = LOT_RESOLVED
+	government = prussian_constitutionalism
+	nationalvalue = nv_equality
+	ruling_party_ideology = conservative
+	political_reform = unitary
+	political_reform = universal_voting
+	political_reform = state_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = secret_ballots
+	any_pop = { 
+		scaled_militancy = {
+			ideology = reactionary
+			factor = -10
+		      }
+        }
+	any_pop = { 
+		scaled_militancy = {
+			ideology = conservative
+			factor = -1
+		      }
+        }			  
+	any_pop = { 
+		scaled_militancy = {
+			ideology = liberal
+			factor = 2
+		      }
+        }
+	ai_chance = { 
+	factor = 40
+		}
+	}
+	
+	option = { 
+	name = "ATL47.B"
+	set_global_flag = LOT_RESOLVED
+	NAN = { country_event = 66948 }
+	any_pop = { 
+		scaled_militancy = {
+			ideology = reactionary
+			factor = 1
+		      }
+        }
+	any_pop = { 
+		scaled_militancy = {
+			ideology = conservative
+			factor = -4
+		      }
+        }			  
+	any_pop = { 
+		scaled_militancy = {
+			ideology = liberal
+			factor = 2
+		      }
+        }
+	ai_chance = { 
+	factor = 40
+		}
+	}
+	
+	option = { 
+	name = "ATL47.C"
+	NAN = { country_event = 66948 }
+	set_country_flag = LOT_RESOLVED
+	government = democracy
+	election = yes
+	ruling_party_ideology = liberal
+	political_reform = federalism
+	political_reform = no_slavery
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+	
+}
+
+country_event = { 
+
+	id = 66951 #White Peace
+	title = "AND52.T"
+	desc = "AND52.D"
+	picture = ""
+	
+	trigger = { 
+	tag = LOT 
+	war = no 
+	NOT = { has_global_flag = LOT_RESOLVED } 
+	has_global_flag = WAR_INC_LOT
+	AND = { ATL = { exists = no } owns = 2447 } 
+	NOT = { any_owned_province = { is_core = NAN } }
+	}
+	
+	option = { 
+	name = "AND52.A" 
+	NAN = { all_core = { remove_core = THIS } }
+	clr_global_flag = WAR_INC_LOT 
+	clr_global_flag = NAN_URUGUAY
+	prestige = -5 
+	}
+}
+
+country_event = {
+	id = 66952 #Inca win - Dismantlement of Lotharingia
+	title = "AND53.T"
+	desc = "AND53.D"
+	
+	trigger = {	
+	    exists = yes
+		tag = LOT
+		has_country_flag = custom_treaty_loser
+		has_global_flag = WAR_INC_LOT
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND53.A"
+	clr_country_flag = custom_treaty_loser
+	clr_global_flag = WAR_INC_LOT
+	set_global_flag = LOT_RESOLVED
+	any_owned = { 
+	limit = { OR = { 
+				is_core = AVA 
+				region = LOT_6 
+				} 
+			}  
+		secede_province = INC
+		remove_core = LOT
+		}
+	NAN = { all_core = { remove_core = LOT } }
+	any_owned = { 
+	limit = { is_core = NAL } remove_core = LOT secede_province = NAL 
+	}
+	any_owned = { 
+	limit = { is_core = ATL } remove_core = LOT secede_province = ATL 
+	}
+	any_owned = { 
+	limit = { is_core = ODO } remove_core = LOT secede_province = ODO 
+	}
+	prestige = -20 
+	any_pop = { militancy = 9 }
+	INC = { country_event = 66953 }
+	}
+	
+}
+	
+country_event = {
+	id = 66953 #Inca win - Fractured LOT
+	title = "AND54.T"
+	desc = "AND54.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "AND54.A"
+	prestige = 10 
+	any_owned = { 
+	limit = { is_core = AVA }
+	add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	any_owned = { 
+	limit = { is_core = ODO }
+	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+	add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	any_pop = { 
+	limit = { has_pop_culture = lotharian } 
+	militancy = 4 
+		}
+	}
+}
+
+country_event = {
+	id = 66954 #Forgot the Westernization event for INC
+	title = "AND55.T"
+	desc = "AND55.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = NAN_OVER
+	has_country_modifier = INC_unrecognized
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 10
+	}
+	
+	option = { 
+	name = "AND55.A" 
+	remove_country_modifier = INC_unrecognized
+	add_country_modifier = { name = INC_catching_up duration = 5600 }
+	}
+}
+
+#THE WAR IN THE ANDES 
+
+country_event = { 
+	id = 66955 
+	title = "AND56.T"
+	desc = "AND56.D"
+	
+	trigger = { 
+	tag = QUI 
+	has_country_flag = QUI_DICTATORSHIP
+	has_global_flag = WAR_ANDES
+	NOT = { has_country_flag = WAR_ANDES_started } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND56.A"
+	2299 = { add_core = THIS } 
+	2301 = { add_core = THIS } 
+	2321 = { add_core = THIS } 
+	2549 = { add_core = THIS } 
+	set_country_flag = WAR_ANDES_started
+	war = { 
+		target = INC
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		} 
+	}
+
+}
+
+country_event = { 
+	id = 669550 
+	title = "AND560.T"
+	desc = "AND560.D"
+	
+	trigger = { 
+	tag = INC
+	has_global_flag = WAR_ANDES
+	NOT = { has_global_flag = NAN_OVER } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND560.A"
+	prestige = -10 
+	end_war = NAN
+	set_global_flag = NAN_OVER
+	war_exhaustion = -25 
+	ai_chance = {
+	factor = 100
+		}
+	}
+	
+	option = { 
+	name = "AND560.A"
+	prestige = 1 
+	ai_chance = {
+	factor = 0 
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66956
+	title = "AND57.T"
+	desc = "AND57.D"
+	
+	trigger = { 
+	tag = QUI 
+	OR = { has_country_flag = QUI_WIDE_COALTION has_country_flag = QUI_COUNTER_COUP has_country_flag = QUI_ROMANTIC }
+	has_global_flag = WAR_ANDES
+	NOT = { has_country_flag = WAR_ANDES_started } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND57.A"
+	2299 = { add_core = THIS } 
+	2301 = { add_core = THIS } 
+	2321 = { add_core = THIS } 
+	2549 = { add_core = THIS } 
+	set_country_flag = WAR_ANDES_started
+	nationalvalue = nv_liberty
+	war = { 
+		target = INC
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		} 
+	}
+
+}
+
+
+country_event = {
+	id = 66957 #Ballivian has won - Dismantlement of the INC
+	title = "AND58.T"
+	desc = "AND58.D"
+	
+	trigger = {	
+	    exists = yes
+		tag = INC
+		has_country_flag = custom_treaty_loser
+		has_global_flag = WAR_ANDES
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND58.A"
+	any_owned = { 
+	limit = { OR = { 
+				is_core = QUI 
+				region = PEU_2303 
+				region = INC_2308
+				region = CHL_2322
+				region = SA_6
+				} 
+			}  
+		remove_core = INC
+		add_core = QUI
+		secede_province = QUI
+	}
+	clr_country_flag = custom_treaty_loser
+	any_owned = { limit = { is_core = NAN } remove_core = INC secede_province = NAN }
+	any_owned = { limit = { is_core = LOT } remove_core = INC secede_province = LOT } 
+	prestige = -20 
+	government = presidential_dictatorship 
+	QUI  = { country_event = 66958 }
+	}
+	
+}
+	
+country_event = {
+	id = 66958 #Ballivian has won - Dismantlement of the INC
+	title = "AND59.T"
+	desc = "AND59.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND59.A" 
+	create_vassal = INC
+	}
+	
+}
+
+country_event = {
+	id = 66959 #QUI will start the War in the Andes 
+	title = "AND60.T"
+	desc = "AND60.D"
+	
+	trigger = { 
+	tag = QUI 
+	OR = { has_country_flag = QUI_WIDE_COALTION has_country_flag = QUI_COUNTER_COUP has_country_flag = QUI_ROMANTIC }
+	NOT = { has_global_flag = WAR_ANDES } 
+	war = no 
+	NOT = { truce_with = INC } 
+	year = 1843
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "AND60.A"
+	2299 = { add_core = THIS } 
+	2301 = { add_core = THIS } 
+	2321 = { add_core = THIS } 
+	2549 = { add_core = THIS } 
+	set_country_flag = WAR_ANDES_started
+	set_global_flag = WAR_ANDES
+	nationalvalue = nv_liberty
+	war = { 
+		target = INC
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		} 
+	}
+	
+	option = { 
+	name = "AND60.B" 
+	prestige = -5 
+	} 
+}
+
+
+country_event = {
+	id = 66960 #Arise, new knights! -Nouvelle-Amsterdam Beornian refugee event
+	title = "AND61.T"
+	desc = "AND61.D"
+	
+	trigger = { 
+	owns = 2447 
+	has_global_flag = Washkar_WILDRIDE
+	INC = { owns = 2348 }
+	NOT = { exists = NAN }
+	NOT = { has_global_flag = assemble_Knights } 
+	} 
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	months = 10
+	modifier = { 
+	factor = 0.01 
+	year = 1844
+		}
+	}
+	
+	option = { 
+	name = "AND61.A" 
+	prestige = -2
+	set_global_flag = assemble_Knights 
+	} 
+	
+}
+
+country_event = {
+	id = 66961 #The Grande Rivière conference
+	title = "AND62.T"
+	desc = "AND62.D"
+	
+	trigger = { 
+	tag = LOT 
+	has_global_flag = assemble_Knights 
+	NOT = { war_with = INC } 
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "AND62.A"
+	any_country = {
+	   limit = {
+	       tag = SPA
+		   NOT = { truce_with = INC }
+		}
+        country_event = { id = 66963 days = 1 }
+    }
+	any_country = {
+	   limit = {
+	       tag = SCA
+		   NOT = { truce_with = INC }
+		}
+        country_event = { id = 66964 days = 1 }
+    }
+	any_country = {
+	   limit = {
+	      #owns = 2774
+		   OR = {
+		      tag = ATL
+			  tag = AMA
+		   }
+		   NOT = { truce_with = INC }
+		}
+        country_event = { id = 66962 days = 1 }
+    }
+	any_country = {
+	   limit = {
+	      #owns = 2779
+		   OR = {
+		      tag = QUI
+			  tag = GRA
+		   }
+		   is_vassal = no
+		   NOT = { truce_with = INC }
+		}
+        country_event = { id = 66965 days = 1 }
+    }
+	INC = { country_event = 66966 } #warning event
+	country_event = { id = 66967 days = 15 }  #actual Conference
+	}
+}
+	
+
+country_event = {
+	id = 66962 #The Grande Rivière invitation -AMA or ATL
+	title = "AND63.T"
+	desc = "AND63.D"
+		
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND63.A"
+	add_country_modifier = { name = small_country_draft duration = 100 }	
+    relation = { who = FROM value = 50 }
+	set_country_flag = Join_ANDWAR
+	ai_chance = { factor = 100 } 
+	}
+	
+	option = { 
+	name = "AND63.B"
+	ai_chance = { factor = 0 } 
+	} 
+}
+
+country_event = {
+	id = 66963 #The Grande Rivière invitation -SPA
+	title = "AND64.T"
+	desc = "AND64.D"
+			
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND64.A"	
+    relation = { who = FROM value = 50 }
+	set_country_flag = Join_ANDWAR
+	ai_chance = { factor = 100 } 
+	}
+	
+	option = { 
+	name = "AND64.B"
+	ai_chance = { factor = 0 } 
+	} 
+}
+
+country_event = {
+	id = 66964 #The Grande Rivière invitation -SCA
+	title = "AND65.T"
+	desc = "AND65.D"
+			
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND65.A"	
+    relation = { who = FROM value = 50 }
+	set_country_flag = Join_ANDWAR
+	ai_chance = { factor = 100 } 
+	}
+	
+	option = { 
+	name = "AND65.B"
+	ai_chance = { factor = 0 } 
+	} 
+}
+
+country_event = {
+	id = 66965 #The Grande Rivière invitation -QUI or GRA
+	title = "AND66.T"
+	desc = "AND66.D"
+			
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND66.A"
+	add_country_modifier = { name = small_country_draft duration = 100 }	
+	relation = { who = FROM value = 50 }
+	set_country_flag = Join_ANDWAR
+	ai_chance = { factor = 100 } 
+	}
+	
+	option = { 
+	name = "AND66.B"
+	ai_chance = { factor = 0 } 
+	} 
+}
+
+country_event = {
+	id = 66966 #Warning for Inca
+	title = "AND67.T"
+	desc = "AND67.D"
+			
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND63.A"
+	}
+}
+
+country_event = {
+	id = 66967 #The Grande Rivière conference
+	title = "AND68.T"
+	desc = "AND68.D"
+			
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND68.A"
+    NAN = { all_core = { add_core = THIS } } 
+	2299 = { add_core = QUI } 
+	2301 = { add_core = QUI } 
+	2321 = { add_core = QUI } 
+	2549 = { add_core = QUI } 
+	any_country = {
+	   limit = {
+	       has_country_flag = Join_ANDWAR
+		}
+        create_alliance = LOT relation = { who = LOT value = 400 }
+    }
+	INC = { country_event = 66968 } 
+	}
+}
+
+# "A continent destroyed..."
+
+country_event = {
+	id = 66968 #Beginning of the Great Amerigan War
+	title = "AND69.T"
+	desc = "AND69.D"
+	
+	is_triggered_only = yes 
+	major = yes
+	
+	option = { 
+	name = "AND69.A" 
+	QUI = { all_core = { add_core = THIS } }
+	add_country_modifier = { name = taiping_draft duration = 365 }
+	set_global_flag = Amerigan_GW
+	war = { 
+		target = FROM
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+		defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	}
+}
+
+country_event = { #sack of Cuzco
+	id = 66969
+	title = "AND70.T"
+	desc = "AND70.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA13355"
+		prestige = -25
+		war_exhaustion = 50
+		2302 = {
+			any_pop = {
+				reduce_pop = 0.8
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
+country_event = { #sack of Fort Lothère
+	id = 66970
+	title = "AND71.T"
+	desc = "AND71.D"
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "AND71.A"
+		prestige = -25
+		war_exhaustion = 50
+		2302 = {
+			any_pop = {
+				reduce_pop = 0.85
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
+# Everything below this line is a clusterfuck. I got your war working but this bit below will need a extencive rewrite.
+
+country_event = { #Victory of the Alliance
+	id = 66971
+	title = "AND72.T"
+	desc = "AND72.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = Washkar_WILDRIDE
+	has_global_flag = assemble_Knights 
+	has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND72.A" 
+	prestige_factor = -0.9
+	clr_global_flag = Amerigan_GW
+	clr_global_flag = Washkar_WILDRIDE
+	#Give Amazonie to Amazonie early so they may take Antisuyu if QUI has lost 
+	SA_2403 = { secede_province = AMA }
+	SA_2 = { secede_province = AMA }
+	SA_3 = { secede_province = AMA } 
+	SA_5 = { secede_province = LOT } 
+	any_owned = { limit = { is_core = LOT } secede_province = LOT }
+	random_owned = {
+		limit = { owner = { has_country_flag = landed_Ameriga_SPA } }
+		 owner = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA } }
+	}
+	random_owned = {
+		limit = { owner = { has_country_flag = landed_Ameriga_SCA } }
+		 owner = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA } }
+	}
+    any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA }
+	#Quito exists
+	any_owned = { limit = { is_core = QUI } secede_province = QUI }
+	any_country = {
+	   limit = {
+	      tag = QUI
+		  exists = yes
+		  NOT = { is_vassal = yes }
+	   }
+	   inherit = THIS
+	}
+	}
+}
+
+country_event = { #White Peace
+	id = 66972
+	title = "AND73.T"
+	desc = "AND73.D"
+	
+	trigger = { 
+	tag = INC 
+	has_global_flag = Washkar_WILDRIDE
+	has_global_flag = Amerigan_GW 
+	war = no 
+	NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND73.A" 
+	clr_global_flag = Amerigan_GW
+	clr_global_flag = Washkar_WILDRIDE
+	any_owned = { remove_core = LOT } 
+	prestige = 10 
+	}
+}
+
+country_event = { #WASHKAR HAS DONE IT
+	id = 66973
+	title = "AND74.T"
+	desc = "AND74.D"
+	
+	trigger = { 
+	tag = LOT 
+	has_global_flag = Washkar_WILDRIDE
+	has_global_flag = Amerigan_GW 
+	war = no 
+	OR = { has_country_flag = custom_treaty_loser has_global_flag = sacked_Lothere }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND74.A" 
+	clr_global_flag = Amerigan_GW
+	clr_global_flag = Washkar_WILDRIDE
+	clr_global_flag = WAR_INC_LOT
+	set_global_flag = END_LOT 
+	any_owned = { 
+	limit = { OR = { 
+				is_core = AVA 
+				region = LOT_6 
+				} 
+			}  
+		secede_province = INC
+		add_core = INC
+		remove_core = LOT
+	}
+	NAN = { all_core = { remove_core = LOT } }
+	any_owned = { 
+	limit = { is_core = NAL } remove_core = LOT secede_province = NAL 
+	}
+	any_owned = { 
+	limit = { is_core = ATL } remove_core = LOT secede_province = ATL 
+	}
+	any_owned = { 
+	limit = { is_core = ODO } remove_core = LOT secede_province = ODO 
+	}
+	prestige = -50 
+	AMA = { country_event = 66974 } 
+	}
+}
+
+country_event = { #AMA shouldn't have done that
+	id = 66974
+	title = "AND75.T"
+	desc = "AND75.D"
+	
+	is_triggered_only = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "AND75.A" 
+	change_tag = ANT
+	any_owned = { 
+	limit = { is_core = EQN } secede_province = EQN remove_core = ANT
+	}
+	any_owned = { 
+	limit = { is_core = GOU } remove_core = ANT secede_province = GOU 
+	}
+	any_owned = { 
+	limit = { is_core = ATL } remove_core = ANT secede_province = ATL
+	}
+	prestige = -50 
+	INC = { country_event = 66975 } 
+	}
+}
+
+country_event = {
+	id = 66975 #Inca win - Fractured Ameriga
+	title = "AND76.T"
+	desc = "AND76.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "AND76.A"
+	prestige = 50
+	SA_2403 = { secede_province = THIS }
+	SA_2 = { secede_province = THIS }
+	SA_3 = { secede_province = THIS } 
+	SA_5 = { secede_province = THIS } 
+	any_owned = { 
+	limit = { is_core = AVA }
+	add_province_modifier = { name = population_resettlement duration = 15000 }
+		}
+	any_owned = { 
+	limit = { is_core = ODO }
+	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+	add_province_modifier = { name = population_resettlement duration = 15000 }
+		}
+	any_pop = { 
+	limit = { has_pop_culture = lotharian } 
+	militancy = 4 
+		}
+	create_vassal = LOT 
+	create_vassal = ODO
+	create_vassal = NAL
+	create_vassal = EQN
+	}
+}
+
+country_event = { 
+	id = 66976 #Inca conquest of Caladero : purge time
+	title = "AND77.T"
+	desc = "AND77.D"
+	
+	trigger = { 
+	tag = INC 
+	QUI = { exists = no } 
+	owns = 2276 
+	owns = 2295
+	NOT = { has_country_flag = purge_QUI } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "AND77.A" 
+	set_country_flag = purge_QUI
+	2292 = { add_province_modifier = { name = italian_emigration  duration = 3500 } }
+	2291 = { add_province_modifier = { name = italian_emigration  duration = 3500 } }
+	2290 = { add_province_modifier = { name = italian_emigration  duration = 3500 } }
+	2298 = { add_province_modifier = { name = italian_emigration  duration = 3500 } }
+	any_pop = { 
+	limit = { culture = chimu OR = { type = soldiers type = aristocrats } }
+	reduce_pop = 0.5 
+		}
+	any_pop = { 
+	limit = { culture = caladeran OR = { pop_majority_ideology = liberal type = soldiers } }
+	reduce_pop = 0.6
+		}
+	}
+
+}
+
+province_event = { 
+	id = 669760 #Potosi stripped 
+	title = "AND770.T"
+	desc = "AND770.D"
+	
+	trigger = { 
+	province_id = 2314
+	trade_goods = precious_metal
+	has_global_flag = mechanizing_potosi_dec
+	NOT = { has_province_modifier = potosi_silver_mine } 
+	}
+	
+	option = { 
+	name = "AND77.A" 
+	trade_goods = iron
+	}
+}
+
+#Llapa events 
+
+country_event = { 
+	id = 66977 #The new writing system
+	title = "AND78.T"
+	desc = "AND78.D"
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = Llapa_INC
+	year = 1850 
+	NOT = { has_country_flag = new_writing_system }
+	}
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "AND78.A" 
+	set_country_flag = new_writing_system
+	any_pop = {
+			literacy = 0.05
+	}
+	add_country_modifier = {
+			name = transcribing_quipus
+			duration = 3650
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66978 #The Second Industrialization Plan
+	title = "AND79.T"
+	desc = "AND79.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1860 
+	has_country_flag = Llapa_INC
+	has_country_flag = industrialization_chile_INC
+	NOT = { has_country_flag = inca_planning }
+	}
+	
+	mean_time_to_happen = { 
+	months = 60
+	modifier = { 
+	factor = 0.01 
+	year = 1870 
+		}
+	}
+	
+	option = { 
+	name = "AND79.A" 
+	set_country_flag = inca_planning
+	add_country_modifier = {
+		name = ruhr_boom
+		duration = 3650
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66979 #Emperor of the Socialists
+	title = "AND80.T"
+	desc = "AND80.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1860 
+	has_country_flag = Llapa_INC
+	is_ideology_enabled = socialist
+	NOT = { has_country_flag = paternalism_INC }
+	}
+	
+	mean_time_to_happen = { 
+	months = 60
+	modifier = { 
+	factor = 0.01 
+	year = 1870 
+		}
+	}
+	
+	option = { 
+	name = "AND80.A" 
+	set_country_flag = paternalism_INC
+	random_owned = {
+		limit = { owner = { 
+			tag = INC 
+			child_labor = child_labor_legal 
+			} 
+		}
+		owner = { social_reform = child_labor_restricted }
+		}
+	random_owned = {
+		limit = { owner = { 
+			tag = INC 
+			child_labor = child_labor_restricted 
+			} 
+		}
+		owner = { social_reform = child_labor_illegal }
+		}
+	random_owned = {
+		limit = { owner = { 
+			tag = INC 
+			OR = { health_care = no_health_care health_care = trinket_health_care }
+			} 
+		}
+		owner = { social_reform = low_health_care }
+		}
+	random_owned = {
+		limit = { owner = { 
+			tag = INC 
+			health_care = low_health_care
+			} 
+		}
+		owner = { social_reform = acceptable_health_care }
+		}
+	random_owned = {
+		limit = { owner = { 
+			tag = INC 
+			pensions = no_pensions 
+			} 
+		}
+		owner = { social_reform = trinket_pensions }
+		}
+	add_country_modifier = { 
+		name = lover_and_benefactor_of_the_poor 
+		duration = -1 
+		}
+	}
+
+}
+
+country_event = { 
+	id = 66980 #Federalization 
+	title = "AND81.T"
+	desc = "AND81.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1860 
+	has_country_flag = Llapa_INC
+	NOT = { has_country_flag = federalism_INC }
+	}
+	
+	mean_time_to_happen = { 
+	months = 90
+	modifier = { 
+	factor = 0.01 
+	year = 1874 
+		}
+	}
+	
+	option = { 
+	name = "AND81.A"
+	set_country_flag = federalism_INC 
+	political_reform = federalism
+	any_pop = { 
+	consciousness = -1 
+		}
+	}
+}
+
+country_event = { 
+	id = 66981 #Llapa's choosing an Heir 
+	title = "AND82.T"
+	desc = "AND82.D"
+	
+	trigger = { 
+	tag = INC 
+	year = 1865 
+	has_country_flag = Llapa_INC
+	NOT = { has_country_flag = heir_Llapa }
+	}
+	
+	mean_time_to_happen = { 
+	months = 12 
+	}
+	
+	option = { 
+	name = "AND82.A"# "Hurhi" Sunquyuq Inca -Huhri is George Quechuazied
+	set_country_flag = heir_Llapa 
+	set_country_flag = heir_Beornia
+	}
+	
+	option = { 
+	name = "AND82.B" #Llipya Sinchiyachiq Inca
+	set_country_flag = heir_Llapa 
+	set_country_flag = heir_Chinchaysuyu
+	}
+	
+	option = { 
+	name = "AND82.C" #Sinchi Churan Inka
+	set_country_flag = heir_Llapa 
+	set_country_flag = heir_Collasuyu
+	}
+} 
+
+country_event = { 
+	id = 66982 #Good heir is around, time for travelling !
+	title = "AND83.T"
+	desc = "AND83.D"
+	
+	trigger = { 
+	tag = INC 
+	war = no 
+	has_country_flag = heir_Llapa
+	NOT = { has_country_flag = travels } 
+	}
+	
+	option = { 
+	name = "AND83.A" 
+	set_country_flag = travels 
+	country_event = { id = 66983 days = 30 } #general Europe travel
+	random_owned = {
+		limit = { province_id = 390 owner = { tag = BRG OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } } }
+		owner = { country_event = { id = 66984 days = 25 } } #Jeannist Burgundy is around
+		}
+	}
+}
+
+country_event = { 
+	id = 66983 #General Europe travel
+	title = "AND84.T"
+	desc = "AND84.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND84.A" 
+	any_country = { limit = { capital_scope = { continent = europe } } relation = { who = THIS value = 25 } }
+	any_country = { limit = { capital_scope = { continent = europe } OR = { government = absolute_monarchy government = prussian_constitutionalism } } relation = { who = THIS value = 25 } }
+	country_event = { id = 66989 days = 60 } #travel back to the Pacific and Qingqiu
+	# I refuse to fix this. You should know better - DeNuke
+	#random_owned = {
+	#	limit = { province_id = 1657 owner = { tag = JAP government = absolute_monarchy } }
+	#	owner = { country_event = { id = 66986 days = 45 } } #HELLISH JAPAN IS AROUND
+	#	}
+	#random_owned = {
+	#	limit = { province_id = 1657 owner = { tag = JAP OR = { government = prussian_constitutionalism government = hms_government } }
+	#	owner = { country_event = { id = 66987 days = 45 } } #Normal Japan is around
+	#		}
+	#	}
+	}
+}
+
+country_event = { 
+	id = 66984 #Llapa meets Jean
+	title = "AND85.T"
+	desc = "AND85.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND85.A" 
+	relation = { who = BRG value = 100 }
+	BRG = { country_event = 66985 } 
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66985 #Jean meets Llapa
+	title = "AND86.T"
+	desc = "AND86.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND86.A" 
+	relation = { who = INC value = 100 }
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66986 #Llapa is a weeb -Kyowa and other bad ending : he LOVES IT
+	title = "AND87.T"
+	desc = "AND87.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND87.A" 
+	relation = { who = JAP value = 100 }
+	JAP = { country_event = 66988 } 
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66987 #Llapa is a weeb -normal Japan : could be better
+	title = "AND88.T"
+	desc = "AND88.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND88.A" 
+	relation = { who = JAP value = 50 }
+	JAP = { country_event = 66988 } 
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66988 #Japan is graced by Llapa
+	title = "AND89.T"
+	desc = "AND89.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND89.A" 
+	relation = { who = JAP value = 50 }
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66989 #Pacific tour in Qingqiu 
+	title = "AND90.T"
+	desc = "AND90.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND90.A" 
+	relation = { who = DNG value = 75 }
+	country_event = { id = 66990 days = 5 }
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 66990 #WORLD TOUR ENDS
+	title = "AND91.T"
+	desc = "AND91.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND91.A" 
+	any_pop = { 
+		scaled_militancy = {
+		ideology = reactionary
+		factor = -5 
+		}
+		scaled_militancy = {
+		ideology = conservative
+		factor = -2 
+		}
+	}
+	prestige = 2 
+	}
+}
+
+country_event = { 
+	id = 66991 #Lastahallpa -Snowland = Antarctica
+	title = "AND92.T"
+	desc = "AND92.D"
+	
+	trigger = { 
+	tag = INC 
+	owns = 2400 
+	has_global_flag = SouthPoleDiscovered 
+	steel_steamers = 1 
+	NOT = { has_country_flag = Lastahallpa }
+	}
+	
+	option = { 
+	name = "AND92.A" 
+	prestige = 10 
+	set_country_flag = Lastahallpa
+	}
+}
+	
+	
+#67000
+country_event = { 
+	id = 66992 #AI-only : occupy Beornia
+	title = "AND93.T"
+	desc = "AND93.D"
+	
+	trigger = { 
+	tag = NAN 
+	war_with = INC 
+	NOT = { has_global_flag = NAN_OVER } 
+	AND = { ai = yes INC = { ai = yes } } 
+	national_provinces_occupied = 0.25
+	INC = { NOT = { national_provinces_occupied = 0.1 } }
+	year = 1843 
+	}
+	
+	fire_only_once = yes
+	
+	option = { 
+	name = "AND92.A" 
+	prestige = 10 
+	any_owned = { 
+	change_controller = INC
+		}
+	}
+}
+
+country_event = { 
+	id = 66993
+	title = "AND94.T" #Llapa died but INC is not master of the continent
+	desc = "AND94.D" 
+	
+	trigger = { 
+	tag = INC 
+	year = 1900 
+	government = absolute_monarchy
+	has_country_flag = Llapa_INC
+	NOT = { has_country_flag = death_Llapa } 
+	NOT = { is_greater_power = yes owns = 2254 owns = 2400 }
+	}
+	
+	mean_time_to_happen = { 
+	months = 60 
+	modifier = { 
+	factor = 0.01 
+	year = 1904 
+		}
+	}
+	
+	option = { 
+	name = "AND94.A" 
+	prestige = 1
+	set_country_flag = death_Llapa
+	any_pop = { consciousness = 1 } 
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Beornia } }
+	owner = { country_event = 66995 }
+		}
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Chinchaysuyu } }
+	owner = { country_event = 66996 }
+		}
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Collasuyu } }
+	owner = { country_event = 66997 }
+		}
+	}
+}
+
+country_event = { 
+	id = 66994
+	title = "AND95.T" #Llapa died with INC dominating the continent
+	desc = "AND95.D" 
+	
+	trigger = { 
+	tag = INC 
+	year = 1900 
+	has_country_flag = Llapa_INC
+	government = absolute_monarchy
+	NOT = { has_country_flag = death_Llapa } 
+	NOT = { is_greater_power = yes owns = 2254 owns = 2400 }
+	}
+	
+	mean_time_to_happen = { 
+	months = 60 
+	modifier = { 
+	factor = 0.01 
+	year = 1904 
+		}
+	}
+	
+	option = { 
+	name = "AND94.A" 
+	prestige = 5
+	set_country_flag = death_Llapa
+	any_pop = { consciousness = 1 } 
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Beornia } }
+	owner = { country_event = 66995 }
+		}
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Chinchaysuyu } }
+	owner = { country_event = 66996 }
+		}
+	random_owned = { 
+	limit = { owner = { has_country_flag = heir_Collasuyu } }
+	owner = { country_event = 66997 }
+		}
+	}
+}
+
+country_event = { 
+	id = 66995
+	title = "AND95.T" #Coronation of Sunquyuq Inca
+	desc = "AND95.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND95.A"
+	any_pop = { 
+	militancy = -1 
+		}
+	}
+}
+	
+country_event = { 
+	id = 66996
+	title = "AND95.T" #Coronation of Llipya Sinchiyachiq Inca
+	desc = "AND95.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND95.A"
+	any_pop = { 
+	militancy = -1 
+		}
+	}
+}
+
+country_event = { 
+	id = 66997
+	title = "AND95.T" #Coronation of Lasta Churan Inka
+	desc = "AND95.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND95.A"
+	any_pop = { 
+	militancy = -1 
+		}
+	}
+}

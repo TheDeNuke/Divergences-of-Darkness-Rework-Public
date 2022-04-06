@@ -268,12 +268,14 @@ country_event = {
 	option = { 
 	name = "203512.A"
 	any_pop = {
-			literacy = 0.1
-		}
+		literacy = 0.1
+	}
 	economic_reform = yes_education_reform
 	activate_technology = malthusian_thought
 	economic_reform = madrasahs
 	activate_technology = late_enlightenment_philosophy 
+	economic_reform = universities
+	activate_technology = idealism
 	set_country_flag = crimean_standardized
 	}
 }
@@ -302,8 +304,6 @@ country_event = {
 	activate_technology = post_napoleonic_thought
 	military_reform = yes_foreign_officers
 	activate_technology = army_command_principle
-	military_reform = yes_army_schools
-	activate_technology = bronze_muzzle_loaded_artillery
 	any_pop = { 
 		limit = { type = soldiers }
 		militancy = 2 
@@ -2286,3 +2286,355 @@ country_event = {
 	}
 }
 
+################ The Tatar Problem - Triggered by decision by either MOS after the pacifist modifier expires or NOV that owns Moscow - NOV/MOS must win to form RUS ##############################
+
+#### Unciv Tatarstan is threatened by Muscovy Unification and is given another three years worth of Research Points ####
+
+country_event = { 
+	id = 203557
+	title = "TAR57.T"
+	desc = "TAR57.D"
+	picture = "angry_cossack"	
+	
+	trigger = { 
+	   tag = TAR
+	   civilized = no
+	   exists = MOS
+	   NOT = { has_country_flag = tatar_warning }
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name  = "TAR57.A"
+	set_country_flag = tatar_warning
+	prestige = -1
+	years_of_research = 3
+	}
+}
+
+#### The Tatar Threat - North Russian State/Muscovy is effectively told that so long as the Tatars are relevent then Russia shall never be a Great Power. Thus the Tatar Empire must end. ####
+
+country_event = { 
+	id = 203558
+	title = "TAR58.T"
+	desc = "TAR58.D"
+	picture = "Tatar_imam"	
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name  = "TAR58.A"
+	    any_pop = {
+		    militancy = -5
+	    }
+		set_country_flag = tatar_killing_attempt
+	    set_global_flag = GREAT_TATAR_WAR
+   	    war = {
+			target = TAR
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}     
+	}
+}
+
+### Tatarstan is given a warning event ###
+
+country_event = { 
+	id = 203559
+	title = "TAR59.T"
+	desc = "TAR59.D"
+	picture = "Tatar_imam"	
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "TAR59.A"
+ 	    any_pop = {
+		    militancy = -9
+	    } 
+	    add_country_modifier = { 
+	       name = CLM_fight
+	       duration = 720
+	    }
+	}
+}
+
+### Tatarstan forces the Russian Tag into a whitepeace. I guess you are going to have to form Russia and deal with them later. ###
+
+country_event = { 
+	id = 203560
+	title = "TAR60.T"
+	desc = "TAR60.D"
+	picture = "Tatar_imam"	
+	
+	trigger = { 
+	   has_country_flag = tatar_killing_attempt
+	   war = no
+	   has_global_flag = GREAT_TATAR_WAR
+	   NOT = { has_country_flag = custom_treaty_loser }
+	   TAR = { NOT = { has_country_flag = custom_treaty_loser } }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "TAR60.A"
+	   clr_global_flag = GREAT_TATAR_WAR
+	   clr_country_flag = tatar_killing_attempt
+       prestige_factor = -0.25
+	   set_country_flag = TAR_attempt_failed
+	}
+}
+
+### Russian Tag defeats Tatarstan and Tatarstan implodes into a bunch of Military Warlords after the Khan is killed ###
+
+country_event = { 
+	id = 203561
+	title = "TAR61.T"
+	desc = "TAR61.D"
+	picture = "Tatar_imam"	
+	
+	trigger = { 
+	   tag = TAR
+	   war = no
+	   has_global_flag = GREAT_TATAR_WAR
+	   has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	
+	option = { 
+	name = "TAR61.A"
+	   prestige_factor = -0.5
+	   remove_country_modifier = CLM_fight
+	   clr_global_flag = GREAT_TATAR_WAR
+	   clr_country_flag = custom_treaty_loser    
+       all_core = { remove_core = TAR }	   
+	   any_owned = {
+		   limit = {
+		        is_core = BAH
+		   }
+		   secede_province = BAH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = KAZ
+		   }
+		   secede_province = KAZ
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = ASK
+		   }
+		   secede_province = ASK
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = SIB
+		   }
+		   secede_province = SIB
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = DON
+		   }
+		   secede_province = DON
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = AKH
+		   }
+		   secede_province = AKH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = VOR
+		   }
+		   secede_province = VOR
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = ZAZ
+		   }
+		   secede_province = ZAZ
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = KHK
+		   }
+		   secede_province = KHK
+	   }
+	   government = presidential_dictatorship
+	   KAZ = { government = presidential_dictatorship }
+	   ASK = { government = presidential_dictatorship }
+	   BAH = { government = presidential_dictatorship }	   
+       change_tag = CRI  	   
+	}
+}
+
+### Tatarstan defeats Southern Russian Tag and the funny occurs ###
+
+country_event = { 
+	id = 203562
+	title = "TAR62.T"
+	desc = "TAR62.D"
+	picture = "Tatar_imam"	
+	
+	trigger = {    
+	   has_country_flag = tatar_killing_attempt
+	   primary_culture = russian
+	   war = no
+	   has_global_flag = GREAT_TATAR_WAR
+	   has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "TAR62.A"
+	   prestige_factor = -0.5
+	   clr_global_flag = GREAT_TATAR_WAR
+	   clr_country_flag = custom_treaty_loser
+	   clr_country_flag = tatar_killing_attempt
+	   set_country_flag = TAR_attempt_failed
+	   set_global_flag = MOS_shattered
+	   prestige_factor = -0.9
+       # Become Moscow again
+       change_tag = MUS	
+	   capital = 1008
+       # Add warlord cores back. Also add MOS cores just to be sure.
+       1020 = { add_core = MUS add_core = TVE add_core = NZH remove_core = MOS }
+       1011 = { remove_core = MUS remove_core = MOS }
+	   RUS_1008 = { add_core = MUS remove_core = MOS }
+	   RUS_1020 = { remove_core = MUS remove_core = MOS add_core = RYA  }	
+	   RUS_998 = { remove_core = MUS remove_core = MOS add_core = TVE }
+	   RUS_1015 = { remove_core = MUS remove_core = MOS add_core = SMO }  
+	   any_owned = {
+		   limit = {
+		        is_core = NZH
+		   }
+		   secede_province = NZH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = TVE
+		   }
+		   secede_province = TVE
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = SMO
+		   }
+		   secede_province = SMO
+	   }
+	}
+}
+
+### Tatarstan somehow defeats Northern Russian Tag. Treat this as Novogrod and then go into isolation. ###
+
+country_event = { 
+	id = 203563
+	title = "TAR63.T"
+	desc = "TAR63.D"
+	picture = "Tatar_imam"	
+	
+	trigger = {    
+	   has_country_flag = tatar_killing_attempt
+	   primary_culture = north_russian
+	   war = no
+	   has_global_flag = GREAT_TATAR_WAR
+	   has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "TAR63.A"
+	   prestige_factor = -0.5
+	   set_global_flag = isolat_NOV
+	   clr_global_flag = panrussian_NOV
+	   clr_global_flag = GREAT_TATAR_WAR
+	   clr_country_flag = custom_treaty_loser
+	   clr_country_flag = tatar_killing_attempt
+	   set_country_flag = TAR_attempt_failed
+	   # Add Moscow Shattered Flag if it does not already exist
+	   set_global_flag = MOS_shattered
+	   prestige_factor = -0.5
+       # Add warlord cores back. Also add MOS cores just to be sure.
+       1020 = { add_core = MUS add_core = TVE add_core = NZH remove_core = MOS }
+       1011 = { remove_core = MUS remove_core = MOS }
+	   RUS_1008 = { add_core = MUS remove_core = MOS }
+	   RUS_1020 = { remove_core = MUS remove_core = MOS add_core = RYA  }	
+	   RUS_998 = { remove_core = MUS remove_core = MOS add_core = TVE }
+	   RUS_1015 = { remove_core = MUS remove_core = MOS add_core = SMO } 
+	   any_owned = {
+		   limit = {
+		        is_core = MUS
+		   }
+		   secede_province = MUS
+	   }	   
+	   any_owned = {
+		   limit = {
+		        is_core = NZH
+		   }
+		   secede_province = NZH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = TVE
+		   }
+		   secede_province = TVE
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = RYA
+		   }
+		   secede_province = RYA
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = SMO
+		   }
+		   secede_province = SMO
+	   }
+	}
+}

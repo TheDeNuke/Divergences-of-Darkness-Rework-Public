@@ -538,6 +538,8 @@ political_decisions = {
 	
 	GOU_puppet = { 
 		
+		picture = gouas	
+		
 		potential = { 
 		tag = ATL 
 		GOU = { exists = yes war = no } 
@@ -556,6 +558,8 @@ political_decisions = {
 	} 
 	
 	integrate_GOU = { 
+	
+		picture = gouas	
 		
 		potential = { 
 		tag = ATL 
@@ -844,11 +848,8 @@ political_decisions = {
 	picture = acceptation_afro 
 		potential = {
 			OR = {
-				tag = AMA
 				tag = PLA
 				tag = NBG
-				tag = LOT	
-				tag = AZL 
 				tag = ARC	
 			}
 			NOT = { has_country_flag = slave_citizens }
@@ -915,6 +916,83 @@ political_decisions = {
 			any_pop = {
 			    limit = {
 			       culture = afro_frankish
+				  }
+          consciousness = 2
+			}
+		}
+	}
+	afro_amerigan_slave_citizens = {
+	picture = acceptation_afro 
+		potential = {
+			OR = {
+				tag = AMA
+				tag = LOT	
+				tag = AZL 	
+			}
+			NOT = { has_country_flag = slave_citizens }
+		}
+		allow = {
+			NOT = { war = yes }
+			slavery = no_slavery 
+			NOT = { average_militancy = 3 }
+			OR = {
+				upper_house = {
+					ideology = socialist
+					value = 0.4
+				}
+				upper_house = {
+					ideology = liberal
+					value = 0.4
+				}
+				upper_house = {
+					ideology = anarcho_liberal
+					value = 0.4
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+			}	
+		}
+		effect = {
+			add_accepted_culture = afro_amerigan
+			set_country_flag = slave_citizens
+			prestige = -15
+			any_pop = {
+			    limit = {
+			      NOT = { culture = afro_amerigan }
+			    }
+				  militancy = 2
+			}
+			any_pop = {
+			    limit = {
+			       culture = afro_amerigan
 				  }
           consciousness = 2
 			}
@@ -1419,10 +1497,18 @@ political_decisions = {
 		ai_will_do = { factor = 1 }
 	}
 	
+	
 	AMA_become_ANT = { 
+	
 		potential = { 
 		tag = EQN
-		NOT = { has_global_flag = CW_waiting }
+		NOT = {
+           OR = {
+		      has_global_flag = CW_waiting 
+		      has_global_flag = AMA_CW
+			  has_country_flag = EQN_AMA_FORMED
+		   }
+		}
 		AMA = { exists = yes }
 		}
 		
@@ -1432,6 +1518,7 @@ political_decisions = {
 		}
 		
 		effect = { 
+		set_country_flag = EQN_AMA_FORMED
 		EQN = { all_core = { remove_core = AMA } }
 		AMA = { country_event = 98426 }
 		}
@@ -1458,6 +1545,8 @@ political_decisions = {
 	} 
 	
 	NAL_puppet = { 
+	
+		picture = rooster_atlantia
 		
 		potential = { 
 		tag = ATL 
@@ -1479,6 +1568,8 @@ political_decisions = {
 	} 
 	
 	integrate_NAL = { 
+	
+		picture = rooster_atlantia
 		
 		potential = { 
 		tag = ATL 
@@ -1497,6 +1588,8 @@ political_decisions = {
 	} 
 	
 	ODO_grand_duchy_NAN = { 
+	
+		picture = Odonie
 	
 		potential = { 
         OR = {		
@@ -1521,6 +1614,8 @@ political_decisions = {
 	}
 	
 	integrate_ODO = { 
+	
+		picture = Odonie
 		
 		potential = {
         OR = {		
@@ -1543,7 +1638,8 @@ political_decisions = {
 	}
 	
 	prospect_Atlantia = { 
-	
+		
+		picture = mining_Ameriga
 	
 		potential = {
 		OR = { 
@@ -1576,7 +1672,8 @@ political_decisions = {
 	
 	LOT_coal = { 
 	
-	
+		picture = mining_Ameriga
+		
 		potential = {
 		OR = { 
 			tag = AZL 
@@ -1605,7 +1702,7 @@ political_decisions = {
 	}
 	
 	atlantian_ruhr = { 
-	
+		
 		potential = { 
 		OR = { 
 		has_country_flag = coal_LOT has_country_flag = mining_ATL
@@ -1628,6 +1725,7 @@ political_decisions = {
 	}
 
 	Burning_New_Amsterdam = { 
+	
 		potential = { 
 		owns = 2447  
 		OR = { 
@@ -1697,6 +1795,7 @@ political_decisions = {
 	}
 	
 	peaceful_unification_AMA = { 
+	picture = rooster_atlantia
 	potential = { 
 	tag = ATL 
 	AMA = { exists = yes } 
@@ -1735,6 +1834,8 @@ political_decisions = {
 	}
 	
 	peaceful_unification_LOT = { 
+	picture = rooster_atlantia
+	
 	potential = { 
 	tag = ATL 
 	LOT = { exists = yes } 
@@ -1794,7 +1895,125 @@ political_decisions = {
 	
 	}
 	
+	INC_rename_frontier = {
+		picture = "gtfo"
+		potential = {
+			OR = { tag = INC tag = ARE } 
+			OR = {
+				AND = { owns = 2376 NOT = { has_global_flag = INC_rename_Wessex } }
+				AND = { owns = 2390 NOT = { has_global_flag = INC_rename_Godwinson } }
+				AND = { owns = 2377 NOT = { has_global_flag = INC_rename_Northumbria } }
+			}
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 2376 }
+				2376 = { 
+					change_province_name = "Liwitaka"
+					state_scope = { change_region_name = "Chinchakuyun"  }
+				}
+				2378 = { change_province_name = "Mayu Sumaj" }
+				2379 = { change_province_name = "Sampacha" }
+				2380 = { change_province_name = "Cachicoya" }
+				2381 = { change_province_name = "Awanqay" }
+				2386  = { change_province_name = "Shancash" }
+				owner = { set_global_flag = INC_rename_Wessex }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2390 }
+				2390 = { 
+					change_province_name = "Tupuncato "
+					state_scope = { change_region_name = "Qullakuyun"  }
+				}
+				2383 = { change_province_name = "Tilisarao" }
+				2382 = { change_province_name = "Vayumanka" }
+				2384 = { change_province_name = "Huanacache" }
+				owner = { set_global_flag = INC_rename_Godwinson }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2377 }
+				2377  = { 
+					change_province_name = "Tinti"
+					state_scope = { change_region_name = "Chaco"  }
+				}
+				2365 = { change_province_name = "Pumahuasi" }
+				2364 = { change_province_name = "Pukyu" }
+				
+				owner = { set_global_flag = INC_rename_Northumbria }
+			}
+			
+		}
+		ai_will_do = { 
+		factor = 1 
+		}
+	}
 	
+	NAN_rename_frontier = {
+		picture = "gtfo"
+		potential = {
+			OR = { tag = NAN tag = AZL tag = LOT } 
+			OR = {
+				AND = { owns = 2376 has_global_flag = INC_rename_Wessex }
+				AND = { owns = 2390 has_global_flag = INC_rename_Godwinson }
+				AND = { owns = 2377 has_global_flag = INC_rename_Northumbria }
+			}
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 2376 }
+				2376 = { 
+					change_province_name = "Hincaster"
+					state_scope = { change_region_name = "Wessex"  }
+				}
+				2378 = { change_province_name = "Mayu Sumaj" }
+				2379 = { change_province_name = "Furness" }
+				2380 = { change_province_name = "Sharrow" }
+				2381 = { change_province_name = "Hemingbrough" }
+				2386  = { change_province_name = "Ebberston" }
+				owner = { clr_global_flag = INC_rename_Wessex }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2390 }
+				2390 = { 
+					change_province_name = "Camblesforth "
+					state_scope = { change_region_name = "Godwinson"  }
+				}
+				2383 = { change_province_name = "Osmotherley" }
+				2382 = { change_province_name = "Kettlewell" }
+				2384 = { change_province_name = "Ryedale" }
+				owner = { clr_global_flag = INC_rename_Godwinson }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2377 }
+				2377  = { 
+					change_province_name = "Cartmel"
+					state_scope = { change_region_name = "Northumbia"  }
+				}
+				2365 = { change_province_name = "Penrith" }
+				2364 = { change_province_name = "Bewcastle" }
+				
+				owner = { clr_global_flag = INC_rename_Northumbria }
+			}
+			
+		}
+		ai_will_do = { 
+		factor = 1 
+		}
+	}
 }
 
 

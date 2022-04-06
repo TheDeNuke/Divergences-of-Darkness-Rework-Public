@@ -31,10 +31,10 @@ party_issues = {
 
 	economic_policy = {
 		laissez_faire = {
-			max_tax = 0.75
-			factory_owner_cost = 0.25
-			factory_output = 0.1
-			import_cost = -0.25
+            max_tax = 0.5
+            factory_owner_cost = 0.25
+            factory_output = 0.1
+            import_cost = -0.25
 			
 			rules = {
 				build_factory = no
@@ -57,10 +57,8 @@ party_issues = {
 			}
 		}
 		interventionism = {
-			max_tax = 0.75
-			min_tax = 0.25
-			factory_owner_cost = 0.5
-			import_cost = 0.25
+            factory_owner_cost = 0.5
+            import_cost = 0.25
 			
 			rules = {
 				build_factory = no
@@ -85,10 +83,9 @@ party_issues = {
 			}
 		}
 		state_capitalism = {
-			min_tax = 0.25
-			max_tax = 0.75
-			import_cost = 0.5
-			factory_owner_cost = 0.8
+            import_cost = 0.5
+            min_tax = 0.25
+            factory_owner_cost = 0.8
 			
 			rules = {
 				build_factory = yes
@@ -109,10 +106,11 @@ party_issues = {
 			}
 		}
 		planned_economy = {
-			min_tax = 0.50
-			import_cost = 0.75
-			factory_throughput = 0.05
-			factory_owner_cost = -1	#negative costs, can't build.
+            import_cost = 0.95
+            min_tax = 0.5
+            factory_throughput = 0.5
+            RGO_throughput = 0.5
+            factory_owner_cost = -1    #negative costs, can't build.
 			
 			rules = {
 				build_factory = yes
@@ -134,9 +132,12 @@ party_issues = {
 		}
 		agrarianism = {
 			min_tax = 0.75
-			global_pop_consciousness_modifier = -0.04
-			global_pop_militancy_modifier = -0.05
+			global_pop_consciousness_modifier = -0.02
+			global_pop_militancy_modifier = -0.03
+			factory_throughput = -0.75
+			RGO_throughput = 0.75
 			factory_owner_cost = -1	#negative costs, can't build.
+			
 			rules = {
 				build_factory = no
 				expand_factory = no
@@ -159,31 +160,32 @@ party_issues = {
 	
 	religious_policy = {
 		pro_atheism = {
-			global_pop_consciousness_modifier = 0.02
+			research_points_modifier = 0.05
 		}
 		secularized = {
-			global_pop_consciousness_modifier = 0.01
+		    #no effect
 		}
 		pluralism = {
-			#no effect
+			literacy_con_impact = -0.05
 		}
 		moralism = {
-			global_pop_consciousness_modifier = -0.01
+		    literacy_con_impact = -0.1	
+			research_points_modifier = -0.05
 		}
 	}
 	
 	citizenship_policy = {
 		residency = {
-			non_accepted_pop_consciousness_modifier = 0.02
+		    global_assimilation_rate = 0.1
+			non_accepted_pop_consciousness_modifier = 0.01
 			non_accepted_pop_militancy_modifier = 0.01
 		}
 		limited_citizenship = {
 			global_assimilation_rate = 0.05
 		}
 		full_citizenship = {
-			non_accepted_pop_consciousness_modifier = -0.02
-			non_accepted_pop_militancy_modifier = -0.01
-			global_assimilation_rate = 0.1
+			non_accepted_pop_consciousness_modifier = -0.01
+			non_accepted_pop_militancy_modifier = -0.01			
 		}
 	}
 	
@@ -268,7 +270,8 @@ political_reforms = {
 		freedom_of_womb = {
 			rules = { slavery_allowed = yes }
 			allow = {
-				NOT = { has_country_flag = communist_gov }
+			    NOT = { has_country_flag = PLA_institutionalized_slavery }
+				NOT = { has_country_flag = communist_gov }				
 				NOT = { has_country_flag = fascist_gov }
 				NOT = { has_country_flag = fascist_monarchy_gov }
 				NOT = { has_country_flag = slave_revolution }
@@ -280,6 +283,8 @@ political_reforms = {
 			rules = { slavery_allowed = no }
 			global_immigrant_attract = 0.01
 			allow = {
+			    NOT = { has_country_flag = PLA_institutionalized_slavery }
+				NOT = { has_country_flag = belgian_confederation_slavery }
 				NOT = { has_country_flag = government_busy_with_something }
 			}
 		}
@@ -881,6 +886,7 @@ political_reforms = {
 				is_cultural_union = yes
 				can_create_vassals = yes
 				is_vassal = no
+				NOT = { AND = { tag = SPA NOT = { has_global_flag = CST_ENDING } } }
 			}
 		}
 		unitary = {
@@ -893,6 +899,7 @@ political_reforms = {
 				NOT = { num_of_substates = 1 }
 				is_cultural_union = no
 				NOT = { AND = { tag = DUA NOT = { has_country_flag = DUA_schooling } } }
+				NOT = { AND = { tag = SPA NOT = { has_global_flag = CST_ENDING } } }
 			}
 		}
 	}

@@ -1,0 +1,4757 @@
+###################################### ARCADIAN GENERAL AND UNIFICATION EVENTS #######################################################
+
+### 79100
+
+### O beautiful for spacious skies,
+### For amber waves of grain,
+### For purple mountain majesties
+### Above the fruited plain!
+### Arcadia! Arcadia!
+### God shed His grace on thee
+### And crown thy good with brotherhood
+### From sea to shining sea!
+
+############################
+##### The Sioux Claims #####
+############################
+
+country_event = { 
+
+	id = 79100
+	title = "ARCGEN1.T"
+	desc = "ARCGEN1.D"
+	#picture = "war_ended"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = SCA
+	   NOT = { year = 1840 }
+	}
+	
+	mean_time_to_happen = { 
+	   months = 1
+	}
+	
+	option = { 
+	name = "ARCGEN1.A"
+	prestige = -1
+    PLA = { country_event = { id = 79101 days = 31 } }
+	}
+}
+
+### PLA is requested to hand over Sioux Claims
+
+country_event = { 
+
+	id = 79101
+	title = "ARCGEN2.T"
+	desc = "ARCGEN2.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# Only if you give us our claimed territories to the south of Tobol
+
+	option = { 
+	name = "ARCGEN2.A"
+	prestige = 2
+    NA_153 = { secede_province = PLA }
+    SCA = { country_event = { id = 79102 days = 14 } }
+	ai_chance = { 
+	    factor = 75
+	}
+	}
+	
+	# NON!
+	
+	option = { 
+	name = "ARCGEN2.B"
+	prestige = 1
+	set_country_flag = SCAPLA_chain
+    any_country = {
+	   limit = {
+	      OR = {
+		     tag = SCA
+			 tag = VIN
+			 tag = SKR
+	      }
+	   }
+	   country_event = { id = 79106 days = 3 }
+	}
+	OUM = { all_core = { remove_core = VIN } }
+	NA_117 = { remove_core = VIN }
+	NA_153 = { remove_core = VIN secede_province = PLA }
+	ai_chance = { 
+	    factor = 25
+	}
+	}	
+}
+
+### PLA wants everything south of Tobol
+
+country_event = { 
+
+	id = 79102
+	title = "ARCGEN3.T"
+	desc = "ARCGEN3.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# This is a decent deal. I hope they enjoy the overextensnion.
+
+	option = { 
+	name = "ARCGEN3.A"
+	prestige = -2	
+	NA_153 = { remove_core = PLA remove_core = OUM add_core = SKR secede_province = THIS }
+	NA_117 = { remove_core = PLA remove_core = OUM add_core = SKR secede_province = THIS }
+	PLA_165 = { remove_core = SKR remove_core = VIN add_core = PLA }
+	164 = { remove_core = SKR remove_core = VIN add_core = PLA }
+	166 = { remove_core = SKR remove_core = VIN add_core = PLA }
+	any_owned = {
+	   limit = { 
+		  is_core = SKR
+	   }
+	   secede_province = SKR
+    }
+    PLA = { country_event = { id = 79103 days = 7 } }
+	ai_chance = { 
+	    factor = 30
+	}
+	}
+	
+	# How about we limit it to the southermost state of SKR?
+
+	option = { 
+	name = "ARCGEN3.B"
+	prestige = 1
+    SCA = { country_event = { id = 79104 days = 14 } }
+	ai_chance = { 
+	    factor = 50
+	}
+	}
+	
+	# NEJ!
+	
+	option = { 
+	name = "ARCGEN3.C"
+	prestige = 2	
+    any_country = {
+	   limit = {
+	      OR = {
+		     tag = SCA
+			 tag = VIN
+			 tag = SKR
+	      }
+	   }
+	   country_event = { id = 79106 days = 3 }
+	}
+	PLA = { set_country_flag = SCAPLA_chain }
+	NA_117 = { remove_core = VIN }
+	NA_153 = { remove_core = VIN }
+	ai_chance = { 
+	    factor = 20
+	}
+	}	
+}
+
+### We have been given half of Illimark but its already causing problems.
+
+country_event = { 
+
+	id = 79103
+	title = "ARCGEN4.T"
+	desc = "ARCGEN4.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# Oh No
+	
+	option = { 
+	name = "ARCGEN4.A"
+	prestige = -2
+	set_country_flag = PLA_SKR_intervene
+	set_country_flag = jesuits_PLA
+	any_owned = {
+	   limit = { 
+		  is_core = SKR
+	   }
+	   secede_province = SKR
+    }
+	PLA_165 = { secede_province = THIS }
+	164 = { secede_province = THIS }
+	166 = { secede_province = THIS }	
+	SKR = { country_event = { id = 79118 days = 1 } }
+	}
+}
+
+### Scandinavia wants a more reasonable deal ###
+
+country_event = { 
+
+	id = 79104
+	title = "ARCGEN5.T"
+	desc = "ARCGEN5.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# That's acceptable
+	
+	option = { 
+	name = "ARCGEN5.A"
+	prestige = 3
+	set_country_flag = SCAPLA_chain
+    SCA = { country_event = { id = 79105 days = 3 } }
+	NA_153 = { remove_core = PLA remove_core = OUM add_core = SKR }
+	NA_117 = { remove_core = PLA remove_core = OUM add_core = SKR }
+	PLA_165 = { remove_core = SKR remove_core = VIN add_core = PLA secede_province = THIS }
+	any_owned = {
+	   limit = { 
+		  is_core = SKR
+	   }
+	   secede_province = SKR
+    }
+	ai_chance = { 
+	    factor = 80
+	}
+	}
+	
+	# NON!
+	
+	option = { 
+	name = "ARCGEN5.B"
+	prestige = 1
+	set_country_flag = SCAPLA_chain
+    any_country = {
+	   limit = {
+	      OR = {
+		     tag = SCA
+			 tag = VIN
+			 tag = SKR
+	      }
+	   }
+	   country_event = { id = 79106 days = 3 }
+	}
+	OUM = { all_core = { remove_core = VIN } }
+	NA_117 = { remove_core = VIN }
+	NA_153 = { remove_core = VIN }
+	ai_chance = { 
+	    factor = 20
+	}
+	}
+}
+
+### Plantagenia has accepted the deal.
+
+country_event = { 
+
+	id = 79105
+	title = "ARCGEN6.T"
+	desc = "ARCGEN6.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# They shall have their state full of natives. I hope they don't just immediatly enslave them....
+	
+	option = { 
+	name = "ARCGEN6.A"
+	prestige = 3
+	NA_117 = { secede_province = THIS }
+    NA_153 = { secede_province = THIS }	
+	any_owned = {
+	   limit = { 
+		  is_core = PLA
+	   }
+	   secede_province = PLA
+    }
+	any_owned = {
+	   limit = { 
+		  is_core = SKR
+	   }
+	   secede_province = SKR
+    }
+	}
+}
+
+### A lost oppitunity - Triggers for SCA, SKR and VIN.
+
+country_event = { 
+
+	id = 79106
+	title = "ARCGEN7.T"
+	desc = "ARCGEN7.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# The Sioux shall be enslaved by Plantagenia forevermore
+	
+	option = { 
+	name = "ARCGEN7.A"
+	prestige = -1
+	}
+}
+
+########################
+##### Cymrie Chain #####
+########################
+
+##### VNS exists - Spain considers doing something about the uncolonized territory to the north after the Apache raid Nova Lisboa ####
+
+country_event = { 
+
+	id = 79107
+	title = "ARCGEN8.T"
+	desc = "ARCGEN8.D"
+	#picture = "war_ended"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = SPA
+	   VNS = { exists = yes }
+	   has_global_flag = trigger_cymrie
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "ARCGEN8.A"
+	137 = { add_province_modifier = { name = apache_raiders	duration = 365 } }
+	clr_global_flag = trigger_cymrie
+    PLA = { country_event = { id = 79110 days = 7 } }
+	}
+}
+
+##### CLM exists and either has the Father of Colombia in control or Castro ####
+
+country_event = { 
+
+	id = 79108
+	title = "ARCGEN9.T"
+	desc = "ARCGEN9.D"
+	#picture = "war_ended"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = CLM
+	   OR = {
+	      has_country_flag = CASTO_CLM
+		  has_country_flag = VICINTE_CLM
+	   }  
+	   has_global_flag = trigger_cymrie
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "ARCGEN8.A"
+	137 = { add_province_modifier = { name = apache_raiders	duration = 365 } }
+	clr_global_flag = trigger_cymrie
+    PLA = { country_event = { id = 79110 days = 7 } }
+	}
+}
+
+##### LST exists - LST considers doing something about the uncolonized territory to the north after the Apache raid Nova Lisboa #####
+
+country_event = { 
+
+	id = 79109
+	title = "ARCGEN10.T"
+	desc = "ARCGEN10.D"
+	#picture = "war_ended"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = LST
+	   exists = yes
+	   has_global_flag = trigger_cymrie
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "ARCGEN10.A"
+	137 = { add_province_modifier = { name = apache_raiders	duration = 365 } }
+	clr_global_flag = trigger_cymrie
+    PLA = { country_event = { id = 79110 days = 7 } }
+	}
+}
+
+##### FROM is interested in taking Cymrie ###
+
+country_event = { 
+
+	id = 79110
+	title = "ARCGEN11.T"
+	desc = "ARCGEN11.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	# We need to stop them!
+	
+	option = { 
+	name = "ARCGEN11.A"
+	   # Successfully defended the region from Settlers
+	   random_owned = {
+	      limit = { owner = { has_country_flag = PLA_Cymrie_intervene } }
+		  owner = { prestige = 5 country_event = { id = 79111 days = 7 } }
+	   }
+	   # Completely failed
+	   random_owned = {
+	      limit = { owner = { NOT = { has_country_flag = PLA_Cymrie_intervene } } }
+		  owner = { prestige = -5 country_event = { id = 79112 days = 7 } }
+	   }
+	}
+}
+
+##### PLA successfully takes the region 
+
+country_event = { 
+
+	id = 79111
+	title = "ARCGEN12.T"
+	desc = "ARCGEN12.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	option = { 
+	name = "ARCGEN11.A"
+       TEX_134 = { remove_core = CLM remove_core = LST remove_core = MEX remove_core = VNS secede_province = THIS }
+	   any_country = {
+	      limit = { owns = 137 }
+	         country_event = { id = 79113 days = 7 }
+	   }
+	   country_event = { id = 79115 days = 100 }
+	}
+}
+
+##### You've successfully just gotten a lot of people killed and let the region fell into the hands of the Hispanics. Good Job
+
+country_event = { 
+
+	id = 79112
+	title = "ARCGEN13.T"
+	desc = "ARCGEN13.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	option = { 
+	name = "ARCGEN11.A"
+       TEX_134 = { remove_core = PLA remove_core = OUM }
+	   any_country = {
+	      limit = { owns = 137 }
+	         country_event = { id = 79114 days = 7 }
+	   }	  
+	}
+}
+
+##### Well so much for Texas. I hope they enjoy the Apache.
+
+country_event = { 
+
+	id = 79113
+	title = "ARCGEN14.T"
+	desc = "ARCGEN14.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	option = { 
+	name = "ARCGEN11.A"
+       prestige = -5  
+	}
+}
+
+##### PLA are a joke and we were able to march in with no problems.
+
+country_event = { 
+
+	id = 79114
+	title = "ARCGEN15.T"
+	desc = "ARCGEN15.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	option = { 
+	name = "ARCGEN15.A"
+       prestige = 5
+	   TEX_134 = { add_core = THIS secede_province = THIS }
+	   country_event = { id = 79115 days = 100 }
+	}
+}
+
+##### THE CYMRIE TRAP - FUCK FUCK FUCK FUCK FUCK ####
+
+country_event = { 
+
+	id = 79115
+	title = "ARCGEN16.T"
+	desc = "ARCGEN16.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	option = { 
+	name = "ARCGEN16.A"
+       prestige = -5
+	   TEX_134 = { add_province_modifier = { name = apache_raiders	duration = -1 } }
+	}
+}
+
+##### THE APACHE THREAT HAS ENDED ####
+
+country_event = { 
+
+	id = 79116
+	title = "ARCGEN17.T"
+	desc = "ARCGEN17.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   owns = 135
+	   135 = { has_province_modifier = apache_raiders }
+	   NOT = { has_country_flag = apache_break }
+	   OR = {
+	      year = 1870
+		  nationalism_n_imperialism = 1
+	   }		  
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+	
+	option = { 
+	name = "ARCGEN17.A"
+	   set_country_flag = apache_break
+       prestige = 10
+	   TEX_134 = { any_pop = { militancy = -5 } remove_province_modifier = apache_raiders }
+	}
+}
+
+###############################################################################################################################################################################################
+############################################################################## Skraelingr Territory Content ###################################################################################
+###############################################################################################################################################################################################
+
+### Meeting in the Capital of SKR ###
+
+country_event = {
+	id = 79117
+	title = "ARCGEN18.T"
+	desc = "ARCGEN18.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = SKR_INTRO_TWO		  
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+
+	option = {
+		name = "ARCGEN18.A"
+		clr_country_flag = SKR_INTRO_TWO	
+		prestige = -1
+		any_pop = {
+		   ideology = {
+			  value = separatist
+			  factor = 0.05
+		   }
+        }	
+    }
+}
+
+### Jesuits in SKR - PLA decided to send Jesuits to SKR ###
+
+country_event = {
+	id = 79118
+	title = "ARCGEN19.T"
+	desc = "ARCGEN19.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   PLA = { has_country_flag = PLA_SKR_intervene }
+	   NOT = { has_country_flag = SKR_JESUITS }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+	
+	# At least the education is useful...
+
+	option = {
+		name = "ARCGEN19.A"
+		economic_reform = advanced_education_reform
+		activate_technology = positivism
+		set_country_flag = positivism
+		set_country_flag = SKR_JESUITS
+		prestige = -1
+		any_pop = {
+		   limit = {
+		      location = { is_core = NUN }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = 0.1
+		   }
+        }
+	    ai_chance = { 
+	        factor = 70
+		}		
+    }
+	
+	# I don't care if this destablizes us. Stop them from doing anything relevent.
+	
+	option = {
+		name = "ARCGEN19.B"
+		set_country_flag = SKR_FAIL_CHECK_ONE
+		PLA = { set_country_flag = SKR_GET_TROLLED }
+		set_country_flag = SKR_JESUITS
+		prestige = 1
+		any_pop = {
+		   limit = {
+		      location = { is_core = NUN }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = -0.1
+		   }
+        }
+	    ai_chance = { 
+	        factor = 30
+		}		
+    }
+}
+
+### Jesuits in SKR - PLA has annexed a good chunk of our south. We are forced to accept Jesuits
+
+country_event = {
+	id = 79119
+	title = "ARCGEN20.T"
+	desc = "ARCGEN20.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   PLA = { has_country_flag = PLA_SKR_intervene }
+	   NOT = { has_country_flag = SKR_JESUITS }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+	
+	# At least the education is useful...
+
+	option = {
+		name = "ARCGEN20.A"	
+		economic_reform = advanced_education_reform
+		activate_technology = positivism
+		set_country_flag = positivism
+		set_country_flag = SKR_JESUITS
+		prestige = -1
+		any_pop = {
+		   limit = {
+		      location = { is_core = NUN }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = 0.1
+		   }
+        }	
+    }
+}
+
+### The Prophet Appears in Erie
+
+country_event = {
+	id = 79120
+	title = "ARCGEN21.T"
+	desc = "ARCGEN21.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   year = 1837
+	   NOT = { has_country_flag = SKR_PROPHET }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+
+	option = {
+		name = "ARCGEN21.A"	
+		set_country_flag = SKR_PROPHET
+		prestige = 1
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+        }	
+    }
+}
+
+### Decline of the Fur Trade
+
+country_event = {
+	id = 79121
+	title = "ARCGEN22.T"
+	desc = "ARCGEN22.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   year = 1838
+	   NOT = { has_country_flag = SKR_FUR_TRADE }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	# The Iroquois hijack the fur trade through highly advanced diplomatic techinuqes and further destablize the nation.
+
+	option = {
+		name = "ARCGEN22.A"	
+		economic_reform = balanced_diplomacy 
+		activate_technology = romanticism
+		money = 100000
+		prestige = 10
+		set_country_flag = SKR_FAIL_CHECK_TWO
+		set_country_flag = SKR_FUR_TRADE
+		any_pop = {
+		   limit = {
+		      location = { is_core = IRO }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = 0.1
+		   }
+        }
+	    ai_chance = { 
+	        factor = 30
+		}		
+    }
+	
+	# Vinland retains control over it
+	
+	option = {
+		name = "ARCGEN22.B"
+		money = -10000
+		prestige = -10
+		set_country_flag = SKR_FUR_TRADE		
+		any_pop = {
+		   limit = {
+		      location = { is_core = IRO }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = -0.1
+		   }
+        }
+	    ai_chance = { 
+	        factor = 70
+		}		
+    }
+}
+
+### Flavor - On the Mohawk Tribes and their Government - A Belgian book saying how nonsense the Iroquious are.
+
+country_event = {
+	id = 79122
+	title = "ARCGEN23.T"
+	desc = "ARCGEN23.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   year = 1839
+	   NOT = { has_country_flag = SKR_IRO_NONSENSE }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	# I love when the Belgians make this place out to be a big joke.
+
+	option = {
+		name = "ARCGEN23.A"	
+		prestige = -5
+		set_country_flag = SKR_IRO_NONSENSE
+		any_pop = {
+		   limit = {
+		      location = { is_core = IRO }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = 0.05
+		   }
+        }
+        any_country = {
+           limit = { primary_culture = septiman }
+		   country_event = { id = 79123 days = 3 }
+		}
+    }
+}
+
+### Flavor - Haha Indians are so funny
+
+country_event = {
+	id = 79123
+	title = "ARCGEN24.T"
+	desc = "ARCGEN24.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	# I promise that this event is not racist in any possi...
+
+	option = {
+		name = "ARCGEN24.A"	
+		prestige = 5
+		set_country_flag = SKR_IRO_NONSENSE
+    }
+}
+
+### The Legacy of Emil - Triggered by 333505 in Vinland ###
+
+country_event = {
+	id = 79124
+	title = "ARCGEN25.T"
+	desc = "ARCGEN25.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	# Always at guard!
+
+	option = {
+		name = "ARCGEN25.A"
+        prestige = 1		
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.1
+		   }
+        }
+    }
+}
+
+### THE VINLANDIC REVOLUTION - OH MY GOD OK ITS HAPPENING. STAY CALM. STAY THE F..
+
+country_event = {
+	id = 79125
+	title = "ARCGEN26.T"
+	desc = "ARCGEN26.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	# Wait and see how this turns out.
+
+	option = {
+		name = "ARCGEN26.A"
+		civilized = yes
+		set_country_flag = SKR_wait_and_see
+		VIN = { create_vassal = THIS }
+		any_pop = {
+		   ideology = {
+			  value = separatist
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = liberal
+			  factor = -0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = -0.1
+		   }
+        }
+	    ai_chance = { 
+	        factor = 90
+		}	
+    }
+	
+	# We don't need the white man to tell us what to do anymore!
+	
+	option = {
+		name = "ARCGEN26.B"
+		civilized = yes
+		prestige = 10
+		VIN = { relation = { who = THIS value = -400 } }
+		MSG = { relation = { who = THIS value = -400 } }
+		any_pop = {
+		   ideology = {
+			  value = separatist
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = conservative
+			  factor = -0.1
+		   }
+		   ideology = {
+			  value = liberal
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+        }     
+        country_event = { id = 79133 days = 14 }		
+	    ai_chance = { 
+	        factor = 10
+		}
+    }
+}
+
+### Vinland is a fucking idiot - Switch to Indipendent Chain
+
+country_event = {
+	id = 79126
+	title = "ARCGEN27.T"
+	desc = "ARCGEN27.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = SKR_wait_and_see
+	   OR = {
+	      VIN = { war_with = MSG }
+		  NOT = { exists = VIN }
+		  NOT = { THIS = { vassal_of = VIN } }
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	# Vinlander = Fool
+
+	option = {
+		name = "ARCGEN27.A"
+        clr_country_flag = SKR_wait_and_see
+		VIN = { relation = { who = THIS value = -400 } release_vassal = THIS }
+		SCA = { release_vassal = THIS }
+		end_war = MSG
+		end_war = SCA
+		country_event = { id = 79133 days = 14 }	
+    }
+}
+
+### SKR IS STILL A VASSAL OF VINLAND ###
+
+### Vinland is told that the Status Quo in Arcadia at the end of the Sanicomb War and they must do something about SKR since its still a vassal ###
+
+country_event = {
+	id = 79127
+	title = "ARCGEN28.T"
+	desc = "ARCGEN28.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = "ARCGEN28.A"
+        prestige = 1
+		set_country_flag = VIN_SKR_ENABLED
+    }
+}
+
+### Liberal VIN has annexed SKR - Trigger Special Event that removes SKR cores ###
+
+### This event explains that SKR was a shitty compromise by the Scandinavians and it is better served to just scrub all traces of the nation and instead create federal territories that deal with each individual tribe (but not the cree because they are not that fucking liberal) ###
+
+country_event = {
+	id = 79128
+	title = "ARCGEN29.T"
+	desc = "ARCGEN29.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_country_flag = liberal_vin_skr
+	   SKR = { all_core = { owned_by = THIS } }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = {
+		name = "ARCGEN29.A"
+		clr_country_flag = liberal_vin_skr
+		set_country_flag = skr_accepted
+		add_accepted_culture = algonquin
+		add_accepted_culture = southern_algonquin
+		add_accepted_culture = iroquois 
+		any_pop = {
+		   limit = {
+		      location = { is_core = SKR }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = -0.1
+		   }
+		   militancy = -5
+        }
+        SKR = { all_core = { remove_core = SKR } }
+    }
+}
+
+### THE GREAT NATIVE REVOLT - Conservative or Reactionary VIN has tried to annex SKR and it backfired - Their envoys had their heads sent back to them in baskets by the Prophet ###
+
+country_event = {
+	id = 79129
+	title = "ARCGEN30.T"
+	desc = "ARCGEN30.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_country_flag = conservative_vin_skr
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	immediate = {
+	  SKR = { clr_country_flag = SKR_wait_and_see }
+	}
+	
+	option = {
+		name = "ARCGEN30.A"
+		clr_country_flag = conservative_vin_skr
+		leave_alliance = SKR
+		release_vassal = SKR
+		relation = { who = SKR value = -400 }
+		diplomatic_influence = { who = SKR value = -400 }
+		set_global_flag = THE_GREAT_NATIVE_REVOLT		
+		SKR = {
+		   clr_country_flag = SKR_wait_and_see
+	       government = theocracy
+	       ruling_party_ideology = reactionary
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = closed_borders
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+		   political_reform = unitary
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       set_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+			iron = 10
+			wool = 10
+			timber = 25
+			small_arms = 10
+			leadership = 20
+			add_country_modifier = {
+				name = taiping_draft
+				duration = 720
+			}
+		}
+		war = {
+			target = SKR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+			call_ally = yes
+	    }
+    }
+}
+
+### HOLY SHIT SKR ACTUALLY FUCKING WON. 
+
+### MSG immediatly GTFOs and everyone is extremely confused internationally
+
+country_event = {
+	id = 79130
+	title = "ARCGEN31.T"
+	desc = "ARCGEN31.D"
+	#picture = "war_ended"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = SKR
+	   has_global_flag = THE_GREAT_NATIVE_REVOLT
+	   NOT = { war = yes }
+	   NOT = { exists = VIN }
+	}
+
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	# Moses, Jesus, Muhammad and the new Prophet of the West!
+	
+	option = {
+		name = "ARCGEN31.A"
+		clr_global_flag = THE_GREAT_NATIVE_REVOLT
+		SKR = { all_core = { remove_core = VIN } }
+		VIN = { all_core = { remove_core = VIN } }
+        any_owned = {
+            limit = {
+                is_core = MSG
+            }
+            secede_province = MSG
+        }	
+        VIN_58 = { add_core = VIN }
+		VIN_66 = { add_core = VIN }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+            secede_province = VIN
+        }
+		add_accepted_culture = cree		
+		add_accepted_culture = inuit
+		prestige = 50
+		any_pop = {
+		   militancy = -8
+		}
+    }
+}
+
+### VIN naturally utterly destroys SKR - Alt-Trail of Tears
+
+country_event = {
+	id = 79131
+	title = "ARCGEN32.T"
+	desc = "ARCGEN32.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = THE_GREAT_NATIVE_REVOLT
+	   NOT = { war = yes }
+	   NOT = { exists = SKR }
+	}
+
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	# Abolish SKR and all native states north of the Great Lakes
+	## Add a lot of Reduce Pop here.
+	
+	option = {
+		name = "ARCGEN32.A"
+		clr_global_flag = THE_GREAT_NATIVE_REVOLT
+		prestige = 5
+		VIN_55 = { remove_core = IRO }
+		176 = { add_core = IRO }
+		ANI = { all_core = { remove_core = ANI } }
+		VIN_161 = { add_core = ANI }
+		SKR = { all_core = { remove_core = SKR } }
+    }
+}
+
+### SKR WPs VIN - Trigger Indipendent Theocracy Path or FAIL_CHECK_THREE ###
+
+country_event = {
+	id = 79132
+	title = "ARCGEN33.T"
+	desc = "ARCGEN33.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_global_flag = THE_GREAT_NATIVE_REVOLT
+	   NOT = { war = yes }
+	   exists = VIN
+	}
+
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = {
+		name = "ARCGEN33.A"
+		prestige = 20	
+        set_global_flag = SKR_IS_FRESH_MEAT		
+		clr_global_flag = THE_GREAT_NATIVE_REVOLT		
+		set_country_flag = SKR_FAIL_CHECK_THREE
+		SKR = { all_core = { remove_core = VIN } }
+    }
+}
+
+
+### STRUGGLE IN THE COUNCIL - SKR IS INDIPENDENT ####
+
+country_event = {
+	id = 79133
+	title = "ARCGEN34.T"
+	desc = "ARCGEN34.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes 
+	
+	# Federation of Tribes - Isolationaist Federal Parlimentary Republic
+	
+	option = {
+		name = "ARCGEN34.A"
+        prestige = 5
+	    government = parliamentary_republic
+	    ruling_party_ideology = liberal
+	    political_reform = one_year_draft
+	    political_reform = free_press
+	    political_reform = yes_meeting
+	    political_reform = secret_ballots
+	    political_reform = culture_voting_only
+	    political_reform = population_equal_weight
+	    political_reform = jefferson_method
+	    political_reform = universal_voting
+		political_reform = federalism
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    set_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+        set_global_flag = SKR_IS_FRESH_MEAT
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+	
+	# Reform the Confederacies - Expanisionst Conservative Confederal Presidental Republic
+	
+	option = {
+		name = "ARCGEN34.C"
+        prestige = 10
+	    government = democracy
+	    ruling_party_ideology = conservative
+	    political_reform = confederalism
+	    political_reform = four_year_draft
+	    political_reform = free_press
+	    political_reform = yes_meeting
+	    political_reform = gerrymandering
+	    political_reform = culture_voting_only
+	    political_reform = state_equal_weight
+	    political_reform = first_past_the_post
+	    political_reform = wealth_voting
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		set_global_flag = SKR_IS_FRESH_MEAT
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+	
+	# Theocracy - Wacky
+	
+	option = {
+		name = "ARCGEN34.C"
+        prestige = 20
+	    government = theocracy
+	    ruling_party_ideology = reactionary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+		political_reform = unitary
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win
+	    set_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		set_country_flag = SKR_FAIL_CHECK_THREE
+		set_global_flag = SKR_IS_FRESH_MEAT
+	    ai_chance = { 
+	        factor = 20
+		}	
+    }
+}
+
+### Regardless of what path they choose they are ultimately doomed to foreign intervention ###
+
+############ PLA AND SKR INTERACTIONS ################
+
+### PLA attempts to intervene and tears off a good chunk of the nation due to having successfully undermining jesuits in the area ###
+
+### TRIGGERED VIA DECISION ###
+
+country_event = {
+	id = 79134
+	title = "ARCGEN33.T"
+	desc = "ARCGEN33.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = SKR_jesuits
+	   has_country_flag = PLA_intervened
+	   NOT = { PLA = { has_country_flag = SKR_GET_TROLLED } }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+
+	# FUCKING TRAITORS
+	
+	option = {
+		name = "ARCGEN33.A"
+		prestige = -10
+		clr_country_flag = PLA_intervened
+		VIN = { set_country_flag = VIN_NUN_stolen relation = { who = PLA value = -400 } } 
+        relation = { who = PLA value = -400 }
+        any_owned = {
+            limit = {
+                is_core = NUN
+				NOT = { province_id = 174 }
+            }
+			remove_core = SKR
+            secede_province = NUN
+        }
+		PLA = { country_event = { id = 79135 days = 0 } }
+    }
+}
+
+#### HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! HON! 
+
+country_event = {
+	id = 79135
+	title = "ARCGEN34.T"
+	desc = "ARCGEN34.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	# This was a great plan.
+	
+	option = {
+		name = "ARCGEN33.A"
+		prestige = 10
+	    NUN = { all_core = { add_core = SKR } }
+		VIN = { set_country_flag = VIN_NUN_stolen relation = { who = PLA value = -400 } } 
+        any_owned = {
+            limit = {
+			    is_core = PLA
+                is_core = NUN
+            }
+			remove_core = NUN
+        }
+        create_vassal = NUN
+		set_country_flag = PLA_NUN_conclusion
+    }
+}
+
+### PLA attempts to intervene and gets trolled ###
+
+country_event = {
+	id = 79136
+	title = "ARCGEN35.T"
+	desc = "ARCGEN35.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = SKR_jesuits
+	   has_country_flag = PLA_intervened
+	   PLA = { has_country_flag = SKR_GET_TROLLED }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+
+	# All the resources wasted and you just managed to completely fail
+	
+	option = {
+		name = "ARCGEN35.A"
+		prestige = 10
+		clr_country_flag = PLA_intervened
+		PLA = { clr_country_flag = SKR_GET_TROLLED country_event = { id = 79137 days = 0 } }
+    }
+}
+
+### GET TROLLED PLA ###
+
+country_event = {
+	id = 79137
+	title = "ARCGEN36.T"
+	desc = "ARCGEN36.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+
+	# Well. That was a complete waste of time and money.
+	
+	option = {
+		name = "ARCGEN36.A"
+		prestige = -10
+		any_pop = { militancy = 1 }
+		set_country_flag = PLA_NUN_conclusion
+    }
+}
+
+### PLA also gets a decision to annex NUN and create a Great Lakes City ###
+
+############ NBG AND SKR INTERACTIONS ################
+
+############ SKR is unstable and NBG marches on the Great Lakes - SKR collapses on the spot ###
+
+country_event = {
+	id = 79138
+	title = "ARCGEN37.T"
+	desc = "ARCGEN37.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = NBG_goes_marching_west
+	   has_country_flag = SKR_FAIL_CHECK_ONE
+	   has_country_flag = SKR_FAIL_CHECK_TWO
+	   has_country_flag = SKR_FAIL_CHECK_THREE
+	   NOT = { has_country_flag = SKR_COLLAPSED }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	# You should have known better
+	
+	option = {
+		name = "ARCGEN37.A"
+	    clr_country_flag = NBG_goes_marching_west
+		set_country_flag = SKR_COLLAPSED
+		prestige_factor = -0.99
+		all_core = { remove_core = SKR }
+        any_owned = {
+            limit = {
+                is_core = NUN
+				NOT = { province_id = 174 }
+            }
+            secede_province = NUN
+        }    
+        any_owned = {
+            limit = {
+                is_core = ANI
+				NOT = { province_id = 176 }
+            }
+			add_core = VIN
+            secede_province = ANI
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = VIN
+            secede_province = OCE
+        }
+        any_owned = {
+            limit = {
+                region = VIN_55
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                region = VIN_179
+            }
+            secede_province = NBG
+        }
+        any_owned = {
+            limit = {
+                region = VIN_178
+            }
+            secede_province = NBG
+        }
+        change_tag = IRO	
+        NBG = { set_country_flag = VIN_TREATY set_country_flag = SKR_lakeshore_drive }
+	    any_country = {
+	    limit = {
+	      tag = PLA
+		  has_country_flag = PLA_SKR_intervene
+		  NOT = { NUN = { vassal_of = PLA } }
+		  NOT = { owns = 163 }
+	    }
+	    clr_country_flag = SKR_GET_TROLLED
+	    country_event = { id = 79139 days = 0 }
+	    }
+	    any_country = {
+	    limit = {
+	      OR = {
+		     tag = VIN
+			 tag = NBG
+		  }
+		  war = no
+	    }
+	    country_event = { id = 79140 days = 0 }
+		}
+	}			  
+}
+
+### NUN is asking to be made a vassal of PLA after SKR collapses ###
+
+country_event = {
+	id = 79139
+	title = "ARCGEN38.T"
+	desc = "ARCGEN38.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN38.A"	
+        prestige = 1
+		VIN = { set_country_flag = VIN_NUN_stolen }
+        create_vassal = NUN
+		set_country_flag = PLA_NUN_conclusion
+    }		
+}
+
+### VIN and NBG are forced to race for the leftovers of IRO ###
+
+country_event = {
+	id = 79140
+	title = "ARCGEN39.T"
+	desc = "ARCGEN39.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN40.A"	
+		war = {
+			target = IRO
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+	    }
+    }		
+}
+
+############ SKR is not unstable and NBG marches on the Great Lakes ##########
+
+country_event = {
+	id = 79141
+	title = "ARCGEN40.T"
+	desc = "ARCGEN40.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   has_country_flag = NBG_goes_marching_west
+	   NOT = { has_country_flag = SKR_COLLAPSED }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = {
+		name = "ARCGEN40.A"	
+		clr_country_flag = NBG_goes_marching_west
+		NBG = { set_country_flag = SKR_lakeshore_drive }
+		prestige = 10
+	    any_country = {
+	       limit = {
+		      tag = VIN
+			  is_vassal = no
+			  exists = yes
+		      war = no
+		   }
+		   country_event = { id = 79143 days = 0 }
+	    }
+		NBG = {
+		war = {
+			target = SKR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+	    }
+		}
+	    add_country_modifier = {
+			name = small_country_draft
+			duration = 720
+		}
+	    ai_chance = { 
+	        factor = 20
+		}
+    }
+
+	option = {
+		name = "ARCGEN40.B"	
+		NBG = { set_country_flag = SKR_lakeshore_drive }
+        any_owned = {
+            limit = {
+                region = VIN_178
+            }
+			remove_core = SKR
+			remove_core = VIN
+            secede_province = NBG
+        }		
+	    ai_chance = { 
+	        factor = 80
+		}
+    }
+}	
+
+############ NBG declares war on SKR later on anyway - TRIGGERED BY DECISION ##########
+
+country_event = {
+	id = 79142
+	title = "ARCGEN43.T"
+	desc = "ARCGEN43.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN43.A"		
+	    any_country = {
+	       limit = {
+		      tag = VIN
+			  is_vassal = no
+			  exists = yes
+		      war = no
+		   }
+		   country_event = { id = 79143 days = 0 }
+	    }
+    }
+}
+
+############ SKR is not unstable and NBG marches on the Great Lakes - VIN realizes that NBG is basically going to ensure that they lose most of SKR ##########
+
+country_event = { 
+	id = 79143
+	title = "ARCGEN44.T"
+	desc = "ARCGEN44.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	## Threaten NBG to stop immediatly ###
+	
+	option = {
+		name = "ARCGEN41.A"	
+		prestige = 10
+		any_pop = { militancy = -1 }
+		NBG = { country_event = { id = 79144 days = 1 } }
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+	
+	## Ask NBG for a treaty ###
+	
+	option = {
+		name = "ARCGEN42.B"	
+		prestige = 5
+		NBG = { country_event = { id = 79145 days = 1 } }
+	    ai_chance = { 
+	        factor = 50
+			  modifier = {
+			    factor = 0
+			    has_country_flag = RADICAL_VIN		
+		      }
+		}
+    }
+
+	## Do nothing ###
+	
+	option = {
+		name = "ARCGEN42.C"	
+		prestige = -1
+	    ai_chance = { 
+	        factor = 10
+			  modifier = {
+			    factor = 0
+			    has_country_flag = RADICAL_VIN		
+		      }
+		}
+    }
+}
+
+################# VIN says stop to NBG ####################
+
+country_event = {
+	id = 79144
+	title = "ARCGEN45.T"
+	desc = "ARCGEN45.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN45.A"	
+		prestige = 10
+		VIN = {
+		set_country_flag = VINSKR_INTERVENTION
+		war = {
+			target = NBG
+			attacker_goal =  { 
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+	    }
+		}
+	    ai_chance = { 
+	        factor = 80
+		}
+    }
+
+	option = {
+		name = "ARCGEN45.B"
+        prestige = -10		
+		end_war = SKR	
+	    ai_chance = { 
+	        factor = 20
+		}
+    }
+}
+
+################# VIN is happy to give the south but the rest must be immediatly given to VIN #######
+
+country_event = {
+	id = 79145
+	title = "ARCGEN46.T"
+	desc = "ARCGEN46.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	# Peace in our time!
+	
+	option = {
+		name = "ARCGEN46.A"	
+		set_country_flag = VIN_TREATY
+		prestige = 2
+		VIN = { country_event = { id = 79147 days = 0 } } 
+		SKR = { country_event = { id = 79146 days = 0 } } 
+	    ai_chance = { 
+	        factor = 80
+		}
+    }
+
+	option = {
+		name = "ARCGEN46.B"
+		prestige = -2
+		VIN = { country_event = { id = 79148 days = 3 } }
+	    ai_chance = { 
+	        factor = 20
+		}
+    }
+}
+
+################# VIN has marched in and backstabbed us in the middle of a war #######
+
+country_event = {
+	id = 79146
+	title = "ARCGEN47.T"
+	desc = "ARCGEN47.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	# With our armies distracted we can't stop the west from collapsing.
+	
+	option = {
+		name = "ARCGEN46.A"			
+		prestige = 1  
+        any_owned = {
+            limit = {
+                region = VIN_55
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+				NOT = { province_id = 176 }
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+				NOT = { province_id = 174 }
+            }
+            secede_province = NUN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+	    any_country = {
+	       limit = {
+	          tag = PLA
+		      has_country_flag = PLA_SKR_intervene
+		      NOT = { NUN = { vassal_of = PLA } }
+		      NOT = { owns = 163 }
+	       }
+	       clr_country_flag = SKR_GET_TROLLED
+	       country_event = { id = 79139 days = 0 }
+	    }
+    }
+}
+
+################# NBG has agreed and let us occupy the approprate territories #######
+
+country_event = {
+	id = 79147
+	title = "ARCGEN48.T"
+	desc = "ARCGEN48.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN46.A"	
+		leave_alliance = SKR
+		relation = { who = SKR value = -400 }
+		war = {
+			target = SKR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+	    }
+		any_pop = { militancy = -1 }
+		prestige = 5
+    }
+}
+
+################# NBG has refused. War or do nothing
+
+country_event = {
+	id = 79148
+	title = "ARCGEN49.T"
+	desc = "ARCGEN49.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN49.A"	
+		prestige = 5
+		NBG = { country_event = { id = 79144 days = 1 } }
+	    ai_chance = { 
+	        factor = 80
+		}
+    }
+
+	option = {
+		name = "ARCGEN49.B"
+        prestige = -15		
+		end_war = SKR	
+	    ai_chance = { 
+	        factor = 20
+		}
+    }
+}
+
+### VIN IS RADICAL AND SKR STILL EXISTS - TRIGGERED BY PARTICULAR CONDITIONS ON A NON-THEOCRACY SKR ###
+
+country_event = {
+	id = 79149
+	title = "ARCGEN50.T"
+	desc = "ARCGEN50.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = SKR
+	   NOT = { government = theocracy }
+	   VIN = { has_country_flag = RADICAL_VIN }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = {
+		name = "ARCGEN50.A"
+		VIN = { country_event = { id = 79150 days = 1 } inherit = THIS }
+	    ai_chance = { 
+	        factor = 100
+		}		
+    }
+	
+	option = {
+		name = "ARCGEN50.B"
+	    ai_chance = { 
+	        factor = 0
+		}
+    }
+}
+
+### SKR HAS WILLINGLY JOINED US ###
+
+country_event = {
+	id = 79150
+	title = "ARCGEN51.T"
+	desc = "ARCGEN51.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN51.A"
+		set_country_flag = skr_accepted
+		add_accepted_culture = algonquin
+		add_accepted_culture = southern_algonquin
+		add_accepted_culture = iroquois 
+		add_accepted_culture = cree
+		any_pop = {
+		   limit = {
+		      location = { is_core = SKR }
+		   }
+		   ideology = {
+			  value = separatist
+			  factor = -0.1
+		   }
+		   militancy = -5
+        }			
+    }
+}
+
+### Event for PLA to tell that their investment has failed if SKR is annexed by VIN in any way and they have not intervened correctly.
+
+country_event = {
+	id = 79151
+	title = "ARCGEN52.T"
+	desc = "ARCGEN52.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = PLA
+	   has_country_flag = PLA_SKR_intervene
+	   NOT = { exists = SKR }
+	   NOT = { has_country_flag = PLA_NUN_conclusion }
+	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+	
+	option = {
+		name = "ARCGEN52.A"
+		prestige = -1
+	    set_country_flag = PLA_NUN_conclusion
+    }
+}
+
+### Event for NBG if they own Michigan to ensure that no wars are fought in the future over SKR
+
+country_event = {
+	id = 79152
+	title = "ARCGEN53.T"
+	desc = "ARCGEN53.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = NBG
+	   owns = 173
+	   NOT = { OR = { exists = NUN PLA = { owns = 163 } } }
+	   NOT = { has_country_flag = NBG_SKR_Conference }	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 3
+	}
+	
+    # No future wars right?
+	
+	option = {
+		name = "ARCGEN53.A"
+        any_owned = {
+            limit = {
+                region = VIN_55
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                region = VIN_173
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+				NOT = { province_id = 176 }
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = VIN
+            secede_province = OCE
+        }
+	    NBG = { set_country_flag = SKR_lakeshore_drive }
+		set_country_flag = NBG_SKR_Conference
+		set_country_flag = VIN_TREATY
+		VIN = { country_event = { id = 79154 days = 1 } }
+	    ai_chance = { 
+	        factor = 60
+		}
+    }
+	
+	# You are asking for it with Arcadian Unification
+	
+	option = {
+		name = "ARCGEN53.B"
+		badboy = 10
+		# NBG can never own these states if NUN exists or PLA owns 163
+        any_owned = {
+            limit = {
+                is_core = ANI
+				NOT = { province_id = 176 }
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = VIN
+            secede_province = OCE
+        }
+		VIN = { set_country_flag = VIN_IRO_stolen }
+	    set_country_flag = NBG_SKR_Conference
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+}
+
+### Event for NBG if they own Michigan to ensure that no wars are fought in the future over SKR (NUN exists or PLA owns 163 }
+
+country_event = {
+	id = 791520
+	title = "ARCGEN530.T"
+	desc = "ARCGEN530.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = NBG
+	   owns = 173
+	   OR = { 
+	      exists = NUN
+		  PLA = { owns = 163 }
+	   }
+	   NOT = { has_country_flag = NBG_SKR_Conference }
+	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 3
+	}
+	
+    # No future wars right?
+	
+	option = {
+		name = "ARCGEN530.A"
+        any_owned = {
+            limit = {
+                region = VIN_55
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                region = VIN_173
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+				NOT = { province_id = 176 }
+            }
+			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = VIN
+            secede_province = OCE
+        }
+	    NBG = { set_country_flag = SKR_lakeshore_drive }
+		set_country_flag = NBG_SKR_Conference
+		set_country_flag = VIN_TREATY
+		VIN = { country_event = { id = 79154 days = 1 } }
+	    ai_chance = { 
+	        factor = 60
+		}
+    }
+	
+	# You are asking for it with Arcadian Unification
+	
+	option = {
+		name = "ARCGEN530.B"
+		badboy = 10
+		VIN = { set_country_flag = VIN_IRO_stolen }
+	    set_country_flag = NBG_SKR_Conference
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+}
+
+### Event for VIN if they own the south bank to ensure that no wars are fought in the future over SKR
+
+country_event = {
+	id = 79153
+	title = "ARCGEN54.T"
+	desc = "ARCGEN54.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   owns = 179
+	   NOT = { has_country_flag = NBG_SKR_Conference }
+	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 3
+	}
+	
+    # No future wars right?
+	
+	option = {
+		name = "ARCGEN54.A"
+        any_owned = {
+            limit = {
+                region = VIN_179
+            }
+            secede_province = NBG
+        }
+        any_owned = {
+            limit = {
+                region = VIN_178
+            }
+            secede_province = NBG
+        }
+	    NBG = { set_country_flag = SKR_lakeshore_drive }
+		set_country_flag = NBG_SKR_Conference
+		NBG = { set_country_flag = VIN_TREATY }
+		VIN = { country_event = { id = 79154 days = 1 } }
+	    ai_chance = { 
+	        factor = 60
+		}
+    }
+	
+	# NBG will be back.
+	
+	option = {
+		name = "ARCGEN54.B"
+		badboy = 5
+		NBG = { set_country_flag = NBG_claim_lakeshore }
+	    set_country_flag = NBG_SKR_Conference
+	    ai_chance = { 
+	        factor = 40
+		}
+    }
+}
+
+### Notification Event for party that obtains territory
+
+country_event = {
+	id = 79154
+	title = "ARCGEN55.T"
+	desc = "ARCGEN55.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN55.A"
+		prestige = 1		
+    }
+}
+
+############################################################################
+############# THE SECOND ARCADIAN WAR AND ARCADIAN UNIFICATION #############
+############################################################################
+
+#### LOU - NEW ARCADIANS ASK FOR ANNEXATION - THERE IS NO "NO" ANSWER TO THIS ####
+
+country_event = {
+	id = 79155
+	title = "ARCGEN56.T"
+	desc = "ARCGEN56.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN56.A"
+		all_core = { add_core = NBG } 
+		FROM = { inherit = THIS }	
+	    ai_chance = { 
+	        factor = 99
+			modifier = {
+				factor = 0
+				NOT = { 
+				   OR = {
+				      government = democracy
+					  government = parliamentary_republic
+					  government = socialist_republic
+				   }
+			   }
+			}
+		}	
+    }
+	
+	option = {
+		name = "ARCGEN56.B"
+		FROM = {
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		all_core = { add_core = NBG } 
+	    ai_chance = { 
+	        factor = 1
+		}	
+    }
+}
+
+#### LB - NEW ARCADIANS ASK FOR ANNEXATION - THERE IS NO "NO" ANSWER TO THIS ####
+
+country_event = {
+	id = 79156
+	title = "ARCGEN57.T"
+	desc = "ARCGEN57.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN57.A"
+		all_core = { add_core = NBG } 
+		FROM = { inherit = THIS }	
+	    ai_chance = { 
+	        factor = 99
+			modifier = {
+				factor = 0
+				NOT = { 
+				   OR = {
+				      government = democracy
+					  government = parliamentary_republic
+					  government = socialist_republic
+				   }
+			   }
+			}
+		}	
+    }
+	
+	option = {
+		name = "ARCGEN57.B"
+		FROM = {
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		all_core = { add_core = NBG } 
+	    ai_chance = { 
+	        factor = 1
+		}	
+    }
+}
+
+################ THE SECOND ARCADIAN WAR - TRIGGERED BY NBG - OLD ARCADIAN ##################
+
+#### DAVID AND GOLIATH ###
+
+country_event = {
+	id = 79157
+	title = "ARCGEN58.T"
+	desc = "ARCGEN58.D"
+	#picture = "war_ended"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN59.A"
+		set_global_flag = SECOND_ARCADIAN_WAR
+		political_reform = mandatory_service
+		relation = { who = PLA value = -400 }
+		diplomatic_influence = { who = PLA value = -400 }
+		leave_alliance = PLA
+		relation = { who = VIN value = -200 }
+		diplomatic_influence = { who = VIN value = -200 }
+		leave_alliance = VIN
+		PLA = {
+		   relation = { who = VIN value = -200 }
+		   diplomatic_influence = { who = VIN value = -200 }
+		   leave_alliance = VIN
+		}
+	    war = {
+	     target = PLA
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = custom_treaty_cb
+		     }	
+			 call_ally = yes
+	    }
+		# All or Nothing
+        PLA = { country_event = { id = 79159 days = 0 }	}
+		any_pop = {
+		   militancy = -8
+		}
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - TRIGGERED BY NBG - NEW ARCADIAN ##################
+
+#### SHOUTING THE BATTLE CRY OF FREEDOM! ###
+
+### New Arcadians have extra content - The content appears below the end of the war related content ###
+
+country_event = {
+	id = 79158
+	title = "ARCGEN59.T"
+	desc = "ARCGEN59.D"
+	#picture = "war_ended"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN59.A"
+		set_global_flag = SECOND_ARCADIAN_WAR
+		political_reform = mandatory_service
+		relation = { who = PLA value = -400 }
+		diplomatic_influence = { who = PLA value = -400 }
+		leave_alliance = PLA
+		relation = { who = VIN value = -200 }
+		diplomatic_influence = { who = VIN value = -200 }
+		leave_alliance = VIN
+		PLA = {
+		   relation = { who = VIN value = -200 }
+		   diplomatic_influence = { who = VIN value = -200 }
+		   leave_alliance = VIN
+		}
+	    war = {
+	     target = PLA
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = custom_treaty_cb
+		     }	
+			 call_ally = yes
+	    }
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}
+		# All or Nothing
+        PLA = { country_event = { id = 79159 days = 0 }	}
+		any_pop = {
+		   militancy = -8
+		}
+    }	
+}
+
+#### THIS IS IT. THE CLIMAX IS HERE. IF YOU LOSE THIS WAR YOU WILL DIE. ###
+
+country_event = {
+	id = 79159
+	title = "ARCGEN60.T"
+	desc = "ARCGEN60.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN60.A"
+		political_reform = mandatory_service
+		any_pop = {
+		   militancy = -8
+		}
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}		
+    }	
+}
+
+
+################ THE SECOND ARCADIAN WAR - TRIGGERED BY NBG - BURGUNDIAN OR DUTCH ##################
+
+#### ENDING THE THREAT FOR GOOD ###
+
+country_event = {
+	id = 79160
+	title = "ARCGEN61.T"
+	desc = "ARCGEN61.D"
+	#picture = "war_ended"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN61.A"
+		set_global_flag = SECOND_ARCADIAN_WAR
+		political_reform = mandatory_service
+		relation = { who = PLA value = -400 }
+		diplomatic_influence = { who = PLA value = -400 }
+		leave_alliance = PLA
+		relation = { who = VIN value = -200 }
+		diplomatic_influence = { who = VIN value = -200 }
+		leave_alliance = VIN
+		PLA = {
+		   relation = { who = VIN value = -200 }
+		   diplomatic_influence = { who = VIN value = -200 }
+		   leave_alliance = VIN
+		}
+	    war = {
+	     target = PLA
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = custom_treaty_cb
+		     }	
+			 call_ally = yes
+	    }
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}
+		# All or Nothing
+        PLA = { country_event = { id = 79161 days = 0 }	}
+		any_pop = {
+		   militancy = -8
+		}
+    }	
+}
+
+#### THE BELGIAN CONFEDERATION HAS POUNCED! ###
+
+country_event = {
+	id = 79161
+	title = "ARCGEN62.T"
+	desc = "ARCGEN62.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN62.A"		
+		political_reform = mandatory_service
+		any_pop = {
+		   militancy = -8
+		}
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}		
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - PANARCADIAN PLA VICTORY - FORMATION OF THE PROVISIONAL GOVERNMENT - MUST NOT HAVE LIB_IS_HERE FLAG, ABOLITION_MONARCHY OR LOU_IS_HERE FLAG ##################
+
+country_event = {
+	id = 79162
+	title = "ARCGEN63.T"
+	desc = "ARCGEN63.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = PLA
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   war = no
+	   NOT = { has_country_flag = PLA_ARCADIAN_BLOCKED }
+	   NBG = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}	
+	
+	option = {
+		name = "ARCGEN63.A"
+		war_exhaustion = 30
+		set_country_flag = SAW_WINNER
+		set_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		prestige = 40
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		add_country_modifier = {
+			name = ARC_TOTAL_OVEREXTENSION
+			duration = -1
+		}		
+        create_vassal = NBG
+		NBG = {
+		   remove_country_modifier = ALL_OR_NOTHING_ARC
+		   clr_country_flag = custom_treaty_loser
+		   government = autonomous_dependency
+	       war_exhaustion = -50
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+       	   political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = four_year_draft
+           political_reform = first_past_the_post
+	       political_reform = underground_parties 
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+		   add_country_modifier = {
+			  name = ARC_MILITARY_OCCUPATION
+			  duration = -1
+		   }
+		}
+    }	
+}
+
+
+################ THE SECOND ARCADIAN WAR - NON-PANARCADIAN PLA VICTORY - DISMANTLEMENT OF THE BELGIAN CONFEDERATION ##################
+
+country_event = {
+	id = 79163
+	title = "ARCGEN64.T"
+	desc = "ARCGEN64.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = PLA
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   war = no
+	   has_country_flag = PLA_ARCADIAN_BLOCKED
+	   NBG = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}	
+	
+	option = {
+		name = "ARCGEN64.A"
+		war_exhaustion = 30
+		clr_global_flag = SECOND_ARCADIAN_WAR
+	    set_country_flag = PLA_Valois
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		any_country = {
+		   limit = { 
+		      primary_culture = septiman
+			  has_country_flag = unreleasable_country
+		   }
+		   clr_country_flag = unreleasable_country
+		}
+		PLA_214 = { remove_core = NBG add_core = PLA }
+		NBG = { 
+		   remove_country_modifier = ALL_OR_NOTHING_ARC
+		   clr_country_flag = custom_treaty_loser 
+           any_owned = {
+               limit = {
+                   is_core = LOU
+               }
+               secede_province = PLA
+           }
+           any_owned = {
+               limit = {
+                   is_core = CBV
+               }
+			   remove_core = NBG
+               secede_province = PLA
+           }	
+           any_owned = {
+               limit = {
+                   is_core = CHV
+               }
+			   remove_core = NBG
+               secede_province = PLA
+           }	
+           any_owned = {
+               limit = {
+                   is_core = CCA
+               }
+			   remove_core = NBG
+               secede_province = CCA
+           }
+           any_owned = {
+               limit = {
+                   is_core = CPH 
+               }
+			   remove_core = NBG
+               secede_province = CPH 
+           }	
+           any_owned = {
+               limit = {
+                   is_core = CNL
+               }
+			   remove_core = NBG
+               secede_province = CNL
+           }
+           any_owned = {
+               limit = {
+                   is_core = IRO
+               }
+			   remove_core = NBG
+               secede_province = PLA
+           }
+		   change_tag = CNF
+		}
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - OLD OR NEW ARCADIAN NBG VICTORY - FORMATION OF THE PROVISIONAL GOVERNMENT ##################
+
+country_event = {
+	id = 79164
+	title = "ARCGEN65.T"
+	desc = "ARCGEN65.D"
+	#picture = "war_ended"
+
+	trigger = { 
+	   tag = NBG
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   war = no
+	   OR = {
+	      has_global_flag = NBG_OLD_ARCADIAN
+		  has_global_flag = NBG_NEW_ARCADIAN
+	   }
+	   PLA = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	immediate = {
+		PLA = { all_core = { remove_core = NBG } }
+	    any_owned = {
+	       limit = { is_core = PLA }
+	       secede_province = PLA
+	    }
+	    any_owned = {
+	       limit = { is_core = LIB }
+	       secede_province = PLA
+	    }
+	}
+	
+	option = {
+		name = "ARCGEN65.A"
+		war_exhaustion = 30
+		set_country_flag = SAW_WINNER
+		set_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		prestige = 40
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		add_country_modifier = {
+			name = ARC_TOTAL_OVEREXTENSION
+			duration = -1
+		}		
+        create_vassal = PLA
+		PLA = {
+		   remove_country_modifier = ALL_OR_NOTHING_ARC
+		   clr_country_flag = custom_treaty_loser
+		   government = autonomous_dependency
+	       war_exhaustion = -50
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+       	   political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = four_year_draft
+           political_reform = first_past_the_post
+	       political_reform = underground_parties 
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+		   add_country_modifier = {
+			  name = ARC_MILITARY_OCCUPATION
+			  duration = -1
+		   }
+		}
+    }	
+}
+
+################ FAILSAFE BY EITHER PLA NOT EXISTING OR AUTOMATIC PUPPET - FORMATION OF THE PROVISIONAL GOVERNMENT ##################
+
+country_event = {
+	id = 791640
+	title = "ARCGEN650.T"
+	desc = "ARCGEN650.D"
+	#picture = "war_ended"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN650.A"
+		war_exhaustion = 30
+		set_country_flag = SAW_WINNER
+		set_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		prestige = 40
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		add_country_modifier = {
+			name = ARC_TOTAL_OVEREXTENSION
+			duration = -1
+		}		
+        create_vassal = PLA
+		PLA = {
+		   remove_country_modifier = ALL_OR_NOTHING_ARC
+		   clr_country_flag = custom_treaty_loser
+		   government = autonomous_dependency
+	       war_exhaustion = -50
+	       ruling_party_ideology = conservative
+	       political_reform = none_voting
+	       political_reform = party_appointed
+       	   political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = four_year_draft
+           political_reform = first_past_the_post
+	       political_reform = underground_parties 
+	       clr_country_flag = tory_election_win
+	       clr_country_flag = socialist_election_win
+	       clr_country_flag = liberal_election_win
+	       clr_country_flag = communist_election_win
+	       clr_country_flag = fascist_election_win
+	       clr_country_flag = reactionary_election_win
+	       clr_country_flag = anarcho_liberal_election_win
+	       clr_country_flag = social_liberal_election_win
+	       clr_country_flag = market_liberal_election_win
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = democracy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+    	   clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+		   add_country_modifier = {
+			  name = ARC_MILITARY_OCCUPATION
+			  duration = -1
+		   }
+		}
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - LIONS OR BURGUNDIAN VICTORY - COMPLETE DISMANTLEMENT OF PLA - IF BURGUNDIAN THEN ANNEX LOU ##################
+
+country_event = {
+	id = 79165
+	title = "ARCGEN66.T"
+	desc = "ARCGEN66.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = NBG
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   war = no
+	   OR = {
+	      has_global_flag = NBG_LIONS
+		  has_global_flag = NBG_LIONS_RADICAL
+		  has_global_flag = NBG_BURGUNDIAN
+	   }
+	   PLA = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN66.A"
+		PLA = { 
+		remove_country_modifier = ALL_OR_NOTHING_ARC 
+		country_event = { id = 791650 days = 3 } 
+		clr_country_flag = custom_treaty_loser 
+        any_owned = {
+            limit = {
+                is_core = CHE
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = ATS
+            }
+			remove_core = PLA
+			add_core = LOU
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = PLA
+            secede_province = OUM
+        }			
+		}
+		war_exhaustion = 30
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		CHE = { government = democracy }
+		147 = { add_core = OUM }
+		random_owned = { 
+		   limit = { owner = { has_global_flag = NBG_BURGUNDIAN } }
+		   owner = { country_event = { id = 7916500 days = 3 } }
+		}
+    }	
+}
+
+# Authority completely collapses in the black belt - LIB appears
+
+country_event = {
+	id = 791650
+	title = "ARCGEN666.T"
+	desc = "ARCGEN666.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+	   name = "ARCGEN666.A"
+	   PLA_198 = { add_core = LIB }
+	   PLA_187 = { add_core = LIB }
+	   LOU = { all_core = { add_core = LIB } }
+       any_owned = {
+            limit = {
+                is_core = LIB
+            }
+            secede_province = LIB
+       }
+    }	
+}
+
+# Burgundians annex LOU
+
+country_event = {
+	id = 7916500
+	title = "ARCGEN6666.T"
+	desc = "ARCGEN6666.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+	   name = "ARCGEN6666.A"
+	   prestige = 10
+	   inherit = LOU
+	   LOU = { all_core = { add_core = NBG } }
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - WHITE PEACE - Alternative ARC decision is enabled after mass politics for Arcadians. Burgundians can still go conquering after MP but minus the dismantling. Lions get nothing. ##################
+
+country_event = {
+	id = 791660
+	title = "ARCGEN670.T"
+	desc = "ARCGEN670.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = NBG
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   war = no
+	   NOT = { has_country_flag = custom_treaty_loser }
+	   NOT = { PLA = { has_country_flag = custom_treaty_loser } }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN670.A"
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		prestige_factor = -0.5
+		war_exhaustion = 50
+		set_country_flag = ARC_ENABLE_PLAN_B
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		PLA = { remove_country_modifier = ALL_OR_NOTHING_ARC war_exhaustion = 50 set_country_flag = ARC_ENABLE_PLAN_B prestige_factor = -0.5 }	
+		VIN = { set_country_flag = VIN_unblock_expansion }
+	}
+}
+
+############# CHECK FLAG IS SET IF FOURTEEN DAYS EXPIRES WITHOUT ANY MILITARY INTERVENTION THEN THE "ARCADIAN UNIFICATION POSSIBLE" FLAG WILL BE SET FOR THE WINNER ########
+
+country_event = {
+	id = 79166
+	title = "ARCGEN67.T"
+	desc = "ARCGEN67.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	}
+	
+	mean_time_to_happen = { 
+		 days = 30
+	}
+	
+	option = {
+		name = "ARCGEN67.A"
+        prestige = 5
+		clr_country_flag = SAW_WINNER
+	    clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR		
+		set_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
+    }	
+}
+
+############# VIN INTERVENTION CHECK - EITHER HAS ONE OF THE STOLEN FLAGS AND THE APPROPRATE TAG IS THE SAW WINNER #############
+
+country_event = {
+	id = 79167
+	title = "ARCGEN68.T"
+	desc = "ARCGEN68.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	   is_vassal = no
+	   OR = {
+	      AND = {
+	         PLA = { has_country_flag = SAW_WINNER }
+			 has_country_flag = VIN_NUN_stolen
+	      }
+	      AND = {
+	         NBG = { has_country_flag = SAW_WINNER }
+			 has_country_flag = VIN_IRO_stolen
+	      }	
+          NOT = { owns = 55 }		  
+       } 
+       NOT = { has_country_flag = ARC_VIN_CONFIRMED }
+       NOT = { has_country_flag = VIN_counter_arcadia }	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN68.A"
+		set_country_flag = ARC_VIN_CONFIRMED
+        any_country = {
+		   limit = {
+		      has_country_flag = SAW_WINNER
+		   }
+		   country_event = { id = 79168 days = 4 }
+		}	
+    }	
+}
+
+############# VIN INTERVENTION CHECK - IF VIN WANTS TO KILL OFF ARCADIA THEN USE THIS OVERRIDE EVENT TO AUTOTRIGGER INTERVENTION #############
+
+country_event = {
+	id = 791670
+	title = "ARCGEN680.T"
+	desc = "ARCGEN680.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	   has_country_flag = VIN_counter_arcadia
+       NOT = { has_country_flag = ARC_VIN_CONFIRMED }	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN680.A"
+		prestige = 10
+	    any_pop = {
+		   militancy = -3
+	    }
+		set_country_flag = ARC_VIN_CONFIRMED
+		set_global_flag = VIN_THIRD_ARCADIAN_WAR
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR	
+    }	
+}
+
+### The SAW Winner is told that VIN intends to end the Arcadian Dream once and for all ####
+
+### The SAW Winner is told by VIN to give all claimed territories of SKR back to them or risk immediate war!
+
+country_event = {
+	id = 79168
+	title = "ARCGEN69.T"
+	desc = "ARCGEN69.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	
+	# We are the new hegemony of the continent and we don't give a FUCK what you think.
+	
+	option = {
+		name = "ARCGEN69.A"
+		prestige = 5
+		war_exhaustion = 10
+		badboy = -10
+		VIN = { country_event = { id = 79169 days = 1 } }
+	    ai_chance = { 
+	        factor = 50
+		}
+    }	
+	
+	# If this will get you off our back
+	
+	option = {
+		name = "ARCGEN69.B"
+		set_country_flag = VIN_TREATY
+		prestige = -5
+		war_exhaustion = -5
+		any_country = {
+		    limit = {
+			   tag = NUN
+			   vassal_of = THIS
+			}
+            annex_to = THIS
+	    }
+        any_country = {
+           limit = { 
+             vassal_of = THIS
+             government = autonomous_dependency	
+           }
+           country_event = 791680
+        } 			
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+	    ai_chance = { 
+	        factor = 50
+			modifier = {
+				factor = 0
+				NOT = { 
+				   OR = {
+				      government = hms_government
+				      government = democracy
+					  government = parliamentary_republic
+					  government = socialist_republic
+				   }
+			   }
+			}
+		}
+    }	
+}
+
+
+# Cleanup event for the vassal to also give VIN its stuff back. You don't really need to localize this you know.
+
+country_event = {
+	id = 791680
+	title = "ARCGEN690.T"
+	desc = "ARCGEN690.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN690.A"		   
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+    }	
+}
+
+### ... and ever we fight on - VIN chooses if it will go in or not
+
+country_event = {
+	id = 79169
+	title = "ARCGEN70.T"
+	desc = "ARCGEN70.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	
+	# The Arcadian Dream shall die
+	
+	option = {
+		name = "ARCGEN70.A"
+		prestige = 10
+		clr_country_flag = VIN_IRO_stolen
+		set_country_flag = VINTAW_INTERVENTION
+		set_global_flag = VIN_THIRD_ARCADIAN_WAR
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	    ai_chance = { 
+	        factor = 90
+	    }
+    }	
+	
+	# Eh.
+	
+	option = {
+		name = "ARCGEN70.A"
+		random_owned = {
+		   limit = { owner = { has_country_flag = VIN_IRO_stolen } }
+		   owner = { clr_country_flag = VIN_IRO_stolen set_country_flag = VIN_TREATY }
+		}
+		prestige = -10
+	    ai_chance = { 
+	        factor = 10
+	    }
+    }	
+}
+
+############# DNG INTERVENTION CHECK - WILL ALWAYS INTERVENE - May not intervene in future depending on DNG content #############
+
+country_event = {
+	id = 79170
+	title = "ARCGEN71.T"
+	desc = "ARCGEN71.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = DNG
+	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	   NOT = { exists = OUM }
+       NOT = { has_country_flag = ARC_DNG_CONFIRMED }	   
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN71.A"
+		set_country_flag = ARC_DNG_CONFIRMED
+        any_country = {
+		   limit = {
+		      has_country_flag = SAW_WINNER
+		   }
+		   country_event = { id = 79171 days = 4 }
+		}
+    }	
+}
+
+### The SAW Winner is told by DNG to sign a border demarkation treaty or will be invaded by DNG
+
+country_event = {
+	id = 79171
+	title = "ARCGEN72.T"
+	desc = "ARCGEN72.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	
+	# Oh Look. The Chinese-Arcadians are being cute. This is our continent and you can go back to China where you belong
+	
+	option = {
+		name = "ARCGEN72.A"
+		prestige = 5
+		war_exhaustion = 10
+		badboy = -10
+		VIN = { country_event = { id = 79172 days = 1 } }
+	    ai_chance = { 
+	        factor = 50
+		}
+    }	
+	
+	# If this will get you off our back
+	
+	option = {
+		name = "ARCGEN72.B"
+		prestige = -5
+		war_exhaustion = -5	   
+		NA_115 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_106 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_109 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
+        any_owned = {
+            limit = {
+                is_core = DNG
+            }
+            secede_province = DNG
+        }
+		PLA = {		
+        any_owned = {
+            limit = {
+                is_core = DNG
+            }
+            secede_province = DNG
+        }
+		}
+    }	
+}
+
+
+### ... the Dragon Awakens - DNG chooses if it will go in or not
+
+country_event = {
+	id = 79172
+	title = "ARCGEN73.T"
+	desc = "ARCGEN73.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	
+	# The East shall fear the west
+	
+	option = {
+		name = "ARCGEN73.A"
+		prestige = 10
+		set_global_flag = DNG_THIRD_ARCADIAN_WAR
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+	    ai_chance = { 
+	        factor = 90
+	    }
+    }	
+	
+	# I don't feel like crossing the mountains
+	
+	option = {
+		name = "ARCGEN73.B"
+		prestige = -10
+	    ai_chance = { 
+	        factor = 10
+	    }
+    }	
+}
+
+################### THE (FINAL) THIRD ARCADIAN WAR - DNG #####################
+
+####### The Dragon Awakens #######
+
+country_event = {
+	id = 79173
+	title = "ARCGEN74.T"
+	desc = "ARCGEN74.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = DNG_THIRD_ARCADIAN_WAR 
+	   NOT = { has_global_flag = VIN_THIRD_ARCADIAN_WAR }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		 days = 14
+	}
+	
+	option = {
+		name = "ARCGEN74.A"
+		clr_global_flag = DNG_THIRD_ARCADIAN_WAR 
+		set_global_flag = THIRD_ARCADIAN_WAR 
+		DNG = {
+		relation = { who = THIS value = -200 }
+		diplomatic_influence = { who = THIS value = -200 }
+		leave_alliance = THIS
+	    war = {
+	     target = THIS
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = cut_down_to_size
+		     }	
+			 call_ally = yes
+	    }
+		}
+    }	
+}
+
+################### THE (FINAL) THIRD ARCADIAN WAR - VIN #####################
+
+####### The North has had enough #######
+
+country_event = {
+	id = 79174
+	title = "ARCGEN75.T"
+	desc = "ARCGEN75.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = VIN_THIRD_ARCADIAN_WAR 
+	   NOT = { has_global_flag = DNG_THIRD_ARCADIAN_WAR }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		 days = 14
+	}
+	
+	option = {
+		name = "ARCGEN75.A"
+		clr_global_flag = VIN_THIRD_ARCADIAN_WAR 
+		set_global_flag = THIRD_ARCADIAN_WAR 
+		VIN = {
+		relation = { who = THIS value = -200 }
+		diplomatic_influence = { who = THIS value = -200 }
+		leave_alliance = THIS
+	    war = {
+	     target = THIS
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = cut_down_to_size
+		     }	
+			 call_ally = yes
+	    }
+		}
+    }	
+}
+
+################### THE (FINAL) THIRD ARCADIAN WAR - VIN AND DNG #####################
+
+####### You've declared war on the entire continent. Good Job. #######
+
+country_event = {
+	id = 79175
+	title = "ARCGEN76.T"
+	desc = "ARCGEN76.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = VIN_THIRD_ARCADIAN_WAR 
+	   has_global_flag = DNG_THIRD_ARCADIAN_WAR 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		 days = 14
+	}
+	
+	option = {
+		name = "ARCGEN76.A"
+		clr_global_flag = DNG_THIRD_ARCADIAN_WAR
+		clr_global_flag = VIN_THIRD_ARCADIAN_WAR 
+		set_global_flag = THIRD_ARCADIAN_WAR 
+		VIN = {
+		relation = { who = THIS value = -200 }
+		diplomatic_influence = { who = THIS value = -200 }
+		leave_alliance = THIS
+	    war = {
+	     target = THIS
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = cut_down_to_size
+		     }	
+			 call_ally = yes
+	    }
+		}
+		DNG = {
+		relation = { who = THIS value = -200 }
+		diplomatic_influence = { who = THIS value = -200 }
+		leave_alliance = THIS
+	    war = {
+	     target = THIS
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = cut_down_to_size
+		     }	
+			 call_ally = yes
+	    }
+		}
+    }	
+}
+
+### The only victory for VIN and DNG is a total victory. One of them must enforce the custom treaty CB for them to win.
+
+################### THIRD ARCADIAN WAR - CUSTOM_TREATY_CB IS ENFORCED - The Death of the Arcadian Dream - PLA/NBG is restored back to normal with OUM released from PLA - ARCADIAN UNIFICATION IS COMPLETELY BLOCKED FOREVER #####################
+
+country_event = {
+	id = 79176
+	title = "ARCGEN77.T"
+	desc = "ARCGEN77.D"
+	#picture = "war_ended"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = NBG
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = THIRD_ARCADIAN_WAR 
+	   war = no
+	   has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+		 days = 7
+	}
+	
+	immediate = {
+	    set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+		inherit = PLA
+     }		
+	
+	option = {
+		name = "ARCGEN77.A"
+		prestige_factor = -0.5
+		any_country = {
+		   limit = { 
+		      primary_culture = septiman
+			  has_country_flag = unreleasable_country
+		   }
+		   clr_country_flag = unreleasable_country
+		}
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = SAW_WINNER
+	    clr_global_flag = THIRD_ARCADIAN_WAR 
+		set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+		NA_115 = { add_core = DNG }
+		NA_106 = { add_core = DNG }
+		NA_109 = { add_core = DNG }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = DNG
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = DNG
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = OUM
+        }
+        any_owned = {
+            limit = {
+                is_core = PLA
+            }
+			remove_core = NBG
+            secede_province = PLA
+        }
+		PLA = { 
+			set_country_flag = abolition_monarchy
+	        government = democracy
+	        ruling_party_ideology = conservative
+	        political_reform = federalism
+	        political_reform = one_year_draft
+	        political_reform = free_press
+	        political_reform = yes_meeting
+	        political_reform = secret_ballots
+	        political_reform = culture_voting_only
+	        political_reform = population_equal_weight
+	        political_reform = jefferson_method
+	        political_reform = universal_voting
+			political_reform = no_slavery
+	        set_country_flag = tory_election_win
+	        clr_country_flag = socialist_election_win
+	        clr_country_flag = liberal_election_win
+	        clr_country_flag = communist_election_win
+	        clr_country_flag = fascist_election_win
+	        clr_country_flag = reactionary_election_win
+	        clr_country_flag = anarcho_liberal_election_win
+	        clr_country_flag = social_liberal_election_win
+	        clr_country_flag = market_liberal_election_win
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+    	    clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+            any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = LOU
+            }
+            any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = DNG
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = DNG
+            }
+            any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = OUM
+            }
+	    }
+		DNG = { all_core = { remove_core = PLA remove_core = NBG } create_vassal = OUM country_event = 791760 }
+		VIN = { all_core = { remove_core = PLA remove_core = NBG } }		
+    }	
+}
+
+country_event = {
+	id = 791761
+	title = "ARCGEN771.T"
+	desc = "ARCGEN771.D"
+	#picture = "war_ended"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = THIRD_ARCADIAN_WAR 
+	   war = no
+	   has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+		 days = 7
+	}
+	
+	immediate = {
+	    set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+		inherit = NUN
+		inherit = NBG
+     }	
+	
+	option = {
+		name = "ARCGEN771.A"
+		prestige_factor = -0.5
+		any_country = {
+		   limit = { 
+		      primary_culture = septiman
+			  has_country_flag = unreleasable_country
+		   }
+		   clr_country_flag = unreleasable_country
+		}
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = SAW_WINNER
+	    clr_global_flag = THIRD_ARCADIAN_WAR 
+		set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+		NA_115 = { add_core = DNG }
+		NA_106 = { add_core = DNG }
+		NA_109 = { add_core = DNG }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = DNG
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = DNG
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = OUM
+        }
+        any_owned = {
+            limit = {
+                is_core = NBG
+            }
+			remove_core = PLA
+            secede_province = NBG
+        }
+		NBG = { 
+            nationalvalue = nv_prosperity
+	        government = parliamentary_republic
+	        ruling_party_ideology = liberal
+	        political_reform = unitary
+	        political_reform = one_year_draft
+	        political_reform = free_press
+	        political_reform = yes_meeting
+	        political_reform = secret_ballots
+	        political_reform = culture_voting_only
+	        political_reform = population_equal_weight
+	        political_reform = jefferson_method
+	        political_reform = universal_voting
+			political_reform = no_slavery
+	        clr_country_flag = tory_election_win
+	        clr_country_flag = socialist_election_win
+	        set_country_flag = liberal_election_win
+	        clr_country_flag = communist_election_win
+	        clr_country_flag = fascist_election_win
+	        clr_country_flag = reactionary_election_win
+	        clr_country_flag = anarcho_liberal_election_win
+	        clr_country_flag = social_liberal_election_win
+	        clr_country_flag = market_liberal_election_win
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        set_country_flag = parliamentary_republic_gov
+	        clr_country_flag = democracy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+    	    clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        set_global_flag = NBG_LIONS
+			clr_global_flag = NBG_BURGUNDIANS
+			clr_global_flag = NBG_NEW_ARCADIANS
+			clr_global_flag = NBG_OLD_ARCADIANS
+            any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = LOU
+            }
+            any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = DNG
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = DNG
+            }
+            any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = OUM
+            }
+	    }
+		DNG = { all_core = { remove_core = PLA remove_core = NBG } create_vassal = OUM country_event = 791760 }
+		VIN = { all_core = { remove_core = PLA remove_core = NBG } }		
+    }	
+}
+
+country_event = {
+	id = 791760
+	title = "ARCGEN770.T"
+	desc = "ARCGEN770.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN77.A"		
+		badboy = 15
+		inherit = OUM	
+	    ai_chance = { 
+	        factor = 10
+		}	
+     }
+	 
+	option = {
+		name = "ARCGEN77.B"
+		prestige = 5
+	    ai_chance = { 
+	        factor = 10
+		}
+     }
+}
+	
+################### THIRD ARCADIAN WAR - SET ARCADIAN UNIFICATION POSSIBLE IF THE WAR ENDS AND SAW WINNER DOES NOT HAVE CUSTOM_TREATY_CB SET. #####################	
+	
+country_event = {
+	id = 79177
+	title = "ARCGEN78.T"
+	desc = "ARCGEN78.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   has_country_flag = SAW_WINNER
+	   has_global_flag = THIRD_ARCADIAN_WAR 
+	   war = no
+	   NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 7
+	}
+	
+	option = {
+		name = "ARCGEN78.A"
+        prestige = 10
+		clr_country_flag = SAW_WINNER
+	    clr_global_flag = THIRD_ARCADIAN_WAR 	
+		set_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
+    }	
+}
+
+################### DNG intervenes in OUM and siezes the west #####################	
+	
+country_event = {
+	id = 79178
+	title = "ARCGEN79.T"
+	desc = "ARCGEN79.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = DNG
+	   has_global_flag = DGL_is_here 
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN79.A"
+		clr_global_flag = DGL_is_here 
+		NA_115 = { remove_core = OUM remove_core = ARC remove_core = PLA add_core = THIS }
+		NA_106 = { remove_core = OUM remove_core = ARC remove_core = PLA add_core = THIS }
+		NA_109 = { remove_core = OUM remove_core = ARC remove_core = PLA }
+		OUM = {
+            any_owned = {
+            limit = {
+                is_core = DNG
+            }
+            secede_province = DNG
+            }
+            any_owned = {
+            limit = {
+                region = NA_109
+            }
+			add_core = DNG
+			secede_province = DNG
+            }
+		}
+    }	
+}
+
+################### VIN decides to delete NBG #####################	
+
+country_event = {
+	id = 79179
+	title = "ARCGEN80.T"
+	desc = "ARCGEN80.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN80.A"
+		any_country = {
+		   limit = { 
+		      primary_culture = septiman
+			  has_country_flag = unreleasable_country
+		   }
+		   clr_country_flag = unreleasable_country
+		}
+        any_owned = {
+               limit = {
+                   is_core = LOU
+               }
+			   remove_core = NBG
+               secede_province = LOU
+        }
+        any_owned = {
+               limit = {
+                   is_core = CBV
+               }
+			   remove_core = NBG
+               secede_province = PLA
+        }		
+        any_owned = {
+               limit = {
+                   is_core = CPH 
+               }
+			   remove_core = NBG
+               secede_province = CPH 
+        }	
+        any_owned = {
+               limit = {
+                   is_core = CNL
+               }
+			   remove_core = NBG
+               secede_province = CNL
+        }
+		change_tag = CNF
+    }	
+}
+
+################### VIN decides to break PLA #####################	
+
+country_event = {
+	id = 79180
+	title = "ARCGEN81.T"
+	desc = "ARCGEN81.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN81.A"
+		country_event = { id = 791650 days = 3 } 
+        any_owned = {
+            limit = {
+                is_core = CHE
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = ATS
+            }
+			remove_core = PLA
+			add_core = LOU
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = PLA
+            secede_province = OUM
+        }
+    }	
+}
+
+################### Overpowered has formed and you are getting annexed into it #####################	
+
+country_event = {
+	id = 79181
+	title = "ARCGEN810.T"
+	desc = "ARCGEN810.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN810.A"
+		all_core = { add_core = AFN }
+		remove_country_modifier = AFN_council
+		AFN = { inherit = THIS }	
+	}
+}
+
+#### Vinlandic Border Treaty Events #####
+
+#### The Honest Truth - Intervened in Third Arcadian War and either WP or lost - ARC gets whatever it wants due to having massive leverage #####
+
+country_event = {
+	id = 79182
+	title = "ARCGEN82.T"
+	desc = "ARCGEN82.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = VIN_FISHING 
+	   has_country_flag = VINTAW_INTERVENTION
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN82.A"
+		clr_country_flag = VINTAW_INTERVENTION
+		clr_global_flag = VIN_FISHING
+		ARC = { set_country_flag = puppet_VIN_possible }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                region = VIN_161
+            }
+            secede_province = ARC
+        }
+    }	
+}
+
+#### Arcadian Demands - ARC wants everything except for for the north bank and refusal will mean war - ARC has some leverage over VIN #####
+
+country_event = {
+	id = 79183
+	title = "ARCGEN83.T"
+	desc = "ARCGEN83.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = VIN_FISHING 
+	   OR = {
+	     ARC = { has_country_flag = NBG_claim_lakeshore }
+		 has_country_flag = VINSKR_INTERVENTION
+	   }	  
+	   NOT = { has_country_flag = VINTAW_INTERVENTION }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN83.A"
+		clr_country_flag = VINSKR_INTERVENTION
+		clr_global_flag = VIN_FISHING
+		ARC = { clr_country_flag = NBG_claim_lakeshore }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                region = VIN_161
+            }
+            secede_province = ARC
+        }
+	    ai_chance = { 
+	        factor = 75
+	        modifier = {
+	           factor = 0.3
+               allied_with = CLM
+            }
+	        modifier = {
+	           factor = 0.3
+               allied_with = DNG
+            }
+	        modifier = {
+	           factor = 0.6
+               any_greater_power = { alliance_with = THIS }
+            }
+		}
+    }	
+	
+	option = {
+		name = "ARCGEN83.B"
+		clr_country_flag = VINSKR_INTERVENTION
+		clr_global_flag = VIN_FISHING
+		ARC = { clr_country_flag = NBG_claim_lakeshore }
+		prestige = 5
+		ARC = { country_event = { id = 79185 days = 3 } }
+	    ai_chance = { 
+	        factor = 25
+	        modifier = {
+	           factor = 3
+               allied_with = CLM
+            }
+	        modifier = {
+	           factor = 3
+               allied_with = DNG
+            }
+	        modifier = {
+	           factor = 2
+               any_greater_power = { alliance_with = THIS }
+            }
+		}
+    }
+}
+
+#### Arcadian Demands - ARC holds no leverage over VIN #####
+
+country_event = {
+	id = 79184
+	title = "ARCGEN84.T"
+	desc = "ARCGEN84.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = VIN_FISHING 
+	   OR = {
+	      NOT = { has_global_flag = SKR_IS_FRESH_MEAT }
+		  VIN = { has_country_flag = VIN_NUN_stolen }	  	  
+	   }	  
+	   NOT = { has_country_flag = VINTAW_INTERVENTION }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN84.A"
+		clr_country_flag = VINSKR_INTERVENTION
+		clr_global_flag = VIN_FISHING
+		clr_country_flag = VIN_NUN_stolen
+        any_owned = {
+            limit = {
+                is_core = IRO
+				NOT = { region = VIN_55 }
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = ARC
+        }
+	    ai_chance = { 
+	        factor = 90
+	        modifier = {
+	           factor = 0.3
+               allied_with = CLM
+            }
+	        modifier = {
+	           factor = 0.3
+               allied_with = DNG
+            }
+	        modifier = {
+	           factor = 0.6
+               any_greater_power = { alliance_with = THIS }
+            }
+		}
+    }	
+	
+	option = {
+		name = "ARCGEN84.B"
+		clr_country_flag = VINSKR_INTERVENTION
+		clr_global_flag = VIN_FISHING
+		clr_country_flag = VIN_NUN_stolen
+		prestige = 5
+		ARC = { country_event = { id = 79185 days = 3 } }
+	    ai_chance = { 
+	        factor = 10
+	        modifier = {
+	           factor = 5
+               allied_with = CLM
+            }
+	        modifier = {
+	           factor = 5
+               allied_with = DNG
+            }
+	        modifier = {
+	           factor = 3
+               any_greater_power = { alliance_with = THIS }
+            }
+		}
+    }
+}
+
+#### VIN refused #####
+
+country_event = {
+	id = 79185
+	title = "ARCGEN85.T"
+	desc = "ARCGEN85.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN85.A"
+		prestige = -5
+	    ai_chance = { 
+	        factor = 10
+	        modifier = {
+	           factor = 9
+               war_policy = pacifist
+            }
+	        modifier = {
+	           factor = 0
+               war_policy = jingoism
+            }
+	        modifier = {
+	           factor = 5
+               war_policy = anti_military
+            }
+		}
+    }	
+	
+	option = {
+		name = "ARCGEN85.B"
+        set_global_flag = ARC_VIN_WAR
+		VIN = { 
+			add_country_modifier = {
+				name = ALL_OR_NOTHING_ARC
+				duration = 720
+			}
+	    }
+	    war = {
+	     target = VIN
+		     attacker_goal =  { 
+			    casus_belli = custom_treaty_cb
+		     }
+		     defender_goal = {
+			    casus_belli = cut_down_to_size
+		     }	
+			 call_ally = yes
+	    }		
+	    ai_chance = { 
+	        factor = 90
+	        modifier = {
+	           factor = 0
+               war_policy = pacifist
+            }
+	        modifier = {
+	           factor = 0.5
+               war_policy = anti_military
+            }
+		}
+    }
+}
+
+#### ARC was unable to enforce its rule over SKR and the land had fallen back to VIN #####
+
+country_event = {
+	id = 79186
+	title = "ARCGEN86.T"
+	desc = "ARCGEN86.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = VIN
+	   has_global_flag = ARC_VIN_WAR
+	   NOT = { has_country_flag = custom_treaty_loser }
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN86.A"
+		prestige = 30
+		clr_global_flag = ARC_VIN_WAR
+		ARC = {
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+		}
+    }	
+}
+
+#### ARC takes all SKR land #####
+
+country_event = {
+	id = 79187
+	title = "ARCGEN87.T"
+	desc = "ARCGEN87.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = ARC
+	   has_global_flag = ARC_VIN_WAR
+	   VIN = { has_country_flag = custom_treaty_loser }
+	   war = no
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN87.A"
+		prestige = 20
+		VIN = { clr_country_flag = custom_treaty_loser }
+		set_country_flag = puppet_VIN_possible 
+		clr_global_flag = ARC_VIN_WAR
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+            secede_province = ARC
+        }
+        any_owned = {
+            limit = {
+                region = VIN_161
+            }
+            secede_province = ARC
+        }
+    }	
+}

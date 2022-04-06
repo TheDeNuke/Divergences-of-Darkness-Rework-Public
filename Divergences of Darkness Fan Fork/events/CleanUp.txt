@@ -1205,19 +1205,10 @@ country_event = {
 	news_desc_short = "EVTDESC60160_NEWS_SHORT"
 	picture = "Unite"
 	
-	trigger = {
-		exists = yes
-		war = no
-		NOT = { has_country_flag = existing_country }
-	}
-	
-	mean_time_to_happen = {
-		days = 3
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = "Hurrah for $COUNTRY$!"
-		set_country_flag = existing_country
 		any_pop = {
 			limit = { is_primary_culture = yes }
 			militancy = -2
@@ -1395,13 +1386,6 @@ country_event = {
 				activate_technology = flintlock_rifles
 			}
 		}		
-		any_country = {
-			limit = {
-				exists = no
-				has_country_flag = existing_country
-			}
-			clr_country_flag = existing_country
-		}
 	}
 }
 
@@ -2418,51 +2402,27 @@ country_event = {
 
     option = {
         name = "EVT6016823OPTA"
-        add_country_modifier = { name = law_changed_by_force duration = 365 }
-            random_owned = {
+            add_country_modifier = { name = law_changed_by_force duration = 365 }
+            any_owned = {
                 limit = {
-                    owner = {
-                        any_owned_province = { has_pop_type = serfs }
-                        NOT = { debt_law = serfdom }
-                    }
+                    has_pop_type = serfs
+                    has_pop_type = labourers
                 }
-                owner = {
-                    any_owned = {
-                        limit = {
-                            has_pop_type = serfs
-                            has_pop_type = labourers
-                        }
-                        any_pop = { limit = { type = serfs } pop_type = labourers }
-                    }
-                    any_owned = {
-                        limit = {
-                            has_pop_type = serfs
-                            has_pop_type = farmers
-                        }
-                        any_pop = { limit = { type = serfs } pop_type = farmers }
-                    }
-                }
+                any_pop = { limit = { type = serfs } pop_type = labourers money = 1000 }
             }
-            any_country = {
+            any_owned = {
                 limit = {
-                    exists = yes
-                    any_owned_province = { has_pop_type = serfs }
-                    NOT = { debt_law = serfdom }
+                    has_pop_type = serfs
+                    has_pop_type = farmers
                 }
-                any_owned = {
-                    limit = {
-                        has_pop_type = serfs
-                        has_pop_type = labourers
-                    }
-                    any_pop = { limit = { type = serfs } pop_type = labourers }
+                any_pop = { limit = { type = serfs } pop_type = farmers money = 1000 }
+            }
+            any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    NOT = { has_pop_type = farmers has_pop_type = labourers }
                 }
-                any_owned = {
-                    limit = {
-                        has_pop_type = serfs
-                        has_pop_type = farmers
-                    }
-                    any_pop = { limit = { type = serfs } pop_type = farmers }
-                }
+                any_pop = { limit = { type = serfs } pop_type = farmers money = 1000 }
             }
     }
 }

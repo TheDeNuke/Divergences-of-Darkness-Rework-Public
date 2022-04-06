@@ -1,643 +1,759 @@
 political_decisions = {
+
+	
+	#### Old Flavor Decisions
+	
+	create_gendarmeria = { 
+	
+		picture = "Federales"
+		
+		potential = { 
+		tag = CLM 
+		NOT = { has_country_flag = gendarmerie_CLM }
+		}
+		
+		allow = { 
+		state_n_government = 1 
+		NOT = { num_of_revolts = 1 }
+		OR = {
+			average_militancy = 3
+			average_consciousness = 4
+			}
+		}
+		
+		effect = {  
+		add_country_modifier = { name = federales_CLM duration = -1 }
+		remove_country_modifier = divided_society
+		set_country_flag = gendarmerie_CLM
+		}
+	}
+	
+	sponsor_transcontinental = { 
+		
+		potential = { 
+		OR = { 
+		tag = SPC
+		tag = CLM 
+		tag = LST 
+		tag = ARC
+			}
+		owns = 137 
+		owns = 136
+		owns = 105
+		owns = 104 
+		owns = 100 
+		owns = 90 
+		NOT = { has_global_flag = transcontinental_railroad }
+		}
+		
+		allow = { 
+		iron_railroad = 1 
+		}
+		
+		effect = { 
+		prestige = 15
+		set_global_flag = transcontinental_railroad 
+		137 = { infrastructure = 1 life_rating = 7 }
+		136 = { infrastructure = 1 life_rating = 2 }
+		105 = { infrastructure = 1 life_rating = 2 }
+		104 = { infrastructure = 1 life_rating = 2 }
+		100 = { infrastructure = 1 life_rating = 2 }
+		90 = { infrastructure = 1 life_rating = 5 }
+		}
+	
+	}
+	
+	#### CASTRO - The Colombian Empire
+
 		colombian_empire_from = {
 		
-		picture = emperor_colombia
-		
-		
-			potential = {
-				tag = CLM
-		   		has_global_flag = congress_of_panama_over
-				has_country_flag = dictatorshipgc
-		   		NOT = { has_global_flag = columbian_unity }
-				NOT = { has_global_flag = fall_of_all_the_colombia }
-			}
-			allow = {
-		        OR = { is_secondary_power = yes is_greater_power = yes }
-				NOT = { war = yes }
-				CLM = {
-					all_core = {
-						owned_by = THIS
-					}
-				}
-				NOT = { average_militancy = 3 }
-			}
-			effect = {
-				any_pop = {
-  					limit = {
-  					 	NOT = { culture = mexican }
-  			    		}
-  				militancy = 3
-          			consciousness = 3
-  				}
-				random_owned = {
-  					limit = {
-  					 	owner = {
-							GRA = {
-								all_core = {
-									owned_by = THIS
-								}
-							}
-						}
-					}
-					owner = {
-						add_accepted_culture = lusitanian
-    						add_accepted_culture = central_american
-						prestige = 10
-					}
-				}	
-    			prestige = 20
-					add_country_modifier = {
-						name = fight_the_power
-					duration = 2000
-					}			
-				clr_country_flag = dictatorshipgc
-				set_country_flag = empiregc
-    				set_global_flag = columbian_unity
-				    political_reform = federalism
-    				government = absolute_monarchy
-    				political_reform = none_voting
-    				political_reform = appointed
-    				political_reform = yes_meeting
-    				political_reform = state_press
-    				political_reform = state_controlled
-    				political_reform = secret_ballots
-			}
-			ai_will_do = {
-				factor = 1
-			}
-		}
-		
-		colombian_empire = {
-		picture = emperor_colombia
-			potential = {
-				NOT = { CLM = { exists = yes } }
-		    		has_global_flag = congress_of_panama_over
-		    		NOT = { has_global_flag = columbian_unity }
-				NOT = { has_global_flag = fall_of_all_the_colombia }
-				OR = {
-					tag = MEX
-					tag = JLS
-					tag = UCA
-					#tag = LST
-				}
-			}
-			allow = {
-				NOT = { average_militancy = 3 }
-				is_greater_power = yes
-				NOT = { war = yes }
-				MEX = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				JLS = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				UCA = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				LST = {
-				    OR = {
-					has_country_flag = claim_old_portugal			
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						   }
-					   }
-					}
-				}
-			}
-			effect = {
-				any_pop = {
-  					limit = {
-  					 	NOT = { culture = mexican }
-  			    		}
-  				militancy = 3
-          		consciousness = 3
-  				}
-    			primary_culture = mexican
-    			prestige = 30
-    			set_global_flag = columbian_unity
-				political_reform = federalism
-    			government = absolute_monarchy
-				capital = 2172
-				change_tag = CLM
-				any_owned = {
-						limit = {
-							OR = {
-								AND = {
-								is_core = LST
-								NOT = { is_core = POR }
-								}
-								is_core = JLS
-								is_core = MEX
-								is_core = UCA
-							}
-						}
-						add_core = CLM
-				}
-    			political_reform = none_voting
-    			political_reform = appointed
-    			political_reform = yes_meeting
-    			political_reform = state_press
-    			political_reform = state_controlled
-    			political_reform = secret_ballots
-				set_country_flag = empiregc
-			}
-			ai_will_do = {
-				factor = 1
-			}
-		}
-		
-		colombian_empire2 = {
-		
-		picture = emperor_colombia
-		
-	
-			potential = {
-				NOT = { CLM = { exists = yes } }
-		    	has_global_flag = partial_peace
-				government = presidential_dictatorship
-				OR = {
-					tag = MEX
-					tag = JLS
-					tag = UCA
-					#tag = LST
-				}
-			}
-			allow = {
-				NOT = { average_militancy = 3 }
-				is_greater_power = yes
-				NOT = { war = yes }
-				MEX = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				JLS = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				UCA = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				LST = {
-				    OR = {
-					has_country_flag = claim_old_portugal			
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						   }
-					   }
-					}
-				}
-			}
-			effect = {
-				any_pop = {
-  					limit = {
-  					 	NOT = { culture = mexican }
-  			    		}
-  				militancy = 3
-          		consciousness = 3
-  				}
-    			primary_culture = mexican
-    			prestige = 30
-    			set_global_flag = columbian_unity
-    			government = absolute_monarchy
-				political_reform = federalism
-				capital = 2172
-				change_tag = CLM
-				any_owned = {
-						limit = {
-							OR = {
-								AND = {
-								is_core = LST
-								NOT = { is_core = POR }
-								}
-								is_core = JLS
-								is_core = MEX
-								is_core = UCA
-							}
-						}
-						add_core = CLM
-				}
-    			political_reform = none_voting
-    			political_reform = appointed
-    			political_reform = yes_meeting
-    			political_reform = state_press
-    			political_reform = state_controlled
-    			political_reform = secret_ballots
-				set_country_flag = empiregc
-			}
-			ai_will_do = {
-				factor = 1
-			}
-		}
-	
-		colombian_republic = {
-			potential = {
-				NOT = { CLM = { exists = yes } }
-		    	has_global_flag = congress_of_panama_over
-		    	NOT = { has_global_flag = columbian_unity }
-				NOT = { has_global_flag = fall_of_all_the_colombia }
-				OR = {
-					tag = MEX
-					tag = JLS
-					tag = UCA
-					#tag = LST
-				}
-			}
-			allow = {
-				NOT = { average_militancy = 5 }
-				NOT = { war = yes }
-				MEX = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				JLS = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				UCA = {
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						}
-					}
-				}
-				LST = {
-				    OR = {
-					has_country_flag = claim_old_portugal			
-					all_core = {
-						OR = {
-							owned_by = THIS
-							owner = { in_sphere = THIS }
-							owner = { vassal_of = THIS }
-						   }
-					   }
-					}
-				}
-			}
-			effect = {
-				any_pop = {
-  					limit = {
-  					 	NOT = { culture = mexican }
-  			    		}
-  				militancy = 3
-          			consciousness = 3
-  				}
-    				primary_culture = mexican
-    				prestige = 10
-				capital = 2172
-				change_tag = CLM
-				any_owned = {
-						limit = {
-							OR = {
-								AND = {
-								is_core = LST
-								NOT = { is_core = POR }
-								}
-								is_core = JLS
-								is_core = MEX
-								is_core = UCA
-							}
-						}
-						add_core = CLM
-				}
-				any_country = {
-					any_owned = {
-						limit = {
-							OR = {
-								AND = {
-								is_core = LST
-								NOT = { is_core = POR }
-								}
-								is_core = JLS
-								is_core = MEX
-								is_core = UCA
-							}
-						}
-						add_core = CLM
-					}
-				}
-
-  				set_country_flag = dictatorshipgc
-				government = presidential_dictatorship
-				political_reform = unitary
-				political_reform = none_voting
-				political_reform = party_appointed
-				political_reform = no_meeting
-				political_reform = state_press
-				political_reform = no_trade_unions
-				political_reform = underground_parties
-			}
-			ai_will_do = {
-				factor = 1
-			}
-		}
-
-		embrace_colombian_unity = {
-		
-			picture = emperor_liberal_clm
-		
-			potential = {
-				tag = CLM
-				has_country_flag = empiregc
-				NOT = { has_global_flag = fall_of_all_the_colombia }
-			}
-			allow = {
-				NOT = { average_militancy = 1 }
-				is_greater_power = yes
-				NOT = { war = yes }
-				CLM = {
-					all_core = {
-						owned_by = THIS
-					}
-				}
-			}
-			effect = {
-				any_pop = {
-					limit = {
-						OR = {
-							NOT = { culture = mexican }
-							culture = mexican
-						}
-					}
-           				consciousness = 3
-    				}
-				clr_country_flag = empiregc
-				country_event = 46433
-			}
-			ai_will_do = {
-				factor = 1
-			}
-		}
-		
-		restore_greater_salvador = { 
-		
-		picture = restore_order_GC
-		
-		potential = { 
-		tag = SPA 
-		war = no
-		has_global_flag = partial_peace 
-		UCA = { exists = yes } 
-		CLM = { NOT = { exists = yes } }
-		}
-		
-		allow = { 
-		is_greater_power = yes 
-		war = no 
-		}
-		
-		effect = { 
-		badboy = 5 
-		any_country = {
-			limit = {
-			tag = UCA
-			}
-		country_event = 46484
-			}
-		}
+		    picture = emperor_colombia
 			
-		ai_will_do = { 
-		factor = 1 
+			potential = {
+				tag = CLM
+		   		has_country_flag = CASTO_CLM
+				government = presidential_dictatorship
+				NOT = { has_country_flag = IMPERIAL_CLM }
+			}
+			
+			allow = {
+			    OR = {
+		           is_greater_power = yes
+					CUB = {
+					   all_core = {
+						 owned_by = THIS
+					   }
+				    }
 				}
-		
-		}
-		
-		restore_lusitania = { 
-		picture = restore_order_GC
-		potential = { 
-		tag = SPA
-        OR = {		
-		has_global_flag = partial_peace 
-		has_country_flag = LSTSPAThreat
-        }		
-		war = no
-		LST = { exists = yes }
-		CLM = { NOT = { exists = yes } }
-		UCA = { NOT = { exists = yes } }
-		NOT = { LST = { vassal_of = SPA } }
-		}
-		
-		allow = { 
-		is_greater_power = yes 
-		war = no 
-		}
-		
-		effect = { 
-		clr_country_flag = LSTSPAThreat
-		any_country = {
-			limit = {
-			tag = LST
+				war = no
 			}
-		country_event = 46484
+			
+			effect = {	
+    		   prestige = 20		
+			   plurality = -50
+		       set_country_flag = IMPERIAL_CLM       
+	           government = absolute_monarchy
+	           ruling_party_ideology = reactionary
+			   political_reform = regionalism
+	           political_reform = none_voting
+	           political_reform = party_appointed
+	           political_reform = no_meeting
+	           political_reform = state_press
+	           political_reform = state_controlled
+	           political_reform = underground_parties
+	           political_reform = four_year_draft
+	           political_reform = all_voting_pops
+	           clr_country_flag = theocratic_government
+	           clr_country_flag = merchantrepublic_gov
+	           clr_country_flag = parliamentary_republic_gov
+	           clr_country_flag = communist_gov
+	           set_country_flag = absolute_monarchy_gov
+	           clr_country_flag = semi_constitutional_monarchy_gov
+	           clr_country_flag = constitutional_monarchy_gov
+	           clr_country_flag = presidential_dictatorship_gov
+	           clr_country_flag = fascist_gov
+	           clr_country_flag = anarcho_liberal_gov
+	           clr_country_flag = socialist_republic_gov
+	           clr_country_flag = fascist_monarchy_gov
+	           clr_country_flag = democracy_gov
+	           any_pop = {
+		       ideology = {
+			      value = reactionary
+			      factor = 0.1
+		       }
+		       ideology = {
+			      value = conservative
+			      factor = 0.2
+		       }
+	           }
+               upper_house = {
+               ideology = conservative
+               value = 0.20
+               }
+               upper_house = {
+               ideology = reactionary
+               value = 0.40
+               }
+	        }  
+			ai_will_do = {
+				factor = 1
 			}
-		badboy = 5 
+	}
+	
+	#### VICINTE - The New Federation - A player has somehow been successful to the point of GP status as Veracruz without collapse ####
+	
+	   colombian_republic_veracruz = {
+		
+		    picture = emperor_liberal_clm
+			
+			potential = {
+				tag = CLM
+		   		has_global_flag = VERACRUZ_ACTIVE
+				NOT = { has_country_flag = CLM_GRANADA_ENABLED }			
 			}
-		
-		ai_will_do = { 
-		factor = 1 
-		modifier = {
-		factor = 0
-		exists = QUI
-			    }
+			
+			allow = {
+		        is_greater_power = yes
+				war = no
+				election = no
 			}
-		}
-		
-		restore_quito = { 
-		picture = restore_order_GC
-		potential = { 
-		tag = SPA
-        OR = {		
-		has_global_flag = partial_peace 
-		has_country_flag = QUISPAThreat
-        }		
-		war = no
-		QUI = { exists = yes }
-		GRA = { NOT = { exists = yes } }
-		NOT = { QUI = { vassal_of = SPA } }
-		}
-		
-		allow = { 
-		is_greater_power = yes 
-		war = no 
-		}
-		
-		effect = { 
-		clr_country_flag = QUISPAThreat
-		any_country = {
-			limit = {
-			exists = yes
-			OR = {
-			tag = QUI
-			tag = ARE
-			   }
-			}
-		country_event = 46484
-		}
-		badboy = 5 
-		}
-		
-		ai_will_do = { 
-		factor = 1 
+			
+			effect = {	
+			prestige = 30
+			clr_global_flag = VERACRUZ_ACTIVE
+		    set_country_flag = CLM_GRANADA_ENABLED
+			LST = { all_core = { add_core = CLM } }
+			UCA = { all_core = { add_core = CLM } }
+			inherit = LST
+			inherit = UCA
+		    add_accepted_culture = central_american
+		    add_accepted_culture = lusitanian	    
+	        government = parliamentary_republic
+            political_reform = population_equal_weight
+            political_reform = universal_voting
+            political_reform = yes_meeting
+            political_reform = free_press
+            political_reform = proportional_representation
+            political_reform = secret_ballots
+		    political_reform = federalism
+            clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+            clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+            set_country_flag = parliamentary_republic_gov
+            clr_country_flag = democracy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+		    election = yes
+	        any_pop = {
+		    ideology = {
+			   value = reactionary
+			   factor = -0.2
 		    }
-		}
-		
-		restore_mexico = { 
-		picture = restore_order_GC
-		
-		potential = { 
-		tag = SPA 
-		has_global_flag = partial_peace 
-		war = no
-		CLM = { NOT = { exists = yes } }
-		LST = { NOT = { exists = yes } }
-		UCA = { NOT = { exists = yes } }
-		}
-		
-		allow = { 
-		is_greater_power = yes 
-		war = no 
-		}
-		
-		effect = { 
-		badboy = 15 
-		any_country = {
-			limit = {
-			exists = yes
-			OR = { 
-			tag = MEX
-			tag = JLS
-			tag = ZAP
-			tag = PUR
-			tag = AZT
-				}
+	        }
+            upper_house = {
+               ideology = liberal
+               value = 0.30
+            }  
 			}
-		country_event = 46484
+			ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	#### SANTANDER - The Wild Ride ####
+	   
+	   #### Claim the starting Mexican cores in Central America ####
+	
+	     salvadorian_mexico_santander = {
+		
+		    picture = form_USCA
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = SANTANDER_MEX
+				NOT = { has_country_modifier = calm_before_storm }
+				NOT = { has_global_flag = MEX_SALVATION_WAR }
+				NOT = { has_country_flag = UCA_MEX }
+			}
+			
+			allow = {
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}			
+                NOT = { war_exhaustion = 1 }			
+			}
+			
+			effect = {	
+			   prestige = 5
+			   set_country_flag = UCA_MEX
+			   2185 = { add_core = MEX }
+			   2184 = { add_core = MEX }
+			   2183 = { add_core = MEX }
+			   2165 = { add_core = MEX }
+			   2181 = { add_core = MEX }
+			   2182 = { add_core = MEX }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	   
+	   #### Mexican-Lusitanian War - This is a scripted war because the aftermath is VERY powerful ####
+	
+	   lustanian_mexican_war = {
+		
+		    picture = CAL_greater_california
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = SANTANDER_MEX
+				NOT = { has_country_flag = SANTANDER_GAMING }
+			}
+			
+			allow = {
+			    has_country_flag = UCA_MEX
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}			
+                NOT = { war_exhaustion = 1 }			
+			}
+			
+			effect = {	
+			   set_country_flag = SANTANDER_GAMING
+			   prestige = 5
+			   LST = { country_event = { id = 46470 days = 0 } }
+			   country_event = { id = 46476 days = 14 }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	}
+	
+	#### Destruction of Lusitania - Needs Biologism - Gaming at the highest quality level. ####
+	
+	   the_destruction_of_lusitania = {
+		
+		    picture = CAL_greater_california
+			
+			potential = {
+				tag = MEX		
+				has_country_flag = can_fuck_LST
+				OR = {
+				   has_country_flag = SANTANDER_MEX	
+				   has_country_flag = FORMER_SANTANDER_MEX	
+				}
+				NOT = { has_country_flag = LST_GAMER }
+			}
+			
+			allow = {
+			    NOT = { exists = LST }
+				owns = 137
+			    OR = {
+			       government = presidential_dictatorship
+				   government = fascist_dictatorship
+				}
+			    biologism = 1				   
+			}
+			
+			effect = {	
+			   set_country_flag = LST_GAMER
+			   badboy = 2
+			   prestige = 5
+               any_owned = { 
+			      limit = { is_core = LST }
+			         add_province_modifier = {
+				        name = mexican_integration_modifier
+				        duration = 3650
+					 }
+			   }
+	           any_pop = {
+			      limit = {
+				     culture = lusitanian
+			      }
+			      reduce_pop = 0.97
+		       }
+			   # PLA is pissed off as you have basically denied their claims to this territory.
+		       relation = { who = PLA value = -100 }
+			   # Lustanian is dead
+			   LST = { primary_culture = mexican }
 			}	
-		}
-		
-		ai_will_do = { 
-			factor = 1 
+			
+			ai_will_do = {
+				factor = 1
 			}
+	}
+	
+	#### Annihilation of Central America - Needs SP Status as Santander and GP as non-Santander ####
+	
+	     salvadorian_annexation_santander = {
 		
-		}
-		
-	marching_apache = {
-		potential = {
-			tag = LST
-			NOT = {
-				has_global_flag = marching_apache
+		    picture = form_USCA
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = LST_GAMER
+				NOT = { has_country_flag = MEX_EATS_UCA }
 			}
-		}
-		
-		allow = {
-			owns = 99
-			owns = 108
-			owns = 103
-			owns = 109
-		}
-		
-		effect = {
-			any_pop = {
-				limit = {
-					has_pop_culture = mexican
-						location = {
-							province_id = 99
-						}
+			
+			allow = {
+			    OR = {
+				   has_country_flag = SANTANDER_MEX  
+				   has_country_flag = FORMER_SANTANDER_MEX	
 				}
-				consciousness = 2
-				militancy = -1
-				move_pop = 2141
+				OR = {
+                  AND = {
+                    is_secondary_power = yes
+                    has_country_flag = SANTANDER_MEX
+                  }
+                  is_greater_power = yes
+                }				  
 			}
-			any_pop = {
-				limit = {
-					has_pop_culture = mexican
-						location = {
-							province_id = 108
-						}
-				}
-				consciousness = 2
-				militancy = -1
-				move_pop = 2145
+			
+			effect = {	
+			   prestige = 5
+			   set_country_flag = MEX_EATS_UCA
+			   UCA = { all_core = { add_core = MEX } }
 			}
-			any_pop = {
-				limit = {
-					has_pop_culture = mexican
-						location = {
-							province_id = 103
-						}
-				}
-				consciousness = 2
-				militancy = -1
-				move_pop = 2143
+			
+			ai_will_do = {
+				factor = 1
 			}
-			any_pop = {
-				limit = {
-					has_pop_culture = mexican
-						location = {
-							province_id = 109
-						}
-				}
-				consciousness = 2
-				militancy = -1
-				move_pop = 2147
-			}
-			set_global_flag = marching_apache
-		}
+	   }
+	
+	#### Santander's Triumph - Needs SP Status as Santander and GP as non-Santander ####
+	
+	     colombia_reborn_santander = {
 		
-		ai_will_do = {
-			factor = 1
-		}
+		    picture = emperor_liberal_clm
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = LST_GAMER
+				NOT = { has_country_flag = GLORIA_CLM }
+			}
+			
+			allow = {
+				UCA = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}				
+			    OR = {
+				   has_country_flag = SANTANDER_MEX  
+				   has_country_flag = FORMER_SANTANDER_MEX	
+				}
+				OR = {
+                  AND = {
+                    is_secondary_power = yes
+                    has_country_flag = SANTANDER_MEX
+                  }
+                  is_greater_power = yes
+                }				  
+			}
+			
+			effect = {	
+			   prestige = 30
+			   set_country_flag = GLORIA_CLM
+			   set_country_flag = CLM_GRANADA_ENABLED
+			   change_tag = CLM
+			   all_core = { add_core = MEX }
+			   UCA = { all_core = { remove_core = MEX } }
+			   add_accepted_culture = central_american
+	           any_pop = {
+		       ideology = {
+			      value = reactionary
+			      factor = 0.1
+		       }
+		       ideology = {
+			      value = conservative
+			      factor = 0.2
+		       }
+	           }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	
+	#### NEW MEXICO - Mexico minus Colombia ####
+	
+	     salvadorian_mexico_normal = {
+		
+		    picture = form_USCA
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = NEW_MEXICO_ENABLED
+				NOT = { has_country_flag = UCA_MEX }
+			}
+			
+			allow = {
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}					
+			}
+			
+			effect = {	
+			   prestige = 5
+			   badboy = 2
+			   set_country_flag = UCA_MEX
+			   2185 = { add_core = MEX }
+			   2184 = { add_core = MEX }
+			   2183 = { add_core = MEX }
+			   2165 = { add_core = MEX }
+			   2181 = { add_core = MEX }
+			   2182 = { add_core = MEX }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	   
+	     guatamala_to_mexico = {
+		
+		    picture = form_USCA
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = NEW_MEXICO_ENABLED
+				has_country_flag = UCA_MEX
+				NOT = { has_country_flag = GUA_MEX }
+			}
+			
+			allow = {
+			    OR = {
+				   is_secondary_power = yes
+				   is_greater_power = yes
+				}
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}					
+			}
+			
+			effect = {	
+			   prestige = 5
+			   badboy = 2
+			   set_country_flag = GUA_MEX
+			   2190 = { add_core = MEX }
+			   2189 = { add_core = MEX }
+			   2188 = { add_core = MEX }
+			   2186 = { add_core = MEX }
+			   2187 = { add_core = MEX }
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	   
+	     mexican_baja = {
+		
+		    picture = CAL_greater_california
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = NEW_MEXICO_ENABLED
+				has_country_flag = UCA_MEX
+				NOT = { has_country_flag = BAJ_MEX }
+			}
+			
+			allow = {
+			    OR = {
+				   is_secondary_power = yes
+				   is_greater_power = yes
+				}
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}					
+			}
+			
+			effect = {	
+			   prestige = 5
+			   badboy = 2
+			   set_country_flag = BAJ_MEX
+			   2140 = { add_core = MEX }
+			   2141 = { add_core = MEX }
+			   2137 = { add_core = MEX }
+			   2138 = { add_core = MEX }
+			   2139 = { add_core = MEX }
+			   90 = { add_core = MEX }			   
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	     }
+	   
+	     add_lst_federation = {
+		
+		    picture = CAL_greater_california
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = NEW_MEXICO_ENABLED
+				has_country_flag = GUA_MEX
+				has_country_flag = BAJ_MEX
+				NOT = { has_country_flag = LST_MEX }
+			}
+			
+			allow = {
+				is_greater_power = yes
+				MEX = {
+			       all_core = {
+					  owned_by = THIS
+				   }
+				}						
+			}
+			
+			effect = {	
+			   prestige = 20
+			   badboy = 5 
+			   set_country_flag = BAJ_MEX
+			   LST = { all_core = { add_core = MEX } }			   
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	
+	#### Constitutional Reform - Needs Specific Techs ####
+
+	     mexican_consitutional_reform = {
+		
+		    picture = MEX_rancho
+			
+			potential = {
+				tag = MEX
+		   		has_country_flag = NEW_MEXICO_ENABLED
+			    OR = { 
+                  government = democracy
+				  government = parliamentary_republic
+                  government = socialist_republic
+				  government = proletarian_dictatorship
+                }
+				NOT = { has_country_flag = CENT_MEX }
+			}
+			
+			allow = {
+			    social_science = 1
+			    OR = {
+				   is_secondary_power = yes
+				   is_greater_power = yes
+				}
+                OR = {
+                  citizens_rights = all_voting_pops
+				  government = proletarian_dictatorship
+				}			  
+			}
+			
+			effect = {	
+			   prestige = 20
+			   add_accepted_culture = nahua
+			   add_accepted_culture = tarascan
+			   add_accepted_culture = zapotec
+			   AZT = { all_core = { remove_core = AZT } }
+			   JLS = { all_core = { remove_core = JLS } }
+			   ZAP = { all_core = { remove_core = ZAP } }
+			   PUR = { all_core = { remove_core = PUR } }
+			   set_country_flag = CENT_MEX
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	
+	#### Anglois of Mexico - Needs Specific Techs ####
+	
+	     mexican_language_enforcement = {
+		
+		    picture = MEX_rancho
+			
+			potential = {
+			    OR = {
+				   tag = MEX
+				   AND = {
+				     tag = CLM
+					 has_country_flag = FORMER_SANTANDER_MEX
+			       }
+				}
+				OR = {
+				   government = fascist_dictatorship
+				   government = fascist_monarchy
+				   has_country_flag = FORMER_SANTANDER_MEX
+				   has_country_flag = SANTANDER_MEX
+				}   
+				NOT = { has_country_flag = CENT_MEX }
+			}
+			
+			allow = {
+			    social_science = 1
+			    OR = {
+				   is_secondary_power = yes
+				   is_greater_power = yes
+				}			  
+			}
+			
+			effect = {	
+			   badboy = 5
+			   prestige = 20
+               any_owned = { 
+			      limit = { is_core = AZT }
+			         add_province_modifier = {
+				        name = mexican_integration_modifier
+				        duration = 3650
+					 }
+			   }
+	           any_pop = {
+			      limit = {
+				     culture = nahua
+			      }
+			      reduce_pop = 0.97
+		       }
+               any_owned = { 
+			      limit = { is_core = ZAP }
+			         add_province_modifier = {
+				        name = mexican_integration_modifier
+				        duration = 3650
+					 }
+			   }
+	           any_pop = {
+			      limit = {
+				     culture = tarascan
+			      }
+			      reduce_pop = 0.97
+		       }
+               any_owned = { 
+			      limit = { is_core = PUR }
+			         add_province_modifier = {
+				        name = mexican_integration_modifier
+				        duration = 3650
+					 }
+			   }
+	           any_pop = {
+			      limit = {
+				     culture = zapotec
+			      }
+			      reduce_pop = 0.97
+		       }
+               any_owned = { 
+			      limit = { is_core = JLS }
+			         add_province_modifier = {
+				        name = mexican_integration_modifier
+				        duration = 3650
+					 }
+			   }
+			   AZT = { all_core = { remove_core = AZT } }
+			   JLS = { all_core = { remove_core = JLS } }
+			   ZAP = { all_core = { remove_core = ZAP } }
+			   PUR = { all_core = { remove_core = PUR } }
+			   set_country_flag = CENT_MEX
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
+	   }
+	
+
+	#### The Granadan Claim ####
+	
+	  the_grand_granadan_claim = {
+		
+		    picture = colombia_map
+			
+			potential = {
+			    tag = CLM
+				NOT = { has_country_flag = GRA_CLAIMED }
+			}
+			
+			allow = { 
+			    has_country_flag = CLM_GRANADA_ENABLED	
+			    is_canal_enabled = 3
+				all_core = { owned_by = THIS }
+			    OR = {
+	               AND = {
+                      is_greater_power = yes				   
+			          revolution_n_counterrevolution = 1
+				   }
+	               AND = {
+                      is_secondary_power = yes				   
+			          mass_politics = 1
+				   }	
+                }				   	    		  
+			}
+			
+			effect = {	
+			   badboy = 5
+			   prestige = 20
+               GRA = { all_core = { add_core = CLM } }
+			   set_country_flag = GRA_CLAIMED
+			}
+			
+			ai_will_do = {
+				factor = 1
+			}
 	}
 	
 	rename_laofeng = {
@@ -720,109 +836,13 @@ political_decisions = {
         }
     }    
 	
-	dictatorshipCLM = { 
-	potential = { 
-	tag = CLM 
-	has_country_flag = dictatorshipCLM
-		}
-		
-	allow = { 
-	OR = { 
-	year = 1855 
-	state_n_government = 1 
-		}
-	war = no 
-	}
-
-	effect = { 
-	any_country = {
-		limit = {
-			OR = { tag = LST tag = UCA }
-		}
-		annex_to = THIS
-	}
-	government = absolute_monarchy 
-	political_reform = federalism
-	LST = { all_core = { add_core = THIS } }
-	MEX = { all_core = { add_core = THIS } }
-	UCA = { all_core = { add_core = THIS } }
-	GRA = { all_core = { add_core = THIS } }
-	add_accepted_culture = lusitanian 
-	add_accepted_culture = central_american 
-	add_accepted_culture = granadan 
-	clr_country_flag = dictatorshipCLM 
-	clr_country_flag = calm_before_tempest
-		}		
-	}
-	
-	integrate_granadans = {
-		potential = {
-			tag = CLM
-			has_country_flag = granadans_refusal
-			NOT = { exists = GRA }
-		}
-		
-		allow = {
-		NOT = { OR = { government = absolute_monarchy government = fascist_monarchy } }
-			GRA = {
-				all_core = {
-					owned_by = THIS
-				}
-			}
-			nationalism_n_imperialism = 1
-			OR = {
-				rank = 4
-				revolution_n_counterrevolution = 1
-			}
-		}
-		
-		effect = {
-			prestige = 5
-			add_accepted_culture = granadan
-			clr_country_flag = granadans_refusal
-			
-			any_pop = {
-				limit = {
-					has_pop_culture = granadan
-				}
-				militancy = -2
-				consciousness = 2
-			}
-			any_pop = {
-				limit = {
-					has_pop_culture = central_american
-				}
-				militancy = -2
-				consciousness = 2
-			}
-			any_pop = {
-				limit = {
-					has_pop_culture = lusitanian
-				}
-				militancy = -1
-				consciousness = -1
-			}
-			any_pop = {
-				limit = { 
-				has_pop_culture = mexican
-				}
-				militancy = -1
-				consciousness = -1
-			}
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	
 	universityMEX = { 
 		picture = universidad_mexico 
 		
 		potential = { 
 		tag = CLM 
 		OR = { is_secondary_power = yes is_greater_power = yes }
+		NOT = { school_reforms = good_schools }
 		NOT = { has_country_flag = university_MEX }
 		}
 		
@@ -860,7 +880,6 @@ political_decisions = {
 		tag = SPC
 		OR = { is_secondary_power = yes is_greater_power = yes }
 		NOT = { has_country_flag = university_MEX }
-		has_country_flag = SPC_VMEXannex
 		}
 		
 		allow = { 		
@@ -889,271 +908,4 @@ political_decisions = {
 			}
 		}
 	}
-	
-	CLM_control = {
-	potential = { 
-	tag = SPA
-    year = 1840 
-    war_with = CLM
-    CLM = { ai = yes } 
-    CLM = { exists = yes }
-    ai = yes 
-	NOT = { 
-			OR = { 
-					CLM = { has_country_flag = enforced_peace_clm }
-					has_global_flag = partial_peace 
-					has_global_flag = congress_of_panama
-					has_global_flag = spanish_vic
-				} 
-			}
-	}
-	
-	allow = { 	
-	2172 = { controlled_by = THIS }
-	2254 = { controlled_by = THIS }
-	}
-	
-	effect = {
-	end_war = CLM
-    inherit = CLM
-	end_war = QUI
-	end_war = ARE
-	any_country = {
-	limit = {
-	tag = QUI
-	exists = yes
-	ai = yes
-	}
-	SPA = { inherit = QUI }
-	}	
-	any_country = {
-	limit = {
-	tag = ARE
-	exists = yes
-	ai = yes
-	}
-	SPA = { inherit = ARE }
-	      }
-	   }
-	}
-	
-	############## THE GREAT COLUMBIAN EXPANSION ###############
-	
-	the_northern_expansion = { 
-		picture = Manifest_Destiny_ARC
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = CLM_can_now_expand
-		has_country_flag = the_northern_capital_CLM
-		NOT = { has_country_flag = the_northern_expansion_CLM }
-		}
-		
-		allow = { 
-		nationalism_n_imperialism = 1 
-		all_core = { owned_by = THIS }
-		OR = { is_secondary_power = yes is_greater_power = yes }
-		}
-		
-		effect = { 
-		badboy = 10
-		set_country_flag = the_northern_expansion_CLM
-		DNG_88 = { add_core = CLM }
-		DNG_2 = { add_core = CLM }
-		NA_6 = { add_core = CLM }
-		NA_5 = { add_core = CLM }
-		NA_109 = { add_core = CLM }
-		NA_4 = { add_core = CLM }		
-		}
-	}
-	
-	the_southern_expansion = { 
-		picture = Manifest_Destiny_ARC
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = CLM_can_now_expand
-		has_country_flag = the_southern_capital_CLM
-		NOT = { has_country_flag = the_southern_expansion_CLM }
-		}
-		
-		allow = { 
-		nationalism_n_imperialism = 1 
-		all_core = { owned_by = THIS }
-		OR = { is_secondary_power = yes is_greater_power = yes }
-		}
-		
-		effect = { 
-		badboy = 20
-		set_country_flag = the_southern_expansion_CLM
-		INC = { all_core = { add_core = NAN } }
-		INC = { all_core = { add_core = ARU } }
-		NAN = { country_event = 465169 }
-		### Arequipia States ###
-		PEU_2297 = { add_core = CLM }
-		PEU_2303 = { add_core = CLM }
-		PEU_2297 = { add_core = ARE }
-		PEU_2303 = { add_core = ARE }
-		PEU_2297 = { add_core = GRA }
-		PEU_2303 = { add_core = GRA }	
-        ### Bolivia States ###		
-		BOL_2321 = { add_core = CLM }
-		BOL_2305 = { add_core = CLM }
-		INC_2308 = { add_core = CLM }
-		ARG_2368 = { add_core = CLM }
-		CLM = { all_core = { remove_core = ARU } }
-		CLM = { all_core = { remove_core = NAN } }
-		GRA = { all_core = { remove_core = ARU } }
-		GRA = { all_core = { remove_core = NAN } }
-		ARE = { all_core = { remove_core = ARU } }
-		ARE = { all_core = { remove_core = NAN } }
-		any_country = {
-		limit = {
-		tag = AZL
-		exists = yes
-		owns = 2348
-		NOT = { exists = NAN }
-		}
-		NAN = { all_core = { add_core = AZL } }
-		     }	
-		}
-	}
-
-	############## CORE REORGINIZATION DECISIONS ###############
-	
-	expand_california = { 
-		picture = Manifest_Destiny_ARC
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = the_northern_expansion_CLM
-		has_country_flag = the_northern_capital_CLM
-		NOT = { has_country_flag = california_dreaming_CLM }
-		}
-		
-		allow = { 
-		all_core = { owned_by = THIS }
-		OR = { is_secondary_power = yes is_greater_power = yes }
-		}
-		
-		effect = { 
-		set_country_flag = california_dreaming_CLM
-		prestige = 25
-		89 = {
-		add_core = LST
-		remove_core = DNG
-		change_province_name = "Los Angeles"
-		add_province_modifier = {
-		name = gold_rush
-		duration = 3650
-		}
-		state_scope = {
-		  change_region_name = "Northern California"
-		    }
-		 }
-		 87 = { 
-		 add_core = LST
-		 change_province_name = "San Simeon"
-		 }
-		 88 = { 
-		 add_core = LST
-		 change_province_name = "Tulare"
-		 }
-		 96 = { 
-		 add_core = LST
-		 change_province_name = "Las Vegas"
-		 }
-		 95 = { 
-		 add_core = LST
-		 }
-		 94 = { 
-		 add_core = LST
-		    }	
-		}
-	}
-
-	destroy_incan_empire = { 
-		picture = search_for_machu_picchu
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = the_southern_expansion_CLM
-		has_country_flag = the_southern_capital_CLM
-		NOT = { has_country_flag = death_of_inca_CLM }
-		}
-		
-		allow = { 
-		all_core = { owned_by = THIS }
-		NOT = { exists = INC }
-		OR = { is_secondary_power = yes is_greater_power = yes }
-		}
-		
-		effect = { 
-		set_country_flag = death_of_inca_CLM
-		prestige = 25
-		ARE = { add_accepted_culture = aimara }
-		ARE = { add_accepted_culture = quechua }
-		INC = { all_core = { remove_core = INC } }
-		BOL_2321 = { add_core = ARE }
-		BOL_2305 = { add_core = ARE }
-		INC_2308 = { add_core = ARE }
-		ARG_2368 = { add_core = ARE }		
-		}
-	}	
-	
-	############## CULTURE AND CORE RESTORATION DECISIONS ###############
-	
-	granada_returns = { 
-		picture = Panarcadianism
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = the_northern_expansion_CLM
-		has_country_flag = the_northern_capital_CLM
-		has_country_flag = california_dreaming_CLM
-		any_owned_province = { is_core = GRA }
-		NOT = { has_country_flag = the_north_is_completed_CLM }
-		}
-		
-		allow = { 
-		is_greater_power = yes
-		all_core = { owned_by = THIS }
-		vote_franschise = universal_voting
-		citizens_rights = all_voting_pops
-		}
-		
-		effect = { 
-		set_country_flag = the_north_is_completed_CLM
-		prestige = 10
-		add_accepted_culture = granadan
-		GRA = { all_core = { add_core = CLM } }		
-		}
-	}	
-
-	lst_returns = { 
-		picture = Panarcadianism
-		
-		potential = { 
-		tag = CLM 
-	    has_country_flag = the_southern_expansion_CLM
-		has_country_flag = the_southern_capital_CLM
-		has_country_flag = death_of_inca_CLM
-		any_owned_province = { is_core = LST }
-		NOT = { has_country_flag = the_south_is_completed_CLM }
-		}
-		
-		allow = { 
-		is_greater_power = yes
-		all_core = { owned_by = THIS }
-		vote_franschise = universal_voting
-		citizens_rights = all_voting_pops
-		}
-		
-		effect = { 
-		set_country_flag = the_south_is_completed_CLM
-		prestige = 10
-		add_accepted_culture = lusitanian
-		LST = { all_core = { add_core = CLM } }		
-		}
-	}	
 }

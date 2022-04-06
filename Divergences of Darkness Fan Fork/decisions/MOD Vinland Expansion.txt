@@ -1,0 +1,1142 @@
+political_decisions = {
+
+### Vinland ###
+
+	treaty_of_vinland = {
+		picture = treaty_signing
+		potential = {
+	        tag = VIN
+			has_global_flag = vinlandic_indipendence_war
+		}
+		
+		allow = {
+			war = yes
+			OR = {
+			   73 = { controlled_by = THIS province_control_days = 365 }
+			   73 = { controlled_by = MSG province_control_days = 365 }
+			}
+			MSG = {
+				all_core = {
+					OR = {
+						controlled_by = THIS
+						controller = { vassal_of = THIS }
+						empty = yes
+					}
+				}
+			}
+		}
+		
+		effect = {
+		    clr_global_flag = vinlandic_indipendence_war
+			random_country = {
+				limit = {
+					owns = 73
+					war_with = THIS
+				}
+				country_event = 3335220
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# OH MY GOD ITS SO DEMOCRATIC
+	
+	end_of_security_committee = {
+		picture = switch_to_liberty
+		potential = {
+	        tag = VIN
+			has_country_flag = VIN_security_committee
+		}
+		
+		allow = {
+		    is_ideology_enabled = anarcho_liberal
+			war = no
+			has_country_flag = VIN_SC_ENABLED
+		}
+		
+		effect = {
+		    prestige = 10
+		    clr_country_flag = VIN_security_committee
+			clr_country_flag = VIN_SC_ENABLED
+			set_country_flag = RADICAL_VIN
+		    any_pop = {
+		       ideology = {
+			      value = anarcho_liberal
+			      factor = 0.10
+		       } 
+		       ideology = {
+			      value = reactionary
+			      factor = -0.10
+		       }
+            }
+	        any_pop = {
+	           consciousness = -9
+	        }
+	        any_pop = {
+	           militancy = -9
+	        }
+		    government = parliamentary_republic
+			ruling_party_ideology = anarcho_liberal
+		    political_reform = free_press
+		    political_reform = yes_meeting
+		    political_reform = secret_ballots
+		    political_reform = federalism
+			political_reform = all_voting_pops
+			political_reform = population_equal_weight
+			political_reform = proportional_representation
+			political_reform = universal_voting
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        set_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        clr_country_flag = democracy_gov
+			nationalvalue = nv_equality
+            election = yes			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	greater_vinland_frontier = {
+	    picture = Manifest_Destiny_ARC
+		potential = {
+			tag = VIN 		
+			ideological_thought = 1
+			NOT = { is_vassal = yes }
+			NOT = { has_country_flag = greater_VIN_west }
+		}
+		
+		allow = {
+		    is_greater_power = yes 
+			nationalism_n_imperialism = 1
+			all_core = { owned_by = THIS }
+			war = no 
+		}
+		
+		effect = {
+		    set_country_flag = greater_VIN_west
+			HHR = { all_core = { add_core = THIS } }
+			NA_11 = { add_core = THIS }
+			NA_2598 = { add_core = THIS }
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	greater_vinland_removing_japan = {
+	    picture = map_alaska
+		potential = {
+			tag = VIN 		
+			has_country_flag = greater_VIN_west
+			NOT = { is_vassal = yes }
+			NOT = { has_country_flag = greater_VIN_japan }
+		}
+		
+		allow = {
+		    is_greater_power = yes 
+			revolution_n_counterrevolution = 1
+            owns = 8
+			owns = 18
+			owns = 25
+			war = no 
+		}
+		
+		effect = {
+		    set_country_flag = greater_VIN_japan
+			NA_1 = { add_core = THIS }
+			NA_4 = { add_core = THIS }
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	vinland_declares_intervention = {
+	    picture = SevenRep
+		potential = {
+			tag = VIN 
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_west
+			nationalism_n_imperialism = 1
+			NOT = { has_country_flag = VIN_counter_arcadia }
+		}
+		
+		allow = {
+		    is_greater_power = yes 
+			revolution_n_counterrevolution = 1
+			war = no 			
+		}
+		
+		effect = {
+		    prestige = 20
+			set_country_flag = VIN_counter_arcadia
+		}
+		ai_will_do = { factor = 1 }
+	}
+
+    greater_vinland_SKR = {
+	    picture = Vinland
+		potential = {
+			tag = VIN 
+			NOT = { is_vassal = yes }
+			OR = {
+			   has_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+			   has_country_flag = VIN_unblock_expansion
+			}
+			NOT = { has_country_flag = greater_VIN_skr }
+		}
+		
+		allow = {
+		    OR = { 
+		       is_greater_power = yes 
+			   is_secondary_power = yes
+			}
+			revolution_n_counterrevolution = 1
+			war = no 		
+			all_core = { owned_by = THIS }		
+		}
+		
+		effect = {
+			IRO = { all_core = { add_core = THIS } }
+			ANI = { all_core = { add_core = THIS } }
+			VIN_163 = { add_core = THIS }
+			PLA_165 = { add_core = THIS }
+			174 = { add_core = THIS }
+			set_country_flag = greater_VIN_skr
+		}
+		ai_will_do = { factor = 1 }
+	}
+
+	greater_vinland_east = {
+	    picture = SevenRep
+		potential = {
+			tag = VIN 
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_west
+			OR = {
+			   has_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+			   has_country_flag = VIN_unblock_expansion
+			}
+			NOT = { has_country_flag = greater_VIN_east }
+		}
+		
+		allow = {
+			revolution_n_counterrevolution = 1
+			war = no 
+			is_greater_power = yes 
+			all_core = { owned_by = THIS }
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174		
+		}
+		
+		effect = {
+			NBG_247 = { add_core = THIS }
+			NBG_224 = { add_core = THIS }
+			NBG_221 = { add_core = THIS }
+			PLA_186 = { add_core = THIS }
+			VIN_178 = { add_core = THIS }
+			set_country_flag = greater_VIN_east
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+    #### EVERYTHING BELOW THIS LINE REQUIRES VINLAND TO HAVE HAD A RADICALIST OR A LIBERAL CONSTITUTION INITIALLY ####
+	
+	VIN_accept_rohnnst = {
+	    picture = Rohnst_decision
+		potential = {
+			tag = VIN 			
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_west
+			OR = {
+			  has_country_flag = moderate_VIN_liberal
+			  has_country_flag = RADICAL_VIN
+			}
+			NOT = { has_country_flag = rohnnst_accepted }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1
+		    HHR = { all_core = { owned_by = THIS } }
+			OR = {
+			    has_country_flag = RADICAL_VIN
+				upper_house = {
+					ideology = socialist
+					value = 0.4
+				}
+				upper_house = {
+					ideology = liberal
+					value = 0.4
+				}
+				upper_house = {
+					ideology = anarcho_liberal
+					value = 0.4
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+			}			
+		}
+		
+		effect = {
+		   prestige = 1
+		   set_country_flag = rohnnst_accepted
+           add_accepted_culture = rohnnst
+		   any_pop = {
+		      limit = {
+		         location = { is_core = HHR }
+		      }
+		      ideology = {
+			     value = separatist
+			     factor = -0.1
+		      }
+		      militancy = -5
+           }
+		}
+
+		ai_will_do = { factor = 1 }
+	}
+	
+	VIN_accept_SKR = {
+	    picture = Iroquois_decision
+		potential = {
+			tag = VIN 			
+			NOT = { is_vassal = yes }
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174
+			OR = {
+			  has_country_flag = moderate_VIN_liberal
+			  has_country_flag = RADICAL_VIN
+			}
+			NOT = { has_country_flag = skr_accepted }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174
+			OR = {
+			    has_country_flag = RADICAL_VIN
+				upper_house = {
+					ideology = socialist
+					value = 0.4
+				}
+				upper_house = {
+					ideology = liberal
+					value = 0.4
+				}
+				upper_house = {
+					ideology = anarcho_liberal
+					value = 0.4
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+			}			
+		}
+		
+		effect = {
+		   prestige = 1
+		   add_accepted_culture = algonquin
+		   add_accepted_culture = southern_algonquin
+		   add_accepted_culture = iroquois 
+		   add_accepted_culture = cree
+		   set_country_flag = skr_accepted
+		   any_pop = {
+		      limit = {
+		         location = { is_core = HHR }
+		      }
+		      ideology = {
+			     value = separatist
+			     factor = -0.1
+		      }
+		      militancy = -5
+           }
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	VIN_accept_sioux = {
+	    picture = Sioux_decision
+		potential = {
+			tag = VIN 			
+			NOT = { is_vassal = yes }
+			OCE = { any_core = { owned_by = THIS } }
+			OR = {
+			  has_country_flag = moderate_VIN_liberal
+			  has_country_flag = RADICAL_VIN
+			}
+			NOT = { has_country_flag = sioux_accepted }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1
+			OR = {
+			    has_country_flag = RADICAL_VIN
+				upper_house = {
+					ideology = socialist
+					value = 0.4
+				}
+				upper_house = {
+					ideology = liberal
+					value = 0.4
+				}
+				upper_house = {
+					ideology = anarcho_liberal
+					value = 0.4
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = anarcho_liberal
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+				AND = {
+					upper_house = {
+						ideology = socialist
+						value = 0.20
+					}
+					upper_house = {
+						ideology = liberal
+						value = 0.20
+					}
+				}
+			}			
+		}
+		
+		effect = {
+		   prestige = 1
+		   add_accepted_culture = sioux
+		   set_country_flag = sioux_accepted
+		   any_pop = {
+		      limit = {
+		         location = { is_core = OCE }
+		      }
+		      ideology = {
+			     value = separatist
+			     factor = -0.1
+		      }
+		      militancy = -5
+           }
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	dismantle_NBG = {
+	    picture = SevenRep
+		potential = {
+			tag = VIN 
+			exists = NBG
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_east
+			OR = {
+			   has_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+			   has_country_flag = VIN_unblock_expansion
+			}
+			NOT = { has_country_flag = VIN_gonna_break_NBG }
+		}
+		
+		allow = {
+			revolution_n_counterrevolution = 1
+			war = no 
+			is_greater_power = yes 
+			all_core = { owned_by = THIS }
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174
+			NOT = { exists = CPH }
+			NOT = { exists = CNF }
+			NOT = { exists = CNL }
+			NOT = { exists = CBV }
+			NBG = { 
+			   OR = {
+			      vassal_of = THIS
+				  in_sphere = THIS
+			   }
+			}			
+		}
+		
+		effect = {
+			badboy = 8 
+			NBG = {
+				country_event = 79179 
+			}
+			set_country_flag = VIN_gonna_break_NBG
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	dismantle_PLA = {
+	    picture = Plantagenia
+		potential = {
+			tag = VIN 
+			exists = PLA
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_east
+			OR = {
+			   has_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+			   has_country_flag = VIN_unblock_expansion
+			}
+			NOT = { has_country_flag = VIN_gonna_break_PLA }
+		}
+		allow = {
+			revolution_n_counterrevolution = 1
+			war = no 
+			is_greater_power = yes 
+			all_core = { owned_by = THIS }
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174	
+			PLA = { 
+			   OR = {
+			      vassal_of = THIS
+				  in_sphere = THIS
+			   }
+			}			
+		}
+		effect = {
+			badboy = 8 
+			PLA = {
+				country_event = 79180
+			}
+			set_country_flag = VIN_gonna_break_PLA
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	################### The Secret Arcadian Union ##############################
+	
+	AFN_council = {
+	    picture = ARCcapital
+		potential = {
+			tag = VIN 
+			NOT = { is_vassal = yes }
+			has_country_flag = greater_VIN_east
+			OR = {
+			   has_global_flag = ARCADIAN_UNIFICATION_BLOCKED
+			   has_country_flag = VIN_unblock_expansion
+			}
+			OR = {
+			  has_country_flag = moderate_VIN_liberal
+			  has_country_flag = RADICAL_VIN
+			}
+			NOT = { has_country_flag = AFN_council_leader  }
+		}
+		
+		allow = {
+			revolution_n_counterrevolution = 1
+			rank = 6
+			war = no 
+			all_core = { owned_by = THIS }
+			OR = {
+			NBG = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			AND = {
+			CPH = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CNF = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CNL = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CBV = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+		}
+		}
+		}
+		effect = {
+			set_country_flag = AFN_council_leader 
+			add_country_modifier = { name = AFN_council  duration = -1 }
+			diplomatic_influence = { who = NBG value = 400 }
+			diplomatic_influence = { who = CPH value = 400 }
+			diplomatic_influence = { who = CNF value = 400 }
+			diplomatic_influence = { who = CNL value = 400 }
+			diplomatic_influence = { who = CBV value = 400 }
+			any_country = { 
+			   limit = { 
+			      primary_culture = septiman
+				  exists = yes
+			   }
+			   set_country_flag = AFN_council		   
+		    }
+	    }
+		ai_will_do = { factor = 1 }
+	}	
+	
+	###Puppeting STARTS here###
+	
+	puppet_CPH = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = CPH_taken }
+		}
+		allow = {
+			CPH = {
+				exists = yes 
+				in_sphere = THIS
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = CPH
+			create_alliance = CPH
+			relation = { who = CPH value = 400 }
+			diplomatic_influence = { who = CPH value = 400 }
+			CPH = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = CPH_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	puppet_CNF = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = CNF_taken }
+		}
+		allow = {
+			CNF = {
+				exists = yes 
+				in_sphere = THIS
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = CNF
+			create_alliance = CNF
+			relation = { who = CNF value = 400 }
+			diplomatic_influence = { who = CPH value = 400 }
+			CPH = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = CNF_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	puppet_CNL = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = CNL_taken }
+		}
+		allow = {
+			CNL = {
+				exists = yes 
+				in_sphere = THIS
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = CNL
+			create_alliance = CNL
+			relation = { who = CNL value = 400 }
+			diplomatic_influence = { who = CNL value = 400 }
+			CNL = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = CNL_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	puppet_CBV = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = CBV_taken }
+		}
+		allow = {
+			CBV = {
+				exists = yes 
+				in_sphere = THIS
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = CBV
+			create_alliance = CBV
+			relation = { who = CBV value = 400 }
+			diplomatic_influence = { who = CBV value = 400 }
+			CBV = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = CBV_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	puppet_PLA = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = PLA_taken }
+		}
+		allow = {
+			PLA = {
+				exists = yes 
+				in_sphere = THIS
+			}
+			war = no 
+		}
+		effect = {			
+			create_vassal = PLA
+			relation = { who = PLA value = 400 }
+			diplomatic_influence = { who = PLA value = 400 }
+			PLA = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = PLA_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	puppet_CHE = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = CHE_taken }
+		}
+		allow = {
+			CHE = {
+				exists = yes 
+				in_sphere = THIS
+				NOT = { is_vassal = yes }
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = CHE
+			create_alliance = CHE
+			relation = { who = CHE value = 400 }
+			diplomatic_influence = { who = CHE value = 400 }
+			CHE = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = CHE_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	puppet_OUM = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = OUM_taken }
+		}
+		allow = {
+			OUM = {
+				exists = yes 
+				in_sphere = THIS
+				NOT = { is_vassal = yes }
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = OUM
+			create_alliance = OUM
+			relation = { who = OUM value = 400 }
+			diplomatic_influence = { who = OUM value = 400 }
+			OUM = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = OUM_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	puppet_LOU = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = LOU_taken }
+		}
+		allow = {
+			LOU = {
+				exists = yes 
+				in_sphere = THIS
+				NOT = { is_vassal = yes }
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = LOU
+			create_alliance = LOU
+			relation = { who = LOU value = 400 }
+			diplomatic_influence = { who = LOU value = 400 }
+			LOU = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = LOU_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	puppet_LIB = {
+	    picture = citizenship_tests
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader 
+			NOT = { has_country_flag = LIB_taken }
+		}
+		allow = {
+			LIB = {
+				exists = yes 
+				in_sphere = THIS
+				NOT = { is_vassal = yes }
+			}
+			war = no 
+		}
+		effect = {
+			create_vassal = LIB
+			create_alliance = LIB
+			relation = { who = LIB value = 400 }
+			diplomatic_influence = { who = LIB value = 400 }
+			LIB = { add_country_modifier = { name = AFN_council  duration = -1 } tech_school = commerce_tech_school }
+			set_country_flag = LIB_taken
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	######### YOUVE FORMED SUPER-ARCADIA. GOOD JOB! ################
+	
+	
+	form_AFN = {
+	    picture = UniteARC
+		potential = {
+			tag = VIN 
+			has_country_flag = AFN_council_leader
+			revolution_n_counterrevolution = 1
+			OR = {
+			  has_country_flag = moderate_VIN_liberal
+			  has_country_flag = RADICAL_VIN
+			}
+			NOT = { AFN = { exists = yes } }
+			NOT = { has_country_flag = in_varietate_concordia }
+		}
+		allow = {
+			rank = 5
+			war = no 
+			mass_politics = 1
+			citizens_rights = all_voting_pops
+			citizenship_policy = full_citizenship
+			NOT = { is_vassal = yes }
+			NOT = { part_of_sphere = yes }
+			IRO = { all_core = { owned_by = THIS } }
+			ANI = { all_core = { owned_by = THIS } }
+			owns = 163
+			owns = 165
+			owns = 174
+			VIN = { 
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			NBG = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CCA = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CPH = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CNF = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CFS = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CNL = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CBV = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CHV = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			PLA = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			CHE = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			OUM = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			LIB = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+			LOU = {
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+		    prestige = 100
+			remove_country_modifier = AFN_council
+			political_reform = federalism
+			political_reform = all_voting_pops
+			add_accepted_culture = marklander 
+			add_accepted_culture = septiman
+			add_accepted_culture = rohnnst 
+		    add_accepted_culture = sioux
+			add_accepted_culture = cherokee
+			add_accepted_culture = cree 
+			add_accepted_culture = inuit 
+			add_accepted_culture = iroquois
+			add_accepted_culture = algonquin
+			add_accepted_culture = southern_algonquin
+			add_accepted_culture = afro_frankish 
+			add_accepted_culture = plantagenian
+			any_country = {
+				limit = {
+					OR = {
+						  tag = MSG
+						  tag = CCA 
+						  tag = CPH
+						  tag = CNF
+						  tag = CFS
+						  tag = CNL
+						  tag = CBV
+						  tag = CHV
+						  tag = CHE
+						  tag = IRO
+						  tag = ANI
+						  tag = LIB
+						  tag = LOU
+						  tag = NBG
+						  tag = NUN
+						  tag = OCE
+						  tag = OUM
+						  tag = PLA
+					}
+					in_sphere = THIS
+				}
+				country_event = 333458
+		    }				
+			change_tag = AFN
+			set_country_flag = in_varietate_concordia
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

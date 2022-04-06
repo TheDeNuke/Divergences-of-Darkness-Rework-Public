@@ -1,0 +1,5263 @@
+###################################### NEW SPAIN EVENTS #######################################################
+
+### Soldiers, the homeland calls us to the fight. Let us swear for her sake to triumph or to die.  ###
+
+######### Start-up Events ########
+
+### These are old events but they do server the purpose. Hopefully the localization can be adjusted though ###
+
+### The Revolution of 1808 - Introduction Event ###
+
+country_event = { 
+
+	id = 470020
+	title = "SPAN1.T"
+	desc = "SPAN1.D"
+	picture = "war_ended"
+	
+	trigger = { 
+	tag = SPA 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "SPAN1.A"
+	prestige = -1
+	any_pop = { 
+		limit = { 
+			location = { is_core = POR }
+			}
+		ideology = {
+				value = liberal
+				factor = 0.2
+			}
+		}
+	}
+}
+
+### La Nación Dividida - The Problem with Castille ###
+	
+country_event = { 
+
+	id = 470021
+	title = "SPAN2.T"
+	desc = "SPAN2.D"
+	picture = "SPA_dual_monarchs"
+	
+	trigger = { 
+	tag = SPA 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	   days = 7 
+	}
+	
+	option = { 
+	name = "SPAN2.A"
+	any_pop = { 
+		limit = { 
+			location = { NOT = { is_core = POR } }
+			}
+		ideology = {
+				value = reactionary
+				factor = 0.05
+			}
+	}
+	any_pop = { 
+		limit = { 
+			location = { is_core = ATR }
+			}
+		ideology = {
+				value = reactionary
+				factor = 0.1
+			}
+	}
+	}
+}
+
+######### Colombian Aftermath ########
+
+######## Colombian Aftermath Events that are related to the Victory are at the very bottom of this Document ######
+
+
+#### WINDS OF REFORM - Spanish Half-Failure - You recovered Granada ####
+
+country_event = {
+	id = 470022
+	title = "SPAN3.T"
+	desc = "SPAN3.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_HALF_FAILURE	            
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+
+	option = {
+		name = "SPAN3.A"
+		prestige = 5
+	    set_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    set_variable = {
+		   which = SPA_centralization
+		   value = 10
+	    }
+		set_country_flag = SPA_you_are_getting_couped
+		clr_country_flag = SPA_HALF_FAILURE	 
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.05
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+	    }
+	    }
+	    ai_chance = {
+	      factor = 40
+	    }
+	}
+	
+	option = {
+		name = "SPAN3.B"
+		prestige = -5
+	    set_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    set_variable = {
+		   which = SPA_centralization
+		   value = 10
+	    }
+		set_country_flag = SPA_clear_initial_chain
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA
+		clr_country_flag = SPA_HALF_FAILURE	 
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = yes_meeting
+		political_reform = harassment
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+	    }
+	    }
+	    ai_chance = {
+	      factor = 60
+	    }
+	}
+}
+
+#### THE MADRID COUP - This is why you should take compromises ####
+
+country_event = {
+	id = 470023
+	title = "SPAN4.T"
+	desc = "SPAN4.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	major = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_you_are_getting_couped      
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+
+	option = {
+		name = "SPAN4.A"
+		prestige = -10
+		capital = 521
+		set_country_flag = SPA_clear_initial_chain
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA
+		clr_country_flag = SPA_you_are_getting_couped
+	    government = hms_government
+        political_reform = appointed
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = censored_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+	    }
+	    }
+	}
+}
+
+#### THE LISBON REVOLUTION - Spanish Total-Failure - You lost the new world ####
+
+country_event = {
+	id = 470024
+	title = "SPAN5.T"
+	desc = "SPAN5.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_CATASTROPIC_FAILURE           
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+
+	option = {
+		name = "SPAN5.A"
+		clr_country_flag = SPA_CATASTROPIC_FAILURE    
+		prestige = -5
+	    set_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    set_variable = {
+		   which = SPA_centralization
+		   value = 10
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.1
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		add_province_modifier = { 
+			name = liberal_agitation
+			duration = 18250
+			}
+		}
+		country_event = { id = 470025 days = 7 }
+	}
+}
+
+#### The Toledo Junta - Angry Generals are Angry ####
+
+country_event = {
+	id = 470025
+	title = "SPAN6.T"
+	desc = "SPAN6.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+
+	option = {
+		name = "SPAN5.A"
+		set_country_flag = toledo_junta
+		any_pop = { limit = { pop_type = officers } militancy = 4 ideology = { value = reactionary factor = 0.4 } }		
+		any_pop = { limit = { pop_type = soldiers } militancy = 2 ideology = { value = reactionary factor = 0.2 } }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+	    }
+		country_event = { id = 470026 days = 7 }
+	}
+} 
+
+#### Madrid Government Collapses - Madrid has effectively lost control over the majority of the country with the East siding with the military and the west siding with revolutionaries. ####
+
+country_event = {
+	id = 470026
+	title = "SPAN7.T"
+	desc = "SPAN7.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+
+	option = {
+		name = "SPAN5.A"
+		prestige = -10
+	    add_country_modifier = {
+			name = calm_before_storm
+			duration = -1
+		}
+		country_event = { id = 470027 days = 7 }
+	}
+} 
+
+#### The Decision of the King - Side with the Revolutionaries or attempt to get the military to oppress the revolutionaries? ####
+
+country_event = {
+	id = 470027
+	title = "SPAN8.T"
+	desc = "SPAN8.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# Propose a King's Charter to the Revolutionaries and implement basic reforms
+
+	option = {
+		name = "SPAN8.A"
+	    set_country_flag = SPA_kings_charter
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = yes_meeting
+		political_reform = harassment
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    ai_chance = {
+	      factor = 70
+	    }
+	}
+	
+	# Tell the Toledo Junta to get off their asses and crush the revolution
+	
+	option = {
+		name = "SPAN8.B"
+		prestige = 10
+	    set_country_flag = SPA_GOOD_IDEA_KING
+	    ai_chance = {
+	      factor = 30
+	    }
+	}
+} 
+
+#### The King's Charter is Rejected. Full Constitutional Reform or Nothing ####
+
+country_event = {
+	id = 470028
+	title = "SPAN9.T"
+	desc = "SPAN9.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_kings_charter        
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+
+    # We will have to agree with these radicals or risk the end of the Kingdom
+	
+	option = {
+		name = "SPAN9.A"
+		prestige = -20
+		clr_country_flag = SPA_kings_charter     
+	    remove_country_modifier = calm_before_storm
+	    government = hms_government
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = jefferson_method
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -5
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -5
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		remove_province_modifier = liberal_agitation
+		}
+		country_every = { id = 470029 days = 7 }
+	    ai_chance = {
+	      factor = 60
+	    }
+	}
+	
+	# We proposed a King's Charter and you refused? Tell the Toledo Junta to get off their asses and crush the revolution.
+	
+	option = {
+		name = "SPAN9.B"
+		prestige = 10
+	    set_country_flag = SPA_GOOD_IDEA_KING
+	    ai_chance = {
+	      factor = 40
+	    }
+	}
+}
+
+#### Should we return to Lisbon? ####
+
+country_event = {
+	id = 470029
+	title = "SPAN10.T"
+	desc = "SPAN10.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# lel no
+
+	option = {
+		name = "SPAN10.A"
+	    set_country_flag = lel_no_SPA
+	    any_owned = { 
+	    limit = { 
+	      province_id = 521
+	    }
+		add_province_modifier = { 
+			name = liberal_agitation
+			duration = 18250
+			}
+		}
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.05
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+	    }
+	    }
+	    ai_chance = {
+	      factor = 40
+	    }
+	}
+	
+	# Sure
+	
+	option = {
+		name = "SPAN10.B"
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA
+		set_country_flag = SPA_clear_initial_chain
+		capital = 521
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.01
+		   }
+		   ideology = {
+			  value = conservative
+			  factor = 0.05
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+	    }
+	    }
+	    ai_chance = {
+	      factor = 60
+	    }
+	}
+} 
+
+#### Army gets its shit together and just shoots the liberals in Lisbon over their petty capital bullshit
+
+country_event = {
+	id = 470030
+	title = "SPAN11.T"
+	desc = "SPAN11.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = lel_no_SPA      
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+
+	option = {
+		name = "SPAN11.A"
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA
+		set_country_flag = SPA_clear_initial_chain
+	    clr_country_flag = lel_no_SPA
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = -1
+	    }
+	    any_owned = { 
+	    limit = { 
+	      province_id = 521
+	    }
+		remove_province_modifier = liberal_agitation
+		}
+	    521 = {
+		poor_strata = {
+            reduce_pop = 0.99
+	    }
+		middle_strata = {
+			reduce_pop = 0.97
+	    }
+		rich_strata = {
+			reduce_pop = 0.98
+	    }
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = -0.05
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+	    }
+	    }
+	}
+} 
+
+#### THE UNEXPECTED COUP - The Toledo Junta refuses to listen to the king and coups him. The King Flees.
+
+country_event = {
+	id = 470031
+	title = "SPAN12.T"
+	desc = "SPAN12.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_GOOD_IDEA_KING       
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN12.A"
+		prestige = -5
+		clr_country_flag = SPA_GOOD_IDEA_KING  
+	    remove_country_modifier = calm_before_storm		
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		remove_province_modifier = liberal_agitation
+		}
+		country_event = { id = 470032 days = 7 }
+	}
+}
+
+#### MAJOR - A Revolution at the Edge of Europe - Toledo Junta hands power over to the Lisbon Government - DUA relations are fucking killed and ARA relations are also killed. TUS relations are instantly put at 200.
+
+country_event = {
+	id = 470032
+	title = "SPAN13.T"
+	desc = "SPAN13.D"
+	#picture = "ambush_army"
+	
+	major = yes
+	is_triggered_only = yes
+	fire_only_once = yes
+
+    # A New Era for Spain and the World
+	
+	option = {
+		name = "SPAN13.A"
+		prestige = 15
+		capital = 521    
+	    government = democracy
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = jefferson_method
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		
+	    any_country = {
+	      limit = { 
+	         is_greater_power = yes
+			 NOT = { government = democracy }
+	      }
+	      relation = { who = THIS value = -25 }
+	    }
+		
+	    country_event = 800054
+		country_event = { id = 470033 days = 3 }
+		ARA = { relation = { who = THIS value = -400 } leave_alliance = THIS }
+		NAV = { relation = { who = THIS value = -400 } leave_alliance = THIS }
+        TUS = { relation = { who = THIS value = 400 } }
+		
+		any_country = {
+		   limit = {
+		     tag = DUA
+			 exists = yes
+		   }
+		   relation = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		   country_event = { id = 470034 days = 14 }		   
+		}
+		
+		set_country_flag = SPA_clear_initial_chain
+		set_country_flag = SPA_wait_DUA
+		
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 2
+	    }
+		
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.2
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+        }	
+		
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -10
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -10
+	    }
+	    }
+   }
+}
+
+#### Dealing with the Fueros - Do we restore the Lisbon Proclamation?
+
+country_event = {
+	id = 470033
+	title = "SPAN14.T"
+	desc = "SPAN14.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# ABOLISH THEM NOW
+
+	option = {
+		name = "SPAN14.A"
+		set_country_flag = SPA_Fueros
+		prestige = 10
+	    add_country_modifier = {
+			name = SPA_killed_fueros
+			duration = -1
+		}
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 2
+	    }
+		
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.05
+		   }
+        }	
+		
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+	    }
+	    }
+	    ai_chance = {
+	      factor = 80
+	    }
+	}
+	
+	# This would be extremely dangerous
+	
+	option = {
+		name = "SPAN14.B"
+		prestige = -5
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+	    }
+	    }
+	    ai_chance = {
+	      factor = 20
+	    }
+	}
+}
+
+#### Alfonso in Paris - Dual Monarchy is informed that their greatest ally just turned traitor
+
+country_event = {
+	id = 470034
+	title = "SPAN15.T"
+	desc = "SPAN15.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# WE WILL DEFEAT THE REVOLUTION
+
+	option = {
+		name = "SPAN14.A"
+		prestige = 10
+		badboy = 5
+		
+		# You are not parading through our territory you aggressive piece of shit
+		diplomatic_influence = { who = NAV value = -200 }
+		ARA = { relation = { who = THIS value = -200 } end_military_access = THIS leave_alliance = THIS }
+		NAV = { relation = { who = THIS value = -200 } end_military_access = THIS leave_alliance = THIS }
+		
+		set_global_flag = spanish_revolutionary_war
+		
+		# Navarre Problem
+		country_event = { id = 470036 days = 3 }
+		
+		# Spain is alerted and given mobilization modifiers
+		SPA = { country_event = { id = 470035 days = 0 } }
+		
+	    war = {
+			target = SPA
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+		
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+	    }
+	    }
+		
+	    ai_chance = {
+	    factor = 70
+		   modifier = { 
+		     factor = 0
+			   OR = {
+			     war_with = BRG
+			     war_with = FRA
+				 war_with = OCC
+				 war_with = ENL
+				 war_with = PAP
+			   }
+		   }
+	    }		
+	}
+	
+	# Recognize the Republic - Lets not trigger a great power war in the 1840s
+	
+	option = {
+		name = "SPAN14.B"
+		prestige = -5
+		SPA = { country_event = { id = 470040 days = 0 } }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+	    }
+	    }
+	    ai_chance = {
+	    factor = 30
+	    }
+	}
+}
+
+#### MAJOR - THE SPANISH REVOLUTIONARY WAR - DUAL MONARCHY DIRECTLY DECLARED WAR ON SPAIN
+
+country_event = {
+	id = 470035
+	title = "SPAN16.T"
+	desc = "SPAN16.D"
+	#picture = "ambush_army"
+	
+	major = yes
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	#A LAS BARRICADAS!
+
+	option = {
+		name = "SPAN16.A"
+		political_reform = mandatory_service
+	    add_country_modifier = {
+			name = SPA_THE_REVOLUTION
+			duration = -1
+		}
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -5
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 5
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -10
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -10
+	    }
+	    }	
+	}
+}
+
+#### The Navarre Problem - Navarre has closed borders to us - Should we intervene? - Red Text warning of this backfiring
+
+country_event = {
+	id = 470036
+	title = "SPAN17.T"
+	desc = "SPAN17.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# Demand that Navarra respects Anglois Claims - Triggers 98740111 in MOD Navarra
+
+	option = {
+		name = "SPAN17.A"
+        badboy = 3	
+		NAV = { country_event = { id = 98740111 days = 0 } }
+	    ai_chance = {
+	    factor = 60
+	    }		
+	}
+	
+	# Don't kick the bees hive
+	
+	option = {
+		name = "SPAN17.B"
+		badboy = 1
+		NAV = { country_event = { id = 98740333 days = 0 } }
+	    ai_chance = {
+	    factor = 40
+	    }
+	}
+}
+
+#### SPANISH VICTORY - Dual Monarchy has not enforced its CB onto Spain
+
+country_event = {
+	id = 470037
+	title = "SPAN18.T"
+	desc = "SPAN18.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		NOT = { war_with = DUA }
+		has_global_flag = spanish_revolutionary_war
+		NOT = { has_country_flag = custom_treaty_loser }		
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	# Libertad!
+	
+	option = {
+		name = "SPAN18.A"
+		prestige = 40
+		clr_country_flag = SPA_wait_DUA
+		clr_global_flag = spanish_revolutionary_war
+	    remove_country_modifier = SPA_THE_REVOLUTION
+        nationalvalue = nv_liberty
+		remove_country_modifier = national_confusion
+	    any_pop = {
+			limit = {
+				has_pop_culture = portuguese
+			}
+			ideology = { factor = 0.2 value = liberal } 
+		}
+		add_country_modifier = {
+			name = national_confusion
+			duration = 365
+		}
+	    change_variable = {
+		   which = SPA_instab
+		   value = -2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.1
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -6
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -6
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -8
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -8
+	    }
+	    }
+		DUA = { country_event = { id = 470038 days = 7 } }
+	}
+}
+
+#### L'humiliation - Dual Monarchy is basically told that a bunch of Republicans just kicked their shit in. You idiot.
+
+country_event = {
+	id = 470038
+	title = "SPAN19.T"
+	desc = "SPAN19.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	# Blame everyone
+	
+	option = {
+		name = "SPAN19.A"
+		prestige = -20
+	    any_pop = {
+			limit = {
+				has_pop_culture = anglois
+			}
+			ideology = { factor = 0.1 value = liberal } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = french
+			}
+			ideology = { factor = 0.05 value = separatist } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = english
+			}
+			ideology = { factor = 0.1 value = separatist } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = provencal
+			}
+			ideology = { factor = 0.1 value = separatist } 
+		}			
+	    change_variable = {
+		   which = ENL_revolt
+		   value = 1
+	    }
+	    change_variable = {
+		   which = OCC_revolt
+		   value = 1
+	    }
+	}
+}
+
+#### DUAL MONARCHY VICTORY - Dual Monarchy does a peninsular war and drags Spain back into 18th Century.
+
+country_event = {
+	id = 470039
+	title = "SPAN20.T"
+	desc = "SPAN20.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	major = yes
+	
+    trigger = {
+        tag = SPA
+		NOT = { war_with = DUA }
+		has_global_flag = spanish_revolutionary_war
+		has_country_flag = custom_treaty_loser
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	# Yeah, RIP
+	
+	option = {
+		name = "SPAN20.A"
+		capital = 487    
+		DUA = { diplomatic_influence = { who = THIS value = 400 } relation = { who = THIS value = 400 } create_alliance = THIS }
+		prestige = -40
+		plurality = -50
+	    government = prussian_constitutionalism
+        political_reform = appointed
+        political_reform = landed_voting
+        political_reform = no_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = underground_parties
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		clr_country_flag = SPA_wait_DUA
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = spanish_revolutionary_war		
+	    remove_country_modifier = SPA_THE_REVOLUTION
+		random_owned = {
+		   limit = {
+		      owner = { has_country_modifier = SPA_killed_fueros }
+		   }
+		   owner = { 
+		      remove_country_modifier = SPA_killed_fueros
+			  clr_country_flag = SPA_Fueros
+			  change_variable = {
+		         which = SPA_instab
+		         value = -1
+	          }
+	          change_variable = {
+		         which = SPA_centralization
+		         value = -5
+	          }
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { has_country_modifier = SPA_killed_fueros } }
+		   }
+		   owner = { 
+		      clr_country_flag = SPA_Fueros
+	          change_variable = {
+		         which = SPA_instab
+		         value = 2
+	          }
+	          change_variable = {
+		         which = SPA_centralization
+		         value = -3
+	          }
+		   }
+		}	
+		any_pop = {
+			   limit = {
+				   OR = { type = soldiers type = officers }
+				   pop_majority_ideology = liberal
+				}
+				militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}		
+		any_pop = { 
+				limit = {
+					OR = {
+						social_movement = yes
+						political_movement = yes
+						}
+					} 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+		}
+		any_pop = { ideology = { factor = -0.2 value = liberal } }
+		any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.85 }		
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -10
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -5
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -5
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 5
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 5
+			   ideology = liberal
+	       }
+		}
+	}
+}
+
+#### Dual Monarchy has taken the peaceful approach with our republic
+
+country_event = {
+	id = 470040
+	title = "SPAN21.T"
+	desc = "SPAN21.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+
+	option = {
+		name = "SPAN21.A"
+		prestige = 10
+        nationalvalue = nv_liberty
+		remove_country_modifier = national_confusion
+		add_country_modifier = {
+			name = national_confusion
+			duration = 365
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = portuguese
+			}
+			ideology = { factor = 0.2 value = liberal } 
+		}
+		NAV = { country_event = { id = 98740333 days = 0 } }
+		clr_country_flag = SPA_wait_DUA
+		relation = { who = DUA value = 300 }
+	    change_variable = {
+		   which = SPA_instab
+		   value = -1
+	    }
+    }
+}
+
+######### AND NOW A COUNTRY TO UNIFY! ########
+
+country_event = {
+	id = 470041
+	title = "SPAN22.T"
+	desc = "SPAN22.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = SPA_clear_initial_chain
+		OR = {
+		   NOT = { has_country_flag = SPA_wait_DUA }
+           NOT = { exists = DUA }  
+        }		   
+    }
+	
+    mean_time_to_happen = {
+        days = 31
+    }
+	
+	# Yeah, RIP
+	
+	option = {
+		name = "SPAN22.A"
+		prestige = 1
+		clr_country_flag = SPA_clear_initial_chain
+		clr_country_flag = SPA_wait_DUA
+ 	    any_pop = {
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = reactionary
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = reactionary
+	       }
+	       scaled_militancy = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_consciousness = {
+			   factor = -1
+			   ideology = conservative
+	       }
+	       scaled_militancy = {
+			   factor = 1
+			   ideology = liberal
+	       }
+	       scaled_consciousness = {
+			   factor = 1
+			   ideology = liberal
+	       }
+		}		
+		random_owned = {
+		   limit = {
+		      owner = { government = democracy }
+		   }
+		   owner = { 
+		      set_country_flag = SPA_EARLY_REPUBLIC
+		   }
+		}
+		set_global_flag = SPA_CLEARED_INITIAL
+    }
+}
+
+
+######## SPAINISH STABLITY EVENTS #######
+
+### Economic Collapse of Madrid - The Capital is not in Madrid - Set CAS Capital to Lisbon and move all "Spanish" pops to Lisbon ###
+
+country_event = {
+	id = 470042
+	title = "SPAN23.T"
+	desc = "SPAN23.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_CLEARED_INITIAL	
+        capital = 521		
+		NOT = { has_country_flag = madrid_is_dead }
+    }
+	
+    mean_time_to_happen = {
+        days = 200
+    }
+	
+	option = {
+		name = "SPAN23.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+		prestige = -1
+		487 = { 
+		   any_pop = { limit = { OR = { pop_type = officers pop_type = bureaucrats pop_type = aristocrats has_pop_culture = portuguese } } move_pop = 521 }			
+		   add_province_modifier = { name = revolution_aftermath duration = 3650 } 
+		   life_rating = -5 
+		}
+		489 = { life_rating = 5 }
+		521 = { life_rating = 5 }
+	
+		CST = { capital = 489 }
+		set_country_flag = madrid_is_dead
+    }
+}
+
+### The Monopolization of Land in Spain ####
+
+country_event = {
+	id = 470043
+	title = "SPAN24.T"
+	desc = "SPAN24.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_CLEARED_INITIAL
+		NOT = { has_country_flag = SPA_ChurchLand }
+		NOT = { has_country_flag = SPA_ChurchLand_intro }
+    }
+	
+    mean_time_to_happen = {
+        days = 300
+    }
+	
+	option = {
+		name = "SPAN24.A"
+		set_country_flag = SPA_ChurchLand_intro
+	    add_country_modifier = {
+			name = SPA_NO_LAND_LEFT
+			duration = -1
+		}
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+	    }
+	    }	
+    }
+}
+
+### The Nationalization of Church Land ####
+
+country_event = {
+	id = 470044
+	title = "SPAN25.T"
+	desc = "SPAN25.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = SPA_ChurchLand_intro
+		NOT = { has_country_flag = SPA_ChurchLand }
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+	
+	option = {
+		name = "SPAN25.A"
+		clr_country_flag = SPA_ChurchLand_intro
+		set_country_flag = SPA_ChurchLand
+		country_event = { id = 470045 days = 7 }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+	    }
+	    }
+	    ai_chance = {
+	      factor = 60
+	    }		
+    }
+	
+	option = {
+		name = "SPAN25.B"
+		prestige = -1
+		clr_country_flag = SPA_ChurchLand_intro
+		set_country_flag = SPA_ChurchLand
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.05
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -3
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+	    }
+		}
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		add_province_modifier = { 
+			name = liberal_agitation
+			duration = 180
+			}
+		}	
+	    ai_chance = {
+	      factor = 40
+	    }
+    }
+}
+
+### Rome has protested ###
+
+country_event = {
+	id = 470045
+	title = "SPAN26.T"
+	desc = "SPAN26.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	#Fuck the Pope
+	
+	option = {
+		name = "SPAN26.A"
+		prestige = 10
+		remove_country_modifier = SPA_NO_LAND_LEFT
+		PAP = { relation = { who = THIS value = -10 } leave_alliance = THIS }
+		country_event = { id = 470046 days = 7 }
+	    ai_chance = {
+	      factor = 30
+	    }		
+    }
+	
+	#Lets play nice with the pope
+	
+	option = {
+		name = "SPAN26.B"
+		prestige = 5
+		country_event = { id = 470047 days = 14 }
+	    ai_chance = {
+	      factor = 70
+	    }
+    }
+	
+	#This is too hard
+	
+	option = {
+		name = "SPAN25.C"
+		prestige = -5
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.05
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -3
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+	    }
+		}
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		add_province_modifier = { 
+			name = liberal_agitation
+			duration = 180
+			}
+		}	
+	    ai_chance = {
+	      factor = 0
+	    }
+    }
+}
+
+### The Pope Denounces Spain
+
+country_event = {
+	id = 470046
+	title = "SPAN27.T"
+	desc = "SPAN27.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# That was a bad idea.
+	
+	option = {
+		name = "SPAN27.A"
+		prestige = -15
+		add_country_modifier = {
+			name = conservative_reaction
+			duration = 365
+		}
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.15
+		   }
+        }
+		any_pop = { limit = { pop_type = clergymen religion = catholic } militancy = 9 consciousness = 3 ideology = { value = reactionary factor = 0.5 } }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+		any_country = {
+		   limit = {
+		      religion = catholic
+		   }
+		   relation = { who = THIS value = -50 }
+		}	
+		PAP = { relation = { who = THIS value = -150 } leave_alliance = THIS }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 8
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 4
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 6
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+	    }
+	    }	
+    }
+}
+
+### The Meeting with the Pope
+
+country_event = {
+	id = 470047
+	title = "SPAN28.T"
+	desc = "SPAN28.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# We shall enshrine Catholicsm as our state religion
+	
+	option = {
+		name = "SPAN28.A"
+		prestige = -5
+		remove_country_modifier = SPA_NO_LAND_LEFT
+	    add_country_modifier = {
+			name = SPA_EMPOWERED_CLERGY
+			duration = -1
+		}
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+        }
+		any_pop = { limit = { pop_type = clergymen religion = catholic } militancy = -9 consciousness = -9 ideology = { value = conservative factor = 0.4 } }
+		any_country = {
+		   limit = {
+		      religion = catholic
+		   }
+		   relation = { who = THIS value = 50 }
+		}
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 3
+	    }
+	    }
+	    ai_chance = {
+	      factor = 30
+	    }		
+    }
+	
+	# A set of vaque promises and solutions to various problems without actually giving anything substancial.
+	
+	option = {
+		name = "SPAN28.B"
+		prestige = 5
+		random_list = {
+			40 = { 
+			   prestige = -5
+			   remove_country_modifier = SPA_NO_LAND_LEFT
+			   country_event = { id = 470048 days = 3 }
+			}
+			60 = { 
+			   prestige = 10
+			   remove_country_modifier = SPA_NO_LAND_LEFT
+               country_event = { id = 4700480 days = 3 }
+			}
+		}
+	    ai_chance = {
+	      factor = 70
+	    }		
+    }
+}
+
+### The Pope is insulted
+
+country_event = {
+	id = 470048
+	title = "SPAN29.T"
+	desc = "SPAN29.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# At least we tried
+	
+	option = {
+		name = "SPAN29.A"
+		prestige = -10
+		add_country_modifier = {
+			name = conservative_reaction
+			duration = 365
+		}
+		any_pop = { limit = { pop_type = clergymen religion = catholic } militancy = 9 consciousness = 3 ideology = { value = reactionary factor = 0.4 } }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.05
+		   }
+        }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+		any_country = {
+		   limit = {
+		      religion = catholic
+		   }
+		   relation = { who = THIS value = -25 }
+		}
+		PAP = { relation = { who = THIS value = -125 } leave_alliance = THIS }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+	    }
+	    }	
+    }
+}
+
+### The Spanish Concordat - You genius
+
+country_event = {
+	id = 4700480
+	title = "SPAN290.T"
+	desc = "SPAN290.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes	
+    is_triggered_only = yes
+	
+	# Everyone is happy
+	
+	option = {
+		name = "SPAN290.A"
+		prestige = 10
+		money = 100000
+		any_pop = { limit = { pop_type = clergymen religion = catholic } militancy = -9 consciousness = -9 ideology = { value = conservative factor = 0.4 } }
+		any_country = {
+		   limit = {
+		      religion = catholic
+		   }
+		   relation = { who = THIS value = 25 }
+		}
+		PAP = { relation = { who = THIS value = 100 } }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -4
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+	    }	
+    }
+}
+
+### Publishing of the Iverea Cronicles ####
+
+country_event = {
+	id = 470049
+	title = "SPAN30.T"
+	desc = "SPAN30.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_CLEARED_INITIAL
+		year = 1850
+		is_ideology_enabled = anarcho_liberal
+		NOT = { has_country_flag = SPA_IVERA_RELEASED }
+    }
+	
+    mean_time_to_happen = {
+        days = 300
+    }
+	
+	option = {
+		name = "SPAN30.A"
+		prestige = 5
+		set_country_flag = SPA_IVERA_RELEASED
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.05
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 2
+	    }
+	    }	
+	    ai_chance = {
+	      factor = 50
+	    }
+    }
+	
+	option = {
+		name = "SPAN30.B"
+		prestige = -5
+		set_country_flag = SPA_IVERA_RELEASED
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+		any_pop = {
+		   ideology = {
+			  value = liberal
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = anarcho_liberal
+			  factor = 0.05
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -2
+	    }
+	    }	
+	    ai_chance = {
+	      factor = 50
+	    }
+    }
+}
+
+### The Asturias Trial ####
+
+country_event = {
+	id = 470050
+	title = "SPAN31.T"
+	desc = "SPAN31.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		year = 1860
+		has_country_flag = SPA_IVERA_RELEASED
+		NOT = { has_country_flag = SPA_THE_TRIAL }
+		NOT = { has_country_flag = SPA_Fueros }
+    }
+	
+    mean_time_to_happen = {
+        days = 300
+    }
+	
+	option = {
+		name = "SPAN31.A"
+		set_country_flag = SPA_THE_TRIAL
+	    add_country_modifier = {
+			name = SPA_FUEROS_ARE_PROBLEM
+			duration = -1
+		}
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 2
+	    }
+	    }		
+    }
+}
+
+### The Problem with Fureos ####
+
+country_event = {
+	id = 470051
+	title = "SPAN32.T"
+	desc = "SPAN32.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = SPA_THE_TRIAL
+		NOT = { has_country_flag = SPA_Fueros }
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+	
+	option = {
+		name = "SPAN32.A"
+		prestige = -5
+		clr_country_flag = SPA_THE_TRIAL
+		set_country_flag = SPA_Fueros
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = 4
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 4
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = POR
+	    }
+		add_province_modifier = { 
+			name = liberal_agitation
+			duration = 180
+	    }
+		}
+	    ai_chance = {
+	      factor = 40
+	    }		
+    }
+	
+	option = {
+		name = "SPAN32.B"
+		country_event = { id = 470052 days = 7 }
+		clr_country_flag = SPA_THE_TRIAL
+		set_country_flag = SPA_Fueros
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 1
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -2
+	    }
+	    }
+	    ai_chance = {
+	      factor = 60
+	    }			
+    }
+}
+
+### The Castillian Courts ask for a Compromise ####
+
+country_event = {
+	id = 470052
+	title = "SPAN33.T"
+	desc = "SPAN33.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN33.A"
+		prestige = 10
+		add_country_modifier = {
+			name = conservative_reaction
+			duration = 365
+		}
+	    add_country_modifier = {
+			name = SPA_killed_fueros
+			duration = -1
+		}
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 2
+	    }
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.05
+		   }
+        }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = 4
+	    }
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = -4
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+	    }
+	    }
+	    ai_chance = {
+	      factor = 35
+	    }		
+    }
+	
+	option = {
+		name = "SPAN32.B"
+        prestige = -5
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = -2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+	    }
+		scaled_consciousness = { 
+				ideology = conservative
+				factor = -1
+        }
+		scaled_militancy = {
+				ideology = conservative
+				factor = -1
+	    }
+		scaled_consciousness = { 
+				ideology = anarcho_liberal
+				factor = 1
+        }
+		scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 1
+	    }
+	    }	
+	    ai_chance = {
+	      factor = 65
+	    }		
+    }
+}
+
+######## THE BIRTH OF THE CASTILLIAN NATIONAL MOVEMENT #######
+
+### HIGH CENTRALIZATION ###
+
+country_event = {
+	id = 470053
+	title = "SPAN330.T"
+	desc = "SPAN330.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1865
+        has_country_flag = SPA_Fueros
+		has_country_flag = SPA_ChurchLand
+		has_global_flag = the_age_of_nationalism_fired
+		war = no
+		NOT = { has_country_flag = CST_CRISIS }	
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 15
+	    }	
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN330.A"
+		prestige = -5
+		set_country_flag = CST_CRISIS
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 3
+	    }
+		remove_accepted_culture = castilian
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = CST }
+		494 = { add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 4
+		  consciousness = 4
+	      ideology = { factor = 0.2 value = separatist } 
+	   }
+		any_pop = {
+		   limit = { 
+	         culture = portuguese
+	       }
+		   militancy = -4
+        }
+	    ai_chance = {
+	      factor = 70
+	    }
+    }
+	
+	option = {
+		name = "SPAN33.B"
+		prestige = 10
+		set_country_flag = CST_CRISIS
+		remove_accepted_culture = castilian
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = CST }
+		494 = { add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 2
+		  consciousness = 2
+	      ideology = { factor = 0.1 value = separatist } 
+	    }
+	    ai_chance = {
+	      factor = 30
+	    }
+    }
+}
+
+### LOW CENTRALIZATION ###
+
+country_event = {
+	id = 470054
+	title = "SPAN34.T"
+	desc = "SPAN34.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1865
+        has_country_flag = SPA_Fueros
+		has_country_flag = SPA_ChurchLand
+		has_global_flag = the_age_of_nationalism_fired
+		war = no
+		NOT = { has_country_flag = CST_CRISIS }	
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+	    NOT = {
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 15
+	    }
+        }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN34.A"
+		prestige = -10
+		set_country_flag = CST_CRISIS
+		remove_accepted_culture = castilian
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = CST }
+		494 = { add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = -1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -5
+		  consciousness = -5
+	    }
+		any_pop = {
+		   limit = { 
+	         culture = portuguese
+	       }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+		   militancy = 2
+        }
+	    ai_chance = {
+	      factor = 70
+	    }
+    }
+	
+	option = {
+		name = "SPAN34.B"
+		set_country_flag = CST_CRISIS
+		remove_accepted_culture = castilian
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = CST }
+		494 = { add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 2
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 2
+		  consciousness = 2
+	      ideology = { factor = 0.1 value = separatist } 
+	    }
+	    ai_chance = {
+	      factor = 30
+	    }
+    }
+}
+
+######## Railroad Plans ###########
+
+### I should actually build some railroads here. Later.
+
+country_event = {
+	id = 470055
+	title = "SPAN35.T"
+	desc = "SPAN35.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1870
+		has_country_flag = CST_CRISIS
+		NOT = { has_country_flag = SPA_CHOO_CHOO }
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+		
+    }
+	
+    mean_time_to_happen = {
+        days = 62
+    }
+	
+	option = {
+		name = "SPAN35.A"
+		set_country_flag = SPA_CHOO_CHOO
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -2
+		  consciousness = -2
+	    }
+		any_pop = {
+		   limit = { 
+	         culture = portuguese
+	       }
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+		   militancy = 2
+        }
+	    ai_chance = {
+	      factor = 50
+	    }
+    }
+	
+	option = {
+		name = "SPAN35.B"
+		set_country_flag = SPA_CHOO_CHOO
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 2
+		  consciousness = 2
+	      ideology = { factor = 0.1 value = separatist } 
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = portuguese
+	      }
+	      militancy = -2
+		  consciousness = -2
+	    }
+	    ai_chance = {
+	      factor = 50
+	    }
+    }
+}
+
+############ A SPAM OF TIMED EVENTS ##############
+
+### Hey Localization Guy. I have no lore for these. So have fun coming up with something ###
+
+### Get fucked stage one - 1870 ###
+
+country_event = {
+	id = 470056
+	title = "SPAN36.T"
+	desc = "SPAN36.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1870	
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN36.A"
+		set_country_flag = SPA_CHOO_CHOO
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+	    }
+    }
+}
+
+### Get fucked stage two - 1880 ###
+
+country_event = {
+	id = 470057
+	title = "SPAN37.T"
+	desc = "SPAN37.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1880	
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN37.A"
+		set_country_flag = SPA_CHOO_CHOO
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+	    }
+    }
+}
+
+### OH MY GOD JUST FIX THE PROBLEM NOW ###
+
+country_event = {
+	id = 470058
+	title = "SPAN38.T"
+	desc = "SPAN38.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1890
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN38.A"
+		set_country_flag = SPA_CHOO_CHOO
+	    change_variable = {
+		   which = SPA_instab
+		   value = 4
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+	    }
+    }
+}
+
+### This is gone on far too long... ###
+
+country_event = {
+	id = 470059
+	title = "SPAN39.T"
+	desc = "SPAN39.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		year = 1900	
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN39.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 4
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+		  ideology = { factor = 0.05 value = communist } 
+	    }
+    }
+}
+
+### COMRADE. YOUR ENTIRE COUNTRY JUST CAUGHT FIRE. ###
+
+country_event = {
+	id = 470060
+	title = "SPAN40.T"
+	desc = "SPAN40.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		government = proletarian_dictatorship
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN40.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 6
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 4
+		  consciousness = 4
+	      ideology = { factor = 0.2 value = separatist } 
+	    }
+    }
+}
+
+### You somehow managed to create a fascist dictatorship before the CST crisis ended. Now everyone hates you. ###
+
+country_event = {
+	id = 470061
+	title = "SPAN41.T"
+	desc = "SPAN41.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		OR = {
+		   government = fascist_dictatorship
+		   government = fascist_monarchy
+		}
+		has_country_flag = CST_CRISIS
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN41.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 20
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 20
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 5
+		  consciousness = 5
+	      ideology = { factor = 0.3 value = separatist } 
+	    }
+    }
+}
+
+### The Monarchy was abolished at any point after the initial republic chain - THIS CAN TRIGGER PRIOR TO THE START OF THE CST CHAIN ###
+
+country_event = {
+	id = 470062
+	title = "SPAN42.T"
+	desc = "SPAN42.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		NOT = { 
+		   OR = {
+		     government = absolute_monarchy
+			 government = prussian_constitutionalism
+			 government = hms_government
+		   }
+		}
+		has_global_flag = SPA_CLEARED_INITIAL
+		NOT = { has_country_flag = SPA_EARLY_REPUBLIC }
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN42.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 3
+	    }
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.05
+		   }
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+	    }
+    }
+}
+
+############ THE WIND UP TO THE CIVIL WAR ##############
+
+### Autonomous Governors ####
+
+country_event = {
+	id = 470063
+	title = "SPAN43.T"
+	desc = "SPAN43.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_CRISIS	
+	    check_variable = {
+		   which = SPA_instab
+		   value = 14
+	    }
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 30
+    }
+	
+	option = {
+		name = "SPAN43.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = portuguese
+	      }
+	      militancy = 1
+		  consciousness = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 1
+		  consciousness = 1
+	      ideology = { factor = 0.05 value = separatist } 
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+		add_province_modifier = { 
+			name = spa_autonomous_governors
+			duration = -1
+			}
+		}
+	    ai_chance = {
+	      factor = 70
+	    }
+    }
+	
+	option = {
+		name = "SPAN43.B"
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = portuguese
+	      }
+	      militancy = -1
+		  consciousness = -1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 3
+		  consciousness = 3
+	      ideology = { factor = 0.1 value = separatist } 
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+		add_province_modifier = { 
+			name = spa_autonomous_governors
+			duration = 365
+			}
+		}
+	    ai_chance = {
+	      factor = 30
+	    }
+    }
+}
+
+### Inspired Nationalist Protest in $CAPITAL$ ####
+
+country_event = {
+	id = 470064
+	title = "SPAN44.T"
+	desc = "SPAN44.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_CRISIS	
+	    check_variable = {
+		   which = SPA_instab
+		   value = 18
+	    }
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 30
+    }
+	
+	option = {
+		name = "SPAN44.A"
+	    change_variable = {
+		   which = SPA_instab
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = portuguese
+	      }
+	      militancy = 2
+		  consciousness = 2
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -1
+		  consciousness = -1
+	      ideology = { factor = -0.05 value = separatist } 
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+        add_province_modifier = {
+                name = nationalist_agitation
+                duration = 14
+            }
+		}
+	    ai_chance = {
+	      factor = 70
+	    }
+    }
+	
+	option = {
+		name = "SPAN44.B"
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 1
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = portuguese
+	      }
+	      militancy = -2
+		  consciousness = -2
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 3
+		  consciousness = 3
+	      ideology = { factor = 0.1 value = separatist } 
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+        add_province_modifier = {
+                name = nationalist_agitation
+                duration = 180
+            }
+		}
+	    ai_chance = {
+	      factor = 30
+	    }
+    }
+}
+
+### SHIT HAS NOW OFFICALLY HIT THE FAN - THE MILITAS HAVE NOW APPEARED ###
+
+country_event = {
+	id = 470065
+	title = "SPAN45.T"
+	desc = "SPAN45.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_CRISIS	
+	    check_variable = {
+		   which = SPA_instab
+		   value = 22
+	    }
+		NOT = { VNS = { vassal_of = THIS } }
+		NOT = { has_global_flag = CST_STAGETWO }
+		NOT = { has_global_flag = CST_ENDING }
+    }
+	
+    mean_time_to_happen = {
+        days = 150
+    }
+	
+	option = {
+		name = "SPAN45.A"
+		clr_country_flag = CST_CRISIS	
+		set_global_flag = CST_STAGETWO
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 3
+		  consciousness = 3
+	    }
+	    any_owned = { 
+	       limit = { 
+	         is_core = CST
+	       }
+           remove_province_modifier = nationalist_agitation
+		}
+	    any_owned = { 
+	       limit = { 
+	        is_core = CST
+	       }
+           remove_province_modifier = spa_autonomous_governors
+		}
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { has_country_flag = toledo_junta } }
+		   }
+		   owner = { 
+		      country_event = { id = 470066 days = 0 } 
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = toledo_junta }
+		   }
+		   owner = { 
+		      clr_country_flag = toledo_junta
+			  country_event = { id = 470067 days = 0 }			  
+		   }
+		}
+
+    }
+}
+
+### THE TOLEDO JUNTA ###
+
+country_event = {
+	id = 470066
+	title = "SPAN46.T"
+	desc = "SPAN46.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN46.A"
+		any_pop = { limit = { pop_type = officers } militancy = 4 ideology = { value = reactionary factor = 0.4 } }		
+		any_pop = { limit = { pop_type = soldiers } militancy = 2 ideology = { value = reactionary factor = 0.2 } }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+        add_province_modifier = {
+                name = nationalist_agitation
+                duration = 180
+            }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { capital = 521 }
+		   }
+		   owner = { 
+		      country_event = { id = 4700670 days = 7 } 
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { capital = 487 }
+		   }
+		   owner = { 
+			  country_event = { id = 470068 days = 7 }	
+           }			  
+		}
+    }
+}
+
+### THE SECOND TOLEDO JUNTA - OH FOR FUCK SAKES NOT AGAIN ###
+
+country_event = {
+	id = 470067
+	title = "SPAN47.T"
+	desc = "SPAN47.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN45.A"
+		any_pop = { limit = { pop_type = officers } militancy = 4 ideology = { value = reactionary factor = 0.4 } }		
+		any_pop = { limit = { pop_type = soldiers } militancy = 2 ideology = { value = reactionary factor = 0.2 } }	
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = reactionary
+				factor = 2
+        }
+		scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+	    }
+	    }
+	    any_owned = { 
+	    limit = { 
+	      is_core = CST
+	    }
+        add_province_modifier = {
+                name = nationalist_agitation
+                duration = 180
+            }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { capital = 521 }
+		   }
+		   owner = { 
+		      country_event = { id = 4700670 days = 7 } 
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { capital = 487 }
+		   }
+		   owner = { 
+			  country_event = { id = 470068 days = 7 }	
+           }			  
+		}
+    }
+}
+
+
+### Junta has declared the Republic of Castille in Toledo. Time for España Cañí ###
+
+country_event = {
+	id = 4700670
+	title = "SPAN470.T"
+	desc = "SPAN470.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN470.A"
+	    any_owned = { 
+	       limit = { 
+	         is_core = CST
+	       }
+           remove_province_modifier = nationalist_agitation
+		}
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 8
+		  consciousness = 8
+	      ideology = { factor = 0.3 value = separatist } 
+	    }
+	    add_country_modifier = { 
+	       name = calm_before_storm
+	       duration = 2190
+	    }
+		CST = { set_country_flag = CST_republic } 
+		# The Indipendence Event 
+        country_event = { id = 470069 days = 7 }		
+    }
+}
+
+### The Lisbon Diktat - Junta has effectively overthrown the Spanish Monarchy in Madrid and declared the Kingdom of Castille. That was one way for the Spanish Monarchy to end.  ###
+
+country_event = {
+	id = 470068
+	title = "SPAN48.T"
+	desc = "SPAN48.D"
+	#picture = "ambush_army"
+	
+	major = yes
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN48.A"
+	    any_owned = { 
+	       limit = { 
+	         is_core = CST
+	       }
+           remove_province_modifier = nationalist_agitation
+		}
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 8
+		  consciousness = 8
+	      ideology = { factor = 0.3 value = separatist } 
+	    }
+	    add_country_modifier = { 
+	       name = calm_before_storm
+	       duration = 2190
+	    }
+		capital = 521
+	    government = democracy
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = jefferson_method
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+		CST = { set_country_flag = CST_monarchy }
+		# The Indipendence Event 
+        country_event = { id = 470069 days = 7 }			
+    }
+}
+
+### NATIONAL COLLAPSE - Castille has declared Indipendence ##
+
+country_event = {
+	id = 470069
+	title = "SPAN49.T"
+	desc = "SPAN49.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN49.A"
+		prestige = -20
+		set_global_flag = SPA_COLLAPSING
+		any_owned = {
+			limit = {
+			   is_core = CST
+			   NOT = { is_core = ATR }
+			   NOT = { is_core = ANA }
+			   NOT = { province_id = 511 }
+			   NOT = { province_id = 486 }
+			   NOT = { province_id = 484 }
+			   NOT = { province_id = 482 }
+			   NOT = { province_id = 477 }	
+			}
+			secede_province = CST
+		}
+		any_owned = {
+			limit = {
+			   is_core = CST
+			   NOT = { province_id = 511 }
+			   NOT = { province_id = 486 }
+			   NOT = { province_id = 484 }
+			   NOT = { province_id = 482 }
+			   NOT = { province_id = 477 }		   
+			}
+			remove_core = SPA
+		}
+		any_owned = {
+			limit = {
+			   is_core = ANA
+			}
+			remove_core = CST
+		}
+		any_owned = {
+			limit = {
+			   is_core = ATR
+			}
+			remove_core = CST
+		}
+		random_list = {
+			50 = { 
+			   511 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               511 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   484 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               484 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   486 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               486 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   482 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               482 = { remove_core = CST }
+			}
+		}
+	    CST = { 
+	    add_country_modifier = { 
+	       name = preparing_for_war
+	       duration = 2190
+	    }	
+	    add_country_modifier = { 
+	      name = CST_REVOLUTION
+	      duration = 2190
+	    }
+	    add_country_modifier = { 
+	      name = calm_before_storm
+	      duration = 2190
+	    }	
+	    define_general = {
+		  name = "Ruben Guerrero"
+		  personality = heroic
+		  background = rising_star
+	    }
+		money = 500000
+	    canned_food = 500
+	    regular_clothes = 500
+	    small_arms = 500
+	    artillery = 500
+		political_reform = four_year_draft
+		# CST Setup Event
+		country_event = 470070
+	    }		
+		
+    }
+	
+	option = {
+		name = "SPAN49.B"
+		prestige = -20
+		set_global_flag = SPA_COLLAPSING
+		any_owned = {
+			limit = {
+			   is_core = CST
+			   NOT = { is_core = ATR }
+			   NOT = { is_core = ANA }
+			   NOT = { province_id = 511 }
+			   NOT = { province_id = 486 }
+			   NOT = { province_id = 484 }
+			   NOT = { province_id = 482 }
+			   NOT = { province_id = 477 }	
+			}
+			secede_province = CST
+		}
+		any_owned = {
+			limit = {
+			   is_core = CST
+			   NOT = { province_id = 511 }
+			   NOT = { province_id = 486 }
+			   NOT = { province_id = 484 }
+			   NOT = { province_id = 482 }
+			   NOT = { province_id = 477 }		   
+			}
+			remove_core = SPA
+		}
+		any_owned = {
+			limit = {
+			   is_core = ANA
+			}
+			remove_core = CST
+		}
+		any_owned = {
+			limit = {
+			   is_core = ATR
+			}
+			remove_core = CST
+		}
+		random_list = {
+			50 = { 
+			   511 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               511 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   484 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               484 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   486 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               486 = { remove_core = CST }
+			}
+		}
+		random_list = {
+			50 = { 
+			   482 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               482 = { remove_core = CST }
+			}
+		}
+	    CST = { 
+	    add_country_modifier = { 
+	       name = preparing_for_war
+	       duration = 2190
+	    }	
+	    add_country_modifier = { 
+	      name = CST_REVOLUTION
+	      duration = 2190
+	    }
+	    add_country_modifier = { 
+	      name = calm_before_storm
+	      duration = 2190
+	    }	
+	    define_general = {
+		  name = "Ruben Guerrero"
+		  personality = heroic
+		  background = rising_star
+	    }
+		money = 500000
+	    canned_food = 500
+	    regular_clothes = 500
+	    small_arms = 500
+	    artillery = 500
+		political_reform = four_year_draft
+		# CST Setup Event
+		country_event = 470070
+	    }	
+        change_tag_no_core_switch = CST				
+    }
+}
+
+### Castille Setup Event ##
+
+country_event = {
+	id = 470070
+	title = "SPAN50.T"
+	desc = "SPAN50.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "SPAN50.A"
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = CST_monarchy }
+		   }
+		   owner = { 
+	          government = hms_government
+			  ruling_party_ideology = conservative
+              political_reform = state_equal_weight
+              political_reform = universal_weighted_voting
+              political_reform = yes_meeting
+              political_reform = free_press
+              political_reform = no_trade_unions
+              political_reform = first_past_the_post
+              political_reform = gerrymandering
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          set_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          clr_country_flag = democracy_gov	
+              clr_country_flag = CST_monarchy		      
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = CST_republic }
+		   }
+		   owner = { 
+	          government = democracy
+			  ruling_party_ideology = conservative
+              political_reform = state_equal_weight
+              political_reform = universal_voting
+              political_reform = yes_meeting
+              political_reform = free_press
+              political_reform = no_trade_unions
+              political_reform = first_past_the_post
+              political_reform = gerrymandering
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          clr_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          set_country_flag = democracy_gov
+              clr_country_flag = CST_republic		      
+		   }
+		}		
+    }
+}
+
+### Checking Granada - Need under 3 to stay ####
+
+country_event = {
+	id = 470071
+	title = "SPAN51.T"
+	desc = "SPAN51.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_COLLAPSING
+		NOT = { has_country_flag = SPA_ANA }
+		NOT = {
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 13
+	    }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 10
+    }
+	
+	option = {
+		name = "SPAN51.A"
+		prestige = 10
+		set_country_flag = SPA_ANA
+		country_event = { id = 470072 days = 3 }
+    }
+}
+
+country_event = {
+	id = 470072
+	title = "SPAN52.T"
+	desc = "SPAN52.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	
+	option = {
+		name = "SPAN51.A"
+		prestige = -5
+	    add_country_modifier = { 
+	      name = SPA_ARMY_COLLAPSE
+	      duration = 2190
+	    }
+    }
+}
+
+country_event = {
+	id = 470073
+	title = "SPAN53.T"
+	desc = "SPAN53.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_COLLAPSING
+		NOT = { has_country_flag = SPA_ANA }
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 13
+	    }
+    }
+	
+    mean_time_to_happen = {
+        days = 10
+    }
+	
+	option = {
+		name = "SPAN53.A"
+		prestige = -10
+		set_country_flag = SPA_ANA
+		any_owned = {
+			limit = {
+			   is_core = ANA
+			}
+			remove_core = SPA
+			add_core = CST
+		}
+		any_owned = {
+			limit = {
+			   is_core = ANA
+			}
+			secede_province = CST
+		}
+    }
+}
+
+### Checking Asturias - Will always declare indipendence ####
+
+country_event = {
+	id = 470074
+	title = "SPAN54.T"
+	desc = "SPAN54.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_COLLAPSING
+		has_country_flag = SPA_ANA
+		NOT = { has_country_flag = SPA_ATR }
+    }
+	
+    mean_time_to_happen = {
+        days = 10
+    }
+	
+	option = {
+		name = "SPAN54.A"
+		prestige = -1
+		set_country_flag = SPA_ATR
+		any_owned = {
+			limit = {
+			   is_core = ATR
+			}
+			remove_core = SPA
+		}
+		any_owned = {
+			limit = {
+			   is_core = ATR
+			}
+			secede_province = ATR
+		}
+    }
+}
+
+### Checking Galicia - Need under 8 to stay ####
+
+country_event = {
+	id = 470075
+	title = "SPAN55.T"
+	desc = "SPAN55.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_COLLAPSING
+		has_country_flag = SPA_ANA
+		has_country_flag = SPA_ATR
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 18
+	    }
+    }
+	
+    mean_time_to_happen = {
+        days = 10
+    }
+	
+	option = {
+		name = "SPAN54.A"
+		prestige = -5
+		clr_global_flag = SPA_COLLAPSING
+		clr_country_flag = SPA_ANA
+		clr_country_flag = SPA_ATR
+		any_owned = {
+			limit = {
+			   is_core = GAL
+			}
+			remove_core = SPA
+		}
+		any_owned = {
+			limit = {
+			   is_core = GAL
+			}
+			secede_province = GAL
+		}
+		set_country_flag = KILL_GAL
+		GAL = {
+		  add_country_modifier = { 
+	        name = CST_REVOLUTION
+	        duration = 2190
+	      }
+		}
+		random_list = {
+			75 = { 
+			   477 = { remove_core = SPA secede_province = CST }  
+			}
+			25 = { 
+			   prestige = 1
+               477 = { remove_core = CST }
+			}
+		}
+		country_event = { id = 470076 days = 14 }
+		country_event = { id = 470078 days = 30 }
+    }
+}
+
+country_event = {
+	id = 470076
+	title = "SPAN56.T"
+	desc = "SPAN56.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	
+	option = {
+		name = "SPAN56.A"
+		prestige = 10
+	    add_country_modifier = { 
+	      name = SPA_NATIONAL_GUARD
+	      duration = 2190
+	    }
+    }
+}
+
+country_event = {
+	id = 470077
+	title = "SPAN57.T"
+	desc = "SPAN57.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPA_COLLAPSING
+		has_country_flag = SPA_ANA
+		has_country_flag = SPA_ATR
+		NOT = {
+	    check_variable = {
+		   which = SPA_centralization
+		   value = 18
+	    }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 10
+    }
+	
+	option = {
+		name = "SPAN57.A"
+		clr_global_flag = SPA_COLLAPSING
+		clr_country_flag = SPA_ANA
+		clr_country_flag = SPA_ATR
+		prestige = -1
+	    any_pop = { 
+	      limit = { 
+	         culture = old_portuguese
+	      }
+		  reduce_pop = 0.99
+	      militancy = 7
+		  consciousness = 7
+	      ideology = { factor = 0.3 value = separatist } 
+	    }
+		random_list = {
+			50 = { 
+			   477 = { remove_core = SPA secede_province = CST }  
+			}
+			50 = { 
+			   prestige = 1
+               477 = { remove_core = CST }
+			}
+		}
+		country_event = { id = 470078 days = 30 }
+    }
+}
+		
+
+#### THE CASTILLIAN REVOLT - Here lies half of Spain. It died with the other half ####
+
+country_event = {
+	id = 470078
+	title = "SPAN58.T"
+	desc = "SPAN58.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "SPAN56.A"
+		set_global_flag = SPANISH_CIVIL_WAR
+		relation = { who = GAL value = -400 } 
+		relation = { who = ATR value = -400 } 
+		relation = { who = CST value = -400 } 
+        CST = { all_core = { add_core = SPA } }
+		GAL = { all_core = { add_core = SPA } }
+		ATR = { all_core = { add_core = SPA } }
+	    war = {
+		    target = CST
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		}
+		random_owned = {
+		    limit = {
+			   owner = { NOT = { owns = 474 } }
+			}
+			owner = {
+	           war = {
+		          target = GAL
+			      attacker_goal = {
+				     casus_belli = civil_war
+			      }
+			      defender_goal = {
+				     casus_belli = status_quo
+			      }
+		       }
+			}
+			
+	    }
+		 
+    }
+}
+
+##### Spain has won the Castllian Revolt - Check Centralization for next event #####
+
+country_event = {
+	id = 470079
+	title = "SPAN59.T"
+	desc = "SPAN59.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = SPA
+		has_global_flag = SPANISH_CIVIL_WAR
+        war = no
+		NOT = { exists = CST }
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	option = {
+		name = "SPAN57.A"
+		prestige = 20
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO
+		set_global_flag = CST_ENDING
+        set_country_flag = CST_SOLUTION
+    }
+}
+
+### Solution 1 - Low Centralization - Los Nuevos Fueros - Ideal Solution
+
+country_event = {
+	id = 470080
+	title = "SPAN60.T"
+	desc = "SPAN60.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	major = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_SOLUTION
+		NOT = { exists = GAL }
+		NOT = { exists = ATR }
+		NOT = { exists = ANA }
+		NOT = {
+	       check_variable = {
+		      which = SPA_centralization
+		      value = 13
+	       }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN60.A"
+		prestige = 10
+		clr_country_flag = CST_SOLUTION
+		set_global_flag = SPA_DECENTER
+		political_reform = federalism
+		add_accepted_culture = castilian
+        add_accepted_culture = old_portuguese
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = old_portuguese
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }	
+		CST = { remove_country_modifier = CST_REVOLUTION }
+        remove_country_modifier = SPA_killed_fueros		
+        remove_country_modifier = SPA_NO_LAND_LEFT	
+        remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
+        remove_country_modifier = SPA_EMPOWERED_CLERGY
+        remove_country_modifier = SPA_ARMY_COLLAPSE		
+        remove_country_modifier = SPA_NATIONAL_GUARD		
+    }
+}
+
+### Solution 2 - Normal Centralization - Grandes Reformas  - Status Quo Solution
+
+country_event = {
+	id = 470081
+	title = "SPAN61.T"
+	desc = "SPAN61.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	major = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_SOLUTION
+	    check_variable = {
+		    which = SPA_centralization
+		    value = 13
+	    }
+		NOT = { exists = GAL }
+		NOT = { exists = ATR }
+		NOT = { exists = ANA }
+		NOT = {
+	       check_variable = {
+		      which = SPA_centralization
+		      value = 18
+	       }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN60.A"
+		prestige = 5
+		clr_country_flag = CST_SOLUTION
+		set_global_flag = SPA_STATUSQUO
+		political_reform = unitary
+		add_accepted_culture = castilian
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }
+        all_core = { remove_core = ANA remove_core = GAL remove_core = ATR remove_core = CST }
+		CST = { remove_country_modifier = CST_REVOLUTION }
+        remove_country_modifier = SPA_killed_fueros		
+        remove_country_modifier = SPA_NO_LAND_LEFT	
+        remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
+        remove_country_modifier = SPA_EMPOWERED_CLERGY
+        remove_country_modifier = SPA_ARMY_COLLAPSE		
+        remove_country_modifier = SPA_NATIONAL_GUARD
+    }
+}
+
+### Solution 3 - Hyper Centralization - El Decreto de Unificación - This gets a bit night of the long knives
+
+country_event = {
+	id = 470082
+	title = "SPAN62.T"
+	desc = "SPAN62.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	major = yes
+	
+    trigger = {
+        tag = SPA
+		has_country_flag = CST_SOLUTION
+	    check_variable = {
+		    which = SPA_centralization
+		    value = 18
+	    }
+		NOT = { exists = GAL }
+		NOT = { exists = ATR }
+		NOT = { exists = ANA }
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = {
+		name = "SPAN62.A"
+		prestige = 10
+		clr_country_flag = CST_SOLUTION
+		set_global_flag = SPA_CENTER
+		political_reform = unitary
+	    random_owned = {
+			limit = {
+			   owner = { vote_franschise = none_voting }
+			}
+			owner = { political_reform = totalitarianism }
+		}
+	    any_owned = { 
+	    limit = { 
+		    OR = {
+		       is_core = POR
+			   is_core = GAL
+			   is_core = ATR
+			   is_core = CST
+			   is_core = ANA
+		    }
+		}
+        add_province_modifier = {
+                name = spanish_education
+                duration = 10950
+            }
+		}
+	    any_owned = { 
+	    limit = { 
+		    OR = {
+			   is_core = GAL
+			   is_core = ATR
+			   is_core = CST
+			   is_core = ANA
+		    }
+		}
+        add_province_modifier = {
+                name = nationalist_agitation
+                duration = 100
+		    }
+		}
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = 2
+		  consciousness = 2
+		  reduce_pop = 0.99
+	      ideology = { factor = -0.2 value = separatist } 
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = old_portuguese
+	      }
+	      militancy = 2
+		  consciousness = 2
+		  reduce_pop = 0.99
+	      ideology = { factor = -0.2 value = separatist } 
+	    }
+	    any_pop = { 
+	        limit = { 
+		      OR = {
+	             culture = old_portuguese
+				 culture = castilian
+		      }
+			  OR = { 
+			     pop_type = bureaucrats
+				 pop_type = clergymen
+			  }
+			}
+		    reduce_pop = 0.8
+	        assimilate = yes
+	    }
+	    any_pop = { 
+	        limit = { 
+		      OR = {
+	             culture = old_portuguese
+				 culture = castilian
+		      }
+			  pop_type = officers
+			}
+		    reduce_pop = 0.7
+	        assimilate = yes
+	    }
+		rich_strata = { 
+			limit = {
+			    OR = {
+				   has_pop_culture = castilian
+				   has_pop_culture = old_portuguese
+				}
+			}
+			reduce_pop = 0.8
+			assimilate = yes
+		}
+        all_core = { remove_core = ANA remove_core = GAL remove_core = ATR remove_core = CST } 
+		CST = { remove_country_modifier = CST_REVOLUTION }
+        remove_country_modifier = SPA_killed_fueros		
+        remove_country_modifier = SPA_NO_LAND_LEFT	
+        remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
+        remove_country_modifier = SPA_EMPOWERED_CLERGY
+        remove_country_modifier = SPA_ARMY_COLLAPSE		
+        remove_country_modifier = SPA_NATIONAL_GUARD
+    }
+}
+
+##### Castille has won the Castllian Revolt - Treaty with Spain is Possible #####
+
+country_event = {
+	id = 470083
+	title = "SPAN63.T"
+	desc = "SPAN63.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = CST
+		has_global_flag = SPANISH_CIVIL_WAR
+		exists = yes
+        war = no
+		NOT = {
+	       check_variable = {
+		      which = SPA_centralization
+		      value = 18
+	       }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	option = {
+		name = "SPAN63.A"
+		prestige = 20
+		SPA = { country_event = { id = 470084 days = 1 } clr_country_flag = custom_treaty_loser }
+		remove_country_modifier = CST_REVOLUTION
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING
+	    ai_chance = {
+	      factor = 100
+	    }
+    }
+	
+	# We fought for indipendence and not some dammed treaty - WILL LEAD TO TOTAL COLLAPSE OF SPANISH EMPIRE
+	
+	option = {
+		name = "SPAN63.B"
+		prestige = 20
+		SPA = { country_event = 470087 clr_country_flag = custom_treaty_loser }
+		remove_country_modifier = CST_REVOLUTION
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING
+	    ai_chance = {
+	      factor = 0
+	    }
+    }
+	
+	option = {
+		name = "SPAN63.C"
+		prestige = 20
+		SPA = { country_event = { id = 470084 days = 1 } clr_country_flag = custom_treaty_loser }
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING
+		change_tag_no_core_switch = SPA
+	    ai_chance = {
+	      factor = 0
+	    }
+    }
+}
+
+##### Castille wants España Confederal #####
+
+country_event = {
+	id = 470084
+	title = "SPAN64.T"
+	desc = "SPAN64.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# For the sake of this empire we must agree
+	
+	option = {
+		name = "SPAN63.A"
+		prestige = -10
+		country_event = { id = 470085 days = 1 }
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING
+	    ai_chance = {
+	      factor = 100
+	    }
+    }
+	
+	# Go get fucked Castille - WILL LEAD TO TOTAL COLLAPSE OF SPANISH EMPIRE
+	
+	option = {
+		name = "SPAN63.A"
+		country_event = { id = 470087 days = 1 }
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING		
+	    ai_chance = {
+	      factor = 0
+	    }
+    }
+}
+
+### Solution 4 - Extreme Decentralization - España Confederal - What a absolutely shitty union
+
+country_event = {
+	id = 470085
+	title = "SPAN65.T"
+	desc = "SPAN65.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	major = yes
+    is_triggered_only = yes
+	
+	option = {
+		name = "SPAN65.A"
+		prestige = 10
+		clr_country_flag = CST_SOLUTION
+		set_global_flag = SPA_DECENTER
+		political_reform = confederalism
+		add_accepted_culture = castilian
+        add_accepted_culture = old_portuguese
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }
+	    any_pop = { 
+	      limit = { 
+	         culture = old_portuguese
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }	
+		GAL = { all_core = { remove_core = POR } }
+		ATR = { all_core = { add_core = CST } }
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST add_core = ANA }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = ATR add_core = CST }
+		494 = { add_core = ATR add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST }	
+		477 = { add_core = ATR }
+		479 = { add_core = ATR }
+		480 = { add_core = ATR }
+		519 = { add_core = GAL }
+		518 = { add_core = GAL }
+        #remove_country_modifier = SPA_killed_fueros	
+        #remove_country_modifier = SPA_NO_LAND_LEFT	
+        #remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
+        #remove_country_modifier = SPA_EMPOWERED_CLERGY
+        #remove_country_modifier = SPA_ARMY_COLLAPSE		
+        #remove_country_modifier = SPA_NATIONAL_GUARD	
+        any_country = {
+            limit = { 
+			    exists = yes
+                OR = {
+                   tag = ATR
+                   tag = CST
+                   tag = GAL
+                   tag = ANA
+                }	
+            }
+            annex_to = SPA
+        }			
+    }
+}
+
+##### Castille has won the Castllian Revolt - Treaty with Spain is Impossible - COLLAPSE IS INEVITABLE #####
+
+country_event = {
+	id = 470086
+	title = "SPAN66.T"
+	desc = "SPAN66.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+        tag = CST
+		has_global_flag = SPANISH_CIVIL_WAR
+		exists = yes
+        war = no
+	    check_variable = {
+		    which = SPA_centralization
+		    value = 18
+	    }
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	option = {
+		name = "SPAN66.A"
+		prestige = 20
+		SPA = { country_event = { id = 470087 days = 1 } clr_country_flag = custom_treaty_loser }
+		remove_country_modifier = CST_REVOLUTION
+		clr_global_flag = SPA_COLLAPSING
+		clr_global_flag = SPANISH_CIVIL_WAR
+		clr_global_flag = CST_STAGETWO	
+		set_global_flag = CST_ENDING
+    }
+}
+
+### Solution 6 - The Total Collapse of the Spanish Empire - If the Dual Monarchy exists then they take the provinces. Otherwise its the owner of London.
+
+country_event = {
+	id = 470087
+	title = "SPAN67.T"
+	desc = "SPAN67.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes 
+	major = yes
+    is_triggered_only = yes
+	
+	option = {
+		name = "SPAN67.A"
+		prestige_factor = -0.9		
+		clr_country_flag = CST_SOLUTION
+		set_global_flag = SPA_COLLAPSED
+        remove_country_modifier = SPA_killed_fueros	
+        remove_country_modifier = SPA_NO_LAND_LEFT	
+        remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
+        remove_country_modifier = SPA_EMPOWERED_CLERGY
+        remove_country_modifier = SPA_ARMY_COLLAPSE		
+        remove_country_modifier = SPA_NATIONAL_GUARD	
+		political_reform = unitary
+		remove_accepted_culture = basque
+	    change_variable = {
+		   which = SPA_centralization
+		   value = -20
+	    }
+        any_country = {
+		   limit = {
+		      tag = DUA
+              exists = yes			  
+			}
+			country_event = { id = 470088 days = 0 }
+	    }
+        any_country = {
+		   limit = {
+		      owns = 425
+              NOT = { exists = DUA }			  
+			}
+			country_event = { id = 470089 days = 0 }
+	    }
+		all_core = { remove_core = SPA }
+		GAL = { all_core = { remove_core = POR } }
+		ATR = { all_core = { add_core = CST } }
+		SPA_513 = { add_core = CST }
+		SPA_512 = { add_core = CST add_core = ANA }
+		SPA_484 = { add_core = CST }
+		SPA_487 = { add_core = CST } 
+		SPA_506 = { add_core = CST } 
+		SPA_477 = { add_core = CST }
+		492 = { add_core = ATR add_core = CST }
+		494 = { add_core = ATR add_core = CST }
+		478 = { add_core = CST }
+		475 = { add_core = CST add_core = GAL }	
+		477 = { add_core = ATR add_core = GAL }
+		479 = { add_core = ATR }
+		480 = { add_core = ATR }
+		519 = { add_core = GAL }
+		518 = { add_core = GAL }
+  		any_owned = {
+			limit = {
+			   is_core = ATR
+			}
+			secede_province = ATR
+		} 		
+		any_owned = {
+			limit = {
+			   is_core = GAL
+			}
+			secede_province = GAL
+		}
+		any_owned = {
+			limit = {
+			   is_core = ANA
+			}
+			secede_province = ANA
+		}
+  		any_owned = {
+			limit = {
+			   is_core = CST
+			}
+			secede_province = CST
+		} 
+        change_tag = POR		
+    }
+}
+
+# The Collapse of the Spanish Empire - Dual Monarchy is mourning.
+
+country_event = { 
+
+	id = 470088
+	title = "SPAN68.T"
+	desc = "SPAN68.D"
+	picture = "storming_palace_communists"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPAN68.A"
+	POR = {
+	    any_owned = { 
+	    limit = { 
+		   NOT = { is_core = POR }
+	       NOT = { continent = europe }
+		}
+	    secede_province = THIS
+	    } 
+	}
+	any_country = {
+	    limit = {
+	    overlord = { tag = POR }
+        NOT = { capital_scope = { continent = europe } }
+		}
+		country_event = { id = 470090 days = 3 }
+    }
+	}
+}   
+
+# The Collapse of the Spanish Empire - Owner of London
+
+country_event = { 
+
+	id = 470089
+	title = "SPAN69.T"
+	desc = "SPAN69.D"
+	picture = "storming_palace_communists"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPAN69.A"
+	POR = {
+	    any_owned = { 
+	    limit = { 
+		   NOT = { is_core = POR }
+	       NOT = { continent = europe }
+		}
+	    secede_province = THIS
+	    } 
+	}
+	any_country = {
+	    limit = {
+	    overlord = { tag = POR }
+        NOT = { capital_scope = { continent = europe } }
+		}
+		country_event = { id = 470090 days = 3 }
+    }
+	}
+}  
+	
+# Released from Portugal
+	
+country_event = { 
+
+	id = 470090
+	title = "SPAN70.T"
+	desc = "SPAN70.D"
+	picture = "crimean_war_defeat"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPAN70.A"
+    POR = { release_vassal = THIS }
+	}
+} 
+
+######### Spanish Victory #############
+
+#### REFORMATION OF NEW SPAIN - Spanish Total Victory - You won everything ####
+#### This event leads back around to "AND NOW A COUNTRY TO UNIFY" ####
+
+country_event = {
+	id = 470091
+	title = "SPAN71.T"
+	desc = "SPAN71.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = SPA_TOTAL_VICTORY           
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	# The Absolute Authority of the King has been reassured by his Victory
+
+	option = {
+		name = "SPAN71.A"
+		clr_country_flag = SPA_TOTAL_VICTORY 
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA
+		MEX = { all_core = { add_core = VNS } }
+		LST = { all_core = { add_core = VNS } }
+	    any_owned = {
+	       limit = { is_core = VNS }
+	       secede_province = VNS
+	    }
+		VNS = { country_event = { id = 470092 days = 0 } }
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.2
+		   }
+        }
+	    set_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    set_variable = {
+		   which = SPA_centralization
+		   value = 10
+	    }
+		set_country_flag = SPA_clear_initial_chain
+	    ai_chance = {
+	    factor = 40
+	    }
+	}
+	
+	# We will do some reforms for the sake of this nation.
+	
+	option = {
+		name = "SPAN71.B"
+		clr_country_flag = SPA_TOTAL_VICTORY
+		relation = { who = DUA value = 300 }
+		create_alliance = DUA		
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = yes_meeting
+		political_reform = harassment
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		any_pop = {
+		   ideology = {
+			  value = conservative
+			  factor = 0.1
+		   }
+        }
+	    any_pop = {
+		scaled_consciousness = { 
+				ideology = liberal
+				factor = -3
+        }
+		scaled_militancy = {
+				ideology = liberal
+				factor = -3
+	    }
+	    }
+		MEX = { all_core = { add_core = VNS } all_core = { remove_core = UCA } }
+		LST = { all_core = { add_core = VNS } }
+	    any_owned = {
+	       limit = { is_core = VNS }
+	       secede_province = VNS
+	    }
+		VNS = { country_event = { id = 470092 days = 0 } }
+	    set_variable = {
+		   which = SPA_instab
+		   value = 10
+	    }
+	    set_variable = {
+		   which = SPA_centralization
+		   value = 10
+	    }
+		set_country_flag = SPA_clear_initial_chain
+	    ai_chance = {
+	    factor = 60
+	    }
+	}
+}
+
+country_event = { 
+
+	id = 470092
+	title = "SPAN72.T"
+	desc = "SPAN72.D"
+	picture = "crimean_war_defeat"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "SPAN72.A"
+       FROM = { set_country_flag = VNS_ACTIVE create_vassal = THIS }   
+	}
+} 
+
+#### THE NEW SPAIN CRISIS - You are not a GP and hold VNS as a Vassal - This is a warning event to tell you to reach GP again ASAP
+
+country_event = {
+	id = 470093
+	title = "SPAN73.T"
+	desc = "SPAN73.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = VNS_ACTIVE 
+        NOT = { is_greater_power = yes }
+        NOT = { has_country_flag = VNS_WARNING }		
+    }
+	
+    mean_time_to_happen = {
+        months = 12
+    }
+	
+	option = { 
+	name = "SPAN73.A"
+	   prestige = -10 
+	   set_country_flag = VNS_WARNING  
+	}
+}
+
+#### Fin del Dominio - LOSE/LOST CONTROL OF VNS. LOSE ALL CORES ON NEW WORLD AND NEW WORLD ACCEPTED CULTURES ####
+
+country_event = {
+	id = 470094
+	title = "SPAN74.T"
+	desc = "SPAN74.D"
+	#picture = "ambush_army"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SPA
+        has_country_flag = VNS_ACTIVE 
+		OR = {
+		    AND = {
+               NOT = { is_greater_power = yes }
+			   has_country_flag = VNS_WARNING
+			}
+		    VNS = { NOT = { vassal_of = SPA } }
+		}
+    }
+	
+    mean_time_to_happen = {
+        days = 365 
+		modifier = {
+			factor = 0.1
+			VNS = { NOT = { vassal_of = SPA } }
+		}
+    }
+	
+	option = { 
+	name = "SPAN74.A"
+	   prestige = -50 
+       clr_country_flag = VNS_ACTIVE 
+	   clr_country_flag = VNS_WARNING
+	   release_vassal = VNS
+       remove_accepted_culture = caribeno
+       remove_accepted_culture = granadan
+       remove_accepted_culture = central_american
+       remove_accepted_culture = lusitanian
+	   remove_accepted_culture = mexican 
+       any_country = {
+	      limit = {
+		     OR = {
+			    capital_scope = { continent = north_america }
+			    capital_scope = { continent = south_america }
+		     }
+		  }
+          any_owned = { remove_core = SPA }
+	   }
+	   any_owned = { 
+	        limit = { 
+		        OR = { 
+			       is_core = MEX 
+				   is_core = VNS 
+				   is_core = UCA 
+				   is_core = GRA 
+				   is_core = CUB 
+		        } 
+			}
+			remove_core = SPA 
+			add_province_modifier = {
+                name = nationalist_agitation
+                duration = 3650
+            } 
+	    }
+	    change_variable = {
+		   which = SPA_instab
+		   value = 3
+	    }
+	    change_variable = {
+		   which = SPA_centralization
+		   value = 3
+	    }
+	}
+}
+
+### Solutions are done via decisions ###
+#### Integrations are done via decisions ###
+### Events dealing with the Viceroyality of Granda will be below this line ###
+
+# A EMPIRE THAT THE SUN NEVER SETS ON
+
+country_event = {
+	id = 470095
+	title = "SPAN75.T"
+	desc = "SPAN75.D"
+	#picture = "ambush_army"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	major = yes
+	
+	option = { 
+	name = "SPAN74.A"
+	   prestige = 40
+       clr_country_flag = VNS_ACTIVE 
+	   clr_country_flag = VNS_WARNING
+	   inherit = VNS
+       add_accepted_culture = lusitanian
+	   add_accepted_culture = mexican 
+	   set_global_flag = SPA_DECENTER
+	   political_reform = federalism
+	   VNS = { all_core = { add_core = SPC } }
+	   all_core = { add_core = SPC }
+       change_tag = SPC 
+	   country_event = { id = 470096 days = 1 }
+	}
+}
+
+# The End of the Castillian Problem
+
+country_event = {
+	id = 470096
+	title = "SPAN76.T"
+	desc = "SPAN76.D"
+	#picture = "ambush_army"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "SPAN76.A"
+	   prestige = 10
+	    any_pop = { 
+	      limit = { 
+	         culture = castilian
+	      }
+	      militancy = -9
+		  consciousness = -9
+	      ideology = { factor = -0.1 value = separatist } 
+	    }
+	}
+}
