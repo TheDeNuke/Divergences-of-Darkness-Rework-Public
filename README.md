@@ -8,6 +8,7 @@ Disclaimers:
 - India is basically unplayable after the Hindustan Conference.  India will need a rework in the future to make inland states much more playable (don’t expect much from the coast though).
 - China also needs a complete rework. Likely won’t get around to either China or India until a Victoria 3 release though.
 - Germany feels a bit railroaded currently and only has a few potential outcomes but that will be addressed in release four along with Italy and the North Balkans
+- There is a general lack of event GFX and thus we are always looking for people to actually help in this particular department.
 
 Credits:
 
