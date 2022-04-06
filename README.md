@@ -6,10 +6,8 @@ Disclaimers:
 - HPM/HFM Rebels can be extremely brutal if you manage to get high WE and nothing I can do will fix that. Don’t get high WE.
 - If you want to pass reforms with Market Liberals or Radicalists then get high militancy without imploding.
 - India is basically unplayable after the Hindustan Conference.  India will need a rework in the future to make inland states much more playable (don’t expect much from the coast though).
-- China also needs a complete rework. Likely won’t get around to either China or India until a theoretical Victoria 3 release though.
-- Germany feels a bit railroaded currently and only has a few potential outcomes but that will be addressed in release two along with Italy and the North Balkans
-- Prior to release two (soon) there will be a much more viable way to stop Russia from happening added to the mod.
-- We will also fix the problem that occurs when Provence wins in Tuscany.
+- China also needs a complete rework. Likely won’t get around to either China or India until a Victoria 3 release though.
+- Germany feels a bit railroaded currently and only has a few potential outcomes but that will be addressed in release four along with Italy and the North Balkans
 
 Credits:
 
@@ -39,6 +37,7 @@ The mod team:
 -  Ania - Localization
 -  Epstine Thrawn - GFX Changes
 -  Norman_Scopes - Localization
+-  definitely NOT ash - Localization
 
 Special Thanks to:
 
@@ -51,3 +50,4 @@ Special Thanks to:
 - The HOI4 Mod (Divergences) - For a lot of very important lore suggestions that were implemented in this project.
 - HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
 - Bsharri/Flyrion/Trask - The original DoD FF founder
+- The various testers
