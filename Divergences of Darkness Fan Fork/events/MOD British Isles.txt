@@ -1,39 +1,8 @@
-# This file is yet to be filled out but the general concept is for a scottish revolt that resolves the current issues with scotland.
-# 1. It can ONLY happen if the Glorious Revolution is successful and not if the Total Revolution or just general ENL independence occurs.
-# 2. It will only likely result in the annexation of SCO as it can only happen under ENL rather then under DUA or any other circumstance.
-#
-# Event 1: The Scottish Aristocratic Society
-# Triggered by: A. 1870
-#               B. Dictatorship Scandinavia
-#               C. Existent England
-# This event explains that various Scottish aristocrats are preparing a council meeting regarding what they should do regarding the Scandinavian Menace.
-# 
-# Event 2: The Scottish Government agrees.
-#
-# This event explains that the Scottish government is willing to hear out these Aristocrats on the basis of culture. Ideology is made irrelevant in such a council.
-#
-# Event 3: The Council of Scots
-#
-# This event is not a major event but is the trigger event for the event which triggers the various variable events that are needed to resolve the scottish situation. 
-#
-# Variable Events: 
-#
-# Starting Variable is at 5
-#
-# Scandinavia is not a great power -1
-# Scandinavia is a democracy -1
-# Scandinavia does not own Livonia -1
-# Scandinavia does not own Pommerania -1
-# Scandinavia is a dictatorship of any type -2
-# England exists -2
-# If Walter Scott is helped by ENL: -4 (100 Percent Chance of a Civil War)
-# Separate Events trigger if DUA monarchy exists and has one of the "integration" flags. If English Integration -4 from Scandinavia (DUA will get a decision to Puppet SCO for free after the civil war if English), If French Integration -1 from Scandinavia and if Anglois = -2.
-# 
-# 4-5 = Stable, Council Fails
-# 2-3 = Home Rule, if denied = CIVIL WAR
-# 0-1 = CIVIL WAR
-# So, a relatively stable monarchist Scandinavia should avoid any issues with the sheer exception of a WScott England or English Integration DUA which will likely trigger the worst case situation almost always.
-# Also, this revolt is always HMS Government but if SCO wins the Civil War and there is a republican ENL there will be a coup to switch it to republic.
+######## BRITISH ISLES #############
+
+##################################################################
+################ SCOTTISH REVOLT CHAIN ###########################
+##################################################################
 
 country_event = { 
 
@@ -945,13 +914,72 @@ country_event = {
 
 ### Core Removal is dealt with via Decision in SCANewStuff (moved from England.txt) ###
 
-### The Angleterre Declaration ###
+##############################################################
+################### England and France #######################
+##############################################################
+
+### The King of England ###
 
 country_event = { 
 
 	id = 48285
 	title = "ENLFRA1.T"
 	desc = "ENLFRA1.D"
+	#picture = "spanish_glorious_revolution"	
+
+	is_triggered_only = yes
+	
+	# A Burgundian King
+
+	option = { 
+	name = "ENLFRA1.A"
+	   prestige = 5
+	   relation = { who = BRG value = 200 }	
+	   ai_chance = { 
+	   factor = 50
+	   }
+    }
+	
+	# A Non-Bohemian German King
+	
+	option = { 
+	name = "ENLFRA1.B"
+	   prestige = 10
+	   any_country = {
+	      limit = {
+		     OR = {
+			   primary_culture = north_german
+			   primary_culture = south_german
+			   primary_culture = rheinish
+			 }
+	      }
+	      relation = { who = ENL value = 100 }	
+       }
+	   ai_chance = { 
+	   factor = 30
+	   }	   
+    }
+	
+	# A Beronian King
+	
+	option = { 
+	name = "ENLFRA1.C"
+	   set_country_flag = the_rightful_king_of_england
+	   diplomatic_influence = { who = NAN value = 400 }	
+	   relation = { who = NAN value = 400 }	
+	   ai_chance = { 
+	   factor = 20
+	   }		
+    }
+}
+
+### The Angleterre Declaration ###
+
+country_event = { 
+
+	id = 48286
+	title = "ENLFRA2.T"
+	desc = "ENLFRA2.D"
 	picture = "spanish_glorious_revolution"	
 
 
@@ -969,7 +997,7 @@ country_event = {
 	}
 
 	option = { 
-	name = "ENLFRA1.A"
+	name = "ENLFRA2.A"
 	prestige = -1
 	any_pop = {
 			limit = {
