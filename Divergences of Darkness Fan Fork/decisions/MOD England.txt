@@ -1,4 +1,7 @@
 political_decisions = {
+
+    ## Formation Decisions - Feel Free to Relocalize these if you wish
+
 	create_british_empire = {
 	picture = British_islands
 		potential = {
@@ -8,12 +11,19 @@ political_decisions = {
 				tag = SCO
 				tag = WLS
 			}
+			OR = { 
+				NOT = { tag = ENL }
+				has_country_flag = ENL_UNLOCK_DECISIONS
+				has_global_flag = AEN_ENDING
+			}
+			NOT = { has_country_flag = wait_AEN }
 		}	
 		allow = {
 			NOT = { war = yes }
 			NOT = { part_of_sphere = yes }
 			NOT = { has_global_flag = BLOCK_ENG }
 			is_greater_power = yes
+			nationalism_n_imperialism = 1
 			WLS = {
 				all_core = {
 						OR = {
@@ -208,7 +218,7 @@ political_decisions = {
 	}
 	
 	claim_ireland_british = {
-	picture = British_islands
+	picture = ireland
 		potential = {
 		    tag = ENG
 			NOT = { has_country_flag = IRE_ENG }
@@ -247,7 +257,7 @@ political_decisions = {
 	}
 	
 	british_ireland_unification = {
-	picture = British_islands
+	picture = ireland
 		potential = {
 		    tag = ENG
 		    OR = { 
@@ -264,6 +274,8 @@ political_decisions = {
 			NOT = { war = yes }
 			NOT = { part_of_sphere = yes }
 			is_greater_power = yes
+		    nationalism_n_imperialism = 1
+            citizens_rights = all_voting_pops
 			IRE = {
 				all_core = {
 						OR = {
@@ -306,11 +318,481 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+	form_england = {
+		potential = {		    
+			tag = NTL
+			exists = yes
+			NOT = { exists = ENL }
+			NOT = { has_global_flag = england_is_dead }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			OR = {
+			   is_greater_power = yes
+			   NOT = { exists = DUA }
+			}
+			all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    prestige = 10
+			change_tag = ENL
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	form_occitania = {
+		potential = {		    
+			tag = AQT
+			exists = yes
+			NOT = { exists = OCC }
+			NOT = { has_global_flag = occitana_is_dead }
+		}
+		
+		allow = {
+			war = no
+			is_vassal = no
+			OR = {
+			   is_greater_power = yes
+			   NOT = { exists = DUA }
+			}
+			all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    prestige = 10
+			change_tag = OCC
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### This is the decision for England to kill off the Dual Monarchy ###
+	
+	end_DUA_ENL = { 
+	picture = kill_dua
+		potential = { 
+		        NOT = { tag = DUA }	     
+				owns = 300              
+                DUA = { exists = yes }			
+				FRA = { exists = no }
+				OR = { 
+				   NOT = { tag = ENL }
+				   has_country_flag = ENL_UNLOCK_DECISIONS
+				   has_global_flag = AEN_ENDING
+				}
+		}
+	
+		allow = { 
+			DUA = { NOT = { any_owned_province = { is_core = ENL } } }
+			OR = { 
+				AND = { 
+					is_greater_power = yes 
+					DUA = { is_greater_power = no }
+					}
+				AND = { 
+					DUA = { is_greater_power = yes }
+					THIS = { rank = 4 }
+					}
+				}
+		
+			}
+		
+		effect = { 
+		prestige = 50 
+		DUA = { country_event = 650294 }
+		}
+	
+	}
+	
+	######################################
+	### New English and AEN Decisions ####
+	######################################
+	
+	# Disables Radical Decisions for Republican AEN and adds non-radical decisions to prevent a lock up.
+	
+	AEN_new_anglois_state = { 
+	picture = British_islands
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}
+            has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED			
+		}
+		
+		allow = {
+		    war = no
+			NOT = {
+			   OR = {
+		         government = absolute_monarchy
+	             government = prussian_constitutionalism
+				 government = hms_government
+				 government = fascist_dictatorship
+				 government = fascist_monarchy
+			   }
+			}		
+		}
+		
+		effect = {
+		    prestige = -5
+			clr_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED	
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	AEN_new_insane_anglois_state = { 
+	picture = British_islands
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}
+            NOT = { has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED }	
+		}
+		
+		allow = {
+		    war = no
+			OR = {
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
+			}		
+		}
+		
+		effect = {
+		    prestige = 5
+			set_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED	
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Non Radical AEN Only
+	
+	AEN_accept_english = { 
+	picture = England_NAN
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}		
+            owns = 278			
+            NOT = { has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED }
+		    NOT = { has_country_flag = english_claimed  }
+	        NOT = { accepted_culture = english }			
+		}
+		
+	    allow = { 
+		   OR = { 
+		      is_secondary_power = yes
+		      is_greater_power = yes 
+		   }
+		   nationalism_n_imperialism = 1
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }		   
+	    }
+	
+	    effect = { 
+		   prestige = 10
+		   set_country_flag = english_claimed 
+		   add_accepted_culture = english
+		}
+	}
+	
+	AEN_accept_welsh = { 
+	#picture = British_islands
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}		
+            owns = 273		
+            NOT = { has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED }
+		    NOT = { has_country_flag = welsh_claimed  }
+	        NOT = { accepted_culture = welsh }			
+		}
+		
+	    allow = { 
+		   OR = { 
+		      is_secondary_power = yes
+		      is_greater_power = yes 
+		   }
+		   nationalism_n_imperialism = 1
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }		   
+	    }
+	
+	    effect = { 
+		   prestige = 2
+		   set_country_flag = welsh_claimed 
+		   add_accepted_culture = welsh
+		}
+	}
+	
+	AEN_accept_irish = { 
+	picture = ireland
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}		
+            owns = 263			
+            NOT = { has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED }
+		    NOT = { has_country_flag = irish_claimed  }
+	        NOT = { accepted_culture = irish }
+		}
+		
+	    allow = { 
+		   OR = { 
+		      is_secondary_power = yes
+		      is_greater_power = yes 
+		   }
+		   biologism = 1
+		   nationalism_n_imperialism = 1
+           citizens_rights = all_voting_pops
+		   
+	    }
+	
+	    effect = { 
+		   prestige = 4
+		   set_country_flag = irish_claimed 
+		   add_accepted_culture = irish
+		}
+	}
+	
+	AEN_reconquer_ireland = { 
+	picture = ireland
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}	
+            owns = 278	
+            NOT = { exists = ENL }	
+            NOT = { has_country_flag = irish_reconquest }			
+		}
+		
+	    allow = { 
+		   is_greater_power = yes
+		   state_n_government = 1		   
+	    }
+	
+	    effect = { 
+		   prestige = 10
+		   IRE = { all_core = { add_core = AEN } }
+		   set_country_flag = irish_reconquest
+		}	
+	}
+	
+	AEN_puppet_scotland = { 
+	picture = British_islands
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}	
+            owns = 278					
+			NOT = { has_country_flag = scottish_puppet }
+		}
+		
+	    allow = { 
+		   is_greater_power = yes
+		   nationalism_n_imperialism = 1		   
+           SCO = { exists = yes in_sphere = THIS }		   
+	    }
+	
+	    effect = { 
+		   prestige = 10
+		   create_vassal = SCO
+		   set_country_flag = scottish_puppet
+		}	
+	}
+	
+	# Radical AEN 
+	
+	# Monarchy Only
+	
+	# The player can see this. I guess if you want to commit national suicide
+	
+	AEN_rejoin_DUA = { 
+	picture = British_islands
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}	
+			owns = 278
+            has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED
+		}
+		
+	    allow = {  
+			OR = {
+		       government = absolute_monarchy
+	           government = prussian_constitutionalism
+			   government = fascist_monarchy
+			}
+			DUA = { 
+			   exists = yes
+			   OR = { 
+		          government = absolute_monarchy
+	              government = prussian_constitutionalism
+				  government = fascist_monarchy
+			   }
+			}
+		}   
+	
+	    effect = { 		
+		   all_core = { add_core = DUA }
+		   DUA = { inherit = THIS }
+		}	
+	}
+	
+	# Fascist or Monarchy
+	
+	AEN_reconquer_anglois_homeland = { 
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}	
+            owns = 278					
+			has_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED
+			NOT = { 
+			   AND = {
+			      ai = yes
+				  exists = DUA
+			   }
+			}
+			NOT = { has_country_flag = reconquesta_francia }
+		}
+		
+	    allow = { 
+		   is_greater_power = yes
+		   nationalism_n_imperialism = 1		   
+	    }
+	
+	    effect = { 
+		   set_country_flag = reconquesta_francia
+		   prestige = 10
+		   FRA_418 = { add_core = AEN }
+		   FRA_420 = { add_core = AEN }
+		   FRA_435 = { add_core = AEN }
+		   402 = { add_core = AEN }
+		}		
+	}
+	
+	# This is a trap monarchy only decision
+	
+	#reform_DUA = { 
+	# I won't write this one for now.
+	#}	
+	
+	# ENL stuff
+	
+	ENL_reintegrate_wales = { 
+		potential = {
+		    tag = ENL
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = ENL_UNLOCK_DECISIONS
+			}		
+            has_country_flag = wait_AEN
+            WLS = { vassal_of = THIS }
+            NOT = { has_country_flag = english_is_welsh }			
+		}
+		
+	    allow = { 
+		   OR = { 
+		      is_secondary_power = yes
+		      is_greater_power = yes 
+		   }
+		   state_n_government = 1
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }			   
+	    }
+	
+	    effect = { 
+		   prestige = 5
+		   inherit = WLS
+		   WLS = { all_core = { add_core = ENL } }
+		   add_accepted_culture = welsh
+		   set_country_flag = english_is_welsh
+		}	
+	}
+	
+	ENL_reintegrate_AEN = { 
+		potential = {
+		    tag = ENL
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = ENL_UNLOCK_DECISIONS
+			}		
+            has_country_flag = wait_AEN
+            AEN = { vassal_of = THIS }	
+		}
+		
+	    allow = { 
+		   OR = { 
+		      is_secondary_power = yes
+		      is_greater_power = yes 
+		   }
+		   nationalism_n_imperialism = 1
+		   biologism = 1
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }			  
+	    }
+	
+	    effect = { 
+		   prestige = 10
+		   clr_country_flag = wait_AEN
+		   political_reform = federalism
+		   inherit = AEN
+		   AEN = { all_core = { add_core = ENL } }
+		   add_accepted_culture = anglois
+		}
+     }		
+	
+	
+	######################################
+	
+	## Dual Monarchy and Revolution Decisions
+	
+	## ENL removing DUA cores 
 
 	ENL_recognized = {
 	picture = British_islands
 		potential = {
-		NOT = { has_global_flag = wait_DUA }
+		    NOT = { has_global_flag = wait_DUA }
 			tag = ENL
 			NOT = { has_country_flag = ENL_recognized }
 		}
@@ -335,7 +817,7 @@ political_decisions = {
 			any_country = {
 				limit = {
 					any_owned_province = { is_core = ENL }
-					NOT = { primary_culture = english}
+					NOT = { primary_culture = english }
 				}
 				relation = { who = THIS value = -100 }
 				leave_alliance = THIS
@@ -346,6 +828,8 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+	## Cannot be used if England owns London and DUA cores will be removed if England owns London. This conquest is only possible while England does not control the whole island.
 	
 	ENL_claim = {
 	picture = British_islands
@@ -365,9 +849,9 @@ political_decisions = {
 		allow = {
 			war = no
 			is_vassal = no
-			ENL = { NOT = { is_greater_power = yes } }
-			all_core = { owned_by = THIS }
 			nationalism_n_imperialism = 1 
+			ENL = { NOT = { owns = 300 is_greater_power = yes } }
+			all_core = { owned_by = THIS }		
 		}
 		
 		effect = {
@@ -463,60 +947,6 @@ political_decisions = {
 		}
 	}
 	
-	form_england = {
-		potential = {		    
-			tag = NTL
-			exists = yes
-			NOT = { exists = ENL }
-		}
-		
-		allow = {
-			war = no
-			is_vassal = no
-			OR = {
-			   is_greater_power = yes
-			   NOT = { exists = DUA }
-			}
-			all_core = { owned_by = THIS }
-		}
-		
-		effect = {
-		    prestige = 10
-			change_tag = ENL
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	form_occitania = {
-		potential = {		    
-			tag = AQT
-			exists = yes
-			NOT = { exists = OCC }
-		}
-		
-		allow = {
-			war = no
-			is_vassal = no
-			OR = {
-			   is_greater_power = yes
-			   NOT = { exists = DUA }
-			}
-			all_core = { owned_by = THIS }
-		}
-		
-		effect = {
-		    prestige = 10
-			change_tag = OCC
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
 	IRE_recognized = {
 		potential = {
 			tag = IRE
@@ -582,39 +1012,8 @@ political_decisions = {
 			factor = 1
 		}
 	}
-	
-  #### Moved SCO decisions to SCANewStuff ####
-	
-	end_DUA_ENL = { 
-	picture = kill_dua
-		potential = { 
-		        NOT = { tag = DUA }	     
-				owns = 300              
-                DUA = { exists = yes }			
-				FRA = { exists = no }
-		}
-	
-		allow = { 
-			DUA = { NOT = { any_owned_province = { is_core = ENL } } }
-			OR = { 
-				AND = { 
-					is_greater_power = yes 
-					DUA = { is_greater_power = no }
-					}
-				AND = { 
-					DUA = { is_greater_power = yes }
-					THIS = { rank = 4 }
-					}
-				}
-		
-			}
-		
-		effect = { 
-		prestige = 50 
-		DUA = { country_event = 650294 }
-		}
-	
-	}
+
+	#### RENAMING DECISIONS
 	
 	English_north_ENL = { 
 		potential = { 

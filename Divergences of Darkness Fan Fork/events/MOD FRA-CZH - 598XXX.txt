@@ -91,9 +91,13 @@ country_event = {
 	tag = DUA
 	NOT = { OR = { government = democracy government = parliamentary_republic } }
     OR = {
-	has_country_flag = enacted_anglois_schooling
-	AND = {
-	        OR = { has_global_flag = english_int has_global_flag = french_int has_country_flag = Anglois_accepted }
+	   has_country_flag = enacted_anglois_schooling
+	   AND = {
+	        OR = { 
+			   has_global_flag = english_int 
+			   has_global_flag = french_int 
+			   has_country_flag = Anglois_accepted 
+			}
 			NOT = {
 				government = proletarian_dictatorship
 				government = presidential_dictatorship
@@ -101,15 +105,20 @@ country_event = {
 				government = fascist_dictatorship 
 				government = fascist_monarchy 
 				school_reforms = no_schools
+				exists = ENL
+				exists = AEN
+				exists = ENG
+				exists = OCC
+				exists = PRV
+				exists = AUV
+				exists = FRA
+				exists = ANF
 			}
-			NOT = { exists = ENL }
-			NOT = { exists = AEN }
-			NOT = { exists = ENG }
-			NOT = { exists = OCC }
 			war = no
+			invention = nostalgic_romanticism
 			invention = biased_multiculturalism
 			invention = social_darwinism
-		  }
+	   }
 	}
 	NOT = { has_country_flag = DUA_schooling_check }
 	}
@@ -125,6 +134,7 @@ country_event = {
 	option = {
 	name = "650330.A"
  	prestige = -25
+	tech_school = industrial_tech_school
 	set_country_flag = enacted_anglois_schooling
 	set_country_flag = DUA_schooling_check
 	clr_country_flag = DUA_schooling
@@ -149,6 +159,7 @@ country_event = {
 	option = {
 	name = "650330.B"
 	prestige = 25
+	tech_school = industrial_tech_school
 	set_country_flag = enacted_anglois_schooling
 	set_country_flag = DUA_schooling_check
 	set_country_flag = DUA_schooling
@@ -174,15 +185,6 @@ country_event = {
 #	remove_accepted_culture = scottish 
 #	remove_accepted_culture = provencal
 #	remove_accepted_culture = basque
-	any_owned = {
-				limit = {
-					is_core = DUA 
-				}
-				add_province_modifier = {
-					name = anglois_cultural_unity
-					duration = -1
-				}
-	}
 	ai_chance = { factor = 70
 	modifier = {
 	factor = 2
@@ -207,30 +209,40 @@ country_event = {
 	trigger = { 
 	tag = DUA
 	OR = {
-	government = democracy
-	government = parliamentary_republic
+	   government = democracy
+	   government = parliamentary_republic
 	}
     OR = {
-	has_country_flag = enacted_anglois_schooling
-	AND = {
-	        OR = { has_global_flag = english_int has_global_flag = french_int has_country_flag = Anglois_accepted }
+	   has_country_flag = enacted_anglois_schooling
+	   AND = {
+	        OR = { 
+			   has_global_flag = english_int 
+			   has_global_flag = french_int 
+			   has_country_flag = Anglois_accepted 
+			}
 			NOT = {
-				government = fascist_dictatorship 
-				government = fascist_monarchy 
+				government = proletarian_dictatorship
 				government = presidential_dictatorship
 				government = bourgeois_dictatorship
+				government = fascist_dictatorship 
+				government = fascist_monarchy 
 				school_reforms = no_schools
+				exists = ENL
+				exists = AEN
+				exists = ENG
+				exists = OCC
+				exists = PRV
+				exists = AUV
+				exists = FRA
+				exists = ANF
 			}
-			NOT = { exists = ENL }
-			NOT = { exists = AEN }
-			NOT = { exists = ENG }
-			NOT = { exists = OCC }
 			war = no
+			invention = nostalgic_romanticism
 			invention = biased_multiculturalism
 			invention = social_darwinism
-		  }
+	   }
 	}
-	NOT = { has_country_flag = DUA_schooling_check }
+	   NOT = { has_country_flag = DUA_schooling_check }
 	}
 	
 	mean_time_to_happen =  {
@@ -244,6 +256,7 @@ country_event = {
 	option = {
 	name = "DUA135.A"
 	prestige = 10
+	tech_school = industrial_tech_school
 	set_country_flag = enacted_anglois_schooling
 	set_country_flag = DUA_schooling_check
 	set_country_flag = DUA_schooling
@@ -397,7 +410,7 @@ country_event = {
 	     }
 	}
 	NOT = { has_country_flag = dual_republic_start }
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	OR = { 
 	has_country_flag = anglois_accepted
 	has_global_flag = french_int
@@ -472,20 +485,25 @@ country_event = {
 	trigger = { 
 	tag = DUA
 	OR = {
-	government = democracy
-	government = parliamentary_republic
+	   government = democracy
+	   government = parliamentary_republic
 	}
 	has_country_flag = DUA_republic_question
-	has_country_flag = DUA_schooling
+	has_country_flag = DUA_schooling	
 	NOT = {
 	   OR = {
+		  exists = AEN
 		  exists = ENL
 		  exists = ENG
-		  exists = AEN
 		  exists = OCC
+		  exists = PRV
+		  exists = AUV
+		  exists = FRA
+		  exists = ANF
 	   }
 	}
-	NOT = { has_country_flag = reconquest_DUA }
+	NOT = { has_country_flag = DUA_final_stage }
+	
 	}
 	
 	mean_time_to_happen =  {
@@ -579,7 +597,8 @@ country_event = {
 	   government = socialist_republic
 	}
 	has_country_flag = DUA_schooling
-	NOT = { has_country_flag = reconquest_DUA }
+	NOT = { has_country_flag = DUA_final_stage }
+	
 	NOT = { has_country_flag = angloisfederal }
 	}
 	
@@ -620,83 +639,30 @@ country_event = {
 	add_accepted_culture = provencal
 	#add_accepted_culture = scottish 
 	#add_accepted_culture = basque
-	ENL = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
-	}
-	OCC = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
-	}
-	WLS = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
-	}
-	BRT = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
-	}
-	IRE = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
-	}
-	FRA = {
-	ruling_party_ideology = communist
-	government = proletarian_dictatorship
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = all_voting_pops
+	any_country = {
+	   limit = {
+	      exists = no
+		  OR = {
+		     primary_culture = anglois
+			 primary_culture = breton
+			 primary_culture = provencal
+			 primary_culture = french
+			 primary_culture = english
+			 primary_culture = irish
+			 primary_culture = welsh
+		  }
+	   }
+	   ruling_party_ideology = communist
+	   government = proletarian_dictatorship
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = all_voting_pops
 	}
 	OCC = { all_core = { add_core = DUA } }
 	ENL = { all_core = { add_core = DUA } }	
@@ -911,10 +877,10 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
-	OCC = { all_core = { remove_core = DUA } }
 	release = OCC
 	any_owned = { limit = { is_core = OCC } secede_province = OCC }
 	OCC = {
+	all_core = { remove_core = DUA }
 	any_owned = {
 				limit = {
 					is_core = OCC 
@@ -927,6 +893,16 @@ country_event = {
 	
 	option = {
 	name = "DUAR11.A"
+	any_owned = { limit = { is_core = OCC } secede_province = OCC }
+	OCC = {
+	all_core = { remove_core = DUA }
+	any_owned = {
+				limit = {
+					is_core = OCC 
+				}
+				remove_province_modifier = anglois_cultural_unity
+	    }
+	}
 	prestige = -10
 	remove_accepted_culture = provencal
 	}
@@ -944,11 +920,12 @@ country_event = {
 	ENG_280 = { add_core = NTL }
 	ENG_277 = { add_core = NTL }
 	ENG_284 = { add_core = NTL }
-	NTL = { all_core = { remove_core = DUA } }
 	release = NTL
 	any_owned = { limit = { is_core = NTL } secede_province = NTL }
-	NTL = { government = democracy capital = 278 }
 	NTL = {
+	government = democracy
+	capital = 278
+	all_core = { remove_core = DUA }
 	any_owned = {
 				limit = {
 					is_core = ENL 
@@ -960,6 +937,22 @@ country_event = {
 	
 	option = {
 	name = "DUAR12.A"
+	ENG_280 = { add_core = NTL }
+	ENG_277 = { add_core = NTL }
+	ENG_284 = { add_core = NTL }
+	any_owned = { limit = { is_core = NTL } secede_province = NTL }
+	NTL = {
+	government = democracy
+	capital = 278
+	all_core = { remove_core = DUA }
+	any_owned = {
+				limit = {
+					is_core = ENL 
+				}
+				remove_province_modifier = anglois_cultural_unity
+	    }
+	}
+	prestige = -10
     remove_accepted_culture = english
 	}
 }
@@ -1086,7 +1079,7 @@ country_event = {
 	}
 }
 
-#### THE ANGLOIS DIVORCE ###
+#### THE ANGLOIS DIVORCE - FRA exists ###
 
 country_event = {
 	id = 650320
@@ -1099,6 +1092,7 @@ country_event = {
 	trigger = { 
 	tag = DUA
 	has_country_flag = the_DUA_divorce
+	any_owned_province = { is_core = FRA }	
 	}
 	
 	mean_time_to_happen =  {
@@ -1136,6 +1130,10 @@ country_event = {
 	}
 	DUA = { all_core = { remove_core = DUA } }
 	any_owned = { 
+	   limit = { is_core = AEN }
+	   secede_province = AEN
+	}
+	any_owned = { 
 	   limit = { is_core = ENL }
 	   secede_province = ENL
 	}
@@ -1163,6 +1161,88 @@ country_event = {
 	}
 }
 
+#### THE ANGLOIS DIVORCE - FRA does not exist ###
+
+country_event = {
+	id = 6503200
+	title = "DUAR21.T"
+	desc = "DUAR21.D"
+	picture = "french_revolution_1848"
+	
+	major = yes
+
+	trigger = { 
+	tag = DUA
+	has_country_flag = the_DUA_divorce
+	any_owned_province = { is_core = ANF }	
+	}
+	
+	mean_time_to_happen =  {
+		days = 31
+	}
+	
+	immediate = {
+	   any_country = {
+	      limit = { 
+		     tag = ANF
+			 ai = no
+		   }
+		   change_tag_no_core_switch = DUA 
+	   }	   
+	}
+
+	option = {
+	name = "DUAR21.A"
+	inherit = ANF
+    clr_country_flag = the_DUA_divorce
+	any_pop = { militancy = -3 }
+	any_owned = {
+				limit = {
+					is_core = DUA 
+				}
+				remove_province_modifier = anglois_cultural_unity
+	}
+	any_country = {
+	any_owned = {
+				limit = {
+					is_core = DUA 
+				}
+				remove_province_modifier = anglois_cultural_unity
+	    }
+	}
+	DUA = { all_core = { remove_core = DUA } }
+	any_owned = { 
+	   limit = { is_core = AEN }
+	   secede_province = AEN
+	}
+	any_owned = { 
+	   limit = { is_core = ENL }
+	   secede_province = ENL
+	}
+	any_owned = { 
+	   limit = { is_core = IRE }
+	   secede_province = IRE
+	}
+	any_owned = { 
+	   limit = { is_core = OCC }
+	   secede_province = OCC
+	}
+	ENL = { government = democracy }
+	OCC = { government = democracy }
+	IRE = { government = democracy }
+	remove_accepted_culture = english 
+	remove_accepted_culture = irish
+	remove_accepted_culture = welsh
+	remove_accepted_culture = provencal
+	primary_culture = anglois
+	add_accepted_culture = french
+	OCC = { capital = 455 }
+	ENL = { capital = 300 }
+	IRE = { capital = 263 }
+	change_tag = ANF
+	}
+}
+
 #### A BAD IDEA - THE COLLAPSE OF THE DUA WARNING ###
 
 country_event = {
@@ -1174,7 +1254,7 @@ country_event = {
 	trigger = { 
 	tag = DUA
 	NOT = { has_global_flag = DUAGRANDETRIGGER }
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	OR = {
 	has_country_flag = DUAVERYGOODIDEA
 	AND = { 
@@ -1203,6 +1283,10 @@ country_event = {
 
 #### THE GRANDE REVOLUTION ###
 
+## This is easier the more land has been integrated into the Dual Monarchy ##
+
+#### Everything that can revolt will revolt. This is not treated like the the Total Revolution and anyone that does revolt will go for a Status Quo ###
+
 country_event = {
 	id = 650322
 	title = "DUAR23.T"
@@ -1223,28 +1307,25 @@ country_event = {
 	option = {
 	name = "The twilight of the gods..."
 	clr_country_flag = DUATHEBESTIDEA
-	remove_country_modifier = calm_before_storm 
+	remove_country_modifier = calm_before_storm 	   
 	any_owned = {
 			limit = {
 				is_core = ENL
 			}
 			secede_province = ENL
 	}
-	ENL = { government = democracy
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 	
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-				}
-    }
-	release_vassal = IRE
-	leave_alliance = IRE
+	any_owned = {
+			limit = {
+				is_core = WLS
+			}
+			secede_province = WLS
+	}
+	any_owned = {
+			limit = {
+				is_core = NTL
+			}
+			secede_province = NTL
+	}
 	any_owned = {
 			limit = {
 				is_core = OCC
@@ -1268,95 +1349,65 @@ country_event = {
 				is_core = IRE 
 			}
 			secede_province = IRE
-		}
+	}
+	any_owned = {
+			limit = {
+				is_core = BRT
+			}
+			secede_province = BRT
+	}
+	leave_alliance = IRE
+	release_vassal = IRE
 	any_owned = { 
 	limit = {
+	        is_core = FRA
 			OR = {
-					region = FRA_445 
-					region = FRA_438
-					region = FRA_404
-					region = FRA_442
-					region = FRA_435
-					region = FRA_428
+				region = FRA_445 
+				region = FRA_438
+				region = FRA_404
+				region = FRA_442
+				region = FRA_435
+				region = FRA_428
 				}
 			}
 			secede_province = FRA 
 	}
-	IRE = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
+	any_country = {
+	      limit = {
+	      exists = yes
+		  OR = {
+			 primary_culture = breton
+			 primary_culture = provencal
+			 primary_culture = french
+			 primary_culture = english
+			 primary_culture = irish
+			 primary_culture = welsh
+		  }
+		  NOT = { tag = PRV }
+		  }
+		  set_country_flag = kill_DUA
+          government = democracy
+	      treasury = 10000
+	      ammunition = 1000
+	      small_arms = 1000
+	      artillery = 1000
+	      canned_food = 1000
+	      regular_clothes = 1000
+	      add_country_modifier = {
 				name = taiping_draft
 				duration = 1825
-				}
-			}
-	OCC = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-				}
-			}
-	FRA = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-				}
-			}
-	war = { 
-	target = ENL 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
+		  }
+	      war = { 
+             target = DUA 
+	         attacker_goal = {
+			 	casus_belli = custom_treaty_cb
+			 }
+	         defender_goal = {
+				casus_belli = civil_war
+			 }
+	      }
 	}
-	war = { 
-	target = FRA 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
-	war = { 
-	target = OCC 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
-	war = { 
-	target = IRE 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
+	FRA = { government = presidential_dictatorship }
 	}
 }
 
@@ -1378,7 +1429,7 @@ country_event = {
 	      government = hms_government
 		  government = fascist_monarchy
 	}
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	NOT = { has_country_flag = DUA_schooling_solved }
 	}
 	
@@ -1391,7 +1442,9 @@ country_event = {
 	prestige = 10
     set_country_flag = SCA_danelawcheck
     set_country_flag = DUA_schooling_solved
+	set_global_flag = occitana_is_dead
     remove_accepted_culture = english 
+	FRA = { all_core = { add_core = ANF } all_core = { remove_core = FRA } }
 	ENG_280 = { remove_core = DUA }
 	ENG_277 = { remove_core = DUA }
 	ENG_284 = { remove_core = DUA }
@@ -1408,10 +1461,13 @@ country_event = {
 				}
 			}
 	any_owned = {
-		limit = {
-		is_core = ENL 
-		}
-		remove_province_modifier = anglois_cultural_unity
+				limit = {
+					is_core = ANF
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
 	}
 	NAN = { add_country_modifier = { 
 	name = beornia_english 
@@ -1426,7 +1482,9 @@ country_event = {
 	prestige = -20
 	set_country_flag = SCA_danelawcheck
     set_country_flag = DUA_schooling_solved
+	set_global_flag = occitana_is_dead
     remove_accepted_culture = english 
+	FRA = { all_core = { add_core = ANF } all_core = { remove_core = FRA } } 
 	ENG_280 = { remove_core = DUA }
 	ENG_277 = { remove_core = DUA }
 	ENG_284 = { remove_core = DUA }
@@ -1445,7 +1503,16 @@ country_event = {
 					is_core = NTL
 				}
                 secede_province = NTL
-				}	
+				}
+	any_owned = {
+				limit = {
+					is_core = ANF
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+	}				
 	ai_chance = { 
 	factor = 80 
     modifier = {
@@ -1478,7 +1545,7 @@ country_event = {
 	      government = hms_government
 		  government = fascist_monarchy
 	}
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	NOT = { has_country_flag = DUA_schooling_solved }
 	}
 	
@@ -1490,31 +1557,35 @@ country_event = {
 	name = "Provencal is a dead culture."
 	prestige = 10
     set_country_flag = DUA_schooling_solved
+	set_global_flag = england_is_dead
     remove_accepted_culture = provencal 
-	FRA_458 = { remove_core = DUA }
-	FRA_455 = { remove_core = DUA }
-	FRA_461 = { remove_core = DUA }
-	449 = { remove_core = DUA }
-	450 = { remove_core = DUA }
-	FRA_458 = { add_core = AQT }
-	FRA_455 = { add_core = AQT }
+	FRA_448 = { add_core = AQT }
+	FRA_455 = { add_core = AQT }  
 	FRA_461 = { add_core = AQT }
-	449 = { add_core = AQT }
-	450 = { add_core = AQT }
+	FRA_467 = { add_core = AQT }
+	FRA_448 = { remove_core = DUA }
+	FRA_455 = { remove_core = DUA }  
+	FRA_461 = { remove_core = DUA }
+	FRA_467 = { remove_core = DUA }
+	448 = { remove_core = AQT }
+	448 = { add_core = DUA }
+	ENG_280 = { remove_core = ENL }
+	ENG_277 = { remove_core = ENL }
+	ENG_284 = { remove_core = ENL }
+	ENG_273 = { remove_core = ENL }
+	ENG_280 = { add_core = NTL }
+	ENG_277 = { add_core = NTL }
+	ENG_284 = { add_core = NTL }
+	ENL = { all_core = { add_core = AEN } all_core = { remove_core = ENL } }
 	any_owned = {
-		limit = {
-		is_core = OCC
-		}
-		remove_province_modifier = anglois_cultural_unity
+				limit = {
+					is_core = AEN
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
 	}
-	any_owned = { 
-	limit = { 
-	is_core = NAV
-		}
-    remove_province_modifier = anglois_cultural_unity
-	add_core = AQT
-	remove_core = DUA
-	}	
 	any_owned = {
 				limit = {
 					is_core = AQT
@@ -1531,37 +1602,47 @@ country_event = {
 	name = "This shall be useful to achieve Anglois unity."
 	prestige = -20
     set_country_flag = DUA_schooling_solved
-    remove_accepted_culture = provencal
-	FRA_458 = { remove_core = DUA }
-	FRA_455 = { remove_core = DUA }
-	FRA_461 = { remove_core = DUA }
-	449 = { remove_core = DUA }
-	450 = { remove_core = DUA }
-	FRA_458 = { add_core = AQT }
-	FRA_455 = { add_core = AQT }
+	set_global_flag = england_is_dead
+    remove_accepted_culture = provencal 
+	FRA_448 = { add_core = AQT }
+	FRA_455 = { add_core = AQT }  
 	FRA_461 = { add_core = AQT }
-	449 = { add_core = AQT }
-	450 = { add_core = AQT }
+	FRA_467 = { add_core = AQT }
+	FRA_448 = { remove_core = DUA }
+	FRA_455 = { remove_core = DUA }  
+	FRA_461 = { remove_core = DUA }
+	FRA_467 = { remove_core = DUA }
+	448 = { remove_core = AQT }
+	448 = { add_core = DUA }
+	ENG_280 = { remove_core = ENL }
+	ENG_277 = { remove_core = ENL }
+	ENG_284 = { remove_core = ENL }
+	ENG_273 = { remove_core = ENL }
+	ENG_280 = { add_core = NTL }
+	ENG_277 = { add_core = NTL }
+	ENG_284 = { add_core = NTL }
+	ENL = { all_core = { add_core = AEN } all_core = { remove_core = ENL } }
+	any_owned = {
+				limit = {
+					is_core = AEN
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+	}
 	any_owned = {
 				limit = {
 					is_core = AQT
 				}
                 secede_province = AQT
-				}
+	}
 	create_vassal = AQT
 	any_owned = {
 				limit = {
 					is_core = AQT
 				}
                 secede_province = AQT
-				}
-	any_owned = { 
-	limit = { 
-	is_core = NAV
-		}
-	add_core = AQT
-	remove_core = DUA
-	secede_province = AQT	
 	}				 
 	ai_chance = { 
 	factor = 80 
@@ -1601,7 +1682,7 @@ country_event = {
 		  government = fascist_monarchy
 	}
 	war = no
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	NOT = { has_country_flag = DUA_schooling_solved }
 	}
 	
@@ -1612,14 +1693,10 @@ country_event = {
 	option = {
 	name = "Provencal is a dead culture."
     set_country_flag = DUA_schooling_solved
+	set_global_flag = occitana_is_dead
+	remove_accepted_culture = french
     remove_accepted_culture = provencal
 	remove_accepted_culture = english
-	any_owned = {
-		limit = {
-		is_core = NTL
-		}
-		remove_province_modifier = anglois_cultural_unity
-	}
 	any_owned = {
 		limit = {
 		is_core = NTL
@@ -1629,24 +1706,18 @@ country_event = {
 		duration = 10950
 		}
 	}
+	FRA = { all_core = { add_core = ANF } all_core = { remove_core = FRA } } 
 	NTL = { all_core = { remove_core = DUA } }
-	FRA_458 = { add_core = AQT }
-	FRA_455 = { add_core = AQT }
+	FRA_448 = { add_core = AQT }
+	FRA_455 = { add_core = AQT }  
 	FRA_461 = { add_core = AQT }
-	449 = { add_core = AQT }
-	450 = { add_core = AQT }
+	FRA_467 = { add_core = AQT }
+	448 = { remove_core = AQT }
 	any_owned = { 
 	limit = { 
 	is_core = AQT
 		}
 	secede_province = AQT
-	}
-	any_owned = { 
-	limit = { 
-	is_core = NAV
-		}
-	add_core = AQT
-	secede_province = AQT	
 	}
 	AQT = { 
 	capital = 455
@@ -1696,6 +1767,15 @@ country_event = {
 	        } 
 	all_core = { remove_core = AQT }
 	}
+	any_owned = {
+				limit = {
+					is_core = ANF
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+	}
     war = {
 			target = AQT
 			attacker_goal = {
@@ -1739,7 +1819,7 @@ country_event = {
 		  government = fascist_monarchy
 	}
 	war = no
-	NOT = { has_country_flag = reconquest_DUA }
+	
 	NOT = { has_country_flag = DUA_schooling_solved }
 	}
 	
@@ -1752,6 +1832,7 @@ country_event = {
 	prestige = 10
     set_country_flag = SCA_danelawcheck
     set_country_flag = DUA_schooling_solved
+	set_global_flag = england_is_dead
     remove_accepted_culture = provencal
 	remove_accepted_culture = english
 	any_owned = {
@@ -1770,10 +1851,14 @@ country_event = {
 		}
 	}
 	AQT = { all_core = { remove_core = DUA } }
-	PRV = { all_core = { remove_core = DUA } }
+	ENG_280 = { remove_core = ENL }
+	ENG_277 = { remove_core = ENL }
+	ENG_284 = { remove_core = ENL }
+	ENG_273 = { remove_core = ENL }
 	ENG_280 = { add_core = NTL }
 	ENG_277 = { add_core = NTL }
 	ENG_284 = { add_core = NTL }
+	ENL = { all_core = { add_core = AEN } all_core = { remove_core = ENL } }
 	any_owned = { 
 	limit = { 
 	is_core = NTL
@@ -1817,6 +1902,7 @@ country_event = {
 				name = taiping_draft
 				duration = 1825
 	        }
+	}
 	any_owned = {
 				limit = {
 					is_core = ENL
@@ -1825,8 +1911,15 @@ country_event = {
 					name = revolution_aftermath
 					duration = 2000
 				   }
-	           } 
-	all_core = { remove_core = NTL }
+	} 
+	any_owned = {
+				limit = {
+					is_core = AEN
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
 	}
     war = {
 			target = NTL
@@ -1836,16 +1929,7 @@ country_event = {
 			defender_goal = {
 				casus_belli = status_quo
 			 }
-	    }
-	any_owned = {
-				limit = {
-					is_core = ENL
-				}
-				add_province_modifier = {
-					name = revolution_aftermath
-					duration = 2000
-				}
-	} 
+	}
 	NAN = { add_country_modifier = { 
 	name = beornia_english 
 	duration = 2000
@@ -1911,15 +1995,6 @@ country_event = {
 #	remove_accepted_culture = scottish 
 #	remove_accepted_culture = provencal
 #	remove_accepted_culture = basque
-	any_owned = {
-				limit = {
-					is_core = DUA 
-				}
-				add_province_modifier = {
-					name = anglois_cultural_unity
-					duration = -1
-				}
-	}
 	ai_chance = { factor = 0 }
 	}
 }
@@ -2006,8 +2081,8 @@ province_event = {
 		NOT = { has_province_modifier = anglois_federalism  }
         NOT = { owner = { government = fascist_dictatorship } }	
         NOT = { owner = { government = fascist_monarchy } }		
-		OR = { is_core = FRA is_core = ENL is_core = OCC is_core = IRE is_core = SCO is_core = LRR }
-		NOT = { OR = { owned_by = DIE owned_by = CHA owned_by = PRV owned_by = OCC owned_by = NET owned_by = BRT owned_by = WLS owned_by = BRG owned_by = PBG owned_by = ENL owned_by = ENG owned_by = SCO owned_by = SCA owned_by = IRE owned_by = LRR owned_by = AQT owned_by = NTL owned_by = AEN } }
+		OR = { is_core = ANF is_core = AEN is_core = FRA is_core = ENL is_core = OCC is_core = IRE is_core = SCO is_core = LRR }
+		NOT = { OR = { owned_by = DIE owned_by = CHA owned_by = PRV owned_by = OCC owned_by = NET owned_by = BRT owned_by = WLS owned_by = BRG owned_by = PBG owned_by = ENL owned_by = ENG owned_by = SCO owned_by = SCA owned_by = IRE owned_by = LRR owned_by = AQT owned_by = NTL owned_by = AEN owned_by = ANF } }
 	}
 	
 	mean_time_to_happen = {
@@ -2073,10 +2148,12 @@ country_event = {
 	   has_country_flag = DUA_schooling
 	}
 	has_country_flag = angloisfederal
-	NOT = { has_country_flag = reconquest_DUA }	
+	NOT = { has_country_flag = DUA_final_stage }
+		
 	NOT = { has_global_flag = the_DUA_federal_collapse }
 	NOT = { exists = OCC }
 	NOT = { exists = ENL }
+	NOT = { exists = AEN }
 	NOT = { exists = ENG }
 	}
 	
@@ -2094,11 +2171,11 @@ country_event = {
 	prestige = -50
 	any_owned = {
 			limit = {
-				is_core = ENL
+				is_core = OCC
 			}
-			secede_province = ENL
+			secede_province = OCC
 		}
-    ENL = { government = democracy  }
+    OCC = { government = democracy  }
 	ai_chance = {
 			factor = 1
 		}
@@ -2109,32 +2186,33 @@ country_event = {
 	set_global_flag = the_DUA_federal_collapse 
 	any_owned = {
 			limit = {
-				is_core = ENL
+				is_core = OCC
 			}
-			secede_province = ENL
+			secede_province = OCC
 	}
-	ENL = { government = democracy
+	OCC = { 
+	government = democracy
 	treasury = 10000
 	ammunition = 1000
 	small_arms = 1000
 	artillery = 1000
 	canned_food = 1000
 	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 	
+	set_country_flag = kill_DUA 	
 	add_country_modifier = {
 				name = taiping_draft
 				duration = 1825
-				}
-    }
-	war = { 
-	target = ENL 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
 		}
+	war = { 
+	         target = DUA
+	         attacker_goal = {
+			 	casus_belli = custom_treaty_cb
+			 }
+	         defender_goal = {
+				casus_belli = civil_war
+			 }
+		}
+    }
 	country_event = { id = 650350 days = 3 }
 	ai_chance = {
 			factor = 99
@@ -2153,8 +2231,24 @@ country_event = {
 	
 	option = {
 	name = "There goes the neighbourhood."
-	release_vassal = IRE
-	leave_alliance = IRE
+	any_owned = {
+			limit = {
+				is_core = ENL
+			}
+			secede_province = ENL
+	}
+	any_owned = {
+			limit = {
+				is_core = WLS
+			}
+			secede_province = WLS
+	}
+	any_owned = {
+			limit = {
+				is_core = NTL
+			}
+			secede_province = NTL
+	}
 	any_owned = {
 			limit = {
 				is_core = OCC
@@ -2178,86 +2272,66 @@ country_event = {
 				is_core = IRE 
 			}
 			secede_province = IRE
-		}
+	}
+	any_owned = {
+			limit = {
+				is_core = BRT
+			}
+			secede_province = BRT
+	}
+	leave_alliance = IRE
+	release_vassal = IRE
 	any_owned = { 
 	limit = {
+	        is_core = FRA
 			OR = {
-					region = FRA_445 
-					region = FRA_438
-					region = FRA_404
-					region = FRA_442
-					region = FRA_435
-					region = FRA_428
+				region = FRA_445 
+				region = FRA_438
+				region = FRA_404
+				region = FRA_442
+				region = FRA_435
+				region = FRA_428
 				}
 			}
 			secede_province = FRA 
 	}
-	IRE = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
+	any_country = {
+	      limit = {
+	      exists = yes
+		  OR = {
+			 primary_culture = breton
+			 primary_culture = provencal
+			 primary_culture = french
+			 primary_culture = english
+			 primary_culture = irish
+			 primary_culture = welsh
+		  }
+		  NOT = { tag = PRV }
+		  NOT = { tag = OCC }
+		  }
+		  set_country_flag = kill_DUA
+          government = democracy
+	      treasury = 10000
+	      ammunition = 1000
+	      small_arms = 1000
+	      artillery = 1000
+	      canned_food = 1000
+	      regular_clothes = 1000
+	      add_country_modifier = {
 				name = taiping_draft
 				duration = 1825
-				}
-			}
-	OCC = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-				}
-			}
-	FRA = { government = democracy 
-	treasury = 10000
-	ammunition = 1000
-	small_arms = 1000
-	artillery = 1000
-	canned_food = 1000
-	regular_clothes = 1000
-	set_country_flag = anschluss_DUA 
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-				}
-			}
-	war = { 
-	target = FRA 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
-	war = { 
-	target = OCC 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
-	war = { 
-	target = IRE 
-	attacker_goal = {
-				casus_belli = annex_core_country
-			}
-	defender_goal = {
-				casus_belli = custom_treaty_cb
-			}
-		}
+		  }
+	      war = { 
+             target = DUA 
+	         attacker_goal = {
+			 	casus_belli = custom_treaty_cb
+			 }
+	         defender_goal = {
+				casus_belli = civil_war
+			 }
+	      }
+	}
+	FRA = { government = presidential_dictatorship }
 	}
 }
 
@@ -2275,8 +2349,8 @@ country_event = {
 	trigger = {
 	tag = DUA
 	has_country_flag = in_great_war	
-	NOT = { has_country_flag = angloisfederal }
-	NOT = { has_country_flag = reconquest_DUA }
+	NOT = { has_country_flag = DUA_final_stage }
+	NOT = { has_country_flag = angloisfederal }	
 	NOT = { has_global_flag = english_revolution_gw }
 	NOT = { exists = ENL }
 	NOT = { exists = ENG }
@@ -2446,8 +2520,8 @@ country_event = {
 	trigger = {
 	tag = DUA
 	has_country_flag = in_great_war	
-	NOT = { has_country_flag = angloisfederal }
-	NOT = { has_country_flag = reconquest_DUA }
+	NOT = { has_country_flag = DUA_final_stage }
+	NOT = { has_country_flag = angloisfederal }	
 	NOT = { has_global_flag = occtain_revolution_gw  }	
 	NOT = { exists = OCC }
 	OR = {
@@ -2580,7 +2654,7 @@ country_event = {
 				duration = 1825
 				}
 			}
-	FRA = { government = democracy 
+	FRA = { government = presidential_dictatorship 
 	treasury = 10000
 	ammunition = 1000
 	small_arms = 1000
@@ -2686,5 +2760,68 @@ country_event = {
 	ENL = { inherit = NTL }
 	ai_chance = { 
 	factor = 0 }
+	}
+}
+
+##### Anglois Education was triggered without compromise. Good Job Player #####
+
+country_event = { 
+	id = 650400
+	title = "DUA188.T"
+	desc = "DUA188.D"
+	picture = "irish_home_rule"
+
+	trigger = { 
+	tag = DUA
+    has_country_flag = Anglois_accepted 
+	NOT = { has_country_flag = provencal_betrayal }
+	NOT = { has_country_flag = english_betrayal }
+	NOT = { has_country_flag = DUA_schooling_solved }
+	}
+	
+	mean_time_to_happen =  {
+		days = 31
+	}
+	
+	option = {
+	name = "We are the superior culture"
+	prestige = 20
+	tech_school = industrial_tech_school
+    set_country_flag = DUA_schooling_solved
+	set_global_flag = occitana_is_dead
+	set_global_flag = england_is_dead
+    remove_accepted_culture = french 
+	FRA = { all_core = { add_core = ANF } all_core = { remove_core = FRA } }
+	ENG_280 = { remove_core = ENL }
+	ENG_277 = { remove_core = ENL }
+	ENG_284 = { remove_core = ENL }
+	ENG_273 = { remove_core = ENL }
+	ENG_280 = { add_core = NTL }
+	ENG_277 = { add_core = NTL }
+	ENG_284 = { add_core = NTL }
+	ENL = { all_core = { add_core = AEN } all_core = { remove_core = ENL } }
+	any_owned = {
+				limit = {
+					is_core = AEN
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+	}
+	any_owned = {
+				limit = {
+					is_core = ANF
+				}
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+	}
+	NAN = { add_country_modifier = { 
+	name = beornia_english 
+	duration = 2000
+		}
+	}
 	}
 }

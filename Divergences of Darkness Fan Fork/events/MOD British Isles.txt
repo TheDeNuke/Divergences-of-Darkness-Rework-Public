@@ -980,16 +980,15 @@ country_event = {
 	id = 48286
 	title = "ENLFRA2.T"
 	desc = "ENLFRA2.D"
-	picture = "spanish_glorious_revolution"	
-
+	picture = "DUAestates"
+	
+	fire_only_once = yes
 
 	trigger = {
-	OR = {
 	tag = ENL
-	tag = ENG
-	}
     NOT = { has_global_flag = AEN_triggered }
 	all_core = { owned_by = THIS }
+	NOT = { has_global_flag = AEN_ENDING }	
     }
 	
 	mean_time_to_happen = { 
@@ -998,7 +997,14 @@ country_event = {
 
 	option = { 
 	name = "ENLFRA2.A"
+	capital = 300
 	prestige = -1
+	all_core = { remove_core = DUA }
+    set_global_flag = AEN_triggered
+	ENG_296 = { add_core = AEN }
+	ENG_300 = { add_core = AEN }
+	ENG_273 = { add_core = AEN }
+	ENG_291 = { add_core = AEN }
 	any_pop = {
 			limit = {
 				culture = anglois
@@ -1007,16 +1013,1293 @@ country_event = {
 				}
 			}
 			militancy = 2
-			consciousness = 4
+			consciousness = 2
+	}	
+    }
+}
+
+### The Anglois in Exlie - Monarchist ###
+
+country_event = { 
+
+	id = 48287
+	title = "ENLFRA3.T"
+	desc = "ENLFRA3.D"
+	picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+        has_global_flag = fall_DUA
+	    OR = { 
+		    government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+        }	
+	    NOT = { has_global_flag = AEN_triggered }
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   days = 7
 	}
-    set_global_flag = AEN_triggered
+
+
+    # We remain here.
+	
+	option = { 
+	name = "ENLFRA3.A"
+	capital = 300
+	country_event = { id = 48289 days = 7 }
+	set_global_flag = AEN_triggered
+	any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -5
+			consciousness = -5
+	}	
+    }
+}
+
+### The Anglois in Exile - Republican ###
+
+country_event = { 
+
+	id = 48288
+	title = "ENLFRA4.T"
+	desc = "ENLFRA4.D"
+	picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+        has_global_flag = fall_DUA
+		NOT = { 
+	       OR = { 
+		     government = absolute_monarchy
+			 government = prussian_constitutionalism
+			 government = hms_government
+          }	
+		}
+	    NOT = { has_global_flag = AEN_triggered }
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+
+
+    # What is a kingdom without a crown?
+	
+	option = { 
+	name = "ENLFRA4.A"
+	capital = 300
+	set_global_flag = AEN_triggered		
+	any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -2
+			consciousness = -2
+	}	
+    }
+}
+
+### The Opening of the Estates-General in London ###
+
+country_event = { 
+
+	id = 48289
+	title = "ENLFRA5.T"
+	desc = "ENLFRA5.D"
+	picture = "DUAestates"
+	
+	fire_only_once = yes
+
+
+	is_triggered_only = yes
+
+
+    # We need to be reasonable here and maintain our current government
+	
+	option = { 
+	name = "ENLFRA5.A"
+	    prestige = 1
+	    ai_chance = {
+		   factor = 80
+		}
+    }
+	
+	# In the chaos the government is dissolved
+	
+	option = { 
+	name = "ENLFRA5.B"
+	    government = absolute_monarchy
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+		any_pop = {
+		   ideology = {
+			  value = reactionary
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = liberal
+			  factor = -0.1
+		   }
+        }	
+	    ai_chance = {
+		   factor = 20
+		}
+    }
+}
+
+### The Problem of Integration - AEN ###
+
+country_event = { 
+
+	id = 48290
+	title = "ENLFRA6.T"
+	desc = "ENLFRA6.D"
+	picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+        has_global_flag = AEN_triggered
+		NOT = { exists = ENL }	
+        NOT = { vassal_of = ENL }
+        NOT = { has_global_flag = AEN_ENDING }		
+    }
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+
+    # This is not working
+	
+	option = { 
+	name = "ENLFRA6.A"
+	random_owned = {
+		limit = {
+			owner = { has_country_flag = dual_integration }
+		}
+		owner = {
+			clr_country_flag = dual_integration
+			set_country_flag = anglois_accepted
+		}
+	}	
+	random_owned = {
+		limit = {
+			owner = { has_country_flag = french_integration }
+		}
+		owner = {
+			clr_country_flag = french_integration
+			set_global_flag = french_int
+		}
+	}
+	random_owned = {
+		limit = {
+			owner = { has_country_flag = english_integration }
+		}
+		owner = {
+			clr_country_flag = english_integration
+			set_global_flag = english_int
+		}
+	}
+	set_country_flag = AEN_the_english_problem
+	prestige = -5
+	any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -2
+			consciousness = -2
+	}	
+	any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = 2
+			consciousness = 2
+	}
+    }
+}
+
+### The Problem of Integration - ENL ###
+
+country_event = { 
+
+	id = 48291
+	title = "ENLFRA7.T"
+	desc = "ENLFRA7.D"
+	picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = ENL
+        has_global_flag = AEN_triggered
+		NOT = { exists = AEN }	
+        NOT = { has_global_flag = AEN_ENDING }			
+    }
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+
+    # This is not working
+	
+	option = { 
+	name = "ENLFRA7.A"
+	set_country_flag = ENL_the_anglois_problem
+	prestige = -5
+	any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -2
+			consciousness = -2
+	}
+    }
+}
+
+### AEN Identity Events ####
+
+#### The English already love us. We are best friends with the English. ###
+
+country_event = { 
+
+	id = 48292
+	title = "ENLFRA8.T"
+	desc = "ENLFRA8.D"
+	#picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		has_country_flag = AEN_the_english_problem
+        OR = {
+           has_country_flag = english_integration 
+           has_global_flag = english_int		
+        }
+		NOT = { vassal_of = ENL }
+		NOT = { has_global_flag = AEN_ENDING }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "ENLFRA8.A"	
+	clr_country_flag = english_integration 
+	add_accepted_culture = english
+	set_global_flag = english_int
+	any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -8
+			consciousness = -8
+	}
+    }
+}
+
+#### AEN chooses if it wants to be AEN or ENL - Monarchist ###
+
+country_event = { 
+
+	id = 48293
+	title = "ENLFRA9.T"
+	desc = "ENLFRA9.D"
+	#picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		has_country_flag = AEN_the_english_problem
+	    OR = { 
+		  government = absolute_monarchy
+	      government = prussian_constitutionalism
+		  government = hms_government
+       }	   
+	   NOT = { vassal_of = ENL }
+	   NOT = { has_global_flag = AEN_ENDING }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "ENLFRA9.A"	
+	   set_country_flag = AEN_CORRECT_PATH
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -2
+			consciousness = -2
+	   }	
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = 2
+			consciousness = 2
+	   }
+	   ai_chance = {
+		   factor = 70
+			modifier = {
+				factor = 0.5
+				has_global_flag = english_int
+			}
+	   }
+    }
+
+	option = { 
+	name = "ENLFRA9.B"	
+	   country_event = { id = 48295 days = 14 }
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = 2
+			consciousness = 2
+	   }	
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -2
+			consciousness = -2
+	   }
+	   ai_chance = {
+		   factor = 30
+			modifier = {
+				factor = 0
+				government = absolute_monarchy
+			}
+			modifier = {
+				factor = 2
+				has_global_flag = english_int
+			}
+	    }
+    }
+}
+
+#### AEN chooses if it wants to be AEN or ENL - Republican ###
+
+country_event = { 
+
+	id = 48294
+	title = "ENLFRA10.T"
+	desc = "ENLFRA10.D"
+	#picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		has_country_flag = AEN_the_english_problem
+		NOT = {
+	    OR = { 
+		  vassal_of = ENL
+		  government = absolute_monarchy
+	      government = prussian_constitutionalism
+		  government = hms_government
+       }	
+	   }
+	   NOT = { has_global_flag = AEN_ENDING }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "ENLFRA10.A"	
+	   set_country_flag = AEN_UNLOCK_DECISIONS
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -2
+			consciousness = -2
+	   }	
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = 2
+			consciousness = 2
+	   }
+	   ai_chance = {
+		   factor = 70
+			modifier = {
+				factor = 0.5
+				has_global_flag = english_int
+			}
+	   }
+    }
+
+	option = { 
+	name = "ENLFRA10.B"		
+	   country_event = { id = 48295 days = 14 }
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = 2
+			consciousness = 2
+	   }	
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -2
+			consciousness = -2
+	   }
+	   ai_chance = {
+		   factor = 30
+			modifier = {
+				factor = 2
+				has_global_flag = english_int
+			}
+	    }
+    }
+}
+
+#### Restoration of England ####
+
+country_event = { 
+
+	id = 48295
+	title = "ENLFRA11.T"
+	desc = "ENLFRA11.D"
+	#picture = "DUAestates"
+	
+	major = yes
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+	
+	# Till we have built Jerusalem
+	
+	option = { 
+	name = "ENLFRA11.A"	
+	   prestige = -5
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -9
+			consciousness = -9
+	   }
+	   primary_culture = english
+	   add_accepted_culture = anglois
+	   all_core = { remove_core = AEN }
+	   ENL = { all_core = { remove_core = AEN } }
+	   change_tag = ENL
+	   country_event = { id = 48296 days = 14 } 
+    }
+}
+
+#### Anglois go completely nuts at this complete and utter treason ###
+
+
+country_event = { 
+
+	id = 48296
+	title = "ENLFRA12.T"
+	desc = "ENLFRA12.D"
+	#picture = "DUAestates"
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+	
+	# This was to be expected
+	
+	option = { 
+	name = "ENLFRA12.A"	
+	clr_country_flag = AEN_the_english_problem
+	set_country_flag = ENL_the_anglois_problem
+	prestige = -3
 	ENG_296 = { add_core = AEN }
 	ENG_300 = { add_core = AEN }
 	ENG_273 = { add_core = AEN }
 	ENG_291 = { add_core = AEN }
-	286 = { add_core = AEN }
-	286 = { add_core = WLS }
-	287 = { add_core = AEN }
-	289 = { add_core = AEN }	
+	any_pop = {
+			limit = {
+				culture = anglois
+				location = {
+					is_core = AEN
+				}
+			}
+			militancy = 2
+			consciousness = 2
+	}
+    }
+}
+
+### ENL Leadup Events ####
+
+#### The Anglois are still unhappy. We need to do something  ###
+
+country_event = { 
+
+	id = 48297
+	title = "ENLFRA13.T"
+	desc = "ENLFRA13.D"
+	#picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = ENL 
+		has_country_flag = ENL_the_anglois_problem
+		NOT = { has_country_flag = ENL_futile }
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   months = 6
+		modifier = {
+			factor = 0.01
+		    any_owned_province = {
+		       controlled_by_rebels = yes
+		    }
+		}
+	}
+
+    # We could try...
+	
+	option = { 
+	   name = "ENLFRA13.A"
+	   prestige = -1
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -1
+			consciousness = -1
+	   }
+	   set_country_flag = ENL_futile		
+    }
+	
+	# I mean... we could...
+	
+	option = { 
+	   name = "ENLFRA13.B"
+	   prestige = -1
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -1
+			consciousness = -1
+	   }
+	   set_country_flag = ENL_futile		
+    }
+}
+
+#### Its hopeless. A compromise will need to be made ###
+
+country_event = { 
+
+	id = 48298
+	title = "ENLFRA14.T"
+	desc = "ENLFRA14.D"
+	#picture = "DUAestates"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = ENL 
+		has_country_flag = ENL_futile
+		NOT = { has_country_flag = ENL_compromise }
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   days = 31
+		modifier = {
+			factor = 0.1
+		    any_owned_province = {
+		       controlled_by_rebels = yes
+		    }
+		}
+	}
+
+    # So much for that stiff upper lip.
+	
+	option = { 
+	   name = "ENLFRA14.A"
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -1
+			consciousness = -1
+	   }
+	   set_country_flag = ENL_compromise	
+    }
+}
+
+#### The Conference in Cardiff ###
+
+### Yes. Its in Cardiff ###
+
+country_event = { 
+
+	id = 48299
+	title = "ENLFRA15.T"
+	desc = "ENLFRA15.D"
+	picture = "confederation"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = ENL 
+		has_country_flag = ENL_compromise	
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   days = 31
+	}
+
+    # GET FUCKED
+	
+	option = { 
+	   name = "ENLFRA14.A"
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = 2
+			consciousness = 2
+	   }
+	   clr_country_flag = ENL_compromise	
+	   set_country_flag = ENL_CIVIL_WAR_INEVITABLE	
+    }
+	
+	# We will tolerate this Anglois Enclave and give the Welsh their stupid state
+	
+	option = { 
+	   name = "ENLFRA14.B"
+	   set_global_flag = AEN_ENDING
+	   capital = 278
+	   ENG_296 = { remove_core = AEN }
+	   ENG_273 = { remove_core = AEN }
+	   ENG_291 = { remove_core = AEN }
+	   any_pop = {
+			limit = {
+				culture = anglois
+			}
+			militancy = -9
+			consciousness = -9
+	   }
+	   clr_country_flag = ENL_compromise
+	   set_country_flag = wait_AEN
+	   set_country_flag = ENL_UNLOCK_DECISIONS
+	   any_owned = {
+	      limit = {
+		     is_core = WLS
+		  }
+          secede_province = WLS
+	   }
+	   any_owned = {
+	      limit = {
+		     is_core = AEN
+		  }
+          secede_province = AEN
+	   }
+	   AEN = { country_event = { id = 48300 days = 1 } }
+	   WLS = { country_event = { id = 48300 days = 1 } }
+    }
+}
+
+country_event = { 
+
+	id = 48300
+	title = "ENLFRA16.T"
+	desc = "ENLFRA16.D"
+	picture = "confederation"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "ENLFRA16.A"	
+	FROM = { create_vassal = THIS }
+	}
+}
+
+### AEN Leadup Events ####
+
+#### Monarchist AEN - Plans for the Reconquest of France have been leaked to the Public ###
+
+country_event = { 
+
+	id = 48301
+	title = "ENLFRA17.T"
+	desc = "ENLFRA17.D"
+	picture = "news"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		has_country_flag = AEN_CORRECT_PATH
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	mean_time_to_happen = { 
+	   months = 6
+		modifier = {
+			factor = 0.01
+		    any_owned_province = {
+		       controlled_by_rebels = yes
+		    }
+		}
+	}
+
+    # This is far too risky. Abandon our goals for reconquest.
+	
+	option = { 
+	   name = "ENLFRA17.A"
+	   clr_country_flag = AEN_CORRECT_PATH
+	   set_country_flag = AEN_UNLOCK_DECISIONS
+	   prestige = -5
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = -2
+			consciousness = -2
+	   }
+	   set_country_flag = ENL_futile
+	   ai_chance = {
+		   factor = 50
+			modifier = {
+				factor = 0
+				government = absolute_monarchy
+			}
+       }	   
+    }
+	
+	# THE ANGLOIS SHALL RECONQUER THE MAINLAND
+	
+	option = { 
+	   name = "ENLFRA17.B"
+	   clr_country_flag = AEN_CORRECT_PATH
+	   prestige = 10
+	   remove_accepted_culture = english
+	   clr_country_flag = anglois_accepted
+	   clr_global_flag = english_int
+	   set_global_flag = french_int
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = 2
+			consciousness = 2
+	   }
+	   set_country_flag = AEN_CIVIL_WAR_INEVITABLE	
+	   ai_chance = {
+		   factor = 50
+			modifier = {
+				factor = 2
+				government = absolute_monarchy
+			}
+       }			
+    }
+}
+
+#### Fascist AEN -  Newcastle Declaration ###
+
+country_event = { 
+
+	id = 48302
+	title = "ENLFRA18.T"
+	desc = "ENLFRA18.D"
+	picture = "news"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		OR = { 
+		  government = fascist_dictatorship
+		  government = fascist_monarchy
+	    }
+		NOT = { has_country_flag = fas_is_bad_aen }
+		NOT = { has_global_flag = AEN_ENDING }	
+    }
+	
+	option = { 
+	   name = "ENLFRA18.A"
+	   set_country_flag = AEN_CIVIL_WAR_INEVITABLE	
+	   set_country_flag = fas_is_bad_aen
+	   any_pop = {
+			limit = {
+				culture = english
+			}
+			militancy = 2
+			consciousness = 2
+	   }	   
+    }
+}
+
+#### Civil War is inevitable - ENL ###
+
+country_event = { 
+
+	id = 48303
+	title = "ENLFRA19.T"
+	desc = "ENLFRA19.D"
+	#picture = "news"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = ENL
+		has_country_flag = ENL_CIVIL_WAR_INEVITABLE	
+    }
+	
+	mean_time_to_happen = { 
+	   months = 1
+	}
+	
+	option = { 
+	   name = "ENLFRA18.A"
+	   any_owned = {
+	      limit = {
+		     is_core = WLS
+		  }
+          secede_province = AEN
+	   }
+	   any_owned = {
+	      limit = {
+		     is_core = AEN
+		  }
+          secede_province = AEN
+	   }
+	   clr_country_flag = ENL_CIVIL_WAR_INEVITABLE	
+	   political_reform = mandatory_service
+	   add_country_modifier = { 
+		  name = calm_before_storm
+		  duration = 60
+	   }
+       AEN = { 
+	   political_reform = mandatory_service
+	   all_core = { remove_core = ENL }
+	   add_country_modifier = { 
+		  name = calm_before_storm
+		  duration = 60
+	   }	   
+	   canned_food = 150
+	   regular_clothes = 150
+	   small_arms = 150
+	   artillery = 150
+	   horses = 150
+	   }
+       country_event = { id = 48305 days = 60 }	   
+    }
+}
+
+#### Civil War is inevitable - AEN - The welsh don't join in on this one you idiot ###
+
+country_event = { 
+
+	id = 48304
+	title = "ENLFRA20.T"
+	desc = "ENLFRA20.D"
+	#picture = "news"
+	
+	fire_only_once = yes
+
+	trigger = {
+	    tag = AEN
+		has_country_flag = AEN_CIVIL_WAR_INEVITABLE	
+    }
+	
+	mean_time_to_happen = { 
+	   months = 1
+	}
+	
+	option = { 
+	   name = "ENLFRA20.A"
+	   ENG_296 = { remove_core = ENL }
+	   ENG_291 = { remove_core = ENL }
+	   ENG_300 = { remove_core = ENL }
+	   ENG_273 = { remove_core = ENL remove_core = AEN }
+	   any_owned = {
+	      limit = {
+		     is_core = WLS
+		  }
+          secede_province = WLS
+	   }
+	   any_owned = {
+	      limit = {
+		     is_core = ENL
+		  }
+          secede_province = ENL
+	   }
+	   clr_country_flag = AEN_CIVIL_WAR_INEVITABLE	
+	   political_reform = mandatory_service
+	   add_country_modifier = { 
+		  name = calm_before_storm
+		  duration = 60
+	   }
+       ENL = { 
+	   political_reform = mandatory_service
+	   all_core = { remove_core = AEN }
+	   add_country_modifier = { 
+		  name = calm_before_storm
+		  duration = 60
+	   }	   
+	   canned_food = 150
+	   regular_clothes = 150
+	   small_arms = 150
+	   artillery = 150
+	   horses = 150
+	   }	      
+	   ENL = { country_event = { id = 48305 days = 60 } }
+    }
+}
+
+############### The English Civil War - AEN vs ENL or ENL vs AEN #######################
+
+### I will not cease from mental fight ###
+### Nor shall my sword sleep in my hand ###
+### Till we have built Jerusalem ### 
+### In England's green and pleasant land ###
+
+country_event = { 
+
+	id = 48305
+	title = "ENLFRA21.T"
+	desc = "ENLFRA21.D"
+	#picture = "news"
+	
+	major = yes
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	option = { 
+	   name = "ENLFRA21.A"
+	   ENG_273 = { add_core = ENL add_core = AEN }
+	   set_global_flag = AEN_ENDING
+	   all_core = { add_core = AEN }	   
+	   remove_country_modifier = calm_before_storm
+	   AEN = { all_core = { add_core = ENL } remove_country_modifier = calm_before_storm }
+	   set_global_flag = CROMWELL_IS_BACK
+	   war = {
+	      target = AEN
+		  attacker_goal =  { 
+			 casus_belli = civil_war
+		  }
+		  defender_goal = {
+			 casus_belli = civil_war
+		  }	
+	   }
+    }
+}
+
+#### English Civil War - AEN wins - The Anglois Homeland Reborn ###
+
+country_event = { 
+
+	id = 48306
+	title = "ENLFRA22.T"
+	desc = "ENLFRA22.D"
+	#picture = "news"
+	
+	trigger = {
+	    tag = AEN
+		has_global_flag = CROMWELL_IS_BACK
+		war = no
+		NOT = { exists = ENL }
+    }
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	# Don't forget to kill the Welsh...
+	
+	option = { 
+	   name = "ENLFRA22.A"
+	   clr_global_flag = CROMWELL_IS_BACK
+	   set_global_flag = AEN_ENDING
+	   set_country_flag = AEN_UNLOCK_DECISIONS
+	   set_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED
+	   ENG_300 = { remove_core = ENL }
+	   ENG_273 = { add_core = AEN }
+	   any_pop = { 
+	     limit = { 
+	        culture = english
+	     }
+		 reduce_pop = 0.95
+	     ideology = { factor = -0.2 value = separatist } 
+	   }
+	   300 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.6 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				assimilate = yes
+			}
+		}
+	    294 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.6 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				assimilate = yes
+			}
+		}
+	    301 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.6 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				assimilate = yes
+			}
+		}
+	    302 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.6 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				assimilate = yes
+			}
+		}
+	    303 = {
+			poor_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.9 }
+					33 = { reduce_pop = 0.8 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			middle_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				random_list = {
+					34 = { reduce_pop = 0.5 }
+					33 = { reduce_pop = 0.6 }
+					33 = { reduce_pop = 0.7 }
+				}
+				move_pop = 278
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = english
+				}
+				assimilate = yes
+			}
+		}
+    }
+}
+
+#### English Civil War - ENL wins - The Anglois are now banned from England ###
+
+country_event = { 
+
+	id = 48307
+	title = "ENLFRA24.T"
+	desc = "ENLFRA24.D"
+	#picture = "news"
+	
+	trigger = {
+	    tag = ENL
+		has_global_flag = CROMWELL_IS_BACK
+		war = no
+		NOT = { exists = AEN }
+    }
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	# There will be no living Anglois here when we are done
+	
+	option = { 
+	   name = "ENLFRA23.A"
+	   clr_global_flag = CROMWELL_IS_BACK
+	   set_global_flag = AEN_ENDING
+	   set_country_flag = ENL_UNLOCK_DECISIONS
+	   any_pop = { 
+	     limit = { 
+	        culture = anglois
+	     }
+		 reduce_pop = 0.95
+	     ideology = { factor = -0.2 value = separatist } 
+	   }
+	   any_owned = {
+		  limit = {
+			 is_core = AEN
+		  }
+		  add_province_modifier = {
+			   name = english_anglois_purge
+			   duration = 1825
+		  }
+	   }
+       AEN = { all_core = { remove_core = AEN } }  
+    }
+}
+
+#### English Civil War - Nobody wins - Yugoengland ###
+
+country_event = { 
+
+	id = 48308
+	title = "ENLFRA25.T"
+	desc = "ENLFRA25.D"
+	#picture = "news"
+	
+	trigger = {
+	    tag = ENL
+		has_global_flag = CROMWELL_IS_BACK
+		war = no
+		exists = AEN
+    }
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	# Good Job
+	
+	option = { 
+	   name = "ENLFRA25.A"
+	   clr_global_flag = CROMWELL_IS_BACK
+	   ENG_296 = { remove_core = ENL }
+	   ENG_291 = { remove_core = ENL }
+	   ENG_300 = { remove_core = ENL }
+	   ENG_273 = { remove_core = ENL remove_core = AEN }
+	   all_core = { remove_core = AEN }
+	   AEN = { set_country_flag = ENL_LOCKED }
+	   set_country_flag = ENL_LOCKED
+	   set_global_flag = AEN_ENDING
+	   any_owned = {
+	      limit = {
+		     is_core = WLS
+		  }
+          secede_province = WLS
+	   }	   
     }
 }
