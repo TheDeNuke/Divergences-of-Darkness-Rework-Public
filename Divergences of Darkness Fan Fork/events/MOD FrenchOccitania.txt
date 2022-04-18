@@ -117,6 +117,7 @@ country_event = { ## The Duke of Bourbon rides
 	
 	option = { 
 	name = "ENLFRA27.A"
+	capital = 467
 	inherit = AUV
 	AUV = { all_core = { remove_core = AUV } }
 	DUA = { country_event = { id = 650226 days = 4 } }
@@ -147,6 +148,7 @@ country_event = { ## The Duke of Bourbon rides
 	
 	option = { 
 	name = "ENLFRA27.B"
+	capital = 467
 	inherit = AUV
 	AUV = { all_core = { remove_core = AUV } }
 	DUA = { country_event = { id = 650226 days = 4 } }
@@ -204,6 +206,7 @@ country_event = { ## The Duke of Bourbon rides - NO PRV
 	
 	option = { 
 	name = "ENLFRA27.A"
+	capital = 467
 	inherit = AUV
 	AUV = { all_core = { remove_core = AUV } }
 	DUA = { country_event = { id = 650226 days = 4 } }
@@ -230,6 +233,7 @@ country_event = { ## The Duke of Bourbon rides - NO PRV
 	
 	option = { 
 	name = "ENLFRA28.B"
+	capital = 467
 	inherit = AUV
 	AUV = { all_core = { remove_core = AUV } }
 	DUA = { country_event = { id = 650226 days = 4 } }
@@ -301,8 +305,17 @@ country_event = {
 	trigger = {
 	    tag = PRV
 		has_country_flag = valois_rulez
-		has_global_flag = the_age_of_nationalism_fired
 		has_country_flag = warning_of_nationalism_PRV
+		OR = {
+		   has_global_flag = the_age_of_nationalism_fired
+		   NOT = { 
+		     OR = {
+		        government = absolute_monarchy
+			    government = prussian_constitutionalism
+			    government = hms_government
+		      }
+           }
+        }		  		      
     }
 	
 	mean_time_to_happen = { 
@@ -334,6 +347,7 @@ country_event = {
 			secede_province = OCC
 	   }
 	   OCC = { 
+	      capital = 467
 	      ruling_party_ideology = liberal
 	      political_reform = universal_voting
 	      political_reform = population_equal_weight
@@ -454,6 +468,7 @@ country_event = {
 	option = { 
 	   name = "ENLFRA34.A"
 	   prestige = 5
+	   capital = 425
 	   government = democracy
 	   ruling_party_ideology = liberal
 	   political_reform = universal_voting
@@ -484,6 +499,7 @@ country_event = {
 	
 	option = { 
 	   name = "ENLFRA34.B"
+	   capital = 425
 	   prestige = 10 
 	   any_pop = {
 			limit = {
@@ -510,6 +526,7 @@ country_event = {
 	option = { 
 	   name = "ENLFRA34.C"
 	   prestige = 5
+	   capital = 425
 	   set_global_flag = FRA_HEIR_SEARCHING
 	   any_pop = {
 			limit = {
@@ -1210,4 +1227,637 @@ country_event = {
 		}
 	}
 
+}
+
+#### IRISH NOISES #####
+
+### The below event will always trigger so long as IRE is indipendent, not at war and is not a vassal of DUA. ###
+
+country_event = { 
+
+	id = 48318
+	title = "ENLFRA49.T"
+	desc = "ENLFRA49.D"
+	picture = "irish_home_rule"
+	
+	trigger = {
+		tag = IRE
+		exists = yes
+		is_vassal = no
+		war = no
+		NOT = { has_country_flag = new_irish_era }
+    }
+	
+	mean_time_to_happen = { 
+	   days = 31
+	}
+	
+	fire_only_once = yes
+	
+	# We'll chant a soldiers song...
+	
+	option = { 
+	   name = "ENLFRA49.A"
+	   prestige = 5
+	   capital = 263
+	   government = democracy
+	   set_country_flag = new_irish_era
+	   country_event = { id = 48319 days = 3 }
+    }
+}
+
+## Violence against Anglois 
+
+country_event = { 
+
+	id = 48319
+	title = "ENLFRA50.T"
+	desc = "ENLFRA50.D"
+	picture = "fenian_easter_rising"
+	
+	is_triggered_only = yes
+	
+	# Let them have their fun
+	
+	option = { 
+	   name = "ENLFRA50.A"
+	   prestige = -5
+	   any_pop = { limit = { culture = irish } militancy = -5 }
+	   any_pop = { limit = { culture = anglois }  militancy = -1 reduce_pop = 0.99 }
+       any_owned = {
+            limit = {
+                is_core = IRE
+            }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 7
+            }
+       }
+	   country_event = { id = 48320 days = 30 }
+	   ai_chance = {
+		   factor = 60
+	   }
+    }
+	
+	# This is unacceptable
+	
+	option = { 
+	   name = "ENLFRA50.B"
+	   any_pop = { limit = { culture = irish } militancy = 1 }
+	   any_pop = { limit = { culture = anglois }  militancy = -9 }
+       any_owned = {
+            limit = {
+                is_core = IRE
+            }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 30
+            }
+       }
+	   set_global_flag = irish_brotherhood
+	   country_event = { id = 48320 days = 30 }
+	   ai_chance = {
+		   factor = 40
+	   }
+    }
+}
+
+## The Opening of the National Assembly and Macbrele's Speech
+
+### To impose another language on such a people is to send their history adrift among the accidents of translation – 
+### ’tis to tear their identity from all places – ’tis to substitute arbitrary signs for picturesque and suggestive names – 
+### ’tis to cut off the entail of feeling, and separate the people from their forefathers by a deep gulf – 
+### ’tis to corrupt their very organs, and abridge their power of expression.
+
+country_event = { 
+
+	id = 48320
+	title = "ENLFRA51.T"
+	desc = "ENLFRA51.D"
+	picture = "charles_parnell"
+	
+	is_triggered_only = yes
+	
+	## This man clearly dislikes the Anglois
+	
+	option = { 
+	   name = "ENLFRA51.A"
+	   prestige = 1
+	   any_pop = { limit = { culture = irish } militancy = -1 }
+	   any_pop = { limit = { culture = anglois }  militancy = 1 }
+       any_owned = {
+            limit = {
+                is_core = IRE
+            }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 7
+            }
+       }
+	   country_event = { id = 48320 days = 7 }
+    }
+}
+
+## The Grand Vote of the National Assembly
+
+country_event = { 
+
+	id = 48322
+	title = "ENLFRA52.T"
+	desc = "ENLFRA52.D"
+	picture = "sinn_fein_demand"
+	
+	is_triggered_only = yes
+	
+	## The First Irish Republic!
+	
+	option = { 
+	   name = "ENLFRA52.A"
+	   political_reform = no_draft
+	   random_owned = {
+	      limit = {
+		     owner = { has_global_flag = irish_brotherhood }
+		  }
+		  owner = { country_event = { id = 48323 days = 14 } }
+	   }
+	   random_owned = {
+	      limit = {
+		     owner = { NOT = { has_global_flag = irish_brotherhood } }
+		  }
+		  owner = { country_event = { id = 48324 days = 14 } }
+	   }
+	   any_pop = { limit = { culture = irish } militancy = -1 }
+	   any_pop = { limit = { culture = anglois }  militancy = 1 }	   
+	   ai_chance = {
+		   factor = 20
+			modifier = {
+				factor = 2
+				year = 1890		   
+			}
+			modifier = {
+				factor = 2
+				year = 1900			   
+			}
+			modifier = {
+				factor = 2
+				year = 1910		   
+			}
+        }
+    }
+	
+	### The Assembly is couped by the Peasants General 
+	
+	option = { 
+	   name = "ENLFRA52.B"
+	   prestige = -10
+	   government = presidential_dictatorship
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   any_pop = { limit = { culture = irish } militancy = 1 }
+	   any_pop = { limit = { culture = anglois }  militancy = 1 }
+	   set_country_flag = the_anglois_plot
+	   ai_chance = {
+		   factor = 20
+			modifier = {
+				factor = 1.5
+				year = 1890		   
+			}
+			modifier = {
+				factor = 1.5
+				year = 1900			   
+			}
+			modifier = {
+				factor = 1.5
+				year = 1910		   
+			}
+        }
+    }
+	
+	## We shall create a Regency for a High Kingdom
+	
+	option = { 
+	   name = "ENLFRA52.C"
+	   prestige = 5
+	   government = hms_government
+	   any_pop = { limit = { culture = irish } militancy = -1 }
+	   any_pop = { limit = { culture = anglois }  militancy = 1 }
+	   set_country_flag = the_anglois_plot
+	   ai_chance = {
+		   factor = 60
+			modifier = {
+				factor = 0.5
+				year = 1890					   
+			}
+			modifier = {
+				factor = 0.7
+				year = 1900				   
+			}
+			modifier = {
+				factor = 0.7
+				year = 1910			   
+			}
+        }
+    }
+}
+
+## A based event - An Díbeartha
+
+country_event = { 
+
+	id = 48323
+	title = "ENLFRA53.T"
+	desc = "ENLFRA53.D"
+	#picture = "sinn_fein_demand"
+	
+	major = yes	
+	is_triggered_only = yes
+	
+	## Go home frenchie
+	
+	option = { 
+	   name = "ENLFRA53.A"
+	   prestige = -10
+	   political_reform = primary_culture_only
+       # The entire anglois-french speaking world hates you for this
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  relation = { who = IRE value = -400 } 
+		  diplomatic_influence = { who = IRE value = -400 } 
+	   }
+	   any_pop = { limit = { culture = anglois } militancy = 9 reduce_pop = 0.98 move_pop = 425 }	   
+    }
+}
+
+## The better and more likely outcome
+
+country_event = { 
+
+	id = 48324
+	title = "ENLFRA54.T"
+	desc = "ENLFRA54.D"
+    picture = "irish_home_rule"
+	
+	is_triggered_only = yes
+	
+	## Go home frenchie
+	
+	option = { 
+	   name = "ENLFRA54.A"
+	   political_reform = all_voting_pops
+	   prestige = 10
+	   add_accepted_culture = anglois
+	   any_pop = { limit = { culture = anglois } consciousness = -9 militancy = -9  }	   
+    }
+}
+
+## Rumors of a Anglois Plot
+
+country_event = { 
+
+	id = 48325
+	title = "ENLFRA55.T"
+	desc = "ENLFRA55.D"
+	picture = "irish_republican_brotherhood"
+	
+	trigger = {
+		tag = IRE
+		has_country_flag = the_anglois_plot
+    }
+	
+	mean_time_to_happen = { 
+	   days = 365
+		modifier = {
+			factor = 0.05
+		    government = presidential_dictatorship
+	    }
+	}
+	
+	## The Anglois are a problem...
+	
+	option = { 
+	   name = "ENLFRA55.A"
+	   clr_country_flag = the_anglois_plot
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  relation = { who = IRE value = -25 } 
+	   }
+	   any_pop = { limit = { culture = anglois } consciousness = 1 militancy = 1  }
+       any_pop = { limit = { culture = irish } consciousness = 1 militancy = 1 }	   
+	   set_country_flag = the_anglois_plot_real
+    }
+}
+
+## The Dublin Putch
+
+country_event = { 
+
+	id = 48326
+	title = "ENLFRA56.T"
+	desc = "ENLFRA56.D"
+	picture = "fenian_raid"
+	
+	trigger = {
+		tag = IRE
+		has_country_flag = the_anglois_plot_real
+    }
+	
+	mean_time_to_happen = { 
+	   days = 185
+		modifier = {
+			factor = 0.1
+		    government = presidential_dictatorship
+	    }
+	}
+	
+	## The Anglois overthrow the government and establish a Irish Regency
+	
+	option = { 
+	   name = "ENLFRA56.A"
+	   clr_country_flag = the_anglois_plot_real
+	   primary_culture = anglois
+	   add_accepted_culture = irish
+	   random_owned = {
+	      limit = {
+		     owner = { NOT = { government = hms_government } }
+		  }
+	      government = hms_government
+	   }
+	   ruling_party_ideology = conservative
+	   political_reform = wealth_voting
+	   political_reform = first_past_the_post
+	   political_reform = gerrymandering
+	   political_reform = yes_meeting
+	   political_reform = state_press
+	   political_reform = four_year_draft
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  relation = { who = IRE value = 25 } 
+	   }
+	   any_pop = { limit = { culture = anglois } consciousness = -5 militancy = -5  }
+       any_pop = { limit = { culture = irish } consciousness = 1 militancy = 1 }	   
+	   set_country_flag = irish_regency_active
+	   ai_chance = {
+		   factor = 80
+	   }
+    }
+	
+	## A Relatively Unknown Nobleman General stops the Anglois and is crowned as King
+	
+	option = { 
+	   name = "ENLFRA56.B"
+	   clr_country_flag = the_anglois_plot_real
+	   random_owned = {
+	      limit = {
+		     owner = { NOT = { government = hms_government } }
+		  }
+	      government = hms_government
+	      ruling_party_ideology = liberal
+	      political_reform = universal_voting
+	      political_reform = population_equal_weight
+		  political_reform = gerrymandering
+	      political_reform = yes_meeting
+	      political_reform = free_press
+		  political_reform = no_draft
+	   }
+	   random_owned = {
+	      limit = {
+		     owner = { has_global_flag = irish_brotherhood }
+		  }
+		  owner = { country_event = { id = 48323 days = 14 } }
+	   }
+	   random_owned = {
+	      limit = {
+		     owner = { NOT = { has_global_flag = irish_brotherhood } }
+		  }
+		  owner = { country_event = { id = 48324 days = 14 } }
+	   }			  		  
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  relation = { who = IRE value = -25 } 
+	   }
+	   any_pop = { limit = { culture = anglois } consciousness = 1 militancy = 1  }
+       any_pop = { limit = { culture = irish } consciousness = -1 militancy = -1 }	   
+	   ai_chance = {
+		   factor = 20
+	   }
+    }
+}
+
+### The Irish Regency will end either by IRE becoming a Republic or by the Queen Chain 
+
+### Ireland has become a republic. Terminate the Regency ###
+
+country_event = { 
+
+	id = 48327
+	title = "ENLFRA57.T"
+	desc = "ENLFRA57.D"
+	picture = "fenian_easter_rising"
+	
+	trigger = {
+		tag = IRE
+		has_country_flag = irish_regency_active
+		NOT = { 
+		   OR = {
+		     government = absolute_monarchy
+			 government = prussian_constitutionalism
+			 government = hms_government
+		   }
+        }
+    }
+	
+	option = { 
+	   name = "ENLFRA56.B"	
+	   prestige = 1
+	   primary_culture = irish	
+	   any_pop = { limit = { culture = irish } consciousness = -1 militancy = -1 }
+	   random_owned = {
+	      limit = {
+		     owner = { has_global_flag = irish_brotherhood }
+		  }
+		  owner = { country_event = { id = 48323 days = 14 } }
+	   }
+	   random_owned = {
+	      limit = {
+		     owner = { NOT = { has_global_flag = irish_brotherhood } }
+		  }
+		  owner = { country_event = { id = 48324 days = 14 } }
+	   }
+    }
+}	
+
+## Conditions are valid for the Queen to Appear ###
+
+## The New Anglois Queen ###
+	   
+country_event = { 
+
+	id = 48328
+	title = "ENLFRA58.T"
+	desc = "ENLFRA58.D"
+	picture = "fenian_easter_rising"
+	
+	trigger = {
+		tag = IRE
+		has_country_flag = irish_regency_active
+		NOT = { 
+		   DUA = {
+		      exists = yes
+		      OR = {
+		         government = absolute_monarchy
+			     government = prussian_constitutionalism
+			     government = hms_government
+		      }
+		   }
+		   AEN = {
+		      exists = yes
+		      OR = {
+		         government = absolute_monarchy
+			     government = prussian_constitutionalism
+			     government = hms_government
+		      }
+		   }
+		   AFN = {
+		      exists = yes
+		      OR = {
+		         government = absolute_monarchy
+			     government = prussian_constitutionalism
+			     government = hms_government
+		      }
+		   }
+        }
+    }
+	
+	# The Queen is a enlightened individual and decides that this is a Irish State
+	
+	option = { 
+	   name = "ENLFRA58.A"	
+	   clr_country_flag = irish_regency_active
+	   primary_culture = irish	
+	   add_accepted_culture = anglois
+	   prestige = -5
+	   any_pop = { limit = { culture = irish } consciousness = -5 militancy = -5 }
+	   any_pop = { limit = { culture = anglois } consciousness = -5 militancy = -5 }
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  relation = { who = IRE value = -25 } 
+	   }
+	   ai_chance = {
+		   factor = 50
+	   }
+    }
+	
+	# The Queen restores the Lordship of Ireland and creates a Minority State	
+	# Do we have Car Bombs in the 19th Century
+	
+	option = { 
+	   name = "ENLFRA58.B"
+	   clr_country_flag = irish_regency_active
+	   remove_accepted_culture = irish
+	   government = absolute_monarchy
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only   
+	   set_country_flag = the_foggy_dew
+	   set_global_flag = irish_brotherhood
+	   any_pop = { limit = { culture = irish } reduce_pop = 0.99 }
+	   ai_chance = {
+		   factor = 50
+	   }
+    }
+}	
+	
+## Murchadh Mór - The Great Massacre of the Plantagenets ###
+	   
+country_event = { 
+
+	id = 48329
+	title = "ENLFRA59.T"
+	desc = "ENLFRA59.D"
+	picture = "fenian_easter_rising"
+	major = yes
+	
+	trigger = {
+		tag = IRE
+		has_country_flag = the_foggy_dew
+		NOT = { 
+		   OR = {
+		     government = absolute_monarchy
+			 government = prussian_constitutionalism
+			 government = hms_government
+		   }
+        }
+    }
+	
+	# End of a Era...
+	
+	option = { 
+	   name = "ENLFRA59.A"	
+	   clr_country_flag = the_foggy_dew
+	   primary_culture = irish
+	   political_reform = primary_culture_only
+       # The entire anglois-french speaking world hates you for this and also want to kill you
+	   any_country = {
+	      limit = {
+		    OR = {
+		       primary_culture = anglois
+			   primary_culture = french
+			   primary_culture = amazonian
+			   primary_culture = plantagenian
+			}
+		  }
+		  add_casus_belli = { target = IRE type = cut_down_to_size months = 12 }	   
+		  relation = { who = IRE value = -400 } 
+		  diplomatic_influence = { who = IRE value = -400 } 
+	   }
+	   any_pop = { limit = { culture = anglois } militancy = 9 reduce_pop = 0.95 move_pop = 425 }
+	}
 }
