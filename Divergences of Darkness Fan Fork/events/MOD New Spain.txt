@@ -1007,7 +1007,7 @@ country_event = {
 	# WE WILL DEFEAT THE REVOLUTION
 
 	option = {
-		name = "SPAN14.A"
+		name = "SPAN15.A"
 		prestige = 10
 		badboy = 5
 		
@@ -1080,7 +1080,7 @@ country_event = {
 	# Recognize the Republic - Lets not trigger a great power war in the 1840s
 	
 	option = {
-		name = "SPAN14.B"
+		name = "SPAN15.B"
 		prestige = -5
 		SPA = { country_event = { id = 470040 days = 0 } }
 	    any_pop = {
@@ -1191,7 +1191,7 @@ country_event = {
 	}
 }
 
-#### SPANISH VICTORY - Dual Monarchy has not enforced its CB onto Spain
+#### SPANISH VICTORY - Dual Monarchy has not enforced its CB onto Spain (or too much time has elapsed)
 
 country_event = {
 	id = 470037
@@ -1202,14 +1202,21 @@ country_event = {
 	fire_only_once = yes
 	
     trigger = {
-        tag = SPA
-		NOT = { war_with = DUA }
+        tag = SPA	
+        OR = {
+           NOT = { war_with = DUA }
+           NOT = { national_provinces_occupied = 0.1 }
+        } 		   
 		has_global_flag = spanish_revolutionary_war
 		NOT = { has_country_flag = custom_treaty_loser }		
     }
 	
     mean_time_to_happen = {
-        days = 1
+        days = 365
+		   modifier = {
+		      factor = 0.01
+		      NOT = { war_with = DUA }
+		   }
     }
 	
 	# Libertad!
@@ -1548,6 +1555,7 @@ country_event = {
 	option = {
 		name = "SPAN22.A"
 		prestige = 1
+		tech_school = naval_tech_school
 		clr_country_flag = SPA_clear_initial_chain
 		clr_country_flag = SPA_wait_DUA
  	    any_pop = {
@@ -1839,7 +1847,7 @@ country_event = {
 	#This is too hard
 	
 	option = {
-		name = "SPAN25.C"
+		name = "SPAN26.C"
 		prestige = -5
 	    change_variable = {
 		   which = SPA_instab
@@ -3677,6 +3685,7 @@ country_event = {
 	    clr_country_flag = socialist_republic_gov
 	    clr_country_flag = fascist_monarchy_gov
 	    set_country_flag = democracy_gov
+		set_country_flag = CST_is_monarchy
 		CST = { set_country_flag = CST_monarchy }
 		# The Indipendence Event 
         country_event = { id = 470069 days = 7 }			
@@ -4284,6 +4293,17 @@ country_event = {
 		relation = { who = GAL value = -400 } 
 		relation = { who = ATR value = -400 } 
 		relation = { who = CST value = -400 } 
+		random_owned = {
+		    limit = {
+			   owner = { ai = yes }
+			}
+		    owner = {
+			   add_country_modifier = {
+                   name = taiping_draft
+                   duration = -1
+               }
+            }			   
+	    }		
         CST = { remove_country_modifier = calm_before_storm remove_country_modifier = preparing_for_war all_core = { add_core = SPA } }
 		GAL = { remove_country_modifier = calm_before_storm remove_country_modifier = preparing_for_war all_core = { add_core = SPA } }
 		ATR = { remove_country_modifier = calm_before_storm remove_country_modifier = preparing_for_war all_core = { add_core = SPA } }
@@ -4381,6 +4401,7 @@ country_event = {
 	option = {
 		name = "SPAN60.A"
 		prestige = 10
+		clr_country_flag = CST_is_monarchy
 		clr_country_flag = CST_SOLUTION
 		set_global_flag = SPA_DECENTER
 		political_reform = federalism
@@ -4403,6 +4424,7 @@ country_event = {
 	      ideology = { factor = -0.1 value = separatist } 
 	    }	
 		CST = { remove_country_modifier = CST_REVOLUTION }
+		remove_country_modifier = taiping_draft
         remove_country_modifier = SPA_killed_fueros		
         remove_country_modifier = SPA_NO_LAND_LEFT	
         remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
@@ -4448,6 +4470,7 @@ country_event = {
 	option = {
 		name = "SPAN60.A"
 		prestige = 5
+		clr_country_flag = CST_is_monarchy
 		clr_country_flag = CST_SOLUTION
 		set_global_flag = SPA_STATUSQUO
 		political_reform = unitary
@@ -4462,6 +4485,7 @@ country_event = {
 	    }
         all_core = { remove_core = ANA remove_core = GAL remove_core = ATR remove_core = CST }
 		CST = { remove_country_modifier = CST_REVOLUTION }
+		remove_country_modifier = taiping_draft
         remove_country_modifier = SPA_killed_fueros		
         remove_country_modifier = SPA_NO_LAND_LEFT	
         remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
@@ -4593,7 +4617,9 @@ country_event = {
 			assimilate = yes
 		}
         all_core = { remove_core = ANA remove_core = GAL remove_core = ATR remove_core = CST } 
+		clr_country_flag = CST_is_monarchy
 		CST = { remove_country_modifier = CST_REVOLUTION }
+		remove_country_modifier = taiping_draft
         remove_country_modifier = SPA_killed_fueros		
         remove_country_modifier = SPA_NO_LAND_LEFT	
         remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
@@ -4732,6 +4758,37 @@ country_event = {
 	option = {
 		name = "SPAN65.A"
 		prestige = 10
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = CST_is_monarchy }
+		   }
+		   owner = { 		      
+	          government = hms_government
+              clr_country_flag = CST_is_monarchy		      
+		   }
+		}
+		ruling_party_ideology = conservative
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = all_trade_unions
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov	
+		clr_country_flag = CST_is_monarchy
 		clr_country_flag = CST_SOLUTION
 		set_global_flag = SPA_DECENTER
 		political_reform = confederalism
@@ -4770,6 +4827,7 @@ country_event = {
 		480 = { add_core = ATR }
 		519 = { add_core = GAL }
 		518 = { add_core = GAL }
+		remove_country_modifier = taiping_draft
         #remove_country_modifier = SPA_killed_fueros	
         #remove_country_modifier = SPA_NO_LAND_LEFT	
         #remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
@@ -4843,8 +4901,10 @@ country_event = {
 	option = {
 		name = "SPAN67.A"
 		prestige_factor = -0.9		
+		clr_country_flag = CST_is_monarchy
 		clr_country_flag = CST_SOLUTION
 		set_global_flag = SPA_COLLAPSED
+		remove_country_modifier = taiping_draft
         remove_country_modifier = SPA_killed_fueros	
         remove_country_modifier = SPA_NO_LAND_LEFT	
         remove_country_modifier = SPA_FUEROS_ARE_PROBLEM	
@@ -5294,5 +5354,421 @@ country_event = {
 		  consciousness = -9
 	      ideology = { factor = -0.1 value = separatist } 
 	    }
+	}
+}
+
+## The Dominion of Granada - This is a event that's based off the events that form the MOR and ALG tags
+
+country_event = {
+
+	id = 470097
+
+	title = "SPAN76.T"
+	desc = "SPAN76.D"
+	picture = "danishgovernment"
+
+	major = yes
+
+	trigger = {
+		tag = SPA
+		exists = yes
+		war = no
+		OR = {
+		   state_n_government = 1
+		   year = 1860
+		}
+		owns = 2264
+		any_owned_province = { is_core = SAN }
+		NOT = { VNS = { vassal_of = SPA } }
+		NOT = { exists = GRA }
+		is_possible_vassal = GRA
+	}
+
+	mean_time_to_happen = {
+		months = 20
+		modifier = {
+			factor = 10
+			has_country_flag = GRA_independence_refused
+		}
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = GRA }
+				average_militancy = 3
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = GRA }
+				average_militancy = 4
+			}
+		}
+		modifier = {
+			factor = 0.5
+			year = 1880
+			NOT = { has_country_flag = GRA_independence_refused }
+		}
+	}
+
+	option = {
+		name = "SPAN76.A"
+		clr_country_flag = GRA_independence_refused		
+		prestige = -20
+		badboy = -5
+		any_pop = {
+			limit = { location = { is_core = GRA } }
+			militancy = -5
+		}
+		GRA = {
+		    set_country_flag = GRA_DOMINION
+			all_core = { remove_core = SPA }
+		}
+		release_vassal = GRA
+		GRA = {
+			prestige = -80
+			capital = 2264
+		}
+		relation = {
+			who = GRA
+			value = 100
+		}
+		diplomatic_influence = {
+			who = GRA
+			value = 200
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+				}
+			}
+			modifier = {
+				factor = 0.25
+				government = absolute_monarchy
+			}
+			modifier = {
+				factor = 1.5
+				government = democracy
+			}
+			modifier = {
+				factor = 1.5
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 1.5
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 3
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 5
+			}
+			
+		}	
+	}
+	
+	option = {
+		name = "SPAN76.B"
+		set_country_flag = GRA_independence_refused
+		any_owned = {
+			limit = { is_core = GRA }
+			any_pop = {
+				militancy = 3
+			}
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 1.75
+				government = absolute_monarchy
+			}
+			modifier = {
+				factor = 0.5
+				government = democracy
+			}
+			modifier = {
+				factor = 0.5
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 0.5
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 3
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 5
+			}
+		}
+	}
+	
+	option = {
+		name = "SPAN76.C"
+		clr_country_flag = GRA_independence_refused
+		prestige = -20
+		badboy = -5
+		any_pop = {
+			limit = { location = { is_core = GRA } }
+			militancy = -5
+		}
+		GRA = {
+		    set_country_flag = GRA_DOMINION
+			all_core = { remove_core = SPA }
+		}
+		release_vassal = GRA
+		GRA = {
+			prestige = -80
+			capital = 2264
+		}
+		relation = {
+			who = GRA
+			value = 50
+		}
+		diplomatic_influence = {
+			who = GRA
+			value = 200
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		change_tag_no_core_switch = GRA
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+country_event = {
+
+	id = 3332230
+
+	title = "333223.T"
+	desc = "333223.D"
+	picture = "danishgovernment"
+
+	major = yes
+
+	trigger = {
+		tag = SPA
+		exists = yes
+		war = no
+		year = 1910		
+		any_owned_province = { is_core = CUB }
+		NOT = { VNS = { vassal_of = SPA } }
+		NOT = { owns = 2264 }
+		NOT = { exists = CUB }
+		is_possible_vassal = CUB
+	}
+
+	mean_time_to_happen = {
+		months = 6
+		modifier = {
+			factor = 10
+			has_country_flag = CUB_independence_refused
+		}
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = CUB }
+				average_militancy = 3
+			}
+		}
+		modifier = {
+			factor = 0.8
+			any_state = {
+				any_owned_province = { is_core = CUB }
+				average_militancy = 4
+			}
+		}
+		modifier = {
+			factor = 0.5
+			year = 1920
+			NOT = { has_country_flag = CUB_independence_refused }
+		}
+	}
+
+	option = {
+		name = "22260.A"
+		clr_country_flag = CUB_independence_refused
+		prestige = -20
+		badboy = -5
+		any_pop = {
+			limit = { location = { is_core = CUB } }
+			militancy = -10
+		}
+		CUB = {
+			all_core = { remove_core = SPA }
+		}
+		release_vassal = CUB
+		CUB = {
+			prestige = -80
+		}
+		relation = {
+			who = CUB
+			value = 100
+		}
+		diplomatic_influence = {
+			who = CUB
+			value = 200
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				OR = {
+					government = proletarian_dictatorship
+					government = bourgeois_dictatorship
+					government = fascist_dictatorship
+					government = fascist_monarchy
+					government = presidential_dictatorship
+				}
+			}
+			modifier = {
+				factor = 0.25
+				government = absolute_monarchy
+			}
+			modifier = {
+				factor = 1.5
+				government = democracy
+			}
+			modifier = {
+				factor = 1.5
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 1.5
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 3
+			}
+			modifier = {
+				factor = 1.2
+				militancy = 5
+			}
+			
+		}	
+	}
+	
+	option = {
+		name = "22260.B"
+		set_country_flag = CUB_independence_refused
+		any_owned = {
+			limit = { is_core = CUB }
+			any_pop = {
+				militancy = 3
+			}
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 1.75
+				government = absolute_monarchy
+			}
+			modifier = {
+				factor = 0.5
+				government = socialist_republic
+			}
+			modifier = {
+				factor = 0.5
+				government = democracy
+			}
+			modifier = {
+				factor = 0.5
+				government = parliamentary_republic
+			}
+			modifier = {
+				factor = 1.5
+				war_policy = jingoism
+			}
+			modifier = {
+				factor = 1.25
+				war_policy = pro_military
+			}
+			modifier = {
+				factor = 0.75
+				war_policy = anti_military
+			}
+			modifier = {
+				factor = 0.5
+				war_policy = pacifism
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 3
+			}
+			modifier = {
+				factor = 0.8
+				militancy = 5
+			}
+		}
 	}
 }

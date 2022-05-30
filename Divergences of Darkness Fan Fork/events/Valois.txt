@@ -268,6 +268,7 @@ country_event = {
 
 	option = {
 		name = "VAL5.A"
+		clr_global_flag = TUS_carbonari
 		add_accepted_culture = central_italian
 		prestige = 10
 		any_pop = {
@@ -972,6 +973,10 @@ country_event = {
 			     factor = 0
 				 war = yes
 			  }
+		      modifier = {
+			     factor = 0
+				 tag = TRE
+			  }
 		}
 	}
 	
@@ -1057,6 +1062,13 @@ country_event = {
 		  months = 120
 	    }
 		}
+		any_country = {
+		   limit = {
+		      has_country_flag = ITALIAN_LEAGUE_MEMBER
+			  NOT = { tag = THIS }
+		   }
+		   military_access = THIS
+		}
 		military_access = FROM
 		war = {
 				target = PRV
@@ -1140,7 +1152,8 @@ country_event = {
 	          limit = { 
 	             is_core = TUS
 	          }
-	          secede_province = THIS
+			  remove_core = PRV
+	          secede_province = PAP
 		   }
 		   money = 100000
 		   clr_country_flag = ITALIAN_LEAGUE_MEMBER
@@ -1150,9 +1163,11 @@ country_event = {
 	          limit = { 
 	             is_core = TUS
 	          }
-	          secede_province = THIS
+			  remove_core = PRV
+	          secede_province = PAP
 		   }
-	    }		   		   
+	    }	
+        PAP = { country_event = { id = 110662 days = 7 } }		
 	}
 }
 
@@ -1269,6 +1284,13 @@ country_event = {
 		  type = cut_down_to_size
 		  months = 120
 	    }
+		}
+		any_country = {
+		   limit = {
+		      has_country_flag = ITALIAN_LEAGUE_MEMBER
+			  NOT = { tag = THIS }
+		   }
+		   military_access = THIS
 		}
 		military_access = FROM
 		war = {
@@ -1429,6 +1451,7 @@ country_event = {
 	option = {
 		name = "VAL38.A"
 		set_global_flag = AVIGNON_WAR_DUA
+		add_country_modifier = { name = small_country_draft duration = 720 }
 		DUA = {
 	    add_casus_belli = {
 	      target = THIS
@@ -1451,6 +1474,7 @@ country_event = {
 				defender_goal = {
 					casus_belli = cut_down_to_size
 				}
+				call_ally = yes
 		}
 	}
 }
@@ -1466,11 +1490,20 @@ country_event = {
 	option = {
 		name = "VAL34.A"
 		DUA = {
+		relation = { who = THIS value = -400 }
+		diplomatic_influence = { who = THIS value = -400 }
 	    add_casus_belli = {
 	      target = THIS
 		  type = cut_down_to_size
 		  months = 120
 	    }
+		}
+		any_country = {
+		   limit = {
+		      has_country_flag = ITALIAN_LEAGUE_MEMBER
+			  NOT = { tag = THIS }
+		   }
+		   military_access = THIS
 		}
 		military_access = FROM
 		war = {
@@ -2391,3 +2424,293 @@ country_event = {
 		}
 	}	
 }
+
+###########################
+##	Pope holds Florence  ##
+###########################
+
+country_event = { 
+	id = 110662
+	title = "VAL62.T"
+	desc = "VAL62.D"
+	picture = "christian_religion"
+	
+	is_triggered_only = yes
+	
+	# The Pope agrees that Italy is his rightful domain
+	
+	option = { 
+	name = "VAL62.A"
+		set_global_flag = confed_council
+		set_country_flag = council_PAP
+		any_country = {
+			limit = {
+			    tag = LOM
+		    }
+			country_event = { id = 110663 days = 2 }
+		}				  
+		relation = {
+			who = ARA
+			value = -100
+		}
+		ARA = {
+			diplomatic_influence = {
+				who = THIS
+				value = -200
+		    }
+		}
+	    ai_chance = { 
+	       factor = 75
+		}
+    }
+	
+	# We will restore the 1836 status quo.
+
+	option = { 
+	name = "VAL62.B"
+	    set_global_flag = confed_council
+		relation = {
+			who = ARA
+			value = 400
+		}
+		ARA = {
+			diplomatic_influence = {
+				who = THIS
+				value = 400
+		    }
+		}
+	    any_owned = {
+	       limit = {
+	          is_core = LUC
+	       }
+	       secede_province = LUC
+	    }
+	    any_owned = {
+	       limit = {
+	          is_core = MOD
+	       }
+	       secede_province = MOD
+	    }
+	    any_owned = {
+	       limit = {
+	          is_core = PRV
+	       }
+	       secede_province = PRV
+	    } 
+		TUS = { 
+		   clr_country_flag = REV_TUS
+		   set_country_flag = CON_TUS
+		   set_country_flag = ITC_council_failed
+		   government = parliamentary_republic
+           political_reform = population_equal_weight
+           political_reform = wealth_voting
+           political_reform = yes_meeting
+           political_reform = state_press
+           political_reform = first_past_the_post
+           political_reform = gerrymandering
+		}
+	    ai_chance = { 
+	       factor = 25
+		}
+    }	
+}
+
+country_event = { 
+	id = 110663
+	title = "VAL63.T"
+	desc = "VAL63.D"
+	picture = "christian_religion"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "VAL63.A"
+	set_country_flag = accepted_ITC
+	ai_chance = { 
+	factor = 60
+	   modifier = {
+	      factor = 1.5
+		  exists = PIE
+	   }
+	   modifier = {
+	      factor = 1.25
+		  ARA = { is_greater_power = yes }
+	   }
+	   modifier = {
+	      factor = 1.5
+		  PAP = { OR = { is_greater_power = yes is_secondary_power = yes } }
+	   }	   
+       }
+	}
+	
+	option = { 
+	name = "VAL63.B"
+	set_country_flag = refused_ITC 
+	ai_chance = { 
+	factor = 40
+	   modifier = {
+	      factor = 0.75
+		  exists = PIE
+	   }
+	   modifier = {
+	      factor = 0.75
+		  ARA = { is_greater_power = yes }
+	   }
+	   modifier = {
+	      factor = 0.75
+		  PAP = { OR = { is_greater_power = yes is_secondary_power = yes } }
+	   }
+	   }
+	}
+	
+	option = { 
+	name = "VAL63.C"
+	set_country_flag = accepted_ITC
+	change_tag_no_core_switch = PAP
+	ai_chance = { 
+	factor = 0 
+	}
+	}
+}
+
+country_event = { 
+	id = 110664
+	title = "VAL64.T" #Formation of ITC - Poop Edition
+	desc = "VAL64.D"
+	
+	major = yes
+	
+	trigger = { 
+	tag = PAP
+	has_country_flag = council_PAP
+	LOM = { has_country_flag = accepted_ITC }
+	}
+	
+	mean_time_to_happen = { 
+	days = 20 
+	}
+	
+	option = { 
+	name = "VAL64.A"
+	clr_country_flag = council_PAP
+	inherit = LOM
+	release_vassal = AVN
+	add_accepted_culture = central_italian
+	add_accepted_culture = north_italian
+	change_tag = ITC
+	tech_school = industrial_tech_school
+	any_owned = { limit = { is_core = ITA } add_core = ITC }
+	government = theocracy
+	ruling_party_ideology = conservative
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+    political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = two_year_draft
+	political_reform = primary_culture_only
+    clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	country_event = { id = 110660 days = 1 }
+	capital = 749
+    749 = {
+	   add_province_modifier = {
+		 name = gateway_to_harbor
+		 duration = 720
+	   } 
+	   add_province_modifier = {
+		 name = small_baby_boom
+		 duration = 14600
+	   }
+	   add_province_modifier = {
+		 name = baby_boom
+		 duration = 1825
+	   }
+    }
+	country_event = { id = 124275 days = 0 }
+	}
+}
+
+country_event = { 
+	id = 110665
+	title = "VAL65.T" #Formation of ITC-refused - Pope restores 1836 status quo
+	desc = "VAL65.D"
+	
+	trigger = { 
+	tag = PAP
+	has_country_flag = council_PAP
+    LOM = { has_country_flag = refused_ITC }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	days = 20 
+	}
+	
+	option = { 
+	name = "VAL65.A"
+	    clr_country_flag = council_PAP
+		relation = {
+			who = ARA
+			value = 400
+		}
+		ARA = {
+			diplomatic_influence = {
+				who = THIS
+				value = 400
+		    }
+		}
+	    any_owned = {
+	       limit = {
+	          is_core = LUC
+	       }
+	       secede_province = LUC
+	    }
+	    any_owned = {
+	       limit = {
+	          is_core = MOD
+	       }
+	       secede_province = MOD
+	    }
+	    any_owned = {
+	       limit = {
+	          is_core = PRV
+	       }
+	       secede_province = PRV
+	    } 
+		TUS = { 
+		   clr_country_flag = REV_TUS
+		   set_country_flag = CON_TUS
+		   set_country_flag = ITC_council_failed
+		   government = parliamentary_republic
+           political_reform = population_equal_weight
+           political_reform = wealth_voting
+           political_reform = yes_meeting
+           political_reform = state_press
+           political_reform = first_past_the_post
+           political_reform = gerrymandering
+		}
+	}
+} 

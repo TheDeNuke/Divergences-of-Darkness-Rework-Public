@@ -5,31 +5,11 @@
 
 ##### START PDM DIVIDE BY ZERO MODIFIERS #####
 
-no_army = {
-	trigger = {
-	    ai = no
-		not = { total_amount_of_divisions = 1 }
-		civilized = yes
-	}
-	icon = 9
-	prestige = -0.25
-}
-
-winds_of_change = {
-	trigger = {
-		has_global_flag = berlin_conference
-		civilized = no
-		not = { year = 1900 }
-	}
-	icon = 1
-	research_points = 1
-}
-
 winds_of_change_1900 = {
 	trigger = {
 		has_global_flag = berlin_conference
 		civilized = no
-		year = 1900
+		year = 1890
 	}
 	icon = 1
 	research_points = 2
@@ -64,18 +44,18 @@ DVG_badboy_2 = {
 
 }
 
-powerful_HRE = { 
-	trigger = { 
-		OR = { 
-		primary_culture = south_german
-		primary_culture = rheinish 
-		primary_culture = north_german
-			}
-		in_sphere = BOH 
-		NOT = { year = 1849 }
-	}
-	prestige = -0.50 
-}
+#powerful_HRE = { 
+#	trigger = { 
+#		OR = { 
+#		primary_culture = south_german
+#		primary_culture = rheinish 
+#		primary_culture = north_german
+#			}
+#		in_sphere = BOH 
+#		NOT = { year = 1849 }
+#	}
+#	prestige = -0.50 
+#}
 
 money_hoarder_3 = {
 	trigger = {
@@ -140,15 +120,21 @@ occupied_captial = {
 small_but_efficient = {
     trigger = {
         capital_scope = { continent = europe }
-        NOT = { num_of_cities = 6 }
+        civilized = yes
+        NOT = { number_of_states = 4 }
+        NOT = { num_of_cities = 8 }
         NOT = { total_pops = 500000 }
+        NOT = { money = 1000000 }
     }
-
-    icon = 9
-    tax_efficiency = 0.5
-    administrative_efficiency_modifier = 0.4
-    tariff_efficiency_modifier = 0.4
-    supply_consumption = -0.95
+    tax_efficiency = 0.4
+    administrative_efficiency_modifier = 0.3
+    tariff_efficiency_modifier = 0.3
+    education_efficiency_modifier = 0.05
+    supply_consumption = -0.9
+    poor_income_modifier = 1
+    middle_income_modifier = 3
+    rich_income_modifier = 5
+	icon = 9
 }
 
 vassal_nation = {
@@ -351,6 +337,29 @@ neglected_education = {
 	icon = 19
 }
 
+educational_spen = {
+		trigger = {
+			ai = yes
+			exists = yes
+			administration_spending = 0.74
+		}
+
+	education_efficiency_modifier = 0.3
+	icon = 16
+}
+
+admin_spen = {
+		trigger = {
+			ai = yes
+			exists = yes
+			administration_spending = 0.74
+		}
+
+	administrative_efficiency_modifier = 0.3
+	icon = 16
+}
+
+
 own_kiel_canal = {
     trigger = {
         owns = 369
@@ -380,16 +389,6 @@ own_panama_canal = {
     tariff_efficiency_modifier = 0.2
     import_cost = -0.25
     prestige = 0.02
-}
-
-landlocked_nation = {
-    trigger = {
-        NOT = { any_owned_province = { port = yes } }
-    }
-
-    import_cost = 0.5
-    global_immigrant_attract = -1.5
-    icon = 8
 }
 
 democratic_nation = {
@@ -434,26 +433,89 @@ social_reformed_nation = {
     icon = 13
 }
 
-educational_spen = {
-		trigger = {
-			ai = yes
-			exists = yes
-			administration_spending = 0.74
-		}
-
-	education_efficiency_modifier = 0.3
-	icon = 16
-}
-
-admin_spen = {
-		trigger = {
-			ai = yes
-			exists = yes
-			administration_spending = 0.74
-		}
-
-	administrative_efficiency_modifier = 0.3
-	icon = 16
-}
-
 ##### END HPM MODIFIERS #####
+
+##### Adjusted GFM Revanchism Modifiers ####
+
+save_the_nation1  = {
+    trigger = {
+        revanchism = 0.1
+		year = 1870
+        NOT = { revanchism = 0.2 }
+    }
+
+    suppression_points_modifier = 0.10
+
+    land_organisation = 0.025
+    mobilisation_size = 0.01
+    supply_consumption = -0.05
+    icon = 9
+}
+
+save_the_nation2  = {
+    trigger = {
+        revanchism = 0.2
+		year = 1870
+        NOT = { revanchism = 0.3 }
+    }
+
+    suppression_points_modifier = 0.10
+
+    land_organisation = 0.075
+    mobilisation_size = 0.02
+    supply_consumption = -0.15
+    mobilization_impact = 0.25
+    mobilisation_economy_impact = -0.125
+    icon = 9
+}
+
+save_the_nation3  = {
+    trigger = {
+        revanchism = 0.3
+		year = 1870
+        NOT = { revanchism = 0.4 }
+    }
+
+    suppression_points_modifier = 0.10
+
+    land_organisation = 0.1
+    mobilisation_size = 0.03
+    supply_consumption = -0.20
+    mobilization_impact = 0.5
+    mobilisation_economy_impact = -0.25
+    icon = 9
+}
+
+save_the_nation4  = {
+    trigger = {
+        revanchism = 0.4
+		year = 1870
+        NOT = { revanchism = 0.5 }
+    }
+
+    suppression_points_modifier = 0.10
+
+    land_organisation = 0.2
+    mobilisation_size = 0.04
+    supply_consumption = -0.30
+    mobilization_impact = 1
+    mobilisation_economy_impact = -0.5
+    icon = 9
+}
+
+save_the_nation5  = {
+    trigger = {
+        revanchism = 0.5
+		year = 1870
+    }
+
+    suppression_points_modifier = 0.10
+
+    land_organisation = 0.25
+    land_unit_start_experience = 5
+    mobilisation_size = 0.05
+    supply_consumption = -0.30
+    mobilization_impact = 1
+    mobilisation_economy_impact = -0.66
+    icon = 9
+}

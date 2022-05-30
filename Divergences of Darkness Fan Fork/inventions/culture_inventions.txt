@@ -1053,6 +1053,10 @@ social_darwinism = {
 		colonial_prestige = 0.1
 		war_exhaustion = -0.05
 		colonial_points = 50
+		rebel_org_gain = {
+			faction = socialist_rebels
+			value = -0.25
+		}
 	}
 	
 	
@@ -1188,8 +1192,12 @@ the_decline_of_the_west_and_the_lost_generation = {
 		plurality = 0.02
 		permanent_prestige = 15
 		shared_prestige = 15
+		rebel_org_gain = {
+			faction = fascist_rebels
+			value = 0.25
+		}
 	}
-	core_pop_consciousness_modifier = 0.03
+	core_pop_consciousness_modifier = 0.02
 	
 	
 	
@@ -2167,14 +2175,15 @@ secret_police = {
 	chance = {
 		base = 0
 		modifier = {
-			factor = 3
+			factor = 1
 			OR = {
 				ruling_party_ideology = fascist
+				ruling_party_ideology = reactionary
 				ruling_party_ideology = communist
 			}
 		}
 		modifier = {
-			factor = 2
+			factor = 1
 			OR = {
 				nationalvalue = nv_might
 				nationalvalue = nv_dominion
@@ -2182,7 +2191,7 @@ secret_police = {
 			}
 		}
 		modifier = {
-			factor = 3
+			factor = 2
 			nationalvalue = nv_supremacy
 		}
 		modifier = {
@@ -2199,11 +2208,13 @@ secret_police = {
 		}
 	}
 	core_pop_consciousness_modifier = -0.02
-	suppression_points_modifier = 0.25
-    rebel_org_gain = {
-        faction = all
-        value = -0.25
-    }
+	effect = {
+		suppression_points_modifier = 0.25
+        rebel_org_gain = {
+            faction = all
+            value = -0.25
+        }
+	}
 }
 
 womens_suffrage_movement = {
@@ -2375,6 +2386,10 @@ vangaurd_party = {
 			faction = communist_rebels
 			value = 0.50
 		}
+		rebel_org_gain = {
+			faction = socialist_rebels
+			value = 0.25
+		}
 	}
 	
 	
@@ -2382,10 +2397,14 @@ vangaurd_party = {
 }
 #mass_politics
 great_war_paradigm = {
-	limit = { mass_politics = 1 }
+	limit = { revolution_n_counterrevolution = 1 }
 	news = no
 	chance = {
 		base = 0
+		modifier = {
+			factor = -25
+			NOT = { mass_politics = 1 }
+		}
 		modifier = {
 			factor = 5
 			is_greater_power = yes
@@ -2409,15 +2428,22 @@ great_war_paradigm = {
 			factor = 2
 			ruling_party_ideology = fascist
 		}
+		modifier = {
+			factor = 50
+			any_greater_power = {
+				invention = great_war_paradigm
+			}
+		}
 	}
 	effect = {
 		permanent_prestige = 25
 		shared_prestige = 50
 		seperatism = -0.25
+		mobilisation_size = 0.03
 		rebel_org_gain = {
 			faction = nationalist_rebels 
 			value = -0.50
-		}
+		 }
 		rebel_org_gain = {
 			faction = separatist_rebels
 			value = -0.50
@@ -2487,11 +2513,9 @@ paramilitary_groups = {
 			value = 0.25
 		} 
 	}
-	
-	
+	core_pop_consciousness_modifier = 0.01	
 	
 }
-
 the_red_scare = {
 	limit = { mass_politics = 1 }
 	news = no
@@ -2552,15 +2576,16 @@ the_police_state = {
 	limit = { mass_politics = 1 }
 	news = no
 	chance = {
-		base = 0
-		modifier = {
-			factor = 5
-			OR = {
-				ruling_party_ideology = fascist
-				ruling_party_ideology = communist
-			}
-		}
-	}
+	   base = 1
+          modifier = {
+              factor = 1
+              invention = secret_police
+          }
+          modifier = {
+             factor = -75
+             NOT = { has_country_modifier = totalitarian_system }
+          }
+    }
 	effect = {
 		suppression_points_modifier = 0.25
         rebel_org_gain = {
@@ -2569,6 +2594,7 @@ the_police_state = {
         }
 	}
 }
+
 #behaviorism
 mass_advertising = {
 	limit = {

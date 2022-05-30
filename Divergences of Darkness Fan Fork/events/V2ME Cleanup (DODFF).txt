@@ -305,6 +305,15 @@ country_event = {
 			set_country_flag = exempt_from_vassal_contribution
 		}
 		
+		# Automatically end wars for non-existing nations
+		any_country = {
+			limit = {
+				exists = no
+				war = yes
+			}
+			country_event = 477877797
+		}
+		
 		#cleanup colonial cores
 		any_country = {
 			limit = {
@@ -469,6 +478,17 @@ country_event = {
 				}
 				any_owned = {
 					limit = {
+						is_core = ALD
+						OR = {
+							is_core = ALJ
+							is_core = KBL
+						}
+					}
+					remove_core = KBL
+					remove_core = ALJ
+				}
+				any_owned = {
+					limit = {
 						is_core = TRA
 						OR = {
 							is_core = MYS
@@ -543,6 +563,23 @@ country_event = {
 					remove_core = BIK
 					remove_core = BER
 				}
+		}
+		
+		# Landlocked Cleanup
+		any_country = {
+			limit = {
+			   exists = yes
+               NOT = { any_owned_province = { port = yes } }
+			}
+			add_country_modifier = { name = landlocked_nation duration = -1 }
+		}
+		any_country = {
+			limit = {
+			   exists = yes
+			   has_country_modifier = landlocked_nation 
+               any_owned_province = { port = yes }
+			}
+			remove_country_modifier = landlocked_nation
 		}
 		
 		#fix for bad modifier
@@ -638,7 +675,7 @@ country_event = {
 		#		overlord = { exists = yes }
 		#	}
 		#	country_event = 477877788
-		#}	
+		#}			
 		
 		#cleanup bad govflags
 		any_country = {
@@ -951,6 +988,15 @@ country_event = {
 			}
 			set_global_flag = revolution_n_counter_researched
 		}
+
+		#If Tuscan global flag has not been cleared and its 1850 then clear it
+		any_country = {
+			limit = {
+				has_global_flag = TUS_carbonari
+				year = 1850
+			}
+			clr_global_flag = TUS_carbonari
+		}
 		
 		#ghost units monthly cleanup
 		any_country = {
@@ -1046,6 +1092,14 @@ country_event = {
 			   exists = yes
 			   has_global_flag = post_colonial_era_fired
 			}
+			any_country = {
+				any_owned = {
+					limit = {
+						has_province_modifier = colonial_province
+					}
+                    remove_province_modifier = colonial_province
+				}
+			}
 		    any_country = {
 			   limit = {
 				   NOT = { capital_scope = { continent = africa } }
@@ -1123,6 +1177,16 @@ country_event = {
 			   }
 		   }
 		   any_country = {
+				any_owned = {
+					limit = {
+						is_colonial = no
+					}
+					remove_province_modifier = colonial_province
+					remove_province_modifier = colonial_exploitation_tech_effect
+					remove_province_modifier = colonial_dawn
+				}
+		   }
+		   any_country = {
 			   limit = {
 				   ai = yes
 			   }
@@ -1138,6 +1202,7 @@ country_event = {
 			   remove_country_modifier = ai_nation_boost_income
 		   }
 		}
+		
 		#slave pop growth
 		any_country = {
             limit = {
@@ -1337,19 +1402,17 @@ country_event = {
 		random_owned = {
 			limit = {
 				owner = {
-					year = 1860
-					NOT = { has_global_flag = rebel_tech_1860 }
+					year = 1865
+					NOT = { has_global_flag = rebel_tech_1865 }
 					NOT = { has_global_flag = disable_rebel_improvement }
 				}
 			}
 			owner = {
 				REB = {
-					activate_technology = post_napoleonic_thought				
-					activate_technology = bronze_muzzle_loaded_artillery
-					activate_technology = military_staff_system
-					activate_technology = army_command_principle
+				    activate_technology = muzzle_loaded_rifles	
+
 				}
-				set_global_flag = rebel_tech_1860
+				set_global_flag = rebel_tech_1865
 			}
 		}
 		random_owned = {
@@ -1362,11 +1425,11 @@ country_event = {
 			owner = {
 				set_global_flag = rebel_tech_1880
 				REB = {
-					activate_technology = strategic_mobility
-					activate_technology = muzzle_loaded_rifles					
-					activate_technology = iron_muzzle_loaded_artillery
-					activate_technology = military_plans
-					activate_technology = army_professionalism
+				    activate_technology = breech_loaded_rifles	
+					activate_technology = post_napoleonic_thought				
+					activate_technology = bronze_muzzle_loaded_artillery
+					activate_technology = military_staff_system
+					activate_technology = army_command_principle
 				}
 			}
 		}
@@ -1380,11 +1443,11 @@ country_event = {
 			owner = {
 				set_global_flag = rebel_tech_1900
 				REB = {
-				    activate_technology = point_defense_system
-				    activate_technology = breech_loaded_rifles					
-					activate_technology = iron_breech_loaded_artillery
-					activate_technology = military_statistics 
-					activate_technology = army_decision_making
+				    activate_technology = machine_guns
+					activate_technology = strategic_mobility									
+					activate_technology = iron_muzzle_loaded_artillery
+					activate_technology = military_plans
+					activate_technology = army_professionalism
 				}
 			}
 		}
@@ -1398,16 +1461,14 @@ country_event = {
 			owner = {
 				set_global_flag = rebel_tech_1920
 				REB = {
-			       activate_technology = deep_defense_system
-                   activate_technology = machine_guns 			
-		   	       activate_technology = bolt_action_rifles 
-			       activate_technology = steel_breech_loaded_artillery 
-			       activate_technology = military_logistics 
-			       activate_technology = army_risk_management 
+				   activate_technology = bolt_action_rifles
+				   activate_technology = point_defense_system				    				
+				   activate_technology = iron_breech_loaded_artillery
+				   activate_technology = military_statistics 
+				   activate_technology = army_decision_making
 				}
 			}
-		}
-		
+		}		
 		CLN = { country_event = { id = 477877791 days = 365 } }
 	}
 }
@@ -1439,6 +1500,25 @@ country_event = {
 			country_event = 477877790
 			country_event = 477877791
 			add_country_modifier = { name = neutrality duration = -1 }
+		}
+	}
+}
+
+# Terminate war for non-existing nation
+country_event = {
+	id = 477877797
+	title = "AI: War Terminator"
+	desc = "AI: War Terminator"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Terminate"
+		any_country = {
+		   limit = { 
+		     war_with = THIS
+		   }
+		   end_war = THIS
 		}
 	}
 }

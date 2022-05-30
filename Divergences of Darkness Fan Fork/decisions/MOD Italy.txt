@@ -216,6 +216,58 @@ political_decisions = {
 	
 	# New Italian Decisions
 	
+	crown_new_grand_duke = {
+	    picture = restore_the_grand_duchy
+		potential = {
+			tag = ARA
+			TUS = {
+			  OR = {
+			    government = parliamentary_republic
+				government = democracy
+				government = socialist_republic
+			  }
+			}
+		}
+	
+		allow = {
+		    is_greater_power = yes
+			state_n_government = 1
+			TUS = { in_sphere = THIS }
+		}
+	
+		effect = {		
+            prestige = 10		
+			TUS = { 
+			     government = hms_government 
+	             prestige = -20 
+	             remove_accepted_culture = north_italian
+	             clr_global_flag = TUS_carbonari
+	             clr_country_flag = REV_TUS
+	             clr_country_flag = CON_TUS
+	             set_country_flag = failed_TUS 
+	             add_country_modifier = { name = the_eye_of_the_storm duration = 1460 }
+	             any_pop = { 
+		         ideology = {
+				    value = liberal
+				    factor = -0.10
+			     }
+		         }					
+			}
+			any_country = {
+			   limit = {
+			     tag = LUC
+				 exists = yes
+			   }
+			   all_core = { add_core = TUS }
+			   annex_to = TUS
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	form_piedmont = {
 	    picture = become_savoy
 		potential = {
@@ -271,22 +323,8 @@ political_decisions = {
 		
 		allow = {			
 			is_vassal = no
-			year = 1848
+			year = 1843
 		    NOT = { war = yes }
-			OR = {
-				has_country_flag = liberal_revolution_fired
-				ITA = {
-					any_core = {
-						owner = {
-						    OR = {
-							   primary_culture = north_italian
-							   primary_culture = central_italian
-							}
-							has_country_flag = liberal_revolution_fired
-						}
-					}
-				}
-			}
 		}
 		
 		effect = {
@@ -848,6 +886,7 @@ political_decisions = {
 			764 = { add_core = ITA }
 			765 = { add_core = ITA }
 			766 = { add_core = ITA }
+			3255 = { add_core = ITA }
 			AUS_729 = { 
 				add_core = ITA
 			}
@@ -881,48 +920,31 @@ political_decisions = {
 		potential = {
 			tag = TUS
 			OR = {
-			   government = parliamentary_republic
 			   government = democracy
 			   government = socialist_republic
-			}
-			OR = {
-		       AND = {
-		          year = 1850
-			      ai = yes
-			   }
-			   ai = no
 			}
 			has_country_flag = REV_TUS
 			NOT = { has_global_flag = council_of_italy }
 			NOT = { has_global_flag = HALT_ITALIAN_CHAINS }
 			NOT = { has_country_flag = council_TUS }
+			NOT = { has_country_flag = failed_TUS }
+			NOT = { year = 1843 }
 		}
 		
 		allow = {			
+			year = 1841 
 			is_vassal = no
 		    NOT = { war = yes }
-			OR = {
-				has_country_flag = liberal_revolution_fired
-				ITA = {
-					any_core = {
-						owner = {
-			                OR = {
-				                primary_culture = north_italian
-				                primary_culture = central_italian
-			                }
-							has_country_flag = liberal_revolution_fired
-						}
-					}
-				}
-				year = 1850
-			}
+			owns = 738
+			owns = 739
+			owns = 746
 		}
 		
 		effect = {
 			prestige = 5
-			set_global_flag = council_of_italy
 			remove_country_modifier = the_last_democracy
 			set_country_flag = council_TUS
+			set_global_flag = council_of_italy
 			relation = {
 				who = ARA
 				value = -100
@@ -978,7 +1000,7 @@ political_decisions = {
 	
 		potential = { 
 		NOT = { has_global_flag = ponte_venice }
-		OR = { tag = VEN tag = ARI tag = ITA}
+		OR = { tag = VEN tag = ARI tag = ITA }
 		owns = 729 
 		}
 		
@@ -1137,4 +1159,205 @@ political_decisions = {
 		set_country_flag = dalmatia_cores
 		}
 	}
+	
+	The_Iron_Crown = { 
+	potential = { 
+	tag = MAN 
+	government = absolute_monarchy 
+	NOT = { has_country_flag = iron_crown } 
+		}
+		
+	allow = { 
+	owns = 726
+	LOM = { exists = no } 
+	rank = 20 
+		}
+		
+	effect = { 
+	change_tag = LOM 
+	set_country_flag = iron_crown
+	set_country_flag = struggle_for_northern_italy
+	capital = 3263 
+	730 = { add_core = LOM } 
+	731 = { add_core = LOM } 
+	738 = { add_core = LOM } 
+	739 = { add_core = LOM } 
+	SAR_720 = { add_core = LOM } 
+	GEN_724 = { add_core = LOM } 
+	TUS_744 = { add_core = LOM } 
+	MAN = { all_core = { remove_core = MAN }
+	3264 = { add_core = MAN }
+	}	
+	}
+	
+	The_North_italian_Brothers_war = { 
+		potential = { 
+			tag = LOM 
+			OR = { 
+			   PIE = { exists = yes in_sphere = DUA } 
+			   SAR = { exists = yes in_sphere = DUA } 
+		    }
+			has_global_flag = italian_turnoil 
+			has_country_flag = struggle_for_northern_italy
+			owns = 3264
+			NOT = { has_global_flag = Guerra_fratelli } 
+		}
+		
+		allow = { 
+			OR = { relation = { who = BRG value = 50 } relation = { who = PBG value = 50 } }
+			OR = { is_secondary_power = yes is_greater_power = yes }
+		}
+	
+		effect = { 
+			set_global_flag = Guerra_fratelli
+			any_country = { 
+				limit = { tag = BRG exists = yes }
+				country_event = 1242040
+			}
+			any_country = { 
+				limit = { tag = PBG exists = yes }
+				country_event = 1242040
+			}
+		}
+	
+	}
+	
+	The_North_italian_Brothers_war_2 = { 
+		potential = { 
+			tag = LOM 
+			OR = { PIE = { exists = yes NOT = { in_sphere = DUA } } SAR = { exists = yes NOT = { in_sphere = DUA } } }
+			has_global_flag = italian_turnoil 
+			has_country_flag = struggle_for_northern_italy
+			owns = 3264
+			NOT = { has_global_flag = Guerra_fratelli } 
+		}
+		
+		allow = { 
+			OR = { is_secondary_power = yes is_greater_power = yes stronger_army_than = SAR stronger_army_than = PIE }
+		}
+			
+		effect = { 
+		set_global_flag = Guerra_fratelli
+			any_country = { 
+				limit = { tag = SAR exists = yes }
+				country_event = 1242043
+			}
+			any_country = { 
+				limit = { tag = PIE exists = yes }
+				country_event = 1242043
+			}
+		}
+	
+	}
+	
+	claim_the_farnese = { 
+		potential = { 
+		tag = LOM 
+		has_country_flag = struggle_for_northern_italy
+		NOT = { has_country_flag = claimed_PARMOD }
+		}
+		
+		allow = { 
+		all_core = { owned_by = THIS } 
+		}
+		
+		effect = { 
+		738 = { add_core = THIS }
+		set_country_flag = claimed_PARMOD
+		739 = { add_core = THIS }
+		any_country = {
+			limit = { 
+					tag = MOD
+					exists = yes
+				}
+				country_event = { id = 1242038 days = 2 }
+			}
+		any_country = {
+			limit = { 
+					tag = PAR
+					exists = yes
+				}
+				country_event = { id = 1242038 days = 4 }
+			}
+		}
+	}
+	
+	core_piedmont_LOM = { 
+		potential = { 
+		tag = LOM 
+		has_global_flag = Guerra_fratelli 
+		NOT = { has_country_flag = cored_SAR } 
+		}
+		
+		allow = { 
+		SAR = { exists = no } 
+		PIE = { exists = no } 
+		owns = 720
+		}
+		
+		effect = { 
+		set_country_flag = cored_SAR
+		any_owned = { 
+		limit = { OR = { region = SAR_720 region = GEN_724 } } 
+		add_core = THIS
+			}
+		}
+	}
+	
+	core_lombardy_SAR = { 
+		potential = { 
+		OR = { tag = SAR tag = PIE } 
+		has_global_flag = Guerra_fratelli 
+		NOT = { has_country_flag = cored_LOM } 
+		}
+		
+		allow = { 
+		LOM = { exists = no } 
+		owns = 726 
+		war = no 
+		}
+		
+		effect = { 
+		set_country_flag = cored_LOM
+		any_owned = { 
+		limit = { OR = { region = AUS_726 AND = { region = PAP_741 is_core = LOM } } } 
+		add_core = THIS
+			}
+		}
+	}
+	
+	The_North_italian_Brothers_war_PIE = { 
+		potential = { 
+			tag = PIE 
+			has_global_flag = italian_turnoil 
+			owns = 724
+			NOT = { has_global_flag = Guerra_fratelli } 
+		}
+		
+		allow = { 
+		    year = 1847
+			OR = { 
+			   rank = 16 
+			   AND = { rank = 20 stronger_army_than = LOM } 
+			}
+			LOM = { has_country_flag = struggle_for_northern_italy }
+			NOT = { exists = MAN }
+		}
+	
+		effect = { 
+			set_global_flag = Guerra_fratelli
+			leave_alliance = DUA 
+			relation = { who = DUA value = -150 }
+			LOM = { country_event = 1242064 }
+			war = { 
+					target = LOM
+			        attacker_goal = {
+				       casus_belli = conquest_any
+				    }
+			        defender_goal = { 
+				       casus_belli = conquest_any
+			        } 
+			}
+		}	
+	}	
 }

@@ -907,8 +907,8 @@ country_event = {
 		name = "ARCGEN26.B"
 		civilized = yes
 		prestige = 10
-		VIN = { relation = { who = THIS value = -400 } }
-		MSG = { relation = { who = THIS value = -400 } }
+		VIN = { leave_alliance = THIS diplomatic_influence = { who = THIS value = -400 } relation = { who = THIS value = -400 } }
+		MSG = { leave_alliance = THIS diplomatic_influence = { who = THIS value = -400 } relation = { who = THIS value = -400 } }
 		any_pop = {
 		   ideology = {
 			  value = separatist
@@ -926,7 +926,7 @@ country_event = {
 			  value = reactionary
 			  factor = 0.1
 		   }
-        }     
+        } 	
         country_event = { id = 79133 days = 14 }		
 	    ai_chance = { 
 	        factor = 10
@@ -961,8 +961,8 @@ country_event = {
 	option = {
 		name = "ARCGEN27.A"
         clr_country_flag = SKR_wait_and_see
-		VIN = { relation = { who = THIS value = -400 } release_vassal = THIS }
-		SCA = { release_vassal = THIS }
+		VIN = { leave_alliance = THIS diplomatic_influence = { who = THIS value = -400 } relation = { who = THIS value = -400 } release_vassal = THIS }
+		SCA = { release_vassal = THIS leave_alliance = THIS diplomatic_influence = { who = THIS value = -400 } relation = { who = THIS value = -400 } }
 		end_war = MSG
 		end_war = SCA
 		country_event = { id = 79133 days = 14 }	
@@ -1251,6 +1251,7 @@ country_event = {
 	option = {
 		name = "ARCGEN34.A"
         prestige = 5
+		set_country_flag = legit_neutrality_SKR
 	    government = parliamentary_republic
 	    ruling_party_ideology = liberal
 	    political_reform = one_year_draft
@@ -1530,6 +1531,14 @@ country_event = {
 	    clr_country_flag = NBG_goes_marching_west
 		set_country_flag = SKR_COLLAPSED
 		prestige_factor = -0.99
+		any_country = {
+		   limit = {
+		      civilized = yes
+		   }
+		   relation = { who = SKR value = -400 }
+		   diplomatic_influence = { who = SKR value = -400 }
+		   leave_alliance = SKR
+		}
 		all_core = { remove_core = SKR }
         any_owned = {
             limit = {
@@ -1552,6 +1561,12 @@ country_event = {
             }
 			add_core = VIN
             secede_province = OCE
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
+            }
+            secede_province = VIN
         }
         any_owned = {
             limit = {
@@ -1897,6 +1912,12 @@ country_event = {
         }
         any_owned = {
             limit = {
+                is_core = HHR
+            }
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
                 is_core = OCE
             }
 			add_core = VIN
@@ -2110,6 +2131,12 @@ country_event = {
         }
         any_owned = {
             limit = {
+                is_core = HHR
+            }
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
                 is_core = OCE
             }
 			add_core = VIN
@@ -2136,6 +2163,12 @@ country_event = {
 				NOT = { province_id = 176 }
             }
 			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
+            }
             secede_province = VIN
         }
         any_owned = {
@@ -2200,6 +2233,12 @@ country_event = {
 				NOT = { province_id = 176 }
             }
 			add_core = VIN
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
+            }
             secede_province = VIN
         }
         any_owned = {
@@ -2589,6 +2628,236 @@ country_event = {
     }	
 }
 
+################ THE SECOND ARCADIAN WAR - TRIGGERED BY NBG - LIB HAS KILLED OFF PLA - RE-ADDS PLA CORES TO LIB DURING THIS WAR ##################
+
+#### THE WHITE MAN'S BURDEN ###
+
+country_event = {
+	id = 791600
+	title = "ARCGEN610.T"
+	desc = "ARCGEN610.D"
+	#picture = "war_ended"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN61.A"
+		set_global_flag = SECOND_ARCADIAN_WAR
+		set_global_flag = LIB_SECOND_ARCADIAN_WAR
+		political_reform = mandatory_service
+		relation = { who = LIB value = -400 }
+		diplomatic_influence = { who = LIB value = -400 }
+		leave_alliance = LIB
+		relation = { who = VIN value = -200 }
+		diplomatic_influence = { who = VIN value = -200 }
+		leave_alliance = VIN
+		LIB = {
+		   relation = { who = VIN value = -200 }
+		   diplomatic_influence = { who = VIN value = -200 }
+		   leave_alliance = VIN
+		   all_core = { add_core = PLA }
+		}
+	    war = {
+	     target = LIB
+		     attacker_goal =  { 
+			    casus_belli = conquest_any
+		     }
+		     defender_goal = {
+			    casus_belli = custom_treaty_cb
+		     }	
+			 call_ally = yes
+	    }
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}
+		# All or Nothing
+        LIB = { country_event = { id = 791601 days = 0 } }
+		any_pop = {
+		   militancy = -8
+		}
+    }	
+}
+
+#### THE BELGIAN CONFEDERATION HAS POUNCED! ###
+
+country_event = {
+	id = 791601
+	title = "ARCGEN620.T"
+	desc = "ARCGEN620.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN620.A"		
+		political_reform = mandatory_service
+		any_pop = {
+		   militancy = -8
+		}
+		add_country_modifier = {
+			name = ALL_OR_NOTHING_ARC
+			duration = 1440
+		}		
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - LIB VICTORY - DISMANTLEMENT OF THE BELGIAN CONFEDERATION ##################
+
+country_event = {
+	id = 791602
+	title = "ARCGEN630.T"
+	desc = "ARCGEN630.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = LIB
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   has_global_flag = LIB_SECOND_ARCADIAN_WAR
+	   war = no
+	   NBG = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}	
+	
+	option = {
+		name = "ARCGEN630.A"
+		inherit = NBG
+		war_exhaustion = 30
+		clr_global_flag = SECOND_ARCADIAN_WAR	  
+        clr_global_flag = LIB_SECOND_ARCADIAN_WAR		
+		remove_country_modifier = ALL_OR_NOTHING_ARC
+		any_country = {
+		   limit = { 
+		      primary_culture = septiman
+			  has_country_flag = unreleasable_country
+		   }
+		   clr_country_flag = unreleasable_country
+		}		
+		# Delete PLA
+		PLA_214 = { remove_core = NBG add_core = LIB }
+		NBG_220 = { add_core = LIB }
+		NBG = { remove_country_modifier = ALL_OR_NOTHING_ARC clr_country_flag = custom_treaty_loser all_core = { remove_core = NBG } } 
+		PLA = { all_core = { remove_core = PLA } } 
+		LOU = { all_core = { remove_core = LOU } } 	
+        any_owned = {
+            limit = {
+                is_core = CHV
+            }
+            secede_province = CHV
+        }		   
+        any_owned = {
+            limit = {
+                is_core = CCA
+            }
+            secede_province = CCA
+        }
+        any_owned = {
+            limit = {
+                is_core = CPH 
+            }
+            secede_province = CPH 
+        }	
+        any_owned = {
+            limit = {
+                is_core = CNL
+            }
+            secede_province = CNL
+        }
+        any_owned = {
+            limit = {
+                is_core = CNF
+            }
+            secede_province = CNF
+        }
+    }	
+}
+
+################ THE SECOND ARCADIAN WAR - LIONS OR BURGUNDIAN VICTORY IF LIB - NEW OR OLD ARCADIANS USE OLD EVENT - A NEW SOUTHERN ORDER - IF BURGUNDIAN THEN ANNEX LOU ##################
+
+country_event = {
+	id = 791603
+	title = "ARCGEN640.T"
+	desc = "ARCGEN640.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   tag = NBG
+	   has_global_flag = SECOND_ARCADIAN_WAR
+	   has_global_flag = LIB_SECOND_ARCADIAN_WAR
+	   war = no
+	   OR = {
+	      has_global_flag = NBG_LIONS
+		  has_global_flag = NBG_BURGUNDIAN
+	   }
+	   NOT = { exists = LIB }
+	}
+	
+	mean_time_to_happen = { 
+		 days = 1
+	}
+	
+	option = {
+		name = "ARCGEN640.A"
+		war_exhaustion = 30
+		clr_global_flag = LIB_SECOND_ARCADIAN_WAR
+		clr_global_flag = SECOND_ARCADIAN_WAR
+		clr_country_flag = custom_treaty_loser 
+        any_owned = {
+            limit = {
+                is_core = CHE
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = PLA
+            secede_province = CHE
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = ATS
+            }
+			remove_core = PLA
+			add_core = LOU
+            secede_province = LOU
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = PLA
+            secede_province = OUM
+        }			
+		CHE = { government = democracy }
+		147 = { add_core = OUM }
+		random_owned = { 
+		   limit = { owner = { has_global_flag = NBG_BURGUNDIAN } }
+		   owner = { country_event = { id = 7916500 days = 3 } }
+		}
+    }	
+}
+
 ################ THE SECOND ARCADIAN WAR - PANARCADIAN PLA VICTORY - FORMATION OF THE PROVISIONAL GOVERNMENT - MUST NOT HAVE LIB_IS_HERE FLAG, ABOLITION_MONARCHY OR LOU_IS_HERE FLAG ##################
 
 country_event = {
@@ -2623,6 +2892,7 @@ country_event = {
 		}		
         create_vassal = NBG
 		NBG = {
+		   prestige_factor = -0.99
 		   remove_country_modifier = ALL_OR_NOTHING_ARC
 		   clr_country_flag = custom_treaty_loser
 		   government = autonomous_dependency
@@ -2687,6 +2957,7 @@ country_event = {
 	
 	option = {
 		name = "ARCGEN64.A"
+		inherit = NBG
 		war_exhaustion = 30
 		clr_global_flag = SECOND_ARCADIAN_WAR
 	    set_country_flag = PLA_Valois
@@ -2699,59 +2970,37 @@ country_event = {
 		   clr_country_flag = unreleasable_country
 		}
 		PLA_214 = { remove_core = NBG add_core = PLA }
-		NBG = { 
-		   remove_country_modifier = ALL_OR_NOTHING_ARC
-		   clr_country_flag = custom_treaty_loser 
-           any_owned = {
-               limit = {
-                   is_core = LOU
-               }
-               secede_province = PLA
-           }
-           any_owned = {
-               limit = {
-                   is_core = CBV
-               }
-			   remove_core = NBG
-               secede_province = PLA
-           }	
-           any_owned = {
-               limit = {
-                   is_core = CHV
-               }
-			   remove_core = NBG
-               secede_province = PLA
-           }	
-           any_owned = {
-               limit = {
-                   is_core = CCA
-               }
-			   remove_core = NBG
-               secede_province = CCA
-           }
-           any_owned = {
-               limit = {
-                   is_core = CPH 
-               }
-			   remove_core = NBG
-               secede_province = CPH 
-           }	
-           any_owned = {
-               limit = {
-                   is_core = CNL
-               }
-			   remove_core = NBG
-               secede_province = CNL
-           }
-           any_owned = {
-               limit = {
-                   is_core = IRO
-               }
-			   remove_core = NBG
-               secede_province = PLA
-           }
-		   change_tag = CNF
-		}
+		NBG = { remove_country_modifier = ALL_OR_NOTHING_ARC all_core = { remove_core = NBG } clr_country_flag = custom_treaty_loser }	   
+        any_owned = {
+            limit = {
+                is_core = CHV
+            }
+            secede_province = CHV
+        }		   
+        any_owned = {
+            limit = {
+                is_core = CCA
+            }
+            secede_province = CCA
+        }
+        any_owned = {
+            limit = {
+                is_core = CPH 
+            }
+            secede_province = CPH 
+        }	
+        any_owned = {
+            limit = {
+                is_core = CNL
+            }
+            secede_province = CNL
+        }
+        any_owned = {
+            limit = {
+                is_core = CNF
+            }
+            secede_province = CNF
+        }
     }	
 }
 
@@ -2771,7 +3020,16 @@ country_event = {
 	      has_global_flag = NBG_OLD_ARCADIAN
 		  has_global_flag = NBG_NEW_ARCADIAN
 	   }
-	   PLA = { has_country_flag = custom_treaty_loser }
+	   OR = {
+	      AND = {
+		     exists = PLA
+	         PLA = { has_country_flag = custom_treaty_loser }
+	      }
+		  AND = {
+		     NOT = { exists = LIB }
+		     has_global_flag = LIB_SECOND_ARCADIAN_WAR			 
+	      }
+	   }
 	}
 	
 	mean_time_to_happen = { 
@@ -2779,6 +3037,7 @@ country_event = {
 	}
 	
 	immediate = {
+	    PLA_214 = { remove_core = PLA remove_core = LIB add_core = NBG }
 		PLA = { all_core = { remove_core = NBG } }
 	    any_owned = {
 	       limit = { is_core = PLA }
@@ -2787,10 +3046,11 @@ country_event = {
 	}
 	
 	option = {
-		name = "ARCGEN65.A"
+		name = "ARCGEN65.A"		
 		war_exhaustion = 30
 		set_country_flag = SAW_WINNER
 		set_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+		clr_global_flag = LIB_SECOND_ARCADIAN_WAR
 		clr_global_flag = SECOND_ARCADIAN_WAR
 		prestige = 40
 		remove_country_modifier = ALL_OR_NOTHING_ARC
@@ -2800,6 +3060,7 @@ country_event = {
 		}		
         create_vassal = PLA
 		PLA = {
+		   prestige_factor = -0.99
 		   remove_country_modifier = ALL_OR_NOTHING_ARC
 		   clr_country_flag = custom_treaty_loser
 		   government = autonomous_dependency
@@ -2838,6 +3099,10 @@ country_event = {
 			  duration = -1
 		   }
 		}
+	    any_owned = {
+	       limit = { is_core = PLA }
+	       secede_province = PLA
+	    }
     }	
 }
 
@@ -2873,6 +3138,7 @@ country_event = {
 		}		
         create_vassal = PLA
 		PLA = {
+		   prestige_factor = -0.99
 		   remove_country_modifier = ALL_OR_NOTHING_ARC
 		   clr_country_flag = custom_treaty_loser
 		   government = autonomous_dependency
@@ -3054,7 +3320,16 @@ country_event = {
 	   has_global_flag = SECOND_ARCADIAN_WAR
 	   war = no
 	   NOT = { has_country_flag = custom_treaty_loser }
-	   NOT = { PLA = { has_country_flag = custom_treaty_loser } }
+	   OR = {   
+	      AND = {	    
+	        NOT = { PLA = { has_country_flag = custom_treaty_loser } }
+			exists = PLA
+	      }
+		  AND = {
+		    has_global_flag = LIB_SECOND_ARCADIAN_WAR
+			exists = LIB
+		  }
+	   }
 	}
 	
 	mean_time_to_happen = { 
@@ -3064,11 +3339,13 @@ country_event = {
 	option = {
 		name = "ARCGEN670.A"
 		clr_global_flag = SECOND_ARCADIAN_WAR
+		clr_global_flag = LIB_SECOND_ARCADIAN_WAR
 		prestige_factor = -0.5
 		war_exhaustion = 50
 		set_country_flag = ARC_ENABLE_PLAN_B
 		remove_country_modifier = ALL_OR_NOTHING_ARC
 		PLA = { remove_country_modifier = ALL_OR_NOTHING_ARC war_exhaustion = 50 set_country_flag = ARC_ENABLE_PLAN_B prestige_factor = -0.5 }	
+		LIB = { remove_country_modifier = ALL_OR_NOTHING_ARC war_exhaustion = 50 prestige_factor = -0.5 }
 		VIN = { set_country_flag = VIN_unblock_expansion }
 	}
 }
@@ -3122,6 +3399,7 @@ country_event = {
 	      }	
           NOT = { owns = 55 }		  
        } 
+	   NOT = { exists = SKR }
        NOT = { has_country_flag = ARC_VIN_CONFIRMED }
        NOT = { has_country_flag = VIN_counter_arcadia }	   
 	}
@@ -3262,6 +3540,13 @@ country_event = {
 			remove_core = THIS
             secede_province = VIN
         }
+        any_owned = {
+            limit = {
+                is_core = HHR
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
 	    ai_chance = { 
 	        factor = 50
 			modifier = {
@@ -3330,6 +3615,13 @@ country_event = {
         any_owned = {
             limit = {
                 is_core = ANI
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
             }
 			remove_core = THIS
             secede_province = VIN
@@ -3745,6 +4037,14 @@ country_event = {
         }
         any_owned = {
             limit = {
+                is_core = HHR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
                 is_core = ANI
             }
 			remove_core = NBG
@@ -3852,6 +4152,14 @@ country_event = {
             any_owned = {
             limit = {
                 is_core = IRO
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = HHR
             }
 			remove_core = NBG
 			remove_core = PLA
@@ -3993,6 +4301,14 @@ country_event = {
         }
         any_owned = {
             limit = {
+                is_core = HHR
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
                 is_core = DNG
             }
 			remove_core = NBG
@@ -4104,6 +4420,14 @@ country_event = {
             any_owned = {
             limit = {
                 is_core = ANI
+            }
+			remove_core = NBG
+			remove_core = PLA
+            secede_province = VIN
+            }
+            any_owned = {
+            limit = {
+                is_core = HHR
             }
 			remove_core = NBG
 			remove_core = PLA
@@ -4706,6 +5030,13 @@ country_event = {
         any_owned = {
             limit = {
                 is_core = ANI
+            }
+			remove_core = ARC
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
             }
 			remove_core = ARC
             secede_province = VIN

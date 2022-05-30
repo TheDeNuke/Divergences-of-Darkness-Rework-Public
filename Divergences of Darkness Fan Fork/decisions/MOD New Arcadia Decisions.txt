@@ -114,7 +114,7 @@ political_decisions = {
 		
 		allow = {
 		    has_global_flag = SKR_IS_FRESH_MEAT
-		    SKR = { NOT = { vassal_of = VIN } }	    
+		    SKR = { NOT = { vassal_of = VIN has_country_modifier = neutrality } }	    
             NOT = { truce_with = VIN }				
 		}
 		
@@ -783,6 +783,135 @@ political_decisions = {
 		}
 	}
 	
+	NBG_ANNEX_LOU_SPHERE = {
+		picture = louisania
+		potential = {
+	        tag = NBG
+            exists = LOU
+			NOT = { has_global_flag = NBG_LIONS } 
+			NOT = { has_country_flag = ANNEX_LOU }
+			LOU = { in_sphere = THIS }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1  		    
+		    is_greater_power = yes
+			LOU = { in_sphere = THIS }
+		}
+		
+		effect = {
+		    prestige = 5
+			set_country_flag = ANNEX_LOU
+            inherit = LOU
+		    LOU = { all_core = { add_core = NBG } }    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	PLA_RECONQUER_LOU = {
+		picture = louisania
+		potential = {
+	        tag = PLA
+            exists = LOU
+			NOT = { has_country_flag = LOUIS_TIME }
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+		}
+		
+		effect = {
+		    set_country_flag = LOUIS_TIME
+		    prestige = 5
+		    leave_alliance = LOU
+		    relation = { who = LOU value = -400 }
+		    diplomatic_influence = { who = LOU value = -400 }
+		    LOU = { all_core = { add_core = PLA } }   
+			NBG = { any_owned = { limit = { is_core = LOU } remove_core = PLA } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# ALL POSSIBLE TAGS WILL DO THIS IF PLA DOES NOT EXIST REGARDLESS OF IDEOLOGY
+	
+	NBG_DESTROY_LIB = {
+		picture = acceptation_afro
+		potential = {
+	        tag = NBG
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }	
+            NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }	
+			exists = LIB
+		    NOT = { exists = LOU }
+            NOT = { exists = CHE }
+			NOT = { exists = PLA }			
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+			owns = 205
+		}
+		
+		effect = {
+		    prestige = 10
+			set_country_flag = SECOND_ARCADIAN_TRIGGER
+			country_event = { id = 791600 days = 3 }	
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	LIB_MURDER_NBG_FAILSAFE = {
+		picture = SevenRep
+		potential = {
+	        tag = LIB		
+			NBG = { 
+			   NOT = {
+			      is_secondary_power = yes
+			      is_greater_power = yes
+			      has_country_flag = SECOND_ARCADIAN_TRIGGER
+			   }
+			}
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}	
+            NOT = { exists = PLA }			
+		    NOT = { exists = LOU }
+			NOT = { exists = CHE }
+			NOT = { truce_with = NBG }
+		}
+		
+		effect = {
+		    prestige = 10
+            NBG = { set_country_flag = SECOND_ARCADIAN_TRIGGER country_event = 791600 }				
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	# This is to inform the PLA player when they can actually kill off NBG
 	
 	PLA_MURDER_NBG_DECISION_VISIBILITY = {
@@ -936,7 +1065,10 @@ political_decisions = {
 		       has_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
 			}
 		    revolution_n_counterrevolution = 1
-            is_greater_power = yes
+			OR = {
+               is_greater_power = yes
+			   year = 1900
+			}
 			OR = {
 			  NBG = { vassal_of = THIS }
 			  NOT = { exists = NBG }
@@ -980,7 +1112,10 @@ political_decisions = {
 		       has_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
 			}
 		    revolution_n_counterrevolution = 1
-            is_greater_power = yes
+			OR = {
+               is_greater_power = yes
+			   year = 1900
+			}
 			OR = {
 			  PLA = { vassal_of = THIS }
 			  NOT = { exists = PLA }
@@ -1864,6 +1999,7 @@ political_decisions = {
         }
         
         allow = { 
+		   NOT = { exists = SKR }
 		   NOT = { truce_with = VIN }
 		   NOT = { VIN = { is_greater_power =  yes } }
 		   NOT = { exists = OUM }

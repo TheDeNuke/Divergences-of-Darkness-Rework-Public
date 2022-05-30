@@ -1464,7 +1464,7 @@ country_event = { ## Midi Revolution
 	}
 }
 
-country_event = { ## Midi Revolution : Occitan choices 
+country_event = { ## Midi Revolution : Occitan choices - THIS IS A DEAD EVENT
 	id = 650223
 	title = "DUA23.T"
 	desc = "DUA23.D"
@@ -1549,6 +1549,7 @@ country_event = { ## Midi Revolution : DUA fights back the pretenders
 			}
 			defender_goal = { 
 				casus_belli = acquire_all_cores
+				country = PRV
 			}
 		}
 	}
@@ -1572,6 +1573,7 @@ country_event = { ## Midi Revolution : DUA fights back the pretenders
 			}
 			defender_goal = { 
 				casus_belli = acquire_all_cores
+				country = OCC
 			}
 		}
 	}
@@ -2240,18 +2242,32 @@ country_event = { ##The Total Revolution
 	name = "650247.A"
 	set_country_flag = global_revolt
 	set_global_flag = glorious_revolution
+	any_country = {
+	   limit = {
+	      tag = IRE
+		  exists = no
+	   }
+	   government = democracy
+	}
+	any_country = {
+	   limit = {
+	      tag = OCC
+		  exists = no
+	   }
+	   government = democracy
+	}
 	any_owned = {
 			limit = {
 				is_core = OCC 
 			}
 			secede_province = OCC
-		}
+	}
 	any_owned = {
 			limit = {
 				is_core = IRE 
 			}
 			secede_province = IRE
-		}
+	}
 	any_owned = {
 			limit = {
 				OR = {
@@ -2276,7 +2292,7 @@ country_event = { ##The Total Revolution
 			}
 			secede_province = FRA 
 		}
-	IRE = { government = democracy 
+	IRE = {
 	treasury = 10000
 	ammunition = 1000
 	small_arms = 1000
@@ -2289,8 +2305,7 @@ country_event = { ##The Total Revolution
 				duration = 1825
 				}
 			}
-	OCC = { 
-	government = democracy
+	OCC = { 	
     inherit = AUV	
 	treasury = 10000
 	ammunition = 1000
@@ -2304,7 +2319,8 @@ country_event = { ##The Total Revolution
 				duration = 1825
 				}
 			}
-	FRA = { government = presidential_dictatorship
+	FRA = { 
+	government = presidential_dictatorship
 	treasury = 10000
 	ammunition = 1000
 	small_arms = 1000
@@ -2317,7 +2333,8 @@ country_event = { ##The Total Revolution
 				duration = 1825
 				}
 			}
-	ENL = { government = democracy 
+	ENL = { 
+	government = democracy 
 	treasury = 10000
 	ammunition = 1000
 	small_arms = 1000
@@ -4611,6 +4628,7 @@ country_event = { ##The End of the Dual Monarchy - Either triggered by ENL or by
 	
 	trigger = { 
 	    tag = DUA 
+		NOT = { exists = ANF }
 		NOT = { any_owned_province = { is_core = ENL } }
         NOT = { any_owned_province = { is_core = AEN } }		
         any_owned_province = { is_core = ANF }		
@@ -4620,7 +4638,7 @@ country_event = { ##The End of the Dual Monarchy - Either triggered by ENL or by
 				controlled_by_rebels = yes
 			}
 			revolt_percentage = 0.80
-		}
+		}		
 		NOT = { has_global_flag = fall_DUA }
 	}
 	
@@ -4683,6 +4701,7 @@ country_event = { ##Total Collapse of the Anglois Dream - French Revolution
 	
 	trigger = { 
 	    tag = DUA 
+		NOT = { exists = FRA }
 		NOT = { any_owned_province = { is_core = ENL } }
         NOT = { any_owned_province = { is_core = AEN } }
         any_owned_province = { is_core = FRA }		
@@ -4953,6 +4972,7 @@ country_event = { ##The End of Anglois France
 	
 	trigger = { 
 	    tag = ANF	
+		NOT = { exists = FRA }
 		any_owned_province = { is_core = FRA }
 		OR = {
 			any_owned_province = {
@@ -5844,7 +5864,7 @@ country_event = {
 }
 
 country_event = { 
-	id = 650361 #End of the Personal Union
+	id = 6503611 #End of the Personal Union
 	title = "DUA191.T"
 	desc = "DUA191.D"
 	
@@ -5889,5 +5909,344 @@ country_event = {
 				value = -400 
 		    }
 		}
+	}
+}
+
+
+#### Dealing with Rebel Issues - DUA - These can only trigger for Ireland and England and is meant to represent a meltdown in these regions. These are usually used for the purposes of the AI. ####
+
+### England ###
+
+country_event = { 
+	id = 650361 #Collapse of Order in England
+	title = "DUA192.T"
+	desc = "DUA192.D"
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	NOT = { has_global_flag = england_is_dead }
+	NOT = { has_country_flag = ENL_collapse_inevitable }
+	NOT = { exists = ENL }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = ENL
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "We must restore order."
+	    set_country_flag = ENL_collapse_inevitable
+		add_country_modifier = {
+			name = ENL_collapse_inevitable
+			duration = 1460
+		}
+	}
+}
+
+country_event = { 
+	id = 650362 #Restored Order in England
+	title = "DUA193.T"
+	desc = "DUA193.D"
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = ENL_collapse_inevitable
+	NOT = {
+	   any_owned_province = {
+		   controlled_by_rebels = yes
+		   is_core = ENL
+	   }
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "That was close."
+	    clr_country_flag = ENL_collapse_inevitable
+		remove_country_modifier = ENL_collapse_inevitable
+	}
+}
+
+country_event = { 
+	id = 650363 #English Meltdown
+	title = "DUA194.T"
+	desc = "DUA194.D"
+	
+	major = yes
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = ENL_collapse_inevitable
+	NOT = { has_country_modifier = ENL_collapse_inevitable }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = ENL
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "This was a complete failure."
+	    prestige_factor = -0.1
+	    clr_country_flag = ENL_collapse_inevitable
+		remove_country_modifier = ENL_collapse_inevitable
+	    any_owned = {
+			limit = {
+				is_core = ENL
+			}
+			secede_province = ENL
+		}
+		war = {
+			target = ENL
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = yes
+		}
+		ENL = { government = democracy add_country_modifier = { name = taiping_draft duration = 1460 } }
+	}
+}
+
+### Britannie ###
+
+country_event = { 
+	id = 650364 #Collapse of Order in Britain
+	title = "DUA195.T"
+	desc = "DUA195.D"
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	has_global_flag = england_is_dead
+	NOT = { has_country_flag = AEN_collapse_inevitable }
+	NOT = { exists = AEN }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = AEN
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "We must restore order."
+	    set_country_flag = AEN_collapse_inevitable
+		add_country_modifier = {
+			name = AEN_collapse_inevitable
+			duration = 1460
+		}
+	}
+}
+
+country_event = { 
+	id = 650365 #Restored Order in Britain
+	title = "DUA196.T"
+	desc = "DUA196.D"
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = AEN_collapse_inevitable
+	NOT = {
+	   any_owned_province = {
+		   controlled_by_rebels = yes
+		   is_core = AEN
+	   }
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "That was close."
+	    clr_country_flag = AEN_collapse_inevitable
+		remove_country_modifier = AEN_collapse_inevitable
+	}
+}
+
+country_event = { 
+	id = 650366 #British Meltdown
+	title = "DUA197.T"
+	desc = "DUA197.D"
+	
+	picture = "English_resistance"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = AEN_collapse_inevitable
+	NOT = { has_country_modifier = AEN_collapse_inevitable }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = AEN
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "This was a complete failure."
+	    prestige_factor = -0.1
+	    clr_country_flag = AEN_collapse_inevitable
+		remove_country_modifier = AEN_collapse_inevitable
+	    any_owned = {
+			limit = {
+				is_core = AEN
+			}
+			secede_province = AEN
+		}
+	    any_owned = {
+			limit = {
+				is_core = NTL
+			}
+			add_core = AEN
+			secede_province = AEN
+		}
+		war = {
+			target = AEN
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = yes
+		}
+		AEN = { government = democracy add_country_modifier = { name = taiping_draft duration = 1460 } }
+	}
+}
+
+### Ireland ###
+
+country_event = { 
+	id = 650367 #Collapse of Order in Ireland
+	title = "DUA198.T"
+	desc = "DUA198.D"
+	
+	picture = "fenian_easter_rising"
+	
+	trigger = { 
+	tag = DUA
+	NOT = { has_country_flag = IRE_collapse_inevitable }
+	NOT = { exists = IRE }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = IRE
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	option = { 
+	name = "We must restore order."
+	    set_country_flag = IRE_collapse_inevitable
+		add_country_modifier = {
+			name = IRE_collapse_inevitable
+			duration = 1460
+		}
+	}
+}
+
+country_event = { 
+	id = 650368 #Restored Order in Ireland
+	title = "DUA199.T"
+	desc = "DUA199.D"
+	
+	picture = "fenian_easter_rising"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = IRE_collapse_inevitable
+	NOT = {
+	   any_owned_province = {
+		   controlled_by_rebels = yes
+		   is_core = IRE
+	   }
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "That was close."
+	    clr_country_flag = IRE_collapse_inevitable
+		remove_country_modifier = IRE_collapse_inevitable
+	}
+}
+
+country_event = { 
+	id = 650369 #Ireland Meltdown
+	title = "DUA200.T"
+	desc = "DUA200.D"
+	
+	major = yes
+	
+	picture = "fenian_easter_rising"
+	
+	trigger = { 
+	tag = DUA
+	has_country_flag = IRE_collapse_inevitable
+	NOT = { has_country_modifier = IRE_collapse_inevitable }
+	any_owned_province = {
+		controlled_by_rebels = yes
+		is_core = IRE
+	}
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	option = { 
+	name = "This was a complete failure."
+	    clr_country_flag = IRE_collapse_inevitable
+		remove_country_modifier = IRE_collapse_inevitable	
+	    any_owned = {
+			limit = {
+				is_core = IRE
+			}
+			secede_province = IRE
+		}
+		war = {
+			target = IRE
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+			call_ally = yes
+		}
+		IRE = { government = democracy add_country_modifier = { name = taiping_draft duration = 1460 } }
 	}
 }

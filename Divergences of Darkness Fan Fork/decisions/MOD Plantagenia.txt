@@ -94,42 +94,171 @@ rename_apacheria = {
 	
 	# I'm cutting this for now as I need to work out a way to deal with the Caribbean islands with LIB and the other two Arcadian Powers dealing with this tag. Feel free to remove the hashes if you want to play LIB - DeNuke
 
-	#nouvelle_afrique_LIB = { 
-	#   picture = Plantagenia
-	#	potential = { 
-	#	tag = LIB 
-	#	NOT = { has_country_flag = nouvelle_afrique } 
-	#	}
-	#	
-	#	allow = { 
-	#	   war = no
-	#	   OR = {
-	#	      is_greater_power = yes
-	#		  is_secondary_power = yes
-	#       }
-	#	   OR = {
-	#	      NOT = { has_country_modifier = international_pariah_LIB }
-	#		  government = absolute_monarchy
-	#	   }
-	#	}
-	#	
-	#	effect = { 
-	#	set_country_flag = nouvelle_afrique
-	#	NA_199 = { add_core = THIS } 
-	#	PLA_139 = { add_core = THIS } 
-	#	PLA_190 = { add_core = THIS } 
-	#	PLA_214 = { add_core = THIS }
-	#	PLA_132 = { add_core = THIS } 
-	#	PLA_187 = { add_core = THIS } 
-	#	NBG_220 = { add_core = THIS } 
-	#	HAI_2213 = { add_core = THIS } 
-	#	SPA_2209 = { add_core = THIS } 
-	#	ENG_203 = { add_core = THIS } 
-	#	ENG_2224 = { add_core = THIS } 
-	#	ENG_2228 = { add_core = THIS } 
-	#	}
-	#		ai_will_do = { factor = 1 }
-	#}
+	nouvelle_afrique_LIB = { 
+	   picture = Plantagenia
+		potential = { 
+		tag = LIB 
+		NOT = { has_country_flag = nouvelle_afrique } 
+		}
+		
+		allow = { 
+		   war = no
+		   OR = {
+		      is_greater_power = yes
+			  is_secondary_power = yes
+	       }
+		   OR = {
+		      NOT = { has_country_modifier = international_pariah_LIB }
+			  government = absolute_monarchy
+		   }
+		}
+		
+		effect = { 
+		prestige = 20
+		set_country_flag = nouvelle_afrique
+		CHE = { all_core = { add_core = LIB } }
+		PLA = { all_core = { add_core = LIB } }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	# You don't need to actually control all of PLA's cores to kill off PLA. You just need to hold their capital and have done Nouvelle Afrique	
+	# PLA can still return in the Second Arcadian War
+	
+	LIB_end_of_PLA = { 
+	   picture = Plantagenia
+		potential = { 
+		   tag = LIB 
+		   has_country_flag = nouvelle_afrique
+		   NOT = { exists = PLA }
+		   NOT = { has_country_flag = we_were_kings } 		   
+		}
+			
+		allow = { 
+		   war = no
+           owns = 139 
+		}
+		
+		effect = { 
+		prestige = 20
+		set_country_flag = we_were_kings
+		NBG = { relation = { who = LIB value = -400 } diplomatic_influence = { who = LIB value = -400 } leave_alliance = LIB }
+		PLA = { all_core = { remove_core = PLA } }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	puppeting_OUM = { 
+	   picture = Manifest_Destiny_ARC
+		potential = { 
+		   tag = LIB 
+		   has_country_flag = nouvelle_afrique
+		   NOT = { exists = NBG }
+		   exists = OUM
+		   NOT = { has_country_flag = making_a_statement } 		   
+		}
+			
+		allow = { 
+		   is_greater_power = yes
+		   exists = OUM
+		   war = no
+		   NOT = { war_exhaustion = 5 }
+		}
+		
+		effect = { 
+		   prestige = 5
+		   set_country_flag = making_a_statement
+		   casus_belli = {
+				target = OUM
+				type = make_puppet
+				months = 24
+		   }
+	       war = {
+	           target = OUM
+		       attacker_goal =  { 
+			     casus_belli = make_puppet
+		       }
+		       defender_goal = {
+			     casus_belli = status_quo
+		       }	
+			   call_ally = yes
+	       }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	insane_annexing_OUM = { 
+	   picture = Manifest_Destiny_ARC
+		potential = { 
+		   tag = LIB 
+		   has_country_flag = nouvelle_afrique
+		   OR = {
+		      government = absolute_monarchy
+			  government = fascist_dictatorship
+			  government = fascist_monarchy
+			  government = proletarian_dictatorship
+		   }
+		   OUM = { vassal_of = THIS }
+		   NOT = { has_country_flag = you_are_insane_LIB } 		   
+		}
+			
+		allow = { 
+		   is_greater_power = yes
+		   OR = {
+		      government = absolute_monarchy
+			  government = fascist_dictatorship
+			  government = fascist_monarchy
+			  government = proletarian_dictatorship
+		   }
+		   OUM = { vassal_of = THIS }
+		}
+		
+		effect = { 
+		   badboy = 5
+		   set_country_flag = you_are_insane_LIB
+		   OUM = { all_core = { add_core = LIB } }
+		   inherit = OUM
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	great_nouvelle_afrique_LIB = { 
+	   picture = claim_the_caribbean
+		potential = { 
+		   tag = LIB 
+		   has_country_flag = nouvelle_afrique
+		   NOT = { exists = NBG }
+		   NOT = { has_country_flag = great_nouvelle_afrique } 	
+		}
+		
+		allow = { 
+		   war = no
+		   is_greater_power = yes
+		   OR = {
+		      OUM = { vassal_of = THIS }
+			  owns = 148
+		   }
+		}
+		
+		effect = { 
+		prestige = 20
+		set_country_flag = great_nouvelle_afrique
+		NA_199 = { add_core = THIS } 
+		PLA_214 = { add_core = THIS }
+		NBG_220 = { add_core = THIS } 
+		HAI_2213 = { add_core = THIS } 
+		SPA_2209 = { add_core = THIS } 
+		ENG_203 = { add_core = THIS } 
+		ENG_2224 = { add_core = THIS } 
+		ENG_2228 = { add_core = THIS } 
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
 	
 	university_LIB = { 
 		potential = { 

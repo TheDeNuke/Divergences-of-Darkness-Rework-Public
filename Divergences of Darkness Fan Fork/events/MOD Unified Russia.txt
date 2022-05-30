@@ -650,6 +650,7 @@ country_event = {
 	   RUS = { create_vassal = THIS create_alliance = THIS relation = { who = THIS value = 400 } diplomatic_influence = { who = THIS value = 400 } }
 	   set_country_flag = active_russian_governorate
 	   set_country_flag = russian_integration_zero
+	   prestige_factor = -0.99
  	   add_country_modifier = {
 				name = russian_governorate_modifier
 				duration = -1
@@ -1071,6 +1072,10 @@ country_event = {
 		     RUS = { has_country_modifier = russian_governorate_cooldown }
 	   }
 	   modifier = {
+	      factor = 1.5
+		     RUS = { ai = yes }
+	   }
+	   modifier = {
 	      factor = 1.25
 		     RUS = { citizens_rights = primary_culture_only }
 	   }
@@ -1085,6 +1090,10 @@ country_event = {
 	   modifier = {
 	      factor = 1.25
 		     NOT = { year = 1880 }
+	   }
+	   modifier = {
+	      factor = 0.75
+		     mass_politics = 1
 	   }
 	   modifier = {
 	      factor = 0.5
@@ -1163,6 +1172,10 @@ country_event = {
 		     RUS = { has_country_modifier = russian_governorate_cooldown }
 	   }
 	   modifier = {
+	      factor = 1.5
+		     RUS = { ai = yes }
+	   }
+	   modifier = {
 	      factor = 1.25
 		     RUS = { citizens_rights = primary_culture_only }
 	   }
@@ -1177,6 +1190,10 @@ country_event = {
 	   modifier = {
 	      factor = 1.25
 		     NOT = { year = 1880 }
+	   }
+	   modifier = {
+	      factor = 0.75
+		     mass_politics = 1
 	   }
 	   modifier = {
 	      factor = 0.5
@@ -1254,6 +1271,10 @@ country_event = {
 		     RUS = { has_country_modifier = russian_governorate_cooldown }
 	   }
 	   modifier = {
+	      factor = 1.5
+		     RUS = { ai = yes }
+	   }
+	   modifier = {
 	      factor = 1.25
 		     RUS = { citizens_rights = primary_culture_only }
 	   }
@@ -1268,6 +1289,10 @@ country_event = {
 	   modifier = {
 	      factor = 1.25
 		     NOT = { year = 1880 }
+	   }
+	   modifier = {
+	      factor = 0.75
+		     mass_politics = 1
 	   }
 	   modifier = {
 	      factor = 0.5
@@ -1357,7 +1382,7 @@ country_event = {
 		     RUS = { government = proletarian_dictatorship }
 	      }
 		  AND = { 
-		     NOT = { OR = { government = proletarian_dictatorship government = democracy government = parliamentary_republic government = presidential_dictatorship } }
+		     NOT = { OR = { government = proletarian_dictatorship government = democracy government = parliamentary_republic government = socialist_republic government = presidential_dictatorship } }
 		     RUS = { government = socialist_republic }
 	      }
 		  AND = { 
@@ -4402,4 +4427,59 @@ country_event = {
 	name = "OK"
 	prestige = 1
     }   
+}
+
+province_event = {
+	id = 44345
+	title = "44345.T"
+	desc = "44345.D"
+	
+	trigger = {
+		OR = {
+			region = RUS_2621
+			region = RUS_1079
+			region = RUS_1469
+			region = RUS_1075
+			region = RUS_2694
+			region = RUS_2615
+			region = RUS_1070
+			region = MON_1075
+		}
+		owned_by = THIS
+		controlled_by = THIS
+		any_neighbor_province = {
+			is_core = YKT
+		}
+		owner = {
+			civilized = yes
+		}
+		OR = {
+			AND = {
+				owner = { owns = 1648 }
+				YKT = { exists = no }
+			}
+			YKT = {
+				vassal_of = THIS
+			}
+		}
+		NOT = {
+			is_core = YKT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+	
+	option = {
+		name = "44345.A"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = YKT }
+				}
+				add_core = YKT
+			}
+		}
+	}
 }

@@ -2397,11 +2397,7 @@ pan_nationalist_rebels = {
 		}
 		modifier = {
 			factor = 0
-			culture = catalan
-		}
-		modifier = {
-			factor = 0.3
-			culture = venetian
+			is_culture_group = italian
 		}
 		modifier = {
 			factor = 0
@@ -2436,21 +2432,6 @@ pan_nationalist_rebels = {
 			CFR = { exists = yes }
 			HLR = { exists = yes }
             }
-		}
-		modifier = {
-			factor = 0
-			OR = {
-				culture = north_italian
-				culture = south_italian
-			}
-			ITA = { exists = no }
-			NOT = {
-				country = { has_global_flag = italian_call_to_union }
-			}
-		}
-		modifier = {
-			factor = 0
-			country = { tag = VEN }
 		}
 		modifier = {
 			factor = 0
@@ -3039,11 +3020,6 @@ liberal_rebels = {
 		modifier = {
 			factor = 0.5
 			has_country_modifier = global_liberal_agitation
-		}
-		modifier = { 
-			factor = 0.1
-			has_country_flag = carbonari_activity
-			NOT = { has_country_flag = had_liberal_revolution }
 		}
 	}
 	
@@ -4133,12 +4109,11 @@ socialist_rebels = {
 	# The rebel type with the highest modifier for this pop gets picked
 	spawn_chance = {
 		factor = 1.02
-		
+					
 		modifier = {
 			factor = 0
 			type = slaves
-		}
-		
+		}		
 		modifier = {
 			factor = 0
 			country = { civilized = no }
@@ -5617,7 +5592,7 @@ red_shirts = {
 		factor = 0.5
 		modifier = {
 			war = yes
-			factor = 0.8
+			factor = 0
 		}
 		modifier = {
 			war_exhaustion = 40
@@ -5637,14 +5612,20 @@ red_shirts = {
 			has_country_modifier = springtime_of_nations
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.1
 			has_country_modifier = global_liberal_agitation
+		}
+		
+		modifier = { 
+			factor = 0.1
+			has_country_flag = carbonari_activity
+			NOT = { has_country_flag = had_liberal_revolution }
 		}
 	}
 	
 	# The rebel type with the highest modifier for this pop gets picked
 	spawn_chance = {
-		factor = 1.2
+		factor = 1.1
 		
 		modifier = {
 			factor = 0
@@ -5665,16 +5646,28 @@ red_shirts = {
 				OR = {
 					is_greater_power = yes
 					tag = TUS
-					NOT = { has_global_flag = garibaldi_redshirts }
+					NOT = { has_global_flag = TUS_carbonari }
 				}
 			}
+		}
+
+		modifier = {
+			factor = 0
+			country = {
+				has_country_flag = compromised_by_rebels
+			}
+		}
+		
+		modifier = {
+			factor = 0
+			ITC = { exists = yes }
 		}
 		
 		modifier = {
 			factor = 0
 			NOT = {
 				OR = {
-					culture = south_italian
+					culture = central_italian
 					culture = north_italian
 				}
 			}
@@ -5698,12 +5691,7 @@ red_shirts = {
 				}
 			}
 		}
-
-		modifier = {
-			factor = 0
-			country = { tag = VEN }
-		}		
-
+		
 		modifier = {
 			factor = 1.1
 			ITA = { exists = no }
@@ -5715,12 +5703,12 @@ red_shirts = {
 		}
 		
 		modifier = {
-			factor = 1.1
+			factor = 1.3
 			pop_majority_ideology = anarcho_liberal
 		}
 		
 		modifier = {
-			factor = 1.1
+			factor = 1.05
 			pop_majority_ideology = conservative
 		}
 
@@ -5779,43 +5767,84 @@ red_shirts = {
 			name = war_torn
 			duration = 365
 		}
-		owner = { war_exhaustion = 2.5 }
 	}
 	
 
 	# Country scope
 	demands_enforced_trigger = {
-		NOT = {
-			is_cultural_union = THIS
-		}
-		ITA = {
-			exists = no
-		}
-		capital_scope = {
-			controlled_by = REB
-			province_control_days = 90
+		OR = {
+			capital_scope = {
+				controlled_by = REB
+				province_control_days = 90
+			}
+			NOT = {
+				any_owned_province = {
+					is_colonial = no
+					controlled_by = THIS
+				}
+			}
 		}
 	}
 	
 	demands_enforced_effect = {
 		any_pop = { limit = { is_culture_group = italian } militancy = -6 }
 		plurality = 5
-		random_country = {
+		random_owned = {
 			limit = {
-				is_culture_group = THIS
-				OR = {
-					AND = {
-						NOT = { exists = TUS }
-						is_greater_power = yes
-					}
-					tag = TUS
-				}
-				NOT = {
-					is_cultural_union = yes
-					has_country_flag = does_not_want_to_be_unified
+				owner = {
+                    OR = { 
+					not = { has_country_modifier = the_eye_of_the_storm }
+					not = { has_country_modifier = the_maelstrom_wakes }
+                    }
 				}
 			}
-			country_event = 11103
+			owner = { prestige_factor = -0.3 }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+					OR = { tag = FRR tag = PAP }
+					NOT = { has_country_flag = compromised_by_rebels }
+				}
+			}
+			owner = { set_country_flag = compromised_by_rebels country_event = 1242052 }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+					OR = { tag = LUC tag = MOD tag = PAR }
+					NOT = { has_country_flag = compromised_by_rebels }
+				}
+			}
+			owner = { set_country_flag = compromised_by_rebels country_event = 36737 }
+		}		
+		random_owned = {
+			limit = {
+				owner = {
+					OR = { tag = SAR tag = PIE }
+					NOT = { has_country_flag = compromised_by_rebels }
+					NOT = { has_country_flag = cospirazione }
+				}
+			}
+			owner = { set_country_flag = compromised_by_rebels set_country_flag = cospirazione country_event = 12420140 }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+					tag = LOM
+					NOT = { has_country_flag = compromised_by_rebels }
+					NOT = { has_country_flag = Milan_abdication }
+				}
+			}
+			owner = { set_country_flag = compromised_by_rebels set_country_flag = Milan_abdication country_event = 1242032 }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+					OR = { tag = GEN has_country_flag = Milan_abdication has_country_flag = cospirazione }
+				}
+			}
+			owner = { country_event = 36734 }
 		}
 	}
 }

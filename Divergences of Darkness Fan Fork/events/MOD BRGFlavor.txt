@@ -62,7 +62,182 @@ country_event = {
 	}
 }
 
-### Catholics and the Rhineland ###
+### The Anvers Revolution ###
+
+country_event = {
+	id = 652999
+	title = "BRG000.T"
+	desc = "BRG000.D"
+	major = yes
+
+	trigger = {	exists = yes
+		tag = BRG
+		OR = {
+			any_owned_province = {
+				is_capital = yes
+				controlled_by_rebels = yes
+			}
+			revolt_percentage = 0.50
+		}
+		NOT = { has_country_flag = anne_is_dead }
+		NOT = { has_country_flag = anvers_revolution }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+		modifier = {
+			factor = 0.025
+			capital_scope = { controlled_by_rebels = yes }
+		}
+	}
+
+	option = {
+		name = "BRG000.A"
+		set_country_flag = anvers_revolution
+		prestige = -10
+		upper_house = {
+			ideology = conservative
+			value = 0.5
+		}
+		random_owned = {
+			limit = {
+				owner = { NOT = { vote_franschise = universal_voting } }
+			}
+			owner = {
+				political_reform = universal_voting
+			}
+		}		
+		random_owned = {
+			limit = {
+				owner = { NOT = { political_parties = secret_ballots } }
+			}
+			owner = { political_reform = non_secret_ballots }
+		}		
+		random_owned = {
+			limit = {
+				owner = { NOT = { upper_house_composition = state_equal_weight } }
+			}
+			owner = { political_reform = state_equal_weight }
+		}
+		random_owned = {
+			limit = {
+				owner = { NOT = { slavery = no_slavery } }
+			}
+			owner = { political_reform = no_slavery }
+		}
+		random_owned = {
+			limit = {
+				owner = { NOT = { government = hms_government } }
+			}
+			owner = { government = hms_government }
+		}
+		election = yes		
+		random_owned = {
+			limit = {
+				is_capital = yes
+				controlled_by = REB
+			}
+			change_controller = THIS
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = dutch
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = 0.40 value = conservative } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = burgundian
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = 0.40 value = conservative } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = brabantian
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = 0.40 value = conservative } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = frisian
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = 0.40 value = conservative } 
+		}
+		any_owned = {
+			limit = { 
+			    is_colonial = no
+			    has_pop_culture = burgundian
+			    }
+			    any_pop = {
+				scaled_militancy = {
+					ideology = reactionary
+					factor = 2
+				}
+				scaled_militancy = {
+					ideology = conservative
+					factor = -8
+				}
+				scaled_consciousness = {
+					ideology = conservative
+					factor = -8
+				}
+
+				scaled_militancy = {
+					ideology = liberal
+					factor = -8
+				}
+				scaled_consciousness = {
+					ideology = liberal
+					factor = -4
+				}
+				scaled_militancy = {
+					ideology = separatist
+					factor = -4
+				}
+			}
+		    remove_province_modifier = liberal_agitation
+        }
+		
+		any_owned = {
+			limit = { 
+			   is_colonial = no
+			}
+			any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = separatist
+				factor = -4
+			}
+		}
+		remove_province_modifier = liberal_agitation
+	  }		
+   }
+}	
+
+### Catholics and the Rhineland ###	
 
 country_event = {
 	id = 653004
@@ -3327,15 +3502,13 @@ country_event = {
 	    exists = yes
 	    tag = BRG	
 		war = no
-		NOT = {
-		   OR = { 		       
-		      government = absolute_monarchy
-		      government = prussian_constitutionalism
-		      government = hms_government
-			  government = fascist_monarchy
-			  has_global_flag = JEAN_CIVIL_WAR
-			  exists = PBG
-           }	
+		NOT = {		       
+		   government = absolute_monarchy
+		   government = prussian_constitutionalism
+		   government = hms_government
+		   government = fascist_monarchy
+		   has_global_flag = JEAN_CIVIL_WAR
+		   exists = PBG	
         }		
 		has_global_flag = JEAN_ENDING	
 		NOT = { has_global_flag = DUTCH_REVOLT  }
@@ -3382,11 +3555,11 @@ country_event = {
 		    government = absolute_monarchy
 			government = prussian_constitutionalism
 			government = hms_government
-			government = fascist_monarchy
-			has_global_flag = JEAN_CIVIL_WAR
-			exists = PBG
+			government = fascist_monarchy						
         }		
 		has_global_flag = JEAN_ENDING	
+		NOT = { exists = PBG }
+		NOT = { has_global_flag = JEAN_CIVIL_WAR }	
 		NOT = { has_global_flag = DUTCH_REVOLT  }
 		NOT = { has_country_flag = PBG_CHAINBROKE }
 		NOT = { has_country_flag = PBG_PJC }
@@ -3748,6 +3921,13 @@ country_event = {
 
 	option = {
 	name = "653117.A" 
+    any_country = {
+       limit = {
+         tag = AUV
+		 exists = yes
+       }
+       annex_to = DUA
+    }	
 	war_exhaustion = -50
 	clr_global_flag = THE_FRENCH_FOLLY	
 	clr_country_flag = custom_treaty_loser
@@ -3765,7 +3945,16 @@ country_event = {
     FRA_467 = { add_core = BRG }
 	403 = { remove_core = DUA }
 	408 = { remove_core = DUA }
-	406 = { remove_core = DUA }
+	406 = { remove_core = DUA }	   
+    any_country = {
+       limit = {
+         tag = GNV
+		 exists = yes
+         owns = 451
+       }
+       remove_country_modifier = neutrality
+       annex_to = BRG
+    }	   
 	any_owned = {
 	limit = {
 	   is_core = BRG

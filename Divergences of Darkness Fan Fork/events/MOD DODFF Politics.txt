@@ -592,7 +592,8 @@ country_event = {
 	option = {
 		name = "DODFFP4.A"
 		prestige = -50
-	    set_country_flag = regime_collapse
+		plurality = 50
+	    set_country_flag = regime_collapse		
 		add_country_modifier = {
             name = regime_collapse
             duration = 3650
@@ -729,6 +730,7 @@ country_event = {
 	option = {
 		name = "DODFFP6.B"
 		set_country_flag = fascist_betrayal
+		plurality = 50
 		government = fascist_dictatorship
 	    set_country_flag = regime_collapse
 		add_country_modifier = {
@@ -1316,6 +1318,256 @@ country_event = {
 		   owner = { government = absolute_monarchy }
 		}
 	}		
+}
+
+# You are a AI and still have Cultural Tech School at 70 percent literacy. Making fine art will not make you relevent as a nation. Please stop.
+
+country_event = {
+	id = 443056
+	title = " "
+	desc = " "
+	picture = "communist_crowd"
+
+	trigger = {	 
+	    tech_school = culture_tech_school
+	    ai = yes	
+        literacy = 0.7		
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = " "
+		tech_school = traditional_academic
+	}		
+}
+
+# Reshuffle Generic Tech Schools in 1875
+
+country_event = {
+	id = 443057
+	title = " "
+	desc = " "
+	picture = "communist_crowd"
+
+	trigger = { 
+        tag = CLN
+        year = 1875
+        NOT = { has_country_flag = tech_school_reshuffle_1875 }					   
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = " "
+		set_country_flag = tech_school_reshuffle_1875
+		any_country = {
+		   limit = {
+		      ai = yes
+			  OR = {
+			     tech_school = army_tech_school
+				 tech_school = commerce_tech_school
+				 tech_school = industrial_tech_school
+			  }
+		   }
+		   tech_school = traditional_academic
+		}  
+	}		
+}
+
+# Reshuffle Generic Tech Schools in 1915
+
+country_event = {
+	id = 443058
+	title = " "
+	desc = " "
+	picture = "communist_crowd"
+
+	trigger = { 
+        tag = CLN
+        year = 1915
+        NOT = { has_country_flag = tech_school_reshuffle_1915 }					   
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = " "
+		set_country_flag = tech_school_reshuffle_1915
+		any_country = {
+		   limit = {
+		      ai = yes
+			  OR = {
+			     tech_school = army_tech_school
+				 tech_school = commerce_tech_school
+				 tech_school = industrial_tech_school
+			  }
+		   }
+		   tech_school = traditional_academic
+		}  
+	}		
+}
+
+# European Communist Colonial Collapse
+
+country_event = {
+	id = 443059
+	title = "DODFFP16.T"
+	desc = "DODFFP16.D"
+	picture = "storming_palace_communists"
+
+	trigger = {
+		civilized = yes		
+		government = proletarian_dictatorship
+		any_owned_province = { 
+		      AND = {
+		         is_colonial = yes
+			     is_overseas = yes
+			     NOT = {
+				    is_core = TSG
+				    is_core = YAG
+				    is_core = KUG
+				    is_core = KZG
+				    is_core = TEG
+				    is_core = TRG
+				    is_core = MOR
+				    is_core = ALD
+				    is_core = THIS
+			     }
+			 }
+		}
+		year = 1930
+        NOT = { has_country_flag = communist_colonial_collapse }		
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	option = {
+		name = "DODFFP16.A"
+		set_country_flag = communist_colonial_collapse
+		prestige = 50
+		colonial_policy = no_colonies
+		any_pop = { 
+			limit = {
+				is_primary_culture = no
+				is_accepted_culture = no
+				location = {
+					is_colonial = yes
+				}
+			}
+			militancy = 10
+		}
+		any_owned = {
+			limit = {
+				is_overseas = yes
+				is_core = THIS
+			}
+			remove_core = THIS
+		}
+		#Release organized colonies as vassalS
+		any_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				exists = no
+				OR = {
+				   tech_school = developing_tech_school
+				   has_country_flag = post_colonial_country
+				}
+				NOT = {
+				  OR = {
+				     has_country_flag = russian_governorate 
+					 tag = KZH
+				     tag = ALD
+				     tag = MOR
+				  }
+				}
+			}
+			country_event = 443060
+		}	
+		#give cores back to nearby post colonial countries
+		any_neighbor_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				OR = {
+				   tech_school = developing_tech_school
+				   has_country_flag = post_colonial_country
+				}
+				NOT = {
+				  OR = {
+				     has_country_flag = russian_governorate 
+					 tag = KZH
+				     tag = ALD
+				     tag = MOR
+				  }
+				}
+			}
+			country_event = 96013
+		}	
+		#give cores back to nearby Boer Countries
+		any_neighbor_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				primary_culture = boer
+			}
+			country_event = 96013
+		}	
+	    ai_chance = { 
+	       factor = 100
+	    }
+    }
+	
+	option = {
+		name = "DODFFP16.B"
+		set_country_flag = communist_colonial_collapse
+		prestige = -10
+		any_owned = {
+		   limit = {
+		     is_colonial = yes
+		   }
+		   add_province_modifier = {
+			   name = nationalist_agitation
+			   duration = 7300
+		   }
+        }		   
+	    ai_chance = { 
+	       factor = 0
+	    }
+    }
+}
+
+#The Fate of $COUNTRY$ Colony
+country_event = {
+	id = 443060
+	title = "EVTNAME96095" 
+	desc = "EVTDESC96095"
+	picture = "greatpowers"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		FROM = {
+			any_owned = {
+				limit = { is_core = THIS }
+				secede_province = THIS
+			}
+		}
+	}
+	
+	option = {
+		name = "EVT96095OPTA"
+		random_owned = {
+			limit = { owner = { is_vassal = no } }
+			owner = { FROM = { create_vassal = THIS } }
+		}
+	}
 }
 
 # The Maelstrom - Used to simulate political chaos after a democratic revolution post-invention of fascism/mass politics.
