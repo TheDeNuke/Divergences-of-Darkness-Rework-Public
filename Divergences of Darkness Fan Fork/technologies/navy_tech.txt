@@ -6,12 +6,37 @@ post_nelsonian_thought = {
 	activate_building = naval_base
 	colonial_points = 10
     ai_chance = {
-        factor = 1.5
+        factor = 4
         # Land-locked countries don't research this
         modifier = {
             factor = 0
             NOT = { total_num_of_ports = 1 }
         }
+		# Canals
+		modifier = {
+			factor = 10
+			is_greater_power = yes
+			OR = {
+				1755 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				369 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				1723 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+			}
+		}
         # GPs with 9 or more coastal provinces (Prussia+)
         modifier = {
             factor = 1.05
@@ -82,6 +107,31 @@ battleship_column_doctrine = {
             factor = 0
             NOT = { total_num_of_ports = 1 }
         }
+		# Canals
+		modifier = {
+			factor = 10
+			is_greater_power = yes
+			OR = {
+				1755 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				369 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				1723 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+			}
+		}
         # Valuable to naval tech school countries (UK)
         modifier = {
             factor = 8
@@ -161,6 +211,31 @@ raider_group_doctrine = {
             factor = 0
             NOT = { total_num_of_ports = 1 }
         }
+		# Canals
+		modifier = {
+			factor = 10
+			is_greater_power = yes
+			OR = {
+				1755 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				369 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				1723 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+			}
+		}
         # Low LIT countries should pay less attention here (0.2 = Craftsmen ceiling)
         modifier = {
             factor = 0.2
@@ -608,6 +683,7 @@ clipper_design = {
 			factor = 0
 			NOT = { total_num_of_ports = 1 }
 		}
+		# Canals
 		modifier = {
 			factor = 10
 			is_greater_power = yes
@@ -715,10 +791,7 @@ steamers = {
 			factor = 0
 			NOT = { total_num_of_ports = 1 }
 		}
-		modifier = {
-			factor = 30
-			tag = ENG
-		}
+		# Canals
 		modifier = {
 			factor = 100
 			is_greater_power = yes
@@ -819,70 +892,115 @@ iron_steamers = {
 	
 	influence = 0.05
 	ai_chance = {
-		factor = 1
-		modifier = {
-			factor = 1.2
-			is_greater_power = yes
-		}
-		modifier = {
-			factor = 1.2
-			AND = {
-			is_secondary_power = yes
-			is_greater_power = no
-			}
-		}
+		factor = 5
+		# Land-locked countries don't research this
 		modifier = {
 			factor = 0
-			NOT = { num_of_ports = 1 }
+			NOT = { total_num_of_ports = 1 }
 		}
+		# Canals
 		modifier = {
-			factor = 0.5
-			NOT = { num_of_ports = 10 }
+			factor = 100
+			is_greater_power = yes
+			OR = {
+				1755 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				369 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+				1723 = {
+					OR = {
+						owner = { in_sphere = THIS }
+						owned_by = THIS
+					}
+				}
+			}
 		}
+		# Low LIT countries should pay less attention here (0.2 = Craftsmen ceiling)
+		modifier = {
+			factor = 0.2
+			NOT = { literacy = 0.2 }
+			is_greater_power = no
+		}
+		# Low LIT GPs should pay less attention here
 		modifier = {
 			factor = 0.75
-			num_of_ports = 10
-			NOT = { num_of_ports = 20 }
+			NOT = { literacy = 0.3 }
+			is_greater_power = yes
+		}
+		# Valuable to naval tech school countries (UK)
+		modifier = {
+			factor = 10
+			OR = { tech_school = naval_tech_school tech_school = japanese_tech_school tech_school = burgundian_tech_school }
+		}
+		# GPs with 9 or more coastal provinces (Prussia+)
+		modifier = {
+			factor = 4
+			total_num_of_ports = 9
+			is_greater_power = yes
+		}
+		# GPs and SPs with more than 12 ports
+		modifier = {
+			factor = 4
+			total_num_of_ports = 12
+			rank = 16
+		}
+		# Bigger navy, more weight
+		modifier = {
+			factor = 1.05
+			total_amount_of_ships = 20
 		}
 		modifier = {
-			factor = 1.2
-			num_of_ports = 30
+			factor = 1.05
+			total_amount_of_ships = 40
 		}
 		modifier = {
-			factor = 1.2
-			num_of_ports = 50
+			factor = 1.05
+			total_amount_of_ships = 60
 		}
 		modifier = {
-			factor = 1.2
-			num_of_ports = 100
+			factor = 1.05
+			total_amount_of_ships = 80
 		}
 		modifier = {
-			factor = 1.2
-			nationalvalue = nv_glory
+			factor = 5
+			total_amount_of_ships = 150
+		}
+		# Big country with more than 1/4 coastal provinces
+		modifier = {
+			factor = 1.1
+			total_num_of_ports = 10
+			not = { num_of_cities = 40 }
 		}
 		modifier = {
-			factor = 1.2
-			OR = {
-			   tech_school = japanese_tech_school
-			   tech_school = burgundian_tech_school
-			}
+			factor = 1.1
+			total_num_of_ports = 20
+			not = { num_of_cities = 80 }
 		}
 		modifier = {
-			factor = 1.3
-			tech_school = naval_tech_school
+			factor = 1.1
+			total_num_of_ports = 30
+			not = { num_of_cities = 120 }
 		}
 		modifier = {
-			factor = 0.9
-			OR = {
-				tech_school = industrial_tech_school
-				tech_school = culture_tech_school
-				tech_school = commerce_tech_school
-				tech_school = russian_tech_school
-			}
+			factor = 1.1
+			total_num_of_ports = 40
 		}
 		modifier = {
-			factor = 0.7
-			tech_school = czech_tech_school
+			factor = 3
+			any_owned_province = { is_overseas = yes }
+			#money = 20000
+		}
+		modifier = {
+			factor = 1.5
+			colonial_nation = yes
 		}
 	}
 }
