@@ -1951,6 +1951,7 @@ country_event = {
 	limit = { has_pop_culture = beornian } 
 	militancy = 4 
 		}
+	country_event = { id = 7755226 days = 45 } 
 	} 
 }
 
@@ -2527,6 +2528,7 @@ country_event = {
 	
 	option = { 
 	name = "AND58.A"
+	civilized = no 
 	any_owned = { 
 	limit = { OR = { 
 				is_core = QUI 
@@ -2620,6 +2622,7 @@ country_event = {
 	has_global_flag = Washkar_WILDRIDE
 	INC = { owns = 2348 }
 	NOT = { exists = NAN }
+	year = 1843
 	NOT = { has_global_flag = assemble_Knights } 
 	} 
 	
@@ -2812,6 +2815,7 @@ country_event = {
 	   limit = {
 	       has_country_flag = Join_ANDWAR
 		}
+		add_country_modifier = { name = the_salvation_war duration = -1 }
         create_alliance = LOT relation = { who = LOT value = 400 }
     }
 	INC = { country_event = 66968 } 
@@ -2831,7 +2835,7 @@ country_event = {
 	option = { 
 	name = "AND69.A" 
 	QUI = { all_core = { add_core = THIS } }
-	add_country_modifier = { name = taiping_draft duration = 365 }
+	add_country_modifier = { name = incan_supernova duration = -1 }
 	set_global_flag = Amerigan_GW
 	war = { 
 		target = FROM
@@ -2902,42 +2906,72 @@ country_event = { #Victory of the Alliance
 	has_country_flag = custom_treaty_loser
 	}
 	
+	major = yes 
+	
 	mean_time_to_happen = { 
 	days = 1 
 	}
 	
 	option = { 
+	remove_country_modifier = incan_supernova
+	any_country = { 
+	   limit = { has_country_modifier = the_salvation_war }
+	   remove_country_modifier = the_salvation_war
+	}
 	name = "AND72.A" 
 	prestige_factor = -0.9
+	civilized = no
+	end_war = GRA 
+	end_war = LOT 
+	end_war = NAN 
+	end_war = SPA 
+	end_war = AMA 
+	end_war = SCA 
+	end_war = QUI 
 	clr_global_flag = Amerigan_GW
 	clr_global_flag = Washkar_WILDRIDE
 	release_vassal = ARU 
-	#Give Amazonie to Amazonie early so they may take Antisuyu if QUI has lost 	
+	any_owned = { limit = { is_core = NAN } remove_core = INC }
+	#Give Amazonie to Amazonie early so they may take Antisuyu if QUI has lost
 	SA_2403 = { secede_province = AMA }
 	SA_2 = { secede_province = AMA }
 	SA_3 = { secede_province = AMA } 
 	SA_5 = { secede_province = LOT } 
 	QUI = { all_core = { remove_core = INC } }
 	any_owned = { limit = { is_core = LOT } secede_province = LOT }
-	random_owned = {
-		limit = { owner = { has_country_flag = landed_Ameriga_SPA } }
-		 owner = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA } }
-	}
-	random_owned = {
-		limit = { owner = { has_country_flag = landed_Ameriga_SCA } }
-		 owner = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SCA } }
-	}
-    any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA }
+	#Give Chile to whoever landed 
+	random_country = {
+		limit = { OR = { has_country_flag = landed_Ameriga_SCA has_country_flag = landed_Ameriga_SPA } }
+		country_event = 67000 
+		} 
+	#Granada took Quito
+	random_country = { limit = { tag = GRA owns = 2279 } country_event = 67001 } 
 	#Quito exists
-	any_owned = { limit = { is_core = QUI } secede_province = QUI }
 	any_country = {
 	   limit = {
 	      tag = QUI
 		  exists = yes
 		  NOT = { is_vassal = yes }
-	   }
+		  NOT = { has_country_flag = QUI_DICTATORSHIP } 
+			}
 	   inherit = THIS
+		}
+	#Beornia exists 
+	any_country = { 
+		limit = {
+	      tag = NAN
+		  exists = yes
+			}
+	   country_event = 67002
 	}
+	any_country = {
+	   limit = {
+	      tag = QUI
+		  exists = yes
+		  has_country_flag = QUI_DICTATORSHIP
+			}
+	   country_event = 66958
+		}
 	}
 }
 
@@ -2961,6 +2995,11 @@ country_event = { #White Peace
 	
 	option = { 
 	name = "AND73.A" 
+	remove_country_modifier = incan_supernova
+	any_country = { 
+	   limit = { has_country_modifier = the_salvation_war }
+	   remove_country_modifier = the_salvation_war
+	}
 	clr_global_flag = Amerigan_GW
 	clr_global_flag = Washkar_WILDRIDE
 	any_owned = { remove_core = LOT } 
@@ -2987,16 +3026,22 @@ country_event = { #WASHKAR HAS DONE IT
 	
 	option = { 
 	name = "AND74.A" 
+	remove_country_modifier = the_salvation_war
+	any_country = { 
+	   limit = { has_country_modifier = the_salvation_war }
+	   remove_country_modifier = the_salvation_war
+	}
 	clr_global_flag = Amerigan_GW
 	clr_global_flag = Washkar_WILDRIDE
 	clr_global_flag = WAR_INC_LOT
 	set_global_flag = END_LOT 
 	any_owned = { 
-	limit = { OR = { 
-				is_core = AVA 
-				region = LOT_6 
-				} 
-			}  
+	    limit = { 
+	    OR = { 
+			is_core = AVA 
+			region = LOT_6 
+			} 
+		}  
 		secede_province = INC
 		add_core = INC
 		remove_core = LOT
@@ -3054,6 +3099,7 @@ country_event = {
 	option = { 
 	name = "AND76.A"
 	prestige = 50
+	remove_country_modifier = incan_supernova
 	SA_2403 = { secede_province = THIS }
 	SA_2 = { secede_province = THIS }
 	SA_3 = { secede_province = THIS } 
@@ -3349,10 +3395,10 @@ country_event = {
 	name = "AND83.A" 
 	set_country_flag = travels 
 	country_event = { id = 66983 days = 30 } #general Europe travel
-	random_owned = {
-		limit = { province_id = 390 owner = { tag = BRG OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } } }
-		owner = { country_event = { id = 66984 days = 25 } } #Jeannist Burgundy is around
-		}
+	any_country = {
+		limit = { tag = BRG exists = yes }
+		country_event = { id = 66985 days = 25 } #Jeannist Burgundy is around
+	}
 	}
 }
 
@@ -3368,16 +3414,14 @@ country_event = {
 	any_country = { limit = { capital_scope = { continent = europe } } relation = { who = THIS value = 25 } }
 	any_country = { limit = { capital_scope = { continent = europe } OR = { government = absolute_monarchy government = prussian_constitutionalism } } relation = { who = THIS value = 25 } }
 	country_event = { id = 66989 days = 60 } #travel back to the Pacific and Qingqiu
-	# I refuse to fix this. You should know better - DeNuke
-	#random_owned = {
-	#	limit = { province_id = 1657 owner = { tag = JAP government = absolute_monarchy } }
-	#	owner = { country_event = { id = 66986 days = 45 } } #HELLISH JAPAN IS AROUND
-	#	}
-	#random_owned = {
-	#	limit = { province_id = 1657 owner = { tag = JAP OR = { government = prussian_constitutionalism government = hms_government } }
-	#	owner = { country_event = { id = 66987 days = 45 } } #Normal Japan is around
-	#		}
-	#	}
+	any_country = {
+		limit = { tag = JAP government = absolute_monarchy }
+		country_event = { id = 669880 days = 45 } #HELLISH JAPAN IS AROUND
+		}
+	any_country = {
+		limit = { tag = JAP OR = { government = prussian_constitutionalism government = hms_government } }
+		country_event = { id = 66988 days = 45 } #Normal Japan is around
+		}
 	}
 }
 
@@ -3390,8 +3434,7 @@ country_event = {
 	
 	option = { 
 	name = "AND85.A" 
-	relation = { who = BRG value = 100 }
-	BRG = { country_event = 66985 } 
+	relation = { who = BRG value = 100 }	
 	prestige = 1 
 	}
 }
@@ -3406,6 +3449,7 @@ country_event = {
 	option = { 
 	name = "AND86.A" 
 	relation = { who = INC value = 100 }
+	INC = { country_event = { id = 66984 days = 1 } } 
 	prestige = 1 
 	}
 }
@@ -3420,7 +3464,6 @@ country_event = {
 	option = { 
 	name = "AND87.A" 
 	relation = { who = JAP value = 100 }
-	JAP = { country_event = 66988 } 
 	prestige = 1 
 	}
 }
@@ -3435,7 +3478,6 @@ country_event = {
 	option = { 
 	name = "AND88.A" 
 	relation = { who = JAP value = 50 }
-	JAP = { country_event = 66988 } 
 	prestige = 1 
 	}
 }
@@ -3449,7 +3491,23 @@ country_event = {
 	
 	option = { 
 	name = "AND89.A" 
-	relation = { who = JAP value = 50 }
+	FROM = { country_event = 66987 }
+	relation = { who = FROM value = 50 }
+	prestige = 1 
+	}
+}
+
+country_event = { 
+	id = 669880 #Japan is graced by Llapa -Kyowa
+	title = "AND89.T"
+	desc = "AND89.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND89.A" 
+	FROM = { country_event = 66986 }
+	relation = { who = FROM value = 50 }
 	prestige = 1 
 	}
 }
@@ -3540,6 +3598,7 @@ country_event = {
 	}
 }
 
+
 country_event = { 
 	id = 66993
 	title = "AND94.T" #Llapa died but INC is not master of the continent
@@ -3626,8 +3685,8 @@ country_event = {
 
 country_event = { 
 	id = 66995
-	title = "AND95.T" #Coronation of Sunquyuq Inca
-	desc = "AND95.D" 
+	title = "AND950.T" #Coronation of Sunquyuq Inca
+	desc = "AND950.D" 
 	
 	is_triggered_only = yes 
 	
@@ -3679,15 +3738,17 @@ country_event = {
 	
 	trigger = { 
 	OR = { tag = SPA tag = SCA }
+	has_global_flag = chiri_organized
 	NOT = { has_country_flag = chiri_established } 
-	owns = 2325
+	owns = 2325 
+	year = 1860 
 	}
 	
 	mean_time_to_happen = { 
 	months = 120 
 	modifier = { 
 	factor = 0.1 
-	year = 1850
+	year = 1870
 		}
 	}
 	
@@ -3746,3 +3807,91 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = 67000
+	title = "AND100.T" #Spain or Scandinavia gets Chile 
+	desc = "AND100.D" 
+	picture = "treaty"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "AND100.A"
+		FROM = { 
+			    any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = THIS }
+		}
+	}
+}
+
+country_event = {
+	id = 67001
+	title = "AND101.T" #Granada was involved and took Quito
+	desc = "AND100.D" 
+	picture = "treaty"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "AND101.A"
+		FROM = { 
+			    any_owned = { limit = { OR = { region = PEU_2303 region = PEU_2297 region = SA_2549  is_core = QUI } } 
+				secede_province = THIS
+				remove_core = FROM 
+				add_core = THIS 
+				add_province_modifier = {
+					name = war_torn
+					duration = 1825
+					} 
+				}
+				any_owned = { limit = { region = PEU_2297 } 
+				secede_province = THIS 
+				add_core = THIS 
+				add_province_modifier = {
+					name = war_torn
+					duration = 1825
+					} 
+				}
+			}
+	}
+}
+
+country_event = {
+	id = 67002
+	title = "AND102.T" #Beornia revived and forsake any claims to the New Jerusalem 
+	desc = "AND102.D" 
+	picture = "treaty"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "AND102.A"
+	any_owned = { 
+	remove_core = LOT 
+	remove_core = INC
+		}
+	}
+}
+
+# Bump Event if English Pops are moved to former Beornia
+
+country_event = {
+	id = 67003
+	title = "AND103.T"
+	desc = "AND103.D" 
+	#picture = "treaty"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "AND103.A"
+	    any_pop = {
+				limit = {
+					has_pop_culture = english
+				}
+				consciousness = 2
+				militancy = -1
+				move_pop = 2344
+		}
+	}
+}
+	

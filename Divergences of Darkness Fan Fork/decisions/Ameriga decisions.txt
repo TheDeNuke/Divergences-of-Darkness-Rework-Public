@@ -41,10 +41,10 @@ political_decisions = {
 		effect = {
 			treasury = -50000
 			set_country_flag = kings_statue
-			NAN = { relation = { who = LOT value = 200}
+			NAN = { relation = { who = LOT value = 200 }
 				}	
 			}
-		}
+	}
 	
 	conquest_of_the_desertNAN = {
 	
@@ -98,6 +98,61 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+    conquest_of_the_desertLOT = {
+    
+        picture = conquest_of_the_desert
+    
+        potential = {
+            tag = LOT 
+            NAN = { exists = no } 
+            owns = 2348
+            OR = {
+                2391 = { empty = yes }
+                2392 = { empty = yes }
+                2394 = { empty = yes }
+            }
+            owns = 2395
+            NOT = { has_country_flag = conquest_of_the_desert }
+        }
+        allow = {
+            war = no
+            OR = {
+                is_greater_power = yes
+                nationalism_n_imperialism = 1
+                year = 1880
+                2332 = { empty = no }
+            }
+        }
+        effect = {
+            set_country_flag = conquest_of_the_desert
+            prestige = 5
+            random_owned = {
+                limit = {
+                    2394 = { empty = yes }
+                    2392 = { empty = no }
+                    2391 = { empty = no }
+                }
+                2394 = { secede_province = THIS }
+            }
+            random_owned = {
+                limit = {
+                    2392 = { empty = yes }
+                    2391 = { empty = no }
+                }
+                2392 = { secede_province = THIS }
+            }
+            random_owned = {
+                limit = {
+                    2391 = { empty = yes }
+                }
+                2391 = { secede_province = THIS }
+            }
+        }
+        ai_will_do = {
+            factor = 1
+        }
+    }
 	
 	occupation_of_araucaniaINC = {
 		picture = conquest_of_the_desert
@@ -582,7 +637,8 @@ political_decisions = {
 	potential = { 
 	tag = AZL 
 	is_greater_power = yes 
-	NOT = { has_country_flag = guyana_claim }
+	NOT = { has_global_flag = guyana_claim }
+	NOT = { truce_with = GRA }
 	}
 	
 	allow = { 
@@ -590,8 +646,9 @@ political_decisions = {
 	}
 	
 	effect = { 
-	badboy = 10 
-	set_country_flag = guyana_claim
+	prestige = 2
+	badboy = 5 
+	set_global_flag = guyana_claim
 	ENG_1979 = { 
 		add_core = THIS }
 	VNZ_2275 = { 
@@ -2016,6 +2073,530 @@ political_decisions = {
 		factor = 1 
 		}
 	}
+    
+    # Atlantia Crusading 
+
+	ATL_ARE_friendship_decision = {
+	
+		potential = { 
+			tag = ATL
+			ARE = { exists = yes } 
+			NOT = {
+				has_country_flag = governors_statue
+			}
+		}
+		
+		allow = {
+			money = 50000
+			prestige = 20
+			war = no
+			romanticism = 1
+		}
+		
+		effect = {
+			treasury = -50000
+			set_country_flag = governors_statue
+			ARE = { relation = { who = THIS value = 50 } }
+		}	
+	}
+		
+	ATL_QUI_friendship_decision = {
+		potential = { 
+			tag = ATL
+			QUI = { exists = yes government = democracy NOT = { has_country_flag = QUI_DICTATORSHIP } } 
+			NOT = {
+				has_country_flag = diplomacy_QUI 
+			}
+			
+		}
+		
+		allow = {
+			QUI = { war = no } 
+			war = no
+			ideological_thought = 1
+		}
+		
+		effect = {
+			QUI = { relation = { who = THIS value = 50 } country_event = 7755139 }	
+			set_country_flag = diplomacy_QUI
+		}
+	}
+		
+	
+	Hetzel_Doctrine = { 
+		potential = { 
+		   OR = { tag = ATL AND = { tag = AZL primary_culture = atlantian } }
+		   NOT = { has_global_flag = hetzel_doctrine } 
+		}
+		
+		allow = { 
+		rank = 10 
+		state_n_government = 1 
+		iron_steamers = 1 
+		raider_group_doctrine = 1 
+		NOT = { OR = { ruling_party_ideology = reactionary ruling_party_ideology = conservative } }
+		} 
+		
+		effect = { 
+		prestige = 10 
+		set_global_flag = hetzel_doctrine 
+		any_country = { 
+			limit = { capital_scope = { continent = south_america } NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } }
+				}
+			relation = { who = THIS value = 50 } 
+			}
+		any_country = { 
+		limit = { tag = INC is_vassal = no } 
+			country_event = { 
+				id = 7755142 days = 2 
+			}
+		}
+		any_country = { 
+		limit = { tag = SPA OR = { owns = 2264 owns = 2324 } }
+			country_event = { 
+				id = 7755143 days = 2 
+			}
+		}
+		any_country = { 
+		limit = { tag = GRA OR = { vassal_of = SPA vassal_of = SPC } } 
+			country_event = { 
+				id = 7755144 days = 2 
+				}
+			}
+		}
+	}
+	
+	Bringing_democracy_to_Amazonia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = ATL 
+		AMA = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_AMA }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = AMA 
+		war = no 
+		NOT = { truce_with = AMA } 
+		}
+		
+		effect = { 
+		set_country_flag = het_AMA
+		set_global_flag = active_het
+		AMA = { country_event = { id = 7755152 days = 50 } } 
+		}
+	}
+	
+	Bringing_democracy_to_Equinoxia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = ATL 
+		EQN = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_EQN }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = EQN 
+		war = no 
+		NOT = { truce_with = EQN } 
+		}
+		
+		effect = { 
+		set_country_flag = het_EQN
+		set_global_flag = active_het
+		EQN = { country_event = { id = 7755152 days = 50 } } 
+		}
+	}
+	
+	Bringing_democracy_to_Antarctica = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = ATL 
+		ANT = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = ANT 
+		war = no 
+		NOT = { truce_with = ANT } 
+		}
+		
+		effect = { 
+		set_country_flag = het_ANT
+		set_global_flag = active_het
+		ANT = { country_event = { id = 7755152 days = 50 } } 
+		}
+	}
+	
+	Bringing_democracy_to_Lotharingia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = ATL 
+		LOT = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_LOT }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = LOT 
+		war = no 
+		NOT = { truce_with = LOT } 
+		}
+		
+		effect = { 
+		set_country_flag = het_LOT
+		set_global_flag = active_het
+		LOT = { country_event = { id = 7755152 days = 50 } } 
+		}
+	}
+
+	
+	Bringing_democracy_to_Odonia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = ATL 
+		ODO = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_ODO }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = ODO 
+		war = no 
+		NOT = { truce_with = ODO } 
+		}
+		
+		effect = {
+		set_country_flag = het_ODO
+		set_global_flag = active_het		
+		ODO = { country_event = { id = 7755152 days = 50 } } 
+		}
+	}
+	
+	Bringing_democracy_to_Beornia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		OR = { tag = ATL AND = { tag = AZL primary_culture = atlantian } }
+		NAN = { exists = yes has_country_flag = end_NAN NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_NAN }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		stronger_army_than = NAN 
+		war = no 
+		NOT = { truce_with = NAN } 
+		}
+		
+		effect = { 
+		set_country_flag = het_NAN
+		set_global_flag = active_het
+		NAN = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		modifier = { 
+		factor = 0 
+		NOT = { year = 1875 } 
+			}
+		}
+	}
+	
+	Bringing_democracy_to_Essequibo = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		OR = { tag = ATL AND = { tag = AZL primary_culture = atlantian } }
+		GUY = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_GUY }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		nationalism_n_imperialism = 1
+		stronger_army_than = GUY 
+		war = no 
+		NOT = { truce_with = GUY } 
+		}
+		
+		effect = { 
+		set_country_flag = het_GUY
+		set_global_flag = active_het	
+		GUY = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+			modifier = { 
+				factor = 0 
+				NOT = { year = 1882 } 
+				}
+			}
+	}
+	
+	Bringing_democracy_to_Aureliana = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		OR = { tag = ATL AND = { tag = AZL primary_culture = atlantian } }
+		CAS = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_CAS }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		revolution_n_counterrevolution = 1
+		stronger_army_than = CAS 
+		war = no 
+		NOT = { truce_with = CAS } 
+		}
+		
+		effect = { 
+		set_country_flag = het_CAS
+		set_global_flag = active_het
+		CAS = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		modifier = { 
+		factor = 0 
+		NOT = { year = 1883 } 
+			}
+		}
+	}
+	
+	Bringing_democracy_to_Herreria = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		OR = { tag = ATL AND = { tag = AZL primary_culture = atlantian } }
+		SAN = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_SAN }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		revolution_n_counterrevolution = 1
+		stronger_army_than = SAN 
+		war = no 
+		NOT = { truce_with = SAN } 
+		}
+		
+		effect = { 
+		set_country_flag = het_SAN
+		set_global_flag = active_het
+		SAN = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		modifier = { 
+		factor = 0 
+		NOT = { year = 1885 } 
+			}
+		}
+	}
+	
+	Bringing_democracy_to_Granada = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = AZL 
+		primary_culture = atlantian
+		GRA = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_NAN }
+		NOT = { has_global_flag = active_het }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		revolution_n_counterrevolution = 1
+		stronger_army_than = GRA
+		war = no 
+		NOT = { truce_with = GRA } 
+		}
+		
+		effect = { 
+		set_country_flag = het_GRA
+		set_global_flag = active_het
+		GRA = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		modifier = { 
+		factor = 0 
+		NOT = { year = 1885 } 
+			}
+		}
+	}
+	
+	Bringing_democracy_to_PNM = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = AZL 
+		primary_culture = atlantian
+		PNM = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_PNM }
+		NOT = { has_global_flag = active_het }
+		NOT = { owns = 1723 }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		mass_politics = 1
+		stronger_army_than = PNM
+		war = no 
+		NOT = { truce_with = PNM }
+		}
+		
+		effect = { 
+		set_country_flag = het_PNM
+		set_global_flag = active_het
+		PNM = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		}
+	}
+	
+	Bringing_democracy_to_UCA = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = UCA
+		primary_culture = atlantian
+		GRA = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_UCA }
+		NOT = { has_global_flag = active_het }
+		NOT = { owns = 1723 }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		mass_politics = 1
+		stronger_army_than = UCA
+		war = no 
+		NOT = { truce_with = UCA } 
+		}
+		
+		effect = { 
+		set_country_flag = het_UCA
+		set_global_flag = active_het
+		UCA = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		}
+	}
+	
+	# Why the hell would you do this?
+	
+	Bringing_democracy_to_Colombia = { 
+		picture = Bringing_democracy_ATL
+		potential = { 
+		tag = AZL 
+		primary_culture = atlantian
+		CLM = { exists = yes NOT = { OR = { government = democracy government = parliamentary_republic government = hms_government } } }
+		has_global_flag = hetzel_doctrine 
+		NOT = { has_country_flag = het_NAN }
+		NOT = { has_global_flag = active_het }
+		NOT = { owns = 1723 }
+		}
+		
+		allow = { 
+		is_greater_power = yes 
+		mass_politics = 1
+		stronger_army_than = CLM
+		war = no 
+		NOT = { truce_with = CLM } 
+		}
+		
+		effect = { 
+		set_country_flag = het_CLM
+		set_global_flag = active_het
+		CLM = { country_event = { id = 7755152 days = 50 } } 
+		}
+		
+		ai_will_do = { 
+		factor = 1 
+		}
+	}
+	
+    AMA_remove_debt_money = { 
+        potential = { 
+        OR = {
+		    tag = AMA 
+			tag = EQN 
+			AND = {
+			   has_country_modifier = debt_AMA 
+			   tag = AZL
+			}
+	    } 
+        has_country_modifier = debt_AMA 
+        DUA = { exists = yes } 
+        }
+        
+        allow = { 
+            treasury = 150000
+        }
+        
+        effect = { 
+        remove_country_modifier = debt_AMA 
+        DUA = { country_event = 7754401 }
+        }
+    }
+    
+    AMA_remove_debt_goods = { 
+        potential = { 
+        OR = {
+		    tag = AMA 
+			tag = EQN 
+			AND = {
+			   has_country_modifier = debt_AMA 
+			   tag = AZL
+			}
+	    } 
+        has_country_modifier = debt_AMA 
+        DUA = { exists = yes } 
+        }
+        
+        allow = { 
+            tropical_wood  = 100
+            sugar = 750
+            tobacco = 250
+            coffee = 100
+        }
+        
+        effect = { 
+        remove_country_modifier = debt_AMA 
+        tropical_wood  = -100
+        sugar = -750
+        tobacco = -250
+        coffee = -100
+        DUA = { country_event = 7754401 }
+        } 
+    }
 }
-
-

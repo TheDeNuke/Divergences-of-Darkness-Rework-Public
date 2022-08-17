@@ -1125,3 +1125,167 @@ country_event = {
 	}
 	
 }
+
+country_event = { 
+
+	id = 7755226 #Herds seized in Inca Beornia
+	title = "NAN27.T"
+	desc = "NAN27.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "NAN27.A"
+	country_event = { id = 7755227 days = 60 }
+	any_owned = { 
+			limit = { 
+				is_core = NAN 
+			}
+		add_province_modifier = { 
+		name = agriculture_disorganised_NAN
+		duration = 2500
+			}
+		}
+	}
+}
+
+country_event = { 
+
+	id = 7755227 #John Faith causes problems
+	title = "NAN28.T"
+	desc = "NAN28.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "NAN28.A"
+	any_pop = { 
+		limit = { has_pop_culture = beornian }
+		dominant_issue = {
+				factor = 0.50
+				value = moralism
+			}
+		}
+	set_country_flag = John_Faith
+	}
+}
+
+country_event = { 
+
+	id = 7755228 #Beornia Reborn 
+	title = "NAN29.T"
+	desc = "NAN29.D" 
+	
+	trigger = { 
+	tag = INC 
+	NOT = { has_global_flag = great_awakening_NAN } 
+	NAN = { exists = no } 
+	owns = 2348 
+	2348 = { controlled_by = REB }
+	OR = { 2377 = { controlled_by = REB } 2354 = { controlled_by = REB } 2390 = { controlled_by = REB } } 
+	war = yes 
+	}
+	
+	fire_only_once = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "NAN29.A"
+    set_country_flag = end_NAN
+	set_global_flag = End_NAN_variable 
+	set_global_flag = great_awakening_NAN
+		any_owned = { 
+			limit = { is_core = NAN }
+			secede_province =  NAN
+		}
+	NAN = { 
+		   government = theocracy
+		   ruling_party_ideology = reactionary
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = primary_culture_only
+		   clr_country_flag = tory_election_win
+		   clr_country_flag = socialist_election_win
+		   clr_country_flag = liberal_election_win
+		   clr_country_flag = communist_election_win
+		   clr_country_flag = fascist_election_win
+		   clr_country_flag = reactionary_election_win
+		   clr_country_flag = anarcho_liberal_election_win
+		   clr_country_flag = social_liberal_election_win
+		   clr_country_flag = market_liberal_election_win
+		   set_country_flag = theocratic_government
+		   clr_country_flag = merchantrepublic_gov
+		   clr_country_flag = communist_gov
+		   clr_country_flag = absolute_monarchy_gov
+		   clr_country_flag = semi_constitutional_monarchy_gov
+		   clr_country_flag = constitutional_monarchy_gov
+		   clr_country_flag = parliamentary_republic_gov
+		   clr_country_flag = democracy_gov
+		   clr_country_flag = presidential_dictatorship_gov
+		   clr_country_flag = fascist_gov
+		   clr_country_flag = anarcho_liberal_gov
+		   clr_country_flag = socialist_republic_gov
+		   clr_country_flag = fascist_monarchy_gov
+		}
+	war = { 
+		target = NAN
+		
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+		} 
+	}
+	
+}
+
+country_event = { 
+
+	id = 7755229 #Beornia under the Inca boot for good
+	title = "NAN30.T"
+	desc = "NAN30.D" 
+	
+	
+	trigger = { 
+	tag = INC 
+	has_country_flag = John_Faith 
+	has_global_flag = assemble_Knights
+	NAN = { exists = no } 
+	owns = 2348
+	truce_with = LOT 
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 1 
+	}
+	
+	option = { 
+	name = "NAN30.A"
+    NAN = { set_country_flag = end_NAN }
+	set_global_flag = End_NAN_variable 
+	clr_country_flag = John_Faith 
+	any_pop = { 
+	limit = { has_pop_culture = beornian pop_majority_issue = moralism }
+	reduce_pop = 0.8 
+		}
+	any_pop = { 
+	limit = { has_pop_culture = beornian } 
+	militancy = -5 
+		}
+	any_owned = { 
+	limit = { is_core = NAN }
+	remove_province_modifier = nationalist_agitation
+		}	
+	}
+}

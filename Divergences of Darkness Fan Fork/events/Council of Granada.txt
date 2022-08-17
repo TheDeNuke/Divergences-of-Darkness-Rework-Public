@@ -1,1 +1,778 @@
-# Redundant due to CLM Overhaul
+#Council of Granada - Ballivian controls Quito
+
+country_event = {
+	id = 46501
+	title = "GRA1.T"
+	desc = "GRA1.D"
+	#picture = "sunset"
+
+	trigger = { 
+	tag = SAN 
+	has_global_flag = SAN_WAR_OVER
+	CAS = { exists = yes } 
+	QUI = { exists = yes has_country_flag = QUI_DICTATORSHIP } 
+	NOT = { has_global_flag = congress_granada } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	major = yes 
+
+	option = {
+		name = "GRA1.A"
+        prestige = 1
+		end_war = CAS 
+		end_war = QUI 
+		QUI = { country_event = 46502 }
+		country_event = { id = 46503 days = 5 } 
+		set_global_flag = congress_granada
+	}
+}
+
+
+country_event = {
+	id = 46502
+	title = "GRA2.T" #information for a QUI player 
+	desc = "GRA2.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA2.A"
+	}	
+}
+
+country_event = {
+	id = 46503
+	title = "GRA3.T" #Talks between Rocafuerte and de Blanco fail 
+	desc = "GRA3.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA3.A"
+	prestige = -1
+	country_event = { id = 46504 days = 5 } 
+	}	
+}
+	
+country_event = {
+	id = 46504
+	title = "GRA4.T" #Rocafuerte surrounds the assembly with his own men
+	desc = "GRA4.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA4.A"
+	QUI = { country_event = 46505 }
+	}	
+}
+
+country_event = {
+	id = 46505
+	title = "GRA5.T" #Ballivian must choose between fleeing and fighting
+	desc = "GRA5.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA5.A" #Ballivian fights
+	country_event = { id = 46506 days = 10 }
+	ai_chance = { 
+	factor = 50 
+	modifier = {
+		factor = 0
+		SAN = { ai = no } 
+			}
+		}
+	}
+
+	option = { 
+	name = "GRA5.B" #Ballivian flees back to Quito
+	SAN = { country_event = { id = 46507 days = 5 } }
+	ai_chance = { 
+	factor = 50 
+		}	
+	}
+}
+
+country_event = {
+	id = 46506
+	title = "GRA6.T" #Ballivian comes on top
+	desc = "GRA6.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "GRA6.A"
+	prestige = 20 
+	create_vassal = SAN 
+	create_vassal = CAS 
+	}
+}
+
+country_event = {
+	id = 46507
+	title = "GRA7.T" #Ballivian has fled, Rocafuerte chases De Blanco
+	desc = "GRA7.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA7.A"
+	random_list = {
+                75 = { CAS = { country_event = { id = 46508 days = 7 } } }
+				25 = { country_event = { id = 46509 days = 7 } }
+		}
+	}
+}
+
+country_event = {
+	id = 46508
+	title = "GRA8.T" #Rocafuerte proclaims the New Granadan empire
+	desc = "GRA8.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "GRA8.A"
+	define_general = { 
+				name = "Antonio Rocafuerte" 
+				personality = glory_hound
+				background = mercenary
+			} 
+	inherit = SAN 
+	change_tag = GRA
+	set_country_flag = rocafuerte
+	government = prussian_constitutionalism
+	ruling_party_ideology = conservative
+	political_reform = appointed
+	political_reform = wealth_voting 
+	political_reform = no_meeting
+	political_reform = censored_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+# This may need a balance check
+
+country_event = {
+	id = 46509
+	title = "GRA9.T" #Granadan CW
+	desc = "GRA9.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA9.A"
+	set_global_flag = Granadan_CW
+	define_general = { 
+		name = "Guillermo de Blanco" 
+		personality = cruel
+		background = natural_born_leader 
+	} 
+	add_country_modifier = { name = small_country_draft duration = 720 }
+	CAS = { add_country_modifier = { name = small_country_draft duration = 720 } 
+			define_general = { 
+				name = "Antonio Rocafuerte" 
+				personality = glory_hound
+				background = mercenary  
+			} 
+	} 
+	war = { 
+		target = CAS
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			
+			defender_goal = {
+				casus_belli = civil_war
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 46510
+	title = "GRA10.T" #Granadan CW - De Blanco won
+	desc = "GRA10.D"
+	
+	trigger = { 
+	tag = SAN 
+	has_global_flag = Granadan_CW 
+	CAS = { exists = no }
+	war = no 
+	}
+	
+	major = yes
+	
+	option = { 
+	name = "GRA10.A"
+	clr_global_flag = Granadan_CW
+	change_tag = GRA 
+	set_country_flag = de_blanco
+	capital = 2247
+	government = democracy
+	ruling_party_ideology = conservative
+	political_reform = wealth_voting
+	political_reform = yes_meeting
+	political_reform = censored_press
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+country_event = {
+	id = 46511
+	title = "GRA11.T" #Rocafuerte proclaims the New Granadan empire after the CW
+	desc = "GRA11.D"
+	#picture = "sunset"
+	
+	trigger = { 
+	tag = CAS 
+	has_global_flag = Granadan_CW 
+	SAN = { exists = no }
+	war = no 
+	}
+	
+	major = yes 
+	
+	option = { 
+	name = "GRA11.A"
+	clr_global_flag = Granadan_CW
+	change_tag = GRA
+	set_country_flag = rocafuerte
+	define_general = { 
+				name = "Antonio Rocafuerte" 
+				personality = glory_hound
+				background = mercenary  
+			} 
+	government = prussian_constitutionalism
+	ruling_party_ideology = conservative
+	political_reform = no_slavery
+	political_reform = appointed
+	political_reform = wealth_voting 
+	political_reform = no_meeting
+	political_reform = censored_press
+	political_reform = no_trade_unions
+	political_reform = first_past_the_post
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+country_event = {
+	id = 46512
+	title = "GRA12.T" #CW unsuccessful
+	desc = "GRA12.D"
+	#picture = "sunset"
+	
+	trigger = { 
+	tag = SAN 
+	has_global_flag = Granadan_CW 
+	CAS = { exists = yes }
+	war = no 
+	}
+	
+	option = { 
+	name = "GRA12.A"
+	clr_global_flag = Granadan_CW
+	CAS = { any_owned = { remove_core = SAN } } 
+	SAN = { any_owned = { remove_core = CAS } } 
+	}
+}
+
+country_event = {
+	id = 46513
+	title = "GRA13.T"
+	desc = "GRA13.D"
+	#picture = "sunset"
+
+	trigger = { 
+	tag = SAN 
+	has_global_flag = SAN_WAR_OVER
+	CAS = { exists = yes } 
+	NOT = { QUI = { exists = yes has_country_flag = QUI_DICTATORSHIP } } 
+	NOT = { has_global_flag = congress_granada } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	major = yes 
+
+	option = {
+		name = "GRA13.A"
+        prestige = 1
+		end_war = CAS 
+		end_war = QUI 
+		country_event = { id = 46514 days = 5 } 
+		set_global_flag = congress_granada
+	}
+}
+
+country_event = {
+	id = 46514
+	title = "GRA14.T" #Talks between Rocafuerte and de Blanco fail 
+	desc = "GRA14.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA14.A"
+	prestige = -1
+	country_event = { id = 46515 days = 5 } 
+	}	
+}
+	
+country_event = {
+	id = 46515
+	title = "GRA15.T" #Rocafuerte surrounds the assembly with his own men
+	desc = "GRA15.D"
+	#picture = "sunset"
+
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA15.A"
+	country_event = { id = 46516 days = 5 } 
+	}	
+}
+
+
+country_event = {
+	id = 46516
+	title = "GRA16.T" #Rocafuerte clashes with De Blanco in Bogota
+	desc = "GRA16.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+	name = "GRA16.A"
+	random_list = {
+                5 = { CAS = { country_event = { id = 46508 days = 5 } } }
+				75 = { country_event = { id = 46509 days = 5 } }
+				20 = { country_event = { id = 46517 days = 5 } }
+		}
+	}
+}
+
+country_event = {
+	id = 46517
+	title = "GRA17.T" #Rocafuerte died in the fights, Blanco establishes Granada
+	desc = "GRA17.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+	name = "GRA17.A"
+	inherit = CAS 
+	change_tag = GRA 
+	set_country_flag = de_blanco
+	capital = 2247
+	government = democracy
+	ruling_party_ideology = conservative
+	political_reform = wealth_voting
+	political_reform = yes_meeting
+	political_reform = censored_press
+	political_reform = gerrymandering
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	set_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	set_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	set_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+country_event = {
+	id = 46518
+	title = "GRA18.T" #War in the Andes - Ballivian is dead
+	desc = "GRA18.D"
+
+	trigger = { 
+	tag = GRA 
+	has_country_flag = revenge_is_best_served_cold 
+	NOT = { has_country_flag = intervened_Andes } 
+	NOT = { QUI = { has_country_flag = QUI_DICTATORSHIP } } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "GRA18.A" 
+	add_country_modifier = { name = blancos_madness duration = 720 }
+	set_country_flag = intervened_Andes 
+	war = { 
+		target = INC 
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+		defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+		}
+	war = { 
+		target = QUI
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+		} 
+	}
+}
+
+country_event = {
+	id = 46519 #De Blanco has won - Dismantlement of the INC
+	title = "GRA19.T"
+	desc = "GRA19.D"
+	
+	trigger = {	
+	    exists = yes
+		tag = INC
+		has_country_flag = custom_treaty_loser
+		truce_with = GRA 
+		NOT = { has_global_flag = assemble_Knights } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "GRA19.A"
+	civilized = no 
+	capital = 2370 
+	any_owned = { 
+	limit = { OR = { 
+				is_core = QUI 
+				region = PEU_2303 
+				region = INC_2308
+				region = CHL_2322
+				region = SA_6
+				} 
+			}  
+		remove_core = INC
+		add_core = GRA
+		secede_province = GRA
+	}
+	clr_country_flag = custom_treaty_loser
+	any_owned = { limit = { is_core = NAN } remove_core = INC secede_province = NAN }
+	any_owned = { limit = { is_core = LOT } remove_core = INC secede_province = LOT } 
+	prestige = -20 
+	government = presidential_dictatorship 
+	GRA = { country_event = { id = 46520 days = 1 } }
+	QUI = { country_event = 46521 } 
+	any_owned = { 
+	limit = { 
+			region = PEU_2297 
+			}  
+		secede_province = GRA
+		}	
+	}	
+}
+	
+country_event = {
+	id = 46520 #De Blanco has won - Dismantlement of the INC
+	title = "GRA20.T"
+	desc = "GRA20.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA20.A" 
+	remove_country_modifier = blancos_madness
+	create_vassal = INC
+	any_owned = { 
+		limit = { OR = { is_core = QUI is_core = INC } }
+		add_province_modifier = {
+			name = war_torn
+			duration = 1825
+			}
+		}
+	2302 = { change_province_name = "San José" }
+	}	
+}
+
+country_event = {
+	id = 46521 #De Blanco declared war - QUI is informed 
+	title = "GRA21.T"
+	desc = "GRA21.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA21.A"
+	}
+}
+
+country_event = {
+	id = 46523
+	title = "GRA23.T" #War in the Andes - Ballivian is alive : time to join his fight
+	desc = "GRA23.D"
+	
+	trigger = { 
+	tag = GRA 
+	has_country_flag = revenge_is_best_served_cold 
+	NOT = { has_country_flag = intervened_Andes } 
+	QUI = { has_country_flag = QUI_DICTATORSHIP }
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "GRA18.A" 
+	add_country_modifier = { name = blancos_madness duration = 720 }
+	create_alliance = QUI
+	relation = { who = QUI value = 400 }
+	military_access = QUI
+	QUI = { country_event = 46524 } 
+	INC = { country_event = 46525 }
+	set_country_flag = intervened_Andes 
+	war = { 
+		target = INC 
+		attacker_goal =  { 
+				casus_belli = cut_down_to_size
+			}
+		defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+		}
+	}
+}
+
+country_event = {
+	id = 46524
+	title = "GRA24.T" #QUI is informed
+	desc = "GRA24.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA24.A"
+	relation = { who = GRA value = 400 }
+	}
+}
+
+country_event = {
+	id = 46525
+	title = "GRA25.T" #INC is informed
+	desc = "GRA25.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA25.A"
+	
+	}
+}
+
+country_event = {
+	id = 46526 #De Blanco has won - Dismantlement of the INC
+	title = "GRA26.T"
+	desc = "GRA26.D"
+	
+	is_triggered_only = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "GRA26.A"
+	capital = 2370 
+	any_owned = { 
+	limit = { OR = { 
+				is_core = QUI 
+				region = PEU_2303 
+				region = INC_2308
+				region = CHL_2322
+				region = SA_6
+				} 
+			}  
+		remove_core = INC
+		add_core = GRA
+		secede_province = GRA
+	}
+	clr_country_flag = custom_treaty_loser
+	any_owned = { limit = { is_core = NAN } remove_core = INC secede_province = NAN }
+	any_owned = { limit = { is_core = LOT } remove_core = INC secede_province = LOT } 
+	prestige = -20 
+	government = presidential_dictatorship 
+	GRA = { country_event = 46527 }
+	any_owned = { 
+	limit = { 
+			region = PEU_2297 
+			}  
+		secede_province = GRA
+		}	
+	}
+	
+}
+
+	
+country_event = {
+	id = 46527 #De Blanco has won - Dismantlement of the INC
+	title = "GRA27.T"
+	desc = "GRA27.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "GRA27.A" 
+	remove_country_modifier = blancos_madness
+	create_vassal = INC
+	any_owned = { 
+		limit = { is_core = INC NOT = { is_core = QUI } }
+		add_province_modifier = {
+			name = war_torn
+			duration = 1825
+			}
+		}
+	2302 = { change_province_name = "San José" }
+	}	
+}
+	

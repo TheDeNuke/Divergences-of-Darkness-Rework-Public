@@ -52,25 +52,16 @@ political_decisions = {
 		potential = {
 			NOT = { tag = GRA }
 			NOT = { exists = GRA }
-			OR = {
-				primary_culture = granadan
-				primary_culture = darjani
-			}
+			primary_culture = granadan
 		}
 		
 		allow = {
 			war = no
-			prestige = 50
-			GRA = {
-				all_core = {
-					OR = {
-						owned_by = THIS
-						owner = {
-							in_sphere = THIS
-						}
-					}
-				}
-			}
+			ideological_thought = 1 
+			prestige = 20
+			owns = 2254
+			owns = 2247 
+			owns = 2264
 		}
 		
 		effect = {
@@ -89,4 +80,289 @@ political_decisions = {
 			}
 		}
 	}
+	
+	form_granada_ballivian = {
+		potential = {
+			NOT = { tag = GRA }
+			NOT = { exists = GRA }
+			tag = QUI 
+			has_country_flag = QUI_DICTATORSHIP
+		}
+		
+		allow = {
+			war = no
+			prestige = 20
+			rank = 16 
+			OR = { 
+				AND = { 		
+					owns = 2254
+					owns = 2247
+					}
+				SAN = { vassal_of = THIS owns = 2254 owns = 2247 } 
+				}
+			OR = { 
+				owns = 2264
+				CAS = { vassal_of = THIS owns = 2264 }
+				}
+		}
+		
+		effect = {
+			prestige = 20
+			change_tag = GRA
+			add_accepted_culture = granadan
+			remove_accepted_culture = chimu 
+			any_country = {
+				limit = {
+					primary_culture = granadan
+					OR = { 
+					in_sphere = THIS
+					vassal_of = THIS 
+					}
+				}
+				country_event = 11101
+			}
+		}
+	}
+	
+	# Granada Content
+
+
+	Granadan_unity = { 
+	potential = { 
+	   tag = GRA 
+	   NOT = { has_country_flag = GRA_united } 
+	}
+	
+	allow = { 
+	   social_science = 1
+	   OR = {
+		  is_secondary_power = yes
+	      is_greater_power = yes
+	   } 
+	   SAN = { all_core = { owned_by = THIS } } 
+	   CAS = { all_core = { owned_by = THIS } } 
+	   GUY = { all_core = { owned_by = THIS } }
+	}
+	
+	effect = { 
+	    prestige = 20
+	    any_owned = { 
+	       remove_core = SAN 
+	       remove_core = CAS 
+	       remove_core = GUY
+		}
+	    set_country_flag = GRA_united 
+	}
+	}
+	
+	Expansion_into_Andagoya = { 
+		potential = { 
+		tag = GRA 
+		NOT = { has_country_flag = claimed_Andagoya } 
+		NOT = { CLM = { owns = 1723 } }
+		}
+	
+		allow = { 
+			nationalism_n_imperialism = 1 
+	        OR = {
+		      is_secondary_power = yes
+	          is_greater_power = yes
+	        }
+		}
+	
+		effect = { 
+			PNM = { all_core = { add_core = THIS } } 
+			badboy = 5 
+			set_country_flag = claimed_Andagoya 
+		}
+	}
+	
+	Rebuke_INC_claims = { 
+		potential = { 
+			tag = GRA 
+			INC = { exists = yes } 
+			has_global_flag = claimed_GRA_INC
+			NOT = { has_country_flag = rebuked_INC } 
+		}
+		
+		allow = { 
+		   war = no 
+		   truce_with = INC 
+	       OR = {
+		      is_secondary_power = yes
+	          is_greater_power = yes
+	       }
+		   SAN = { 
+		      all_core = {
+			         OR = {
+					   owned_by = THIS
+					   owner = {
+						 is_our_vassal = THIS
+					   }
+					}
+				}
+			}
+		}
+		
+		effect = { 
+		INC = { prestige = -10 }
+		any_owned = { remove_core = INC } 
+		set_country_flag = rebuked_INC
+		}
+	}
+	
+	
+	Rebuke_AZL_claims = { 
+		potential = { 
+			tag = GRA 
+			AZL = { exists = yes } 
+			has_global_flag = guyana_claim
+			NOT = { has_country_flag = rebuked_AZL } 
+		}
+		
+		allow = { 
+		   war = no 
+		   truce_with = AZL
+	       OR = {
+		      is_secondary_power = yes
+	          is_greater_power = yes
+	       }
+		   GUY = { 
+		      all_core = {
+			         OR = {
+					   owned_by = THIS
+					   owner = {
+						 is_our_vassal = THIS
+					   }
+					}
+				}
+			}
+		}
+		
+		effect = { 
+		    AZL = { prestige = -10 }
+			set_country_flag = rebuked_AZL
+			any_owned = { remove_core = AZL } 
+		}
+	}
+	
+	accept_afro_latinos_rocafuerte = { 
+	picture = acceptation_afro 
+		potential = { 
+		tag = GRA 
+		has_country_flag = rocafuerte
+		NOT = { has_country_flag = acceptation_afro } 
+		}
+		
+		allow = { 
+		war = no 
+		ideological_thought = 1 
+		} 
+		
+		effect = { 
+		set_country_flag = acceptation_afro 
+		add_accepted_culture = afro_latino
+		}
+	}
+	
+	de_blanco_revenge = { 
+	
+		potential = { 
+		tag = GRA 
+		QUI = { exists = yes } 
+		INC = { exists = yes } 
+		has_country_flag = de_blanco
+		}
+		
+		allow = { 
+		QUI = { war_with = INC } 
+		} 
+		
+		effect = { 
+		money = 10000
+		prestige = 5 
+		any_pop = {
+			militancy = -5
+			consciousness = -5
+		}
+		set_country_flag = revenge_is_best_served_cold 		
+		}
+		
+	} 
+	
+	Ballivian_return = { 
+		potential = { 
+		tag = GRA 
+		QUI = { exists = yes has_country_flag = QUI_DICTATORSHIP } 
+		has_country_flag = intervened_Andes
+		NOT = { has_country_flag = GLORY_TO_DE_BLANCO }
+		}
+		
+		allow = { 
+		war = no 
+		QUI = { war = no } 
+		INC = { is_vassal = yes } 
+		}
+		
+		effect = { 
+		set_country_flag = GLORY_TO_DE_BLANCO
+		relation = {
+			who = QUI
+			value = 400
+		}
+		create_alliance = QUI
+		QUI = { country_event = { id = 11101 days = 1 } } 
+		add_accepted_culture = caladeran 
+		INC = { country_event = { id = 46526 days = 3 } }
+		}
+	}
+	
+    Caladero_in_Granada = { 
+        potential = { 
+            tag = GRA           
+            NOT = { has_country_flag = expansion_QUI } 
+            NOT = { owns = 2279 }
+        }
+        
+        allow = { 
+           nationalism_n_imperialism = 1 
+	       OR = {
+		      is_secondary_power = yes
+	          is_greater_power = yes
+	       }
+        }
+        
+        effect = { 
+        QUI = { all_core = { add_core = THIS } }
+        set_country_flag = expansion_QUI
+        }   
+    }
+    
+    accepting_caladerans = { 
+        potential = { 
+            tag = GRA 
+            NOT = { has_country_flag = accepting_caladerans } 
+            NOT = { has_accepted_culture = caladeran } 
+            owns = 2279 #Quito
+        }
+        
+        allow = { 
+			nationalism_n_imperialism = 1 
+			biologism = 1
+			OR = {
+				citizens_rights = culture_voting_only
+				citizens_rights = all_voting_pops
+			}
+			OR = {
+				vote_franschise = universal_weighted_voting
+				vote_franschise = universal_voting
+			}
+            QUI = { all_core = { owned_by = THIS } }
+        }
+        
+        effect = { 
+           add_accepted_culture = caladeran
+           set_country_flag = accepting_caladerans
+        }   
+    }
 }
