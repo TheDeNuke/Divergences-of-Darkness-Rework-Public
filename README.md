@@ -29,9 +29,14 @@ The mod team:
 - Zeeloat - Concept Designer and Localization
 - Arleck - Concept Designer and Localization
 - J Master - Concept Designer and Localization
-- Zerzura - Coder and Localization
+- Zerzura - Coder and Localization Lead
 - Athmos - Concept Designer
 - Polyfox - Concept Designer
+- S Alvia - Concept Designer 
+- Mazakala - Concept Designer
+- Renesio - Concept Designer
+- dgl - Concept Designer
+- Trask - Concept Designer and the Founder
 -  Conquest - Coder/Scripter and the developer of the Popularizer tool.
 -  Ddima - Localization
 -  Tecumseh - Localization
@@ -40,6 +45,12 @@ The mod team:
 -  Epstine Thrawn - GFX Changes
 -  Norman_Scopes - Localization
 -  definitely NOT ash - Localization
+-  ttb618 - Localization
+-  lipad - Localization
+-  pax - Localization
+-  multidavid - Localization
+-  dorcl - Chinese Localization
+-  ape - Localization and Local Ape
 
 Special Thanks to:
 
