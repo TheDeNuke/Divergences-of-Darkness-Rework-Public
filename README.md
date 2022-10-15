@@ -2,14 +2,12 @@ Divergence of Darkness Rework
 
 Disclaimers:
 
-- There are likely a lot of localization key bugs and missing localization throughout this mod. We will likely try to address a lot of the issues in the coming weeks.
 - HPM/HFM Rebels can be extremely brutal if you manage to get high WE and nothing I can do will fix that. Don’t get high WE.
 - If you want to pass reforms with Market Liberals or Radicalists then get high militancy without imploding.
 - India is basically unplayable after the Hindustan Conference.  India will need a rework in the future to make inland states much more playable (don’t expect much from the coast though).
 - China also needs a complete rework. Likely won’t get around to either China or India until a Victoria 3 release though.
 - Germany feels a bit railroaded currently and only has a few potential outcomes but that will be addressed in release four along with Italy and the North Balkans
 - There is a general lack of event GFX and thus we are always looking for people to actually help in this particular department.
-- There is a province in Bohemia without pops. We know.
 
 Credits:
 
