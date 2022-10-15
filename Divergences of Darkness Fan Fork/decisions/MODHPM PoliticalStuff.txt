@@ -36,14 +36,40 @@ political_decisions = {
 			remove_country_modifier = charismatic_leader_anarcho_liberal
 			clr_country_flag = charismatic_leader_market_liberal
 			remove_country_modifier = charismatic_leader_market_liberal
-			clr_country_flag = charismatic_leader_socialist
-			remove_country_modifier = charismatic_leader_socialist
 			clr_country_flag = charismatic_leader_fascist
 			remove_country_modifier = charismatic_leader_fascist
+			clr_country_flag = charismatic_leader_paternal
+			remove_country_modifier = charismatic_leader_paternal
 			clr_country_flag = charismatic_leader_social_liberal
 			remove_country_modifier = charismatic_leader_social_liberal
 			clr_country_flag = charismatic_leader_separatist
 			remove_country_modifier = charismatic_leader_separatist
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_socialist } 
+			   }
+			   owner = {
+			       clr_country_flag = charismatic_leader_socialist
+				   remove_country_modifier = charismatic_leader_socialist
+			       set_country_flag = charismatic_leader_communist
+			       add_country_modifier = {
+                      name = charismatic_leader_communist
+                      duration = 14600
+                   }
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { NOT = { has_country_modifier = charismatic_leader_communist } }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_socialist
+				  remove_country_modifier = charismatic_leader_socialist
+			   }
+			}
 			
 			add_country_modifier = {
                 name = the_brown_scare_cooldown
@@ -92,9 +118,23 @@ political_decisions = {
 			any_pop = { limit = { pop_majority_ideology = socialist } ideology = { factor = 0.5 value = communist } }
 			
 			any_pop = { limit = { pop_majority_ideology = fascist } random_list = { 50 = { reduce_pop = 0.8 } 50 = { reduce_pop = 0.75 } } }
+			any_pop = { limit = { pop_majority_ideology = paternal } random_list = { 50 = { reduce_pop = 0.8 } 50 = { reduce_pop = 0.75 } } }
 			any_pop = { limit = { pop_majority_ideology = anarcho_liberal } random_list = { 50 = { reduce_pop = 0.8 } 50 = { reduce_pop = 0.85 } } }
 			any_pop = { limit = { pop_majority_ideology = market_liberal } random_list = { 50 = { reduce_pop = 0.8 } 50 = { reduce_pop = 0.85 } } }
 			any_pop = { limit = { pop_majority_ideology = reactionary } random_list = { 50 = { reduce_pop = 0.8 } 50 = { reduce_pop = 0.85 } } }
+			
+           any_owned = {
+		       limit = { 
+			       OR = { 
+                      has_province_modifier = paternal_stronghold	
+					  has_province_modifier = fascist_stronghold
+                      has_province_modifier = reactionary_stronghold					  
+				   }
+				}
+				remove_province_modifier = paternal_stronghold
+				remove_province_modifier = fascist_stronghold
+				remove_province_modifier = reactionary_stronghold	
+           }			
 			
 			any_pop = {
 				scaled_consciousness = {
@@ -104,6 +144,15 @@ political_decisions = {
 				scaled_militancy = {
 					factor = 9
 					ideology = fascist
+				}
+				
+				scaled_consciousness = {
+					factor = 9
+					ideology = paternal
+				}
+				scaled_militancy = {
+					factor = 9
+					ideology = paternal
 				}
 				
 				scaled_consciousness = {
@@ -236,6 +285,32 @@ political_decisions = {
 			clr_country_flag = charismatic_leader_separatist
 			remove_country_modifier = charismatic_leader_separatist
 			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_paternal } 
+			   }
+			   owner = {
+			       clr_country_flag = charismatic_leader_paternal
+				   remove_country_modifier = charismatic_leader_paternal
+			       set_country_flag = charismatic_leader_fascist
+			       add_country_modifier = {
+                      name = charismatic_leader_fascist
+                      duration = 14600
+                   }
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { NOT = { has_country_modifier = charismatic_leader_fascist } }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+				  clr_country_flag = charismatic_leader_paternal
+				  remove_country_modifier = charismatic_leader_paternal
+			   }
+			}
+			
 			add_country_modifier = {
                 name = the_red_scare_cooldown
                 duration = 7120
@@ -283,6 +358,18 @@ political_decisions = {
 					militancy = -9 ideology = { factor = 0.35 value = fascist }
 				}
 			any_pop = { ideology = { factor = 0.01 value = fascist } }
+			
+           any_owned = {
+		       limit = { 
+			       OR = { 
+                      has_province_modifier = communist_stronghold	
+					  has_province_modifier = socialist_stronghold				  
+				   }
+				}
+				remove_province_modifier = communist_stronghold	
+				remove_province_modifier = socialist_stronghold	
+           }			
+					
 			any_pop = {
 				scaled_consciousness = {
 					factor = -9
@@ -291,6 +378,15 @@ political_decisions = {
 				scaled_militancy = {
 					factor = -9
 					ideology = fascist
+				}
+				
+				scaled_consciousness = {
+					factor = -9
+					ideology = paternal
+				}
+				scaled_militancy = {
+					factor = -9
+					ideology = paternal
 				}
 				
 				scaled_consciousness = {
@@ -781,7 +877,8 @@ political_decisions = {
 			   government = democracy
 			   government = proletarian_dictatorship
 			   government = socialist_republic
-			}		
+			}
+            NOT = { OR = { ruling_party_ideology = paternal ruling_party_ideology = fascist } }	
 		}
 		
 		effect = {
@@ -830,6 +927,7 @@ political_decisions = {
 			      }
 			   }
 			   ruling_party_ideology = fascist
+			   ruling_party_ideology = paternal
 			   ruling_party_ideology = reactionary
 			   # Radicalists have a anti-totalitarian obsession
 			   ruling_party_ideology = anarcho_liberal
@@ -876,10 +974,62 @@ political_decisions = {
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }						
 			}			
 			any_pop = { ideology = { factor = -0.15 value = communist } }
-			clr_country_flag = charismatic_leader_socialist
-			remove_country_modifier = charismatic_leader_socialist
-			clr_country_flag = charismatic_leader_communist
-			remove_country_modifier = charismatic_leader_communist
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_communist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_communist
+				  remove_country_modifier = charismatic_leader_communist
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_socialist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_socialist
+				  remove_country_modifier = charismatic_leader_socialist
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_communist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_communist
+				  remove_country_modifier = popular_figurehead_communist
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_socialist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_socialist
+				  remove_country_modifier = popular_figurehead_socialist
+			   }
+			}
+
+           any_owned = {
+		       limit = { 
+			       OR = { 
+                      has_province_modifier = socialist_stronghold	
+					  has_province_modifier = communist_stronghold	
+				   }
+				}
+				remove_province_modifier = socialist_stronghold
+				remove_province_modifier = communist_stronghold
+           }
+
             any_pop = { militancy = -5 }
 			any_pop = {
 				scaled_consciousness = {
@@ -889,6 +1039,14 @@ political_decisions = {
 				scaled_militancy = {
 					factor = -5
 					ideology = fascist
+				}
+				scaled_consciousness = {
+					factor = -5
+					ideology = paternal
+				}
+				scaled_militancy = {
+					factor = -5
+					ideology = paternal
 				}
 				scaled_consciousness = {
 					factor = 4
@@ -930,6 +1088,7 @@ political_decisions = {
 			      government = proletarian_dictatorship 
 				  government = socialist_republic
 				  ruling_party_ideology = fascist
+				  ruling_party_ideology = paternal
 			    }
 			}
 		}
@@ -989,12 +1148,99 @@ political_decisions = {
 					}
 					militancy = -9 ideology = { factor = 0.35 value = conservative }	
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }					
+			}	
+			
+			# Lets nuke the proto-fascist officers as well
+			any_pop = {
+				    limit = {
+					    OR = { type = soldiers type = officers }
+					    pop_majority_ideology = paternal
+					}
+					militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                    random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }					
 			}			
+			
 			any_pop = { ideology = { factor = -0.15 value = fascist } }
-			clr_country_flag = charismatic_leader_fascist
-			remove_country_modifier = charismatic_leader_fascist
-			clr_country_flag = charismatic_leader_reactionary
-			remove_country_modifier = charismatic_leader_reactionary		
+
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_paternal
+				  remove_country_modifier = charismatic_leader_paternal
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_reactionary
+				  remove_country_modifier = charismatic_leader_reactionary
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_fascist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_fascist
+				  remove_country_modifier = charismatic_leader_fascist
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_paternal
+				  remove_country_modifier = popular_figurehead_paternal
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_reactionary
+				  remove_country_modifier = popular_figurehead_reactionary
+			   }
+			}
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_fascist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_fascist
+				  remove_country_modifier = popular_figurehead_fascist
+			   }
+			}
+			
+           any_owned = {
+		       limit = { 
+			       OR = { 
+                      has_province_modifier = paternal_stronghold	
+					  has_province_modifier = fascist_stronghold
+                      has_province_modifier = reactionary_stronghold					  
+				   }
+				}
+				remove_province_modifier = paternal_stronghold
+				remove_province_modifier = fascist_stronghold
+				remove_province_modifier = reactionary_stronghold	
+           }
+			
             any_pop = { militancy = -5 }
 			any_pop = {
 				scaled_consciousness = {
@@ -1004,6 +1250,14 @@ political_decisions = {
 				scaled_militancy = {
 					factor = 8
 					ideology = fascist
+				}
+				scaled_consciousness = {
+					factor = 6
+					ideology = paternal
+				}
+				scaled_militancy = {
+					factor = 6
+					ideology = paternal
 				}
 				scaled_consciousness = {
 					factor = 4
@@ -1044,7 +1298,8 @@ political_decisions = {
 			  government = parliamentary_republic
 			  government = socialist_republic
            } 
-           NOT = { ruling_party_ideology = reactionary }           			  
+           NOT = { ruling_party_ideology = reactionary }     
+           NOT = { ruling_party_ideology = paternal }    		   
         }           			
 		
 		effect = {	
@@ -1067,12 +1322,31 @@ political_decisions = {
 			}			
 			any_pop = { ideology = { factor = -0.4 value = reactionary } }
 			any_pop = { 
-			    limit = { is_colonial = no }
 			    militancy = -7
                 consciousness = -7
+			}		
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_reactionary
+				  remove_country_modifier = charismatic_leader_reactionary
+			   }
 			}
-			clr_country_flag = charismatic_leader_reactionary
-			remove_country_modifier = charismatic_leader_reactionary		
+			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_reactionary
+				  remove_country_modifier = popular_figurehead_reactionary
+			   }
+			}
+			
             any_pop = { militancy = -5 }          			
 		}
 		
@@ -1100,6 +1374,7 @@ political_decisions = {
 		      OR = {
 		         ruling_party_ideology = communist
                  ruling_party_ideology = reactionary
+				 ruling_party_ideology = paternal
               }
            }			  
         }           			
@@ -1109,7 +1384,7 @@ political_decisions = {
 			set_country_flag = no_maelstrom_for_now 
 			set_country_flag = communist_purge
 			plurality = 50
-			any_pop = { limit = { OR = { pop_majority_ideology = communist pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
+			any_pop = { limit = { OR = { pop_majority_ideology = communist pop_majority_ideology = paternal pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
 			any_pop = { 
 				limit = { social_movement = yes political_movement = yes } 
 				militancy = -7
@@ -1118,22 +1393,78 @@ political_decisions = {
 			any_pop = {
 				    limit = {
 					    OR = { type = soldiers type = officers }
-					    OR = { pop_majority_ideology = communist pop_majority_ideology = reactionary }
+					    OR = { pop_majority_ideology = communist pop_majority_ideology = reactionary pop_majority_ideology = paternal }
 					}
 					militancy = -9 ideology = { factor = 0.35 value = conservative }	
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }									
 			}			
 			any_pop = { ideology = { factor = -0.4 value = communist } }
 			any_pop = { ideology = { factor = -0.4 value = reactionary } }
+			any_pop = { ideology = { factor = -0.4 value = paternal } }
 			any_pop = { 
-			    limit = { is_colonial = no }
 			    militancy = -7
                 consciousness = -7
 			}
-			clr_country_flag = charismatic_leader_reactionary
-			remove_country_modifier = charismatic_leader_reactionary	
-			clr_country_flag = charismatic_leader_communist
-			remove_country_modifier = charismatic_leader_communist	
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_paternal
+				  remove_country_modifier = charismatic_leader_paternal
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_reactionary
+				  remove_country_modifier = charismatic_leader_reactionary
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_paternal
+				  remove_country_modifier = popular_figurehead_paternal
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_reactionary
+				  remove_country_modifier = popular_figurehead_reactionary
+			   }
+			}				
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_communist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_socialist
+				  remove_country_modifier = charismatic_leader_socialist
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_communist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_communist
+				  remove_country_modifier = popular_figurehead_communist
+			   }
+			}
             add_country_modifier = {
                 name = the_red_scare
                 duration = 3650
@@ -1146,6 +1477,7 @@ political_decisions = {
 		}
 	}
 	
+	# The centrism button
 	the_show_trials_late = {
 		picture = state_of_emergency
 		potential = {
@@ -1166,6 +1498,7 @@ political_decisions = {
 		         ruling_party_ideology = communist
                  ruling_party_ideology = fascist
                  ruling_party_ideology = reactionary
+				 ruling_party_ideology = paternal
               }
            }			  
         }           			
@@ -1176,7 +1509,7 @@ political_decisions = {
 			set_country_flag = fascist_purge
 			set_country_flag = communist_purge
 			plurality = 50
-			any_pop = { limit = { OR = { pop_majority_ideology = fascist pop_majority_ideology = communist pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
+			any_pop = { limit = { OR = { pop_majority_ideology = fascist pop_majority_ideology = paternal pop_majority_ideology = communist pop_majority_ideology = reactionary } } random_list = { 50 = { reduce_pop = 0.95 } 50 = { reduce_pop = 0.9 } } }
 			any_pop = { 
 				limit = { social_movement = yes political_movement = yes } 
 				militancy = -7
@@ -1185,25 +1518,99 @@ political_decisions = {
 			any_pop = {
 				    limit = {
 					    OR = { type = soldiers type = officers }
-					    OR = { pop_majority_ideology = fascist pop_majority_ideology = communist pop_majority_ideology = reactionary }
+					    OR = { pop_majority_ideology = fascist pop_majority_ideology = paternal pop_majority_ideology = communist pop_majority_ideology = reactionary }
 					}
 					militancy = -9 ideology = { factor = 0.35 value = conservative }	
                     random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }									
 			}			
             any_pop = { ideology = { factor = -0.1 value = reactionary } }
+			any_pop = { ideology = { factor = -0.1 value = paternal } }
 			any_pop = { ideology = { factor = -0.4 value = fascist } }
 			any_pop = { ideology = { factor = -0.4 value = communist } }
 			any_pop = { 
-			    limit = { is_colonial = no }
 			    militancy = -7
                 consciousness = -7
 			}
-			clr_country_flag = charismatic_leader_fascist
-			remove_country_modifier = charismatic_leader_fascist
-			clr_country_flag = charismatic_leader_reactionary
-			remove_country_modifier = charismatic_leader_reactionary	
-			clr_country_flag = charismatic_leader_communist
-			remove_country_modifier = charismatic_leader_communist
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_paternal
+				  remove_country_modifier = charismatic_leader_paternal
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_reactionary
+				  remove_country_modifier = charismatic_leader_reactionary
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_paternal }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_paternal
+				  remove_country_modifier = popular_figurehead_paternal
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_reactionary }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_reactionary
+				  remove_country_modifier = popular_figurehead_reactionary
+			   }
+			}				
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_communist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_socialist
+				  remove_country_modifier = charismatic_leader_socialist
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_communist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_communist
+				  remove_country_modifier = popular_figurehead_communist
+			   }
+			}
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_fascist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_fascist
+				  remove_country_modifier = charismatic_leader_fascist
+			   }
+			}			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_fascist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_fascist
+				  remove_country_modifier = popular_figurehead_fascist
+			   }
+			}
             add_country_modifier = {
                 name = the_brown_scare
                 duration = 3650

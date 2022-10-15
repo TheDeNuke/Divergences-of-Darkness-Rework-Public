@@ -89,9 +89,202 @@ political_decisions = {
 		}
 	}
 	
-	# BRG backup conquest decisions
+	## Post-1890 Reforms
 	
+	# Healthcare
 	
+	the_health_insurance_bill = { 
+	
+	picture = adolphe_thiers
+	
+		potential = {
+			tag = BRG
+			has_global_flag = JEAN_ENDING	
+			has_country_flag = BRG_enable_extra_reforms
+            NOT = { health_care = good_health_care }
+            NOT = { has_country_flag = still_better_healthcare_then_modern_usa }	
+		}	
+		
+		allow = {
+			is_greater_power = yes
+			militancy = 4	
+			organic_chemistry = 1
+            money = 500000			
+		}
+		
+		effect = {
+		    set_country_flag = still_better_healthcare_then_modern_usa
+		    prestige = 1
+			social_reform = good_health_care
+			money = -500000
+			any_pop = {
+			   consciousness = -3
+			   militancy = -5
+			}
+            ideology = { factor = 0.05 value = conservative }  	    
+	        upper_house = {
+			   ideology = conservative
+			   value = 0.5
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	    }
+	}
+	
+	# Doing a better job then the Anglois
+	
+	better_then_anglois_schools = { 
+	
+	picture = adolphe_thiers
+	
+		potential = {
+			tag = BRG
+			has_global_flag = JEAN_ENDING	
+			has_country_flag = BRG_enable_extra_reforms
+            NOT = { school_reforms = good_schools }
+            NOT = { has_country_flag = our_education_is_better_then_DUA }
+		}	
+		
+		allow = {
+			is_greater_power = yes		
+			militancy = 2	
+			money = 300000
+            DUA = { school_reforms = good_schools }			
+		}
+		
+		effect = {
+		    set_country_flag = our_education_is_better_then_DUA
+		    prestige = 5
+			money = -300000
+			social_reform = good_schools
+			any_pop = {
+			   consciousness = -3
+			   militancy = -5
+			}
+            ideology = { factor = 0.05 value = conservative }  	    
+	        upper_house = {
+			   ideology = conservative
+			   value = 0.5
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	    }
+	}
+	
+	# The Dutch showing Burgundy what Bankruptcy is
+	
+	dutch_bankruptcy_reforms = { 
+	
+	picture = adolphe_thiers
+	
+		potential = {
+			tag = BRG
+			has_global_flag = JEAN_ENDING	
+			has_country_flag = BRG_enable_extra_reforms
+            NOT = { debt_law = bankruptcy }
+            NOT = { has_country_flag = your_bank_has_failed }
+		}	
+		
+		allow = {
+			is_greater_power = yes		
+			money = 300000
+            modern_central_bank_system = 1	
+		}
+		
+		effect = {
+		    set_country_flag = your_bank_has_failed
+		    prestige = 5
+			money = -300000
+			political_reform = bankruptcy
+			any_pop = {
+			   consciousness = -2
+			   militancy = -2
+			}
+            ideology = { factor = 0.05 value = conservative }  	    
+	        upper_house = {
+			   ideology = conservative
+			   value = 0.5
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	    }
+	}
+	
+	# The Basic Rights - A extremely powerful decision that's only possible at 6 militancy
+	# Gives a massive array of various social reforms.
+	
+	the_basic_rights = { 
+	
+	picture = adolphe_thiers
+	
+		potential = {
+			tag = BRG
+			has_global_flag = JEAN_ENDING	
+			has_country_flag = BRG_enable_extra_reforms
+            NOT = { has_country_flag = the_basic_rights_BRG }
+		}	
+		
+		allow = {
+			is_greater_power = yes	
+            militancy = 6				
+		}
+		
+		effect = {
+		    set_country_flag = the_basic_rights_BRG
+		    prestige = -10
+		    random_owned = {
+			   limit = {
+			       owner = { NOT = { wage_reform = acceptable_minimum_wage wage_reform = good_minimum_wage } }
+			   }
+			   owner = { social_reform = low_minimum_wage }
+		    }
+		    random_owned = {
+			   limit = {
+			      owner = { NOT = { work_hours = eight_hours } }
+			   }
+			   owner = { social_reform = eight_hours }
+		    }
+		    random_owned = {
+			    limit = {
+			       owner = { NOT = { pensions = acceptable_pensions pensions = good_pensions } }
+			    }
+			    owner = { social_reform = low_pensions }
+		    }
+		    random_owned = {
+			    limit = {
+			       owner = { NOT = { unemployment_subsidies = acceptable_subsidies unemployment_subsidies = good_subsidies } }
+			    }
+			    owner = { social_reform = low_subsidies }
+		    }
+		    random_owned = {
+			    limit = {
+			       owner = { NOT = { safety_regulations = acceptable_safety safety_regulations = good_safety } }
+			    }
+			    owner = { social_reform = low_safety }
+		    }
+			any_pop = {
+			   consciousness = -8
+			   militancy = -8
+			}
+            ideology = { factor = 0.1 value = conservative }  	    
+	        upper_house = {
+			   ideology = conservative
+			   value = 0.6
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	    }
+	}
+	
+	# BRG backup conquest decisions	
 	
 	rhone_dispatch = { 
 	
@@ -129,8 +322,7 @@ political_decisions = {
 			}
 			NOT = { war = yes }
 			NET = { exists = no }
-			451 = { is_core = DUA }
-			all_core = { owned_by = THIS }			          			
+			451 = { is_core = DUA }		          			
 		}
 		
 		effect = {
@@ -636,13 +828,14 @@ political_decisions = {
 			   tag = BRG
 			   AND = {
 			      tag = PBG
-			      NOT = {
-			         OR = { 
+				  OR = {
+			         NOT = {
 			            government = democracy
 				        government = hms_government
 				        government = parliamentary_republic
 				        government = socialist_republic		      		      
 			         }
+					 has_global_flag = ARI_denial_BRG
 			      }
 			   }
 			}
@@ -673,6 +866,7 @@ political_decisions = {
 		effect = {
 			prestige = 5
 			badboy = 5
+			clr_global_flag = ARI_denial_BRG
 			set_country_flag = savoya
 			465 = {
 				add_core = THIS

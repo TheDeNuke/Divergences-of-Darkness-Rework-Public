@@ -99,7 +99,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		country_event = 800052
 	}
 }
@@ -189,7 +190,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		country_event = 800052
 	}
 }
@@ -248,19 +250,35 @@ country_event = {
 		}
 		modifier = {
 			factor = 0.5
-			nationalvalue = nv_might
+			OR = {
+				nationalvalue = nv_might
+				nationalvalue = nv_glory
+				nationalvalue = nv_dominion
+				nationalvalue = nv_supremacy
+			}
 		}
 		modifier = {
 			factor = 0.8
-			nationalvalue = nv_order
+			OR = {
+				nationalvalue = nv_order
+				nationalvalue = nv_productivity
+			}
         }
 		modifier = {
 			factor = 2
-			nationalvalue = nv_liberty
+		    OR = {
+				nationalvalue = nv_liberty
+				nationalvalue = nv_equality
+				nationalvalue = nv_prosperity
+				nationalvalue = nv_unity
+			}
         }
 		modifier = {
 			factor = 4
-			nationalvalue = nv_freedom
+			OR = {
+				nationalvalue = nv_freedom
+				nationalvalue = nv_fraternity
+			}
         }
 		modifier = {
 			factor = 0.8
@@ -332,7 +350,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		prestige_factor = -0.1
 		add_country_modifier = {
 			name = national_confusion
@@ -342,101 +361,166 @@ country_event = {
 	}
 }
 
-#country_event = {
-#	id = 60020
-#	title = "Anarcho-Liberals Seize Power"
-#	desc = "EVTDESC60020"
-#	news = yes
-#	news_title = "EVTNAME60020_NEWS_TITLE"
-#	news_desc_long = "EVTDESC60020_NEWS_LONG"
-#	news_desc_medium = "EVTDESC60020_NEWS_MEDIUM"
-#	news_desc_short = "EVTDESC60020_NEWS_SHORT"
-#	picture = "election"
-#	
-#	trigger = { exists = yes
-#		is_vassal = no
-#		civilized = yes
-#		NOT = { government = bourgeois_dictatorship }
-#		OR = {
-#		ruling_party_ideology = anarcho_liberal
-#		anarcho_liberal = 40
-#		}
-#		average_militancy = 3
-#		OR = {
-#			has_country_modifier = regency_government
-#			average_militancy = 8
-#			NOT = {
-#				government = absolute_monarchy
-#				government = prussian_constitutionalism
-#				government = hms_government
-#			}
-#		}
-#		OR = {
-#			num_of_revolts = 1
-#			national_provinces_occupied = .10
-#			is_disarmed = yes
-#			anarcho_liberal = 20
-#			average_militancy = 5
-#		}
-#	}
-#	
-#	mean_time_to_happen = {
-#		months = 24
-#		modifier = {
-#			factor = 0.8
-#			war_exhaustion = 40
-#		}
-#		modifier = {
-#			factor = 0.8
-#			war_exhaustion = 75
-#		}
-#		modifier = {
-#			factor = 0.8
-#			average_militancy = 4
-#		}
-#		modifier = {
-#			factor = 0.8
-#			average_militancy = 5
-#		}
-#		modifier = {
-#			factor = 0.8
-#			average_militancy = 6
-#		}
-#		modifier = {
-#			factor = 0.5
-#			revolt_percentage = 0.25
-#		}
-#	}
-#	major = yes
-#	option = {
-#		name = "EVTOPTA60020"
-#		random_owned = {
-#			limit = { owner = { has_country_modifier = regency_government } }
-#			owner = { remove_country_modifier = regency_government }
-#		}
-#		government = bourgeois_dictatorship
-#		political_reform = none_voting
-#		political_reform = party_appointed
-#		political_reform = yes_meeting
-#		political_reform = free_press
-#		political_reform = all_trade_unions
-#		political_reform = underground_parties
-#		political_reform = open_borders
-#		political_reform = no_draft
-#		political_reform = all_voting_pops
-#		social_reform = no_minimum_wage
-#		social_reform = no_work_hour_limit
-#		social_reform = no_safety
-#		social_reform = no_subsidies
-#		social_reform = no_pensions
-#		social_reform = no_health_care
-#		prestige_factor = -0.1
-#		any_owned = {
-#			remove_province_modifier = anarcho_liberal_stronghold
-#		}
-#		country_event = 800053
-#	}
-#}
+country_event = {
+	id = 60020
+	title = "Military Coup d'Etat"
+	desc = "EVTDESC60020"
+	news = yes
+	news_title = "EVTNAME60020_NEWS_TITLE"
+	news_desc_long = "EVTDESC60020_NEWS_LONG"
+	news_desc_medium = "EVTDESC60020_NEWS_MEDIUM"
+	news_desc_short = "EVTDESC60020_NEWS_SHORT"
+	picture = "Fascist"
+	major = yes
+	
+	trigger = {	exists = yes
+		is_vassal = no
+		civilized = yes
+		OR = {
+		  government = democracy  
+		  government = parliamentary_republic
+		}
+		OR = {
+		   ruling_party_ideology = paternal
+		   paternal = 40
+		}
+		average_militancy = 3
+		OR = {
+			has_country_modifier = regency_government
+			average_militancy = 8
+			NOT = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+			}
+		}
+		OR = {
+			revolt_percentage = 0.10
+			national_provinces_occupied = 0.10
+			is_disarmed = yes
+			upper_house = { ideology = paternal value = 0.3 }
+			average_militancy = 5
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 180
+		modifier = {
+			factor = 0.5
+			revolt_percentage = .25
+		}
+		modifier = {
+			factor = 0.5
+			upper_house = { ideology = paternal value = 0.3 }
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				nationalvalue = nv_might
+				nationalvalue = nv_glory
+				nationalvalue = nv_dominion
+				nationalvalue = nv_supremacy
+			}
+		}
+		modifier = {
+			factor = 0.8
+			OR = {
+				nationalvalue = nv_order
+				nationalvalue = nv_productivity
+			}
+        }
+		modifier = {
+			factor = 2
+		    OR = {
+				nationalvalue = nv_liberty
+				nationalvalue = nv_equality
+				nationalvalue = nv_prosperity
+				nationalvalue = nv_unity
+			}
+        }
+		modifier = {
+			factor = 4
+			OR = {
+				nationalvalue = nv_freedom
+				nationalvalue = nv_fraternity
+			}
+        }
+		modifier = {
+			factor = 0.8
+			average_militancy = 4
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 40
+		}
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 75
+		}
+		modifier = {
+			factor = 0.8
+			is_disarmed = yes
+		}
+		modifier = {
+			factor = 0.8
+			national_provinces_occupied = .25
+		}
+	}
+	option = {
+		name = "This is only temporary until the crisis passes"
+		random_owned = {
+			limit = { owner = { has_country_modifier = the_brown_scare } }
+			owner = { remove_country_modifier = the_brown_scare }
+		}
+		random_owned = {
+			limit = { owner = { has_country_modifier = regency_government } }
+			owner = { remove_country_modifier = regency_government }
+		}
+		government = presidential_dictatorship
+		political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = state_controlled
+		political_reform = underground_parties
+		political_reform = mandatory_service
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		set_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+    	clr_country_flag = anarcho_liberal_gov
+     	clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		prestige_factor = -0.1
+		add_country_modifier = {
+			name = national_confusion
+			duration = 365
+		}
+		country_event = 800057
+	}
+}
 
 country_event = {
 	id = 60030
@@ -461,8 +545,12 @@ country_event = {
 		}
 		is_ideology_enabled = fascist
 		OR = {
-		ruling_party_ideology = fascist
-		fascist = 40
+		   ruling_party_ideology = fascist
+		   fascist = 40
+		}
+		OR = {
+		   NOT = { ruling_party_ideology = paternal }
+		   has_country_flag = fascist_coup_enabled
 		}
 		average_militancy = 3
 		OR = {
@@ -567,6 +655,7 @@ country_event = {
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
 		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win			
 	    prestige_factor = -0.1	
 		plurality = -25
 		country_event = 800051
@@ -668,7 +757,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 	}
 }
 
@@ -715,7 +805,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		random_owned = {
 			limit = { owner = { has_country_modifier = the_brown_scare } }
 			owner = { remove_country_modifier = the_brown_scare }
@@ -829,6 +920,7 @@ country_event = {
 		OR = {
 			ruling_party_ideology = conservative
 			ruling_party_ideology = reactionary
+			ruling_party_ideology = paternal
 			ruling_party_ideology = liberal
 			ruling_party_ideology = socialist
 			ruling_party_ideology = social_liberal
@@ -851,7 +943,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		clr_country_flag = communist_gov
 		clr_country_flag = absolute_monarchy_gov
 		clr_country_flag = semi_constitutional_monarchy_gov
@@ -910,7 +1003,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 	}
 }
 
@@ -959,7 +1053,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		random_owned = {
 			limit = { owner = { has_country_modifier = the_red_scare } }
 			owner = { remove_country_modifier = the_red_scare }
@@ -1016,7 +1111,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		random_owned = {
 			limit = { owner = { has_country_modifier = the_red_scare } }
 			owner = { remove_country_modifier = the_red_scare }
@@ -1069,7 +1165,8 @@ country_event = {
 		clr_country_flag = reactionary_election_win
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
-		clr_country_flag = market_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
 		random_owned = {
 			limit = { owner = { has_country_modifier = the_brown_scare } }
 			owner = { remove_country_modifier = the_brown_scare }
@@ -1863,6 +1960,10 @@ country_event = {
 				NOT = { ruling_party_ideology = fascist }
 			}
 			AND = {
+				has_country_flag = paternal_party_in_power
+				NOT = { ruling_party_ideology = paternal }
+			}
+			AND = {
 				has_country_flag = anarcho_liberal_party_in_power
 				NOT = { ruling_party_ideology = anarcho_liberal }
 			}
@@ -1880,6 +1981,7 @@ country_event = {
 		clr_country_flag = socialist_party_in_power
 		clr_country_flag = communist_party_in_power
 		clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
 		clr_country_flag = anarcho_liberal_party_in_power
 		clr_country_flag = social_liberal_party_in_power
 		clr_country_flag = market_liberal_party_in_power
@@ -2271,6 +2373,28 @@ country_event = {
 					}
 					scaled_consciousness = {
 						ideology = fascist
+						factor = -5
+					}
+				}
+			}
+		}
+		random_owned = {
+			limit = { owner = { ruling_party_ideology = paternal } }
+			owner = {
+				set_country_flag = paternal_party_in_power
+				any_pop = {
+					limit = {
+						OR = {
+							is_primary_culture = yes
+							is_accepted_culture = yes
+						}
+					}
+					scaled_militancy = {
+						ideology = paternal
+						factor = -4
+					}
+					scaled_consciousness = {
+						ideology = paternal
 						factor = -5
 					}
 				}

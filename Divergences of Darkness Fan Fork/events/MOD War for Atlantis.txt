@@ -3718,7 +3718,19 @@ country_event = {
 	      factor = 50 
 	        modifier = { 
 	        factor = 0
+	        ruling_party_ideology = fascist
+		    }
+	        modifier = { 
+	        factor = 0
+	        ruling_party_ideology = communist
+		    }
+	        modifier = { 
+	        factor = 0
 	        ruling_party_ideology = reactionary 
+		    }
+	        modifier = { 
+	        factor = 0
+	        ruling_party_ideology = paternal
 		    }
 	        modifier = { 
 	        factor = 0.5
@@ -3747,13 +3759,30 @@ country_event = {
 	    money = -50000
 	    ai_chance = { 
 		factor = 30 
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = fascist
+		}
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = communist
+		}
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = paternal
+		}
 		}
 	}
 	
 	option = { 
 	name = "ATL107.C" #Censor the press
 	    set_country_flag = intervened_in_press 
-	    political_reform = censored_press
+		random_owned = {
+		   limit = {
+		      owner = { press_rights = free_press }
+		   }
+	       owner = { political_reform = censored_press }
+		}
 	    any_pop = {
 			limit = { literacy = 0.6 }
 			ideology = { factor = 0.05 value = liberal }
@@ -3761,7 +3790,15 @@ country_event = {
 	    }
 	    any_pop = { 
 			scaled_militancy = {
+				ideology = fascist
+				factor = -8
+			}
+			scaled_militancy = {
 				ideology = reactionary
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = paternal
 				factor = -8
 			}
 			scaled_militancy = {
@@ -3792,17 +3829,17 @@ country_event = {
 	    ai_chance = { 
 	    factor = 20 
 	    modifier = { 
-	    factor = 3
-	    ruling_party_ideology = reactionary 
+	        factor = 3
+	        ruling_party_ideology = reactionary 
 	    }
 	    modifier = { 
-	    factor = 0.2
-	    ruling_party_ideology = liberal  
-		}
+	        factor = 0.2
+	        ruling_party_ideology = liberal  
+		    }
 	    modifier = { 
-	    factor = 0.1
-	    ruling_party_ideology = anarcho_liberal  
-		}
+	        factor = 0.1
+	        ruling_party_ideology = anarcho_liberal  
+		    }
 		}
 	}	
 }
@@ -3857,7 +3894,23 @@ country_event = {
 	}
 	ai_chance = { 
 	    factor = 20 
-		}
+	    modifier = { 
+	        factor = 0.5
+	        ruling_party_ideology = reactionary 
+	    }
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = paternal 
+	    }
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = fascist
+	    }
+	    modifier = { 
+	        factor = 0
+	        ruling_party_ideology = communist
+	    }
+	}
 	}
 	
 	option = { 
@@ -3990,6 +4043,18 @@ country_event = {
     }
 	any_pop = { 
 		scaled_militancy = {
+				ideology = communist
+				factor = 8
+			}
+		scaled_militancy = {
+				ideology = fascist
+				factor = 8
+			}
+		scaled_militancy = {
+				ideology = paternal
+				factor = 8
+			}
+		scaled_militancy = {
 				ideology = reactionary
 				factor = 8
 			}
@@ -4027,10 +4092,15 @@ country_event = {
 	    factor = 3
 	    sphere_owner = { is_sphere_leader_of = THIS }
 	}
-	# Reactionaries have a good laugh
+	# Reactionaries and Radicals have a good laugh
     modifier = { 
 	    factor = 0
-	    ruling_party_ideology = reactionary 
+		OR = {
+	        ruling_party_ideology = reactionary
+            ruling_party_ideology = communist
+            ruling_party_ideology = fascist
+            ruling_party_ideology = paternal
+        }			
 		NOT = { sphere_owner = { is_sphere_leader_of = THIS } }
 	}
 	# A de-facto abolition of the monarchy is not going to happen
@@ -4203,6 +4273,14 @@ country_event = {
 		}
 		any_pop = {
 			scaled_militancy = {
+				ideology = fascist
+				factor = 10
+			}
+			scaled_militancy = {
+				ideology = paternal
+				factor = 8
+			}
+			scaled_militancy = {
 				ideology = reactionary
 				factor = 8
 			}
@@ -4232,7 +4310,7 @@ country_event = {
 			}
 			scaled_militancy = {
 				ideology = communist
-				factor = 4
+				factor = 8
 			}
 		}
 		random_country = {
@@ -4285,6 +4363,40 @@ country_event = {
 					ideology = anarcho_liberal
 					factor = 5
 				}
+			}
+		}
+		any_country = {
+			limit = { 
+			    OR = {
+				   ruling_party_ideology = paternal
+				   ruling_party_ideology = fascist
+				}
+				NOT = {
+					has_country_flag = former_sphere_leader
+					has_country_flag = former_overlord
+				}
+				is_greater_power = yes
+			}
+			diplomatic_influence = {
+				who = THIS
+				value = -100
+			}
+		}
+		any_country = {
+			limit = { 
+			    OR = {
+				   ruling_party_ideology = paternal
+				   ruling_party_ideology = fascist
+				}
+				NOT = {
+					has_country_flag = former_sphere_leader
+					has_country_flag = former_overlord
+				}
+			}
+			leave_alliance = THIS		
+			relation = {
+				who = THIS
+				value = -100
 			}
 		}
 		any_country = {
@@ -4814,7 +4926,7 @@ country_event = {
 	name = "AZLF28.B" #Condemn the Scandinavians
 	prestige = 5 
 	set_country_flag = Eriksen_affair
-	SCA = { country_event = 7754411 }
+	SCA = { country_event = 77544101 }
 	}
 }
 

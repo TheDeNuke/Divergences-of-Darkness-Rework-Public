@@ -50,9 +50,9 @@ political_decisions = {
 	
 	form_granada = {
 		potential = {
-			NOT = { tag = GRA }
 			NOT = { exists = GRA }
 			primary_culture = granadan
+			NOT = { has_country_flag = QUI_DICTATORSHIP }
 		}
 		
 		allow = {
@@ -65,25 +65,28 @@ political_decisions = {
 		}
 		
 		effect = {
-			prestige = 20
+			prestige = 20				
 			change_tag = GRA
-			add_accepted_culture = granadan
 			any_country = {
 				limit = {
 					OR = {
-						primary_culture = granadan
-						primary_culture = darjani
+					   tag = CAS
+					   tag = GUY
+					   tag = SAN
+					   NOT = { tag = THIS }
 					}
-					in_sphere = THIS
+					OR = { 
+					   in_sphere = THIS
+					   vassal_of = THIS 
+					}
 				}
-				country_event = 11101
-			}
+				country_event = { id = 11101 days = 1 }
+			}			
 		}
 	}
 	
 	form_granada_ballivian = {
 		potential = {
-			NOT = { tag = GRA }
 			NOT = { exists = GRA }
 			tag = QUI 
 			has_country_flag = QUI_DICTATORSHIP
@@ -107,52 +110,26 @@ political_decisions = {
 		}
 		
 		effect = {
-			prestige = 20
-			change_tag = GRA
-			add_accepted_culture = granadan
+			prestige = 20			
+			primary_culture = granadan
 			remove_accepted_culture = chimu 
+			change_tag = GRA
 			any_country = {
 				limit = {
-					primary_culture = granadan
+					OR = {
+					   tag = CAS
+					   tag = GUY
+					   tag = SAN
+					   NOT = { tag = THIS }
+					}
 					OR = { 
-					in_sphere = THIS
-					vassal_of = THIS 
+					   in_sphere = THIS
+					   vassal_of = THIS 
 					}
 				}
-				country_event = 11101
-			}
+				annex_to = THIS
+			}	
 		}
-	}
-	
-	# Granada Content
-
-
-	Granadan_unity = { 
-	potential = { 
-	   tag = GRA 
-	   NOT = { has_country_flag = GRA_united } 
-	}
-	
-	allow = { 
-	   social_science = 1
-	   OR = {
-		  is_secondary_power = yes
-	      is_greater_power = yes
-	   } 
-	   SAN = { all_core = { owned_by = THIS } } 
-	   CAS = { all_core = { owned_by = THIS } } 
-	   GUY = { all_core = { owned_by = THIS } }
-	}
-	
-	effect = { 
-	    prestige = 20
-	    any_owned = { 
-	       remove_core = SAN 
-	       remove_core = CAS 
-	       remove_core = GUY
-		}
-	    set_country_flag = GRA_united 
-	}
 	}
 	
 	Expansion_into_Andagoya = { 
@@ -175,6 +152,51 @@ political_decisions = {
 			badboy = 5 
 			set_country_flag = claimed_Andagoya 
 		}
+	}
+	
+    Caladero_in_Granada = { 
+        potential = { 
+            tag = GRA           
+            NOT = { has_country_flag = expansion_QUI } 
+            NOT = { owns = 2279 }
+        }
+        
+        allow = { 
+           revolution_n_counterrevolution = 1 
+	       OR = {
+		      is_secondary_power = yes
+	          is_greater_power = yes
+	       }
+        }
+        
+        effect = { 
+        QUI = { all_core = { add_core = THIS } }
+        set_country_flag = expansion_QUI
+        }   
+    }
+
+	Granadan_unity = { 
+	potential = { 
+	   tag = GRA 
+	   NOT = { has_country_flag = GRA_united } 
+	}
+	
+	allow = { 
+	   social_science = 1
+	   OR = {
+		  is_secondary_power = yes
+	      is_greater_power = yes
+	   } 
+	   all_core = { owned_by = THIS }
+	}
+	
+	effect = { 
+	    prestige = 20
+		GUY = { all_core = { remove_core = GUY } }
+		SAN = { all_core = { remove_core = SAN } }
+		CAS = { all_core = { remove_core = CAS } }
+	    set_country_flag = GRA_united 
+	}
 	}
 	
 	Rebuke_INC_claims = { 
@@ -268,82 +290,56 @@ political_decisions = {
 	de_blanco_revenge = { 
 	
 		potential = { 
-		tag = GRA 
-		QUI = { exists = yes } 
-		INC = { exists = yes } 
-		has_country_flag = de_blanco
-		NOT = { has_country_flag = blanco_is_blank }
+		   tag = GRA 
+		   QUI = { exists = yes } 
+		   INC = { exists = yes } 
+		   has_country_flag = de_blanco
+		   NOT = { has_country_flag = blanco_is_blank }
 		}
 		
 		allow = { 
-		QUI = { war_with = INC } 
+		   QUI = { war_with = INC } 
 		} 
 		
-		effect = { 
-		money = 10000
-		prestige = 5 
-		any_pop = {
-			militancy = -5
-			consciousness = -5
-		}
-		set_country_flag = blanco_is_blank
-		set_country_flag = revenge_is_best_served_cold 		
+		effect = {
+		   prestige = 5 
+		   set_country_flag = blanco_is_blank
+		   set_country_flag = revenge_is_best_served_cold 		
 		}		
 	} 
 	
 	Ballivian_return = { 
+	
 		potential = { 
-		tag = GRA 
-		QUI = { exists = yes has_country_flag = QUI_DICTATORSHIP } 
-		has_country_flag = intervened_Andes
-		NOT = { has_country_flag = GLORY_TO_DE_BLANCO }
+		   tag = GRA 
+		   QUI = { exists = yes has_country_flag = QUI_DICTATORSHIP } 
+		   has_country_flag = intervened_Andes
+		   NOT = { has_country_flag = GLORY_TO_DE_BLANCO }
 		}
 		
 		allow = { 
-		war = no 
-		QUI = { war = no } 
-		INC = { is_vassal = yes } 
+		   war = no 
+		   QUI = { war = no } 
+		   INC = { is_vassal = yes } 
 		}
 		
 		effect = { 
-		set_country_flag = GLORY_TO_DE_BLANCO
-		relation = {
-			who = QUI
-			value = 400
-		}
-		create_alliance = QUI
-		QUI = { country_event = { id = 11101 days = 1 } } 
-		add_accepted_culture = caladeran 
-		INC = { country_event = { id = 46526 days = 3 } }
+		   set_country_flag = GLORY_TO_DE_BLANCO
+		   add_accepted_culture = caladeran
+		   relation = {
+			   who = QUI
+			   value = 400
+		   }
+		   create_alliance = QUI
+		   QUI = { country_event = { id = 11101 days = 1 } } 
+		   INC = { country_event = { id = 46526 days = 3 } }	    		   
 		}
 	}
 	
-    Caladero_in_Granada = { 
-        potential = { 
-            tag = GRA           
-            NOT = { has_country_flag = expansion_QUI } 
-            NOT = { owns = 2279 }
-        }
-        
-        allow = { 
-           nationalism_n_imperialism = 1 
-	       OR = {
-		      is_secondary_power = yes
-	          is_greater_power = yes
-	       }
-        }
-        
-        effect = { 
-        QUI = { all_core = { add_core = THIS } }
-        set_country_flag = expansion_QUI
-        }   
-    }
-    
     accepting_caladerans = { 
         potential = { 
             tag = GRA 
             NOT = { has_country_flag = accepting_caladerans } 
-            NOT = { has_accepted_culture = caladeran } 
             owns = 2279 #Quito
         }
         

@@ -1781,11 +1781,12 @@ country_event = {
 	owns = 2390
 	owns = 2381
 	NOT = { has_global_flag = NAN_OVER } 
+	NOT = { has_country_flag = custom_treaty_loser  }
 	NOT = { INC = { has_country_flag = custom_treaty_loser } }
 	}
 	
 	mean_time_to_happen = { 
-	days = 1
+	days = 7
 	}
 	
 	option = { 
@@ -2070,7 +2071,7 @@ country_event = {
 	tag = LOT 
 	war = no 
 	NOT = { has_global_flag = LOT_RESOLVED } 
-	has_global_flag = WAR_INC_LOT
+	OR = { has_global_flag = WAR_INC_LOT has_global_flag = assemble_Knights }
 	AND = { ATL = { exists = no } owns = 2447 } 
 	owns = 2379 
 	owns = 2384 
@@ -2082,7 +2083,7 @@ country_event = {
 	
 	option = { 
 	name = "AND48.A" #The Republican Federation is proclaimed
-	NAN = { country_event = 66948 }
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	set_global_flag = LOT_RESOLVED
 	government = democracy
 	election = yes
@@ -2100,7 +2101,7 @@ country_event = {
 	
 	option = { 
 	name = "AND48.B" #Denis I grants a Constitution 
-	NAN = { country_event = 66948 }
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	set_global_flag = LOT_RESOLVED
 	government = hms_government
 	election = yes
@@ -2118,7 +2119,7 @@ country_event = {
 	
 	option = { 
 	name = "AND48.C" #THE CHEF
-	NAN = { country_event = 66948 }
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	government = presidential_dictatorship
 	set_global_flag = LOT_RESOLVED
 	}
@@ -2172,7 +2173,7 @@ country_event = {
 	trigger = { 
 	tag = LOT 
 	war = no 
-	NOT = { has_global_flag = LOT_RESOLVED } 
+	OR = { has_global_flag = WAR_INC_LOT has_global_flag = assemble_Knights } 
 	has_global_flag = WAR_INC_LOT
 	AND = { ATL = { exists = no } owns = 2447 } 
 	owns = 2379 
@@ -2455,16 +2456,20 @@ country_event = {
 	set_global_flag = NAN_OVER
 	war_exhaustion = -25 
 	ai_chance = {
-	factor = 100
+	factor = 99
 		}
 	}
 	
 	option = { 
-	name = "AND560.A"
+	name = "AND560.B"
 	prestige = 1 
 	ai_chance = {
-	factor = 0 
-		}
+	factor = 1 
+	modifier = { 
+		factor = 100 
+		NAN = { ai = no } 
+			}
+	    }
 	}
 
 }
@@ -3836,7 +3841,7 @@ country_event = {
 		FROM = { 
 			    any_owned = { limit = { OR = { region = PEU_2303 region = PEU_2297 region = SA_2549  is_core = QUI } } 
 				secede_province = THIS
-				remove_core = FROM 
+				remove_core = INC
 				add_core = THIS 
 				add_province_modifier = {
 					name = war_torn

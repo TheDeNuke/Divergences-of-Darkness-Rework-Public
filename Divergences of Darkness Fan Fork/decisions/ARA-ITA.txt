@@ -1,13 +1,19 @@
 political_decisions = {
+
+    # Need to add Aragon Conquest decisions if they are Pan-Latin during ARA chain
+	
 	merge_the_crowns_ari = {
 	    picture = formARI
 		potential = {			
 			tag = ARA	
 			NOT = { has_country_flag = ARA_ITA }
 			NOT = { has_country_flag = Italyrulezz }
+			NOT = { has_country_flag = ARA_IMPLODING }
 		}
 		allow = {
 			is_greater_power = yes
+			state_n_government = 1
+			has_country_flag = fate_of_aragon_confirmed
 			NOT = { DUA = { war_with = SAR } }
 			NOT = { war = yes }
 			owns = 754 # Napoli
@@ -46,9 +52,19 @@ political_decisions = {
 		
 		effect = {
 			prestige = 20
+			clr_country_flag = ARA_ITALIAN_TAKEOVER
+			clr_country_flag = ARA_annex_PIE
+			clr_country_flag = ARA_annex_LOM
+			clr_country_flag = ARA_annex_LUC
+			clr_country_flag = ARA_annex_GEN
+			clr_country_flag = ARA_annex_FAR
+			clr_country_flag = ARA_annex_FRR
+			clr_country_flag = ARA_annex_PAP
+			clr_country_flag = ARA_annex_TUS
 			remove_country_modifier = sicily_burns
 			set_country_flag = ARA_ITA
-			clr_country_flag = ITC_stable		
+			clr_country_flag = ITC_stable	
+			
 			random_country = { 
 				limit = {
 					tag = PAP
@@ -87,40 +103,31 @@ political_decisions = {
 		    }
 			
 			capital = 749
-			
-			political_reform = federalism
 		
+		    primary_culture = central_italian
 			add_accepted_culture = south_italian
-			add_accepted_culture = central_italian
+			#add_accepted_culture = central_italian
+			add_accepted_culture = north_italian
 			add_accepted_culture = catalan
-			
-            PAP_741 = { remove_core = ITA }
-			SIC_754 = { remove_core = ITA }
-			SIC_763 = { remove_core = ITA }
-			765 = { remove_core = ITA }
-		    766 = { remove_core = ITA }
-			PAP_752 = { remove_core = ITA }
-			ITA_759 = { remove_core = ITA }
-			SIC_3257 = { remove_core = ITA } 
 
 			any_country = {
 				limit = {
 					OR = { 
 					    AND = {
-					    NOT = { in_sphere = DUA }
-						primary_culture = south_italian
+					       NOT = { in_sphere = DUA }
+						   primary_culture = south_italian
 						}
 					    AND = {
-					    NOT = { in_sphere = DUA }
-						primary_culture = central_italian
+					       NOT = { in_sphere = DUA }
+						   primary_culture = central_italian
 						}
 					    AND = {
-					    NOT = { in_sphere = DUA }
-						primary_culture = north_italian
+					       NOT = { in_sphere = DUA }
+						   primary_culture = north_italian
 						}		
 						AND = {
-						tag = PRV
-						has_country_flag = AI_tus_core
+						   tag = PRV
+						   has_country_flag = AI_tus_core
 						}
 					}
 					NOT = {
@@ -130,26 +137,9 @@ political_decisions = {
 				}
 				annex_to = THIS
 			}
-
-			any_owned = { 
-				limit = {
-					is_core = ITA
-				}
-				add_core = LOM
-			}
-
-            3285 = { add_core = ARI }
-            PAP_741 = { add_core = ITA }
-			SIC_754 = { add_core = ITA }
-			SIC_763 = { add_core = ITA }
-			765 = { add_core = ITA }
-		    766 = { add_core = ITA }
-			PAP_752 = { add_core = ITA }
-			ITA_759 = { add_core = ITA }
-			SIC_3257 = { add_core = ITA }			
-			SPA_498 = { add_core = CAT }
-			SPA_492 = { add_core = CAT }
-			SPA_503 = { add_core = CAT }
+			
+			ARA = { all_core = { add_core = ARI } }
+			ITA = { all_core = { add_core = ARI } }
 
 			change_tag = ARI
 			
@@ -169,17 +159,6 @@ political_decisions = {
 				}
 			}
 
-			#random_country = {
-			#	limit = {
-			#		ai = yes
-			#		OR = { 
-			#			tag = RAP
-			#			tag = HAW
-			#		}
-			#	}
-			#	country_event = 124101
-			#}
-
 			any_owned = { 
 				limit = {
 					is_core = ARA
@@ -192,87 +171,33 @@ political_decisions = {
 		}
 	}
 	
-	start_ai_cw = {
-		potential = {
-			tag = ARI
-			is_greater_power = yes
-			LOM = { is_vassal = yes }
-			NOT = { has_country_flag = waroveritaly }
-			NOT = { has_country_flag = waroveritalyend }
-		}
-		
-		allow = {
-			OR = {
-				rank = 4
-				mass_politics = 1
-			}
-			war = no
-		}
-		
-		effect = {
-			prestige = 5
-			country_event = 124105
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
+	# Sardinian War - To peace out if SRD holds its whole island for 365 days.
 	
-	integrate_north_italians = {
+	treaty_of_sardinia = {
+		picture = treaty_signing
 		potential = {
-			tag = ARI
-			has_country_flag = waroveritalyend
-			NOT = { exists = LOM }
-			NOT = { has_country_flag = italian_integration }
+			tag = SRD
+			war_with = ARA
+			ARA = { has_country_flag = SRD_revolt }
 		}
 		
 		allow = {
-			ITA = {
+			war = yes
+			765 = { controlled_by = THIS province_control_days = 365 }
+			SRD = {
 				all_core = {
-					owned_by = THIS
+					OR = {
+						controlled_by = THIS
+						controller = { vassal_of = THIS }
+						empty = yes
+					}
 				}
-			}
-			nationalism_n_imperialism = 1
-			OR = {
-				rank = 4
-				revolution_n_counterrevolution = 1
 			}
 		}
 		
 		effect = {
-			prestige = 5
-			add_accepted_culture = north_italian
-			set_country_flag = italian_integration
-			
-			any_pop = {
-				limit = {
-					has_pop_culture = north_italian
-				}
-				militancy = -2
-				consciousness = 2
-			}
-			any_pop = {
-				limit = {
-					has_pop_culture = south_italian
-				}
-				militancy = -2
-				consciousness = 2
-			}
-			any_pop = {
-				limit = {
-					has_pop_culture = catalan
-				}
-				militancy = 2
-				consciousness = 2
-			}
-			any_pop = {
-				limit = { 
-				has_pop_culture = castilian
-				}
-				militancy = 4
-				consciousness = 4
-			}
+		    end_war = ARA
+		    ARA = { country_event = { id = 470126 days = 0 } }
 		}
 		
 		ai_will_do = {
@@ -280,17 +205,297 @@ political_decisions = {
 		}
 	}
 	
+	# Latin Civil War - If NAP or ITC hold Rome for 365 days then force ARI to implode
+	
+	end_the_latin_abomination = {
+		picture = treaty_signing
+		potential = {
+			OR = {
+			   tag = NAP
+			   tag = ITC
+			}
+			war_with = ARI
+			has_global_flag = ARI_GREAT_LATIN_CIVIL_WAR
+		}
+		
+		allow = {
+			war = yes
+			749 = { controlled_by = THIS province_control_days = 365 }
+		}
+		
+		effect = {
+		    prestige = 50
+		    end_war = ARI
+		    ARI = { country_event = { id = 124178 days = 0 } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Neutral Empire dealing with Pope
+	
+	ARI_the_elephant_in_room = {
+		picture = the_roman_question
+		potential = {
+			tag = ARI
+			has_country_modifier = ARI_prisoner_vatican
+			NOT = { has_country_flag = dealing_with_poop_ARI }
+		}
+		
+		allow = {    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+		    revolution_n_counterrevolution = 1
+		}
+		
+		effect = {	
+           set_country_flag = dealing_with_poop_ARI		
+		   prestige = 5		   
+		   any_pop = { militancy = -1 }
+		   country_event = { id = 124147 days = 14 }	    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Latin Empire dealing with Pope
+	
+	ARI_the_main_problem = {
+		picture = the_roman_question
+		potential = {
+			tag = ARI
+			has_country_modifier = ARI_papal_interference
+			NOT = { has_country_flag = dealing_with_poop_ARI }
+		}
+		
+		allow = {    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+		    revolution_n_counterrevolution = 1
+		}
+		
+		effect = {		
+		   set_country_flag = dealing_with_poop_ARI	
+		   prestige = 5
+		   any_pop = { militancy = -1 }
+		   country_event = { id = 124149 days = 14 }	    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# The Fate of Aragon-Italy
+	
+	ARI_fate = {
+		picture = fate_ARI
+		potential = {
+			tag = ARI
+			NOT = { has_country_flag = FATE_OF_ARAGON_ITALY }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1
+			has_country_flag = ARI_NORTH_RESOLVED
+			OR = {
+			   has_country_flag = ARA_SOUTH_RESOLVED
+			   has_country_flag = ARA_EASTNOBILITYSUPPORT
+			}
+			has_country_flag = ARA_RAINS_RESOLVED
+			has_country_flag = ARA_SARDINIA_RESOLVED
+			has_country_flag = ARA_CATALONIAN_RESOLVED
+			NOT = { has_country_modifier = ARI_papal_interference }
+			NOT = { has_country_modifier = ARI_prisoner_vatican }
+			all_core = {
+				OR = {
+					owned_by = THIS
+					owner = { vassal_of = THIS }
+					empty = yes
+				}
+			}
+		}
+		
+		effect = {		
+		   prestige = 5
+		   set_country_flag = FATE_OF_ARAGON_ITALY
+		   clr_country_flag = ARI_NORTH_RESOLVED
+		   clr_country_flag = ARA_SOUTH_RESOLVED
+		   clr_country_flag = ARA_NAV_RESOLVED 
+		   clr_country_flag = ARA_RAINS_RESOLVED
+		   clr_country_flag = ARA_SARDINIA_RESOLVED
+		   clr_country_flag = ARA_CATALONIAN_RESOLVED
+		   any_pop = { militancy = -1 }
+		   country_event = { id = 124159 days = 14 }	    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Integrate Navarra - If decision is enabled
+	
+	ARI_NAV_integrate = {
+		picture = navaree
+		potential = {
+			tag = ARI
+			NAV = { 
+			   OR = {
+			      in_sphere = ARI		
+			      vassal_of = ARI 
+			   }
+			}
+			NOT = { has_country_flag = ARI_ate_nav }
+		}
+		
+		allow = {
+		   state_n_government = 1
+		   OR = {
+		      has_country_flag = NAV_ARI_KILL
+			  has_country_flag = FATE_OF_ARAGON_ITALY
+		   }			   
+		}
+		
+		effect = {		
+		   prestige = 5
+		   3254 = { add_core = ARI }
+		   493 = { add_core = ARI }
+		   inherit = NAV    
+		   set_country_flag = ARI_ate_nav
+		   clr_country_flag = NAV_ARI_KILL
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Triumph in Rome - After Latin Empire has reconquered all of its territory it can press this to activate the latin conquest decisions
+	
+	ARI_triumph_in_rome = {
+		picture = fate_ARI
+		potential = {
+			tag = ARI
+			has_country_flag = ARI_ACTIVATE_LARP_DECISION
+		}
+		
+		allow = {
+			is_greater_power = yes
+			all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    clr_country_flag = ARI_ACTIVATE_LARP_DECISION
+		    prestige = 10
+			remove_country_modifier = ARI_SPQR
+		    set_country_flag = ARI_PERMITTED_TO_LARP
+			any_pop = {
+			   militancy = -8
+			}
+			add_country_modifier = { name = global_baby_boom duration = 1825 }
+		    749 = {
+			    add_province_modifier = {
+				    name = gateway_to_harbor
+				    duration = 720
+			    } 
+			    add_province_modifier = {
+				    name = small_baby_boom
+				    duration = 14600
+			    }
+			    add_province_modifier = {
+				    name = baby_boom
+				    duration = 1825
+			    }
+		    }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+		
+	ARI_reconquest_of_africa = {
+		#picture = treaty_signing
+		potential = {
+			tag = ARI
+			has_country_flag = ARI_PERMITTED_TO_LARP
+			has_country_flag = ALD_revolted_reconquest
+		}
+		
+		allow = {
+			is_greater_power = yes
+		}
+		
+		effect = {
+		    prestige = 5
+			clr_country_flag = ALD_revolted_reconquest
+		    ALD = { all_core = { add_core = THIS } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	ARI_catholic_education = {
+		#picture = treaty_signing
+		potential = {
+			tag = ARI
+			has_country_flag = ARI_CATHOLIC_ENABLED
+			NOT = { has_country_modifier = ARI_ITA_catholic_schools }
+		}
+		
+		allow = {
+			is_ideology_enabled = socialist
+			invention = social_darwinism
+			invention = sunday_schools
+		}
+		
+		effect = {
+		    prestige = 10
+	        add_country_modifier = {
+               name = ARI_ITA_catholic_schools
+		       duration = -1
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+    # Conquest Decisions for Latin Empire here.
+	
+	# This is allowed for all Aragon-Italy tags after unification
+
 	venetian_question = { 
+	
+		picture = "Venice_panorama"
 	
 		potential = { 
 			tag = ARI 
-			has_country_flag = italian_integration
+			OR = {
+			   has_country_flag = ARI_boring
+			   has_country_flag = ARI_boring_catholic
+			   has_country_flag = ARI_PERMITTED_TO_LARP
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+			}
 			NOT = { has_country_flag = venetia_ARI }
 		}
 		
 		allow = { 
-		all_core = { owned_by = THIS }
-		is_greater_power = yes
+		   all_core = { owned_by = THIS }
+		   is_greater_power = yes
+		   war = no
 		}
 		
 		effect = { 
@@ -314,114 +519,538 @@ political_decisions = {
 				}
 				annex_to = THIS
 			}
-		}
-	
-	}
-	
-	latin_empire = {
-		potential = {
-			tag = ARI
-			has_country_flag = venetia_ARI
-			NOT = { has_country_flag = latin_empire }
-		}
-		
-		allow = {
-			all_core = { owned_by = THIS }
-			rank = 4
-			revolution_n_counterrevolution = 1
-		}
-		
-		effect = {
-			set_country_flag = latin_empire
-			prestige = 25
-			
-			ALD_1704 = { add_core = THIS }
-			ALD_1708 = { add_core = THIS }
-			TUN_1726 = { add_core = THIS }
-			TRI_1743 = { add_core = THIS }
-			TRI_1741 = { add_core = THIS }
-			FRA_467 = { add_core = THIS }
-			FRA_461 = { add_core = THIS }
-			FRA_1700 = { add_core = THIS }
-			
-			random_owned = {
-				limit = {
-					owner = { owns = 465 }
-				}
-				FRA_451 = { add_core = THIS }
-			}
-			
-			relation = {
-				who = DUA
-				value = -200
-			}
-			relation = {
-				who = BOH
-				value = -200
-			}
-			relation = {
-				who = SPA
-				value = -200
-			}
-			relation = {
-				who = SPC
-				value = -200
-			}
-			
-			any_country = {
-				limit = {
-					any_owned_province = { is_core = THIS }
-					NOT = {
-						tag = DUA
-						tag = BOH
-						tag = SPA
-						tag = SPC
-					}
-				}
-				relation = {
-					who = THIS
-					value = -200
-				}
-			}
-			
-			any_country = {
-				limit = {
-					any_owned_province = { is_core = THIS }
-					is_greater_power = no
-				}
-				country_event = 124108
-			}
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	annex_provence = { 
-		
-		potential = { 
-		tag = ARI 
-		has_country_flag = latin_empire
-		PRV = { exists = yes }
-		is_greater_power = yes 
-		NOT = { 458 = { owned_by = PRV } }
-		NOT = { 455 = { owned_by = PRV } }
-		}
-		
-		allow = { 
-		PRV = { war = no in_sphere = THIS }
-		war = no 
-		}
-		
-		effect = { 
-		inherit = PRV 
 		}	
 	}
 	
-	annex_MLT = { 
+	
+	# This is allowed for all Aragon-Italy tags after unification if they hold catastropic relations with Burgundy or Burgundy is not a Great Power
+	
+	reclaim_savoie = { 	
+	
+		
+		
 		potential = { 
-		tag = ARA 
+		   tag = ARI 
+		   NOT = { 3265 = { is_core = ARI } }
+		   OR = {
+			   has_country_flag = ARI_boring
+			   has_country_flag = ARI_boring_catholic
+			   has_country_flag = ARI_PERMITTED_TO_LARP
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+		   }
+		   NOT = { has_country_flag = ARI_return_savoie }
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   war = no 
+		   OR = {
+		      BRG = { war = no relation = { who = THIS value = -175 } }
+			  PBG = { war = no relation = { who = THIS value = -175 } }
+		   }		   
+		}
+		
+		effect = { 
+		   set_country_flag = ARI_return_savoie
+		   prestige = 3
+		   466 = { add_core = ARI }
+		   609 = { add_core = ARI }
+		   465 = { add_core = ARI }
+		   3265 = { add_core = ARI }
+		}	
+	}
+	
+	# This is allowed for either Catholic ARI, or Latin/Neutral Centralized
+	
+	annex_provence = { 	
+		potential = { 
+		   tag = ARI 
+		   OR = {
+			   has_country_flag = ARI_boring_catholic
+			   has_country_flag = ARI_PERMITTED_TO_LARP
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+		   }
+		   PRV = { exists = yes }	
+		   NOT = { 458 = { owned_by = PRV } }
+		   NOT = { 455 = { owned_by = PRV } }
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   PRV = { war = no in_sphere = THIS }
+		   war = no 
+		}
+		
+		effect = { 
+		   inherit = PRV 
+		}	
+	}
+	
+	# This is allowed for Catholic ARI
+	
+	invade_occitania_catholic = { 	
+		
+		picture = "Occitania"
+		
+		potential = { 
+		   tag = ARI 
+		   OR = {
+			   has_country_flag = ARI_boring_catholic
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+		   }
+		   has_country_flag = venetia_ARI 
+		   NOT = { has_country_flag = ergo_occitania } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = { 
+		   set_country_flag = ergo_occitania
+		   badboy = 10
+		   prestige = 10
+		   any_country = { 
+		      limit = {
+			     OR = { 
+				    owns = 459
+					owns = 462
+			     }
+			   }
+			   relation = { who = ARI value = -200 }
+			   leave_alliance = ARI
+		   }
+		   FRA_467 = { add_core = ARI }
+		   FRA_451 = { add_core = ARI }
+		   FRA_448 = { add_core = ARI }
+		   FRA_461 = { add_core = ARI }
+		   FRA_455 = { add_core = ARI }
+		   FRA_458 = { add_core = ARI }
+		   any_country = {
+				limit = {
+					tag = PRV 
+					OR = {
+					   in_sphere = THIS
+					   vassal_of = THIS
+					}
+					NOT = {
+						tag = THIS
+					}
+				}
+				annex_to = THIS
+			}		   
+		}	
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.5
+			   }
+		}
+	}
+	
+	# This is allowed for Latin/Neutral Centralized
+	
+	invade_occitania_larp = { 	
+	
+		picture = "Occitania"
+		
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = ARI_PERMITTED_TO_LARP
+		   has_country_flag = venetia_ARI 
+		   NOT = { has_country_flag = ergo_occitania } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = { 
+		   set_country_flag = ergo_occitania
+		   badboy = 10
+		   prestige = 10
+		   any_country = { 
+		      limit = {
+			     OR = { 
+				    owns = 459
+					owns = 462
+			     }
+			   }
+			   relation = { who = ARI value = -200 }
+			   leave_alliance = ARI
+		   }
+		   FRA_467 = { add_core = ARI }
+		   FRA_451 = { add_core = ARI }
+		   FRA_448 = { add_core = ARI }
+		   FRA_461 = { add_core = ARI }
+		   FRA_455 = { add_core = ARI }
+		   FRA_458 = { add_core = ARI }		
+		   any_country = {
+				limit = {
+					tag = PRV 
+					OR = {
+					   in_sphere = THIS
+					   vassal_of = THIS
+					}
+					NOT = {
+						tag = THIS
+					}
+				}
+				annex_to = THIS
+			}		   
+		}	
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.5
+			   }
+		}
+	}
+	
+	# Accepting Provencal - All ARI minus Catholic Centralized
+	
+	ARI_accept_provencal = { 
+	
+		picture = Occitania
+		
+		potential = { 
+		   tag = ARI 
+		   is_greater_power = yes 
+		   has_country_flag = ergo_occitania
+		   NOT = { has_country_flag = ARI_CATHOLIC_ENABLED }
+		   NOT = { has_country_flag = accepted_provencal }
+		}
+		
+		allow = { 
+		   war = no 
+		   nationalism_n_imperialism = 1		   
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }	
+           OCC = { all_core = { owned_by = THIS } }		   
+		}
+		
+		effect = { 
+		   prestige = 5
+		   add_accepted_culture = provencal
+		   set_country_flag = accepted_provencal
+		}	
+	}
+	
+	# Accepting Romand - Always possible after fate of ARI if the northermost part of Savoie is owned and Occitania has been claimed
+	
+	ARI_accept_romand = { 
+	
+		picture = Savoie
+		
+		potential = { 
+		   tag = ARI 
+		   is_greater_power = yes 
+		   has_country_flag = ergo_occitania
+		   NOT = { has_country_flag = accepted_romand }
+		   owns = 3265 
+		}
+		
+		allow = { 
+		   war = no 
+		   nationalism_n_imperialism = 1		   
+		   OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+           }	             
+		}
+		
+		effect = { 
+		   prestige = 5
+		   add_accepted_culture = romand
+		   set_country_flag = accepted_romand
+		}	
+	}
+	
+	# This is allowed for Latin/Neutral Centralized
+	
+	invade_kingdom_of_merica_larp = { 	
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = ARI_PERMITTED_TO_LARP
+		   has_country_flag = venetia_ARI 
+		   NOT = { has_country_flag = claimed_original_merica } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		}
+		
+		effect = { 
+		   set_country_flag = claimed_original_merica
+		   any_country = { 
+		      limit = {
+				    owns = 506
+			   }
+			   relation = { who = ARI value = -200 }
+			   leave_alliance = ARI
+		   }
+		   badboy = 5
+		   prestige = 5
+		   SPA_506 = { add_core = ARI }	   
+		}
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.8
+			   }
+		}		
+	}
+	
+	# This is allowed for Latin/Neutral Centralized
+	
+	secure_vasconia_navarre = { 	
+	
+		picture = navaree
+		
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = ARI_PERMITTED_TO_LARP
+		   has_country_flag = venetia_ARI 
+		   NOT = { has_country_flag = More_NAV } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		}
+		
+		effect = { 
+		   set_country_flag = More_NAV 
+		   badboy = 5
+		   prestige = 5
+		   ESK_1 = { add_core = ARI }	  
+		   any_country = {
+				limit = {
+					tag = NAV
+					OR = {
+					   in_sphere = THIS
+					   vassal_of = THIS
+					}
+					NOT = {
+						tag = THIS
+					}
+				}
+				set_global_flag = NAV_resolved
+				annex_to = THIS
+		   }
+		   any_country = { 
+		      limit = {
+				    owns = 492
+			   }
+			   relation = { who = ARI value = -200 }
+			   leave_alliance = ARI
+		   }			
+		}
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.8
+			   }
+		}		
+	}
+	
+	# This is allowed for Fascist Latin/Neutral Centralized or Catholic ARI
+	
+	ARI_secure_adriatic = { 	
+	
+		picture = conquest_adriatic
+	
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = venetia_ARI 
+		   OR = { 
+			   has_country_flag = ARI_PERMITTED_TO_LARP
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+		   }		   
+		   NOT = { has_country_flag = classic_italy_edition } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   OR = { 
+			   government = fascist_monarchy
+			   government = fascist_dictatorship
+			   has_country_flag = ARI_CATHOLIC_ENABLED
+		   }
+		}
+		
+		effect = { 
+		   set_country_flag = classic_italy_edition
+		   badboy = 10
+		   prestige = 5
+		   MON_2582 = { add_core = ARI }	
+           TUR_853 = { add_core = ARI }	
+           824 = { add_core = ARI }	
+		   any_country = {
+				limit = {
+				    OR = {
+					   tag = ALB
+					   tag = MON
+					}
+					OR = {
+					   in_sphere = THIS
+					   vassal_of = THIS
+					}
+					NOT = {
+						tag = THIS
+					}
+				}
+				annex_to = THIS
+		   }
+		   any_country = { 
+		      limit = {
+				    OR = {
+					   owns = 2582
+					   owns = 824
+					}
+			   }
+			   relation = { who = ARI value = -200 }
+			   leave_alliance = ARI
+		   }		   
+		}
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.5
+			   }
+		}		
+	}
+	
+	# This is allowed for Fascist Latin/Neutral Centralized. This is a Pariah Decision.
+	
+	ARI_french_uberlarp = { 	
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = venetia_ARI 
+		   has_country_flag = ARI_PERMITTED_TO_LARP		   
+		   NOT = { has_country_flag = romeaboo_france } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   OR = { 
+			   government = fascist_monarchy
+			   government = fascist_dictatorship
+		   }
+		   owns = 459
+		   owns = 462
+		   owns = 470
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = { 
+		   set_country_flag = romeaboo_france
+		   badboy = 22
+		   FRA = { all_core = { add_core = ARI } }
+		   ANF = { all_core = { add_core = ARI } }
+	       any_country = { 
+		     limit = {
+		        is_greater_power = yes
+				NOT = {
+			       OR = { 
+			          government = fascist_monarchy
+			          government = fascist_dictatorship
+		           }
+				}
+		     }
+		     diplomatic_influence = { who = ARI value = -200 }
+		     relation = { who = ARI value = -200 }
+	         leave_alliance = ARI	
+          }			 		   
+		}
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.1
+			   }
+		}		
+	}
+
+	# This is allowed for Fascist Latin/Neutral Centralized. This is a Pariah Decision.
+	
+	ARI_iberia_uberlarp = { 	
+		potential = { 
+		   tag = ARI 
+		   has_country_flag = venetia_ARI 
+		   has_country_flag = ARI_PERMITTED_TO_LARP		   
+		   NOT = { has_country_flag = romeaboo_iberia } 
+		}
+		
+		allow = { 
+		   is_greater_power = yes 
+		   OR = { 
+			   government = fascist_monarchy
+			   government = fascist_dictatorship
+		   }
+		   owns = 492
+		   owns = 506
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = { 
+		   set_country_flag = romeaboo_iberia
+		   badboy = 22
+		   MOR_1688 = { add_core = ARI }
+		   SPA_512 = { add_core = ARI }
+		   SPA_513 = { add_core = ARI }
+		   SPA_487 = { add_core = ARI }
+		   SPA_477 = { add_core = ARI }
+		   SPA_474 = { add_core = ARI }	
+		   POR_518 = { add_core = ARI }
+		   POR_521 = { add_core = ARI }
+		   POR_525 = { add_core = ARI }
+		   POR_2134 = { add_core = ARI }
+		   SPA_484 = { add_core = ARI }
+	       any_country = { 
+		     limit = {
+		        is_greater_power = yes
+				NOT = {
+			       OR = { 
+			          government = fascist_monarchy
+			          government = fascist_dictatorship
+		           }
+				}
+		     }
+		     diplomatic_influence = { who = ARI value = -200 }
+		     relation = { who = ARI value = -200 }
+	         leave_alliance = ARI	
+          }			 		   
+		}
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.1
+			   }
+		}		
+	}	
+	
+	
+	
+	
+	annex_MLT = { 
+	
+		picture = knights_hospitaller_maltese_cross
+	
+		potential = { 
+		OR = {
+		   tag = ARA
+           tag = ARI
+        }		   
 		MLT = { 
           vassal_of = THIS
           ai = yes    
@@ -450,15 +1079,616 @@ political_decisions = {
 		allow = { 
 		war = no 
 		OR = { 
-		truce_with = ARA 
-		year = 1860
-			}
+		   truce_with = ARA 
+		   truce_with = ARI
+		   year = 1860
+		}
 		}
 
 		effect = { 
 		prestige = 20
-		any_owned = { limit = { is_core = MLT } remove_core = ARA }		
+		any_owned = { limit = { is_core = MLT } remove_core = ARA remove_core = ARI }		
 	    set_country_flag = fuck_aragon
 		}
+	}
+	
+	### Aragon's North-Italy Demolition Decisions ####
+	
+	### This is only possible if there is currently no ongoing political crisis in Italy and Tuscany is disarmed - Aragon can only annex Tuscany and Pope Directly. The rest can only be sphered to annex.###
+	
+	ARA_annex_pope = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+           NOT = { has_country_flag = ARA_annex_PAP }
+		   PAP = { exists = yes in_sphere = THIS }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 5
+		   set_country_flag = ARA_annex_PAP
+		   PAP = { all_core = { add_core = ARA } }
+		   inherit = PAP          		
+		}
+	}	
+	
+	ARA_restore_pope = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+           NOT = { has_country_flag = ARA_annex_TUS }		   
+		   PAP = { exists = yes NOT = { in_sphere = THIS } }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 5
+		   set_country_flag = ARA_annex_PAP
+		   relation = { who = PAP value = -400 }
+		   diplomatic_influence = { who = PAP value = -400 }
+		   PAP = { all_core = { add_core = ARA } }	
+		   random_owned = {
+		     limit = { 
+			    owner = {
+			       ai = yes
+				   NOT = { PAP = { part_of_sphere = yes } }
+				}
+		     }
+			 owner = {
+			    war = {
+				   target = PAP
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = status_quo
+				   }
+			   }
+			}
+			}
+		}
+	}
+	
+	ARA_annex_TUS = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER		
+           NOT = { has_country_flag = ARA_annex_TUS }		   
+		   TUS = { exists = yes OR = { in_sphere = THIS vassal_of = THIS } }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 749
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 5
+		   set_country_flag = ARA_annex_TUS
+		   TUS = { all_core = { add_core = ARA } }
+           inherit = TUS		   
+		}
+	}
+	
+	ARA_kill_rogue_TUS = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER	
+           NOT = { has_country_flag = ARA_annex_TUS }		   
+		   TUS = { exists = yes NOT = { OR = { in_sphere = THIS vassal_of = THIS } } }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 749
+		   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 5
+		   set_country_flag = ARA_annex_TUS
+		   relation = { who = TUS value = -400 }
+		   diplomatic_influence = { who = TUS value = -400 }
+		   TUS = { all_core = { add_core = ARA } }
+		   random_owned = {
+		     limit = { 
+			    owner = {
+			       ai = yes
+				   NOT = { TUS = { part_of_sphere = yes } }
+				}
+		     }
+			 owner = {
+			    war = {
+				   target = TUS
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = status_quo
+				   }
+			   }
+			}
+			}		   
+		}
+	}
+	
+	ARA_annex_LUC = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_LUC }
+		   LUC = { exists = yes in_sphere = THIS }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 744
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 1
+		   set_country_flag = ARA_annex_LUC
+		   LUC = { all_core = { add_core = ARA } }
+		   inherit = LUC         		
+		}
+	}	
+	
+	ARA_unlucky_LUC = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER		
+           NOT = { has_country_flag = ARA_annex_LUC }			   
+		   LUC = { exists = yes NOT = { in_sphere = THIS } }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 744
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 1
+		   set_country_flag = ARA_annex_LUC
+		   relation = { who = LUC value = -400 }
+		   diplomatic_influence = { who = LUC value = -400 }
+		   LUC = { all_core = { add_core = ARA } }	
+		   random_owned = {
+		     limit = { 
+			    owner = {
+			       ai = yes
+				   NOT = { LUC = { part_of_sphere = yes } }
+				}
+		     }
+			 owner = {
+			    war = {
+				   target = LUC
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = status_quo
+				   }
+			   }
+			}
+			}
+		}
+	}
+	
+	ARA_annex_FRR = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_FRR }	
+		   FRR = { exists = yes in_sphere = THIS }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 744
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = {           
+		   prestige = 3
+           set_country_flag = ARA_annex_FRR
+		   FRR = { all_core = { add_core = ARA } }
+		   inherit = FRR        		
+		}
+	}	
+	
+	ARA_papal_claims = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER	
+           NOT = { has_country_flag = ARA_annex_FRR }		   
+		   FRR = { exists = yes NOT = { in_sphere = THIS } }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 744
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 3
+		   set_country_flag = ARA_annex_FRR
+		   relation = { who = FRR value = -400 }
+		   diplomatic_influence = { who = FRR value = -400 }
+		   FRR = { all_core = { add_core = ARA } }	
+		   random_owned = {
+		     limit = { 
+			    owner = {
+			       ai = yes
+				   NOT = { FRR = { part_of_sphere = yes } }
+				}
+		     }
+			 owner = {
+			    war = {
+				   target = FRR
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = status_quo
+				   }
+			   }
+			}
+			}
+		}
+	}
+
+	ARA_annex_farnese_duchies = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_FAR }
+		   OR = {
+		      MOD = { exists = yes in_sphere = THIS }
+			  PAR = { exists = yes in_sphere = THIS }
+		   }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 742
+		   owns = 746
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 1
+		   set_country_flag = ARA_annex_FAR
+		   PAR = { all_core = { add_core = ARA } }
+		   MOD = { all_core = { add_core = ARA } }
+		   inherit = PAR
+           inherit = MOD		   
+		}
+	}	
+	
+	ARA_annex_genoa = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_GEN }
+		   GEN = { exists = yes in_sphere = THIS }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 746
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   prestige = 3
+		   set_country_flag = ARA_annex_GEN
+		   GEN = { all_core = { add_core = ARA } }
+		   inherit = GEN	   
+		}
+	}
+	
+	ARA_annex_milan = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_LOM }
+		   LOM = { exists = yes in_sphere = THIS }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 738
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   set_country_flag = ARA_annex_LOM
+		   prestige = 5
+		   LOM = { all_core = { add_core = ARA } }
+		   inherit = LOM	   
+		}
+	}
+	
+	ARA_annex_savoyard = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_annex_PIE }
+		   OR = {
+		      PIE = { exists = yes in_sphere = THIS }
+			  SAR = { exists = yes in_sphere = THIS }
+		   }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+		   owns = 726
+		   OR = {
+			   TUS = { vassal_of = ARA }
+			   NOT = { exists = TUS }
+			   NOT = { TUS = { OR = { government = democracy government = parliamentary_republic government = socialist_republic } } }
+		   }
+		   OR = {
+				government = absolute_monarchy
+				government = prussian_constitutionalism
+				government = hms_government
+				government = fascist_monarchy
+		   }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   set_country_flag = ARA_annex_PIE
+		   prestige = 3
+		   SAR = { all_core = { add_core = ARA } }
+		   PIE = { all_core = { add_core = ARA } }
+		   inherit = SAR
+           inherit = PIE		   
+		}
+	}
+	
+	ARA_force_confederation_hand = { 
+		potential = { 
+		   tag = ARA
+           has_country_flag = ARA_ITALIAN_TAKEOVER
+		   NOT = { has_country_flag = ARA_fuck_ITC }
+		   ITC = { exists = yes has_country_modifier = the_compromesso }
+		}
+
+		allow = { 
+		   war = no 
+		   is_greater_power = yes
+           state_n_government = 1
+		   ITC = { in_sphere = THIS }
+           NOT = { has_country_modifier = sicily_burns }
+		   NOT = { exists = SIC }
+		   NOT = { exists = NAP }
+		}
+
+		effect = { 
+		   set_country_flag = ARA_fuck_ITC
+		   prestige = 10
+		   ITC = { remove_country_modifier = the_compromesso }  
+		}
+	}
+	
+	Protector_Holy_Places_ARI = { 
+	
+		picture = protect_eastern_christians
+		
+		potential = { 
+		OR = { tag = ARA tag = ARI } 
+		is_greater_power = yes 
+		NOT = { has_global_flag = ARI_protector } 
+		}
+		
+		allow = { 
+		state_n_government = 1 
+		}
+		
+		effect = { 
+		relation = { who = DUA value = -50 }
+		set_global_flag = ARI_protector
+		any_country = { 
+			limit = { owns = 917 } 
+				country_event = 124198
+			}
+		}
+	
+	}
+	
+	Annex_Palestine_ARI = { 
+	
+		picture = sykes_picot
+		
+		potential = { 
+		tag = ARI 
+		is_greater_power = yes 
+		has_global_flag = ARI_protector
+		PLS = { exists = yes } 
+		has_country_flag = FATE_OF_ARAGON_ITALY
+		}
+		
+		allow = { 
+		war = no 
+		nationalism_n_imperialism = 1
+		PLS = { in_sphere = THIS } 
+		}
+		
+		effect = { 
+		set_global_flag = ARI_protector
+		any_country = { 
+			limit = {
+				is_our_vassal = PLS
+			} 
+			country_event = { id = 124303 days = 5 } 
+		}
+		inherit = PLS 
+		}	
 	}
 }

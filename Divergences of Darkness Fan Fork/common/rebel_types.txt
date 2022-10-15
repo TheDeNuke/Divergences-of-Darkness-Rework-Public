@@ -95,6 +95,7 @@ reactionary_rebels = {
 			NOT = {
 				OR = {
 					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
 					pop_majority_ideology = market_liberal
 					pop_majority_ideology = conservative
 					pop_majority_ideology = fascist
@@ -339,6 +340,344 @@ reactionary_rebels = {
 	}
 }
 
+#######################################################################
+# Paternal Rebels
+#######################################################################
+paternal_rebels = {
+	icon = 1
+	
+	area = nation 					# Stays within the nation
+	break_alliance_on_win = no
+	
+	# <this is the governement in the country> = <this is what the rebels want>
+	government = {
+		proletarian_dictatorship = presidential_dictatorship
+		presidential_dictatorship = presidential_dictatorship
+		parliamentary_republic = presidential_dictatorship
+		bourgeois_dictatorship = presidential_dictatorship
+		fascist_dictatorship = presidential_dictatorship
+		feudal_monarchy = absolute_monarchy
+		khanate = presidential_dictatorship
+		absolute_monarchy = absolute_monarchy
+		prussian_constitutionalism = absolute_monarchy
+		hms_government = absolute_monarchy
+		democracy = presidential_dictatorship
+		socialist_republic = presidential_dictatorship
+		fascist_monarchy = absolute_monarchy
+		theocracy = presidential_dictatorship
+		merchant_republic = presidential_dictatorship
+		autonomous_dependency = presidential_dictatorship
+	}
+	
+	
+	defection = none					# Will defect to the "best" alternative.
+	independence = none				# Does not strive for independence
+	defect_delay = 18
+	
+	ideology = paternal
+	
+	allow_all_cultures = yes
+	allow_all_religions = yes
+	allow_all_ideologies = yes
+	
+	resilient = yes					# Does not disband on retreat
+	reinforcing = yes				# Receives reinforcements
+	general = yes					# Uses generals
+	smart = yes					# Assaults forts, tactically withdraws from battle, etc.
+	unit_transfer = no				# Units remain after enforcing demands.
+	
+	occupation_mult = 1.0			# The amount of strength this rebel gains from taking provinces	
+	
+
+	# triggers a general rising, modifier will be multiplied with the countrys army strength and compared to the factions strenght
+	will_rise = {
+		factor = 0.5
+		
+		modifier = {
+			war = yes
+			factor = 0.8
+		}
+		
+		modifier = {			
+			has_unclaimed_cores = yes
+			factor = 0.8
+		}
+		
+		modifier = {
+			war_exhaustion = 40
+			factor = 0.95
+		}	
+		
+		modifier = {
+			war_exhaustion = 60
+			factor = 0.95
+		}	
+		
+		modifier = {
+			war_exhaustion = 80
+			factor = 0.95
+		}
+		
+		modifier = {
+			factor = 0.5
+			has_country_modifier = charismatic_leader_paternal
+		}
+	}
+	
+	# The rebel type with the highest modifier for this pop gets picked
+	spawn_chance = {
+		factor = 1.02
+		
+		modifier = {
+			factor = 0
+			NOT = { is_ideology_enabled = paternal }
+		}
+		modifier = {
+			factor = 0
+			type = slaves
+		}		
+		modifier = {
+			factor = 0.1
+			has_country_flag = the_terror
+		}		
+		modifier = {
+			factor = 0
+			country = { civilized = no }
+		}
+		modifier = {
+			factor = 0.01
+			NOT = {
+				OR = {
+					pop_majority_ideology = fascist
+					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
+					pop_majority_ideology = conservative
+					pop_majority_ideology = market_liberal
+				}
+			}
+		}
+		modifier = {
+			factor = 0.05
+			is_primary_culture = no
+			is_accepted_culture = no
+		}
+		modifier = {
+			factor = 0.2
+			is_accepted_culture = yes
+			NOT = { is_culture_group = THIS }
+		}	
+		modifier = {
+			factor = 1.2
+			pop_majority_ideology = paternal
+		}
+		# Paternals appease Fascists
+		modifier = {
+			factor = 0
+			pop_majority_ideology = fascist
+		}
+		modifier = {
+			factor = 0
+			country = { government = fascist_dictatorship }
+		}
+		modifier = {
+			factor = 0
+			country = { government = fascist_monarchy }
+		}
+		# Will not rise in Paternal States
+		modifier = {
+			factor = 0
+			country = { 
+			   government = presidential_dictatorship 
+			   ruling_party_ideology = paternal 
+			}
+		}
+		modifier = {
+			factor = 0
+			country = { 
+			   government = absolute_monarchy 
+			   ruling_party_ideology = paternal 
+			}
+		}
+		modifier = {
+			factor = 1.015
+			country = { NOT = { plurality = 35 } }
+		}
+		modifier = {
+			factor = 1.15
+			country = {
+				has_unclaimed_cores = yes
+			}
+		}
+		modifier = {
+			factor = 1.015
+			location = {
+				minorities = yes
+			}
+		}
+		modifier = {
+			factor = 0
+			is_primary_culture = no
+			is_accepted_culture = no
+			location = {
+				any_core = {
+					is_cultural_union = no
+					OR = {
+						is_primary_culture = THIS
+						is_accepted_culture = THIS
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0.01
+			is_primary_culture = no
+			location = {
+				any_core = {
+					is_primary_culture = THIS
+					is_cultural_union = no
+					exists = no
+				}
+			}
+		}
+		modifier = {
+			factor = 0.01
+			is_primary_culture = yes
+			location = {
+				NOT = { is_core = THIS }
+				any_core = {
+					is_primary_culture = THIS
+					is_cultural_union = no
+					exists = no
+				}
+			}
+		}
+	}
+ 
+ 	#This is checked for EACH province in the Area of Operations
+	movement_evaluation = {
+		factor = 1
+		modifier = {
+			factor = 0.1
+			units_in_province = 1
+			NOT = { is_capital = yes }
+		}
+		modifier = {
+			factor = 0.001
+			controlled_by = REB
+			NOT = { is_capital = yes }
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 4
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 1.5
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 5.0
+			is_capital = yes
+		}
+	}
+	
+ 	# Province Scope
+ 	siege_won_trigger = {
+		NOT = { has_province_modifier = war_torn }
+ 	}
+	
+	siege_won_effect = {
+		add_province_modifier = {
+			name = war_torn
+			duration = 365
+		}
+		any_pop = {
+			ideology = {
+				value = paternal
+				factor = 0.1
+			}
+		}
+		owner = { war_exhaustion = 2.5 }
+	}
+	
+
+	# Country scope
+	demands_enforced_trigger = {
+		OR = {
+			capital_scope = {
+				controlled_by = REB
+				province_control_days = 90
+			}
+			NOT = {
+				any_owned_province = {
+					is_colonial = no
+					controlled_by = THIS
+				}
+			}
+		}
+	}
+	demands_enforced_effect = {
+		any_pop = { militancy = -3 }
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+        clr_country_flag = red_guard_gov
+		clr_country_flag = fascist_monarchy_gov		
+		clr_country_flag = socialist_republic_gov	
+		clr_country_flag = autoden_gov
+		ruling_party_ideology = paternal
+		political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = underground_parties
+		political_reform = mandatory_service
+		random_owned = { limit = { owner = { NOT = { trade_unions = no_trade_unions } } } owner = { political_reform = state_controlled } }
+		random_owned = { limit = { owner = { NOT = { citizens_rights = primary_culture_only } } } owner = { political_reform = culture_voting_only } }
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win
+		add_country_modifier = {
+			name = national_confusion
+			duration = 1095
+		}
+		add_country_modifier = {
+			name = the_eye_of_the_storm
+			duration = 1095
+		}
+		random_owned = {
+			limit = {
+				owner = {
+                    OR = { 
+					not = { has_country_modifier = the_eye_of_the_storm }
+					not = { has_country_modifier = the_maelstrom_wakes }
+                    }
+				}
+			}
+			owner = { prestige_factor = -0.25 }
+		}
+		plurality = -25
+		country_event = 800057
+	}
+}
+
 ###################################
 # Fascist Rebels
 ###################################
@@ -443,6 +782,7 @@ fascist_rebels = {
 				OR = {
 					pop_majority_ideology = fascist
 					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
 					militancy = 5
 				}
 			}	
@@ -465,6 +805,7 @@ fascist_rebels = {
 				OR = {
 					pop_majority_ideology = fascist
 					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
 					pop_majority_ideology = conservative
 					pop_majority_ideology = market_liberal
 				}
@@ -863,6 +1204,7 @@ fascist_monarchy_rebels = {
 				OR = {
 					pop_majority_ideology = fascist
 					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
 					militancy = 5
 				}
 			}	
@@ -885,6 +1227,7 @@ fascist_monarchy_rebels = {
 				OR = {
 					pop_majority_ideology = fascist
 					pop_majority_ideology = reactionary
+					pop_majority_ideology = paternal
 					pop_majority_ideology = conservative
 					pop_majority_ideology = market_liberal
 				}
@@ -2116,6 +2459,10 @@ nationalist_rebels = {
 		modifier = {
 			factor = 1.09
 			pop_majority_ideology = reactionary
+		}
+		modifier = {
+			factor = 1.10
+			pop_majority_ideology = paternal
 		}
 		modifier = {
 			factor = 1.11
@@ -3834,6 +4181,10 @@ separatist_rebels = {
 			pop_majority_ideology = reactionary
 		}
 		modifier = {
+			factor = 1.10
+			pop_majority_ideology = paternal
+		}
+		modifier = {
 			factor = 1.11
 			pop_majority_ideology = fascist
 		}
@@ -5162,6 +5513,10 @@ native_rebels = {
 		modifier = {
 			factor = 1.1
 			pop_majority_ideology = anarcho_liberal
+		}
+		modifier = {
+			factor = 1.2
+			pop_majority_ideology = paternal
 		}
 		modifier = {
 			factor = 1.2

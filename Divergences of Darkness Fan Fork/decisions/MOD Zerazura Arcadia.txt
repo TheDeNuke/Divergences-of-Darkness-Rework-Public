@@ -304,13 +304,15 @@ political_decisions = {
 				has_country_modifier = neutrality
 			}
 		}
+		
 		allow = {
             war = no 
             war_policy = jingoism
             NOT = {
                 is_sphere_leader_of = SKR
                 truce_with = SKR
-                alliance_with = SKR           }
+                alliance_with = SKR           
+			}
         }
 
         effect = {
@@ -408,6 +410,7 @@ political_decisions = {
 		allow = {
 			war = no 
 			civilized = yes
+			state_n_government = 1
 			HHR = { NOT = { truce_with = THIS } }
 			30 = {
 				OR = {
@@ -462,6 +465,481 @@ political_decisions = {
 			OCE = { all_core = { add_core = THIS } }
 			set_country_flag = SKR_moar_cultures
 		}
+	}
+
+	NBG_Masgirland_negociations = { 
+		potential = { 
+		OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
+		OR = { tag = NBG AND = { tag = ARC primary_culture = septiman } }
+		NOT = { has_country_flag = MSG_negociations } 
+		MSG = { exists = yes } 
+		NOT = { MSG = { is_vassal = yes } } 
+		}
+		
+		allow = { 
+		MSG = { exists = yes in_sphere = THIS } 
+		}
+		
+		effect = { 
+		MSG = { country_event = 79188 } 
+		set_country_flag = MSG_negociations
+		}
+	
+	}
+	
+	NBG_puppet_MSG = { 
+		potential = { 
+		OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
+		OR = { tag = NBG tag = ARC } 
+		NOT = { MSG = { is_vassal = yes } } 
+		has_country_flag = okay_negociations
+		}
+		
+		allow = { 
+		investment_banks = 1 
+		iron_railroad = 1 
+		iron_steamers = 1 
+		money = 50000
+		}
+		
+		effect = { 
+		money = -50000
+		clr_country_flag = okay_negociations
+		create_vassal = MSG 
+		}
+	}
+	
+	NBG_annex_MSG = { 
+		potential = { 
+		has_global_flag = NBG_NEW_ARCADIAN
+		OR = { 
+		   tag = NBG 
+		   tag = ARC  
+		   is_our_vassal = MSG
+		}
+		}
+		
+		allow = { 
+		mass_politics = 1 
+		}
+		
+		effect = { 
+		inherit = MSG
+		MSG = { all_core = { add_core = THIS } } 
+		add_accepted_culture = marklander 
+		clr_country_flag = okay_negociations
+		}
+	}
+	
+	Arcadia_capital_Vierset = { 
+		picture = "ARCcapital"
+		potential = { 
+		tag = ARC 
+		NOT = { has_country_flag = new_capital } 
+		OR = { 
+				AND = { 
+				primary_culture = septiman 
+				has_global_flag = NBG_NEW_ARCADIAN 
+				}
+				AND = { 
+				primary_culture = plantagenian 
+				NOT = { has_country_flag = COWBOY_KING } 
+				}
+			}
+		}
+		
+		allow = { 
+		iron_railroad = 1 
+		investment_banks = 1 
+		steam_turbine = 1 
+		treasury = 100000
+		}
+		
+		effect = { 
+		capital = 214 
+		treasury = -100000
+		set_country_flag = new_capital
+		214 = { 
+		change_province_name = "Arcadiopolis" 
+		life_rating = 10
+		add_province_modifier = { 
+			name = colonial_recruitment
+			duration = 1825
+				}
+			} 
+		}
+		
+	}
+	
+	Arcadia_capital_Septimontia = { 
+		picture = "ARCcapital"
+		potential = { 
+		tag = ARC 
+		has_global_flag = NBG_OLD_ARCADIAN 
+		primary_culture = septiman
+		NOT = { has_country_flag = new_capital } 
+		}
+		
+		allow = { 
+		iron_railroad = 1 
+		investment_banks = 1 
+		all_core = { owned_by = THIS } 
+		treasury = 100000
+		}
+		
+		effect = { 
+		capital = 182 
+		treasury = -100000
+		set_country_flag = new_capital
+		182 = { 
+		change_province_name = "Septimontia" 
+		life_rating = 10
+		add_province_modifier = { 
+			name = colonial_recruitment
+			duration = 1825
+				}
+			} 
+		}
+		
+	}
+	
+	Arcadia_capital_Charleville = { 
+		picture = "ARCcapital"
+		potential = { 
+		tag = ARC 
+		NOT = { has_country_flag = new_capital } 
+		has_country_flag = COWBOY_KING
+		}
+		
+		allow = { 
+		iron_railroad = 1 
+		investment_banks = 1 
+		steam_turbine = 1 
+		treasury = 100000
+		}
+		
+		effect = { 
+		treasury = -100000
+		set_country_flag = new_capital
+		148 = { 
+		change_province_name = "Charleville" 
+		life_rating = 10
+		add_province_modifier = { 
+			name = colonial_recruitment
+			duration = 1825
+				}
+			} 
+		}
+		
+	}
+	
+	Arcadia_memorial_Louis = { 
+	
+		potential = { 
+		tag = ARC 
+		 has_country_flag = new_capital
+		has_country_flag = COWBOY_KING
+		NOT = { has_country_flag = commemoration_statue }
+		}
+		
+		allow = { 
+		impressionism = 1 
+		advanced_metallurgy = 1 
+		}
+		
+		effect = { 
+		set_country_flag = commemoration_statue
+		prestige = 25  
+		any_pop = {
+		   militancy = -3
+		}
+		random_owned = {
+		   limit = {
+		      owner = { 
+			     NOT = { government = presidential_dictatorship }
+				 NOT = { government = fascist_dictatorship }
+			  }
+		   }
+		   owner = {
+	          add_country_modifier = {
+                 name = the_arcadian_dream_burns_hot
+	             duration = -1
+	          }
+		   }
+		}
+        }		
+	}
+	
+	Arcadia_memorial_peace = { 
+		picture = "arcadia_statue"
+	
+		potential = { 
+		tag = ARC 
+		has_country_flag = new_capital
+		capital = 214
+		NOT = { has_country_flag = commemoration_statue }
+		}
+		
+		allow = { 
+		impressionism = 1 
+		advanced_metallurgy = 1 
+		}
+		
+		effect = { 
+		set_country_flag = commemoration_statue
+		prestige = 25  
+		any_pop = {
+		   militancy = -3
+		}
+		random_owned = {
+		   limit = {
+		      owner = { 
+			     NOT = { government = presidential_dictatorship }
+				 NOT = { government = fascist_dictatorship }
+			  }
+		   }
+		   owner = {
+	          add_country_modifier = {
+                 name = the_arcadian_dream_burns_hot
+	             duration = -1
+	          }
+		   }
+		}	
+		}	
+	}
+	
+	Arcadia_memorial_glory = { 
+		picture = "arcadia_statue"
+	
+		potential = { 
+		tag = ARC 
+		has_country_flag = new_capital
+		capital = 182
+		NOT = { has_country_flag = commemoration_statue }
+		}
+		
+		allow = { 
+		impressionism = 1 
+		advanced_metallurgy = 1 
+		}
+		
+		effect = { 
+		set_country_flag = commemoration_statue
+		prestige = 25  
+		any_pop = {
+		   militancy = -3
+		}
+		random_owned = {
+		   limit = {
+		      owner = { 
+			     NOT = { government = presidential_dictatorship }
+				 NOT = { government = fascist_dictatorship }
+			  }
+		   }
+		   owner = {
+	          add_country_modifier = {
+                 name = the_arcadian_dream_burns_hot
+	             duration = -1
+	          }
+		   }
+		}			
+		}
+		
+	}
+	
+	AFN_capital = { 
+		picture = "ARCcapital" 
+		
+		potential = { 
+		tag = AFN 
+		NOT = { has_country_flag = new_capital } 
+		}
+		
+		allow = { 
+		iron_railroad = 1 
+		investment_banks = 1 
+		steam_turbine = 1 
+		money = 100000
+		}
+		
+		effect = { 
+		set_country_flag = new_capital 
+		country_event = { id = 79200 days = 0 } 
+		treasury = -100000
+		random_owned = {
+		   limit = {
+		      owner = { 
+			     NOT = { government = presidential_dictatorship }
+				 NOT = { government = fascist_dictatorship }
+			  }
+		   }
+		   owner = {
+	          add_country_modifier = {
+                 name = the_arcadian_dream_burns_hot
+	             duration = -1
+	          }
+		   }
+		}		
+		}
+	}
+	
+	ARC_the_mountain_frontier = { 
+		potential = { 
+		tag = ARC 
+		NOT = { has_country_flag = Western_border_fixed }
+		NOT = { has_country_flag = western_frontier } 
+		}
+		
+		allow = { 
+		mass_politics = 1
+		all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		set_country_flag = western_frontier 
+		prestige = -10
+		relation = { who = DNG value = -150 }
+		NA_30 = { add_core = THIS } 
+		NA_22 = { add_core = THIS } 
+		NA_11 = { add_core = THIS } 
+		NA_30 = { add_core = THIS } 
+		NA_33 = { add_core = THIS } 
+		}
+	}
+	
+	ARC_annex_HHR = { 
+		potential = { 
+		tag = ARC 
+		has_country_flag = western_frontier
+		HHR = { exists = yes } 
+		}
+		
+		allow = { 
+		HHR = { in_sphere = THIS war = no } 
+		war = no 
+		}
+		
+		effect = {
+		inherit = HHR
+		badboy = 2 
+		}
+	
+	}
+	
+	SKR_urbanization = { 
+		potential = { 
+		tag = SKR 
+		has_country_flag = the_new_great_peace
+		NOT = { has_country_flag = tier_1_cities } 
+		}
+		
+		allow = {
+		medicine = 1 
+		}
+		
+		effect = { 
+		set_country_flag = tier_1_cities
+		173 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		}	
+	}
+	
+	SKR_urbanization_2 = { 
+		potential = { 
+		tag = SKR 
+		has_country_flag = the_new_great_peace
+		has_country_flag = tier_1_cities
+		NOT = { has_country_flag = tier_2_cities } 
+		owns = 178 
+		owns = 237 
+		owns = 55 
+		owns = 163 
+		}
+		
+		allow = {
+		stock_exchange = 1 
+		high_pressure_steam_engine  = 1 
+		}
+		
+		effect = { 
+		set_country_flag = tier_2_cities
+		178 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		237 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		55 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		163 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		}
+	
+	}
+	
+	SKR_urbanization_3 = { 
+		potential = { 
+		tag = SKR 
+		has_country_flag = the_new_great_peace
+		has_country_flag = tier_2_cities
+		NOT = { has_country_flag = tier_3_cities } 
+		owns = 161 
+		owns = 176 
+		owns = 168 
+		owns = 182 
+		}
+		
+		allow = {
+		iron_railroad = 1 
+		inorganic_chemistry  = 1 
+		}
+		
+		effect = { 
+		set_country_flag = tier_3_cities
+		161 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		176 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		168 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		182 = { 
+			add_province_modifier = {
+					name = baby_boom
+					duration = 1825
+                    }  
+			}
+		}
+	
 	}
 }
 
