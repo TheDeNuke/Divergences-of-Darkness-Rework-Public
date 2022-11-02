@@ -246,13 +246,16 @@ political_decisions = {
 		}
 	}
 	
-	# Forming Iberia needs you to be decentralized.
+	# Forming Iberia needs you to be decentralized or status quo
 	
     form_iberia = {
     picture = create_iberia
 		potential = {
 			tag = SPA
-			has_global_flag = SPA_DECENTER
+			OR = {
+			   has_global_flag = SPA_DECENTER
+			   has_global_flag = SPA_STATUSQUO
+			}
 			has_global_flag = CST_ENDING
 			NOT = { has_country_flag = iberian_union }
 		}
@@ -392,12 +395,104 @@ political_decisions = {
 		}
 	}
 	
+	conquer_galicia_CST = {
+	#picture = french_catalonia
+		potential = {
+			tag = CST
+			has_global_flag = SPA_COLLAPSED
+            NOT = { 474 = { is_core = CST } }
+			NOT = { has_country_flag = CST_reconquest_GAL }
+		}
+		
+		allow = {
+		   prestige = 50
+		   all_core = {
+			 owned_by = THIS
+		   }
+		}
+		
+		effect = {
+		    set_country_flag = CST_reconquest_GAL
+			prestige = 10
+			GAL = { all_core = { add_core = CST } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	conquer_navarre_CST = {
+	#picture = french_catalonia
+		potential = {
+			tag = CST
+			has_global_flag = SPA_COLLAPSED
+			NOT = { has_country_flag = NAV_conquest_CST }
+		}
+		
+		allow = {
+		   OR = {
+		      is_greater_power = yes
+			  is_secondary_power = yes
+		   }
+		   owns = 474
+		   all_core = {
+			 owned_by = THIS
+		   }
+		}
+		
+		effect = {
+		    set_country_flag = NAV_conquest_CST
+			prestige = 10
+			NAV = { all_core = { add_core = CST } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	protector_of_the_aragonese = {
+	#picture = french_catalonia
+		potential = {
+			tag = CST
+			has_global_flag = SPA_COLLAPSED
+			NOT = { has_country_flag = ARA_conquest_CST }
+		}
+		
+		allow = {
+		   OR = {
+		      is_greater_power = yes
+			  is_secondary_power = yes
+		   }
+		   owns = 474
+		   all_core = {
+			 owned_by = THIS
+		   }
+		}
+		
+		effect = {
+		    set_country_flag = ARA_conquest_CST
+			prestige = 10
+			add_accepted_culture = navarro_aragonese
+			add_accepted_culture = basque
+			SPA_492 = { add_core = CST }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	reform_spain = {
 	
 	picture = "emperor_of_india"	
 	
 		potential = {
-			tag = POR
+		    OR = {
+			   tag = POR
+			   tag = ANA
+			}
 			has_global_flag = SPA_COLLAPSED
 			NOT = { exists = SPA }
 		}
