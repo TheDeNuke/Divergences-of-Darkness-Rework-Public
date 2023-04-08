@@ -1,0 +1,3408 @@
+###################################### THE HUNGARIAN CONFERENCE ######################################################
+
+#### Bohemian Intro - The First Imperial Incident is here ####
+#### Check MOD Bohemia-HRE for later imperial incidents ####
+
+country_event = {
+	id = 150000
+	title = "HUNC1.T"
+	desc = "HUNC1.D"
+	picture = "german_rhine"
+
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC1.A"
+		prestige = -1	
+	    add_country_modifier = { 
+		   name = HOLY_ROMAN_EMPEROR
+		   duration = -1 
+		}
+	    set_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 10
+	    }
+	    set_variable = {
+		   which = HOLLOWING_CHECK
+		   value = 10
+	    }
+		DSX = { set_country_flag = the_first_incident }
+	}
+}
+
+country_event = {
+	id = 150001
+	title = "HUNC2.T"
+	desc = "HUNC2.D"
+	#picture = "german_rhine"
+
+    trigger = {
+        tag = DSX
+        has_country_flag = the_first_incident
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+
+    option = {
+        name = "HUNC2.A"
+		clr_country_flag = the_first_incident
+		prestige = 5
+        any_pop = { 
+		   militancy = -1
+		}
+		political_reform = federalism
+		AUS = { country_event = { id = 260003 days = 7 } }
+		BOH = { country_event = { id = 150002 days = 1 } }
+		inherit = SME
+		563 = { add_core = THU }
+		562 = { add_core = THU }
+		561 = { add_core = THU }
+		554 = { add_core = THU }
+		change_tag = THU	
+    }
+}
+
+# Erfurt Agreement - Imperial Incident One
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150002
+	title = "HUNC3.T"
+	desc = "HUNC3.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HUNC3.A"
+		leave_alliance = THU
+		relation = { who = THU value = -200 }
+	    diplomatic_influence = { who = THU value = -200 }
+		ai_chance = {
+			factor = 75
+			   modifier = {
+			      factor = 0
+				  THU = { ai = no }
+			   }	
+		}
+    }
+	
+    option = {
+        name = "HUNC3.B"
+		badboy = 1
+        relation = { who = DUA value = -5 }
+		create_alliance = THU
+		relation = { who = THU value = 400 }
+	    diplomatic_influence = { who = THU value = 400 }
+		SCA = {
+		   relation = { who = THU value = -400 }
+	       diplomatic_influence = { who = THU value = -400 }		
+		} 
+		BRG = {
+		   relation = { who = THU value = -400 }
+	       diplomatic_influence = { who = THU value = -400 }		
+		}
+		any_country = {
+		   limit = {
+		      tag = HAN
+			  exists = yes
+		   }
+		   set_country_flag = THU_protected
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 25
+		}
+    }
+}
+
+#### The Riots in Bremen ####
+
+country_event = {
+	id = 150003
+	title = "HUNC4.T"
+	desc = "HUNC4.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		year = 1838
+    }
+
+    mean_time_to_happen =  {
+        days = 7
+    }
+	
+	option = { 
+	    name = "HUNC4.A"
+		BRE = {
+			any_pop = {
+				scaled_militancy = {
+					ideology = conservative
+					factor = -4
+				}
+				scaled_consciousness = {
+					ideology = conservative
+					factor = -4
+				}
+				scaled_militancy = {
+					ideology = liberal
+					factor = 4
+				}
+				scaled_consciousness = {
+					ideology = liberal
+					factor = 4
+				}
+			}
+		}
+		SCA = { country_event = 150004 }	
+	}
+}
+
+#### The Riots in Bremen - Scandinavian Responce ####
+
+country_event = {
+	id = 150004
+	title = "HUNC5.T"
+	desc = "HUNC5.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC5.A"
+		set_country_flag = abolish_serfdom_SCA
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		BRE = {
+			any_pop = {
+			    reduce_pop = 0.99
+				scaled_militancy = {
+					ideology = liberal
+					factor = 2
+				}
+				scaled_consciousness = {
+					ideology = liberal
+					factor = 2
+				}
+			}			
+		}
+		BOH = { country_event = 150005 }	
+	}
+}
+
+#### Scandinavia pisses on the Treaty of Paris without Mercy ####
+#### AAAAAAAA
+
+country_event = {
+	id = 150005
+	title = "HUNC6.T"
+	desc = "HUNC6.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC6.A"
+		prestige = -1
+		relation = { who = SCA value = -100 }
+	}
+}
+
+#### Mecklenburg Demonstrations - Flag added by event below ####
+
+country_event = {
+	id = 150006
+	title = "HUNC7.T"
+	desc = "HUNC7.D"
+	picture = "pommern"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		year = 1838
+		has_country_flag = mecklenburg_demonstrations
+    }
+
+    mean_time_to_happen =  {
+        days = 7
+    }
+	
+	option = { 
+	    name = "HUNC7.A"
+		clr_country_flag = mecklenburg_demonstrations
+		MSZ = {
+			any_pop = {
+				scaled_militancy = {
+					ideology = conservative
+					factor = 1
+				}
+				scaled_consciousness = {
+					ideology = conservative
+					factor = 1
+				}
+				scaled_militancy = {
+					ideology = liberal
+					factor = 3
+				}
+				scaled_consciousness = {
+					ideology = liberal
+					factor = 3
+				}
+			}
+		}
+	}
+}
+
+##############################################
+############ Hungarian Intro #################
+##############################################
+
+#### This is the start of all Hungarian Content ####
+
+country_event = {
+	id = 150007
+	title = "HUNC8.T"
+	desc = "HUNC8.D"
+	picture = "huncrisis"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HUN
+		NOT = { year = 1837 }
+        NOT = { has_country_flag = hungarian_intro }
+		
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC8.A"
+		prestige = -1	
+		set_country_flag = hungarian_intro
+	}
+}
+
+#### Tensions with the Nitra regarding ongoing Ottoman Occupation ####
+
+country_event = {
+	id = 150008
+	title = "HUNC9.T"
+	desc = "HUNC9.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HUN
+		year = 1837
+        NOT = { has_country_flag = slovaks_are_trash }
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC9.A"
+		prestige = -1	
+		any_pop = {
+		   limit = {
+		     culture = slovak
+		   }
+		   militancy = 1
+		   consciousness = 1
+		}
+		set_country_flag = slovaks_are_trash
+	}
+}
+
+#### Governor of Nitra stops reconizing the Legitimacy of the Hungarian King ####
+
+country_event = {
+	id = 150009
+	title = "HUNC10.T"
+	desc = "HUNC10.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HUN
+		year = 1838
+        NOT = { has_country_flag = nitra_is_bad }
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC10.A"
+		prestige = -1	
+		SLV = { all_core = { remove_core = HUN } }		
+		any_pop = {
+		   limit = {
+		     culture = slovak
+		   }
+		   militancy = 1
+		   consciousness = 1
+		}
+		set_country_flag = slovakia_is_bad
+		set_country_flag = nitra_is_bad
+	}
+}
+
+#### Governor of Nitra creates a faction to depose the King ####
+
+country_event = {
+	id = 150010
+	title = "HUNC11.T"
+	desc = "HUNC11.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HUN
+		year = 1838
+		has_country_flag = slovakia_is_bad
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC11.A"
+		prestige = -5
+		any_pop = {
+		   limit = {
+		     culture = slovak
+		   }
+		   militancy = 1
+		   consciousness = 1
+		}
+		clr_country_flag = slovakia_is_bad
+		BOH = { country_event = 150011 }	
+	}
+}
+
+#### Rumors of a Crisis in Hungary ####
+
+country_event = {
+	id = 150011
+	title = "HUNC12.T"
+	desc = "HUNC12.D"
+	picture = "huncrisis"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC12.A"
+		any_pop = {
+		   limit = {
+		     culture = old_czech
+		   }
+		   consciousness = 1
+		}
+	}
+}
+
+#### Governor of Nitra declares the King of Hungary as a illegitimate Pretender and calls on the Bohemian King to be crowned ####
+
+country_event = {
+	id = 150012
+	title = "HUNC13.T"
+	desc = "HUNC13.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HUN
+		year = 1839
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC13.A"
+		prestige_factor = -0.2
+		remove_accepted_culture = slovak
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		}
+		BOH = { country_event = 150013 }
+        country_event = { id = 150014 days = 14 }	
+	}
+}
+
+############## The Hungarian Crisis ######################
+
+#### A Faction in Hungary has declared us the king of Hungary ####
+#### WTFBBQ ####
+
+
+country_event = {
+	id = 150013
+	title = "HUNC14.T"
+	desc = "HUNC14.D"
+	picture = "huncrisis"
+	
+	fire_only_once = yes
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC14.A"
+		prestige = 10
+		any_pop = {
+		   limit = {
+		     culture = czech
+		   }
+		   consciousness = -1
+		}
+		any_pop = {
+		   limit = {
+		     culture = old_czech
+		   }
+		   consciousness = 1
+		}
+	}
+}
+
+#### A Leaked Letter from the Governor of Nitra falls into the Hand of Scandinavian Diplomats ####
+
+country_event = {
+	id = 150014
+	title = "HUNC15.T"
+	desc = "HUNC15.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC15.A"
+		prestige = -1	
+		relation = { who = SCA value = -50 }
+		SCA = { country_event = { id = 150015 days = 7 } }
+	}
+}
+
+#### Scandinavia - Bohemia is breaking the terms of the Treaty of Paris ####
+
+country_event = {
+	id = 150015
+	title = "HUNC16.T"
+	desc = "HUNC16.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	# Inform Burgundy. Its time to crush the Bohemian Menace...
+	
+	option = { 
+	    name = "HUNC16.A"
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		set_country_flag = fake_GGW
+		relation = { who = BOH value = -200 }
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    leadership = 20
+		BRG = { country_event = { id = 150016 days = 3 } }
+	}
+}
+
+#### Burgundy - Bohemia is breaking the terms of the Treaty of Paris ####
+
+country_event = {
+	id = 150016
+	title = "HUNC17.T"
+	desc = "HUNC17.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	# We are on the edge of the Second Great German War 
+	
+	option = { 
+	    name = "HUNC17.A"
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		set_country_flag = fake_GGW
+		relation = { who = BOH value = -200 }
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    leadership = 20
+		BOH = { country_event = { id = 150017 days = 3 } }
+	}
+}
+
+#### Bohemia - Bitch at the Dual Monarchy ####
+
+country_event = {
+	id = 150017
+	title = "HUNC18.T"
+	desc = "HUNC18.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	# The treaty of Paris should have prevented this
+	
+	option = { 
+	    name = "HUNC18.A"
+		set_country_flag = fake_GGW
+		relation = { who = DUA value = 10 }
+		DUA = { country_event = { id = 150018 days = 7 } }
+	}
+}
+
+#### The Hegemony of Europe finds out ####
+
+country_event = {
+	id = 150018
+	title = "HUNC19.T"
+	desc = "HUNC19.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	# There will not be a war. Demobilize and attend a conference in Neutral Grounds. NOW
+	
+	option = { 
+	    name = "HUNC19.A"
+		relation = { who = BRG value = -50 }
+		relation = { who = BOH value = -50 }
+		relation = { who = SCA value = -50 }
+		country_event = { id = 150027 days = 31 }	
+		any_country = {
+		   limit = {
+		      has_country_flag = fake_GGW
+		   }
+		   clr_country_flag = fake_GGW
+		   country_event = { id = 150019 days = 7 }
+        }		   
+	}
+}
+
+#### Dual Monarchy has threatened war if we do not attend a conference in Neutral Grounds ####
+
+country_event = {
+	id = 150019
+	title = "HUNC20.T"
+	desc = "HUNC20.D"
+    picture = "anglois_path"
+	
+	is_triggered_only = yes
+	
+	#Perfedious Anglois...
+	
+	option = { 
+	    name = "HUNC20.A"
+		relation = { who = DUA value = -10 }	
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -3
+			}
+		}
+		random_owned = {
+		   limit = { owner = { tag = BOH } }
+		    owner = { country_event = { id = 150020 days = 1 } }
+	    }
+  		random_owned = {
+		   limit = { owner = { tag = SCA } }
+		    owner = { country_event = { id = 150021 days = 1 } }
+	    }
+		random_owned = {
+		   limit = { owner = { tag = BRG } }
+		    owner = { country_event = { id = 150022 days = 1 } }
+	    }	
+	}
+}
+
+######### The Leadup to the Hungarian Conference ########
+
+#### Burgundy - Do we invite the Poles? ####
+
+country_event = {
+	id = 150020
+	title = "HUNC21.T"
+	desc = "HUNC21.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC21.A"
+		PLC = { country_event = { id = 150026 days = 3 } }
+		relation = { who = PLC value = 50 }	
+		diplomatic_influence = { who = PLC value = 50 }	
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { 
+	    name = "HUNC21.B"
+		prestige = 5
+		relation = { who = PLC value = -25 }	
+		diplomatic_influence = { who = PLC value = -25 }	
+		ai_chance = {
+			factor = 30
+		}	
+	}
+}
+
+
+#### Scandinavia - Do we invite the Turks? ####
+
+country_event = {
+	id = 150021
+	title = "HUNC22.T"
+	desc = "HUNC22.D"
+	#picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC22.A"
+		TUR = { country_event = { id = 150026 days = 3 } }
+		relation = { who = TUR value = 50 }	
+		diplomatic_influence = { who = TUR value = 50 }	
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { 
+	    name = "HUNC22.B"
+		prestige = 5
+		relation = { who = TUR value = -25 }	
+		diplomatic_influence = { who = TUR value = -25 }	
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#### Burgundy - Do we invite Austria to represent the South German Princes? ####
+
+country_event = {
+	id = 150022
+	title = "HUNC23.T"
+	desc = "HUNC23.D"
+	#picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC23.A"
+		BAV = { country_event = { id = 150023 days = 1 } }
+		relation = { who = AUS value = 1 }	
+		diplomatic_influence = { who = AUS value = 1 }	
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { 
+	    name = "HUNC23.B"
+		prestige = 5
+		relation = { who = AUS value = -1 }	
+		diplomatic_influence = { who = AUS value = -1 }	
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#### Bavaria - Bohemia is demanding that Austria is sent as a representive for both of us? ####
+
+country_event = {
+	id = 150023
+	title = "HUNC24.T"
+	desc = "HUNC24.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC24.A"
+		AUS = { country_event = { id = 150026 days = 2 } }
+		relation = { who = BOH value = 50 }	
+		relation = { who = AUS value = 50 }	
+		ai_chance = {
+			factor = 70
+		}
+	}
+	
+	option = { 
+	    name = "HUNC24.B"
+		prestige = 5
+		AUS = { country_event = { id = 150024 days = 1 } }
+		BOH = { country_event = { id = 150025 days = 1 } }
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#### Austria - We have been denied representation by Bavaria ####
+
+country_event = {
+	id = 150024
+	title = "HUNC25.T"
+	desc = "HUNC25.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC25.A"
+		prestige = -5
+        relation = { who = BAV value = -25 }
+	}
+}
+
+#### Bohemia - Austria has been denied by Bavaria ####
+
+country_event = {
+	id = 150025
+	title = "HUNC26.T"
+	desc = "HUNC26.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC26.A"
+		prestige = -5
+		relation = { who = AUS value = -75 }	
+		diplomatic_influence = { who = AUS value = -75 }	
+		relation = { who = BAV value = -25 }	
+		diplomatic_influence = { who = BAV value = -25 }	
+	}
+}
+
+#### Generic - We have been invited to the Hungarian Conference ####
+
+country_event = {
+	id = 150026
+	title = "HUNC27.T"
+	desc = "HUNC27.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+
+	option = { 
+	    name = "HUNC27.A"
+		prestige = 5
+		relation = { who = BOH value = 25 }	
+		relation = { who = SCA value = 25 }	
+		relation = { who = BRG value = 25 }	
+		relation = { who = DUA value = 25 }
+		set_country_flag = attending_HUN_conference	
+	}
+}
+
+################################################################################################
+################################# THE CONGRESS BEGINS ##########################################
+################################################################################################
+
+country_event = {
+	id = 150027
+	title = "HUNC28.T"
+	desc = "HUNC28.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	is_triggered_only = yes
+	
+
+	option = { 
+	    name = "HUNC28.A"
+        prestige = 5
+		relation = { who = BOH value = 10 }	
+		relation = { who = SCA value = 10 }	
+		relation = { who = BRG value = 10 }	
+		CLN = {
+	       set_variable = {
+		      which = HUN_POWER
+		      value = 10
+	       }
+		}
+		BOH = { country_event = { id = 150028 days = 1 } }
+		#any_country = {
+		#  limit = {
+		#      OR = {
+		#	    tag = SCA
+		#		tag = BRG
+		#		tag = DUA
+		#		tag = HUN
+		#		has_country_flag = attending_HUN_conference	
+		#     }
+		#   }
+		#   country_event = { id = 150029 days = 1 }
+		#}
+	}
+}
+
+#### Bohemia's Argument for Hungary - Bohemia ####
+
+country_event = {
+	id = 150028
+	title = "HUNC29.T"
+	desc = "HUNC29.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+
+	option = { 
+	    name = "HUNC28.A"
+        prestige = 1
+		any_pop = {
+		  consciousness = 1
+		}
+		any_country = {
+		   limit = {
+		      tag = TUR
+			  has_country_flag = attending_HUN_conference
+		   }
+		   country_event = { id = 150030 days = 0 }
+		}
+		SCA = { country_event = { id = 150031 days = 3 } }
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = BOH
+				tag = BRG
+				tag = DUA
+				tag = HUN
+				has_country_flag = attending_HUN_conference	
+		      }
+		   }
+		   country_event = { id = 150032 days = 3 }
+		}
+	}
+}
+
+#### Ottoman Empire intervenes and makes a statement ####
+
+### Offically Hungary is our rightful clay. Not yours. ####
+### I'm going to leave open a event under the Dual Monarchy for later on regarding annexing Croatia ###
+
+country_event = {
+	id = 150030
+	title = "HUNC31.T"
+	desc = "HUNC31.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC31.A"
+		badboy = 2
+		prestige = 2
+        relation = { who = BOH value = -50 }
+		relation = { who = HUN value = -50 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 80
+		}
+	}
+	
+	option = { 
+	    name = "HUNC31.B"
+		badboy = -2
+		prestige = -5
+        relation = { who = BOH value = 50 }
+		relation = { who = HUN value = 50 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 20
+		}		
+	}
+}
+
+
+#### Scandinavia's Arguments - Scandinavia ####
+
+### Effectively pacifist garbage about creating a new european order ###
+### Which of course is to benefit themselves since they are in basically nearly their peak position ###
+
+country_event = {
+	id = 150031
+	title = "HUNC32.T"
+	desc = "HUNC32.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC32.A"
+		badboy = -1
+		prestige = 2
+		plurality = 5
+		any_pop = {
+		  consciousness = 1
+		}
+        relation = { who = BOH value = -80 }	
+		BRG = { country_event = { id = 150033 days = 3 } }
+	}
+}
+
+#### Scandinavia's Arguments - Everyone Else ####
+### They clearly just want a new order for themselves.
+
+country_event = {
+	id = 150032
+	title = "HUNC33.T"
+	desc = "HUNC33.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC33.A"
+        relation = { who = SCA value = -10 }	
+	}
+}
+
+#### Burgundian Arguments - Burgundy ####
+### Another day. Another Burgundian Diplomatic Debacle.
+
+country_event = {
+	id = 150033
+	title = "HUNC34.T"
+	desc = "HUNC34.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC34.A"
+		badboy = -1
+		prestige = 5
+        relation = { who = BOH value = -50 }
+		relation = { who = SCA value = 100 }
+		any_country = {
+		   limit = {
+		      tag = PLC
+			  has_country_flag = attending_HUN_conference
+		   }
+		   country_event = { id = 150034 days = 0 }
+		}
+		any_country = {
+		   limit = {
+		      tag = AUS
+			  has_country_flag = attending_HUN_conference
+		   }
+		   country_event = { id = 150035 days = 1 }
+		}
+		DUA = { country_event = { id = 150036 days = 7 } }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 90
+		}
+	}
+	
+	option = { 
+	    name = "HUNC34.B"
+		set_global_flag = burgundian_backstabbing
+		badboy = 1
+		prestige = -10
+        relation = { who = BOH value = 50 }
+		relation = { who = SCA value = -100 }
+		any_country = {
+		   limit = {
+		      tag = PLC
+			  has_country_flag = attending_HUN_conference
+		   }
+		   country_event = { id = 150034 days = 0 }
+		}
+		any_country = {
+		   limit = {
+		      tag = AUS
+			  has_country_flag = attending_HUN_conference
+		   }
+		   country_event = { id = 150035 days = 1 }
+		}
+		DUA = { country_event = { id = 150036 days = 7 } }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 10
+		}		
+	}
+}
+
+#### Polish Arguments - They will almost always side with Bohemia ####
+
+country_event = {
+	id = 150034
+	title = "HUNC35.T"
+	desc = "HUNC35.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	# This is a bad idea as this is basically a diplomatic severence with Bohemia
+	
+	option = { 
+	    name = "HUNC35.A"
+		badboy = 5
+		prestige = 10
+		leave_alliance = BOH
+		relation = { who = SCA value = 200 }
+		BOH = { 
+           relation = { who = PLC value = -200 }
+		   diplomatic_influence = { who = BAV value = -200 }	
+		}
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 20
+		}
+	}
+	
+	# Polish Simp
+	
+	option = { 
+	    name = "HUNC35.B"
+		prestige = -10
+        relation = { who = BOH value = 100 }
+		relation = { who = SCA value = -100 }
+		relation = { who = HUN value = -100 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 80
+		}		
+	}
+}
+
+#### Austrian Arguments - They will usually side with Bohemia, but will end up triggering a event during the Lull ####
+
+country_event = {
+	id = 150035
+	title = "HUNC36.T"
+	desc = "HUNC36.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC36.A"
+		prestige = 1
+		relation = { who = BOH value = -100 }
+		relation = { who = SCA value = 50 }
+		relation = { who = HUN value = 50 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 20
+		}
+	}
+	
+	option = { 
+	    name = "HUNC36.B"
+		badboy = 1
+		set_global_flag = AUS_agreement_BOH
+        relation = { who = BOH value = 100 }
+		relation = { who = SCA value = -100 }
+		relation = { who = HUN value = -100 }
+		ai_chance = {
+			factor = 80
+		}		
+	}
+}
+
+#### Dual Monarchy Arguments - They will usually support the Status Quo ####
+
+country_event = {
+	id = 150036
+	title = "HUNC37.T"
+	desc = "HUNC37.D"
+	picture = "huncrisis"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC37.A"
+		country_event = { id = 150037 days = 1 }
+		prestige = 5
+		relation = { who = BOH value = -25 }
+		relation = { who = SCA value = 25 }
+		relation = { who = HUN value = 25 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 60
+		}
+	}
+	
+	option = { 
+	    name = "HUNC37.B"
+		country_event = { id = 150037 days = 1 }
+		badboy = 1
+        relation = { who = BOH value = 25 }
+		relation = { who = SCA value = -25 }
+		relation = { who = HUN value = -25 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 40
+		}		
+	}
+}
+
+#### End of the First Congress of Venice - The Lull Begins ####
+
+country_event = {
+	id = 150037
+	title = "HUNC38.T"
+	desc = "HUNC38.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC38.A"
+        set_global_flag = venice_congress_lull
+	}
+}
+
+#### Burgundian Backstabbing ####
+
+country_event = {
+	id = 150038
+	title = "HUNC39.T"
+	desc = "HUNC39.D"
+	picture = "pommern"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BRG
+		has_global_flag = venice_congress_lull
+		has_global_flag = burgundian_backstabbing
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC39.A"
+		prestige = -5
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		}
+		BOH = { country_event = 150039 }
+		ai_chance = {
+			factor = 75
+		}
+	}
+	
+	option = { 
+	    name = "HUNC39.B"
+		clr_global_flag = burgundian_backstabbing
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 25
+		}	
+	}
+}
+
+#### Burgundian Backstabbing - Bohemia ####
+
+country_event = {
+	id = 150039
+	title = "HUNC40.T"
+	desc = "HUNC40.D"
+	picture = "pommern"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC40.A"
+		prestige = -5
+		release_vassal = TES
+        2584 = { remove_core = BOH }
+        689 = { remove_core = BOH }
+        684 = { remove_core = BOH add_core = TES secede_province = TES }
+        685 = { remove_core = BOH add_core = TES secede_province = TES }
+		relation = { who = BRG value = 200 }
+		clr_global_flag = burgundian_backstabbing
+		clr_global_flag = AUS_agreement_BOH
+		### This sets a AI weight and gives a punishment event for the player with specific interventions
+		set_country_flag = BRG_agreement_GER_active
+		set_global_flag = scandinavia_is_backstabbed
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	    name = "HUNC40.B"
+		clr_global_flag = burgundian_backstabbing
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 50
+		}	
+	}
+}
+
+#### Austrian Demands - Bohemia ####
+
+country_event = {
+	id = 150040
+	title = "HUNC41.T"
+	desc = "HUNC41.D"
+	picture = "BRG_cavalry_capital"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_lull
+		has_global_flag = AUS_agreement_BOH
+		NOT = { has_global_flag = burgundian_backstabbing }
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC41.A"
+		relation = { who = AUS value = -25 }
+		prestige = 20
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+		}
+		AUS = { country_event = 150041 }
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	    name = "HUNC41.B"
+		prestige = -10
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+		HUN = { set_country_flag = AUS_agreement_HUN_active }
+		clr_global_flag = AUS_agreement_BOH
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -2
+	       }
+		}
+		ai_chance = {
+			factor = 50
+		}	
+	}
+}
+
+#### Austrian Denouncement - The Austrian Ambassador explodes and leaves the conference ####
+#### This effectively soils Bohemia's chances of getting Hungary ####
+
+country_event = {
+	id = 150041
+	title = "HUNC42.T"
+	desc = "HUNC42.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	    name = "HUNC41.A"
+		clr_global_flag = AUS_agreement_BOH
+		clr_country_flag = attending_HUN_conference
+		relation = { who = BAV value = 400 }
+		relation = { who = SCA value = 400 }
+		relation = { who = BRG value = 400 }
+		BOH = {
+		   relation = { who = AUS value = -400 }
+		   diplomatic_influence = { who = AUS value = -400 }	   
+		   prestige = -25
+		}		
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 3
+	       }
+		}		
+	}
+}
+
+#### Start of the Second Congress of Venice - Standard ####
+
+country_event = {
+	id = 150042
+	title = "HUNC43.T"
+	desc = "HUNC43.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	fire_only_once = yes
+	
+    trigger = {
+        tag = DUA
+		has_global_flag = venice_congress_lull
+		NOT = { has_global_flag = scandinavia_is_backstabbed }
+		NOT = { has_global_flag = AUS_agreement_BOH }
+		NOT = { has_global_flag = burgundian_backstabbing }
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC43.A"
+		clr_global_flag = venice_congress_lull
+		prestige = 5
+		any_pop = {
+		  consciousness = 1
+		}
+		CLN = {
+	       set_variable = {
+		      which = MSZ_POWER
+		      value = 10
+	       }
+		}
+		relation = { who = BOH value = 10 }
+		relation = { who = BRG value = 10 }
+		relation = { who = SCA value = 10 }
+		relation = { who = HUN value = 10 }
+		BOH = { country_event = { id = 150045 days = 1 } }
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = SCA
+				tag = BRG
+				tag = DUA
+				tag = HUN
+				has_country_flag = attending_HUN_conference	
+		      }
+		   }
+		   country_event = { id = 150046 days = 1 }
+		}
+	}
+}
+
+
+#### Start of the Second Congress of Venice - Derailed ####
+#### Burgundy basically opens up by stating that they have made a deal with Bohemia. Dual Monarchy is furious at both of them ####
+
+country_event = {
+	id = 150043
+	title = "HUNC44.T"
+	desc = "HUNC44.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	fire_only_once = yes
+	
+    trigger = {
+        tag = DUA
+		has_global_flag = venice_congress_lull
+		has_global_flag = scandinavia_is_backstabbed
+		NOT = { has_global_flag = AUS_agreement_BOH }
+		NOT = { has_global_flag = burgundian_backstabbing }
+    }
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+	
+	option = { 
+	    name = "HUNC44.A"
+		any_country = {
+		   limit = {
+		      has_country_flag = attending_HUN_conference
+		   }
+		   clr_country_flag = attending_HUN_conference
+		}
+		SCA = { country_event = 150044 }
+		set_global_flag = END_OF_VENICE_CONGRESS
+		clr_global_flag = venice_congress_lull
+		prestige = -5
+		relation = { who = BOH value = -100 }
+		relation = { who = BRG value = -100 }
+		relation = { who = SCA value = 25 }
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = -20
+	       }
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+	}
+}
+
+#### Scandinavia - Burgundy has backstabbed us ####
+
+### UNIONISTER INTERNAL SCREAMING #####
+
+country_event = {
+	id = 150044
+	title = "HUNC45.T"
+	desc = "HUNC45.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	# We will give up Pommerania to maintain peace.
+	
+	option = { 
+	    name = "HUNC45.A"
+		prestige_factor = -0.5
+        relation = { who = BRG value = -50 }
+		any_owned = { 
+	        limit = { 
+	           is_core = POM
+		    }
+			remove_core = SCA
+	        secede_province = POM
+        }
+		BOH = { 
+		   relation = { who = POM value = 400 } 
+		   diplomatic_influence = { who = POM value = 400 }
+		   #set_country_flag = POM_expedite_CAE
+		   country_event = 150069
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		ai_chance = {
+			factor = 20
+		}
+	}
+	
+	# BRING IT BITCH - Trigger BOH vs SCA war
+	# This is down the bottom after the outcomes for the Conference
+	
+	option = { 
+	    name = "HUNC45.B"
+        relation = { who = BRG value = -400 }
+		leave_alliance = BRG
+		BOH = { country_event = 150070 }
+		ai_chance = {
+			factor = 80
+		}
+	}
+}
+
+#### Bohemia's Rant Regarding Mecklenburg ####
+
+country_event = {
+	id = 150045
+	title = "HUNC46.T"
+	desc = "HUNC46.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC46.A"
+		badboy = 2
+	    SCA = { country_event = { id = 150047 days = 1 } }
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = BOH
+				tag = BRG
+				tag = DUA
+				tag = HUN
+				has_country_flag = attending_HUN_conference	
+		      }
+		   }
+		   country_event = { id = 150048 days = 1 }
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -3
+			}
+		}
+        relation = { who = SCA value = -50 }	
+		relation = { who = BRG value = -50 }	
+		relation = { who = DUA value = -10 }       		
+	}
+}
+
+#### Bohemia's Arguments - Everyone Else ####
+
+### This again? ###
+
+country_event = {
+	id = 150046
+	title = "HUNC47.T"
+	desc = "HUNC47.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC47.A"
+        relation = { who = BOH value = -1 }	
+	}
+}
+
+#### Scandinavia's Rant Regarding Mecklenburg ####
+
+#### THE CRIMINAL EMPEROR IN PRAG...
+
+country_event = {
+	id = 150047
+	title = "HUNC48.T"
+	desc = "HUNC48.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC48.A"
+		prestige = 1
+		badboy = -2
+		BRG = { country_event = { id = 150049 days = 1 } }
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}     	
+		relation = { who = BRG value = 50 }	
+		relation = { who = BOH value = -50 }
+		relation = { who = DUA value = -10 }       		
+	}
+}
+
+#### Scandinavia's Arguments - Everyone Else ####
+
+### We did sign the treaty of Paris for a reason... ###
+
+country_event = {
+	id = 150048
+	title = "HUNC49.T"
+	desc = "HUNC49.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC49.A"
+        relation = { who = SCA value = 10 }	
+	}
+}
+
+#### Burgundian Arguments - They reaffirm the treaty of Paris ####
+
+country_event = {
+	id = 150049
+	title = "HUNC50.T"
+	desc = "HUNC50.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC50.A"
+		badboy = -1
+		relation = { who = BOH value = -50 }
+		relation = { who = SCA value = 50 }
+	    DUA = { country_event = { id = 150055 days = 31 } }
+		any_country = {
+		   limit = {
+		      tag = PLC
+			  has_country_flag = attending_HUN_conference	
+		   }
+		   country_event = { id = 150050 days = 1 }
+		}
+		any_country = {
+		   limit = {
+		      tag = TUR
+			  has_country_flag = attending_HUN_conference	
+		   }
+		   country_event = { id = 150051 days = 1 }
+		}
+		any_country = {
+		   limit = {
+		      tag = AUS
+			  has_country_flag = attending_HUN_conference	
+		   }
+		   country_event = { id = 150052 days = 1 }
+		}
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -1
+	       }
+		}
+	}
+}
+
+#### Polish Arguments - 50/50 ####
+
+country_event = {
+	id = 150050
+	title = "HUNC51.T"
+	desc = "HUNC51.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC51.A"
+        relation = { who = BOH value = -50 }
+		relation = { who = SCA value = 50 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+
+	option = { 
+	    name = "HUNC51.B"
+        relation = { who = BOH value = 50 }
+		relation = { who = SCA value = -50 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 50
+		}		
+	}
+}
+
+#### Turkish Arguments - 80/20 ####
+
+country_event = {
+	id = 150051
+	title = "HUNC52.T"
+	desc = "HUNC52.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC52.A"
+        relation = { who = BOH value = -50 }
+		relation = { who = SCA value = 50 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 80
+		}
+	}
+
+	option = { 
+	    name = "HUNC52.B"
+        relation = { who = BOH value = 50 }
+		relation = { who = SCA value = -50 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 20
+		}		
+	}
+}
+
+#### Austrian Arguments - Will only support if Bohemia supports them and keeps Bavaria Weak in Southern Affairs ####
+#### This is only binding for the AI. This is non-binding for the players but it will set a flag that will do nasty things if you go off course ###
+
+country_event = {
+	id = 150052
+	title = "HUNC53.T"
+	desc = "HUNC53.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC53.A"
+        relation = { who = BOH value = -50 }
+		relation = { who = SCA value = 50 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 40
+		}
+	}
+
+	option = { 
+	    name = "HUNC53.B"
+		prestige = 1 
+        BOH = { country_event = { id = 150053 days = 1 } }       
+		ai_chance = {
+			factor = 60
+		}		
+	}
+}
+
+#### Austrian Demands Again - Bohemia ####
+#### Austria demands that Bohemia must intervene against Bavaria's Favor in all future incidents ###
+
+country_event = {
+	id = 150053
+	title = "HUNC54.T"
+	desc = "HUNC54.D"
+	picture = "pommern"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC54.A"
+		relation = { who = AUS value = -25 }
+		prestige = 20
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+		}
+		HUN = { clr_country_flag = AUS_agreement_HUN_active }
+		AUS = { country_event = 150054 }
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	    name = "HUNC54.B"
+		prestige = -10
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+		#### This sets a AI weight and gives a punishment event for the player with specific interventions
+		set_country_flag = AUS_agreement_GER_active
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = 2
+	       }
+		}
+		ai_chance = {
+			factor = 50
+		}	
+	}
+}
+
+#### Austrian Denouncement - The Austrian Ambassador explodes and leaves the conference ####
+#### This effectively soils Bohemia's chances of getting anything from this conference. ####
+
+country_event = {
+	id = 150054
+	title = "HUNC55.T"
+	desc = "HUNC55.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	    name = "HUNC55.A"
+		clr_country_flag = AUS_agreement_GER_active
+		clr_country_flag = attending_HUN_conference
+		relation = { who = BAV value = 400 }
+		relation = { who = SCA value = 400 }
+		relation = { who = BRG value = 400 }
+		BOH = {
+		   relation = { who = AUS value = -400 }
+		   diplomatic_influence = { who = AUS value = -400 }	   
+		   prestige = -25
+		}		
+		CLN = {
+	       change_variable = {
+		      which = HUN_POWER
+		      value = 3
+	       }
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -3
+	       }
+		}		
+	}
+}
+
+#### Dual Monarchy Arguments - They will usually support the Status Quo ####
+
+country_event = {
+	id = 150055
+	title = "HUNC56.T"
+	desc = "HUNC56.D"
+	picture = "pommern"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC56.A"
+		set_global_flag = venice_congress_actone
+		prestige = 5
+		relation = { who = BOH value = -10 }
+		relation = { who = SCA value = 10 }
+		relation = { who = HUN value = 10 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = -1
+	       }
+		}
+		ai_chance = {
+			factor = 20
+		}
+	}
+	
+	option = { 
+	    name = "HUNC56.B"
+		set_global_flag = venice_congress_actone
+		badboy = 1
+        relation = { who = BOH value = 10 }
+		relation = { who = SCA value = -10 }
+		relation = { who = HUN value = -10 }
+		CLN = {
+	       change_variable = {
+		      which = MSZ_POWER
+		      value = 1
+	       }
+		}
+		ai_chance = {
+			factor = 80
+		}		
+	}
+}
+
+################################################################################################
+###################### THE FIRST ACT OF THE CONGRESS OF VENICE #################################
+################################################################################################
+
+#### Fucking Nothing - The Congress votes against the whole of Mecklenburg ####
+
+country_event = {
+	id = 150056
+	title = "HUNC57.T"
+	desc = "HUNC57.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_actone     
+		CLN = {
+		   NOT = {
+	          check_variable = {
+		         which = MSZ_POWER
+		         value = 8
+	          }
+		   }
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	# You idiots rigged this against me.
+	
+	option = { 
+	    name = "HUNC57.A"
+		clr_global_flag = venice_congress_actone 
+		set_global_flag = venice_congress_acttwo
+		set_country_flag = BOH_denied_pommerania 
+		prestige = -5
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+		relation = { who = DUA value = -25 }
+		relation = { who = BRG value = -25 }
+		relation = { who = SCA value = -25 }
+		SCA = { country_event = { id = 150057 days = 0 } }
+	}
+}
+
+# Scandinavia Gloats
+
+country_event = {
+	id = 150057
+	title = "HUNC58.T"
+	desc = "HUNC58.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC56.A"
+		prestige = 20
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = POM }
+	        }
+	        militancy = -9
+	        consciousness = -9     
+	    }
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = reactionary } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+	}
+}
+
+#### At least we got something - The Congress votes to mediate the Border ####
+
+country_event = {
+	id = 1500570
+	title = "HUNC580.T"
+	desc = "HUNC580.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_actone     
+		CLN = {
+	       check_variable = {
+		      which = MSZ_POWER
+		      value = 8
+	       }
+		   NOT = {
+	          check_variable = {
+		         which = MSZ_POWER
+		         value = 12
+	          }
+		   }	  
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	# Yay...
+	
+	option = { 
+	    name = "HUNC580.A"
+		clr_global_flag = venice_congress_actone 
+		set_global_flag = venice_congress_acttwo
+		545 = { add_core = BOH }
+		inherit = MSZ
+		prestige = 1
+		any_pop = {
+		    ideology = { factor = -0.01 value = conservative } 
+		    ideology = { factor = 0.01 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		}
+		SCA = { country_event = { id = 150058 days = 0 } }
+	}
+}
+
+# Not Great. Not Terrible
+
+country_event = {
+	id = 150058
+	title = "HUNC59.T"
+	desc = "HUNC59.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC59.A"
+		prestige = -1
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = POM }
+	        }
+	        militancy = 1
+	        consciousness = 1    
+	    }
+		any_pop = {
+		    ideology = { factor = -0.02 value = conservative } 
+		    ideology = { factor = 0.02 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		}
+	}
+}
+
+#### THE CONGRESS VOTES TO GIVE THE WHOLE OF MECKLENBURG TO BOHEMIA ####
+
+#### Scandinavia directly refused ####
+
+country_event = {
+	id = 150059
+	title = "HUNC60.T"
+	desc = "HUNC60.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_actone     
+		CLN = {
+	       check_variable = {
+		      which = MSZ_POWER
+		      value = 12
+	       }
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC60.A"
+		clr_global_flag = venice_congress_actone 
+		set_global_flag = venice_congress_acttwo
+		set_country_flag = SCA_POM_COMPROMISED
+		prestige = 20
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = reactionary } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+		relation = { who = DUA value = 50 }
+		relation = { who = BRG value = -50 }
+		relation = { who = SCA value = -50 }
+		SCA = { country_event = { id = 150060 days = 0 } }
+	}
+}
+
+# Scandinavia is humiliated but reaffirms the treaty of Paris alongside snubbing the congress and puts it very clearly that any breach of pommerania will result in total war
+
+country_event = {
+	id = 150060
+	title = "HUNC61.T"
+	desc = "HUNC61.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC61.A"
+		set_country_flag = SCA_POM_COMPROMISED
+		prestige = -20
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = POM }
+	        }
+	        militancy = 4
+	        consciousness = 4    
+	    }
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+		relation = { who = DUA value = -50 }
+		relation = { who = BRG value = 200 }
+		relation = { who = SCA value = -50 }
+	}
+}
+
+################################################################################################
+###################### THE SECOND ACT OF THE CONGRESS OF VENICE #################################
+################################################################################################
+
+#### Fucking Nothing - The Congress votes against Bohemian Hungary and also makes judgement regarding the Polish Part of Silesia
+
+country_event = {
+	id = 150061
+	title = "HUNC62.T"
+	desc = "HUNC62.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_acttwo     
+		CLN = {
+	       check_variable = {
+		      which = HUN_POWER
+		      value = 12
+	       }
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	# AAAAA
+	
+	option = { 
+	    name = "HUNC62.A"
+		clr_global_flag = venice_congress_acttwo
+		set_global_flag = venice_congress_final
+		prestige = -5
+		release_vassal = TES
+        2584 = { remove_core = BOH }
+        689 = { remove_core = BOH }
+        684 = { remove_core = BOH add_core = TES secede_province = TES }
+        685 = { remove_core = BOH add_core = TES secede_province = TES }
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+		diplomatic_influence = { who = HUN value = -200 }	   
+		relation = { who = HUN value = -50 }
+		relation = { who = DUA value = -25 }
+		relation = { who = BRG value = -25 }
+		relation = { who = SCA value = -25 }
+		HUN = { country_event = { id = 150062 days = 0 } }
+	}
+}
+
+# Hungarian Indipendence is Secured
+
+country_event = {
+	id = 150062
+	title = "HUNC63.T"
+	desc = "HUNC63.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC63.A"
+		clr_country_flag = AUS_agreement_HUN_active 
+		SCA = {
+		   diplomatic_influence = { who = HUN value = 400 }	
+		   relation = { who = HUN value = 400 }
+		   create_alliance = HUN
+		}
+		prestige = 20
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = SLV }
+	        }
+	        militancy = -9
+	        consciousness = -9     
+	    }
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+	}
+}
+
+#### Eh - The Congress votes to mediate the Teschen Dispute ####
+
+country_event = {
+	id = 150063
+	title = "HUNC64.T"
+	desc = "HUNC64.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_acttwo     
+		CLN = {
+	       check_variable = {
+		      which = HUN_POWER
+		      value = 8
+	       }
+		   NOT = {
+	          check_variable = {
+		         which = HUN_POWER
+		         value = 12
+	          }
+		   }
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	# At least we resolved that problem.
+	
+	option = { 
+	    name = "HUNC64.A"
+		clr_global_flag = venice_congress_acttwo
+		set_global_flag = venice_congress_final
+		prestige = 5
+		inherit = TES	
+		689 = { change_province_name = "Teschen" }
+		any_pop = {
+		    ideology = { factor = -0.01 value = conservative } 
+		    ideology = { factor = 0.01 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		}
+		HUN = { country_event = { id = 150065 days = 0 } }
+		diplomatic_influence = { who = HUN value = -100 }	   
+		relation = { who = HUN value = -50 }
+	}
+}
+
+# Hungarian Indipendence is Secured, but without Teschen
+
+country_event = {
+	id = 150065
+	title = "HUNC66.T"
+	desc = "HUNC66.D"
+	picture = "congress_venice"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "HUNC66.A"
+		clr_country_flag = AUS_agreement_HUN_active 
+		SCA = {
+		   diplomatic_influence = { who = HUN value = 400 }	
+		   relation = { who = HUN value = 400 }
+		   create_alliance = HUN
+		}
+		prestige = 5
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = SLV }
+	        }
+	        militancy = -2
+	        consciousness = -2  
+	    }
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+		}
+	}
+}
+
+#### THE CONGRESS VOTES TO GIVE HUNGARY TO BOHEMIA ####
+
+#### Dear God. What a mess. ####
+
+country_event = {
+	id = 150066
+	title = "HUNC67.T"
+	desc = "HUNC67.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = BOH
+		has_global_flag = venice_congress_acttwo     
+		CLN = {
+		   NOT = {
+	          check_variable = {
+		         which = HUN_POWER
+		         value = 8
+	          }
+		   }
+		}
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC67.A"
+		clr_global_flag = venice_congress_acttwo
+		set_global_flag = venice_congress_final
+		prestige = 20
+		inherit = TES	
+		689 = { change_province_name = "Teschen" }
+		create_vassal = HUN
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = reactionary } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+		relation = { who = DUA value = 100 }
+		relation = { who = BRG value = -100 }
+		relation = { who = SCA value = -100 }
+		HUN = { 
+		   set_country_flag = AUS_agreement_HUN_active
+	       add_country_modifier = {
+              name = calm_before_storm
+	          duration = 14
+	       }		
+		   country_event = { id = 150067 days = 14 } 		
+		}
+	}
+}
+
+#### The Center Cannot Hold - Hungary Collapses ####
+
+### It takes a little more then a couple of weeks before everyone realized what had just occured and soon after the anarchy sets in.
+
+### This is temp until I can actually verify Hungarian Content.
+
+country_event = {
+	id = 150067
+	title = "HUNC68.T"
+	desc = "HUNC68.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+	major = yes
+	
+	option = { 
+	    name = "HUNC68.A"
+		prestige_factor = -0.25
+		any_owned = { 
+	       limit = { 
+	          is_core = SIE
+		   }
+	       secede_province = SIE
+		}	
+		any_owned = { 
+	       limit = { 
+	          is_core = SLA
+		   }
+	       secede_province = SLA
+		}
+		950 = { add_core = PLC }
+		any_owned = { 
+	       limit = { 
+	          is_core = RUT
+		   }
+	       secede_province = PLC
+		}		
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = AUS_agreement_HUN_active }
+		   }
+		   owner = {
+		      clr_country_flag = AUS_agreement_HUN_active 
+		      any_owned = { 
+	             limit = { 
+					 province_id = 623
+		         }
+	             secede_province = AUS
+		      }
+		      any_owned = { 
+	             limit = { 
+					 province_id = 639
+		         }
+	             secede_province = AUS
+		      }
+		   }
+		}
+		SIE = { government = absolute_monarchy }
+		any_pop = {
+		    ideology = { factor = -0.1 value = conservative } 
+		    ideology = { factor = 0.1 value = liberal } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 5
+			}
+		}        
+	}
+}
+
+################################################################################################
+###################### THE FINAL ACT OF THE CONGRESS OF VENICE #################################
+################################################################################################
+
+country_event = {
+	id = 150068
+	title = "HUNC69.T"
+	desc = "HUNC69.D"
+	picture = "congress_venice"
+	
+	fire_only_once = yes
+	major = yes
+	
+    trigger = {
+        tag = DUA
+		has_global_flag = venice_congress_final    
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC69.A"
+		any_country = {
+		   limit = {
+		      has_country_flag = attending_HUN_conference
+		   }
+		   clr_country_flag = attending_HUN_conference
+		}
+		clr_global_flag = venice_congress_final
+        set_global_flag = END_OF_VENICE_CONGRESS
+		set_global_flag = DVG_infamy
+		prestige = 20
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		}
+		relation = { who = BOH value = 25 }
+		relation = { who = BRG value = 25 }
+		relation = { who = SCA value = 25 }
+	}
+}
+
+#### Localization Entries 70 to 90 reserved for Bohemian-Scandinavian War in Backstabbing Scenario ####
+
+### Scandinavia handed us Pommerania - Bwahahahahaha ###
+
+country_event = { 
+	id = 150069
+	title = "HUNC70.T"
+	desc = "HUNC70.D"
+	picture = "pommern"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HUNC70.A"
+        prestige = 20
+		relation = { who = BOH value = 50 } 
+		any_pop = {
+		  consciousness = -3
+		  militancy = -3
+		}
+	}
+}
+
+### Scandinavia refuses to hand us Pommerania ###
+
+country_event = { 
+	id = 150070
+	title = "HUNC71.T"
+	desc = "HUNC71.D"
+	picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HUNC71.A"
+		set_global_flag = pommerania_war_early
+		war = {
+			target = SCA
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}	
+        SCA = { country_event = 150071 }		
+		ai_chance = {
+			factor = 80
+		}
+	}
+	
+	## Refusing to go to war now gives the same effect as if the Congress voted to give Meckelnburg
+	
+    option = {
+        name = "HUNC71.B"
+		badboy = -10
+		prestige = -5
+		any_pop = {
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = reactionary } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+		relation = { who = DUA value = 100 }
+		relation = { who = BRG value = 25 }
+		relation = { who = SCA value = 25 }
+		set_country_flag = SCA_POM_COMPROMISED
+		ai_chance = {
+			factor = 20
+		}
+	}
+}
+
+### The Pommeranian War Major Event ###
+
+country_event = { 
+	id = 150071
+	title = "HUNC72.T"
+	desc = "HUNC72.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HUNC72.A"
+        prestige = -1
+	}
+}
+
+#### SCA has lost the war and Pommerania has been stolen from them ####
+#### This event is either triggered by decision or the custom_treaty_CB #####
+
+country_event = {
+	id = 150072
+	title = "HUNC73.T"
+	desc = "HUNC73.D"
+	picture = "rhapsody"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SCA
+		has_global_flag = pommerania_war_early
+		war = no
+		has_country_flag = custom_treaty_loser
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC73.A"
+		prestige_factor = -0.25
+		clr_country_flag = custom_treaty_loser
+		any_owned = { 
+	        limit = { 
+	           is_core = POM
+		    }
+			remove_core = SCA
+	        secede_province = POM
+        }
+		any_country = {
+		   limit = {
+		      tag = MSZ
+			  vassal_of = BOH
+		   }
+		   annex_to = BOH
+		}
+		BOH = { 
+		   relation = { who = POM value = 400 } 
+		   diplomatic_influence = { who = POM value = 400 }
+		   #set_country_flag = POM_expedite_CAE
+		   country_event = 150073
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+	}
+}
+
+
+### Bohemia's Victory Lap ###
+
+country_event = { 
+	id = 150073
+	title = "HUNC74.T"
+	desc = "HUNC74.D"
+	picture = "rhapsody"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HUNC72.A"
+        prestige = 20
+		# Failsafe for AI to stop them from annexing BRA
+		any_owned = { 
+	        limit = { 
+	           is_core = HAN
+		    }
+	        secede_province = HAN
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = THU
+		    }
+	        secede_province = THU
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRA
+		    }
+	        secede_province = BRA
+        }
+		any_pop = {
+		   militancy = -3
+		   consciousness = -3
+		}
+	}
+}
+
+#### Bohemia has been humiliated again by not successfully achieving its war goal - This secures pommerania for the time being. Bohemia should have waited. ####
+
+country_event = {
+	id = 150074
+	title = "HUNC75.T"
+	desc = "HUNC75.D"
+    picture = "SCAwins"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SCA
+		has_global_flag = pommerania_war_early
+		war = no
+		NOT = { has_country_flag = custom_treaty_loser }
+    }
+
+    mean_time_to_happen =  {
+        days = 3
+    }
+	
+	option = { 
+	    name = "HUNC75.A"
+		prestige = 20
+		clr_global_flag = pommerania_war_early
+		clr_country_flag = custom_treaty_loser
+		any_pop = {
+	        limit = { 
+	           NOT = { location = { is_core = POM } }
+	        }
+		   militancy = -3
+		   consciousness = -3
+		}
+	    any_pop = { 
+	        limit = { 
+	           location = { is_core = POM }
+	        }
+	        militancy = -9
+	        consciousness = -9     
+	    }
+		any_country = {
+		   limit = {
+		      tag = MSZ
+			  vassal_of = BOH
+		   }
+		   annex_to = SCA
+		}
+		BOH = { 
+		   country_event = 150075
+		}
+
+	}
+}
+
+
+### Bohemia's Failure Message ###
+
+country_event = { 
+	id = 150075
+	title = "HUNC76.T"
+	desc = "HUNC76.D"
+	picture = "SCAwins"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HUNC76.A"
+        prestige_factor = -0.25
+		# Failsafe for AI to stop them from annexing BRA
+		any_owned = { 
+	        limit = { 
+	           is_core = HAN
+		    }
+	        secede_province = HAN
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = THU
+		    }
+	        secede_province = THU
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRA
+		    }
+	        secede_province = BRA
+        }
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 8
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+	}
+}

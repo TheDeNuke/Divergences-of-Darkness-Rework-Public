@@ -461,6 +461,7 @@ political_decisions = {
 			   tag = DUA
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			}
 			OR = {
 			   AND = {
@@ -470,6 +471,11 @@ political_decisions = {
 			   }
 			   AND = {
 			      tag = PBG
+				  owns = 470
+				  owns = 451
+			   }
+			   AND = {
+			      tag = FRK
 				  owns = 470
 				  owns = 451
 			   }
@@ -516,6 +522,7 @@ political_decisions = {
 			OR = {
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			   PRV = { 
 				   OR = {
 					   all_core = { 
@@ -552,6 +559,7 @@ political_decisions = {
 			   tag = DUA
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			}
 			OR = {
 			   AND = {
@@ -561,6 +569,11 @@ political_decisions = {
 			   }
 			   AND = {
 			      tag = PBG
+				  owns = 470
+				  owns = 451
+			   }
+			   AND = {
+			      tag = FRK
 				  owns = 470
 				  owns = 451
 			   }
@@ -607,6 +620,7 @@ political_decisions = {
 			OR = {
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			   PRV = { 
 				   OR = {
 					   all_core = { 
@@ -643,6 +657,7 @@ political_decisions = {
 			   tag = DUA
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			}
 			OR = {
 			   AND = {
@@ -655,16 +670,21 @@ political_decisions = {
 				  owns = 470
 				  owns = 451
 			   }
+			   AND = {
+			      tag = FRK
+				  owns = 470
+				  owns = 451
+			   }
 			   has_country_flag = meddle_in_italy
-			}			
-			ITA = {
-				exists = no
-			}
-			ITC = {
-				exists = no
-			}
-			ARI = {
-				exists = no
+			}	
+            OR = {
+               exists = PIE
+               exists = SAR
+            }			   
+			NOT = {
+			   exists = ITA
+			   exists = ITC
+			   exists = ARI
 			}
 			NOT = { has_country_flag = italy_compromised }
 		}
@@ -676,20 +696,24 @@ political_decisions = {
 					state_n_government = 1
 					SAR = { state_n_government = 1 }
 				}
+				AND = {
+					state_n_government = 1
+					PIE = { state_n_government = 1 }
+				}
 				nationalism_n_imperialism = 1
 			}
 			NOT = { war = yes }
 			OR = { 
-			SAR = { 
-				war = no
-				exists = yes
-				in_sphere = THIS
-			}
-			PIE = { 
-				war = no
-				exists = yes
-				in_sphere = THIS
-			}
+			    SAR = { 
+				   war = no
+				   exists = yes
+				   in_sphere = THIS
+			   }
+			   PIE = { 
+				   war = no
+				   exists = yes
+				   in_sphere = THIS
+			   }
 			}
 			PAP = {
 		       all_core = {
@@ -733,6 +757,7 @@ political_decisions = {
 			OR = {
 			   tag = BRG
 			   tag = PBG
+			   tag = FRK
 			   PRV = { 
 				   OR = {
 					   all_core = { 
@@ -754,7 +779,145 @@ political_decisions = {
 				who = SAR
 				value = 400
 			}
-			SAR = {
+			diplomatic_influence = {
+				who = PIE
+				value = 400
+			}
+			any_country = {
+			   limit = {
+			      OR = {
+				    tag = SAR
+					tag = PIE
+			      }
+				  exists = yes
+			   }
+			   country_event = 124274
+            }				
+			set_country_flag = italy_compromised
+		}
+			
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	construct_weak_italy_LOM = {
+	    picture = DUA_italy
+		potential = {
+		    OR = {
+			   tag = DUA
+			   tag = BRG
+			   tag = PBG
+			   tag = FRK
+			}
+			OR = {
+			   AND = {
+			      tag = BRG
+				  owns = 470
+				  owns = 451
+			   }
+			   AND = {
+			      tag = PBG
+				  owns = 470
+				  owns = 451
+			   }
+			   AND = {
+			      tag = FRK
+				  owns = 470
+				  owns = 451
+			   }
+			   has_country_flag = meddle_in_italy
+			}			
+			NOT = {
+			   exists = ITA
+			   exists = ITC
+			   exists = ARI
+			   exists = SAR 
+			   exists = PIE
+			}
+			NOT = { has_country_flag = italy_compromised }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+			OR = {
+				AND = {
+					state_n_government = 1
+					LOM = { state_n_government = 1 }
+				}
+				nationalism_n_imperialism = 1
+			}
+			NOT = { war = yes } 
+			LOM = { 
+			    exists = yes
+				in_sphere = THIS
+				war = no
+			}
+			PAP = {
+		       all_core = {
+			      OR = {
+				     owned_by = THIS
+					 owner = {
+					    in_sphere = THIS
+					 }
+					 owner = {
+					    vassal_of = THIS
+					 }
+				  }
+		       }
+			}
+			LOM = {
+		       all_core = {
+			      OR = {
+				     owned_by = THIS
+					 owner = {
+					    in_sphere = THIS
+					 }
+					 owner = {
+					    vassal_of = THIS
+					 }
+				  }
+		       }
+			}
+			NOT = {
+				ITA = {
+					any_core = {
+						owner = {
+							is_culture_group = italian
+							OR = {
+								is_greater_power = yes
+								war = yes
+							}
+						}
+					}
+				}
+			}			
+			OR = {
+			   tag = BRG
+			   tag = PBG
+			   tag = FRK
+			   PRV = { 
+				   OR = {
+					   all_core = { 
+						   owned_by = THIS
+					   }
+					   exists = no
+				    }
+			   }
+            }			   
+		}
+		
+		effect = {
+			prestige = 20			
+			relation = {
+				who = ARA
+				value = -100
+			}
+			diplomatic_influence = {
+				who = LOM
+				value = 400
+			}
+			LOM = {
 				country_event = 124274
 			}				
 			set_country_flag = italy_compromised
@@ -965,37 +1128,37 @@ political_decisions = {
 		}
 	}
 	
-	help_germany = { 
-	picture = Germania
-	potential = { 
-	tag = ITA 
-	OR = {
-	   government = democracy
-	   government = socialist_republic
-       government = parliamentary_republic
-    }	
-	NOT = { exists = SGF }
-	NOT = { exists = CAE }
-	NOT = { exists = GER }
-	NOT = { exists = HLR }
-	NOT = { has_global_flag = first_council_of_munich }
-	NOT = { has_global_flag = revolution_germany }
-	NOT = { has_global_flag = SGF_revolution_is_dead }
-		}
+	#help_germany = { 
+	#picture = Germania
+	#potential = { 
+	#tag = ITA 
+	#OR = {
+	#   government = democracy
+	#   government = socialist_republic
+    #   government = parliamentary_republic
+    #}	
+	#NOT = { exists = SGF }
+	#NOT = { exists = CAE }
+	#NOT = { exists = GER }
+	#NOT = { exists = HLR }
+	#NOT = { has_global_flag = first_council_of_munich }
+	#NOT = { has_global_flag = revolution_germany }
+	#NOT = { has_global_flag = SGF_revolution_is_dead }
+	#	}
 		
-	allow = { 
-	capital = 749 
-	is_greater_power = yes 
-	}
+	#allow = { 
+	#capital = 749 
+	#is_greater_power = yes 
+	#}
 	
-	effect = { 
-	prestige = 25
-	set_global_flag = revolution_germany
-		}
-	ai_will_do = {
-			factor = 1
-		}
-	}
+	#effect = { 
+	#prestige = 25
+	#set_global_flag = revolution_germany
+	#	}
+	#ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
 	
 	build_the_ponte_liberta = { 
 	

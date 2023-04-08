@@ -1,253 +1,4484 @@
 ###################################### ADVANCE AUSTRALIA FAIR #######################################################
 
 country_event = {
-	id = 95624 #The Conquest of Terra Australis
+	id = 95701 #Yaluo startup 
 	title = "ZHO1.T"
 	desc = "ZHO1.D"
-	picture = "american_colonization_society"
+	
+	picture = zongting
 
-	trigger = {	
-	    exists = yes
-		is_greater_power = yes
-	    NOT = { has_global_flag = active_australia_attempt }
-	    NOT = { has_global_flag = perth_is_owned }
-		NOT = { has_country_flag = australia_failure }
-		2497 = { empty = yes }
-		capital_scope = { continent = europe }
-		any_owned_province = { port = yes }
-		rank = 12
-		total_amount_of_ships = 10
-		war = no
-		is_disarmed = no
-		is_vassal = no
-		NOT = {
-			year = 1900
-			tag = BOH
-			tag = RUS
-			tag = MUS
-			tag = NOV
-			tag = CSK
-			tag = TAR
-			tag = RYA
-			tag = TUR
-		}
+	trigger = { 
+		tag = YLO 
+		NOT = { year = 1837 } 
 	}
 	
-	mean_time_to_happen = {
-		months = 100
-		modifier = {
-			factor = 0.5
-			year = 1840
-		}
-		modifier = {
-			factor = 0.5
-			year = 1850
-		}
-		modifier = {
-			factor = 0.5
-			year = 1855
-		}
-		modifier = {
-			factor = 0.1
-			year = 1860
-		}
-	}
-	
-	option = {
-		name = "We shall conquer the lost continent!"
-	    set_global_flag = active_australia_attempt
-	    prestige = 5
-		random_owned = {
-			limit = {
-				owner = {
-					NOT = { money = 50000 }
-					NOT = { check_variable = { which = owed_cash_money value = 1 } }
-				} 
-			}
-			owner = { set_variable = { which = owed_cash_money value = 50 } }
-		}
-
-		random_owned = {
-			limit = {
-				owner = {
-					NOT = { money = 50000 }
-					check_variable = { which = owed_cash_money value = 9 }
-				} 
-			}
-			owner = { change_variable = { which = owed_cash_money value = 50 } }
-		}
-
-		random_owned = {
-			limit = { owner = { money = 50000 } }
-			owner = { treasury = -50000 }
-		}
-
-		random_list = {
-			40 = { country_event = { id = 95625 days = 60 } }
-			60 = { country_event = { id = 95626 days = 60 } }
-		}
+	fire_only_once = yes 
 		
-		ai_chance = {
-			factor = 90
-		}
-	}
+	mean_time_to_happen = { 
+		days = 1 
+	} 
+	
+	option = { 
+		name = "ZHO1.A"
+		ZSA = { country_event = 95702 } 
+		MJN = { country_event = 95703 } 
+		set_country_flag = yaluo_GAN 
+		set_variable = {
+		   which = REFORM_YALUO
+		   value = 10
+	    }
 
-	option = {
-		name = "There is clearly nothing there."
-		set_country_flag = australia_failure
-		prestige = -1
-		ai_chance = {
-			factor = 10
-		}
 	}
-} 
-
+	
+}
+	
 country_event = {
-	id = 95625 #The Conquest has Failed
+	id = 95702 #Zhusha startup 
 	title = "ZHO2.T"
 	desc = "ZHO2.D"
-	picture = "sudan_question"
-
-	is_triggered_only = yes
 	
-	option = {
-		name = "I was promised fertile land and they gave me nothing."
-		prestige = -10
-	    clr_global_flag = active_australia_attempt
-		set_country_flag = australia_failure
-	}
-} 
+	picture = chinese_muslims
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO2.A" 
+		set_country_flag = zhusha_GAN 
+		country_event = { id = 95737 days = 400 } 
+	}	
+	
+}
 
 country_event = {
-	id = 95626 #Colonization is Possible!
+	id = 95703 #Mianjin startup 
 	title = "ZHO3.T"
 	desc = "ZHO3.D"
-	picture = "1843_GreatMigration"
-
-	is_triggered_only = yes
 	
-	option = {
-		name = "Terra Australis is ours!"
-		prestige = 10
-		GAN = { country_event = { id = 95627 days = 7 } }
-		GAN_8 = { secede_province = THIS }
-		GAN_7 = { secede_province = THIS }
-		2497 = { add_province_modifier = { name = gold_rush duration = 7300 } }
-		2497 = { add_province_modifier = { name = developing_homeland duration = 1095 } }
-	    clr_global_flag = active_australia_attempt
-		set_country_flag = australia_owner
-		set_global_flag = perth_is_owned
+	picture = chinese_company
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO3.A" 
+		country_event = { id = 95724 days = 20 } 
+		country_event = { id = 95735 days = 445 } 
+		set_country_flag = mianjin_GAN 
+		add_country_modifier = { 
+			name = kongsi_republic
+			duration = -1
+		}
+		set_variable = {
+		   which = PRESIDENT_MIANJIN
+		   value = 10
+	    }
 	}
-} 
+	
+}
 
 country_event = {
-	id = 95627 #The Europeans have arrived
+	id = 95704 #The Port Anne colony
 	title = "ZHO4.T"
 	desc = "ZHO4.D"
-	picture = "taiping_attack"
-
-	is_triggered_only = yes
+	
+	picture = burgundian_new_zealand
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	OR = { tag = BRG tag = PBG }
+	year = 1838 
+	3326 = { empty = yes } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 9 
+		modifier = { 
+		factor = 0.1 
+		year = 1840
+		}
+	}
 	
 	option = {
-		name = "How dare they tarnish the legacy of Zheng He!"
-		prestige = -1
+		name = "ZHO4.A"
+		prestige = 3 
+		3326 = { secede_province = THIS } 
 	}
-} 
+}
 
 country_event = {
-	id = 95628 #The Last Bastion of Humanity
-	title = "ZHO5.T"
-	desc = "ZHO5.D"
-	picture = "american_colonization_society"
-
-	trigger = {	
-	    exists = yes
-		is_greater_power = yes
-	    has_global_flag = perth_is_owned
-		NOT = { has_global_flag = zeeland_is_zeehere }
-		NOT = { has_country_flag = australia_owner }
-		NOT = { has_country_flag = no_zealand_zeee }
-		2515 = { empty = yes }
-		capital_scope = { continent = europe }
-		any_owned_province = { port = yes }
-		rank = 12
-		total_amount_of_ships = 10
-		war = no
-		is_disarmed = no
-		is_vassal = no
-		NOT = {
-			year = 1900
-			tag = BOH
-			tag = RUS
-			tag = MUS
-			tag = NOV
-			tag = RYA
-			tag = TUR
-		}
+	id = 95705 #Integration of the New-Zealand outpost 
+	title = "ZHO4.T"
+	desc = "ZHO4.D"
+	
+	picture = burgundian_new_zealand
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		OR = { tag = PBG tag = BRG }  
+		3332 = { owned_by = VOC } 
+		3331 = { owned_by = THIS }
 	}
 	
-	mean_time_to_happen = {
-		months = 100
-		modifier = {
-			factor = 0.5
-			year = 1850
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+		factor = 0.1 
+		year = 1850
 		}
-		modifier = {
-			factor = 0.5
-			year = 1855
-		}
-		modifier = {
-			factor = 0.5
-			year = 1860
-		}
-		modifier = {
-			factor = 0.1
-			year = 1865
+		modifier = { 
+		factor = 0.1 
+		year = 1860
 		}
 	}
 	
 	option = {
-		name = "What can a bunch of primitives do to stop us? Colonize it!"
-	    set_global_flag = zeeland_is_zeehere 
-	    prestige = 5
+		name = "ZHO4.A"
+		prestige = 1
+		VOC = { country_event = 95706 } 
+	}
+}
+
+country_event = {
+	id = 95706 #Integration of the New-Zealand outpost
+	title = "ZHO6.T"
+	desc = "ZHO6.D"
+	
+	picture = burgundian_new_zealand
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = "ZHO6.A"
+		prestige = 1
+		any_owned = {
+		   limit = {
+		      province_id = 3332
+		   }
+		   secede_province = FROM
+		} 
+	}
+}
+
+
+country_event = {
+	id = 95707 #The Zongting
+	title = "ZHO7.T"
+	desc = "ZHO7.D"
+	
+	picture = zongting
+	
+	trigger = { 
+	tag = YLO 
+	year = 1838
+	NOT = { has_country_flag = zongting } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 2
+		modifier = { 
+			factor = 0.01 
+			year = 1839 
+		}
+	}
+	
+	option = { 
+		name = "ZHO7.A" #Maintain the Status Quo
+		country_event = { id = 95708 days = 225 }
+		set_country_flag = zongting
+		any_owned = { 
+			poor_strata = { 
+				militancy = 2
+				ideology = { factor = 0.1 value = liberal } 
+				}
+			rich_strata = { 
+				militancy = -3
+			}
+		}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = -1
+	    }
+	}
+	
+	option = { 
+		name = "ZHO7.B" #Veterans will have representation 
+		country_event = { id = 95708 days = 225 }
+		set_country_flag = zongting
+		any_owned = { 
+			poor_strata = { 
+				militancy = 1
+				ideology = { factor = 0.1 value = liberal } 
+				}
+			rich_strata = { 
+				militancy = -1
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO7.C" #Yaluo is an ideal first and foremost
+		country_event = { id = 95708 days = 225 }
+		set_country_flag = zongting
+		political_reform = universal_voting
+		any_owned = { 
+			poor_strata = { 
+				militancy = -2 
+				ideology = { factor = 0.1 value = liberal } 
+				ideology = { factor = -0.1 value = reactionary } 
+				}
+			rich_strata = { 
+				militancy = 2 
+				ideology = { factor = -0.1 value = liberal } 
+				ideology = { factor = 0.1 value = reactionary } 
+				}
+			}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = 1
+	    }
+	}
+}
+
+country_event = {
+	id = 95708 #The Koori tribute
+	title = "ZHO8.T"
+	desc = "ZHO8.D"
+	
+	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO8.A" #Renege on our promises
+		country_event = { id = 95709 days = 60 } #Frontier Wars
+		country_event = { id = 95710 days = 400 } #Trade with Scandinavia
+		any_pop = { 
+			limit = { culture = koori } 
+			militancy = 4 
+			}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = -1
+	    }
+	}
+	
+	option = { 
+		name = "ZHO8.B" #Pay the tribute with state funds
+		country_event = { id = 95710 days = 400 }
+		any_pop = { 
+			limit = { culture = koori } 
+			militancy = -2 
+			}
+		any_pop = { 
+			limit = { culture = ganguan }
+			militancy = 1 
+			consciousness = 3 
+		}
+	}
+	
+	option = { 
+		name = "ZHO8.C" #Force the Eastern huis to give tribute
+		country_event = { id = 95710 days = 400 }
+		country_event = { id = 95718 days = 100 } 
+		any_pop = { 
+			limit = { culture = koori } 
+			militancy = -2 
+			}
+		any_pop = { 
+			limit = { culture = ganguan }
+			militancy = 1 
+			consciousness = 3 
+		}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = 1
+	    }
+	}
+}
+
+country_event = {
+	id = 95709 #The Koori frontier wars
+	title = "ZHO9.T"
+	desc = "ZHO9.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO9.A" #How could we have guessed ?
+		any_owned = { 
+			limit = { OR = { province_id  = 3322 province_id  = 3321 province_id  = 3318 province_id  = 3315 province_id  = 3312 province_id = 2471 province_id = 2480 } }
+			add_province_modifier = { 
+				name = frontier_war_YLO
+				duration = 7300
+			}
+		}
+		any_pop = { 
+			limit = { culture = koori } 
+			militancy = 4 
+		}
+	}
+}
+
+country_event = {
+	id = 95710 #Trade with Scandinavia
+	title = "ZHO10.T"
+	desc = "ZHO10.D"
+	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO10.A" #Close the ports!
+		SCA = { country_event = { id = 95711 days = 60 } }
 		random_owned = {
 			limit = {
 				owner = {
-					NOT = { money = 100000 }
-					NOT = { check_variable = { which = owed_cash_money value = 1 } }
-				} 
+				has_country_modifier = western_influences
+					} 
 			}
-			owner = { set_variable = { which = owed_cash_money value = 100 } }
+			owner = {
+			   remove_country_modifier = western_influences
+			   add_country_modifier = {
+				   name = uncivilized_isolationism
+				   duration = -1
+			   }
+			}
 		}
-
+		any_pop = { 
+			militancy = -1 
+		}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = -2
+	    }
+		ai_chance = { 
+			factor = 10
+			modifier = { 
+			factor = 0.1 
+			MJN = { ai = no } 
+			}
+			modifier = { 
+			factor = 10
+			AND = { MJN = { ai = yes } ZSA = { ai = yes } } 
+			}
+			modifier = { 
+			factor = 5
+			SCA = { ai = no } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO10.B" #Allow their presence
+		set_country_flag = ports_finished_YLO
+		add_country_modifier = { 
+			name = small_research_buff_YLO
+			duration = 365
+			}
+			SCA = { diplomatic_influence = { who = THIS value = 30 } }
+		any_pop = { 
+			limit = { culture = ganguan }
+			consciousness = 3 
+		}
+		ai_chance = { 
+			factor = 50
+		}
+	}
+	
+	option = { 
+		name = "ZHO10.C" #Allow Scandinavian investors in our country
+		set_country_flag = ports_finished_YLO
+		any_pop = { 
+			militancy = 1 
+			consciousness = 3 
+		}
+		SCA = { diplomatic_influence = { who = THIS value = 80 } }
+		add_country_modifier = { 
+			name = small_research_buff_YLO
+			duration = 365
+			}
 		random_owned = {
 			limit = {
 				owner = {
-					NOT = { money = 100000 }
-					check_variable = { which = owed_cash_money value = 9 }
+				   transport_improv = no_transport_improv
+			    } 
+			}
+			owner = {
+			   economic_reform = yes_transport_improv 
+			   activate_technology = experimental_railroad 
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = {
+				   transport_improv = yes_transport_improv
 				} 
 			}
-			owner = { change_variable = { which = owed_cash_money value = 100 } }
+		    owner = {
+			   economic_reform = advanced_transport  
+			   set_country_flag = early_railroad
+			   activate_technology = early_railroad 
+			}
 		}
+		change_variable = {
+		   which = REFORM_YALUO
+		   value = 2
+	    }
+		ai_chance = { 
+			factor = 40
+		}
+	}
+}
 
-		random_owned = {
-			limit = { owner = { money = 100000 } }
-			owner = { treasury = -100000 }
+country_event = {
+	id = 95711 #Yaluo has refused our traders
+	title = "ZHO11.T"
+	desc = "ZHO11.D"
+	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO11.A" #We will teach them a lesson!
+		YLO = { set_country_flag = ports_finished_YLO country_event = { id = 95712 days = 60 } }
+		war = {
+			target = YLO
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
 		}
+	}
+	
+	option = { 
+		name = "ZHO11.B" #
+		YLO = { set_country_flag = ports_finished_YLO } 
+		relation = { who = FROM value = -50 } 
+	}
+}
+
+
+country_event = {
+	id = 95712 #Scandinavia has declared war! 
+	title = "ZHO12.T"
+	desc = "ZHO12.D"
+	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO12.A" #We will teach them a lesson!
+		set_country_flag = ports_finished_YLO
+	}
+}
+
+country_event = {
+	id = 957120 #The unequal treaty
+	title = "ZHO120.T"
+	desc = "ZHO120.D"
+	picture = commodore_perry
+	
+	trigger = { 
+		tag = YLO
+		has_country_flag = custom_treaty_loser
+		truce_with = SCA 
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "ZHO120.A" #
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = ports_finished_YLO
+		2476 = { secede_province = SCA }
+		SCA = { country_event = 95713 } 
+	}
+}
+
+country_event = {
+	id = 95713 #The unequal Treaty
+	title = "ZHO13.T"
+	desc = "ZHO13.D"
+	picture = Unequal_treaty_CHI
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO13.A" #We will teach them a lesson!
+		create_vassal = FROM 
+		prestige = 5
+	}
+}
+
+country_event = {
+	id = 95714 #Scandinavia demands Weizhou
+	title = "ZHO14.T"
+	desc = "ZHO14.D"
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO14.A" #We will fight for our indenpendece !
+		SCA = { country_event = { days = 15 id = 95715 } }
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.5
+				SCA = { rank = 4 } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO14.B" #We must accept
+		SCA = { country_event = { days = 15 id = 95716 } }
+		civilized = no
+		2483 = { secede_province = FROM } 
+		relation = { who = FROM value = -50 } 
+		ai_chance = { 
+			factor = 20 
+			modifier = { 
+				factor = 3 
+				SCA = { rank = 4 } 
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95715 #Mianjin has refused!
+	title = "ZHO15.T"
+	desc = "ZHO15.D"
+	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO11.A" #Our ships are already en route!
+		war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	}
+
+}
+
+country_event = {
+	id = 95716 #They have accepted!
+	title = "ZHO16.T"
+	desc = "ZHO16.D"
+	picture = Unequal_treaty_CHI
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO16.A" #
+		create_vassal = FROM
+		prestige = 5 
+	}
+}
+
+country_event = {
+	id = 95717 #The unequal treaty
+	title = "ZHO12.T"
+	desc = "ZHO12.D"
+	picture = Unequal_treaty_CHI
+	
+	trigger = { 
+		tag = MJN
+		has_country_flag = custom_treaty_loser
+		truce_with = SCA 
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "ZHO12.A" #We will teach them a lesson!
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = ports_finished_YLO
+		2483 = { secede_province = SCA }
+		SCA = { country_event = 95713 } 
+	}
+}
+
+#Forgot the event to give them more states 
+country_event = { 
+	id = 95718 #Koori tribes join the League
+	title = "ZHO18.T"
+	desc = "ZHO18.D"
+	
+	is_triggered_only = yes 
+	
+	option = {
+	name = "ZHO18.A"
+	GAN_3320 = { secede_province = THIS } 
+	GAN_2493 = { secede_province = THIS } 
+	add_accepted_culture = koori
+	}
+}
+
+country_event = { 
+	id = 95719 #Same interests - YLO proposes peaceful reunification with MJN
+	title = "ZHO19.T"
+	desc = "ZHO19.D"
+	picture = chinese_company
+	
+	trigger = { 
+		tag = YLO 
+		war = yes 
+		NOT = { 
+			check_variable = { 
+				which = REFORM_YALUO 
+				value = 7 
+				}
+			}
+		has_country_flag = ports_finished_YLO
+        NOT = { 
+		   is_vassal = yes
+		   war_with = SCA 
+		   war_with = BRG
+           war_with = DUA 
+        }		   
+	}
+	
+	mean_time_to_happen = { 
+		months = 6 
+	}
+	
+	option = { 
+		name = "ZHO19.A"
+		MJN = { country_event = 95720 } 
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "ZHO19.B" #Player only
+		inherit = MJN 
+		clr_country_flag = yaluo_GAN
+		set_country_flag = mianjin_GAN
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+
+}
+
+
+country_event = { 
+	id = 95720 #Same interests - YLO proposes peaceful reunification with MJN
+	title = "ZHO20.T"
+	desc = "ZHO20.D"
+	picture = chinese_company
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO20.A"
+		inherit = FROM 
 		
-		ENG_2513 = { secede_province = THIS }
-
-		ai_chance = {
-			factor = 90
-		}
 	}
 
-	option = {
-		name = "There is clearly nothing there."
-		set_country_flag = no_zealand_zeee
-		prestige = -1
-		ai_chance = {
+}
+
+country_event = { 
+	id = 95721
+	title = "ZHO21.T"
+	desc = "ZHO21.D" 
+	picture = chinese_war
+	
+	trigger = { 
+		tag = YLO 
+		war = no 
+		check_variable = { 
+			which = REFORM_YALUO 
+				value = 14 
+			}
+		has_country_flag = ports_finished_YLO 
+		year = 1843
+		NOT = { is_vassal = yes } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 14 
+	}
+	
+	option = { 
+		name = "ZHO21.A"
+		any_owned = { 
+			limit = { region = GAN_2 } 
+			secede_province = MJN
+		}
+		MJN = { country_event = { id = 95722 days = 2 } }
+		country_event = 95723 
+	}
+}
+
+country_event = { 
+	id = 95722
+	title = "ZHO22.T"
+	desc = "ZHO22.D" 	
+	picture = chinese_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO22.A"
+		prestige = 5 
+		change_variable = { 
+			which = PRESIDENT_MIANJIN
+			value = 1
+		}
+		set_global_flag = zhourao_CW 
+		war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+		}
+	}
+	
+}
+
+
+country_event = { 
+	id = 95723
+	title = "ZHO23.T" #Complete mobilization because of the reforms!
+	desc = "ZHO23.D" 	
+	picture = chinese_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO23.A" 
+		add_country_modifier = { 
+			name = taiping_draft 
+			duration = 365 
+		}
+	}
+}	
+
+country_event = { 
+	id = 95724
+	title = "ZHO24.T" #Situation in Aotearoa 
+	desc = "ZHO24.D" 	
+	picture = chinese_and_maoris
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO24.A"
+		AOT = { country_event = { id = 95725 days = 720 } }
+		any_pop = { 
+			consciousness = 2 
+		}
+	}
+}
+
+#Maori King = Te Arikinui
+
+country_event = { 
+	id = 95725
+	title = "ZHO25.T" #A Maori Te Arikinui
+	desc = "ZHO25.D" 	
+	picture = maori_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO25.A" #Wait, Maori will free themselves
+		government = absolute_monarchy
+		set_country_flag = waiting_opportunity_AOT
+		MJN = { country_event = 95726 } 
+	}
+	
+	option = { 
+		name = "ZHO25.B" #Contact the Pakeha!
+		government = absolute_monarchy
+		set_global_flag = Maori_rebellion 
+		SCA = { country_event = { id = 95727 days = 45 } }
+	}
+}
+	
+country_event = { 
+	id = 95726
+	title = "ZHO26.T" #A Maori Te Arikinui
+	desc = "ZHO26.D" 	
+	picture = chinese_and_maoris
+	
+	is_triggered_only = yes 	
+	
+	option = { 
+		name = "ZHO26.A" #As long trade flows we are content
+		change_variable = {
+		   which = PRESIDENT_MIANJIN
+		   value = 1
+	    }
+	}
+}
+
+country_event = { 
+	id = 95727
+	title = "ZHO27.T" #A Maori high King demands we help him against Mianjin
+	desc = "ZHO27.D" 	
+	picture = maori_war
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "ZHO27.A"
+		MJN = { country_event = 95728 } 
+		diplomatic_influence = { who = AOT value = 200 }
+		ai_chance = { 
+			factor = 90
+			#modifier = { 
+			#	factor = 0.5 
+			#	any_greater_power = { war_with = THIS }
+			#}
+		}
+	}
+	
+	option = { 
+		name = "ZHO27.B"
+		MJN = { country_event = { id = 95731 days = 5 } }
+		ai_chance = { 
 			factor = 10
 		}
 	}
 }
+	
+country_event = { 
+	id = 95728
+	title = "ZHO28.T" #The Maoris have taken the port of Yungang and are protected by Scandinavia !
+	desc = "ZHO28.D" 	
+	picture = maori_war
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "ZHO28.A" #accept this new state of affairs ... 
+		relation = { who = FROM value = -200 } 
+		any_owned = { limit = { is_core = AOT } secede_province = AOT }
+		clr_global_flag = Maori_rebellion
+		AOT = { country_event = 95729 }
+		release_vassal = AOT 
+		relation = { who = AOT value = -200 } 
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.5 
+				any_greater_power = { war_with = SCA }
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO28.B" #Changyun will be dealt with, and Scandinavians be damned
+		relation = { who = FROM value = -200 } 
+		AOT = { country_event = 95730 } 
+		any_owned = { limit = { is_core = AOT } secede_province = AOT }
+		release_vassal = AOT 
+		war = {
+			target = AOT
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 20 
+			modifier = { 
+				factor = 4
+				any_greater_power = { war_with = SCA }
+			}
+		}
+	}
+}
+
+	
+country_event = { 
+	id = 95729
+	title = "ZHO29.T" #Great Maori Success
+	desc = "ZHO29.D" 	
+	picture = maori_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO29.A"
+		prestige = 5 
+	}
+}
+
+country_event = { 
+	id = 95730
+	title = "ZHO30.T" #Maori Mobilization
+	desc = "ZHO30.D" 	
+	picture = maori_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO30.A"
+		add_country_modifier = { 
+			name = taiping_draft 
+			duration = 365 
+		}
+	}
+}
+
+country_event = { 
+    id = 95731
+    title = "ZHO31.T" #The Maoris tried to get Scandinavian protection for their rebellion!
+    desc = "ZHO31.D"
+
+    is_triggered_only = yes
+
+    option = { 
+        name = "ZHO31.A" #Changyun will be dealt with,
+        relation = { who = FROM value = -200 } 
+        country_event = 95730
+        any_owned = { limit = { is_core = AOT } secede_province = AOT }
+        release_vassal = AOT 
+        war = {
+            target = AOT
+            attacker_goal = {
+                casus_belli = conquest_any
+            }
+            defender_goal = {
+                casus_belli = status_quo
+            }
+        }
+    }
+}
+
+country_event = { 
+	id = 95732
+	title = "ZHO32.T" #Colonization of Southern Island by Scandinavia
+	desc = "ZHO32.D" 	
+	
+	picture = Waitangi
+	
+	trigger = { 
+		tag = SCA 
+		AOT = { civilized = no in_sphere = THIS } 
+		ENG_2513 = { empty = yes }
+	}
+	
+	mean_time_to_happen = { 
+		months = 360
+		modifier = { 
+			factor = 0.5 
+			nationalism_n_imperialism = 1 
+		}
+		modifier = { 
+			factor = 0.5 
+			iron_steamers = 1 
+		}
+		modifier = { 
+			factor = 0.5 
+			AND = { owns = 2476 owns = 2483 } 
+		}
+		modifier = { 
+			factor = 0.8 
+			year = 1860 
+		}
+	}
+	
+	option = { 
+		name = "ZHO32.A"
+		prestige = 5
+		ENG_2513 = { secede_province = THIS }
+	}
+}
+
+country_event = { 
+	id = 95733
+	title = "ZHO33.T" #Maori takeover of Yungang
+	desc = "ZHO33.D" 
+	picture = maori_war	
+	
+	trigger = { 
+		tag = AOT 
+		vassal_of = MJN 
+		has_country_flag = waiting_opportunity_AOT
+		MJN = { war = yes }
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "ZHO33.A"
+		MJN = { country_event = 95734 } 
+	}
+}
+	
+country_event = { 
+	id = 95734
+	title = "ZHO34.T" #Maori takeover of Yungang
+	desc = "ZHO34.D" 	
+	picture = maori_war	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO34.A"
+		release_vassal = FROM  
+		any_owned = { limit = { is_core = AOT } secede_province = FROM }
+		relation = { who = AOT value = -200 } 
+	}
+}
+
+country_event = { 
+	id = 95735
+	title = "ZHO35.T" #The Qingqiuese connection
+	desc = "ZHO35.D" 	
+	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO35.A"
+		relation = { who = DNG value = 100 } 
+		country_event = { id = 95736 days = 445 } 
+		random_owned = {
+			limit = {
+				owner = {
+				naval_architecture = traditional 
+					} 
+				}
+		    owner = {
+			military_reform = scientific  
+			activate_technology = naval_design_bureaus 
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = {
+				naval_architecture = scientific
+					} 
+			}
+			owner = { research_points = 1000  }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+				foreign_naval_officers = no_foreign_naval_officers  
+					} 
+				}
+			    owner = {
+			       military_reform = yes_foreign_naval_officers   
+			       activate_technology = the_command_principle 
+			    }
+		}
+		random_owned = {
+			limit = {
+				owner = {
+				foreign_naval_officers = yes_foreign_naval_officers 
+					} 
+			}
+			owner = { research_points = 1000 }
+		}
+	}
+}
+
+country_event = { 
+	id = 95736
+	title = "ZHO36.T" #Troubles between a Spanish Augustinian and a Sufi master
+	desc = "ZHO36.D" 	
+	
+	picture = chinese_christian_massacre
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO36.A" #Blame the Sufis
+		change_variable = {
+		   which = PRESIDENT_MIANJIN
+		   value = 2
+	    }
+		set_global_flag = commander_of_the_faithful
+		any_pop = { 
+			limit = { religion = sunni } 
+			militancy = 4 
+		}
+		relation = { who = SPA value = 50 } 
+	}
+	
+	option = { 
+		name = "ZHO36.B" #Investigate and ensure a fair trial
+		change_variable = {
+		   which = PRESIDENT_MIANJIN
+		   value = 1
+	    }
+		relation = { who = SPA value = -10 } 
+		set_global_flag = commander_of_the_faithful
+		any_pop = { 
+			limit = { religion = sunni } 
+			militancy = 1 
+		}
+	}
+	
+	option = { 
+		name = "ZHO36.C" #Blame the Augustinians
+		relation = { who = SPA value = -50 } 
+		any_pop = { 
+			limit = { religion = sunni } 
+			militancy = -1 
+		}
+		change_variable = {
+		   which = PRESIDENT_MIANJIN
+		   value = -1
+	    }
+	}
+}
+
+country_event = { 
+	id = 95737
+	title = "ZHO37.T" #A new Sufi order in Zhusha - the Xinjiao 
+	desc = "ZHO37.D" 	
+	picture = chinese_muslims
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO37.A"
+		country_event = { id = 95738 days = 365 } 
+		any_pop = { 
+			limit = { religion = sunni } 
+			literacy = 0.01 
+			ideology = { factor = 0.01 value = reactionary } 
+		}
+	}
+}
+	
+country_event = { 
+	id = 95738
+	title = "ZHO38.T" #Developments of the Jinxingtang
+	desc = "ZHO38.D" 	
+	picture = chinese_muslims
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	    name = "ZHO38.A"
+		any_pop = { 
+			limit = { religion = sunni } 
+			literacy = 0.01 
+			ideology = { factor = 0.01 value = liberal } 
+		}
+	}
+}
+
+country_event = { 
+	id = 95739 
+	title = "ZHO39.T"
+	desc = "ZHO39.D"
+	picture = chinese_muslims
+	
+	trigger = { 
+		tag = ZSA 
+		has_global_flag = commander_of_the_faithful 
+	}
+	
+	mean_time_to_happen = { 
+		months = 2 
+		modifier = { 
+			factor = 0.1 
+			year = 1841 
+			}
+		}
+	
+	option = { 
+		name = "ZHO39.A" #Approve the fatwa by the Shaykh ul Islam
+		MJN = { country_event = 95740 } 
+		clr_global_flag = commander_of_the_faithful 
+		set_country_flag = fatwa_MJN 
+		}
+		
+	option = { 
+		name = "ZHO39.B" #Censor the Shaykh ul Islam
+		clr_global_flag = commander_of_the_faithful 
+		relation = { who = MJN value = 50 }
+		}
+}
+
+country_event = { 
+	id = 95740
+	title = "ZHO40.T"
+	desc = "ZHO40.D"
+	picture = chinese_muslims
+	
+	is_triggered_only = yes 
+
+	
+	option = { 
+		name = "ZHO40.A"
+		any_pop = { 
+			limit = { religion = sunni } 
+			militancy = 2
+			consciousness = 6
+		}
+		relation = { who = FROM value = -100 } 
+		add_country_modifier = { 
+			name = sunni_desobeissance_MJN duration = 1825
+		}
+	}
+}
+
+country_event = { 
+	id = 95741
+	title = "ZHO41.T"
+	desc = "ZHO41.D"
+	picture = chinese_war
+	
+	trigger = { 
+		tag = MJN
+		war = no 
+		year = 1842
+		NOT = { has_country_flag = declaration_YLO }
+		YLO = { 
+		has_country_flag = ports_finished_YLO 
+		NOT = { war = yes } 
+		check_variable = {
+				which = REFORM_YALUO 
+				value = 8
+				}
+		NOT = { 
+			check_variable = { 
+				which = REFORM_YALUO 
+				value = 14 
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 4 
+		modifier = { 
+			factor = 0.01 
+			year = 1843 
+		}
+	}
+	
+	option = { 
+		name = "ZHO41.A"
+		set_country_flag = declaration_YLO
+		YLO = { country_event = 95742 }
+		set_global_flag = zhourao_CW
+		war = {
+			target = YLO
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+		}
+	}
+}
+	
+
+country_event = { 
+	id = 95742
+	title = "ZHO42.T"
+	desc = "ZHO42.D"
+	picture = chinese_war
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO42.A"
+	}
+}
+
+country_event = { 
+	id = 95743
+	title = "ZHO43.T"
+	desc = "ZHO43.D"
+	picture = chinese_war
+	
+	trigger = { 
+	tag = ZSA 
+	YLO = { war_with = MJN } 
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "ZHO43.A"
+		MJN = { country_event = 95744 }
+		YLO = { country_event = 95744 }
+		war = {
+			target = YLO
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+		}
+		war = {
+			target = MJN 
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+		}
+		ai_chance = { 
+			factor = 20
+			modifier = { 
+				factor = 4 
+				has_country_flag = fatwa_MJN 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO43.B"
+		prestige = -2 
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.4 
+				has_country_flag = fatwa_MJN 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 95744
+	title = "ZHO44.T"
+	desc = "ZHO44.D"
+	picture = chinese_war
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "ZHO44.A"
+	}
+}
+
+country_event = { 
+	id = 95745
+	title = "ZHO45.T"
+	desc = "ZHO45.D"	
+	picture = commodore_perry
+	
+	trigger = { 
+		tag = SCA 
+		has_global_flag = zhourao_CW 
+		YLO = { exists = yes war = no } 
+		MJN = { exists = yes war = no } 
+		NOT = { has_country_flag = kongmediation } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 7 
+		modifier = { 
+			factor = 0.1 
+			year = 1850 
+		}
+	}
+	
+	option = { 
+		name = "ZHO45.A"
+	    set_country_flag = kongmediation
+		random_owned = { 
+				limit = {
+					province_id = 2468 owner = { OR = { tag = MJN tag = YLO } } 
+				}
+			owner = { country_event = { id = 95746 days = 1 } }
+			}
+	}
+	
+}
+
+
+country_event = { 
+	id = 95746
+	title = "ZHO46.T"
+	desc = "ZHO46.D"	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO46.A"  #Give Xianxiang
+		any_owned = { 
+			limit = { region = GAN_2 } 
+			secede_province = FROM
+		}
+	}
+	
+	option = { 
+		name = "ZHO46.B"  #Europeans are not welcome here!
+		country_event = 95747
+	}
+}
+
+country_event = { 
+	id = 95747
+	title = "ZHO47.T"
+	desc = "ZHO47.D"	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO47.A"
+		war = {
+			target = FROM
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		badboy = 4 
+		
+	}
+}
+	
+
+country_event = {
+	id = 95748 #Scandinavia demands Weizhou
+	title = "ZHO48.T"
+	desc = "ZHO48.D"
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO48.A" #We will fight for our indenpendece !
+		SCA = { country_event = { days = 15 id = 95715 } }
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.5
+				SCA = { rank = 4 } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO48.B" #We must accept
+		2476 = { secede_province = FROM } 
+		relation = { who = FROM value = -50 } 
+		ai_chance = { 
+			factor = 20 
+			modifier = { 
+				factor = 3 
+				SCA = { rank = 4 } 
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95749 #Red Seal Ships
+	title = "ZHO49.T"
+	desc = "ZHO49.D"
+	
+	trigger = { 
+		tag = ZSA 
+		year = 1850 
+		NOT = { has_country_flag = red_seal } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 40 
+		modifier = { 
+			factor = 0.01 
+			year = 1857 
+		}
+	}
+	
+	option = { 
+		name = "ZHO49.A"
+		set_country_flag = red_seal 
+		JAP = { country_event = 95750 } 
+	}
+	
+}
+
+country_event = {
+	id = 95750 #Red Seal Ships
+	title = "ZHO50.T"
+	desc = "ZHO50.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO50.A"
+		prestige = 1 
+	}
+}
+
+country_event = {
+	id = 95751 #Death of the Red Sultan
+	title = "ZHO51.T"
+	desc = "ZHO51.D"
+	
+	trigger = { 
+		tag = ZSA 
+		exists = yes 
+		year = 1865 
+	}
+	
+	fire_only_once = yes
+	major = yes
+	
+	option = { 
+		name = "ZHO51.A"
+		any_country = { 
+			limit = { 
+					tag = JAP 
+					exists = yes
+					is_greater_power = yes
+				}
+			country_event = 95752
+		}
+		any_country = { 
+			limit = { 
+					tag = DUA 
+					exists = yes
+					is_greater_power = yes
+					owns = 2505
+				}
+			country_event = 95753
+		}
+		any_country = { 
+			limit = { 
+					tag = GAN 
+					exists = yes
+				}
+			country_event = 95754
+		}
+		set_global_flag = waiting_zhusha
+	}
+}
+	
+country_event = {
+	id = 95752 #Death of the Red Sultan - Japan event
+	title = "ZHO52.T"
+	desc = "ZHO52.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO52.A"
+		set_global_flag = JAP_intervene_Zhusha
+		ai_chance = { 
+			factor = 99 
+		}
+	}
+	
+	option = { 
+		name = "ZHO52.B"
+		ai_chance = { 
+			factor = 1 
+		}
+	}
+}
+
+country_event = {
+	id = 95753 #Death of the Red Sultan - Anglois event
+	title = "ZHO53.T"
+	desc = "ZHO53.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO53.A"
+		set_global_flag = DUA_intervene_Zhusha
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.8 
+				GAN = { exists = yes } 
+			}
+			modifier = { 
+				factor = 4
+				JAP = { exists = yes is_greater_power = no } 
+			}
+			modifier = { 
+				factor = 0.8 
+				JAP = { exists = yes is_greater_power = yes } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO53.B"
+		ai_chance = { 
+			factor = 20 
+				modifier = { 
+				factor = 0.1 
+				JAP = { exists = yes is_greater_power = no } 
+				}
+		}
+	}
+}
+
+
+country_event = {
+	id = 95754 #Death of the Red Sultan - Zhourao event : support the Songyan
+	title = "ZHO54.T"
+	desc = "ZHO54.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "ZHO54.A"
+		inherit = ZSA
+		relation = { who = JAP value = -50 }
+		relation = { who = DUA value = -50 }
+	}
+	
+	option = { 
+		name = "ZHO54.B"
+		prestige = -15 
+		any_pop = {
+			militancy = 4 
+		}
+	}
+}
+
+country_event = {
+	id = 95755 #Zhourao holds Zhusha -Japan was the only one to harbor a Prince
+	title = "ZHO55.T"
+	desc = "ZHO55.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = waiting_zhusha 
+		ZSA = { exists = no } 
+		AND = { has_global_flag = JAP_intervene_Zhusha NOT = { has_global_flag = DUA_intervene_Zhusha } } 
+	}
+	
+	option = { 
+		name = "ZHO55.A" #Offer some compensations to Japan
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = JAP_intervene_Zhusha
+		JAP = { country_event = 95756 } 
+	}
+	
+	option = { 
+		name = "ZHO55.B" #Zhourao's sovereignty will not be infringed by Japanese!
+		clr_global_flag = waiting_zhusha 
+		JAP = { country_event = 95757 } 
+	}
+}
+	
+country_event = {
+	id = 95756 #Zhourao offers some trade concessions in exchange for dropping the Prince
+	title = "ZHO56.T"
+	desc = "ZHO56.D"	
+	picture = shimonoseki
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO56.A"
+		diplomatic_influence = { who = FROM value = 200 } 
+		relation = { who = FROM value = 100 } 
+		badboy = -1 
+		ai_chance = { 
+		factor = 80 
+		}
+	}
+	
+	option = { 
+		name = "ZHO56.B"
+		FROM = { country_event = 95758 } 
+		set_global_flag = punish_GAN_JAP
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		badboy = 5
+		ai_chance = { 
+		factor = 20 
+			modifier = { 
+				factor = 4 
+				government = absolute_monarchy 
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95757 #Zhourao told Japan to fuck off
+	title = "ZHO57.T"
+	desc = "ZHO57.D"	
+	picture = japanese_diplomat
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO57.A"
+		set_global_flag = punish_GAN_JAP
+		FROM = { country_event = 95758 } 
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		badboy = 2
+		ai_chance = { 
+		factor = 60 
+			modifier = { 
+				factor = 4 
+				government = absolute_monarchy 
+			}
+			modifier = { 
+				factor = 0.7 
+				GAN = { is_greater_power = yes } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO57.B"
+		relation = { who = FROM value = 20 } 
+		badboy = -1 
+		ai_chance = { 
+		factor = 40
+		}
+	}
+}
+
+country_event = {
+	id = 95758 #Japan has attacked us!
+	title = "ZHO58.T"
+	desc = "ZHO58.D"	
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO58.A"
+	}
+}
+
+country_event = {
+	id = 95759 #The unequal treaty -Zhusha to the Japanese
+	title = "ZHO59.T"
+	desc = "ZHO59.D"
+	
+	picture = shimonoseki
+	
+	trigger = { 
+		tag = GAN
+		has_country_flag = custom_treaty_loser
+		has_global_flag = punish_GAN_JAP
+		truce_with = JAP
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "ZHO59.A" #
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = punish_GAN_JAP 
+		clr_global_flag = punish_GAN_DUA
+		any_country = { 
+			limit = { tag = DUA war_with = THIS } 
+				end_war = THIS 
+			}
+		any_owned = { 
+			limit = { 
+				is_core = ZSA 
+				}
+				secede_province = JAP
+			}
+		JAP = { country_event = 95760 } 
+	}
+}
+
+
+country_event = {
+	id = 95760 #The unequal treaty -Zhusha to the Japanese
+	title = "ZHO60.T"
+	desc = "ZHO60.D"
+	
+	picture = shimonoseki
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO60.A"
+		any_owned = { 
+			limit = { is_core = ZSA } 
+			secede_province = ZSA 
+		}
+		create_vassal = ZSA 
+		diplomatic_influence = { who = ZSA value = 400 } 
+	}
+}
+	
+
+country_event = {
+	id = 95761 #Zhourao holds Zhusha -DUA was the only one to harbor a Prince
+	title = "ZHO61.T"
+	desc = "ZHO61.D"
+	picture = commodore_perry
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = waiting_zhusha 
+		ZSA = { exists = no } 
+		AND = { has_global_flag = DUA_intervene_Zhusha NOT = { has_global_flag = JAP_intervene_Zhusha } } 
+	}
+	
+	option = { 
+		name = "ZHO61.A" #Offer some compensations to DUA
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = DUA_intervene_Zhusha
+		DUA = { country_event = 95762 } 
+	}
+	
+	option = { 
+		name = "ZHO61.B" #Zhourao's sovereignty will not be infringed by Anglois!
+		clr_global_flag = waiting_zhusha 	
+		clr_global_flag = DUA_intervene_Zhusha
+		DUA = { country_event = 95763 } 
+	}
+}
+	
+country_event = {
+	id = 95762 #Zhourao offers some trade concessions in exchange for dropping the Prince
+	title = "ZHO62.T"
+	desc = "ZHO62.D"	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO62.A"
+		diplomatic_influence = { who = FROM value = 200 } 
+		relation = { who = FROM value = 100 } 
+		badboy = -1 
+		ai_chance = { 
+			factor = 80 
+			#modifier = { 
+			#	factor = 2 
+			#	any_greater_power = { war_with = THIS }
+			#}
+			modifier = { 
+				factor = 2
+				GAN = { is_greater_power = yes } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO62.B"
+		FROM = { country_event = 95764 } 
+		set_global_flag = punish_GAN_DUA
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		badboy = 5
+		ai_chance = { 
+		factor = 20 
+			modifier = { 
+				factor = 2 
+				rank = 1 
+			}
+			
+		}
+	}
+}
+
+country_event = {
+	id = 95763 #Zhourao told DUA to fuck off
+	title = "ZHO63.T"
+	desc = "ZHO63.D"	
+	picture = commodore_perry
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO63.A"
+		set_global_flag = punish_GAN_DUA
+		FROM = { country_event = 95764 } 
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		badboy = 2
+		ai_chance = { 
+		factor = 60 
+			#modifier = { 
+			#	factor = 2
+			#	rank = 1 
+			#	NOT = { any_greater_power = { war_with = THIS } }
+			#}
+			modifier = { 
+				factor = 0.7 
+				GAN = { is_greater_power = yes } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO63.B"
+		relation = { who = FROM value = 20 } 
+		badboy = -1 
+		ai_chance = { 
+			factor = 40
+			#modifier = { 
+			#	factor = 3 
+			#	any_greater_power = { war_with = THIS }
+			#}
+		}
+	}
+}
+
+country_event = {
+	id = 95764 #DUA has attacked us!
+	title = "ZHO64.T"
+	desc = "ZHO64.D"	
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO64.A"
+	}
+}
+
+country_event = {
+	id = 95765 #The unequal treaty -Zhusha to the Anglois
+	title = "ZHO65.T"
+	desc = "ZHO65.D"
+	
+	picture = Unequal_treaty_CHI
+	
+	trigger = { 
+		tag = GAN
+		has_country_flag = custom_treaty_loser
+		has_global_flag = punish_GAN_DUA
+		truce_with = DUA
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "ZHO65.A" #
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = punish_GAN_JAP 
+		clr_global_flag = punish_GAN_DUA
+		any_country = { 
+			limit = { tag = JAP war_with = THIS } 
+				end_war = THIS 
+			}
+		any_owned = { 
+			limit = { 
+				is_core = ZSA 
+				}
+				secede_province = DUA
+			}
+		DUA = { country_event = 95766 } 
+	}
+}
+
+
+country_event = {
+	id = 95766 #The unequal treaty -Zhusha to the Anglois
+	title = "ZHO66.T"
+	desc = "ZHO66.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO66.A"
+		any_owned = { 
+			limit = { is_core = ZSA } 
+			secede_province = ZSA 
+		}
+		create_vassal = ZSA 
+		diplomatic_influence = { who = ZSA value = 400 } 
+	}
+}
+
+country_event = {
+	id = 95767 #Zhourao holds Zhusha -DUA and JAP both harbor pretenders to Zhusha
+	title = "ZHO67.T"
+	desc = "ZHO67.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = waiting_zhusha 
+		ZSA = { exists = no } 
+		AND = { has_global_flag = DUA_intervene_Zhusha has_global_flag = JAP_intervene_Zhusha } 
+	}
+	
+	option = { 
+		name = "ZHO67.A" #Propose a conference over free trade in the Torres strait
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = DUA_intervene_Zhusha
+		clr_global_flag = JAP_intervene_Zhusha
+		set_global_flag = zhusha_conference
+		DUA = { country_event = 95768 } 
+		JAP = { country_event = 95769 }
+	}
+	
+	option = { 
+		name = "ZHO67.B" #Broker a deal with the DUA
+		clr_global_flag = waiting_zhusha 	
+		clr_global_flag = DUA_intervene_Zhusha
+		clr_global_flag = JAP_intervene_Zhusha
+		DUA = { country_event = 95772 } 
+	}
+	
+	option = { 
+		name = "ZHO67.C" #Let them cope
+		clr_global_flag = waiting_zhusha 	
+		clr_global_flag = DUA_intervene_Zhusha
+		clr_global_flag = JAP_intervene_Zhusha
+		DUA = { country_event = 95763 } 
+		JAP = { country_event = 95757 }
+	}
+	
+}
+
+
+country_event = {
+	id = 95768 #Zhourao conference - DUA answer
+	title = "ZHO68.T"
+	desc = "ZHO68.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO68.A" #Salvage what we can from the situation
+		diplomatic_influence = { who = FROM value = 100 } 
+		relation = { who = FROM value = 50 } 
+		set_global_flag = DUA_accepted_torres
+		ai_chance = { 
+			factor = 90
+			#modifier = { 
+			#	factor = 2 
+			#	any_greater_power = { war_with = THIS }
+			#}
+			modifier = { 
+				factor = 2
+				GAN = { is_greater_power = yes } 
+			}
+			modifier = { 
+				factor = 0.7 
+				rank = 1 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO68.B" #Zhusha will be restored by force if needed!
+		set_global_flag = punish_GAN_DUA
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 10 
+		}
+	}
+}
+
+country_event = {
+	id = 95769 #Zhourao conference - JAP answer
+	title = "ZHO69.T"
+	desc = "ZHO69.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO69.A" #Salvage what we can from the situation
+		diplomatic_influence = { who = FROM value = 100 } 
+		set_global_flag = JAP_accepted_torres
+		relation = { who = FROM value = 50 } 
+		ai_chance = { 
+			factor = 80
+			#modifier = { 
+			#	factor = 2 
+			#	any_greater_power = { war_with = THIS }
+			#}
+			modifier = { 
+				factor = 2
+				GAN = { is_greater_power = yes } 
+			}
+			modifier = { 
+				factor = 0.7 
+				rank = 4
+			}
+			modifier = { 
+				factor = 0.5 
+				is_greater_power = yes 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO69.B" #Zhusha will be restored by force if needed!
+		set_global_flag = punish_GAN_JAP 
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 20 
+		}
+	}
+}
+	
+country_event = {
+	id = 95770 #Zhourao conference - both accepted
+	title = "ZHO70.T"
+	desc = "ZHO70.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = zhusha_conference 
+		AND = { has_global_flag = JAP_accepted_torres has_global_flag = DUA_accepted_torres } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 10 
+	}
+	
+	option = { 
+		name = "ZHO70.A"
+		clr_global_flag = zhusha_conference 
+		clr_global_flag = JAP_accepted_torres
+		clr_global_flag = DUA_accepted_torres
+		add_country_modifier = { 
+			name = zhusha_conference_mod 
+			duration = 3650
+		}
+	}
+}
+
+country_event = {
+	id = 95771 #Zhourao conference failure
+	title = "ZHO71.T"
+	desc = "ZHO71.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = zhusha_conference 
+		NOT = { AND = { has_global_flag = JAP_accepted_torres has_global_flag = DUA_accepted_torres } }
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "ZHO71.A" #At least we tried
+		clr_global_flag = zhusha_conference 
+		prestige = -5 
+	}
+}
+	
+country_event = {
+	id = 95772 #A proposal from Zhourao
+	title = "ZHO72.T"
+	desc = "ZHO72.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO72.A" #Accept the agreement
+		FROM = { country_event = 95773 } 
+		JAP = { country_event = { id = 95774 days = 2 } } 
+		set_global_flag = chougie_agreement 
+		create_alliance = FROM 
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "ZHO71.B" #Let them deal with Japan on their own
+		JAP = { country_event = { id = 95775 days = 2 } }
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+	
+	option = { 
+		name = "ZHO71.C" #We will restore Zhusha!
+		set_global_flag = punish_GAN_DUA 
+		JAP = { country_event = { id = 95775 days = 2 } }
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+	
+}
+
+country_event = {
+	id = 95773 #The Chougie Agreement
+	title = "ZHO73.T"
+	desc = "ZHO73.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO73.A"
+		GAN_3337 = { remove_core = THIS } 
+		GAN_10 = { remove_core = THIS } 
+		prestige = -10 
+	}
+}
+
+country_event = {
+	id = 95774 #The Chougie Agreement -Japan left on their own
+	title = "ZHO74.T"
+	desc = "ZHO74.D"
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO74.A"
+		prestige = -5 
+		ai_chance = { 
+			factor = 90 
+			modifier = { 
+				factor = 0.1 
+				any_greater_power = { war_with = DUA } 
+			}
+			modifier = { 
+				factor = 1.2 
+				GAN = { is_greater_power = yes } 
+			}
+			modifier = { 
+				factor = 0.5 
+				government = absolute_monarchy
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO74.B"
+		set_global_flag = punish_GAN_JAP 
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 10 
+		}
+	}
+}
+
+country_event = {
+	id = 95775 #The Chougie Agreement has failed !-Japan 
+	title = "ZHO75.T"
+	desc = "ZHO75.D"
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO75.A"
+		prestige = -5 
+		ai_chance = { 
+			factor = 10 
+
+			modifier = { 
+				factor = 1.5 
+				GAN = { is_greater_power = yes } 
+			}
+			modifier = { 
+				factor = 0.5 
+				government = absolute_monarchy
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO75.B"
+		set_global_flag = punish_GAN_JAP 
+		war = {
+			target = GAN
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 90 
+		}
+	}
+}
+
+country_event = { 
+	id = 95776 #DUA and JAP both at war with GAN : declare humiliation war on JAP
+	title = "ZHO76.T"
+	desc = "ZHO76.D"
+	
+	trigger = { 
+		tag = DUA 
+		war_with = GAN 
+		JAP = { war_with = GAN } 
+		NOT = { truce_with = JAP } 
+		has_global_flag = punish_GAN_DUA 
+		has_global_flag = punish_GAN_JAP
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "ZHO76.A"
+		clr_global_flag = JAP_accepted_torres
+		clr_global_flag = DUA_accepted_torres
+		war = {
+			target = JAP
+			attacker_goal = {
+				casus_belli = humiliate
+			}
+			defender_goal = {
+				casus_belli = humiliate
+			}
+		}
+	}
+}
+	
+
+country_event = { 
+	id = 95777 #Zhusha succession - no GAN and JAP alone
+	title = "ZHO77.T"
+	desc = "ZHO77.D"
+	
+	trigger = { 
+		tag = ZSA 
+		has_global_flag = waiting_zhusha 
+		GAN = { exists = no } 
+		has_global_flag = JAP_intervene_Zhusha 
+		NOT = { has_global_flag = DUA_intervene_Zhusha } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1866
+		} 
+	}
+	
+	option = { 
+		name = "ZHO77.A"
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = JAP_intervene_Zhusha
+		DUA = { diplomatic_influence = { who = THIS value = -400 } }
+		JAP = { country_event = 95778 } 
+	}
+	
+}
+
+country_event = { 
+	id = 95778 #Zhusha succession - no GAN and JAP alone
+	title = "ZHO78.T"
+	desc = "ZHO78.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO78.A"
+		diplomatic_influence = { who = FROM value = 400 } 
+		relation = { who = FROM value = 100 } 
+		prestige = 10 
+	}
+	
+}
+
+country_event = { 
+	id = 95779 #Zhusha succession - no GAN and DUA alone
+	title = "ZHO79.T"
+	desc = "ZHO79.D"
+	
+	trigger = { 
+		tag = ZSA 
+		has_global_flag = waiting_zhusha 
+		GAN = { exists = no } 
+		has_global_flag = DUA_intervene_Zhusha 
+		NOT = { has_global_flag = JAP_intervene_Zhusha } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1866
+		} 
+	}
+	
+	option = { 
+		name = "ZHO79.A"
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = DUA_intervene_Zhusha
+		JAP = { diplomatic_influence = { who = THIS value = -400 } }
+		DUA = { country_event = 95780 } 
+	}
+	
+}
+
+country_event = { 
+	id = 95780 #Zhusha succession - no GAN and DUA alone
+	title = "ZHO80.T"
+	desc = "ZHO80.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO80.A"
+		diplomatic_influence = { who = FROM value = 400 } 
+		relation = { who = FROM value = 100 } 
+		prestige = 5 
+	}
+	
+}	
+
+country_event = { 
+	id = 95781 #Zhusha succession - no GAN and competition
+	title = "ZHO81.T"
+	desc = "ZHO81.D"
+	
+	trigger = { 
+		tag = ZSA 
+		has_global_flag = waiting_zhusha 
+		GAN = { exists = no } 
+		has_global_flag = DUA_intervene_Zhusha 
+		has_global_flag = JAP_intervene_Zhusha
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1866
+		} 
+	}
+	
+	option = { 
+		name = "ZHO81.A"
+		clr_global_flag = waiting_zhusha 
+		clr_global_flag = DUA_intervene_Zhusha
+		clr_global_flag = JAP_intervene_Zhusha
+		JAP = { diplomatic_influence = { who = THIS value = 400 } }
+		DUA = { country_event = 95782 diplomatic_influence = { who = THIS value = -100 } } 
+	}
+	
+}
+
+country_event = { 
+	id = 95782 #Zhusha succession - no GAN and competition
+	title = "ZHO82.T"
+	desc = "ZHO82.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO82.A"
+		JAP = { country_event = 95783 } 
+		war = { 
+			target = ZSA
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}
+		ai_chance = { 
+			factor = 50 
+			modifier = { 
+				factor = 2 
+				rank = 1 
+			}
+			modifier = { 
+				factor = 1.5 
+				JAP = { NOT = { rank = 6 } }
+			}
+			modifier = { 
+				factor = 1.5
+				NOT = { JAP = { military_score = 200 } } 
+			}
+			#modifier = { 
+			#	factor = 0.1 
+			#	any_greater_power = { war_with = THIS } 
+			#}
+		}
+	}
+	
+	option = { 
+		name = "ZHO82.B"
+		JAP = { country_event = 95784 } 
+		ai_chance = { 
+			factor = 50
+		}
+	}
+}
+
+country_event = { 
+	id = 95783 #Zhusha succession - DUA goes to war
+	title = "ZHO83.T"
+	desc = "ZHO83.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO83.A"
+	}
+}
+
+country_event = { 
+	id = 95784 #Zhusha succession - no GAN and JAP alone
+	title = "ZHO84.T"
+	desc = "ZHO84.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO84.A"
+		diplomatic_influence = { who = ZSA value = 400 } 
+		relation = { who = ZSA value = 100 } 
+		prestige = 15
+	}
+	
+}
+
+country_event = { 
+	id = 95785 #Zhusha succession - normal succession
+	title = "ZHO85.T"
+	desc = "ZHO85.D"
+	
+	trigger = { 
+		tag = ZSA 
+		has_global_flag = waiting_zhusha 
+		GAN = { exists = no } 
+		NOT = { has_global_flag = DUA_intervene_Zhusha has_global_flag = JAP_intervene_Zhusha }
+	}
+	
+	mean_time_to_happen = {
+	days = 25 
+	}
+	
+	option = { 
+		name = "ZHO85.A"
+		clr_global_flag = waiting_zhusha
+	}
+}
+
+country_event = { 
+	id = 95786 #Zhourao has control over Zhusha and no one contests it
+	title = "ZHO86.T"
+	desc = "ZHO86.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_global_flag = waiting_zhusha 
+		ZSA = { exists = no } 
+		NOT = { has_global_flag = DUA_intervene_Zhusha has_global_flag = JAP_intervene_Zhusha }
+	}
+	
+	mean_time_to_happen = {
+	days = 25 
+	}
+	
+	option = { 
+		name = "ZHO86.A"
+		clr_global_flag = waiting_zhusha
+		prestige = 3 
+	}
+}
+
+#Black flag army 
+
+country_event = { 
+	id = 95787 #The Kaurna tribe wages a guerilla war around Adelaide
+	title = "ZHO87.T"
+	desc = "ZHO87.D"
+	
+	picture = black_flag_army 
+	
+	trigger = { 
+		tag = SCA 
+		owns = 2491
+		year = 1842 
+		NOT = { year = 1850 } 
+		2491 = { NOT = { has_province_modifier = frontier_war_YLO } } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 45
+	}
+	
+	option = { 
+		name = "ZHO87.A"
+		any_owned = { 
+			limit = { region = GAN_2491 } 
+			add_province_modifier = { 
+				name = frontier_war_YLO 
+				duration = -1 
+			}
+		}
+	}
+
+}
+
+country_event = { 
+	id = 95788 #The Black Flag ultimatum
+	title = "ZHO88.T"
+	desc = "ZHO88.D"
+	
+	picture = black_flag_army 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO88.A" #Let's go!
+		country_event = { id = 95789 days = 15 } 
+	}
+}
+
+country_event = { 
+	id = 95789 #Victory of the Black Flag
+	title = "ZHO89.T"
+	desc = "ZHO89.D"
+	
+	
+	picture = black_flag_army 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO89.A" #Abandon the colony ... 
+		any_owned = { 
+			limit = { is_core = GAN } 
+			remove_province_modifier = frontier_war_YLO
+			secede_province = GAN
+			}
+		relation = { who = GAN value = -100 } 
+		GAN = { country_event = 95790 } 
+		prestige = -10 
+		ai_chance = { 
+			factor = 30 
+			#modifier = { 
+			#	factor = 3 
+			#	any_greater_power = { war_with = THIS } 
+			#}
+			modifier = { 
+				factor = 2
+				GAN = { rank = 16 } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "ZHO89.B" #Fight the instigators
+		GAN = { country_event = 95791 } 
+		any_owned = { 
+			limit = { is_core = GAN } 
+			change_controller = GAN
+			remove_province_modifier = frontier_war_YLO
+			}
+		war = { 
+			target = GAN 
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+				}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = GAN
+				}
+			}
+		ai_chance = { 
+			factor = 70 
+			#modifier = { 
+			#	factor = 0.4
+			#	any_greater_power = { war_with = THIS } 
+			#}
+			modifier = { 
+				factor = 0.8
+				GAN = { rank = 16 } 
+			}
+		}
+	}
+}
+
+	
+country_event = { 
+	id = 95790 #Victory of the Black Flag-Sca left
+	title = "ZHO90.T"
+	desc = "ZHO90.D"
+	
+	picture = black_flag_army 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO90.A"
+		prestige = 15 
+		define_general = {
+			name = "Wong Yongfu"
+			personality = inspiring  
+			background = renowned_adventurer
+		}
+	}
+	
+}
+
+	
+country_event = { 
+	id = 95791 #Victory of the Black Flag-Sca declares war on Zhourao
+	title = "ZHO91.T"
+	desc = "ZHO91.D"
+	
+	picture = black_flag_army 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO91.A"
+		define_general = {
+			name = "Wong Yongfu"
+			personality = inspiring  
+			background = renowned_adventurer
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 95792 #The Kaurna tribe wages a guerilla war around Adelaide
+	title = "ZHO92.T"
+	desc = "ZHO92.D"
+	
+	picture = black_flag_army 
+	
+	trigger = { 
+		tag = SCA 
+		owns = 2491
+		year = 1850
+		2491 = { has_province_modifier = frontier_war_YLO } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 5 
+	}
+	
+	option = { 
+		name = "ZHO92.A"
+		prestige = 2 
+		any_owned = { 
+			limit = { region = GAN_2491 } 
+			remove_province_modifier  = frontier_war_YLO 
+		}
+	}
+
+}
+
+province_event = {
+	id = 95793
+	title = "ZHO93.T" #AST spread core
+	desc = "ZHO93.D"
+	
+	trigger = {
+		OR = { 
+			region = GAN_3337
+			region = GAN_3332 
+			region = GAN_3326
+			region = GAN_3329 
+			region = GAN_10 
+			region = GAN_2500
+			region = GAN_3324
+			region = ENG_2509 
+			region = ENG_2513 
+			region = GAN_3303
+			region = GAN_2474 
+			region = GAN_2493
+			region = GAN_3320 
+			region = GAN_2491 
+			region = GAN_2476
+			region = GAN_2472
+			region = GAN_2470
+			region = GAN_2
+			region = GAN_2483
+			region = GAN_2484
+			region = GAN_3291
+			region = GAN_3289
+			region = GAN_3290
+			}
+		owned_by = THIS
+		controlled_by = THIS
+		OR = {
+		   any_neighbor_province = {
+			  is_core = AST
+		   }
+		   port = yes
+		}
+		owner = {
+			civilized = yes
+			has_country_flag = master_AST
+			NOT = { is_culture_group = southeast_asian }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 3326 }
+				AST = { exists = no }
+			}
+			AST = {
+				vassal_of = THIS
+				is_culture_group = THIS
+			}
+		}
+		NOT = {
+			is_core = AST
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	    modifier = {
+			factor = 0.1
+			year = 1925
+		}
+	}
+	
+	option = {
+		name = "ZHO93.A"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = AST }
+				}
+				add_core = AST
+				remove_core = ASS 
+				remove_core = ASG
+				any_pop = { militancy = -3 }
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 95794
+	title = "ZHO94.T" #ASG spread core
+	desc = "ZHO94.D"
+	
+	trigger = {
+		OR = { 
+			region = GAN_3337
+			region = GAN_3332 
+			region = GAN_3326
+			region = GAN_3329 
+			region = GAN_10 
+			region = GAN_2500
+			region = GAN_3324
+			region = ENG_2509 
+			region = ENG_2513 
+			region = GAN_3303
+			region = GAN_2474 
+			region = GAN_2493
+			region = GAN_3320 
+			region = GAN_2491 
+			region = GAN_2476
+			region = GAN_2472
+			region = GAN_2470
+			region = GAN_2
+			region = GAN_2483
+			region = GAN_2484
+			region = GAN_3291
+			region = GAN_3289
+			region = GAN_3290
+			}
+		owned_by = THIS
+		controlled_by = THIS
+		OR = {
+		   any_neighbor_province = {
+			  is_core = ASG
+		   }
+		   port = yes
+		}
+		owner = {
+			civilized = yes
+			has_country_flag = master_AST
+			NOT = { is_culture_group = southeast_asian }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 3326 }
+				ASG = { exists = no }
+			}
+			ASG = {
+				vassal_of = THIS
+				is_culture_group = THIS
+			}
+		}
+		NOT = {
+			is_core = ASG
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	    modifier = {
+			factor = 0.1
+			year = 1925
+		}
+	}
+	
+	option = {
+		name = "ZHO94.A"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = ASG }
+				}
+				add_core = ASG
+				remove_core = AST
+				remove_core = ASS
+				any_pop = { militancy = -3 }
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 95795
+	title = "ZHO95.T" #ASS spread core
+	desc = "ZHO95.D"
+	
+	trigger = {
+		OR = { 
+			region = GAN_3337
+			region = GAN_3332 
+			region = GAN_3326
+			region = GAN_3329 
+			region = GAN_10 
+			region = GAN_2500
+			region = GAN_3324
+			region = ENG_2509 
+			region = ENG_2513 
+			region = GAN_3303
+			region = GAN_2474 
+			region = GAN_2493
+			region = GAN_3320 
+			region = GAN_2491 
+			region = GAN_2476
+			region = GAN_2472
+			region = GAN_2470
+			region = GAN_2
+			region = GAN_2483
+			region = GAN_2484
+			region = GAN_3291
+			region = GAN_3289
+			region = GAN_3290
+			}
+		owned_by = THIS
+		controlled_by = THIS
+		OR = {
+		   any_neighbor_province = {
+			  is_core = ASS
+		   }
+		   port = yes
+		}
+		owner = {
+			civilized = yes
+			has_country_flag = master_AST
+			NOT = { is_culture_group = southeast_asian }
+		}
+		OR = {
+			AND = {
+				owner = { owns = 3326 }
+				ASS = { exists = no }
+			}
+			ASS = {
+				vassal_of = THIS
+				is_culture_group = THIS
+			}
+		}
+		NOT = {
+			is_core = ASS
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	    modifier = {
+			factor = 0.1
+			year = 1925
+		}
+	}
+	
+	option = {
+		name = "ZHO95.A"
+		state_scope = {
+			any_owned = {
+				limit = {
+					NOT = { is_core = ASS }
+				}
+				add_core = ASS
+				remove_core = AST
+				remove_core = ASG
+				any_pop = { militancy = -3 }
+				add_province_modifier = {
+					name = colonial_exploitation
+					duration = 1095
+				}
+			}
+		}
+	}
+}
+
+#Flavor events Zhourao : 
+
+#MIGRATIONS events for Mianjin and Zhusha GAN 
+country_event = { 
+	id = 95796
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		GAN = { exists = yes has_country_flag = mianjin_GAN NOT = { has_country_flag = first_migration } } 
+		year = 1848 	
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			GAN = { capital = 2476 } 
+		}
+	}
+	
+	option = {
+		name = ""
+		3101 = { secede_province = UTI } 
+		3248 = { secede_province = UTI } 
+		3350 = { secede_province = UTI } 
+		3351 = { secede_province = UTI } 
+		3352 = { secede_province = UTI } 
+		UTI = { country_event = 95797 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95797
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		set_country_flag = first_migration 
+		3101 = { any_pop = { limit = { culture = hakka } move_pop = 2471 } }
+		3248 = { any_pop = { limit = { culture = hakka } move_pop = 3309 } }
+		3350 = { any_pop = { limit = { culture = hakka } move_pop = 2469 } }
+		3351 = { any_pop = { limit = { culture = hakka } move_pop = 2468 } }
+		3352 = { any_pop = { limit = { culture = hakka } move_pop = 3310 } } 
+		GAN = { country_event = 95798 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95798
+	title = "ZHO98.T"#To Loc : Hakka migration within Xinxiang
+	desc = "ZHO98.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO98.A"
+		set_country_flag = first_migration 
+		any_pop = { 
+			scaled_consciousness = {
+				issue = residency
+				factor = 2
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 95799
+    title = ""#Not to loc
+    desc = ""
+
+	is_triggered_only = yes 
+	
+    option = {
+        name = ""
+        any_owned = {
+            change_controller = THIS
+        }
+        FROM = { inherit = THIS }
+    }
+}
+
+country_event = { 
+	id = 95800
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		GAN = { exists = yes has_country_flag = mianjin_GAN has_country_flag = first_migration has_country_flag = riverina }  
+		NOT = { has_global_flag = second_migration } 
+		year = 1852 	
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			GAN = { capital = 2476 } 
+		}
+	}
+	
+	option = {
+		name = ""
+		set_global_flag = second_migration
+		3101 = { secede_province = UTI } 
+		3248 = { secede_province = UTI } 
+		3350 = { secede_province = UTI } 
+		3351 = { secede_province = UTI } 
+		3352 = { secede_province = UTI } 
+		UTI = { country_event = 95801 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95801
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		set_country_flag = first_migration 
+		3101 = { any_pop = { limit = { culture = yue } literacy = -0.9 move_pop = 3320 } }
+		3248 = { any_pop = { limit = { culture = yue } literacy = -0.9 move_pop = 3323 } }
+		3350 = { any_pop = { limit = { culture = yue } literacy = -0.9 move_pop = 3314 } }
+		3351 = { any_pop = { limit = { culture = yue } literacy = -0.9 move_pop = 3319 } }
+		3352 = { any_pop = { limit = { culture = yue } literacy = -0.9 move_pop = 3313 } } 
+		GAN = { country_event = 95802 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95802
+	title = "ZHO102.T"#To Loc : Yue migration within the Riverina
+	desc = "ZHO102.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO102.A"
+		any_pop = { 
+			scaled_consciousness = {
+				issue = residency
+				factor = 2
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 95803
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		GAN = { exists = yes has_country_flag = mianjin_GAN }  
+		has_global_flag = second_migration
+		NOT = { has_global_flag = third_migration } 
+		year = 1863 	
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			GAN = { capital = 2476 } 
+		}
+	}
+	
+	option = {
+		name = ""
+		set_global_flag = third_migration
+		3101 = { secede_province = UTI } 
+		3248 = { secede_province = UTI } 
+		3350 = { secede_province = UTI } 
+		3351 = { secede_province = UTI } 
+		3352 = { secede_province = UTI } 
+		UTI = { country_event = 95804 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95804
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		3101 = { any_pop = { limit = { culture = min } literacy = -0.9 move_pop = 3306 } }
+		3248 = { any_pop = { limit = { culture = min } literacy = -0.9 move_pop = 3302 } }
+		3350 = { any_pop = { limit = { culture = min } literacy = -0.9 move_pop = 2486 } }
+		3351 = { any_pop = { limit = { culture = min } literacy = -0.9 move_pop = 3301 } }
+		3352 = { any_pop = { limit = { culture = min } literacy = -0.9 move_pop = 3300 } } 
+		GAN = { country_event = 95805 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95805
+	title = "ZHO105.T"#To Loc : Min migration to the mountains forestry and mining
+	desc = "ZHO105.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO105.A"
+		any_pop = { 
+			scaled_consciousness = {
+				issue = residency
+				factor = 2
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 95806
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		GAN = { exists = yes has_country_flag = mianjin_GAN owns = 2491 owns = 2484 }  
+		has_global_flag = third_migration 
+		NOT = { has_global_flag = last_migration } 
+		year = 1880	
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			GAN = { capital = 2476 } 
+		}
+	}
+	
+	option = {
+		name = ""
+		set_global_flag = last_migration
+		3101 = { secede_province = UTI } 
+		3248 = { secede_province = UTI } 
+		3350 = { secede_province = UTI } 
+		3351 = { secede_province = UTI } 
+		3352 = { secede_province = UTI } 
+		UTI = { country_event = 95807 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95807
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		set_country_flag = first_migration 
+		3101 = { any_pop = { limit = { OR = { culture = beifaren culture = nanfaren } } literacy = 0.2 move_pop = 2491 } }
+		3248 = { any_pop = { limit = { OR = { culture = beifaren culture = nanfaren } } literacy = 0.2 move_pop = 2476 } }
+		3350 = { any_pop = { limit = { OR = { culture = beifaren culture = nanfaren } } literacy = 0.2 move_pop = 2468 } }
+		3351 = { any_pop = { limit = { OR = { culture = beifaren culture = nanfaren } } literacy = 0.2 move_pop = 2470 } }
+		3352 = { any_pop = { limit = { OR = { culture = beifaren culture = nanfaren } } literacy = 0.2 move_pop = 3297 } } 
+		GAN = { country_event = 95808 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95808
+	title = "ZHO108.T"#To Loc : General Han migration to the greatest cities
+	desc = "ZHO108.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO108.A"
+		any_pop = { 
+			scaled_consciousness = {
+				issue = residency
+				factor = 2
+			}
+		}
+	}
+}
+
+#Scandinavian treaty if MJN retook Aotearoa
+
+country_event = {
+	id = 95809
+	title = "ZHO109.T" #War in Zhourao lost
+	desc = "ZHO109.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ZHO109.A"
+		prestige = -10
+		end_war = MJN 
+	}
+}
+
+country_event = {
+	id = 95810
+	title = "ZHO110.T" #Result of the Maori rebellion : Changyun owned and president power increased
+	desc = "ZHO110.D"
+	picture = "treaty"
+	
+	trigger = { 
+		tag = MJN 
+		has_global_flag = Maori_rebellion 
+		AOT = { exists = no } 
+		war = no
+	}
+	
+	mean_time_to_happen = { 
+		months = 2 
+	}
+	
+	option = {
+		name = "ZHO110.A" 
+		clr_global_flag = Maori_rebellion 
+		change_variable = { 
+			which = PRESIDENT_MIANJIN
+			value = 1
+		}
+	}
+}
+
+country_event = {
+	id = 95811
+	title = "ZHO111.T" #Result of the Maori rebellion : Changyun lost 
+	desc = "ZHO111.D"
+	picture = "treaty"
+	
+	trigger = { 
+		tag = MJN 
+		has_global_flag = Maori_rebellion 
+		AOT = { exists = yes } 
+		war = no
+	}
+	
+	mean_time_to_happen = { 
+		months = 2 
+	}
+	
+	option = {
+		name = "ZHO111.A" 
+		prestige = -1 
+		clr_global_flag = Maori_rebellion 
+	}
+}
+
+country_event = {
+	id = 95812
+	title = "ZHO112.T" #The army debate
+	desc = "ZHO112.D"
+	picture = "president_mianjin"
+	
+	trigger = { 
+		tag = MJN 
+		year = 1842 
+		NOT = { has_country_flag = army_debate } 
+	}
+	
+	mean_time_to_happen = { 
+       months = 2	
+	}
+	
+	option = { 
+		name = "ZHO112.A" #a new standing army
+		set_country_flag = army_debate
+		define_general = {
+			name = "Shi Dakai"
+			personality = skilled     
+			background = war_college 
+		}
+		add_country_modifier = {
+			name = GAN_army_reforms 
+			duration = 3650 
+		}
+		change_variable = { 
+			which = PRESIDENT_MIANJIN
+			value = 1
+		}
+	}	
+	
+	option = { 
+		name = "ZHO112.B" #Improve the equipment of the militias
+		set_country_flag = army_debate
+		random_owned = {
+			limit = {
+				owner = {
+				foreign_weapons = yes_foreign_weapons 
+					} 
+				}
+			owner = {
+			military_reform = modern_weapons  
+			set_country_flag = muzzle_loaded_rifles
+			activate_technology = muzzle_loaded_rifles 
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = {
+				foreign_weapons = modern_weapons 
+					} 
+				}
+		    owner = {
+			military_reform = advanced_military_constructions   
+			set_country_flag = strategic_mobility
+			activate_technology = strategic_mobility 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 95813
+	title = "ZHO113.T"
+	desc = "ZHO113.D"
+	
+	picture = president_mianjin
+	
+	trigger = { 
+		tag = GAN
+		has_country_flag = mianjin_GAN 
+		NOT = { has_country_flag = presidential_debate }
+		check_variable = {
+			which = PRESIDENT_MIANJIN 
+			value = 13
+		}
+
+	}
+	
+	mean_time_to_happen = { 
+		months = 4 
+		modifier = { 
+			factor = 0.01 
+			year = 1843 
+		}
+	}
+	
+	option = { 
+		name = "ZHO113.A"
+		set_country_flag = presidential_debate
+		remove_country_modifier = kongsi_republic 
+		government = democracy
+	}
+}
+
+country_event = { 
+	id = 95814
+	title = "ZHO114.T"
+	desc = "ZHO114.D"
+	
+	picture = chinese_company
+	
+	trigger = { 
+		tag = GAN
+		has_country_flag = mianjin_GAN 
+		NOT = { has_country_flag = presidential_debate }
+		NOT = { 
+		check_variable = {
+			which = PRESIDENT_MIANJIN 
+			value = 13
+			}
+		}
+
+	}
+	
+	mean_time_to_happen = { 
+		months = 4 
+		modifier = { 
+			factor = 0.01 
+			year = 1843 
+		}
+	}
+	
+	option = { 
+		name = "ZHO114.A"
+		set_country_flag = presidential_debate
+	}
+}
+
+country_event = { 
+	id = 95815
+	title = "ZHO115.T"
+	desc = "ZHO115.D"
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO115.A"
+		badboy = -10 
+		any_pop = { 
+			dominant_issue = { factor = 0.05 value = jingoism }	
+		}
+	}
+}
+
+country_event = {
+	id = 95816 #The Japanese unequal treaty
+	title = "ZHO116.T"
+	desc = "ZHO116.D"
+	
+	trigger = { 
+		tag = JAP
+		has_country_flag = custom_treaty_loser
+		truce_with = GAN 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "ZHO116.A" #
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.25 
+		any_owned = { 
+			limit = { is_core = KOR } secede_province = KOR 
+			}
+		diplomatic_influence = { who = KOR value = -400 }
+		any_owned = { 
+			limit = { is_core = DNG } secede_province = DNG 
+			}
+		diplomatic_influence = { who = DNG value = -400 }
+		any_owned = { 
+			limit = { is_core = AIN } secede_province = AIN 
+			}
+		any_owned = { 
+			limit = { is_core = KKN } secede_province = KKN 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = KAM is_core = YKT is_core = TSS is_core = MCH } } secede_province = KAM 
+			}
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = GAN 
+					is_core = CHI 
+					province_id = 1678 
+					province_id = 1679 
+					province_id = 1651 
+					} 
+				}
+			secede_province = GAN 
+			}
+		any_owned = { 
+			limit = { region = JAP_1660 } 
+			add_core = AIA 
+			secede_province = AIA
+			}
+		AIA = { capital = 1661 } 
+		KKN = { capital = 3 } 
+		KOR = { capital = 1624 } 
+		AIN = { capital = 1642 } 
+		diplomatic_influence = { who = AIA value = -400 }
+		GAN = { country_event = 95817 }
+	}
+}
+
+country_event = {
+	id = 95817 #The Japanese unequal treaty
+	title = "ZHO117.T"
+	desc = "ZHO117.D"
+	picture = shimonoseki
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO117.A"
+		prestige_factor = 0.1 
+		diplomatic_influence = { who = KOR value = 400 } 
+		diplomatic_influence = { who = AIA value = 400 } 
+		diplomatic_influence = { who = KAM value = 400 } 
+		diplomatic_influence = { who = AIN value = 400 } 
+		diplomatic_influence = { who = KKN value = 400 } 
+		create_vassal = AIA 
+		create_vassal = KAM 
+		create_vassal = AIN
+	}
+}
+
+country_event = {
+	id = 95818 #Declaration of War
+	title = "ZHO118.T"
+	desc = "ZHO118.D"
+	
+	picture = conscription_marching
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO117.A"
+		JAP = { country_event = 95815 } 		
+		war = { 
+			target = JAP 
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = dismantle_cb
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95819 #Foundation of the Tongmenghui 
+	title = "ZHO119.T"
+	desc = "ZHO119.D"
+	
+	trigger = { 
+		OR = { 
+			capital_scope = { continent = europe } 
+			tag = JAP 
+			}
+		NOT = { exists = GAN } 
+		any_owned_province = { OR = { is_core = YLO is_core = ZSA is_core = MJN } }
+		NOT = { has_global_flag = Tongmenghui_GAN } 
+		year = 1880 
+	} 
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.5 
+			year = 1885 
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1890 
+		}
+	}
+	
+	option = { 
+		name = "ZHO119.A"
+		set_global_flag = Tongmenghui_GAN
+		any_owned = { 
+			limit = { OR = { is_core = YLO is_core = ZSA is_core = MJN } } 
+			remove_core = ZSA 
+			remove_core = MJN 
+			remove_core = YLO 
+			add_core = GAN 
+			add_province_modifier = { 
+				name = nationalist_agitation 
+				duration = 3650 
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 95821
+	title = "ZHO121.T" #GAN nationalist cells
+	desc = "ZHO121.D"
+	
+	trigger = {
+		has_global_flag = Tongmenghui_GAN
+		owner = {
+			civilized = yes
+			NOT = { OR = { tag = YLO tag = MJN tag = GAN } } 
+		}
+		OR = { is_core = YLO is_core = ZSA is_core = MJN } 
+		NOT = {
+			is_core = GAN
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	    modifier = {
+			factor = 0.1
+			year = 1925
+		}
+	}
+	
+	option = {
+		name = "ZHO121.A"
+		state_scope = {
+			any_owned = {
+				add_core = GAN
+				remove_core = YLO 
+				remove_core = ZSA
+				remove_core = MJN
+				add_province_modifier = {
+					name = nationalist_agitation
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95822
+	title = "ZHO122.T"
+	desc = "ZHO122.D"
+	picture = "administration"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "ZHO122.A"
+		money = 100000
+		any_owned = {
+			limit = {
+				OR = { 
+					region = GAN_2474
+					region = GAN_3303
+					region = GAN_3320
+					region = GAN_2491 
+					region = GAN_2493
+				}	
+			}
+			secede_province = FROM
+		}
+		FROM = { country_event = 95823 }
+		ai_chance = {
+			factor = 95
+			modifier = { 
+			    factor = 1.5
+			    NOT = { is_greater_power = yes }
+			}
+		}
+	}
+
+	option = {
+		name = "ZHO122.B"
+		FROM = { country_event = 95824 }
+		ai_chance = {
+			factor = 5
+		}
+	}
+}
+
+
+country_event = {
+	id = 95823
+	title = "ZHO123.T"
+	desc = "ZHO123.D"
+	picture = "administration"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ZHO123.A"
+		prestige = 5
+		money = -100000
+		relation = { who = FROM value = 50 }
+		any_pop = { consciousness = -1 }
+	}
+}
+
+country_event = {
+	id = 95824
+	title = "ZHO124.T"
+	desc = "ZHO124.D"
+	picture = "administration"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ZHO124.A"
+		relation = { who = FROM value = -100 }
+	}
+}
+
+country_event = {
+	id = 95825
+	title = "ZHO125.T"
+	desc = "ZHO125.D"
+	picture = "administration"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "ZHO125.A"
+		any_owned = {
+			limit = {
+					region = GAN_3337	
+				}
+			secede_province = FROM
+		}
+		FROM = { country_event = 95832 }
+		ai_chance = {
+			factor = 70
+			modifier = { 
+			factor = 1.5
+			FROM = { rank = 1 } 
+			}
+		}
+	}
+
+	option = {
+		name = "ZHO125.B"
+		FROM = { country_event = 95833 }
+		ai_chance = {
+			factor = 30
+			modifier = { 
+				factor = 2 
+				rank = 1 
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 95832 
+	title = "ZHO132.T"
+	desc = "ZHO132.D"
+	picture = "administration"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ZHO132.A"
+		relation = { who = FROM value = 20 }
+		any_pop = { consciousness = -1 }
+	}
+}
+
+country_event = {
+	id = 95833 
+	title = "ZHO133.T"
+	desc = "ZHO133.D"
+	picture = "administration"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ZHO133.A"
+		relation = { who = FROM value = -50 }
+	}
+}
+
+#MIGRATIONS events for BRG/PBG
+country_event = { 
+	id = 958250
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		BRG = { exists = yes has_global_flag = JEAN_ENDING has_country_flag = AST_master NOT = { has_country_flag = convicts_NZ } } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			year = 1866
+		}
+	}
+	
+	option = {
+		name = ""
+		3109 = { secede_province = UTI } 
+		2779 = { secede_province = UTI } 
+		3235 = { secede_province = UTI } 
+		3108 = { secede_province = UTI } 
+		UTI = { country_event = 95826 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95826
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		3109 = { any_pop = { limit = { culture = dutch } move_pop = 3326 } }
+		3248 = { any_pop = { limit = { culture = burgundian } move_pop = 3332 } }
+		3350 = { any_pop = { limit = { culture = brabantian } move_pop = 2497 } }
+		3351 = { any_pop = { limit = { culture = frisian } move_pop = 3331 } }
+		BRG = { country_event = 95827 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95827
+	title = "ZHO127.T"#To Loc : Liberals and Socialists exiled to NZ
+	desc = "ZHO127.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO127.A"
+		set_country_flag = convicts_NZ 
+		any_pop = { 
+			limit = { 
+				location = { is_core = AST } 
+			}
+			ideology = { factor = 0.05 value = liberal } 
+			ideology = { factor = 0.1 value = anarcho_liberal } 
+			ideology = { factor = 0.05 value = anarcho_liberal } 
+		}
+	}
+}
+
+country_event = { 
+	id = 95828
+	title = "" #Not to loc
+	desc = ""
+	
+	trigger = { 
+		tag = CLN 
+		PBG = { exists = yes has_global_flag = JEAN_ENDING has_country_flag = AST_master NOT = { has_country_flag = convicts_NZ } } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1
+			year = 1866
+		}
+	}
+	
+	option = {
+		name = ""
+		3109 = { secede_province = UTI } 
+		2779 = { secede_province = UTI } 
+		3235 = { secede_province = UTI } 
+		3108 = { secede_province = UTI } 
+		UTI = { country_event = 95829 } 
+		
+	}
+}
+
+country_event = { 
+	id = 95829
+	title = ""#Not to loc
+	desc = ""
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = ""
+		3109 = { any_pop = { limit = { culture = burgundian } move_pop = 3326 } }
+		3248 = { any_pop = { limit = { culture = burgundian } move_pop = 3332 } }
+		3350 = { any_pop = { limit = { culture = burgundian } move_pop = 2497 } }
+		3351 = { any_pop = { limit = { culture = burgundian } move_pop = 3331 } }
+		BRG = { country_event = 95830 } 
+		country_event = 95799
+	}
+}
+
+country_event = { 
+	id = 95830
+	title = "ZHO130.T"#To Loc : Jeanists settle in NZ (convicts + exiled) 
+	desc = "ZHO130.D"
+	picture = ships_to_bangkok
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ZHO130.A"
+		set_country_flag = convicts_NZ 
+		any_pop = { 
+			limit = { 
+				location = { is_core = AST } 
+			}
+			ideology = { factor = 0.05 value = reactionary } 
+			ideology = { factor = 0.1 value = paternal } 
+			ideology = { factor = 0.05 value = conservative } 
+		}
+	}
+}
+
+country_event = { 
+	id = 95831
+	title = "ZHO131.T"#To Loc : You conquered European cores : lose the cultures 
+	desc = "ZHO131.D"
+	picture = ships_to_bangkok
+	
+	trigger = { 
+		tag = GAN 
+		has_country_flag = european_Zhourao
+		any_owned_province = { OR = { is_core = BRG is_core = PBG is_core = SCA is_core = SAF is_core = FRA is_core = ENL is_core = AEN is_core = BRB } }
+		NOT = { has_country_flag = imperialism_GAN } 
+	}
+	
+	option = { 
+		name = "ZHO131.A"
+		set_country_flag = imperialism_GAN 
+		remove_accepted_culture = scandinavian
+		remove_accepted_culture = burgundian
+		remove_accepted_culture = anglois
+	}
+}
+
+country_event = { 
+	id = 95834
+	title = "ZHO134.T"#Radicals plague the Sultanate 
+	desc = "ZHO134.D"
+	picture = zongting 
+	
+	trigger = { 
+		tag = GAN 
+		has_country_flag = zhusha_GAN
+		OR = { government = absolute_monarchy government = prussian_constitutionalism } 
+		year = 1850 
+		NOT = { has_country_flag = increased_radicalism } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 20 
+		modifier = { 
+			factor = 0.1 
+			year = 1855
+		}
+	}
+	
+	option = { 
+		name = "ZHO134.A"
+		set_country_flag = increased_radicalism 
+		any_pop = { 
+			ideology = { factor = 0.1 value = anarcho_liberal } 
+		}
+	}
+	
+}
+	
+
+country_event = { 
+	id = 95835
+	title = "ZHO135.T" #Call a Zongting
+	desc = "ZHO135.D"
+	picture = zongting 
+	
+	trigger = { 
+		tag = GAN 
+		has_country_flag = zhusha_GAN
+		government = absolute_monarchy 
+		has_country_flag = increased_radicalism
+		year = 1857 
+		NOT = { has_country_flag = zongting_refused } 
+	}
+
+	mean_time_to_happen = { 
+		months = 12 
+	}
+	
+	option = { 
+		name = "ZHO135.A" #Call the Zongting
+			government = prussian_constitutionalism 
+			political_reform = wealth_voting
+			political_reform = state_equal_weight		
+		    political_reform = free_press
+		      political_reform = yes_meeting
+		      political_reform = gerrymandering
+		      political_reform = unitary
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          clr_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          set_country_flag = democracy_gov	
+	}
+	
+	option = { 
+		name = "ZHO135.B" #Hunt the Constitutionalists
+		set_country_flag = zongting_refused 
+		any_pop = { 
+			scaled_militancy = {
+			ideology = anarcho_liberal 
+			factor = 5
+		    }
+			scaled_militancy = {
+			ideology = liberal  
+			factor = 3
+		    }
+		}
+		any_pop = { 
+			limit = { pop_majority_ideology = liberal }
+			reduce_pop = 0.95 
+		}
+		any_pop = { 
+			limit = { pop_majority_ideology = anarcho_liberal }
+			reduce_pop = 0.9
+		}
+	}
+}
+
+country_event = { 
+	id = 95836
+	title = "ZHO136.T" #Zongting already there but more stuff to give
+	desc = "ZHO136.D"
+	picture = zongting 
+	
+	trigger = { 
+		tag = GAN 
+		has_country_flag = zhusha_GAN
+		government = prussian_constitutionalism 
+		NOT = { 
+			OR = { 
+				slavery = no_slavery 
+				public_meetings = yes_meeting 
+				press_rights = free_press 
+				vote_franschise = wealth_voting 
+			}
+		}
+		year = 1857 
+	}
+
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1859 
+		}
+	}
+	
+	option = { 
+		name = "ZHO136.A" #Issue new guarantees
+			government = prussian_constitutionalism 
+			political_reform = no_slavery
+			political_reform = wealth_voting
+			political_reform = state_equal_weight		
+		    political_reform = free_press
+		      political_reform = yes_meeting
+		      political_reform = gerrymandering
+		      political_reform = unitary
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          clr_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          set_country_flag = democracy_gov	
+	}
+	
+	option = { 
+		name = "ZHO136.B" #Let them complain
+		set_country_flag = zongting_refused 
+		any_pop = { 
+			scaled_militancy = {
+			ideology = anarcho_liberal 
+			factor = 3
+				}
+			scaled_militancy = {
+			ideology = liberal  
+			factor = 1
+				}
+		}
+	}
+}
+
+country_event = {
+	id = 95837 #Death of the Sultan of Zhourao 
+	title = "ZHO137.T"
+	desc = "ZHO137.D"
+	
+	trigger = { 
+		tag = GAN  
+		exists = yes 
+		OR = { 
+			government = absolute_monarchy 
+			government = prussian_constitutionalism 
+			government = hms_government 
+			}
+		year = 1865 
+		NOT = { has_country_flag = death_sultan } 
+		
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+	}
+	
+	option = { 
+		name = "ZHO137.A"
+		set_country_flag = death_sultan
+		any_pop = { 
+			scaled_consciousness = { 
+				ideology = reactionary 
+				factor = 1
+			}
+			scaled_militancy = { 
+				ideology = reactionary 
+				factor = -1
+			}
+		}
+	}
+	
+}
+
+country_event = {
+	id = 95838 #Ma Luozi bombs the Parliament
+	title = "ZHO138.T"
+	desc = "ZHO138.D"
+	
+	trigger = { 
+		tag = GAN  
+		NOT = { government = absolute_monarchy } 
+		has_country_flag = death_sultan
+		NOT = { year = 1870 } 
+		NOT = { has_country_flag = luozi_gambit } 
+		
+	}
+	
+	mean_time_to_happen = { 
+		months = 1
+		modifier = { 
+			factor = 0.1 
+			year = 1866
+		}
+	}
+	
+	option = { 
+		name = "ZHO138.A"
+			country_event = { id = 95839 days = 7 } 
+			set_country_flag = luozi_gambit
+			government = absolute_monarchy  
+			political_reform = landed_voting
+		    political_reform = state_press
+		    political_reform = no_meeting 
+		    political_reform = gerrymandering
+		      political_reform = unitary
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          clr_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          set_country_flag = democracy_gov	
+			any_pop = { 
+				scaled_consciousness = { 
+					ideology = liberal 
+					factor = 6
+				}
+				scaled_militancy = { 
+					ideology = liberal 
+					factor = 4
+				}
+				scaled_consciousness = { 
+					ideology = anarcho_liberal  
+					factor = 7
+				}
+				scaled_militancy = { 
+					ideology = anarcho_liberal  
+					factor = 5
+				}
+			}
+		}
+	
+}
+
+
+country_event = {
+	id = 95839 #Ma Luozi forced to abdicate and is exiled. Ma Fushou proclaimed Sultan 
+	title = "ZHO139.T"
+	desc = "ZHO139.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "ZHO137.A"
+		government = hms_government 
+		political_reform = universal_voting
+		political_reform = state_equal_weight		
+		    political_reform = free_press
+		      political_reform = yes_meeting
+		      political_reform = secret_ballots 
+	          clr_country_flag = theocratic_government
+	          clr_country_flag = merchantrepublic_gov
+	          clr_country_flag = parliamentary_republic_gov
+	          clr_country_flag = communist_gov
+	          clr_country_flag = absolute_monarchy_gov
+	          clr_country_flag = semi_constitutional_monarchy_gov
+	          clr_country_flag = constitutional_monarchy_gov
+	          clr_country_flag = presidential_dictatorship_gov
+	          clr_country_flag = fascist_gov
+	          clr_country_flag = anarcho_liberal_gov
+	          clr_country_flag = socialist_republic_gov
+	          clr_country_flag = fascist_monarchy_gov
+	          set_country_flag = democracy_gov	
+		any_pop = { 
+			ideology = { factor = 0.05 value = liberal } 
+			ideology = { factor = -0.05 value = reactionary } 
+			scaled_consciousness = { 
+					ideology = liberal 
+					factor = -4
+				}
+				scaled_militancy = { 
+					ideology = liberal 
+					factor = -4
+				}
+				scaled_consciousness = { 
+					ideology = anarcho_liberal  
+					factor = -5
+				}
+				scaled_militancy = { 
+					ideology = anarcho_liberal  
+					factor = -3
+				}
+		}
+	}
+}
+	

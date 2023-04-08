@@ -1,5 +1,78 @@
-
 ###### Burgundy Flavour ######
+
+#### ENEMIES ON ALL SIDES - NOW YOU'VE DONE IT ####
+
+country_event = {
+	id = 1231230
+	title = "BRG666.T"
+	desc = "BRG666.D"
+	picture = "Burgundian_Cross"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+	    exists = yes
+        OR = {
+		  tag = BRG
+		  tag = PBG
+		}
+		war = yes
+		OR = {
+		  AND = {
+		     war_with = NGF
+			 NGF = { OR = { owns = 564 owns = 549 } }
+		  }
+		  AND = {
+		     war_with = SGF
+			 SGF = { OR = { owns = 586 owns = 549 } }
+		  }
+		  war_with = CAE
+		  war_with = GER
+		  war_with = GCF
+		}
+		war_with = DUA
+		NOT = { has_country_modifier = BRG_nightmare_scenario }
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	option = { 
+	name = "BRG666.A"
+	   any_pop = {
+	      militancy = -8
+	   }
+	   add_country_modifier = { name = BRG_nightmare_scenario duration = -1 } 
+	}
+}
+
+country_event = {
+	id = 1231231
+	title = "BRG6666.T"
+	desc = "BRG6666.D"
+	picture = "Burgundian_Cross"
+	
+    trigger = {
+	    exists = yes
+        OR = {
+		  tag = BRG
+		  tag = PBG
+		  tag = FRK
+		}
+        has_country_modifier = BRG_nightmare_scenario
+		war = no
+    }
+	
+    mean_time_to_happen = {
+        days = 1
+    }
+	
+	option = { 
+	name = "BRG6666.A"
+	   remove_country_modifier = BRG_nightmare_scenario
+	}
+}
 
 #### Burgundian Champange Crisis ####
 
@@ -15,7 +88,7 @@ country_event = {
 	name = "123123.A"
 	prestige = 10
 	ai_chance = { 
-	factor = 60
+	factor = 90
 		} 
 	}
 	
@@ -38,26 +111,6 @@ country_event = {
 	}
 	ai_chance = { 
 	factor = 10
-		} 
-	}
-	
-	option = { 
-	name = "123123.C"
-	any_owned = {
-	limit = {
-	is_core = CHA
-	}
-	secede_province = CHA
-	   }	
-	create_vassal = CHA
-	any_owned = {
-	limit = {
-	is_core = CHA
-	}
-	secede_province = CHA
-	   }
-	ai_chance = { 
-	factor = 30
 		} 
 	}
 }
@@ -373,6 +426,7 @@ country_event = {
 	
 	option = {
 		name = "653007.A" 
+		remove_country_modifier = burgundian_golden_age
 	    any_pop = {
 	       scaled_militancy = {
 			   factor = -1
@@ -487,6 +541,475 @@ country_event = {
 	}
 }
 
+
+######################################################################
+########################## BRG and the Hollowing #####################
+######################################################################
+
+######## Shockwaves of the Hollowing are affecting Burgundy ############
+
+country_event = {
+	id = 6530090
+	title = "BRG990.T"
+	desc = "BRG990.D"
+	#picture = "PBGvictory"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "BRG990.A"
+       set_country_flag = RHI_blew_up
+	   country_event = { id = 6530091 days = 31 }
+	   RHI = {
+	       any_pop = { 
+		      consciousness = 1
+		      militancy = 1
+		  }
+	   }
+	}
+}
+
+######## The Dutch Potato Blight ############
+
+#### Oh No ####
+
+country_event = {
+	id = 6530091
+	title = "BRG991.T"
+	desc = "BRG991.D"
+	picture = "famine"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "BRG990.A"
+       set_global_flag = dutch_potato_blight
+	   set_country_flag = time_to_choose_BRG
+	   set_country_flag = time_to_choose_BRG_two
+	   NET = {
+	       any_pop = { 
+		      consciousness = 1
+		      militancy = 1
+		  }
+	   }
+       add_country_modifier = { name = dutch_potato_heavy duration = 1825 } 
+	}
+}
+
+### Heavy Blight
+
+province_event = {
+	id = 6530092
+	title = "BRG992.T"
+	desc = "BRG992.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = dutch_potato_heavy
+            has_global_flag = dutch_potato_blight		
+		}
+		is_core = NET
+		NOT = { is_core = BRB }
+		NOT = { has_province_modifier = dutch_potato_heavy_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "BRG992.A"
+		state_scope = { 
+		    any_owned = {
+			add_province_modifier = {
+					name = dutch_potato_heavy_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+### Light Blight - See post-RHI events for that
+
+province_event = {
+	id = 6530093
+	title = "BRG993.T"
+	desc = "BRG993.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = dutch_potato_light
+            has_global_flag = dutch_potato_blight	
+		}
+		is_core = NET
+		NOT = { is_core = BRB }
+		NOT = { has_province_modifier = dutch_potato_light_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "BRG993.A"
+		state_scope = { 
+		    any_owned = {
+			remove_province_modifier = dutch_potato_heavy_province
+			add_province_modifier = {
+					name = dutch_potato_light_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+
+#### If RHI can be relieved then the first event will trigger (RHI is not at light hollowing) and if not then NET will always be relieved. ####
+
+country_event = {
+	id = 6530094
+	title = "BRG994.T"
+	desc = "BRG994.D"
+	#picture = "colonge"
+
+    fire_only_once = yes
+     
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG
+		   tag = PBG
+		}
+		OR = {
+           has_country_flag = RHI_DEAD_GOODBYE
+		   tag = PBG
+		}
+		has_country_flag = time_to_choose_BRG	
+		OR = {
+		   has_country_modifier = apocalyptic_hollowing
+		   has_country_modifier = catastropic_hollowing
+		   has_country_modifier = severe_hollowing
+		   has_country_modifier = average_hollowing
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "BRG994.A"
+		
+		prestige = -3
+		
+		clr_country_flag = time_to_choose_BRG
+        set_global_flag = dutch_relief
+		remove_country_modifier = dutch_potato_heavy
+		add_country_modifier = { name = dutch_potato_light duration = 1825 } 
+	    NET = {
+	       any_pop = { 
+		      consciousness = -3
+		      militancy = -3
+		  }
+	   }
+	   
+	}
+	
+	option = {
+		name = "BRG994.B"
+		
+		prestige = 3
+		
+		clr_country_flag = time_to_choose_BRG
+        set_global_flag = rhine_relief
+		
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = average_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = average_hollowing
+		      add_country_modifier = { name = light_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = severe_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = severe_hollowing
+		      add_country_modifier = { name = average_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = catastropic_hollowing  }
+		   }
+		   owner = {
+		      remove_country_modifier = catastropic_hollowing 
+		      add_country_modifier = { name = severe_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = apocalyptic_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = apocalyptic_hollowing
+		      add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+		   }
+		}
+		
+	    any_country = { 
+	       limit = { has_country_modifier = average_hollowing }
+		   remove_country_modifier = average_hollowing
+		   add_country_modifier = { name = light_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = severe_hollowing }
+		   remove_country_modifier = severe_hollowing
+		   add_country_modifier = { name = average_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = catastropic_hollowing  }
+		   remove_country_modifier = catastropic_hollowing 
+		   add_country_modifier = { name = severe_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = apocalyptic_hollowing }
+		   remove_country_modifier = apocalyptic_hollowing
+		   add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+	    }
+		
+	    RHI = {
+	       any_pop = { 
+		      consciousness = -3
+		      militancy = -3
+		  }
+	   }
+	   
+	}
+}
+
+
+#### Since the hollowing is light you automatically work on the Dutch instead of the Rhine ####
+
+country_event = {
+	id = 6530095
+	title = "BRG995.T"
+	desc = "BRG995.D"
+	picture = "famine"
+	
+	fire_only_once = yes
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG
+		   tag = PBG
+		}
+		OR = {
+           has_country_flag = RHI_DEAD_GOODBYE
+		   tag = PBG
+		}
+		has_country_flag = time_to_choose_BRG	
+		has_country_modifier = light_hollowing
+		NOT = { has_country_flag = dutch_potato_check }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "BRG995.A"
+		
+		prestige = -3
+		
+		clr_country_flag = time_to_choose_BRG
+        set_global_flag = dutch_relief
+		remove_country_modifier = dutch_potato_heavy
+		add_country_modifier = { name = dutch_potato_light duration = 1825 } 
+	    NET = {
+	       any_pop = { 
+		      consciousness = -3
+		      militancy = -3
+		  }
+	   }
+	   
+	}
+}
+
+### Dutch Aftermath being added ####
+
+province_event = {
+	id = 6530096
+	title = "BRG996.T"
+	desc = "BRG996.D"
+	
+	trigger = {
+		owner = {
+            has_global_flag = HOLLOWING_END	
+			has_global_flag = dutch_potato_blight
+			NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }
+		}
+		is_core = NET
+		NOT = { is_core = BRB }
+		NOT = { has_province_modifier = dutch_aftermath }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "BRG995.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = dutch_potato_heavy_province
+		    remove_province_modifier = dutch_potato_light_province
+			add_province_modifier = {
+					name = dutch_aftermath
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+### EMERGENCY CLEAR MODIFIER - If the Dutch Famine is over and for some reason the province modifier has not been removed.
+
+### Move to the Cleanup Decision Events Later
+
+province_event = {
+	id = 65300960
+	title = "Removing the Dutch Famine"
+	desc = "For some reason an event has not successfully cleared this modifier. This is the emergency removal event."
+	
+	trigger = {
+	    has_province_modifier = dutch_aftermath
+	    NOT = { has_global_flag = dutch_potato_blight }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "Urgh"
+		owner = { clr_global_flag = dutch_potato_blight }
+		state_scope = { 
+		    any_owned = {
+			   remove_province_modifier = dutch_aftermath
+			}
+		}
+	}
+}
+
+### Dutch Aftermath Modifier is removed by 1501380 in Bohemia-HRE due to date. The below event is the manual option ####
+
+country_event = {
+	id = 6530097
+	title = "BRG997.T"
+	desc = "BRG997.D"
+	picture = "famine"
+
+    fire_only_once = yes
+     
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG
+		   tag = PBG
+		}
+        has_global_flag = HOLLOWING_END	
+		has_country_flag = time_to_choose_BRG_two
+		NOT = {
+		    OR = {
+		       has_country_modifier = dutch_potato_heavy
+			   has_country_modifier = dutch_potato_light
+		    }
+		}    
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "BRG997.A"
+		
+		prestige = -3	
+		
+		clr_country_flag = time_to_choose_BRG_two
+		clr_global_flag = dutch_potato_blight
+		any_owned = { 
+		    limit = { 
+		       owner = { has_global_flag = dutch_relief } 
+	        }
+            owner = { clr_global_flag = dutch_relief set_global_flag = dutch_relief_two } 
+	    }
+		any_owned = { 
+		    limit = { 
+		       owner = { NOT = { has_global_flag = dutch_relief } } 
+	        }
+            owner = { set_global_flag = dutch_relief } 
+	    }
+		any_owned = {
+		   remove_province_modifier = dutch_potato_heavy_province
+		   remove_province_modifier = dutch_potato_light_province
+		   remove_province_modifier = dutch_aftermath
+		}
+		any_owned = { 
+			limit = { is_core = NET NOT = { is_core = BRB } }
+		    add_province_modifier = { 
+			    name = baby_boom
+			    duration = 1310
+		    }
+	   }
+	}   
+	
+	option = {
+		name = "BRG997.B"
+		
+		prestige = 3
+		
+		clr_country_flag = time_to_choose_BRG_two
+		any_owned = { 
+		    limit = { 
+		       owner = { has_global_flag = rhine_relief } 
+	        }
+            owner = { clr_global_flag = rhine_relief set_global_flag = rhine_relief_two } 
+	    }
+		any_owned = { 
+		    limit = { 
+		       owner = { NOT = { has_global_flag = rhine_relief } } 
+	        }
+            owner = { set_global_flag = rhine_relief } 
+	    }	
+		any_owned = {
+		   remove_province_modifier = dutch_potato_heavy_province
+		   remove_province_modifier = dutch_potato_light_province
+		   remove_province_modifier = hollowing_aftermath
+		}		
+		any_owned = { 
+			limit = { is_core = RHI }
+		    add_province_modifier = { 
+			    name = baby_boom
+			    duration = 1310
+		    }
+	   } 	   
+	}
+}
+
+#############################
+#####  RHI Revolt     #######
+#############################
+
 country_event = {
 	id = 653010
 	title = "BRG10.T"
@@ -496,7 +1019,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = BRG
-		year = 1846
+		has_country_flag = RHI_blew_up
 		RHI = { substate_of = BRG }
 		NOT = { year = 1855 }
 		OR = { 
@@ -558,6 +1081,17 @@ country_event = {
 		name = "653011.A" 
 		release_vassal = RHI
 	    set_country_flag = BRG_RHI_REVOLT
+		any_country = {
+		    limit = {
+			   OR = {
+			      alliance_with = RHI
+				  is_greater_power = yes
+			   }
+			}
+			leave_alliance = RHI 
+		    relation = { who = RHI value = -300 }
+	        diplomatic_influence = { who = RHI value = -300 }	
+	    }
 		RHI = { 
 		   add_country_modifier = {
 					name = small_country_draft
@@ -666,6 +1200,17 @@ country_event = {
 		set_country_flag = the_trigger_BRGRHI
 		set_country_flag = BRG_RHI_awake
 		set_country_flag = the_rhineland_mistake
+		any_country = {
+		    limit = {
+			   OR = {
+			      alliance_with = RHI
+				  is_greater_power = yes
+			   }
+			}
+			leave_alliance = RHI 
+		    relation = { who = RHI value = -300 }
+	        diplomatic_influence = { who = RHI value = -300 }	
+	    }
 		RHI = { 
 		   add_country_modifier = {
 					name = small_country_draft
@@ -831,462 +1376,6 @@ country_event = {
 	}
 }
 
-##################### PBG Post-Jean Chaos ##############################
-
-### The Burgundian Succession - Liberal Prince is King/Dictator of Finland ###
-
-country_event = {
-	id = 653064
-	title = "BRG15.T"
-	desc = "BRG15.D"
-	picture = "PBGvictory"
-
-	trigger = {	
-	    exists = yes
-	    tag = PBG
-		OR = { 
-		    government = absolute_monarchy
-			government = prussian_constitutionalism
-			government = hms_government
-        }
-		is_ideology_enabled = paternal
-		has_global_flag = JEAN_ENDING
-		NOT = { has_country_flag = PBG_PJC }
-		NOT = { has_country_flag = PBG_CHAINBROKE }
-		FIN = { has_country_flag = prince_is_dead }
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-
-	option = {
-	name = "653064.A" 
-	capital = 390
-	set_country_flag = PBG_PJC
-	set_country_flag = PBG_road_to_Republic
-	remove_country_modifier = regency_government
-	prestige = 10
-	add_country_modifier = { 
-	   name = PBG_castles
-	   duration = 7300
-	}
-	add_country_modifier = { 
-	   name = the_eye_of_the_storm
-	   duration = 1825
-	}
-	any_pop = { 
-	      militancy = 1
-		  ideology = { factor = 0.1 value = anarcho_liberal } 
-	   }	   
-	ai_chance = {
-			factor = 85
-		}
-	}
-	
-	option = {
-	name = "653064.B" 
-	capital = 390
-	set_country_flag = PBG_PJC	
-	remove_country_modifier = regency_government
-	any_pop = { 
-	      militancy = 3
-		  ideology = { factor = 0.2 value = anarcho_liberal } 
-		  ideology = { factor = -0.2 value = liberal }
-		  ideology = { factor = -0.2 value = market_liberal } 
-	      ideology = { factor = 0.2 value = reactionary } 
-	}
-	set_country_flag = inevitable_BRG_coup
-	government = parliamentary_republic
-	ruling_party_ideology = anarcho_liberal
-    political_reform = population_equal_weight
-    political_reform = universal_voting
-    political_reform = yes_meeting
-    political_reform = free_press
-    political_reform = proportional_representation
-    political_reform = secret_ballots
-	political_reform = no_draft
-    clr_country_flag = theocratic_government
-	clr_country_flag = merchantrepublic_gov
-	clr_country_flag = communist_gov
-	clr_country_flag = absolute_monarchy_gov
-    clr_country_flag = semi_constitutional_monarchy_gov
-    set_country_flag = parliamentary_republic_gov
-    clr_country_flag = democracy_gov
-	clr_country_flag = presidential_dictatorship_gov
-	clr_country_flag = fascist_gov
-	clr_country_flag = anarcho_liberal_gov
-	clr_country_flag = socialist_republic_gov
-	clr_country_flag = fascist_monarchy_gov
-	clr_country_flag = constitutional_monarchy_gov
-	clr_country_flag = election_started
-	clr_country_flag = tory_election_win
-	clr_country_flag = socialist_election_win
-	clr_country_flag = liberal_election_win
-	clr_country_flag = communist_election_win
-	clr_country_flag = fascist_election_win
-	clr_country_flag = reactionary_election_win
-	set_country_flag = anarcho_liberal_election_win
-	clr_country_flag = social_liberal_election_win
-	clr_country_flag = market_liberal_election_win		
-		clr_country_flag = paternal_election_win
-	clr_country_flag = conservative_party_in_power
-	clr_country_flag = liberal_party_in_power
-	clr_country_flag = reactionary_party_in_power
-	clr_country_flag = socialist_party_in_power
-	clr_country_flag = communist_party_in_power
-	clr_country_flag = fascist_party_in_power
-	clr_country_flag = paternal_party_in_power
-	set_country_flag = anarcho_liberal_party_in_power
-	clr_country_flag = market_liberal_party_in_power	
-	ai_chance = {
-			factor = 10
-		}
-	}
-	
-	option = {
-	name = "653064.C"
-	capital = 390
-	set_country_flag = PBG_PJC
-    remove_country_modifier = regency_government	
-	any_pop = { 
-	      militancy = 6
-		  ideology = { factor = -0.1 value = anarcho_liberal } 
-		  ideology = { factor = -0.2 value = liberal }
-		  ideology = { factor = -0.2 value = market_liberal } 
-		  ideology = { factor = 0.25 value = conservative } 
-	      ideology = { factor = 0.25 value = reactionary } 
-	}
-	set_country_flag = inevitable_BRG_coup
-	ai_chance = {
-			factor = 5
-		}
-	}
-}
-
-### The Burgundian Succession - Liberal Prince has Vanished ###
-
-country_event = {
-	id = 653065
-	title = "BRG16.T"
-	desc = "BRG16.D"
-	picture = "PBGvictory"
-
-	trigger = {	
-	    exists = yes
-	    tag = PBG
-		OR = { 
-		    government = absolute_monarchy
-			government = prussian_constitutionalism
-			government = hms_government
-        }
-		is_ideology_enabled = paternal
-		has_global_flag = JEAN_ENDING
-		NOT = { has_country_flag = PBG_PJC }
-		NOT = { has_country_flag = PBG_CHAINBROKE }
-		FIN = { NOT = { has_country_flag = prince_is_dead } } 
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-
-	option = {
-	name = "653065.A" 
-    capital = 390
-	set_country_flag = PBG_PJC
-	add_country_modifier = { 
-	   name = PBG_castles
-	   duration = 7300
-	}
-	add_country_modifier = { 
-	   name = the_eye_of_the_storm
-	   duration = 1825
-	}
-	set_country_flag = PBG_road_to_Republic
-	remove_country_modifier = regency_government
-	prestige = 10
-	any_pop = { 
-	      militancy = 1
-		  ideology = { factor = 0.1 value = anarcho_liberal } 
-	   }
-	ai_chance = {
-			factor = 85
-		}	   
-	}
-	
-	option = {
-	name = "653065.B" 
-	capital = 390
-	set_country_flag = PBG_PJC
-	remove_country_modifier = regency_government
-	any_pop = { 
-	      militancy = 3
-		  ideology = { factor = 0.2 value = anarcho_liberal } 
-		  ideology = { factor = -0.2 value = liberal }
-		  ideology = { factor = -0.2 value = market_liberal } 
-	      ideology = { factor = 0.2 value = paternal } 
-	}
-	set_country_flag = inevitable_BRG_coup
-	government = parliamentary_republic
-	ruling_party_ideology = anarcho_liberal
-    political_reform = population_equal_weight
-    political_reform = universal_voting
-    political_reform = yes_meeting
-    political_reform = free_press
-    political_reform = proportional_representation
-    political_reform = secret_ballots
-	political_reform = no_draft
-    clr_country_flag = theocratic_government
-	clr_country_flag = merchantrepublic_gov
-	clr_country_flag = communist_gov
-	clr_country_flag = absolute_monarchy_gov
-    clr_country_flag = semi_constitutional_monarchy_gov
-	clr_country_flag = constitutional_monarchy_gov
-    set_country_flag = parliamentary_republic_gov
-    clr_country_flag = democracy_gov
-	clr_country_flag = presidential_dictatorship_gov
-	clr_country_flag = fascist_gov
-	clr_country_flag = anarcho_liberal_gov
-	clr_country_flag = socialist_republic_gov
-	clr_country_flag = fascist_monarchy_gov
-	clr_country_flag = election_started
-	clr_country_flag = tory_election_win
-	clr_country_flag = socialist_election_win
-	clr_country_flag = liberal_election_win
-	clr_country_flag = communist_election_win
-	clr_country_flag = fascist_election_win
-	clr_country_flag = reactionary_election_win
-	set_country_flag = anarcho_liberal_election_win
-	clr_country_flag = social_liberal_election_win
-	clr_country_flag = market_liberal_election_win		
-		clr_country_flag = paternal_election_win
-	clr_country_flag = conservative_party_in_power
-	clr_country_flag = liberal_party_in_power
-	clr_country_flag = reactionary_party_in_power
-	clr_country_flag = socialist_party_in_power
-	clr_country_flag = communist_party_in_power
-	clr_country_flag = fascist_party_in_power
-	clr_country_flag = paternal_party_in_power
-	set_country_flag = anarcho_liberal_party_in_power
-	clr_country_flag = market_liberal_party_in_power
-	ai_chance = {
-			factor = 10
-		}	
-	}
-	
-	option = {
-	name = "653065.C"
-	capital = 390
-	set_country_flag = PBG_PJC	
-	remove_country_modifier = regency_government
-	any_pop = { 
-	      militancy = 6
-		  ideology = { factor = -0.1 value = anarcho_liberal } 
-		  ideology = { factor = -0.2 value = liberal }
-		  ideology = { factor = -0.2 value = market_liberal } 
-		  ideology = { factor = 0.25 value = conservative } 
-	      ideology = { factor = 0.25 value = paternal } 
-	}
-	set_country_flag = inevitable_BRG_coup
-	ai_chance = {
-			factor = 5
-		}
-	}
-}
-
-# THE PROTECTORATE - YOU'VE LITERALLY JUST DESTROYED BURGUNDY YOU MONSTER.
-
-country_event = {
-	id = 653066
-	title = "BRG17.T"
-	desc = "BRG17.D"
-	picture = "storming_palace"
-	
-	major = yes
-
-	trigger = {	
-	    exists = yes
-	    tag = PBG
-		has_country_flag = inevitable_BRG_coup 
-	}
-	
-	mean_time_to_happen = {
-		days = 7
-	}
-	
-	option = {
-	name = "653066.A"
-	clr_country_flag = inevitable_BRG_coup
-	badboy = 1
-	government = presidential_dictatorship
-	ruling_party_ideology = paternal
-	political_reform = totalitarianism
-	political_reform = none_voting
-	political_reform = party_appointed
-	political_reform = no_meeting
-	political_reform = state_press
-	political_reform = four_year_draft
-    political_reform = first_past_the_post
-	political_reform = underground_parties 
-	random_owned = {
-			limit = {
-				owner = {
-					has_country_modifier = regency_government
-					NOT = {
-						government = absolute_monarchy
-						government = prussian_constitutionalism
-						government = hms_government
-					}
-				}
-			}
-			owner = { remove_country_modifier = regency_government }
-	}
-	clr_country_flag = theocratic_government
-	clr_country_flag = merchantrepublic_gov
-	clr_country_flag = parliamentary_republic_gov
-	clr_country_flag = communist_gov
-	clr_country_flag = absolute_monarchy_gov
-	clr_country_flag = semi_constitutional_monarchy_gov
-	clr_country_flag = constitutional_monarchy_gov
-	set_country_flag = presidential_dictatorship_gov
-	clr_country_flag = fascist_gov
-	clr_country_flag = anarcho_liberal_gov
-	clr_country_flag = socialist_republic_gov
-	clr_country_flag = fascist_monarchy_gov
-	clr_country_flag = democracy_gov
-	clr_country_flag = election_started
-	clr_country_flag = conservative_party_in_power
-	clr_country_flag = liberal_party_in_power
-	clr_country_flag = reactionary_party_in_power
-	clr_country_flag = socialist_party_in_power
-	clr_country_flag = communist_party_in_power
-	clr_country_flag = fascist_party_in_power
-	clr_country_flag = paternal_party_in_power
-	clr_country_flag = anarcho_liberal_party_in_power
-	clr_country_flag = tory_election_win
-	clr_country_flag = socialist_election_win
-	clr_country_flag = liberal_election_win
-	clr_country_flag = communist_election_win
-	clr_country_flag = fascist_election_win
-	clr_country_flag = reactionary_election_win
-	clr_country_flag = anarcho_liberal_election_win
-	clr_country_flag = social_liberal_election_win
-	clr_country_flag = market_liberal_election_win		
-		clr_country_flag = paternal_election_win
-	clr_country_flag = market_liberal_party_in_power
-	
-	add_country_modifier = {
-		name = law_changed_by_force
-		duration = 1095
-	}
-				
-	add_country_modifier = {
-		name = the_terror
-		duration = 1095
-	}
-				
-	add_country_modifier = { 
-	   name = the_new_order_BRG
-	   duration = 10950
-	}
-		
-	# Make society more militant
-	tech_school = army_tech_school
-	nationalvalue = nv_might
-	
-	any_pop = { limit = { pop_majority_ideology = communist } reduce_pop = 0.98 }
-	any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.98 }
-	any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.98 }
-	any_pop = { limit = { pop_majority_ideology = socialist } reduce_pop = 0.98 }
-	any_pop = { limit = { pop_majority_ideology = separatist } reduce_pop = 0.99 }
-	
-	any_pop = { 
-		limit = {
-			OR = {
-				social_movement = yes
-				political_movement = yes
-				}
-		} 
-		militancy = -7
-		random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
-	}	
-	
-	any_pop = {
-		limit = {
-			OR = { type = soldiers type = officers }
-			NOT = { pop_majority_ideology = paternal }
-		}
-		militancy = -9 ideology = { factor = 0.35 value = paternal }
-	}
-	any_pop = { ideology = { factor = 0.01 value = paternal } }
-	
-	scaled_consciousness = {
-		factor = -8
-		ideology = conservative
-	}
-	scaled_militancy = {
-		factor = -8
-		ideology = conservative
-	}
-	
-	scaled_consciousness = {
-		factor = -10
-		ideology = paternal
-	}
-	scaled_militancy = {
-		factor = -10
-		ideology = paternal
-	}
-	
-	scaled_consciousness = {
-		factor = -10
-		ideology = reactionary
-	}
-	scaled_militancy = {
-		factor = -10
-		ideology = reactionary
-	}
-	
-	scaled_consciousness = {
-		factor = 9
-		ideology = anarcho_liberal
-	}
-	scaled_militancy = {
-		factor = 9
-		ideology = anarcho_liberal
-	}
-	
-	scaled_consciousness = {
-		factor = 9
-		ideology = communist
-	}
-		scaled_militancy = {
-		factor = 9
-		ideology = communist
-	}
-				
-	scaled_consciousness = {
-		factor = 7
-		ideology = liberal
-	}
-	scaled_militancy = {
-		factor = 7
-		ideology = liberal
-	}
-	
-	scaled_consciousness = {
-		factor = 7
-		ideology = socialist
-	}	
-	scaled_militancy = {
-		factor = 7
-		ideology = socialist
-	}
-	random_list = { 70 = { country_event = 653096 } 30 = { country_event = 653097 } } 
-	}
-}
-
 #################################################
 ### The Death of Jean and the succession ########
 #################################################
@@ -1303,6 +1392,12 @@ country_event = {
 	   tag = BRG
 	   has_global_flag = JEAN_ENDING
 	   year = 1893
+	   OR = {		       
+		  government = absolute_monarchy
+		  government = prussian_constitutionalism
+		  government = hms_government
+		  government = fascist_monarchy
+       }
 	   NOT = { has_country_flag = JEAN_IS_DEAD }
 	}
 	
@@ -1393,6 +1488,7 @@ country_event = {
 	
 	option = { 
 	name = "BRG19.A"
+	    set_country_flag = jean_is_dead
 	    set_country_flag = the_unexpected_will_BRG
 		set_country_flag = regency_is_now_possible
 	    remove_country_modifier = the_new_order_BRG
@@ -1566,6 +1662,7 @@ country_event = {
 				factor = 0.5
 				OR = {
                    CAE = { owns = 578 }
+				   GCF = { owns = 578 }
 				   HLR = { owns = 578 }
 				   GER = { owns = 578 }
 				}
@@ -1608,6 +1705,7 @@ country_event = {
 	option = { 
 	name = "BRG21.B"
 	    prestige = -20
+		set_country_flag = blocked_from_FRK
 		#remove_country_modifier = regency_government
 		set_country_flag = going_to_be_king_BRG
 		add_country_modifier = {
@@ -1749,6 +1847,7 @@ country_event = {
 				factor = 0.5
 				OR = {
                    CAE = { owns = 578 }
+				   GCF = { owns = 578 }
 				   HLR = { owns = 578 }
 				   GER = { owns = 578 }
 				}
@@ -2120,6 +2219,363 @@ country_event = {
 	        limit = { 
 	          location = { is_core = NET }
 	        }
+            ideology = { factor = 0.15 value = socialist } 			
+	    } 
+	    any_pop = { 
+	        limit = { 
+	          location = { is_core = BRG }
+			  NOT = { location = { is_core = NET } }
+	        }
+            ideology = { factor = 0.15 value = socialist } 	
+	    } 	    
+	    upper_house = {
+			   ideology = socialist
+			   value = 0.5
+	    }
+		set_country_flag = show_trials_possible 
+	    government = hms_government
+		ruling_party_ideology = socialist
+	    political_reform = universal_voting
+	    political_reform = population_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = all_trade_unions
+	    political_reform = secret_ballots
+	    political_reform = one_year_draft
+        political_reform = proportional_representation
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+	    clr_country_flag = tory_election_win
+	    set_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+        clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    set_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+        clr_country_flag = market_liberal_party_in_power
+	    set_country_flag = regency_is_now_possible
+	    election = yes
+	    any_pop = {
+	    scaled_consciousness = {
+		   factor = 3
+		   ideology = conservative
+	    }
+	    scaled_militancy = {
+		    factor = 3
+		    ideology = conservative
+	    }
+	    scaled_consciousness = {
+		   factor = 3
+		   ideology = market_liberal
+	    }
+	    scaled_militancy = {
+		    factor = 3
+		    ideology = market_liberal
+	    }		
+	    scaled_consciousness = {
+		    factor = 6
+		    ideology = paternal
+	    }
+	    scaled_militancy = {
+		    factor = 6
+		    ideology = paternal
+	    }	
+	    scaled_consciousness = {
+		    factor = 5
+		    ideology = reactionary
+	    }
+	    scaled_militancy = {
+		    factor = 5
+		    ideology = reactionary
+	    }	
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = anarcho_liberal
+	    }
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = anarcho_liberal
+	    }				
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = liberal
+	    }
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = liberal
+	    }	
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = socialist
+	    }	
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = socialist
+	    }
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = communist
+	    }	
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = communist
+	    }
+	    }
+		ai_chance = {
+			factor = 30
+		}
+	}
+}
+
+#####################################
+### Jeanist Fascism - BRG Version ###
+#####################################
+
+### You toppled the paternalists - There was going to be a result of this.
+
+country_event = {
+	id = 6530920
+	title = "BRG420.T"
+	desc = "BRG420.D"
+	picture = "ligue_BRG"
+	
+	trigger = { 
+	   tag = BRG
+	   has_country_flag = blocked_from_FRK
+	   has_global_flag = german_phoenix
+	   is_ideology_enabled = fascist
+	   NOT = { has_country_flag = Jeanist_league }
+	}
+	
+	mean_time_to_happen = { 
+	   months = 1 
+	}
+	
+	option = { 
+	name = "BRG420.A"
+	set_country_flag = Jeanist_league
+	any_pop = { 
+		limit = { 
+		strata = rich
+		is_primary_culture = yes 
+			}
+		ideology = {
+					value = fascist
+					factor = 0.30
+				}
+		scaled_militancy = {
+					ideology = fascist
+					factor = 2
+				}
+		}
+	any_pop = { 
+		limit = { 
+		is_primary_culture = yes 
+		OR = { 
+			type = officers
+			type = soldiers
+			}
+		}
+		ideology = {
+					value = fascist
+					factor = 0.2
+			}
+		scaled_militancy = {
+					ideology = fascist
+					factor = 3
+				}
+		}
+	any_pop = { 
+		limit = { 
+		is_primary_culture = yes 
+		}
+		ideology = {
+					value = fascist
+					factor = 0.05
+			}
+		scaled_militancy = {
+					ideology = fascist
+					factor = 2
+				}
+		}
+	}
+}
+
+############################################
+#### The Lotharingian Counterrevolution ####
+############################################
+
+### Successful Burgundy ###
+### Either the Dual Monarchy does not exist or they hold CFR as a puppet ###
+
+### This is the only real way to maintain a moderate monarchy as it blocks the Republican Event chain ###
+
+country_event = {
+	id = 6530922
+	title = "BRG421.T"
+	desc = "BRG421.D"
+	picture = "leopold_von_hohenzollern"
+	
+	trigger = { 
+	   tag = BRG
+	   has_country_flag = Jeanist_league
+	   OR = {
+	      NOT = { exists = DUA }
+		  CFR = { vassal_of = THIS }
+		  owns = 564
+	   }
+	   NOT = { has_country_flag = the_counterrevolution_BRG }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	# The Duke of Berg overthrows the Government and crowns himself King through the efforts of Fascists.	
+	# The Worst Timeline has begun.
+	
+	option = { 
+	name = "BRG421.A"
+	   set_country_flag = jeanist_league_triggered
+	    set_country_flag = the_counterrevolution_BRG
+	    clr_country_flag = blocked_from_FRK
+	    ruling_party_ideology = fascist
+	    add_country_modifier = {
+		    name = the_terror
+		    duration = 1095
+	    }
+	    any_pop = { 
+	          militancy = -3
+		      ideology = { factor = -0.1 value = conservative } 
+	          ideology = { factor = -0.1 value = reactionary } 
+	          ideology = { factor = 0.2 value = fascist } 
+	    }
+	    government = fascist_monarchy
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = underground_parties
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    set_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    set_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+		ai_chance = {
+			factor = 75
+		}
+	}
+	
+	# They are fought back and the constitution is completely rewritten to effectively ban them and the Jeanists along with adding a fully functional democracy. Change tag to PBG
+	
+	option = { 
+	name = "BRG421.B"
+	    prestige = -5	
+		set_country_flag = jeanist_league_triggered
+	    set_country_flag = the_counterrevolution_BRG
+	    clr_country_flag = blocked_from_FRK		
+		#remove_country_modifier = regency_government
+		clr_country_flag = going_to_be_king_BRG
+		random_owned = {
+			limit = {
+			   owner = { NOT = { child_labor = child_labor_illegal } }
+			}
+			owner = { social_reform = child_labor_illegal }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { school_reforms = good_schools } }
+			}
+			owner = { social_reform = good_schools }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { pensions = good_pensions } }
+			}
+			owner = { social_reform = good_pensions }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { work_hours = eight_hours } }
+			}
+			owner = { social_reform = eight_hours }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { health_care = good_health_care } }
+			}
+			owner = { social_reform = good_health_care }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { slavery = no_slavery } }
+			}
+			owner = { political_reform = no_slavery }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { debt_law = bankruptcy } }
+			}
+			owner = { political_reform = bankruptcy }
+		}
+	    any_pop = { 
+	        limit = { 
+	          location = { is_core = NET }
+	        }
 			ideology = { factor = -0.15 value = market_liberal }
             ideology = { factor = 0.15 value = socialist } 			
 	    } 
@@ -2246,19 +2702,535 @@ country_event = {
 		    factor = -9
 		    ideology = communist
 	    }
-	    }
+		}
+		change_tag = PBG
 		ai_chance = {
-			factor = 30
+			factor = 15
+		}
+	}
+	
+	## The military chucks a tantrum and overthrows the government effectively ending the Burgundian Monarchy and establishes a military dictatorship
+	
+	option = { 
+	name = "BRG421.C"
+	    prestige = -10
+		set_country_flag = jeanist_league_triggered
+	    set_country_flag = the_counterrevolution_BRG
+	    clr_country_flag = blocked_from_FRK
+		#remove_country_modifier = regency_government
+	    badboy = 1
+	    government = presidential_dictatorship
+	    ruling_party_ideology = paternal
+	    political_reform = totalitarianism
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+        clr_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	
+	    any_pop = { limit = { pop_majority_ideology = communist } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = socialist } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = separatist } reduce_pop = 0.99 }
+	
+	    any_pop = { 
+		limit = {
+			OR = {
+				social_movement = yes
+				political_movement = yes
+				}
+		} 
+		militancy = -7
+		random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+	    }	
+	
+	    any_pop = {
+		limit = {
+			OR = { type = soldiers type = officers }
+			NOT = { pop_majority_ideology = paternal }
+		}
+		militancy = -9 ideology = { factor = 0.35 value = paternal }
+	    }
+	    any_pop = { ideology = { factor = 0.01 value = paternal } }
+	
+	    scaled_consciousness = {
+		factor = -8
+		ideology = conservative
+	    }
+	    scaled_militancy = {
+		factor = -8
+		ideology = conservative
+	    }
+	
+	    scaled_consciousness = {
+		factor = -10
+		ideology = paternal
+	    }
+	    scaled_militancy = {
+		factor = -10
+		ideology = paternal
+	    }
+	
+	    scaled_consciousness = {
+		factor = -10
+		ideology = reactionary
+	    }
+	    scaled_militancy = {
+		factor = -10
+		ideology = reactionary
+	    }
+	
+	    scaled_consciousness = {
+		factor = 9
+		ideology = anarcho_liberal
+	    }
+	    scaled_militancy = {
+		factor = 9
+		ideology = anarcho_liberal
+	    }
+	
+	    scaled_consciousness = {
+		factor = 9
+		ideology = communist
+	    }
+		scaled_militancy = {
+		factor = 9
+		ideology = communist
+	    }
+				
+	     scaled_consciousness = {
+		factor = 7
+		ideology = liberal
+	    }
+	    scaled_militancy = {
+		factor = 7
+		ideology = liberal
+	    }
+	
+	    scaled_consciousness = {
+		factor = 7
+		ideology = socialist
+	    }	
+	    scaled_militancy = {
+		factor = 7
+		ideology = socialist
+	    }
+		
+		change_tag = PBG
+		ai_chance = {
+			factor = 10
 		}
 	}
 }
 
-#######################
-### Jeanist Fascism ###
-#######################
+
+### Failure Burgundy ###
+
+### The Coup WILL fail but the aftermath will either result in constitutional changes or the military overthrowing the government ####
 
 country_event = {
-	id = 6530920
+	id = 6530923
+	title = "BRG422.T"
+	desc = "BRG422.D"
+	picture = "leopold_von_hohenzollern"
+	
+	trigger = { 
+	   tag = BRG
+	   has_country_flag = Jeanist_league
+	   exists = DUA
+	   NOT = { CFR = { vassal_of = THIS } }
+	   NOT = { owns = 564 }
+	   NOT = { has_country_flag = the_counterrevolution_BRG }
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	# They are fought back and the constitution is completely rewritten to effectively ban them and the Jeanists along with adding a fully functional democracy. Change tag to PBG
+	
+	option = { 
+	name = "BRG422.A"
+	    prestige = -5	
+		set_country_flag = jeanist_league_triggered
+	    set_country_flag = the_counterrevolution_BRG
+	    clr_country_flag = blocked_from_FRK		
+		#remove_country_modifier = regency_government
+		clr_country_flag = going_to_be_king_BRG
+		random_owned = {
+			limit = {
+			   owner = { NOT = { child_labor = child_labor_illegal } }
+			}
+			owner = { social_reform = child_labor_illegal }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { school_reforms = good_schools } }
+			}
+			owner = { social_reform = good_schools }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { pensions = good_pensions } }
+			}
+			owner = { social_reform = good_pensions }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { work_hours = eight_hours } }
+			}
+			owner = { social_reform = eight_hours }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { health_care = good_health_care } }
+			}
+			owner = { social_reform = good_health_care }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { slavery = no_slavery } }
+			}
+			owner = { political_reform = no_slavery }
+		}
+		random_owned = {
+			limit = {
+			   owner = { NOT = { debt_law = bankruptcy } }
+			}
+			owner = { political_reform = bankruptcy }
+		}
+	    any_pop = { 
+	        limit = { 
+	          location = { is_core = NET }
+	        }
+			ideology = { factor = -0.15 value = market_liberal }
+            ideology = { factor = 0.15 value = socialist } 			
+	    } 
+	    any_pop = { 
+	        limit = { 
+	          location = { is_core = BRG }
+			  NOT = { location = { is_core = NET } }
+	        }
+			ideology = { factor = -0.15 value = market_liberal }
+            ideology = { factor = 0.15 value = socialist } 	
+	    }
+        ideology = { factor = -0.05 value = communist }  	    
+	    upper_house = {
+			   ideology = socialist
+			   value = 0.5
+	    }
+		set_country_flag = show_trials_possible 
+	    government = hms_government
+		ruling_party_ideology = socialist
+	    political_reform = universal_voting
+	    political_reform = population_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = all_trade_unions
+	    political_reform = secret_ballots
+	    political_reform = one_year_draft
+        political_reform = proportional_representation
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+	    clr_country_flag = tory_election_win
+	    set_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+        clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    set_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+        clr_country_flag = market_liberal_party_in_power
+	    set_country_flag = regency_is_now_possible
+	    election = yes
+	    any_pop = {
+	    scaled_consciousness = {
+		   factor = 3
+		   ideology = conservative
+	    }
+	    scaled_militancy = {
+		    factor = 3
+		    ideology = conservative
+	    }
+	    scaled_consciousness = {
+		   factor = 3
+		   ideology = market_liberal
+	    }
+	    scaled_militancy = {
+		    factor = 3
+		    ideology = market_liberal
+	    }		
+	    scaled_consciousness = {
+		    factor = 6
+		    ideology = paternal
+	    }
+	    scaled_militancy = {
+		    factor = 6
+		    ideology = paternal
+	    }	
+	    scaled_consciousness = {
+		    factor = 5
+		    ideology = reactionary
+	    }
+	    scaled_militancy = {
+		    factor = 5
+		    ideology = reactionary
+	    }	
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = anarcho_liberal
+	    }
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = anarcho_liberal
+	    }				
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = liberal
+	    }
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = liberal
+	    }	
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = socialist
+	    }	
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = socialist
+	    }
+	    scaled_consciousness = {
+		    factor = -9
+		    ideology = communist
+	    }	
+	    scaled_militancy = {
+		    factor = -9
+		    ideology = communist
+	    }
+		}
+		
+		change_tag = PBG
+		ai_chance = {
+			factor = 75
+		}
+	}
+	
+	## The military chucks a tantrum and overthrows the government effectively ending the Burgundian Monarchy and establishes a totalitarian military dictatorship
+	
+	option = { 
+	name = "BRG422.B"
+	    prestige = -10
+		set_country_flag = jeanist_league_triggered
+	    set_country_flag = the_counterrevolution_BRG
+	    clr_country_flag = blocked_from_FRK
+		#remove_country_modifier = regency_government
+	    badboy = 1
+	    government = presidential_dictatorship
+	    ruling_party_ideology = paternal
+	    political_reform = totalitarianism
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = four_year_draft
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+        clr_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	
+	    any_pop = { limit = { pop_majority_ideology = communist } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = anarcho_liberal } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = liberal } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = socialist } reduce_pop = 0.98 }
+	    any_pop = { limit = { pop_majority_ideology = separatist } reduce_pop = 0.99 }
+	
+	    any_pop = { 
+		limit = {
+			OR = {
+				social_movement = yes
+				political_movement = yes
+				}
+		} 
+		militancy = -7
+		random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+	    }	
+	
+	    any_pop = {
+		limit = {
+			OR = { type = soldiers type = officers }
+			NOT = { pop_majority_ideology = paternal }
+		}
+		militancy = -9 ideology = { factor = 0.35 value = paternal }
+	    }
+	    any_pop = { ideology = { factor = 0.01 value = paternal } }
+	
+	    scaled_consciousness = {
+		factor = -8
+		ideology = conservative
+	    }
+	    scaled_militancy = {
+		factor = -8
+		ideology = conservative
+	    }
+	
+	    scaled_consciousness = {
+		factor = -10
+		ideology = paternal
+	    }
+	    scaled_militancy = {
+		factor = -10
+		ideology = paternal
+	    }
+	
+	    scaled_consciousness = {
+		factor = -10
+		ideology = reactionary
+	    }
+	    scaled_militancy = {
+		factor = -10
+		ideology = reactionary
+	    }
+	
+	    scaled_consciousness = {
+		factor = 9
+		ideology = anarcho_liberal
+	    }
+	    scaled_militancy = {
+		factor = 9
+		ideology = anarcho_liberal
+	    }
+	
+	    scaled_consciousness = {
+		factor = 9
+		ideology = communist
+	    }
+		scaled_militancy = {
+		factor = 9
+		ideology = communist
+	    }
+				
+	    scaled_consciousness = {
+		factor = 7
+		ideology = liberal
+	    }
+	    scaled_militancy = {
+		factor = 7
+		ideology = liberal
+	    }
+	
+	    scaled_consciousness = {
+		factor = 7
+		ideology = socialist
+	    }	
+	    scaled_militancy = {
+		factor = 7
+		ideology = socialist
+	    }
+		
+		change_tag = PBG
+		ai_chance = {
+			factor = 25
+		}
+	}
+}
+
+#####################################
+### Jeanist Fascism - PBG Version ###
+#####################################
+
+country_event = {
+	id = 6530921
 	title = "BRG42.T"
 	desc = "BRG42.D"
 	picture = "ligue_BRG"
@@ -2339,6 +3311,7 @@ country_event = {
 	NOT = { government = presidential_dictatorship }
 	NOT = { government = fascist_dictatorship }
 	NOT = { government = fascist_monarchy }
+	NOT = { has_country_flag = jeanist_league_triggered }
 	}
 	
 	fire_only_once = yes 
@@ -2350,6 +3323,8 @@ country_event = {
 	
 	option = { 
 	name = "BRG43.A"
+	set_country_flag = jeanist_league_triggered
+	ruling_party_ideology = fascist
 	government = fascist_monarchy
 	any_pop = { 
 	ideology = {
@@ -2397,6 +3372,7 @@ country_event = {
 	
 	option = { 
 	name = "BRG43.B"
+	set_country_flag = jeanist_league_triggered
 	prestige = -3
 	any_pop = { 
 		militancy = 1 
@@ -2411,6 +3387,407 @@ country_event = {
 		}
 	}
 	
+}
+
+######################################################
+#### The Outcomes to the Dutch and Rhine Problems ####
+######################################################
+
+### This should be improved after release to not be so basic ###
+
+### Dutch and Frisian Problems ###
+
+### The Frisian Awakening - After being slightly ignored in the Dutch Potato Famine there has been an awakening in the Frisian Lands.
+
+country_event = {
+	id = 6531090
+	title = "BRG25.T"
+	desc = "BRG25.D"
+	picture = "famine"
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		year = 1871
+		any_owned_province = { is_core = DFR }
+		NOT = { has_global_flag = dutch_relief_two }
+		NOT = { has_country_flag = dutch_famine_outcome }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+	name = "BRG25.A" 
+	    clr_global_flag = dutch_relief
+		set_country_flag = dutch_famine_outcome
+		set_country_flag = TRAPPED_DFR
+		DFR = {
+		   all_core = { add_core = GER }
+		}
+		any_owned = { 
+			limit = { is_core = DFR }
+			add_core = GER
+		    add_province_modifier = { 
+			    name = nationalist_agitation
+			    duration = 100
+		    }
+	   }
+	}
+}
+
+### The Dutch Awakening - You absolutely screwed up.
+
+country_event = {
+	id = 6531100
+	title = "BRG26.T"
+	desc = "BRG26.D"
+	picture = "election"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		year = 1871
+		any_owned_province = { is_core = NET }
+		NOT = { has_global_flag = dutch_relief_two }
+		NOT = { has_global_flag = dutch_relief }
+		NOT = { has_country_flag = dutch_famine_outcome }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+	name = "BRG26.A" 
+	    set_country_flag = dutch_famine_outcome
+		set_country_flag = TRAPPED_DIE
+		NET = {
+		   all_core = { add_core = DIE }
+		}
+		any_owned = { 
+			limit = { is_core = NET }
+			add_core = DIE
+		    add_province_modifier = { 
+			    name = nationalist_agitation
+			    duration = 100
+		    }
+	   }
+	}
+}
+
+### The Frisian Uprising ####
+
+### Cores removed on DFR and Frisian added to german accepted cultures ###
+
+country_event = {
+	id = 6531101
+	title = "BRG27.T"
+	desc = "BRG27.D"
+	picture = "prussian_constitution"
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		any_owned_province = { is_core = DFR }
+		OR = {
+		  war_with = GER
+		  war_with = GCF 
+		}
+		has_country_flag = in_great_war
+		has_country_flag = TRAPPED_DFR
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+	name = "BRG27.A" 
+	    clr_country_flag = TRAPPED_DFR
+		set_country_flag = DFR_betrayal
+	    remove_accepted_culture = frisian
+		DFR = { all_core = { remove_core = THIS } }		
+		any_owned = { 
+			limit = { is_core = DFR }
+		    add_province_modifier = { 
+			    name = nationalist_agitation
+			    duration = 720
+		    }
+	   }
+	}
+}
+
+### The Dutch Uprising ####
+
+### Cores removed on DIE and Dutch removed from accepted cultures ###
+
+country_event = {
+	id = 6531102
+	title = "BRG28.T"
+	desc = "BRG28.D"
+	picture = "prussian_constitution"
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		any_owned_province = { is_core = DIE }
+		OR = {
+		  war_with = GER
+		  war_with = GCF 
+		}
+		has_country_flag = in_great_war
+		has_country_flag = TRAPPED_DIE
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+	name = "BRG27.A" 
+	    clr_country_flag = TRAPPED_DIE
+		set_country_flag = DIE_betrayal
+	    remove_accepted_culture = dutch
+		DIE = { all_core = { remove_core = THIS } }		
+		any_owned = { 
+			limit = { is_core = DIE }
+		    add_province_modifier = { 
+			    name = nationalist_agitation
+			    duration = 720
+		    }
+	   }
+	}
+}
+
+### Rhine Problems ###
+
+### The Compromised Confederation - CFR is effectively compromised by agitators due to your refusal to fully the support the Rhine during the Hollowing
+
+country_event = {
+	id = 6531103
+	title = "BRG29.T"
+	desc = "BRG29.D"
+	picture = "famine"
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		year = 1871
+		CFR = { vassal_of = THIS }
+		NOT = { has_global_flag = rhine_relief_two }
+		NOT = { has_country_flag = rhine_famine_outcome }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+	name = "BRG29.A" 
+	    relation = { who = CFR value = -50 }
+	    clr_global_flag = rhine_relief
+		set_country_flag = rhine_famine_outcome
+		set_country_flag = TRAPPED_CFR
+	}
+}
+
+### Rhineish Congress in Colonge - The Burgundian Rhineland is starting to feel pretty hot right about now.
+
+country_event = {
+	id = 6531104
+	title = "BRG30.T"
+	desc = "BRG30.D"
+	picture = "famine"
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		year = 1871
+		any_owned_province = { is_core = RHI }
+		NOT = { has_global_flag = rhine_relief_two }
+		NOT = { has_global_flag = rhine_relief }
+		NOT = { has_country_flag = rhine_famine_outcome }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = {
+	name = "BRG30.A" 
+	    set_country_flag = rhine_famine_outcome
+		set_country_flag = TRAPPED_RHI
+		any_owned = { 
+			limit = { is_core = RHI }
+		    add_province_modifier = { 
+			    name = nationalist_agitation
+			    duration = 100
+		    }
+	   }
+	}
+}
+
+### The Rhinish Revolution - CFR Only ###
+
+### CFR to GER/GCF or we have lost control of the Rhine ###
+
+country_event = {
+	id = 6531105
+	title = "BRG31.T"
+	desc = "BRG31.D"
+	picture = "prussian_constitution"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		OR = {
+		   CFR = { vassal_of = THIS }
+		   owns = 564
+		}
+		OR = {
+		  war_with = GER
+		  war_with = GCF 
+		}
+		has_country_flag = in_great_war
+		has_country_flag = TRAPPED_CFR
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+	name = "BRG31.A" 
+	    any_country = {
+		   limit = {
+		      tag = GER
+			  exists = yes
+		   }
+		   inherit = CFR
+		}
+	    any_country = {
+		   limit = {
+		      tag = GCF
+			  exists = yes
+		   }
+		   inherit = CFR
+		}
+		any_owned = {
+		   limit = {
+		      is_core = CFR
+			  is_core = GCF
+		   }
+		   secede_province = GCF
+		}
+		any_owned = {
+		   limit = {
+		      is_core = CFR
+		      is_core = GER
+		   }
+		   secede_province = GER
+		}
+	    clr_country_flag = TRAPPED_CFR
+		set_country_flag = CFR_betrayal
+	}
+}
+
+### The Rhinish Revolution - Total Failure - Anvers is now at play you idiot. ####
+
+### CFR and RHI to GER/GCF ###
+
+country_event = {
+	id = 6531106
+	title = "BRG32.T"
+	desc = "BRG32.D"
+	picture = "prussian_constitution"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG	
+		   tag = PBG
+		   tag = FRK
+		}
+		OR = {
+		  war_with = GER
+		  war_with = GCF 
+		}
+		any_owned_province = { is_core = RHI }
+		has_country_flag = in_great_war
+		has_country_flag = TRAPPED_RHI
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+	name = "BRG32.A" 
+	    any_country = {
+		   limit = {
+		      tag = GER
+			  exists = yes
+		   }
+		   inherit = CFR
+		}
+	    any_country = {
+		   limit = {
+		      tag = GCF
+			  exists = yes
+		   }
+		   inherit = CFR
+		}
+		any_owned = {
+		   limit = {
+			  is_core = GCF
+		   }
+		   secede_province = GCF
+		}
+		any_owned = {
+		   limit = {
+		      is_core = GER
+		   }
+		   secede_province = GER
+		}
+	    clr_country_flag = TRAPPED_RHI
+		set_country_flag = RHI_betrayal
+	}
 }
 
 ### The End of the Burgundian Monarchy - Rebellion ###
@@ -2823,6 +4200,98 @@ country_event = {
 	}
 }
 
+### The Siege of Paris - It smells like 1871 around here ###
+
+country_event = {
+	id = 6531160
+	title = "BRG490.T"
+	desc = "BRG490.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "6531160.A"
+		prestige = -25
+		war_exhaustion = 25
+		425 = {
+			any_pop = {
+				reduce_pop = 0.9
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
+### The Siege of London - Napoleon would be proud ###
+
+country_event = {
+	id = 6531161
+	title = "BRG491.T"
+	desc = "BRG491.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "6531161.A"
+		prestige = -25
+		war_exhaustion = 25
+		300 = {
+			any_pop = {
+				reduce_pop = 0.9
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
+### The Siege of Anvers - Dreams of Francia are falling down... ###
+
+country_event = {
+	id = 6531162
+	title = "BRG492.T"
+	desc = "BRG492.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "6531162.A"
+		prestige = -25
+		war_exhaustion = 25
+		390 = {
+			any_pop = {
+				reduce_pop = 0.9
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
+### The Siege of Amsterdam - No Dutch were harmed in the making of this film ###
+
+country_event = {
+	id = 6531163
+	title = "BRG493.T"
+	desc = "BRG493.D"
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "6531163.A"
+		prestige = -25
+		war_exhaustion = 25
+		375 = {
+			any_pop = {
+				reduce_pop = 0.9
+			}
+			add_province_modifier = { name = war_torn duration = 2410 } 
+		}
+	}
+}
+
 ### BRG Victory - Pact of Plombieres ###
 
 country_event = {
@@ -2841,7 +4310,14 @@ country_event = {
 		   BRG = { owns = 406 }
 		}
 		NOT = { war_with = BRG }
-		has_global_flag = THE_FRENCH_FOLLY		
+		NOT = {
+		   AND = {
+		      has_global_flag = paris_burning
+			  has_global_flag = london_burning
+		   }
+		}
+		has_global_flag = THE_FRENCH_FOLLY	
+            		
 	}
 	
 	mean_time_to_happen = {
@@ -2858,7 +4334,11 @@ country_event = {
        annex_to = DUA
     }	
 	war_exhaustion = -50
-	clr_global_flag = THE_FRENCH_FOLLY	
+	clr_global_flag = THE_FRENCH_FOLLY
+	clr_global_flag = paris_burning
+	clr_global_flag = london_burning	
+	clr_global_flag = anvers_burning
+	clr_global_flag = amsterdam_burning
 	clr_country_flag = custom_treaty_loser
 	set_country_flag = PLOMBLERES
 	BRG = {
@@ -2874,16 +4354,7 @@ country_event = {
     FRA_467 = { add_core = BRG }
 	403 = { remove_core = DUA }
 	408 = { remove_core = DUA }
-	406 = { remove_core = DUA }	   
-    any_country = {
-       limit = {
-         tag = GNV
-		 exists = yes
-         owns = 451
-       }
-       remove_country_modifier = neutrality
-       annex_to = BRG
-    }	   
+	406 = { remove_core = DUA }	   	   
 	any_owned = {
 	limit = {
 	   is_core = BRG
@@ -2961,9 +4432,108 @@ country_event = {
 }
 
 
-### BRG Total Victory - The Siege of Paris ###
+### BRG Total Victory - The Treaty of Paris ###
 
-#653118
+#### You know that infamous moment where the German Empire was proclaimed in the hall of mirrors? Well, its that but worse.
+
+country_event = {
+	id = 653118
+	title = "BRG500.T"
+	desc = "BRG500.D"
+	picture = "ligue_BRG"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes	
+		tag = DUA
+		OR = {
+		   has_country_flag = custom_treaty_loser
+		   BRG = { owns = 406 }
+		}
+		NOT = { war_with = BRG }
+		has_global_flag = THE_FRENCH_FOLLY	
+	    has_global_flag = paris_burning
+		has_global_flag = london_burning		
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "653118.A" 
+	capital = 300
+    any_country = {
+       limit = {
+         tag = AUV
+		 exists = yes
+       }
+       annex_to = DUA
+    }	
+	war_exhaustion = -50
+	clr_global_flag = THE_FRENCH_FOLLY
+	clr_global_flag = paris_burning
+	clr_global_flag = london_burning	
+	clr_global_flag = anvers_burning
+	clr_global_flag = amsterdam_burning
+	clr_country_flag = custom_treaty_loser
+	set_country_flag = PLOMBLERES
+	BRG = {
+	   prestige = 40
+	   war_exhaustion = -50
+	   set_country_flag = lothaaringia
+	   set_country_flag = fizzywine	
+	}
+	402 = { add_core = BRG }	
+	3270 = { add_core = BRG }
+	FRA_404 = { add_core = BRG }	
+	FRA_451 = { add_core = BRG }	
+    FRA_467 = { add_core = BRG }
+	403 = { remove_core = DUA }
+	408 = { remove_core = DUA }
+	406 = { remove_core = DUA }	   	   
+	any_owned = {
+	limit = {
+	   is_core = BRG
+	   NOT = { is_core = CHA }
+	}
+	remove_core = DUA
+	secede_province = BRG
+	}
+	any_owned = {
+	limit = {
+	   is_core = CHA
+	}
+	remove_core = DUA
+	secede_province = BRG
+	}
+	any_owned = {
+	limit = {
+	   is_core = FRA
+	}
+	secede_province = BRG
+	}
+	any_owned = {
+	limit = {
+	   is_core = ANF
+	}
+	secede_province = BRG
+	}
+	any_owned = {
+	limit = {
+	   is_core = BRT
+	}
+	secede_province = BRG
+	}
+	any_owned = {
+	limit = {
+	   is_core = OCC
+	}
+	secede_province = OCC
+	}
+	}
+}
 
 ### DUA Victory - The Treaty of Neuchatel ###
 
@@ -2983,22 +4553,37 @@ country_event = {
 		   has_country_flag = custom_treaty_loser
 		}
 		NOT = { war_with = DUA }		
-		has_global_flag = THE_FRENCH_FOLLY		
+		has_global_flag = THE_FRENCH_FOLLY	
+        NOT = {
+           AND = {
+	          has_global_flag = anvers_burning
+		      has_global_flag = amsterdam_burning	
+           }
+        }		   
 	}
 	
 	mean_time_to_happen = {
 		days = 1
 	}
 	
-	immediate = {
-	   DUA = { set_country_flag = pale_calais }
-    }	
-
 	option = {
 	name = "653119.A" 
+	   any_country = {
+	      limit = {
+		     tag = DUA
+		  }
+		  set_country_flag = pale_calais
+		  set_country_flag = ITALY_OPEN
+		  war_exhaustion = -50
+		  prestige = 30
+		  country_event = { id = 650360 days = 1 }
+	   }
 	   war_exhaustion = -50
 	   FRA_399 = { add_core = DUA remove_core = BRG }
-       BOG = { all_core = { remove_core = BRG } }	
+       428 = { remove_core = BRG }
+       431 = { remove_core = BRG }
+       429 = { remove_core = BRG }
+       407 = { remove_core = BRG }
 	   any_owned = {
 	   limit = {
 	      is_core = BOG
@@ -3013,14 +4598,83 @@ country_event = {
 	   }
 	   clr_country_flag = custom_treaty_loser
 	   clr_global_flag = THE_FRENCH_FOLLY	
-	   set_country_flag = NEUCHATEL	
-	   DUA = { set_country_flag = ITALY_OPEN war_exhaustion = -50 prestige = 30 country_event = { id = 650360 days = 1 } }		
+	   clr_global_flag = paris_burning
+	   clr_global_flag = london_burning	
+	   clr_global_flag = anvers_burning
+	   clr_global_flag = amsterdam_burning
+	   set_country_flag = NEUCHATEL			
 	}
 }
 
-### DUA Total Victory - The Siege of Anvers ###
+### DUA Total Victory - The Treaty of Anvers ###
 
-#653120
+country_event = {
+	id = 653120
+	title = "BRG53.T"
+	desc = "BRG53.D"
+	picture = "ligue_BRG"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+		tag = BRG
+		OR = {
+		   is_disarmed = yes
+		   has_country_flag = custom_treaty_loser
+		}
+		NOT = { war_with = DUA }		
+		has_global_flag = THE_FRENCH_FOLLY	
+        AND = {
+	       has_global_flag = anvers_burning
+		   has_global_flag = amsterdam_burning	
+        }		   
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+	name = "653120.A" 
+	   any_country = {
+	      limit = {
+		     tag = DUA
+		  }
+		  set_country_flag = pale_calais
+		  set_country_flag = ITALY_OPEN
+		  war_exhaustion = -50
+		  prestige = 30
+		  country_event = { id = 650360 days = 1 }
+	   }
+	   war_exhaustion = -50
+	   FRA_399 = { add_core = DUA remove_core = BRG }
+       428 = { remove_core = BRG }
+       431 = { remove_core = BRG }
+       429 = { remove_core = BRG }
+       407 = { remove_core = BRG }
+	   any_owned = {
+	   limit = {
+	      is_core = BOG
+	   }
+	   secede_province = DUA
+	   }
+	   any_owned = {
+	   limit = {
+	      is_core = DUA
+	   }
+	   secede_province = DUA
+	   }
+	   clr_country_flag = custom_treaty_loser
+	   clr_global_flag = THE_FRENCH_FOLLY	
+	   clr_global_flag = paris_burning
+	   clr_global_flag = london_burning	
+	   clr_global_flag = anvers_burning
+	   clr_global_flag = amsterdam_burning
+	   set_country_flag = NEUCHATEL		
+       country_event = 653111	   
+	}
+}
 
 ### White Peace - The Status Quo Eternal ###
 
@@ -3052,303 +4706,5 @@ country_event = {
 	DUA = { set_country_flag = ITALY_OPEN war_exhaustion = -50 prestige = -10 }
 	war_exhaustion = -50
 	set_country_flag = BRG_CDE	
-	}
-}
-
-### PBG Alliances ###
-
-country_event = {
-	id = 653122
-	title = "BRG55.T"
-	desc = "BRG55.D"
-	picture = "Burgundian_Cross"
-
-	is_triggered_only = yes
-	
-	option = {
-	name = "653122.A" 
-	PBG = { diplomatic_influence = { who = THIS value = 400 } relation  = { who = THIS value = 400 } clr_country_flag = alliance_check }
-	create_alliance = PBG
-	ai_chance = { 
-	   factor = 100
-	   }
-	}
-	
-	option = {
-	name = "653122.B" 
-	PBG = { relation  = { who = THIS value = -200 } clr_country_flag = alliance_check }
-	set_country_flag = PDA_PBG
-	ai_chance = { 
-	   factor = 0
-	   }	
-	}
-}
-
-#### PBG's Road to Republic Chain ###
-
-country_event = {
-	id = 653123 #They have Maximilian, good for them
-	title = "BRG56.T"
-	desc = "BRG56.D"
-	picture = "maximilian_burgundy"
-
-	is_triggered_only = yes
-	
-	option = { 
-	name = "BRG56.A"
-	any_pop = { 
-	scaled_consciousness = {
-				ideology = reactionary
-				factor = -2
-			}
-	scaled_consciousness = {
-				ideology = conservative
-				factor = -1
-			}
-	scaled_consciousness = {
-				ideology = liberal
-				factor = 2
-			}
-	scaled_consciousness = {
-				ideology = anarcho_liberal
-				factor = 3
-			}
-		}	
-	}	
-}
-
-country_event = {
-	id = 653124 #Maximilian and his CASTLES
-	title = "BRG57.T"
-	desc = "BRG57.D"
-	picture = "maximilian_burgundy"
-
-	trigger = { 
-	tag = PBG 
-	government = hms_government 
-	has_country_flag = PBG_road_to_Republic
-	year = 1875 
-	}
-	
-	mean_time_to_happen = { 
-	months = 50 
-	modifier = { 
-	factor = 0.01
-	year = 1880
-		}
-	}
-	
-	option = { 
-		name = "BRG57.A" #Divulge the cost to the Press
-		country_event = { id = 6531241 days = 10 }
-		set_country_flag = PBG_castles
-		ai_chance = {
-			factor = 25
-	    }
-	}	
-	
-	option = { 
-		name = "BRG57.A"
-		clr_country_flag = PBG_road_to_Republic
-		country_event = { id = 6531240 days = 365 }
-		ai_chance = {
-			factor = 75
-	    }
-	}
-}
-
-country_event = {
-	id = 6531240 #Maximilian completes his masterpiece
-	title = "BRG570.T"
-	desc = "BRG570.D"
-	picture = "rhapsody"
-
-	is_triggered_only = yes
-	
-	option = { 
-		name = "BRG570.A" #What the f..
-		prestige = 25
-		remove_country_modifier = PBG_castles
-		set_country_flag = PBG_castles
-		392 = {
-		   life_rating = 5
-		   add_province_modifier = {
-			   name = PBG_the_great_castle
-			   duration = -1
-		   }
-		}
-		any_pop = {
-			consciousness = 1
-			militancy = 1
-		}
-		country_event = { id = 6531241 days = 10 }
-	}	
-}
-
-country_event = {
-	id = 6531241 #Maximilian and his CASTLES - Press edition 
-	title = "BRG58.T"
-	desc = "BRG58.D"
-	picture = "news"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "BRG58.A"
-	remove_country_modifier = PBG_castles
-	any_pop = { 
-	limit = { literacy = 0.6 } 
-	ideology = { factor = -0.03 value = conservative }
-	ideology = { factor = -0.04 value = paternal }
-	ideology = { factor = 0.07 value = anarcho_liberal }
-		}
-	any_pop = { 
-	limit = { literacy = 0.5 type = soldiers } 
-	ideology = { factor = -0.03 value = conservative }
-	ideology = { factor = -0.04 value = paternal }
-	ideology = { factor = 0.08 value = anarcho_liberal }
-		}
-	any_pop = { 
-	limit = { literacy = 0.5 type = craftsmen } 
-	ideology = { factor = -0.03 value = conservative }
-	ideology = { factor = -0.04 value = paternal }
-	ideology = { factor = 0.03 value = anarcho_liberal }
-	ideology = { factor = 0.04 value = socialist }
-		}
-	}
-}
-
-country_event = {
-	id = 653125 #Jean of Holland and his Catholic fiancé - Press forces the government to take a stand
-	title = "BRG59.T"
-	desc = "BRG59.D"
-	picture = "actress"
-	
-	trigger = { 
-	   tag = PBG 
-	   government = hms_government 
-	   has_country_flag = PBG_road_to_Republic
-	   has_country_flag = PBG_castles
-	   year = 1888
-	}
-	
-	fire_only_once = yes 
-	
-	mean_time_to_happen = { 
-		months = 60
-		modifier = { 
-		factor = 0.01 
-		year = 1891 
-		}
-	}
-	
-	option = { 
-	   name = "BRG59.A"
-	   clr_country_flag = PBG_road_to_Republic
-	   country_event = { id = 653126 days = 20 } 
-		ai_chance = {
-			factor = 90
-	    }
-	}
-	
-	option = { 
-		name = "BRG59.B"
-		prestige = 5
-		clr_country_flag = PBG_road_to_Republic
-		ai_chance = {
-			factor = 10
-	    }
-	}
-}
-	
-country_event = {
-	id = 653126 #Jean of Holland flees abroad to marry and abdicates his rights to the throne
-	title = "BRG60.T"
-	desc = "BRG60.D"
-	picture = "PBGvictory"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "BRG60.A"
-	country_event = { id = 653127 days = 10 }
-	prestige = -1
-	any_pop = { 
-	scaled_militancy = { 
-				ideology = reactionary
-				factor = 2
-			}
-	scaled_militancy = { 
-				ideology = paternal
-				factor = 2
-			}
-	scaled_militancy = { 
-				ideology = conservative
-				factor = 1
-			}
-		}
-	}
-}
-
-	
-country_event = {
-	id = 653127 #Proclamation of the Republic
-	title = "BRG61.T"
-	desc = "BRG61.D"
-	picture = "Burgundian_Cross"
-	
-	major = yes 
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "BRG61.A"
-	set_country_flag = PBG_Francia
-	government = democracy 
-	prestige = 10
-	any_pop = { 
-	ideology = { factor = -0.02 value = paternal }
-	ideology = { factor = -0.01 value = conservative }
-	ideology = { factor = -0.01 value = reactionary }
-	ideology = { factor = 0.02 value = anarcho_liberal }
-	ideology = { factor = 0.01 value = socialist }
-	ideology = { factor = 0.01 value = liberal }
-		}
-	}
-}
-	
-country_event = {
-	id = 653128 #PBG has become a Republic through Revolution, cleanup event
-	title = "BRG62.T"
-	desc = "BRG62.D"
-	picture = "PBGvictory"
-	
-	trigger = { 
-	tag = PBG 
-	NOT = {
-	   OR = { 
-	      government = hms_government
-		  government = absolute_monarchy
-		  government = prussian_constitutionalism
-	   }
-    }	   
-	has_country_flag = PBG_road_to_Republic
-	}
-	
-	fire_only_once = yes 
-	
-	mean_time_to_happen = { 
-		months = 60
-		modifier = { 
-		factor = 0.01 
-		year = 1891 
-		}
-	}
-	
-	option = { 
-	name = "BRG62.A"
-	remove_country_modifier = PBG_castles
-	clr_country_flag = PBG_road_to_Republic
-	set_country_flag = PBG_Francia
 	}
 }

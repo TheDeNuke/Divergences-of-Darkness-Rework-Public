@@ -83,10 +83,108 @@ country_event = {
 	}
 }
 
+# Should we restore our Alliance? - Great Powers
+
+country_event = {
+		
+	id = 1919002
+    picture = "Burgundian_Cross"
+	
+	is_triggered_only = yes
+
+	title = "EVTNAME191915"
+	desc = "EVTDESC191915"
+
+	option = {
+		name = "EVTOPTA191915"
+        relation = { who = FROM value = 400 }
+		create_alliance = FROM
+		any_country = {
+		   limit = {
+		      is_greater_power = yes
+			  alliance_with = THIS
+		   }
+		   relation = { who = THIS value = -50 }
+		   leave_alliance = THIS
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				OR = {
+				  tag = ARI
+				  tag = SCA
+				  tag = PRV
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB191915"
+        prestige = 1
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+				   tag = ARI
+				   tag = SCA
+				   tag = PRV
+				}
+			}
+		}
+	}
+}
+
+# Should we restore our Alliance? - Others
+
+country_event = {
+		
+	id = 1919003
+    picture = "Burgundian_Cross"
+	
+	is_triggered_only = yes
+
+	title = "EVTNAME191916"
+	desc = "EVTDESC191916"
+
+	option = {
+		name = "EVTOPTA191916"
+        FROM = {
+		   diplomatic_influence = { who = THIS value = 400 }
+		   relation = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB191916"
+        FROM = {
+		   relation = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {
+		name = "EVTOPTC191916"
+		prestige = 1
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
 #### Scandinavia Initial Chain ####
 
 country_event = {		
-	id = 191901 # Scandinavia Introduction
+	id = 191901 # Scandinavia Introduction - 
 	title = "SCACOL1.T"
 	desc = "SCACOL1.D"
 	picture = "danishgovernment"
@@ -134,6 +232,8 @@ country_event = {
 	desc = "SCACOL2.D"
 	picture = "news"
 	
+	fire_only_once = yes
+	
 	trigger = {
 		tag = SCA
 		year = 1837
@@ -173,6 +273,8 @@ country_event = {
 	desc = "SCACOL3.D"
 	picture = "stortinget"
 	
+	fire_only_once = yes
+	
 	trigger = {
 		tag = SCA
 		year = 1838
@@ -186,6 +288,8 @@ country_event = {
 	
 	option = {
 		name = "SCACOL3.A"
+		political_reform = landed_voting
+		political_reform = harassment
 		clr_country_flag = THREEKINGS
 		set_country_flag = THREECROWNS
 		any_pop = {
@@ -242,15 +346,185 @@ country_event = {
 }
 
 country_event = {		
-	id = 191904 # The Complete Collapse of the Unionister Party
+	id = 1919030 # The Abolition of Serfdom - Blame the Bremen Riots and the Reform Act
+	title = "SCACOLN3.T"
+	desc = "SCACOLN3.D"
+	picture = "stortinget"
+	
+	# Remember that this only abolishes serfom in all territories apart from LAT.
+	# Balter content may not currently exists but its advised that the localization team actually pays attention to this.
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		year = 1838
+		has_country_flag = THREECROWNS
+		has_country_flag = abolish_serfdom_SCA
+	}
+
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "SCACOLN3.A"
+		clr_country_flag = abolish_serfdom_SCA
+		set_country_flag = society_in_HOL
+		political_reform = peonage
+		clr_country_flag = THREEKINGS
+		set_country_flag = THREECROWNS
+        any_pop = {
+                limit = {
+                    OR = {
+                        type = farmers
+                        type = labourers
+                        type = serfs
+                    }
+                }
+                militancy = -2
+                consciousness = 1
+        }
+        any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = labourers
+                }
+                any_pop = { limit = { type = serfs } pop_type = labourers money = 1000 }
+        }
+        any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    has_pop_type = farmers
+                }
+                any_pop = { limit = { type = serfs } pop_type = farmers money = 1000 }
+        }
+        any_owned = {
+                limit = {
+                    has_pop_type = serfs
+                    NOT = { has_pop_type = farmers has_pop_type = labourers }
+                }
+                any_pop = { limit = { type = serfs } pop_type = farmers money = 1000 }
+        }
+		any_pop = {
+		    limit = {
+			   strata = rich
+			   location = { is_core = GER }
+			}
+		    ideology = { factor = -0.1 value = conservative } 
+		    ideology = { factor = 0.1 value = reactionary } 
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+		}
+		any_pop = {
+		    limit = {
+			   NOT = { strata = rich }
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -6
+			}
+		    ideology = { factor = -0.05 value = liberal } 
+		    ideology = { factor = 0.05 value = conservative } 
+		}
+	}
+}
+
+country_event = {		
+	id = 1919031 # Hermann Society in HOL
+	title = "SCACOLN4.T"
+	desc = "SCACOLN4.D"
+	picture = "german_radicals"
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = SCA
+		year = 1839
+	    has_country_flag = society_in_HOL
+	}
+
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "SCACOLN4.A"
+		clr_country_flag = society_in_HOL
+		any_pop = {
+		    limit = {
+			   strata = rich
+			   location = { is_core = GER }
+			}
+            consciousness = 1
+		    ideology = { factor = -0.05 value = conservative } 
+		    ideology = { factor = 0.05 value = liberal } 
+		}
+		any_pop = {
+		    limit = {
+			   NOT = { strata = rich }
+			   location = { is_core = GER }
+			}
+			consciousness = 1
+		    ideology = { factor = -0.05 value = liberal } 
+		    ideology = { factor = 0.05 value = conservative } 
+		}
+	}
+}
+
+####################################################################################
+######### THE MANY WAYS FOR THESE REACTIONARY CLOWNS TO COLLAPSE ###################
+####################################################################################
+
+### Lost to a bunch of Moose ####
+
+country_event = {		
+	id = 191904 # The Complete Collapse of the Unionists - Finland is either lost or on fire.
 	title = "SCACOL4.T"
 	desc = "SCACOL4.D"
 	picture = "Demonstration"
 	
+	fire_only_once = yes
+	
 	trigger = {
 		tag = SCA
-		year = 1850
-		has_global_flag = finnish_chain_trigger
+		has_country_modifier = unionster_dominance
+		OR = {
+		   AND = {
+		      is_our_vassal = FIN
+			  NOT = { has_country_flag = puppet_finland }
+		   }
+		   AND = {
+		      NOT = { is_our_vassal = FIN }
+			  exists = FIN
+		   }
+        }		   
         NOT = { has_country_flag = goodbye_unionist_party }
 	}
 
@@ -261,6 +535,7 @@ country_event = {
 	option = {
 		name = "SCACOL4.A"
 		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
 		remove_country_modifier = unionster_dominance
 	    add_country_modifier = {
 			name = SCA_political_chaos
@@ -283,18 +558,22 @@ country_event = {
             ideology = { factor = 0.10 value = liberal }		 
             ideology = { factor = 0.10 value = conservative }	
 		}
-		election = yes
 	}
 }
 
+### Lost control of your economy ####
+
 country_event = {		
-	id = 1919041 # The Complete Collapse of the Unionister Party
+	id = 1919041 # The Complete Collapse of the Unionists - Bankrupt
 	title = "SCACOL4A.T"
 	desc = "SCACOL4A.D"
 	picture = "Demonstration"
 	
+	fire_only_once = yes
+	
 	trigger = {
 		tag = SCA
+		has_country_modifier = unionster_dominance
 		OR = {
 			has_country_modifier = in_bankrupcy
 			has_country_modifier = generalised_debt_default
@@ -309,6 +588,7 @@ country_event = {
 	option = {
 		name = "SCACOL4A.A"
 		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
 		remove_country_modifier = unionster_dominance
 	    add_country_modifier = {
 			name = SCA_political_chaos
@@ -331,9 +611,519 @@ country_event = {
             ideology = { factor = 0.10 value = liberal }		 
             ideology = { factor = 0.10 value = conservative }	
 		}
-		election = yes
 	}
 }
+
+### Lost control of Pommerania ####
+
+country_event = {		
+	id = 1919042 # The Complete Collapse of the Unionists - Does not own Pommerania
+	title = "SCACOL4B.T"
+	desc = "SCACOL4B.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_modifier = unionster_dominance
+		NOT = { owns = 546 }
+		war = no
+        NOT = { has_country_flag = goodbye_unionist_party }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "SCACOL4B.A"
+		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
+		remove_country_modifier = unionster_dominance
+	    add_country_modifier = {
+			name = SCA_political_chaos
+			duration = 1460
+		}		
+        country_event = { id = 880130 days = 0 }
+		country_event = { id = 555032 days = 10 }
+		country_event = { id = 555042 days = 30 }
+		any_pop = {
+			militancy = 1
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = -0.20 value = reactionary } 	
+            ideology = { factor = 0.10 value = liberal }		 
+            ideology = { factor = 0.10 value = conservative }	
+		}
+	}
+}
+
+### Lost to a bunch of Colonial Militas ####
+
+country_event = {		
+	id = 1919043 # The Complete Collapse of the Unionists - Lost Vinland by losing the revolutionary war - Peacefully is allowed
+	title = "SCACOL4C.T"
+	desc = "SCACOL4C.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_modifier = unionster_dominance
+		truce_with = VIN
+		NOT = { is_our_vassal = VIN }
+		war = no
+        NOT = { has_country_flag = goodbye_unionist_party }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "SCACOL4C.A"
+		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
+		remove_country_modifier = unionster_dominance
+	    add_country_modifier = {
+			name = SCA_political_chaos
+			duration = 1460
+		}		
+        country_event = { id = 880130 days = 0 }
+		country_event = { id = 555032 days = 10 }
+		country_event = { id = 555042 days = 30 }
+		any_pop = {
+			militancy = 1
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = -0.20 value = reactionary } 	
+            ideology = { factor = 0.10 value = liberal }		 
+            ideology = { factor = 0.10 value = conservative }	
+		}
+	}
+}
+
+### Natural Implosion as a result of keeping them alive for too long ####
+
+country_event = {		
+	id = 1919044 # The Complete Collapse of the Unionists - 1855
+	title = "SCACOL4D.T"
+	desc = "SCACOL4D.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_modifier = unionster_dominance
+		year = 1855
+        NOT = { has_country_flag = goodbye_unionist_party }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "SCACOL4D.A"
+		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
+		remove_country_modifier = unionster_dominance
+	    add_country_modifier = {
+			name = SCA_political_chaos
+			duration = 1460
+		}		
+        country_event = { id = 880130 days = 0 }
+		country_event = { id = 555032 days = 10 }
+		country_event = { id = 555042 days = 30 }
+		any_pop = {
+			militancy = 1
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = -0.20 value = reactionary } 	
+            ideology = { factor = 0.10 value = liberal }		 
+            ideology = { factor = 0.10 value = conservative }	
+		}
+	}
+}
+
+### You are too democratic for the Unionists overt corruption to function ####
+
+country_event = {		
+	id = 1919045 # The Complete Collapse of the Unionists - HMS
+	title = "SCACOL4D2.T"
+	desc = "SCACOL4D2.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_modifier = unionster_dominance
+		government = hms_government
+        NOT = { has_country_flag = goodbye_unionist_party }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "SCACOL4D2.A"
+		set_country_flag = goodbye_unionist_party
+		set_country_flag = SCA_contain_leaks_now
+		remove_country_modifier = unionster_dominance
+	    add_country_modifier = {
+			name = SCA_political_chaos
+			duration = 1460
+		}		
+        country_event = { id = 880130 days = 0 }
+		country_event = { id = 555032 days = 10 }
+		country_event = { id = 555042 days = 30 }
+		any_pop = {
+			militancy = 1
+		}
+		any_pop = {
+			consciousness = 1
+		}
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = -0.20 value = reactionary } 	
+            ideology = { factor = 0.10 value = liberal }		 
+            ideology = { factor = 0.10 value = conservative }	
+		}
+	}
+}
+
+### The King can either choose to try and contain the leaks or suffer ####
+
+country_event = {		
+	id = 1919046 # The Complete Collapse of the Unionists - The Fate of the King
+	title = "SCACOL4E.T"
+	desc = "SCACOL4E.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = SCA_contain_leaks_now
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	
+	# Use the King's Perogative to crush the media and arrest anyone who could leak his involvement.
+	
+	option = {
+		name = "SCACOL4E.A"
+		set_country_flag = SCA_old_order
+		clr_country_flag = SCA_contain_leaks_now
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		}
+		political_reform = state_press
+		political_reform = no_meeting
+	    ai_chance = { 
+	      factor = 40
+	    } 
+	}
+	
+	# The King is Sacroscant. Nothing could go wrong.
+	
+	option = {
+		name = "SCACOL4E.B"
+		set_country_flag = SCA_new_order
+		clr_country_flag = SCA_contain_leaks_now
+	    ai_chance = { 
+	      factor = 60
+	    } 
+	}
+}
+
+### The infomation leaked to the press - There are already demonstrations in Copenhagen - The King is doomed ####
+
+country_event = {		
+	id = 1919047 # The Complete Collapse of the Unionists - Yeah RIP Christan III
+	title = "SCACOL4F.T"
+	desc = "SCACOL4F.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = SCA_new_order
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	option = {
+		name = "SCACOL4F.A"
+		clr_country_flag = SCA_new_order
+		country_event = { id = 1919048 days = 14 }
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = 0.10 value = liberal }		 
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 6
+			}
+		}
+	}
+}
+
+country_event = {		
+	id = 1919048 # The Abdication of Christan III
+	title = "SCACOL4G.T"
+	desc = "SCACOL4G.D"
+	picture = "Demonstration"
+	
+	major = yes	
+	is_triggered_only = yes
+	
+	option = {
+		name = "SCACOL4G.A"
+        country_event = { id = 1919049 days = 31 }
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -9
+			}
+		}
+	}
+}
+
+country_event = {		
+	id = 1919049 # Hans IV forms a liberal cabinet and uses the crisis to force through every single liberal reform devised by the liberals
+	title = "SCACOL4G2.T"
+	desc = "SCACOL4G2.D"
+	picture = "stortinget"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "SCACOL4G2.A"
+		remove_country_modifier = SCA_political_chaos
+		set_country_flag = SCA_hans_mode
+        government = hms_government
+	    political_reform = universal_voting
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = non_socialist
+	    political_reform = secret_ballots
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		election = yes
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -9
+			}
+		}
+	}
+}
+
+country_event = {		
+	id = 1919050 # The King holds on
+	title = "SCACOL4H.T"
+	desc = "SCACOL4H.D"
+	picture = "Demonstration"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = SCA_old_order
+	}
+
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "SCACOL4H.A"
+	    add_country_modifier = {
+			name = new_king_dominance
+			duration = 7300
+		}
+		ruling_party_ideology = conservative
+	    clr_country_flag = election_started
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+		clr_country_flag = SCA_old_order
+		remove_country_modifier = SCA_political_chaos
+		clr_country_flag = SCA_old_order
+		set_country_flag = SCA_christian_mode
+		any_pop = {
+			limit = {
+				location = { is_colonial = no }
+			}
+            ideology = { factor = 0.10 value = conservative }		 
+		}
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -9
+			}
+		}
+	}
+}
+
+
 
 ### The Federal Union Party ###
 
@@ -2153,6 +2943,190 @@ country_event = {
 	option = { 
 	name = "SFJ16.A" 
 	prestige = 2
+	}
+}
+
+country_event = {
+	id = 192017
+	title = "SCACOL22.T" #The Scandinavian population increase
+	desc = "SCACOL22.D"
+	picture = ""
+
+	fire_only_once = yes 
+
+	trigger = {
+		tag = SCA
+		exists = yes
+		year = 1840
+		NOT = { year = 1843 } 
+		NOT = { 
+			has_country_flag = SCA_population_increase
+		}
+	}
+	
+	mean_time_to_happen = { 
+	months = 6 
+	modifier = { 
+		factor = 0.01 
+		year = 1841
+		}
+	}
+	
+	option = { 
+		name = "SCACOL22.A" 
+		set_country_flag = SCA_population_increase
+		any_owned = { 
+			limit = { is_core = SCA NOT = { OR = { is_core = SCO is_core = FIN is_core = PRU is_core = LIV is_core = GER is_core = RUS is_core = ICL is_core = SMI } } }
+			add_province_modifier = { 
+				name = small_baby_boom 
+				duration = 7300
+			}
+		}
+	}
+}
+
+
+country_event = {
+	id = 192018
+	title = "SCACOL23.T" #Scandinavia and the Hollowing
+	desc = "SCACOL23.D"
+	picture = "famine"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = SCA 
+		has_country_flag = SCA_population_increase
+		has_global_flag = THE_HOLLOWING
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+
+	option = {
+		name = "SCACOL23.A"
+		prestige = 10
+		clr_country_flag = SCA_population_increase 
+		372 = { life_rating = 5 }#Copenhagen 
+		373 = { life_rating = 3 } #Odense
+		366 = { life_rating = 3 } #Aahrus
+		313 = { life_rating = 3 } #Oslo
+		329 = { life_rating = 3 } #Göteborg
+		322 = { life_rating = 3 } #Stockholm
+		334 = { life_rating = 3 } #Malmo
+		305 = { life_rating = 2 } #Trondheim
+		309 = { life_rating = 2 } #Bergen
+		332 = { life_rating = 2 } #Kalmar
+		335 = { life_rating = 2 } #Karskrona
+		326 = { life_rating = 2 } #Vasteras
+		324 = { life_rating = 1 } #Uppsala
+		330 = { life_rating = 1 } #Boras
+		333 = { life_rating = 1 } #Vaxjo
+		310 = { life_rating = 1 } #Christiansand
+		368 = { life_rating = 1 } #Ribe
+		308 = { life_rating = 1 } #Alesund
+		317 = { life_rating = 1 } #Gavle
+		327 = { life_rating = 1 } #Orebro
+		316 = { life_rating = 1 } #Frederisktag
+		any_pop = { 
+			location = { is_core = GER } 
+			militancy = 3 
+			consciousness = 5
+		}
+		any_country = { 
+			limit = { culture_group = germanic } 
+			relation = { who = THIS value = -25 }
+		}
+		any_owned = { 
+			remove_province_modifier = small_baby_boom
+		}
+		# Enjoy the massive population explosion - You just had to screw everyone over in the process you selfish bastard.
+		any_owned = { 
+			limit = { is_core = SCA NOT = { OR = { is_core = SCO is_core = FIN is_core = PRU is_core = LIV is_core = GER is_core = RUS is_core = ICL is_core = SMI } } }
+			add_province_modifier = { 
+				name = baby_boom 
+				duration = 2920
+			}
+		}
+		ai_chance = { factor = 50 }
+	}
+	
+	option = {
+		name = "SCACOL23.B"
+		prestige = -10
+		clr_country_flag = SCA_population_increase
+        set_country_flag = SCA_counter_hollowing
+		any_country = { 
+			limit = { culture_group = germanic } 
+			relation = { who = THIS value = -50 }
+		}
+		any_pop = { 
+			limit = { has_pop_culture = scandinavian } 
+			militancy = 1 
+			consciousness = 2 
+		}
+		any_owned = { 
+			remove_province_modifier = small_baby_boom
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = average_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = average_hollowing
+		      add_country_modifier = { name = light_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = severe_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = severe_hollowing
+		      add_country_modifier = { name = average_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = catastropic_hollowing  }
+		   }
+		   owner = {
+		      remove_country_modifier = catastropic_hollowing 
+		      add_country_modifier = { name = severe_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = apocalyptic_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = apocalyptic_hollowing
+		      add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+		   }
+		}
+		
+	    any_country = { 
+	       limit = { has_country_modifier = average_hollowing }
+		   remove_country_modifier = average_hollowing
+		   add_country_modifier = { name = light_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = severe_hollowing }
+		   remove_country_modifier = severe_hollowing
+		   add_country_modifier = { name = average_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = catastropic_hollowing  }
+		   remove_country_modifier = catastropic_hollowing 
+		   add_country_modifier = { name = severe_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = apocalyptic_hollowing }
+		   remove_country_modifier = apocalyptic_hollowing
+		   add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+	    }
+		ai_chance = { factor = 50 }
 	}
 }
 

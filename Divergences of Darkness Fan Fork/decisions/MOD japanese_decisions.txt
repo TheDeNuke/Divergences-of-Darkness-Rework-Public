@@ -1648,11 +1648,7 @@ political_decisions = {
 				owner = {
 					OR = {
 						is_greater_power = no 
-						war_exhaustion = 75
-                        AND = {
-                           war_exhaustion = 50
-                           NOT = { stronger_army_than = JAP } 
-                        }						
+						war_exhaustion = 50						
                         ai = no						
 				    }
 				}
@@ -2038,106 +2034,6 @@ political_decisions = {
 ##OCEANIAN CONTENT##
 
 ##OCEANIAN CONTENT##
-
-	#The Southern Embassy - Try to Diplomatically Influence Zhourao
-	the_southern_embassy = {
-		picture = zuharra
-		potential = {
-			tag = JAP 
-			NOT = {
-			    OR = {
-				   government = absolute_monarchy
-				   government = fascist_dictatorship
-				   government = fascist_monarchy
-				}
-			}
-			GAN = { 
-				exists = yes 
-				NOT = { is_vassal = yes }
-			}
-			NOT = { any_owned_province = { is_core = GAN } }
-			has_country_flag = the_sun_has_risen
-			NOT = { has_country_flag = proposed_GAN_alliance }
-			NOT = { has_country_flag = fight_for_zuharra }
-		}
-		allow = {
-			war = no 
-			GAN = { war = no }
-			market_structure = 1
-			total_amount_of_ships = 25
-		}
-		effect = {
-			set_country_flag = proposed_GAN_alliance 
-			GAN = { country_event = 334806 }
-		}
-		ai_will_do = { factor = 1 }
-	}
-	
-	#The Zuharra Agreement - Japan forms an alliance with Zhourao to fight the controller of Zuharra with NO alterior motives
-	the_zuharra_agreement = {
-		picture = administration
-		potential = {
-			tag = JAP 
-			NOT = {
-				government = absolute_monarchy
-				government = fascist_dictatorship
-				government = fascist_monarchy
-			}
-			GAN = { 
-				exists = yes 
-				NOT = { is_vassal = yes }
-				NOT = { alliance_with = JAP }
-				any_core = {
-				   owner = { capital_scope = { continent = europe } }
-				}
-			}
-			NOT = { any_owned_province = { is_core = GAN } }
-			has_country_flag = the_sun_has_risen
-			NOT = { has_country_flag = proposed_GAN_alliance }
-			NOT = { has_country_flag = fight_for_zuharra }
-		}
-		allow = {
-			war = no 
-			GAN = { war = no }
-			military_plans = 1
-			total_amount_of_ships = 50
-		}
-		effect = {
-			set_country_flag = fight_for_zuharra
-			GAN = { country_event = 334807 }
-		}
-		ai_will_do = { factor = 1 }
-	}
-
-	#Zuharra Aftermath - OOPS we were going to coup Zhourao all along
-	puppet_zhourao = {
-		picture = zuharra
-		potential = {
-			tag = JAP 
-			has_country_flag = fight_for_zuharra
-			AST = {
-				all_core = {
-					OR = {
-						owned_by = GAN 
-						empty = yes #As in, unclaimed desert
-					}
-				}
-			}
-			NOT = { has_country_flag = JAP_altered_deal }
-		}
-		
-		allow = {
-			war = no 
-			total_amount_of_ships = 50
-			GAN = { war = no NOT = { stronger_army_than = JAP } }			
-		}
-		
-		effect = {
-			badboy = 8
-			set_country_flag = JAP_altered_deal
-			GAN = { country_event = 334809 }
-		}
-	}
 
 	#The Zhourao Conquest - The Tenno is Coming South
 	conquer_zhourao = {
@@ -2551,19 +2447,20 @@ political_decisions = {
 		allow = {
 		    PNM = { in_sphere = THIS }
 			war = no 
+			is_disarmed = no
 			OR = {			    
 				JAP = { is_greater_power = no }
 				AND = {
 				   rank = 1
 				   total_amount_of_ships = 50
 				}
-				AND = {
-				   stronger_army_than = JAP
+				#AND = {
+				   #stronger_army_than = JAP
 				   OR = {
 				       total_amount_of_ships = 200
 					   num_of_ports = 100
 				   }
-				}
+				#}
 				AND = {
 					blue_and_brown_water_schools = 1
 					steel_steamers = 1

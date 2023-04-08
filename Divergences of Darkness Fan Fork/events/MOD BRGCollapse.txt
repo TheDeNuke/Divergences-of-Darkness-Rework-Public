@@ -1,31 +1,3 @@
-##### Dietsland Spawning #####
-
-country_event = {
-	id = 6530000
-	title = "DIE1.T"
-	desc = "DIE1.D"
-	
-	fire_only_once = yes 
-	
-	trigger = {
-	tag = NET
-	war = no
-	exists = yes
-	NOT = { has_global_flag = DIE_appeared }
-	has_country_flag = flanders_reclaimed_NET 
-	}
-
-	mean_time_to_happen = { 
-	days = 7
-	}
-	
-	option = { 
-	name = "DIE1.A"
-	set_global_flag = DIE_appeared	
-	NET = { all_core = { add_core = DIE } }
-	}
-}
-
 ##### Death of Burgundy Events #####
 
 country_event = { 
@@ -263,6 +235,9 @@ country_event = {
 	set_country_flag = SAFN_break
     set_global_flag = BCW_AVOIDED
     set_global_flag = JEAN_ENDING
+	set_country_flag = reconquer_rhineland
+    diplomatic_influence = { who = RHI value = -400 }
+    relation = { who = RHI value = -400 }
 	random_list = { 70 = { country_event = 653096 } 30 = { country_event = 653097 } } 
 	}
 }
@@ -784,12 +759,13 @@ country_event = {
 	
 	option = { 
 	name = "653027.A"
+	release_vassal = BEG
 	any_country = {
 	limit = {
 	   alliance_with = BRG
 	   tag = SCA
 	}
-	country_event = { id = 1919000 days = 1 } 
+	country_event = { id = 1919000 days = 1 }
 	}
 	any_country = {
 	limit = {
@@ -871,11 +847,20 @@ country_event = {
 	name = "6530270.A"
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = BRG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	#set_country_flag = regency_is_now_possible
 	add_country_modifier = { 
@@ -1406,13 +1391,14 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = BRG
-		year = 1860
+		year = 1860	
         has_global_flag = THE_BRG_CRISIS
 		OR = { 
 		    government = absolute_monarchy
 			government = prussian_constitutionalism
 			government = hms_government
-        }		
+        }	
+        NOT = { exists = HLR }		
         NOT = { has_country_flag = JEAN_ABD_CLEAR }
         NOT = { has_country_flag = JEAN_TIME_BOMB }	
 		NOT = { has_global_flag = JEAN_CIVIL_WAR_BEGINNING }
@@ -1433,6 +1419,48 @@ country_event = {
 	}
 }
 
+############ THE ABDICATION CRISIS - HOLY ROMAN EMPIRE EXISTS ##################
+
+country_event = { 
+
+	id = 6530340
+	title = "JEAN150.T"
+	desc = "JEAN150.D"
+	picture = "coup_BRG"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BRG
+		year = 1860
+		exists = HLR
+        has_global_flag = THE_BRG_CRISIS
+		OR = { 
+		    government = absolute_monarchy
+			government = prussian_constitutionalism
+			government = hms_government
+        }		
+        NOT = { has_country_flag = JEAN_ABD_CLEAR }
+        NOT = { has_country_flag = JEAN_TIME_BOMB }	
+		NOT = { has_global_flag = JEAN_CIVIL_WAR_BEGINNING }
+		NOT = { has_global_flag = JEAN_CIVIL_WAR }
+		NOT = { has_global_flag = JEAN_ENDING }		
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+
+	option = { 
+	name = "6530340.A"
+	   set_country_flag = JEAN_ABD_CLEAR
+	   remove_country_modifier = jean_crisis
+	   BRB = { clr_country_flag = unreleasable_country }
+	   country_event = 653036
+	}
+}
+
 ################ PBG WINS #############
 
 country_event = { 
@@ -1448,12 +1476,20 @@ country_event = {
 	name = "653035.A"
 	prestige = -20
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = BRG value = 200 }
-	relation = { who = PBG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	set_country_flag = regency_is_now_possible
 	any_pop = { 
@@ -1517,11 +1553,20 @@ country_event = {
 	name = "653036.A"
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
-	}
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
 	   clr_country_flag = former_BRG_ally
-	   relation = { who = BRG value = 200 }
+	   country_event = 1919003
+	}
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	#set_country_flag = regency_is_now_possible
 	add_country_modifier = { 
@@ -2624,6 +2669,10 @@ country_event = {
 
 	option = { 
 	name = "653056.A"
+	set_country_flag = reconquer_rhineland
+	relation = { who = RHI value = -400 }
+	diplomatic_influence = { who = RHI value = -400 }
+	PBG = { set_country_flag = reconquer_rhineland relation = { who = RHI value = -400 } diplomatic_influence = { who = RHI value = -400 } }
 	clr_country_flag = RHI_INDIE_BRG 
 	any_owned = { 
 	  limit = { 
@@ -2633,10 +2682,6 @@ country_event = {
 	  secede_province = RHI
 	}
 	RHI = { 
-	add_country_modifier = { 
-	   name = taiping_draft
-	   duration = 1095
-	}	
 	government = democracy
 	ruling_party_ideology = conservative
     political_reform = population_equal_weight
@@ -2953,11 +2998,20 @@ country_event = {
 	end_war = TRN
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = PBG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	any_pop = { 
 	      militancy = -10
@@ -3026,11 +3080,20 @@ country_event = {
 	end_war = TRN	
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = PBG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	any_pop = { 
 	      militancy = -10
@@ -3081,11 +3144,20 @@ country_event = {
 	name = "653060.A"
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = BRG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	capital = 390 
 	add_country_modifier = { 
@@ -3222,11 +3294,20 @@ country_event = {
 	inherit = PBG
 	prestige = 10
 	any_country = {
-	limit = {
-	   has_country_flag = former_BRG_ally
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
 	}
-	clr_country_flag = former_BRG_ally
-	relation = { who = BRG value = 200 }
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
 	}
 	capital = 390 
 	add_country_modifier = { 

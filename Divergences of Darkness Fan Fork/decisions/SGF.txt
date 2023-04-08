@@ -1,1 +1,729 @@
-#
+political_decisions = { 
+
+	a_union_of_danubians = { 
+	
+		potential = { 
+			tag = SGF 
+			exists = yes
+			NOT = { has_country_flag = SGF_centralized } 
+			AUS = { all_core = { owned_by = THIS } }
+			BAV = { all_core = { owned_by = THIS } }
+		}
+		
+		allow = { 
+		    nationalism_n_imperialism = 1 
+			war = no			
+			has_country_flag = renovate_capital_SGF
+			NOT = { has_country_modifier = unstable_federation_SGF } 		
+		}
+		
+		effect = { 
+		    set_country_flag = SGF_centralized
+		    prestige = 10
+			all_core = { remove_core = BAV }
+			all_core = { remove_core = SAL }
+			all_core = { remove_core = AUS }
+		}
+	}
+
+	renovate_munich = { 
+		potential = { 
+			tag = SGF 
+			NOT = { has_country_flag = renovate_capital_SGF } 
+			capital = 599
+		}
+		
+		allow = { 
+			iron_railroad = 1
+			regenerative_furnaces = 1
+			OR = {
+				money = 500000
+				ai = yes
+			}
+		}
+		
+		effect = { 
+			prestige = 10
+			random_owned = { limit = { owner = { ai = no } } owner = { treasury = -500000 } }
+			random_owned = {
+				limit = { owner = { ai = yes NOT = { check_variable = { which = owed_cash_money value = 1 } } } }
+				owner = { set_variable = { which = owed_cash_money value = 500 } }
+			}
+			random_owned = {
+				limit = { owner = { ai = yes check_variable = { which = owed_cash_money value = 9 } } }
+				owner = { change_variable = { which = owed_cash_money value = 500 } }
+			}
+			set_country_flag = renovate_capital_SGF 
+			599 = { 
+				life_rating = 5 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 720
+				}
+			} 
+		}
+	
+	}
+	
+	renovate_vienna = { 
+		potential = { 
+			tag = SGF 
+			NOT = { has_country_flag = renovate_capital_SGF } 
+			capital = 619
+		}
+		
+		allow = { 
+			iron_railroad = 1
+			regenerative_furnaces = 1
+			OR = {
+				money = 500000
+				ai = yes
+			}
+		}
+		
+		effect = { 
+			prestige = 10
+			set_country_flag = renovate_capital_SGF 
+			random_owned = { limit = { owner = { ai = no } } owner = { treasury = -500000 } }
+			random_owned = {
+				limit = { owner = { ai = yes NOT = { check_variable = { which = owed_cash_money value = 1 } } } }
+				owner = { set_variable = { which = owed_cash_money value = 500 } }
+			}
+			random_owned = {
+				limit = { owner = { ai = yes check_variable = { which = owed_cash_money value = 9 } } }
+				owner = { change_variable = { which = owed_cash_money value = 500 } }
+			}
+			619 = { 
+				life_rating = 5 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 720
+				}
+			} 
+		}
+	
+	}
+	
+	build_germania = { 
+		potential = { 
+			tag = SGF 
+			NOT = { has_country_flag = renovate_capital_SGF } 
+			capital = 613
+		}
+		
+		allow = { 
+			iron_railroad = 1
+			regenerative_furnaces = 1
+			OR = {
+				money = 500000
+				ai = yes
+			}
+		}
+		
+		effect = { 
+			prestige = 15
+			set_country_flag = renovate_capital_SGF 
+			random_owned = { limit = { owner = { ai = no } } owner = { treasury = -500000 } }
+			random_owned = {
+				limit = { owner = { ai = yes NOT = { check_variable = { which = owed_cash_money value = 1 } } } }
+				owner = { set_variable = { which = owed_cash_money value = 500 } }
+			}
+			random_owned = {
+				limit = { owner = { ai = yes check_variable = { which = owed_cash_money value = 9 } } }
+				owner = { change_variable = { which = owed_cash_money value = 500 } }
+			}
+			613 = { 
+				life_rating = 10 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 720
+				}
+			} 
+		}
+	
+	}
+	
+	end_austrian_resentment = { 
+		potential = { 
+			tag = SGF 
+			any_owned_province = { has_province_modifier = Austrian_resentment }
+			NOT = { has_country_flag = removed_resentment } 
+		}
+		
+		allow = { 
+			plurality = 40
+			OR = { 
+				any_owned_province = { is_core = AUS NOT = { average_militancy  = 2 } }
+				is_greater_power = yes 
+			}
+		}
+		
+		effect = { 
+			any_owned = { remove_province_modifier = Austrian_resentment } 
+			set_country_flag = removed_resentment 
+		}
+	
+	}
+	
+	end_wittelsbach_nostalgy = { 
+		potential = { 
+			tag = SGF 
+			any_owned_province = { has_province_modifier = Wittelsbach_nostalgy }
+			NOT = { has_country_flag = removed_nostalgy } 
+		}
+		
+		allow = { 
+			plurality = 40
+			OR = { 
+				any_owned_province = { is_core = BAV NOT = { average_militancy  = 2 } }
+				is_greater_power = yes 
+			}
+		}
+		
+		effect = { 
+			any_owned = { remove_province_modifier = Wittelsbach_nostalgy } 
+			set_country_flag = removed_nostalgy 
+		}
+	
+	}
+	
+	SGF_NOT_unstable = { 
+	
+		potential = { 
+			tag = SGF 
+			has_country_modifier = unstable_federation_SGF
+		}
+		
+		allow = { 
+			NOT = { any_owned_province = { has_province_modifier = Wittelsbach_nostalgy } } 
+			NOT = { any_owned_province = { has_province_modifier = Austrian_resentment } }
+			state_n_government = 1 
+			iron_railroad = 1 
+		}
+		
+		effect = {
+			remove_country_modifier = unstable_federation_SGF 
+			prestige = 5 
+		}
+	}
+	
+	annex_fiume_AUS = { 
+	
+		picture = istria
+		
+		potential = { 
+			tag = AUS 
+			FIU = { vassal_of = THIS }
+			NOT = { has_country_flag = claimed_istria } 
+		}
+		
+		allow = { 
+			OR = { 
+				736 = { owned_by = FIU } 
+				736 = { owned_by = AUS } 
+			}
+		}
+		
+		effect = { 
+			FIU = { all_core = { add_core = THIS } } 
+			inherit = FIU 
+			set_country_flag = claim_istria
+		}
+		
+	}
+	
+	annex_fiume_SGF = { 
+		
+		picture = istria
+		
+		potential = { 
+			tag = SGF 
+			FIU = { vassal_of = THIS }
+			NOT = { has_country_flag = claimed_istria } 
+		}
+		
+		allow = { 
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+		}
+		
+		effect = { 
+			FIU = { all_core = { add_core = THIS } } 
+			set_country_flag = claimed_istria 
+			inherit = FIU 
+		}
+		
+	}
+	
+	claim_fiume_SGF = { 
+	
+		picture = istria
+		
+		potential = { 
+			tag = SGF 
+			FIU = { exists = no } 
+			owns = 618
+			NOT = { has_country_flag = claimed_istria } 
+		}
+		
+		allow = { 
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			NOT = { 736 = { owner = { OR = { alliance_with = CAE alliance_with = BOH } } } }
+			state_n_government = 1 
+		}
+		
+		effect = { 
+			FIU = { all_core = { add_core = THIS } } 
+			badboy = 5 
+			set_country_flag = claimed_istria
+		}
+		
+	}
+	
+	
+	#### SGF and the rest of its potencial territories ####
+
+	# SGF asking to annex ASB
+	
+	ask_ansbach_for_annexation = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			tag = SGF 
+			exists = yes
+			ASB = { exists = yes }
+			NOT = { has_country_flag = ansbach_dies }
+		}
+		
+		allow = { 
+		    state_n_government = 1 
+			war = no
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			
+		}
+		
+		effect = { 
+		    prestige = 1 
+			set_country_flag = ansbach_dies
+			ASB = { all_core = { add_core = SGF } country_event = { id = 270095 days = 1 } }
+		}
+		
+	}
+	
+	# Same as ASB above - This is for a FRE that was never annexed into SGF during unification due to previous BOH intervention
+	
+	ask_FRE_for_annexation = {
+	
+		picture = reichstag
+		
+		potential = { 
+			tag = SGF 
+			exists = yes
+			FRE = {			
+			   exists = yes 
+			   NOT = { in_sphere = BOH }
+			   NOT = { vassal_of = BOH }
+			}
+			NOT = { has_country_flag = FRE_die }
+		}
+		
+		allow = { 
+		    state_n_government = 1 
+			war = no
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			
+		}
+		
+		effect = { 
+		    prestige = 1 
+			clr_country_flag = SGF_waiting_for_chance	
+			set_country_flag = FRE_die
+			FRE = { all_core = { add_core = SGF } country_event = { id = 270096 days = 0 } }
+		}		
+	}
+	
+	# This works for either vassal FRE or in_sphere FRE
+	
+	threaten_bohemia_for_FRE = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			tag = SGF 
+			exists = yes
+			FRE = {			
+			   exists = yes 
+			   OR = {
+			     vassal_of = BOH
+				 in_sphere = BOH
+			   }
+			}
+			NOT = { has_country_flag = FRE_fault }
+		}
+		
+		allow = { 
+		    state_n_government = 1 
+			war = no
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			
+		}
+		
+		effect = { 
+		    prestige = 1 
+			set_country_flag = FRE_fault
+			BOH = { country_event = { id = 270097 days = 1 } }
+		}		
+	}
+	
+	# You managed to take FRE in the war
+	
+	integrate_FRE_SGF = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			tag = SGF 
+			exists = yes
+			has_country_flag = FRE_crusade
+		}
+		
+		allow = { 
+		    state_n_government = 1 
+			war = no
+            owns = 3340		
+		}
+		
+		effect = { 
+		    prestige = 10
+			clr_country_flag = FRE_crusade
+			FRE = { all_core = { add_core = SGF } }
+			BOH = { clr_country_flag = integrate_FRE_possible }			
+		}		
+	}
+	
+	# Bohemia defended FRE against SGF - LEL GGWP
+	
+	integrate_FRE_BOH = { 
+	
+		picture = reichstag
+		
+		potential = { 
+		    OR = {
+			   tag = BOH
+			   tag = CAE
+			   tag = GCF
+			}
+			exists = yes
+			has_country_flag = integrate_FRE_possible
+		}
+		
+		allow = { 
+		    state_n_government = 1 
+			war = no
+			FRE = {			
+			   exists = yes 
+			   OR = {
+			     vassal_of = BOH
+				 in_sphere = BOH
+			   }
+			}	
+		}
+		
+		effect = { 
+		    prestige = 10
+			clr_country_flag = integrate_FRE_possible
+			FRE = { all_core = { add_core = THIS } }
+			inherit = FRE
+			SGF = { clr_country_flag = FRE_crusade }			
+		}		
+	}	
+	
+	end_failstate_wurzburg = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			owns = 3340
+			owns = 598
+			FRW = { exists = yes has_country_flag = FRW_DEAD } 
+		}
+		
+		allow = { 
+		    state_n_government = 1
+		    OR = {
+			  AND = {
+			    NOT = { has_country_modifier = unstable_federation_SGF } 
+				tag = SGF
+			  }
+			  tag = CAE
+			  tag = GCF
+			}		 
+		}
+		
+		effect = { 
+		    prestige = 5
+			FRW = { clr_country_flag = FRW_DEAD country_event = { id = 270109 days = 1 } }
+		}		
+	}
+	
+	claim_CRN = { 
+		
+		potential = { 
+			tag = SGF 
+			CRN = { exists = yes NOT = { vassal_of = THIS } } 
+			NOT = { has_country_flag = claimed_CRN } 
+		}
+		
+		allow = { 
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			OR = {
+			   is_secondary_power = yes 
+			   is_greater_power = yes 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = claimed_CRN 
+			CRN = { all_core = { add_core = THIS } }
+			badboy = 12 
+		}
+	
+	}
+	
+	claim_CRN_puppet = { 
+		
+		potential = { 
+			tag = SGF 
+			CRN = { exists = yes vassal_of = THIS } 
+			NOT = { has_country_flag = claimed_CRN } 
+		}
+		
+		allow = { 
+			NOT = { has_country_modifier = unstable_federation_SGF } 
+			is_greater_power = yes 
+			nationalism_n_imperialism = 1 
+		}
+		
+		effect = { 
+			set_country_flag = claimed_CRN 
+			CRN = { all_core = { add_core = THIS } }
+			inherit = CRN
+			badboy = 6
+		}
+	
+	}
+	
+	Remove_the_Hollowing_locally = { 
+		
+		potential = { 
+			OR = { 
+				AND = { 
+				   tag = SGF 
+				   NOT = { OR = { has_country_flag = BAV_unifies_SGF has_country_flag = AUS_unifies_SGF } } 
+				}
+				tag = NGF 
+				AND = {
+				   tag = CFR 
+				   year = 1865
+				   NOT = { OR = { in_sphere = BRG in_sphere = PBG } }
+				}
+				AND = { 
+				   tag = SWA
+				   year = 1865
+                   NOT = { OR = { in_sphere = BRG in_sphere = PBG } }	
+                }				   
+			}
+			has_global_flag = HOLLOWING_END
+			NOT = { has_country_flag = ended_local_hollowing }
+			NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }
+		}
+		
+		allow = { 
+			money = 250000
+		    high_pressure_steam_engine = 1
+		    interchangeable_parts = 1
+		}
+		
+		effect = { 
+			money = -250000
+			set_country_flag = ended_local_hollowing
+		    add_country_modifier = {
+			    name = global_baby_boom
+			    duration = 1825
+		    }
+			any_owned = { 
+				limit = { is_core = GER }
+				remove_province_modifier = light_hollowing_province
+				remove_province_modifier = average_hollowing_province
+				remove_province_modifier = severe_hollowing_province
+				remove_province_modifier = catastropic_hollowing_province
+				remove_province_modifier = apocalyptic_hollowing_province
+				remove_province_modifier = hollowing_aftermath
+			}
+		}
+	}
+	
+	# Some highly cynical redistrbution of resources here.
+	
+	Remove_the_Hollowing_CAE = { 
+		
+		potential = { 
+		    OR = {
+			   tag = CAE
+			   tag = GCF
+			}
+			has_global_flag = HOLLOWING_END
+			NOT = { has_country_flag = ended_local_hollowing }
+			NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }
+		}
+		
+		allow = { 
+			money = 300000
+		    high_pressure_steam_engine = 1
+		    interchangeable_parts = 1
+		}
+		
+		effect = { 
+			money = -300000
+			set_country_flag = ended_local_hollowing
+			any_owned = { 
+				limit = { is_core = CAE NOT = { is_core = GER } }
+		        add_province_modifier = { 
+			       name = baby_boom
+			       duration = 1460
+		        }
+			}
+			any_owned = { 
+				limit = { is_core = GCF NOT = { is_core = GER } }
+		        add_province_modifier = { 
+			       name = baby_boom
+			       duration = 1460
+		        }
+			}
+			any_owned = { 
+				limit = { is_core = GER }
+				remove_province_modifier = light_hollowing_province
+				remove_province_modifier = average_hollowing_province
+				remove_province_modifier = severe_hollowing_province
+				remove_province_modifier = catastropic_hollowing_province
+				remove_province_modifier = apocalyptic_hollowing_province
+				remove_province_modifier = hollowing_aftermath
+		        add_province_modifier = { 
+			       name = small_baby_boom
+			       duration = 3650
+		        }
+			}
+		}
+	}
+	
+	Remove_the_Hollowing_best_SGF = { 
+		
+		potential = { 
+			tag = SGF 
+			OR = { has_country_flag = BAV_unifies_SGF has_country_flag = AUS_unifies_SGF } 
+			has_global_flag = HOLLOWING_END
+			NOT = { has_country_flag = ended_local_hollowing }
+			NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }
+		}
+		
+		allow = { 
+		    high_pressure_steam_engine = 1
+		    interchangeable_parts = 1
+			NOT = { war_exhaustion = 10 } 
+			war = no
+			NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+		}
+		
+		effect = { 
+			set_country_flag = ended_local_hollowing
+			# This is extremely powerful but I guess you deserve a reward
+		    add_country_modifier = {
+			    name = global_baby_boom
+			    duration = 3650
+		    }
+			any_owned = { 
+				limit = { is_core = GER }
+				remove_province_modifier = light_hollowing_province
+				remove_province_modifier = average_hollowing_province
+				remove_province_modifier = severe_hollowing_province
+				remove_province_modifier = catastropic_hollowing_province
+				remove_province_modifier = apocalyptic_hollowing_province
+				remove_province_modifier = hollowing_aftermath
+
+			}
+		}
+	
+	}
+	
+	annex_Trent = { 
+		potential = { 
+			primary_culture = south_german 
+			is_our_vassal = TRE 
+			NOT = { has_global_flag = trent_accord_success } 
+			NOT = { has_country_flag = annexed_trent } 
+		}
+		
+		allow = { 
+			nationalism_n_imperialism = 1 
+			war = no 
+		}
+		
+		effect = { 
+			badboy = 2 
+			inherit = TRE 
+			set_country_flag = annexed_trent 
+			TRE = { all_core = { add_core = THIS } } 
+		}
+	}
+	
+	Tridentine_Agreement = { 
+	
+		potential = { 
+			tag = SGF 
+			is_our_vassal = TRE 
+			NOT = { has_country_flag = trent_agreement } 
+			OR = { 
+				ITC = { exists = yes owns = 3264 }
+				ITA = { exists = yes owns = 3264 } 
+				ARI = { exists = yes owns = 3264 }
+			} 
+		}
+		
+		allow = { 
+			OR = { 
+				relation = { who = ITC value = 50 }
+				relation = { who = ITA value = 50 }
+				relation = { who = ARI value = 50 }
+			}
+		}
+		
+		effect = { 
+			set_country_flag = trent_agreement
+			any_country = { 
+				limit = { owns = 3264 } 
+				country_event = 260088
+			}
+		}
+	}
+	
+	claim_trentino = { 
+		
+		potential = { 
+			OR = { tag = ITA tag = ARI tag = FRT } 
+			NOT = { has_global_flag = trent_accord_success } 
+			NOT = { has_country_flag = claimed_trentino } 
+		}
+		
+		allow = { 
+			revolution_n_counterrevolution = 1 
+			owns = 729 
+		}
+		
+		effect = { 
+			TRE = { all_core = { add_core = THIS } } 
+			set_country_flag = claimed_trentino
+		}
+	
+	}
+
+}

@@ -1,0 +1,975 @@
+political_decisions = {
+	#Compromise decisions 
+	End_the_Hollowing_HLR_1 = { 
+		potential = { 
+		tag = HLR
+		has_global_flag = HOLLOWING_END
+		NOT = { has_country_flag = ended_local_hollowing }
+		has_country_flag = HRE_COMPROMISE 
+		}
+		
+		allow = { 
+		    high_pressure_steam_engine = 1
+		    interchangeable_parts = 1
+		    money = 4000000
+		}
+		
+		effect = { 
+		money = -4000000
+		set_country_flag = ended_local_hollowing
+		any_owned = {
+		   limit = { is_core = GER }
+			remove_province_modifier = light_hollowing_province
+			remove_province_modifier = average_hollowing_province
+			remove_province_modifier = severe_hollowing_province
+			remove_province_modifier = catastropic_hollowing_province
+			remove_province_modifier = apocalyptic_hollowing_province
+			remove_province_modifier = hollowing_aftermath
+		    add_province_modifier = { 
+			   name = baby_boom
+			   duration = 1825
+		    }
+	    }
+		}	
+	}
+
+	Develop_The_North_HRE = { 
+		potential = { 
+		   tag = HLR
+		   has_country_flag = HRE_COMPROMISE 
+		   any_owned_province = { has_province_modifier = Wasted_North }
+		}
+		
+		allow = { 
+		    money = 2000000
+		    state_n_government = 1
+		    organic_chemistry = 1 
+		}
+		
+		effect = { 
+		   money = -2000000
+		   any_owned = { limit = { has_province_modifier = Wasted_North } remove_province_modifier = Wasted_North add_province_modifier = { name = repopulating_countryside duration = 3650 } } 
+		}
+	
+	}
+	
+	Resolve_Clergy_Problem_HRE = { 
+		potential = { 
+		   tag = HLR
+		   has_country_flag = HRE_COMPROMISE 
+		   any_owned_province = { has_province_modifier = Strong_Clergy }
+		}
+		
+		allow = { 
+		   state_n_government = 1
+		   OR = { 
+			   PAP = { exists = yes in_sphere = THIS } 
+			   749 = { owner = { NOT = { tag = PAP } relation = { who = THIS value = 150 } } }
+		   }
+		}
+		
+		effect = { 
+		   any_owned = { limit = { has_province_modifier = Strong_Clergy } remove_province_modifier = Strong_Clergy } 
+		}
+	
+	}
+	
+	Resolve_Strong_Princes_HRE = { 
+		potential = { 
+		   tag = HLR
+		   has_country_flag = HRE_COMPROMISE 
+		   any_owned_province = { has_province_modifier = Strong_Princes }
+		}
+		
+		allow = { 
+		   impressionism = 1 
+		   army_decision_making = 1  
+		   money = 2000000
+		}
+		
+		effect = { 
+		   money = -2000000
+		   any_owned = { limit = { has_province_modifier = Strong_Princes } remove_province_modifier = Strong_Princes } 
+		}
+	
+	}
+	
+	Resolve_Old_Liberties_HRE = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_COMPROMISE 
+		any_owned_province = { has_province_modifier = Old_Liberties }
+		}
+		
+		allow = { 
+		plurality = 50 
+		OR = { 
+			AND = { government = prussian_constitutionalism ruling_party_ideology = liberal }
+			government = hms_government 
+			}
+		}
+		
+		effect = { 
+		any_owned = { limit = { has_province_modifier = Old_Liberties } remove_province_modifier = Old_Liberties } 
+		}
+	
+	}
+	
+	Resolve_Woes_of_Industry_HRE = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_COMPROMISE 
+		any_owned_province = { has_province_modifier = Woes_of_Industry }
+		}
+		
+		allow = { 
+		business_regulations = 1 
+		semi_automatization  = 1 
+		}
+		
+		effect = { 
+		any_owned = { 
+			limit = { has_province_modifier = Woes_of_Industry } 
+			remove_province_modifier = Woes_of_Industry 
+			add_province_modifier = { 
+				name = Urban_Planning_HRE
+				duration = 3650 
+				}
+			}
+		add_country_modifier = { name = rhenish_paternalism_HRE duration = 1825 } 
+		}
+	
+	}
+	
+	HLR_unified = { 
+	
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_COMPROMISE 
+			NOT = { has_country_flag = HRE_unified } 
+		}
+		
+		allow = { 
+			all_core = { owned_by = THIS } 
+			NOT = { any_owned_province = { has_province_modifier = Woes_of_Industry } } 
+			NOT = { any_owned_province = { has_province_modifier = Strong_Clergy } } 
+			NOT = { any_owned_province = { has_province_modifier = Strong_Princes } } 
+			NOT = { any_owned_province = { has_province_modifier = Old_Liberties } } 
+			NOT = { any_owned_province = { has_province_modifier = Wasted_North } } 
+		} 
+		
+		effect = { 
+			set_country_flag = HRE_unified
+			RHI = { all_core = { add_core = THIS } } 
+			ALS = { all_core = { add_core = THIS } } 
+			HOL = { all_core = { add_core = THIS } }
+		}
+	}
+	
+	Reform_Reichsarmee_HRE = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE 
+		has_country_modifier = Reichsarmee_HRE
+		NOT = { has_country_flag = New_Reichsarmee_HRE }
+		}
+		
+		allow = { 
+		breech_loaded_rifles = 1 
+		army_decision_making = 1 
+		military_score = 150 
+		OR = { 
+			war_policy = jingoism
+			war_policy = pro_military 
+			}
+		}
+		
+		effect = { 
+		remove_country_modifier = Reichsarmee_HRE
+		set_country_flag = New_Reichsarmee_HRE
+		}
+	}
+	
+	Reform_Culture_HRE = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE 
+		has_country_modifier = Not_Roman_nor_German_HRE
+		NOT = { has_country_flag = Cultural_Reform_HRE }
+		}
+		
+		allow = { 
+		biologism = 1 
+		army_decision_making = 1 
+		prestige = 250
+		}
+		
+		effect = { 
+		remove_country_modifier = Not_Roman_nor_German_HRE
+		set_country_flag = Cultural_Reform_HRE
+		}
+	}
+	
+	Reform_Economy_HRE_1 = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE 
+		has_country_modifier = disorganized_eco_HRE
+		NOT = { has_country_flag = First_Eco_reform_HRE }
+		}
+		
+		allow = {  
+		central_bank_money_bill_printing = 1 
+		industrial_score = 250
+		NOT = { has_country_modifier = rhenish_paternalism_HRE } 
+		}
+		
+		effect = { 
+		remove_country_modifier = disorganized_eco_HRE
+		add_country_modifier = { 
+			name = disorganized_eco_HRE_2 
+			duration = -1 
+			}
+		set_country_flag = First_Eco_reform_HRE
+		}
+	}
+	
+	Reform_Economy_HRE_2 = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE
+		has_country_modifier = disorganized_eco_HRE_2
+		has_country_flag = First_Eco_reform_HRE
+		NOT = { has_country_flag = Second_Eco_Reform_HRE }
+		}
+		
+		allow = {  
+		steel_railroad = 1 
+		OR = { 
+			industrial_score = 500
+			AND = { 
+				is_canal_enabled = 1
+				owns = 369
+				}
+			}
+		}
+		
+		effect = { 
+		remove_country_modifier = disorganized_eco_HRE_2
+		add_country_modifier = { 
+			name = ruhr_boom 
+			duration = 3650
+			}
+		set_country_flag = Second_Eco_Reform_HRE
+		}
+	}
+	
+		
+	claim_the_netherlands = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_unified
+			NOT = { has_country_flag = claimed_NET } 
+		}
+		
+		allow = { 
+			revolution_n_counterrevolution = 1 
+			all_core = { owned_by = THIS } 
+			
+		}
+		
+		effect = { 
+			set_country_flag = claimed_NET
+			badboy = 12 
+			NET = { all_core = { add_core = THIS } } 
+			add_accepted_culture = frisian 
+			add_accepted_culture = dutch
+		}
+	}
+	
+	#Absolute path 
+	
+	End_the_Hollowing_HLR_2 = { 
+		potential = { 
+		tag = HLR
+		has_global_flag = HOLLOWING_END
+		NOT = { has_country_flag = ended_local_hollowing }
+		has_country_flag = HRE_manifesto 
+		}
+		
+		allow = {
+		    high_pressure_steam_engine = 1
+		    interchangeable_parts = 1		
+		    OR = { 
+			   money = 4500000
+			   AND = { all_core = { owned_by = THIS } money = 100000 }
+			} 
+		}
+		
+		effect = { 
+		set_country_flag = ended_local_hollowing
+		random_owned = { 
+			limit = { owner = { tag = THIS  NOT = { has_country_flag = HRE_unified } } }
+				owner = { money = -4500000
+				change_variable = {
+					which = GERMAN_REVOLUTION
+					value = -1
+					}
+				}
+			}
+		random_owned = { 
+			limit = { owner = { tag = THIS has_country_flag = HRE_unified } }
+			owner = { money = -1000000 
+			change_variable = {
+				which = GERMAN_REVOLUTION
+				value = 2
+				}
+			}
+		}
+		any_owned = {
+		   limit = { is_core = GER }
+			remove_province_modifier = light_hollowing_province
+			remove_province_modifier = average_hollowing_province
+			remove_province_modifier = severe_hollowing_province
+			remove_province_modifier = catastropic_hollowing_province
+			remove_province_modifier = apocalyptic_hollowing_province
+			remove_province_modifier = hollowing_aftermath
+		    add_province_modifier = { 
+			   name = small_baby_boom
+			   duration = 2920
+		    }
+	    }
+		}
+	
+	}
+	
+	centralize_North = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			NOT = { has_country_flag = north_united_HLR } 
+		}
+		
+		allow = { 
+			OR = { 
+			owns = 528
+			NOT = { any_owned_province = { has_province_modifier = hollowing_aftermath  } }
+			}
+			OR = { 
+				money = 1000000
+				AND = { 
+					battleship_column_doctrine = 1 
+					naval_plans = 1 
+				}
+			}
+		} 
+		
+		effect = { 
+			set_country_flag = north_united_HLR
+			money = -1000000
+			add_accepted_culture = north_german 
+			any_country = {
+				limit = {
+					primary_culture = north_german	
+					vassal_of = THIS 
+
+				}
+			country_event = 11101
+			}
+			country_event = 410054
+		} 
+	}
+	
+	centralize_Rhine = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			NOT = { has_country_flag = rhine_united_HLR } 
+		}
+		
+		allow = { 
+			OR = { 
+			owns = 576
+			money = 2000000
+			}
+			OR = { 
+				industrial_score = 400 
+				AND = { 
+					steam_turbine = 1 
+					pneumatic_and_hydraulics = 1 
+					time_saving_measures = 1 
+				}
+			}
+		} 
+		
+		effect = { 
+			money = -2000000
+			add_accepted_culture = rheinish 
+			set_country_flag = rhine_united_HLR
+			any_country = {
+				limit = {
+					primary_culture = rheinish	
+					NOT = { tag = BAD } 
+					vassal_of = THIS  
+
+				}
+			country_event = 11101
+			}
+			country_event = 410055
+		} 
+	}
+	
+	centralize_South = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			NOT = { has_country_flag = south_united_HLR } 
+		}
+		
+		allow = { 
+			money = 2000000
+			OR = { 
+				prestige = 300 
+				AND = { 
+					impressionism = 1 
+					state_n_government = 1 
+					time_saving_measures = 1 
+				}
+			}
+		} 
+		
+		effect = { 
+			set_country_flag = south_united_HLR
+			add_accepted_culture = south_german 
+			money = -2000000
+			any_country = {
+				limit = {
+					primary_culture = south_german
+					vassal_of = THIS  
+
+				}
+			country_event = 11101
+			}
+			country_event = 410056
+		} 
+	}
+	
+	centralize_Swabia = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			NOT = { has_country_flag = swabia_united_HLR } 
+		}
+		
+		allow = { 
+			money = 1000000
+			owns = 564
+			owns = 599
+			iron_railroad = 1 
+		} 
+		
+		effect = { 
+			set_country_flag = swabia_united_HLR
+			add_accepted_culture = swabian 
+			money = -1000000
+			any_country = {
+				limit = {
+					OR = { 
+					primary_culture = swabian 	
+					tag = BAD
+						}
+					vassal_of = THIS  
+
+				}
+			country_event = 11101
+			}
+			country_event = 410057
+		} 
+	}
+
+	Develop_The_North_HRE_Abso = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_manifesto
+		has_country_flag = north_united_HLR 
+		any_owned_province = { has_province_modifier = Wasted_North }
+		}
+		
+		allow = { 
+		money = 2000000
+		organic_chemistry = 1 
+		}
+		
+		effect = { 
+		money = -2000000
+		any_owned = { limit = { has_province_modifier = Wasted_North } remove_province_modifier = Wasted_North add_province_modifier = { name = repopulating_countryside duration = 3650 } } 
+		}
+	
+	}
+	
+	Resolve_Clergy_Problem_HRE_Abso = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_manifesto
+		has_country_flag = south_united_HLR
+		has_country_flag = swabia_united_HLR 
+		has_country_flag = north_united_HLR 
+		any_owned_province = { has_province_modifier = Strong_Clergy }
+		}
+		
+		allow = { 
+		nationalism_n_imperialism = 1
+		OR = { 
+			PAP = { exists = yes in_sphere = THIS } 
+			749 = { owner = { NOT = { tag = PAP } relation = { who = THIS value = 150 } } }
+			}
+		}
+		
+		effect = { 
+		any_owned = { limit = { has_province_modifier = Strong_Clergy } remove_province_modifier = Strong_Clergy } 
+		}
+	
+	}
+	
+	Resolve_Strong_Princes_HRE_Abso = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_manifesto
+		has_country_flag = south_united_HLR
+		has_country_flag = swabia_united_HLR 
+		has_country_flag = north_united_HLR 
+		any_owned_province = { has_province_modifier = Strong_Princes }
+		}
+		
+		allow = { 
+			impressionism = 1 
+			army_decision_making = 1 
+			money = 2000000
+		}
+		
+		effect = { 
+		money = 2000000
+		any_owned = { limit = { has_province_modifier = Strong_Princes } remove_province_modifier = Strong_Princes }  
+		}
+	
+	}
+	
+	Resolve_Old_Liberties_HRE_Abso = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = south_united_HLR
+		has_country_flag = rhine_united_HLR 
+		has_country_flag = swabia_united_HLR 
+		any_owned_province = { has_province_modifier = Old_Liberties }
+		}
+		
+		allow = { 
+			OR = { 
+				plurality = 75
+				phenomenalism = 1 
+			}
+			military_statistics = 1 
+		}
+		
+		effect = { 
+		any_owned = { limit = { has_province_modifier = Old_Liberties } remove_province_modifier = Old_Liberties } 
+		}
+	
+	}
+	
+	Resolve_Woes_of_Industry_HRE_Abso = { 
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_manifesto
+		has_country_flag = rhine_united_HLR 
+		any_owned_province = { has_province_modifier = Woes_of_Industry }
+		}
+		
+		allow = { 
+		market_regulations = 1 
+		pneumatic_and_hydraulics = 1 
+		}
+		
+		effect = { 
+		any_owned = { 
+			limit = { has_province_modifier = Woes_of_Industry } 
+			remove_province_modifier = Woes_of_Industry 
+			add_province_modifier = { 
+				name = Urban_Planning_HRE
+				duration = 3650 
+				}
+			}
+		add_country_modifier = { name = rhenish_paternalism_HRE duration = 1825 } 
+		}
+	
+	}
+	
+	HLR_unified_2 = { 
+	
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			NOT = { has_country_flag = HRE_unified } 
+		}
+		
+		allow = { 
+			all_core = { owned_by = THIS } 
+		} 
+		
+		effect = { 
+			set_country_flag = HRE_unified
+			RHI = { all_core = { add_core = THIS } } 
+			ALS = { all_core = { add_core = THIS } } 
+			HOL = { all_core = { add_core = THIS } }
+		}
+	}
+	
+	
+	Reform_Reichsarmee_HRE_Abso = { 
+		
+		potential = { 
+		tag = HLR
+		has_country_flag = HRE_unified
+		has_country_flag = HRE_manifesto
+		has_country_modifier = Reichsarmee_HRE
+		NOT = { has_country_flag = New_Reichsarmee_HRE }
+		}
+		
+		allow = { 
+			point_defense_system = 1
+			breech_loaded_rifles = 1 
+			iron_breech_loaded_artillery = 1 
+			military_statistics  = 1 
+			military_score = 200 
+			OR = { 
+				war_policy = jingoism
+				war_policy = pro_military 
+				}
+		}
+		
+		effect = { 
+		remove_country_modifier = Reichsarmee_HRE
+		set_country_flag = New_Reichsarmee_HRE
+		}
+	}
+	
+	Reform_Culture_HRE_Abso = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_unified
+		has_country_modifier = Not_Roman_nor_German_HRE
+		has_country_flag = HRE_manifesto
+		NOT = { has_country_flag = Cultural_Reform_HRE }
+		}
+		
+		allow = { 
+		biologism = 1 
+		nationalism_n_imperialism = 1 
+		prestige = 250
+		}
+		
+		effect = { 
+		remove_country_modifier = Not_Roman_nor_German_HRE
+		set_country_flag = Cultural_Reform_HRE
+		}
+	}
+	
+	Reform_Economy_HRE_1_Abso = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_flag = HRE_unified
+		has_country_modifier = disorganized_eco_HRE
+		NOT = { has_country_flag = First_Eco_reform_HRE }
+		}
+		
+		allow = {  
+		business_banks = 1 
+		central_bank_money_bill_printing = 1 
+		industrial_score = 250
+		NOT = { has_country_modifier = rhenish_paternalism_HRE } 
+		}
+		
+		effect = { 
+		remove_country_modifier = disorganized_eco_HRE
+		add_country_modifier = { 
+			name = disorganized_eco_HRE_2 
+			duration = -1 
+			}
+		set_country_flag = First_Eco_reform_HRE
+		}
+	}
+	
+	Reform_Economy_HRE_2_Abso = { 
+		
+		potential = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_modifier = disorganized_eco_HRE_2
+		has_country_flag = First_Eco_reform_HRE
+		NOT = { has_country_flag = Second_Eco_Reform_HRE }
+		}
+		
+		allow = {  
+			steel_railroad = 1 
+			OR = { 
+				industrial_score = 500
+				AND = { 
+					is_canal_enabled = 1
+					owns = 369
+					}
+				}
+		}
+		
+		effect = { 
+			remove_country_modifier = disorganized_eco_HRE_2
+			add_country_modifier = { 
+				name = ruhr_boom 
+				duration = 3650
+				}
+			set_country_flag = Second_Eco_Reform_HRE
+		}
+	}
+	
+	Secret_police_HRE = { 
+		
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto
+			has_country_flag = HRE_unified
+			NOT = { has_country_flag = German_revolution } 
+		}
+		
+		allow = { 
+			OR = { 
+				ruling_party_ideology = reactionary
+				ruling_party_ideology = paternal 
+				}
+			NOT = { government = hms_government } 
+			revolution_n_counterrevolution = 1 
+		}
+		
+		effect = { 
+			set_country_flag = German_revolution
+			add_country_modifier = {
+				name = secret_police 
+				duration = -1
+			}
+		
+		badboy = 3
+		}
+		
+	}
+
+	
+	claim_burgundy = { 
+		potential = { 
+			tag = HLR 
+			has_country_flag = HRE_manifesto 
+			OR = { 
+				government = absolute_monarchy 
+				government = fascist_monarchy
+				}
+			NOT = { has_country_flag = claimed_burgundy } 
+		}
+		
+		allow = { 
+			mass_politics = 1 
+			all_core = { owned_by = THIS } 
+		}
+		
+		effect = { 
+			badboy = 40 
+			set_country_flag = claimed_burgundy
+			BRG = { all_core = { add_core = THIS } } 
+			PBG = { all_core = { add_core = THIS } } 
+		}
+	}
+	
+	#Coalition War decisions 
+	
+	Peace_Scandinavia = { 
+		potential = { 
+			tag = HLR 
+			has_global_flag = COALITION_WAR			
+			war_with = SCA 
+			NOT = { has_country_flag = peace_with_honour } 
+		}
+		
+		
+		allow = { 
+			NOT = { war_with = BRG } 
+			NOT = { any_owned_province = { controlled_by = SCA } }
+			366 = { controlled_by = THIS } 
+			
+		}
+		
+		effect = { 
+			set_country_flag = peace_with_honour 
+			SCA = { country_event = 410036 } 
+		}
+	}
+	
+	Peace_of_Amiens = { 
+	
+		potential = { 
+			tag = HLR 
+			has_global_flag = COALITION_WAR			
+			war_with = DUA 
+			NOT = { has_country_flag = peace_of_amiens } 
+		}
+		
+		
+		allow = { 
+			NOT = { any_owned_province = { controlled_by = DUA } }
+			NOT = { HLR = { national_provinces_occupied = 0.1 } }
+			FRA = { all_core = { controlled_by = THIS } }
+			OR = {
+				458 = { 
+					owned_by = DUA 
+					controlled_by = THIS 
+					province_control_days = 720 
+					} 
+				458 = { NOT = { owned_by = DUA } }
+				}
+			OR = {
+				455 = { owned_by = DUA 
+					controlled_by = THIS 
+					province_control_days = 720 
+					} 
+				455 = { NOT = { owned_by = DUA } }
+				}
+			425 = { 
+				controlled_by = THIS 
+				province_control_days = 720 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = peace_of_amiens 
+			DUA = { country_event = 410041 } 
+		}
+	}
+	
+	#Imperial Republic decisions
+	
+	end_of_security_committee_HLR = {
+		picture = switch_to_liberty
+		potential = {
+	        tag = HLR
+			OR = { 
+			has_country_flag = aftermath_Coalition 
+			has_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+			}
+			government = presidential_dictatorship
+			NOT = { has_country_flag = HLR_zentral_dissolved }
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+		    set_country_flag = HLR_zentral_dissolved
+		    prestige = 10
+		    any_pop = {
+		       ideology = {
+			      value = anarcho_liberal
+			      factor = 0.10
+		       } 
+		       ideology = {
+			      value = reactionary
+			      factor = -0.10
+		       }
+            }
+	        any_pop = {
+	           consciousness = -9
+	        }
+	        any_pop = {
+	           militancy = -9
+	        }
+		    government = parliamentary_republic
+			ruling_party_ideology = anarcho_liberal
+		    political_reform = free_press
+		    political_reform = yes_meeting
+		    political_reform = secret_ballots
+		    political_reform = federalism
+			political_reform = all_voting_pops
+			political_reform = population_equal_weight
+			political_reform = proportional_representation
+			political_reform = universal_voting
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        set_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        clr_country_flag = democracy_gov
+			nationalvalue = nv_equality
+            election = yes			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	revolutionary_wave = { 
+		potential = { 
+		OR = { tag = HLR tag = ITA } 
+		is_greater_power = yes 
+		OR = { government = democracy government = parliamentary_republic } 
+		NOT = { has_country_flag = revolutionary_war } 
+		}
+		
+		allow = { 
+		nationalism_n_imperialism = 1 
+		ruling_party_ideology = anarcho_liberal 
+		}
+		
+		effect = { 
+		set_country_flag = revolutionary_war 
+		badboy = 3 
+		}
+	
+	}
+	
+	
+	alliance_with_TUS = { 
+		potential = { 
+			tag = HLR  
+			OR = { government = democracy government = parliamentary_republic } 
+			OR = { 
+				ITA = { exists = yes government = democracy } 
+				TUS = { exists = yes government = democracy } 
+			}
+			NOT = { has_country_flag = TUS_embassy } 
+		}
+		
+		allow = { 
+			OR = { 
+				relation = { who = ITA value = 0 } 
+				relation = { who = TUS value = 0 }
+			}
+		}
+		
+		effect = { 
+			set_country_flag = TUS_embassy 
+			TUS = { 
+				country_event = 410059
+				}
+		}
+	} 
+}

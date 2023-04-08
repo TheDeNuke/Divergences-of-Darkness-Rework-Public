@@ -2233,9 +2233,10 @@ political_decisions = {
 	                 factor = 0
 	                 CSK = {
 					    OR = {
-						  stronger_army_than = RUS
+						  brigades_compare = 1.1
 					      alliance_with = GER
 						  alliance_with = CAE
+						  alliance_with = GCF
 						  alliance_with = HUN
 						  alliance_with = HUA
 						  alliance_with = ROM
@@ -2510,9 +2511,10 @@ political_decisions = {
 	                 factor = 0
 	                 PLC = {
 					    OR = {
-						  stronger_army_than = RUS
+						  brigades_compare = 1.1
 					      alliance_with = GER
 						  alliance_with = CAE
+						  alliance_with = GCF
 						  alliance_with = HUN
 						  alliance_with = HUA
 						  alliance_with = ROM
@@ -4991,6 +4993,38 @@ political_decisions = {
 			factor = 1
 		}
 	}
+		
+	treaty_of_vyatka = {
+        picture = treaty_signing
+        potential = {
+            tag = UDM 
+            war_with = NOV
+            has_global_flag = UDM_WAR
+        }
+
+        allow = {
+            war = yes
+            1031 = { controlled_by = THIS province_control_days = 190 }
+            UDM = {
+                all_core = {
+                    OR = {
+                        controlled_by = THIS
+                        controller = { vassal_of = THIS }
+                        empty = yes
+                    }
+                }
+            }
+        }
+
+        effect = {
+            end_war = NOV
+            NOV = { country_event = { id = 232510 days = 0 } }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
 	
    ########### Governorates ################
 
@@ -5297,6 +5331,10 @@ political_decisions = {
 			  }
 	       modifier = {
 	          factor = 0
+	          alliance_with = GCF
+			  }
+	       modifier = {
+	          factor = 0
 	          alliance_with = HLR
 			  }		
 	       modifier = {
@@ -5424,6 +5462,464 @@ political_decisions = {
 		
         ai_will_do = { factor = 1 }
    }
+   
+	Governorate_annexation_CPL = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS 
+		has_country_flag = tier_three_western_active
+		OR = { 
+			  capital = 1008
+			  capital = 958
+			}
+		CPL = { 
+		exists = yes 
+		vassal_of = RUS
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_CPL }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		year = 1920 
+		mass_culture_n_the_avant_garde = 1 
+		mass_politics = 1 
+		integral_rail_system = 1 
+		}
+		
+		effect = { 
+		CPL = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = CPL 
+		set_country_flag = annexed_CPL
+		}
+	
+	}
+	
+	Governorate_annexation_BLT = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS 
+		OR = { has_country_flag = baltic_focus has_country_flag = tier_three_western_active }
+		BLT = { 
+		exists = yes 
+		vassal_of = RUS
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_BLT}
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		blue_and_brown_water_schools = 1 
+		steel_railroad = 1 
+		}
+		
+		effect = { 
+		BLT = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = BLT 
+		set_country_flag = annexed_BLT
+		}
+	
+	}
+	
+	Governorate_annexation_FIG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS 
+		has_country_flag = tier_three_northern_active
+		NOT = { 
+			OR = { 
+			capital = 994
+			capital = 1003
+			}
+		}
+		FIG = { 
+		exists = yes 
+		vassal_of = RUS
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_FIG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		blue_and_brown_water_schools  = 1 
+		steel_railroad = 1 
+		}
+		
+		effect = { 
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = FIG 
+		set_country_flag = annexed_FIG
+		}
+	
+	}
+	
+	Governorate_annexation_RRG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS 
+		OR = { has_country_flag = panslavic_focus has_country_flag = tier_three_northern_active has_country_flag = tier_three_southern_active } 
+		RRG  = { 
+		exists = yes 
+		vassal_of = RUS
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_RRG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		revolution_n_counterrevolution = 1 
+		investment_banks = 1 
+		}
+		
+		effect = { 
+		RRG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = RRG  
+		set_country_flag = annexed_RRG 
+		}
+	
+	}
+	
+	Governorate_annexation_RUG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS 
+		RUG = { 
+		exists = yes 
+		vassal_of = RUS
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_RUG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		steel_railroad = 1 
+		revolution_n_counterrevolution = 1 
+		}
+		
+		effect = { 
+		RUG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = RUG  
+		set_country_flag = annexed_RUG 
+		}
+	}
+	
+	Governorate_annexation_SMG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS  
+		OR = { has_country_flag = baltic_focus has_country_flag = tier_three_western_active }
+		SMG = { 
+		exists = yes 
+		vassal_of = RUS 
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_SMG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		revolution_n_counterrevolution = 1 
+		deep_defense_system = 1 
+		}
+		
+		effect = { 
+		SMG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = SMG   
+		set_country_flag = annexed_SMG  
+		}
+	}
+	
+	Governorate_annexation_TEG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS   
+		has_country_flag = tier_three_western_active
+		TEG = { 
+		exists = yes 
+		vassal_of = RUS  
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_TEG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		high_sea_battle_fleet = 1 
+		integral_rail_system = 1 
+		market_determined_exchange_rates = 1 
+		}
+		
+		effect = { 
+		TEG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = TEG    
+		set_country_flag = annexed_TEG  
+		}
+	}
+	
+	Governorate_annexation_TEG_south = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS   
+		has_country_flag = southern_focus
+		TEG = { 
+		exists = yes 
+		vassal_of = RUS  
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_TEG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		iron_steamers = 1 
+		iron_railroad = 1 
+		}
+		
+		effect = { 
+		TEG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = TEG    
+		set_country_flag = annexed_TEG  
+		}
+	}
+	
+	Governorate_annexation_KZG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS      
+		KZG  = { 
+		exists = yes 
+		vassal_of = RUS  
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_KZG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		bolt_action_rifles = 1 
+		steel_railroad = 1 
+		investment_banks = 1 
+		}
+		
+		effect = { 
+		KZG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = KZG     
+		set_country_flag = annexed_KZG  
+		}
+	}
+	
+	Governorate_annexation_YAG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS      
+		OR = { has_country_flag = southern_focus has_country_flag = tier_three_western_active }
+		YAG  = { 
+		exists = yes 
+		vassal_of = RUS  
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_YAG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		machine_guns = 1 
+		steel_railroad = 1 
+		}
+		
+		effect = { 
+		YAG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = YAG     
+		set_country_flag = annexed_YAG  
+		}
+	}
+	
+	Governorate_annexation_TRG = {
+		picture = ""
+		
+		potential = { 
+		tag = RUS       
+		TRG = { 
+		exists = yes 
+		vassal_of = RUS  
+		has_country_flag = active_russian_governorate
+		all_core = { owned_by = THIS } 
+			}
+		NOT = { has_country_flag = annexed_TRG }
+		}
+		
+		allow = { 
+		war = no 
+		NOT = { has_country_modifier = russian_governorate_cooldown } 
+		infiltration = 1 
+		integral_rail_system = 1 
+		market_determined_exchange_rates = 1 
+		}
+		
+		effect = { 
+		TRG = { 
+			clr_country_flag = active_russian_governorate
+			clr_country_flag = russian_integration_one
+			clr_country_flag = russian_integration_two
+			clr_country_flag = russian_integration_three
+			clr_country_flag = fav_governorate
+			remove_country_modifier = russian_governorate_modifier
+			set_country_flag = intergrated_governorate
+				}
+		add_country_modifier = { 
+			name = russian_governorate_cooldown
+			duration = 1825
+			}
+		inherit = TRG     
+		set_country_flag = annexed_TRG 
+		}
+	}
    
 ##### The only current way to gain cores on Tatarstan. This may be improved in future releases. #####
 

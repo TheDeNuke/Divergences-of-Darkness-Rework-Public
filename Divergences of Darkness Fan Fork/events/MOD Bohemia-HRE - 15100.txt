@@ -1,0 +1,6458 @@
+
+# I've filled this file with PBG failsafes. Hopefully they work.
+
+# Generic Event for a Player in any Non-Bohemian HRE tag explaining the inability to go to war.
+# TLDR: Treaty of Paris banned internal wars in the Empire as a matter to maintain peace in Central Europe
+
+country_event = { 
+	id = 123100  
+	title = "BOH0.T" 
+	desc = "BOH0.D"
+	picture = "rhapsody"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "BOH0.A"
+	add_country_modifier = {
+	   name = HOLY_ROMAN_EMPIRE
+	   duration = -1
+	}
+    add_country_modifier = {
+		name = war_justification_blocked
+		duration = -1
+	}
+	any_pop = {
+	  militancy = -1
+	}
+	}
+}
+
+####### 123101 - Bohemia cannot go to war without a prior incident without starting 2GGW
+
+country_event = { 
+	id = 123101  
+	title = "BOH00.T" 
+	desc = "BOH00.D"
+	picture = "rhapsody" 
+	
+	trigger = {	exists = yes
+	    tag = BOH
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		constructing_cb_progress = 0.5 #5% progress
+		OR = {
+			constructing_cb_type = acquire_state
+			constructing_cb_type = conquest
+			constructing_cb_type = make_puppet
+            constructing_cb_type = release_puppet				
+            constructing_cb_type = add_to_sphere
+			constructing_cb_type = take_from_sphere
+			constructing_cb_type = war_reparations
+			constructing_cb_type = liberate_country
+			constructing_cb_type = free_peoples
+			constructing_cb_type = humiliate
+            constructing_cb_type = cut_down_to_size		
+			constructing_cb_type = dismantle_forts
+			constructing_cb_type = free_allied_cores
+		}
+		NOT = { has_country_modifier = impossible_justification_BOH }	
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "BOH00.A"
+		add_country_modifier = {
+			name = impossible_justification_BOH
+			duration = 365
+		}
+		any_owned = {
+		   limit = {
+		      is_core = BOH
+		      owner = { ai = yes }
+		   }
+		   owner = {
+		   add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+		       } 
+		   }
+	    }	
+	}
+}
+
+###################################### BOHEMIA PRIOR TO HRE COLLAPSE ######################################################
+
+## Gott erhalte Sigismund den Kaiser, unsern guten Kaiser Sigismund!...
+
+### The First Incident is left commented out as reference material. ####
+
+#### This is the Old Bohemian Flavor Content which is reused here with some adjustments ###
+
+country_event = { 
+	id = 123180 
+	title = "BOH1.T" #Wenceslaus place
+	desc = "BOH1.D"
+	picture = "rhapsody"
+	
+	trigger = { 
+	tag = BOH 
+	year = 1838
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 4 
+	} 
+	
+	option = { 
+	name = "BOH1.A"
+	prestige = 2 
+	any_pop = { 
+	   limit = { 
+	      pop_type = soldiers
+	   }
+	   militancy = -2 
+	   ideology = {
+			value = reactionary
+			factor = 0.2
+	   }
+	}
+	any_pop = { 
+		limit = { 
+		culture = old_czech
+			}
+		dominant_issue = {
+				factor = 0.05
+				value = anti_military
+			}
+	}
+	any_pop = { 
+		limit = { 
+		culture = czech
+			}
+		dominant_issue = {
+				factor = 0.05
+				value = jingoism
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123181 
+	title = "BOH2.T" #Character of Sigismund 
+	desc = "BOH2.D"
+	picture = "siggy"
+	
+	trigger = { 
+	   tag = BOH 
+	   government = absolute_monarchy
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	    months = 6
+	}
+	
+	option = { 
+	name = "BOH2.A"
+	any_pop = { 
+		limit = { 
+		pop_type = aristocrats
+		}
+	ideology = {
+			value = reactionary
+			factor = 0.4
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123182
+	title = "BOH3.T" #Die Zeil Oath commemoration -Frankfurt
+	desc = "BOH3.D"
+	picture = "BOH_oath"
+
+	trigger = { 
+	tag = FRM 
+	year = 1840 
+	NOT = { has_country_flag = zeil_oath } 
+	}
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	option = { 
+	name = "BOH3.A"
+	set_country_flag = zeil_oath
+	prestige = -1 
+	any_pop = { 
+	militancy = 2 
+	ideology = {
+			value = liberal
+			factor = 0.2
+			}
+		}
+	BRG = { country_event = 123183 } 
+	BOH = { country_event = 123184 }
+	any_country = { 
+		limit = { 
+			OR = { 
+			primary_culture = north_german
+			primary_culture = south_german 
+			primary_culture = rheinish
+				}
+			}
+		country_event = 123185
+		}
+	}
+}
+
+country_event = { 
+	id = 123183
+	title = "BOH4.T" #Die Zeil Oath commemoration -BRG
+	desc = "BOH4.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH4.A" 
+	prestige = -1 
+	any_pop = { 
+		limit = {
+		OR = {
+		   culture = north_german
+		   culture = rheinish 
+		   culture = south_german
+		   }	
+		}
+		consciousness = 3
+		ideology = {
+			value = liberal
+			factor = 0.02
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123184
+	title = "BOH5.T" #Die Zeil Oath commemoration -BOH
+	desc = "BOH5.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH5.A" 
+	prestige = -1 
+	any_pop = { 
+		limit = {
+		OR = {
+		   culture = north_german
+		   culture = rheinish 
+		   culture = south_german
+		   }	
+		}
+		consciousness = 3
+		ideology = {
+			value = liberal
+			factor = 0.04
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123185
+	title = "BOH6.T" #Die Zeil Oath commemoration -German states
+	desc = "BOH6.D"
+	picture = "BOH_oath"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH5.A" 
+	prestige = -1 
+	any_pop = { 
+		consciousness = 3
+		militancy = 1
+		ideology = {
+			value = liberal
+			factor = 0.05
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 123186
+	title = "BOH7.T" #Creation of the Ludwig Society by Wolfgang Jagiellon-Karlstein 
+	desc = "BOH7.D"
+	picture = "banquet"
+	
+	trigger = { 
+	tag = BOH 
+	year = 1842 
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 4 
+	}
+	
+	option = { 
+	name = "BOH7.A" 
+	prestige = 1 
+	any_pop = { 
+	scaled_consciousness = {
+			factor = 3
+			ideology = liberal
+			}
+		}
+	}
+}
+
+	
+country_event = { 
+	id = 123191 #The Song of Nuremberg
+	title = "BOH12.T" 
+	desc = "BOH12.D" 	
+	picture = "BOH_Nuremberg_Burning"
+	
+	trigger = { 
+	   NOT = { has_global_flag = nuremburg_lied }
+	   has_global_flag = nuremberg_burnt
+	   primary_culture = south_german 
+	}
+	
+	mean_time_to_happen = { 
+	months = 20 
+        modifier = {
+            factor = 0.1
+            has_country_flag = liberal_revolution_in_progress
+        }
+        modifier = {
+            factor = 0.01
+            has_country_modifier = springtime_of_nations
+        }
+	}
+	
+	option = { 
+	name = "BOH12.A" 
+	set_global_flag = nuremburg_lied
+	prestige = 5 
+	any_country = { 
+	    limit = {
+			OR = { 
+				primary_culture = rheinish 
+				primary_culture = south_german
+				primary_culture = north_german 
+			}
+	    }
+	    country_event = 123192
+    }
+	any_country = {
+	   limit = { 
+			tag = BOH
+			NOT = { exists = CAE }
+			}
+       country_event = 123193 
+	} 
+	any_country = {
+	    limit = { 
+			tag = CAE
+			NOT = { exists = BOH }
+			}
+        country_event = 123193 
+	    }
+	}
+}
+	
+country_event = { 
+	id = 123192 #The Song of Nuremberg -other Germans
+	title = "BOH13.T" 
+	desc = "BOH13.D" 
+	picture = "BOH_Nuremberg_Burning"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH13.A" 
+	any_pop = { 
+	consciousness = 3 
+		}
+	prestige = 1
+	}
+}
+
+country_event = { 
+	id = 123193 #The Song of Nuremberg -BOH/CAE
+	title = "BOH14.T" 
+	desc = "BOH14.D" 
+	picture = "BOH_Nuremberg_Burning"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "BOH14.A" 
+	prestige = -5
+	}
+}
+
+### Bayruth Creates a liberal Constitution- Siggy fires Schwartz ####
+
+### Original Localization is BOH8 for source
+
+country_event = { 
+	id = 123187
+	title = "HREBOH1.T" #The Bayreuth Charter
+	desc = "HREBOH1.D"	
+	picture = "german_radicals"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	   tag = FRE     
+	   NOT = { has_country_flag = charter_FRE }
+	   year = 1840
+	}
+	
+	mean_time_to_happen = { 
+	   days = 31
+	}
+	
+	option = { 
+	name = "HREBOH1.A"
+	   set_country_flag = charter_FRE
+	   government = hms_government
+	   political_reform = wealth_voting
+	   political_reform = state_equal_weight
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_socialist
+	   political_reform = secret_ballots
+	   BOH = { set_country_flag = waiting_for_schwartz }
+	}	
+}
+
+### The Aftermath of the Hungarian Conference - Siggy fires Schwartz ####
+
+country_event = {
+	id = 150100
+	title = "HREBOH2.T"
+	desc = "HREBOH2.D"
+	picture = "siggy"
+	
+	fire_only_once = yes
+
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_global_flag = END_OF_VENICE_CONGRESS
+		war = no
+		NOT = { has_country_flag = nuremburg_inevitable }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "HREBOH2.A" 
+		set_country_flag = nuremburg_inevitable
+		prestige = 1
+		badboy = 1
+ 		add_country_modifier = {
+			name = BOH_empty_foreign_office
+			duration = -1
+		}       
+	}
+}
+
+### The Aftermath of the Hungarian Conference - Siggy realizes that there are liberals in Bayreuth ####
+
+### Original Localization is BOH9 for source
+
+country_event = { 
+	id = 123188
+	title = "HREBOH3.T" #The Bayreuth Charter -BOH response
+	desc = "HREBOH3.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_country_flag = waiting_for_schwartz
+		has_global_flag = END_OF_VENICE_CONGRESS
+		has_country_modifier = BOH_empty_foreign_office
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "HREBOH3.A"
+	clr_country_flag = waiting_for_schwartz
+    diplomatic_influence = { who = FRE value = -400 }
+	relation = { who = FRE value = -400 } 
+	leave_alliance = FRE
+	war = {
+		target = FRE
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+	}	
+	prestige = 4
+	set_country_flag = nuremberg_will_burn
+	ai_chance = { 
+	factor = 100
+		}
+	}
+	
+	# The Chancellor tries very hard to not start a war...
+	
+	option = { 
+	name = "HREBOH3.B" 
+	clr_country_flag = waiting_for_schwartz
+	country_event = 123189
+	prestige = -1
+	any_pop = { 
+	scaled_militancy = {
+			factor = 3
+			ideology = reactionary
+			}
+		}
+	}
+}
+
+### Original Localization is BOH10 for source
+
+country_event = { 
+	id = 123189
+	title = "HREBOH4.T" #The Franconian Charter -Sigismund forces war
+	desc = "HREBOH4.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HREBOH4.A"
+    diplomatic_influence = { who = FRE value = -400 }
+	relation = { who = FRE value = -400 } 
+	leave_alliance = FRE
+	war = {
+		target = FRE
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+	}	
+	prestige = 4
+	set_country_flag = nuremberg_will_burn
+	}
+}
+
+### Original Localization is BOH11 for source
+
+country_event = { 
+	id = 123190 #Burning of Nuremberg
+	title = "HREBOH5.T" 
+	desc = "HREBOH5.D" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = BOH
+	has_country_flag = nuremberg_will_burn
+	OR = { 
+		AND = { 
+			war_with = FRE 
+			3341 = { controlled_by = THIS } 
+		}
+		FRE = { has_country_flag = custom_treaty_loser }
+	}
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+	   days = 1 
+	} 
+	
+	option = { 
+	name = "HREBOH5.A" 
+	set_global_flag = nuremberg_burnt
+	end_war = FRE 
+	create_vassal = FRE 
+	clr_country_flag = nuremberg_will_burn
+	BOH = { country_event = { id = 150101 days = 3 } }
+	FRE = { 
+	   clr_country_flag = custom_treaty_loser
+	   government = absolute_monarchy 
+	   political_reform = none_voting
+	   political_reform = no_meeting
+	   political_reform = censored_press
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+       clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   set_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+       clr_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	}
+	badboy = 6 
+	3341 = { 
+	    any_pop = { 
+		    limit = { 
+	           culture = south_german
+		     }
+			 reduce_pop = 0.85
+		     consciousness = 1
+		     militancy = 1
+	    }
+	}
+	any_country = { 
+	    limit = {
+	       OR = {
+	           primary_culture = north_german
+	           primary_culture = south_german
+	           primary_culture = rheinish
+			   primary_culture = swabian
+	           }
+		}
+		relation = { who = THIS value = -25 } 
+	}
+	}	
+}
+
+### The Aftermath of the Hungarian Conference - Siggy recalls Schwartz ####
+
+### Siggy suddenly realizes that he does not understand a single thing about Geopolitics and that Nuremberg only successfully radicalized a good chunk of Germany against him...
+
+country_event = {
+	id = 150101
+	title = "HREBOH6.T"
+	desc = "HREBOH6.D"
+	picture = "siggy"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+	
+	option = {
+		name = "HREBOH6.A" 
+		prestige = -1
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+		}
+		badboy = -3
+		remove_country_modifier = BOH_empty_foreign_office
+	    any_country = { 
+	    limit = {
+	       OR = {
+	           primary_culture = north_german
+	           primary_culture = south_german
+	           primary_culture = rheinish
+			   primary_culture = swabian
+	           }
+		}
+		relation = { who = THIS value = 10 } 
+	    }		
+	}
+}
+
+# The Obvious Demand - Bavaria's Request for immediate Bayreuth indipendence 
+
+country_event = { 
+	id = 150102
+	title = "HREBOH7.T"
+	desc = "HREBOH7.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BAV
+		year = 1841
+		has_global_flag = nuremberg_burnt
+		NOT = { has_country_flag = the_obvious_demand }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = { 
+	name = "HREBOH7.A"
+	    set_country_flag = the_obvious_demand
+	    badboy = -1
+		relation = { who = BOH value = -20 } 
+ 	    any_country = { 
+	       limit = {
+	          primary_culture = south_german
+		   }
+		   country_event = { id = 150103 days = 1 }
+	    }
+		BOH = { country_event = { id = 150104 days = 1 } }		
+	}
+}
+
+country_event = { 
+	id = 150103
+	title = "HREBOH8.T"
+	desc = "HREBOH8.D"	
+	picture = "BOH_Nuremberg_Invasion"
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+	   name = "HREBOH8.A"
+       relation = { who = BAV value = 10 } 
+	   relation = { who = BOH value = -20 } 
+	}
+}
+
+# The Danubian Petition - Imperial Incident Two
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150104
+	title = "HREBOH9.T"
+	desc = "HREBOH9.D"
+	picture = "BOH_Nuremberg_Burning"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HREBOH9.A"
+		set_global_flag = the_german_council
+		set_country_flag = the_imperial_diet_BOH
+		release_vassal = FRE
+		leave_alliance = FRE
+		relation = { who = FRE value = -400 }
+	    diplomatic_influence = { who = FRE value = -400 }
+		FRE = {
+		   set_country_flag = join_SGF_on_unification
+	       government = hms_government
+	       political_reform = wealth_voting
+	       political_reform = state_equal_weight
+	       political_reform = yes_meeting
+	       political_reform = free_press
+	       political_reform = non_socialist
+	       political_reform = secret_ballots
+		}
+		ai_chance = {
+			factor = 80
+		}
+    }
+
+	
+    option = {
+        name = "HREBOH9.B"
+		set_global_flag = the_german_council
+		set_country_flag = the_imperial_diet_BOH
+		relation = { who = DUA value = -5 }
+		badboy = 1
+		release_vassal = FRE      
+		create_alliance = FRE
+		relation = { who = FRE value = 400 }
+	    diplomatic_influence = { who = FRE value = 400 }
+		SCA = {
+		   relation = { who = FRE value = -400 }
+	       diplomatic_influence = { who = FRE value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = FRE value = -400 }
+	       diplomatic_influence = { who = FRE value = -400 }		
+		}
+		# The punishment for a rogue player that did not read.
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = AUS_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150147
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10
+			   modifier = {
+			      factor = 2
+				  alliance_with = AUS
+			   }
+			   modifier = {
+			      factor = 0
+				  has_country_flag = AUS_agreement_GER_active
+			   }			   
+		}
+    }
+	
+    option = {
+        name = "HREBOH9.C"
+		set_country_flag = the_imperial_diet_BOH
+		relation = { who = DUA value = -5 }
+		badboy = 3      
+		create_alliance = FRE
+		relation = { who = FRE value = 400 }
+	    diplomatic_influence = { who = FRE value = 400 }
+		relation = { who = AUS value = -400 }
+	    diplomatic_influence = { who = AUS value = -400 }
+		SCA = {
+		   relation = { who = FRE value = -400 }
+	       diplomatic_influence = { who = FRE value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = FRE value = -400 }
+	       diplomatic_influence = { who = FRE value = -400 }		
+		}
+		# The punishment for a rogue player that did not read.
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = AUS_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150147
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10
+			   modifier = {
+			      factor = 0
+				  alliance_with = AUS
+			   }
+			   modifier = {
+			      factor = 0
+				  FRE = { ai = no }
+			   }	
+			   modifier = {
+			      factor = 0
+				  has_country_flag = AUS_agreement_GER_active
+			   }
+		}
+    }
+}
+
+#### Imperial Incident Three - The Imperial Diet - The First Internal Politics Event ####
+#### What should we do with the Imperial Diet? ####
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = { 
+	id = 150105
+	title = "HREBOH10.T"
+	desc = "HREBOH10.D"	
+	picture = "BOH_gov"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_country_flag = the_imperial_diet_BOH
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		NOT = { has_country_flag = time_for_a_diet_BOH }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	name = "HREBOH10.A"
+	    # This modifier should basically kill off 1848 for BOH which will be helpful in future.
+		clr_country_flag = the_imperial_diet_BOH
+		set_country_flag = second_great_german_war_possible
+	    government = absolute_monarchy
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 	
+		political_reform = mandatory_service
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		set_country_flag = siggy_is_shaken
+ 		add_country_modifier = {
+			name = BOH_unshakable_autocracy
+			duration = -1
+		} 
+		any_owned = {
+			limit = {
+				is_colonial = no
+			}
+			any_pop = {
+				scaled_militancy = {
+					ideology = conservative
+					factor = -6
+				}
+				scaled_consciousness = {
+					ideology = conservative
+					factor = -4
+				}
+				ideology = {
+					value = conservative
+					factor = 0.1
+				}
+				ideology = {
+					value = reactionary
+					factor = 0.05
+				}
+			}
+			aristocrats = {
+				ideology = {
+					value = reactionary
+					factor = 0.15
+				}
+			}
+			officers = {
+				ideology = {
+					value = reactionary
+					factor = 0.10
+				}
+			}
+			remove_province_modifier = liberal_agitation
+		}
+		remove_country_modifier = global_liberal_agitation
+		clr_country_flag = liberal_revolution_fired
+		clr_country_flag = liberal_revolution_in_progress
+		set_country_flag = had_liberal_revolution
+		set_country_flag = pacifism_disabled
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    set_variable = {
+		   which = GERMAN_HATE
+		   value = 10
+	    }
+	    set_variable = {
+		   which = CZECH_HATE
+		   value = 10
+	    }
+		ai_chance = {
+			factor = 25
+		}
+	}
+	
+	option = { 
+	name = "HREBOH10.B"
+	    set_country_flag = time_for_a_diet_BOH
+	    set_variable = {
+		   which = GERMAN_HATE
+		   value = 10
+	    }
+	    set_variable = {
+		   which = CZECH_HATE
+		   value = 10
+	    }
+		ai_chance = {
+			factor = 75
+		}
+	}
+}
+
+# Imperial Incident Three - Bohemian Nobility complain about German Involvement in the plans
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = { 
+	id = 150106
+	title = "HREBOH11.T"
+	desc = "HREBOH11.D"	
+	picture = "BOH_gov"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_country_flag = the_imperial_diet_BOH
+		has_country_flag = time_for_a_diet_BOH
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	# Siggy, are you feeling well? This is a bit liberal.
+	
+	option = { 
+	name = "HREBOH11.A"
+		clr_country_flag = the_imperial_diet_BOH
+		clr_country_flag = time_for_a_diet_BOH
+	    set_country_flag = second_great_german_war_possible
+		prestige = -5
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = yes_meeting
+		political_reform = harassment
+		political_reform = all_voting_pops
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		set_country_flag = siggy_is_stirred
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+		}
+		any_pop = {
+		    limit = {
+			   NOT = { strata = rich }
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		}
+		any_owned = {
+			limit = {
+				is_colonial = no
+			}
+			aristocrats = {
+				ideology = {
+					value = reactionary
+					factor = 0.15
+				}
+			}
+			officers = {
+				ideology = {
+					value = reactionary
+					factor = 0.10
+				}
+			}
+			remove_province_modifier = liberal_agitation
+		}
+		remove_country_modifier = global_liberal_agitation
+		clr_country_flag = liberal_revolution_fired
+		clr_country_flag = liberal_revolution_in_progress
+		set_country_flag = had_liberal_revolution
+		country_event = { id = 150107 days = 0 }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    set_variable = {
+		   which = GERMAN_HATE
+		   value = 10
+	    }
+	    set_variable = {
+		   which = CZECH_HATE
+		   value = 11
+	    }
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	# Ah. The good old days.
+	
+	option = { 
+	name = "HREBOH11.B"
+		clr_country_flag = the_imperial_diet_BOH
+		clr_country_flag = time_for_a_diet_BOH
+	    set_country_flag = second_great_german_war_possible
+	    prestige = 5
+		government = prussian_constitutionalism
+        political_reform = landed_voting
+	    political_reform = party_appointed
+	    political_reform = yes_meeting
+		political_reform = harassment
+		political_reform = primary_culture_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		set_country_flag = siggy_is_straight
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -3
+			}
+		}
+		any_pop = {
+		    limit = {
+			   NOT = { strata = rich }
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		any_owned = {
+			limit = {
+				is_colonial = no
+			}
+			aristocrats = {
+				ideology = {
+					value = reactionary
+					factor = 0.15
+				}
+			}
+			officers = {
+				ideology = {
+					value = reactionary
+					factor = 0.10
+				}
+			}
+			remove_province_modifier = liberal_agitation
+		}
+		remove_country_modifier = global_liberal_agitation
+		clr_country_flag = liberal_revolution_fired
+		clr_country_flag = liberal_revolution_in_progress
+		set_country_flag = had_liberal_revolution
+		country_event = { id = 150108 days = 0 }
+	    set_variable = {
+		   which = GERMAN_HATE
+		   value = 11
+	    }
+	    set_variable = {
+		   which = CZECH_HATE
+		   value = 10
+	    }
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+# Adding the Germans was a great idea. Now the Jingoists can be Jingoist
+
+country_event = { 
+	id = 150107
+	title = "HREBOH12.T"
+	desc = "HREBOH12.D"	
+	picture = "meeting_german_princes"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HREBOH12.A"
+	    set_country_flag = pacifism_disabled
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.2
+		   }
+		}	   
+	}
+}
+
+# Wait, the Bohemians Knights which dominate the Bohemian Nobility were the pacifists all along. Bloody Hell. You just put them into power.
+# This does not remove the pacifist modifier in a potencial GGW2 which means you just fucked yourself
+
+country_event = { 
+	id = 150108
+	title = "HREBOH13.T"
+	desc = "HREBOH13.D"	
+	picture = "autocracy"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HREBOH13.A"
+		rich_strata = {
+		   dominant_issue = { 
+		      value = pacifism
+	          factor = 0.2
+		   }
+		}	   
+	}
+}
+
+#### The Death of the Old Duke #####
+
+country_event = {
+	id = 150109
+	title = "HREBOH14.T"
+	desc = "HREBOH14.D"
+	#picture = "german_rhine"
+
+    trigger = {
+        tag = HEK
+		year = 1842
+		NOT = { has_country_flag = HEKecution }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 62
+    }
+
+    option = {
+        name = "HREBOH14.A"
+		set_country_flag = HEKecution
+		3344 = { add_core = RHI }
+		any_owned = { 
+	       limit = { 
+	           is_core = RHI
+		    }
+	        secede_province = RHI
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   country_event = { id = 150110 days = 3 } 
+		}
+    }
+}
+
+#### The Weisbaden Oppitunity #####
+
+country_event = {
+	id = 150110
+	title = "HREBOH15.T"
+	desc = "HREBOH15.D"
+	#picture = "german_rhine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH15.A"
+		3344 = { add_core = THIS }
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  has_country_modifier = HOLY_ROMAN_EMPEROR
+		   }
+		   country_event = { id = 150111 days = 2 }
+        }
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+		   }
+		   country_event = { id = 1501111 days = 2 }
+        }
+    }
+}
+
+# The End of Hesse-Korbach - Imperial Incident Four
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150111
+	title = "HREBOH16.T"
+	desc = "HREBOH16.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+	
+	# Give everything to Nassau and state that Weisbaden is rightfully theirs
+
+    option = {
+        name = "HREBOH16.A"
+		set_global_flag = enable_HAN_coup
+		3344 = { remove_core = HEK }
+		568 = { add_core = NAS remove_core = HEK }
+		566 = { add_core = NAS }
+		585 = { add_core = NAS remove_core = HEK }
+		relation = { who = DUA value = -5 }
+		badboy = 2
+		create_alliance = NAS  
+		relation = { who = NAS value = 400 }
+	    diplomatic_influence = { who = NAS value = 400 }	
+		SCA = {
+		   relation = { who = NAS value = -400 }
+	       diplomatic_influence = { who = NAS value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = THIS value = -20 }
+		   relation = { who = NAS value = -400 }
+	       diplomatic_influence = { who = NAS value = -400 }
+		}
+		NAS = { inherit = HEK }
+		# The punishment for a rogue player that did not read.
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = BRG_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150146
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10
+			   modifier = {
+			      factor = 0
+				  has_country_flag = BRG_agreement_GER_active
+			   }			   
+		}
+    }
+	
+	# Give everything to Nassau but refuse to elaborate regarding Weisbaden - Enforce BRG sphere
+	
+    option = {
+        name = "HREBOH16.B"
+		set_global_flag = enable_HAN_coup
+		3344 = { remove_core = HEK }
+		568 = { add_core = NAS }
+		566 = { add_core = NAS }
+		585 = { add_core = NAS }
+		relation = { who = DUA value = -5 }
+		relation = { who = NAS value = -400 }
+	    diplomatic_influence = { who = NAS value = -400 }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = NAS value = 400 }
+	       diplomatic_influence = { who = NAS value = 400 }		
+		} 
+        NAS = { inherit = HEK }
+		badboy = -1     
+		ai_chance = {
+			factor = 20
+		}
+    }
+	
+	# Partition it between Luneberg and Darmstadt leaving Korbach under a PU from Nassau
+
+    option = {
+        name = "HREBOH16.C"
+		set_global_flag = enable_HAN_coup
+		badboy = 1
+		3344 = { remove_core = HEK }
+		568 = { add_core = HES remove_core = HEK }
+		585 = { add_core = HAN remove_core = HEK }
+		HEK = { country_event = 15011112 }
+		NAS = { relation = { who = HEK value = 400 } create_alliance = HEK }
+		ai_chance = {
+			factor = 70
+		}
+    }
+}
+
+country_event = {
+	id = 15011112
+	title = "lmao partition"
+	desc = "We have been partitioned"
+	#picture = "german_rhine"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "cool bro"
+		 any_owned = { 
+	       limit = { 
+	          is_core = HES
+		   }
+	       secede_province = HES
+		 }
+		 any_owned = { 
+	          limit = { 
+	          is_core = HAN
+		   }
+	       secede_province = HAN
+	    }
+    }
+}
+
+# The End of Hesse-Korbach - Notification for Failed Bohemia
+
+country_event = {
+	id = 1501111
+	title = "HREBOHF16.T"
+	desc = "HREBOHF16.D"
+	#picture = "german_rhine"
+
+    is_triggered_only = yes
+	
+	# Give everything to Nassau but refuse to elaborate regarding Weisbaden - Enforce BRG sphere
+	
+    option = {
+        name = "HREBOHF16.B"
+		prestige = -1
+		set_global_flag = enable_HAN_coup
+		3344 = { remove_core = HEK }
+		568 = { add_core = NAS }
+		566 = { add_core = NAS }
+		585 = { add_core = NAS }
+		relation = { who = DUA value = -5 }
+		relation = { who = NAS value = -400 }
+	    diplomatic_influence = { who = NAS value = -400 }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = NAS value = 400 }
+	       diplomatic_influence = { who = NAS value = 400 }		
+		} 
+        NAS = { inherit = HEK }   
+    }
+}
+
+#### The Braunschweig Crisis - The coup against Karl #####
+#### This fires for HAN because absolutely nobody is going to play BRA 
+
+country_event = {
+	id = 150112
+	title = "HREBOH17.T"
+	desc = "HREBOH17.D"
+	#picture = "german_rhine"
+
+    trigger = {
+        tag = HAN
+		year = 1842
+		has_global_flag = enable_HAN_coup
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+
+    option = {
+        name = "HREBOH17.A"
+		clr_global_flag = enable_HAN_coup
+		# This top one will also trigger if the HRE does not exist
+		random_owned = {
+		   limit = { 
+		      owner = { NOT = { has_country_flag = THU_protected } }
+		   }
+		   owner = { country_event = { id = 150113 days = 14 } }
+		}
+		random_owned = {
+		   limit = { 
+		      owner = { has_country_flag = THU_protected }
+		   }
+		   owner = { country_event = { id = 150114 days = 14 } }
+		}
+    }
+}
+
+### The Braunschweig Rout - Bohemia does not have any previous interests in THU ###
+
+country_event = {
+	id = 150113
+	title = "HREBOH18.T"
+	desc = "HREBOH18.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HREBOH18.A"
+		BOH = {
+		  relation = { who = HAN value = -400 }
+		  diplomatic_influence = { who = HAN value = -400 }
+		}
+		SCA = {
+		  relation = { who = HAN value = 400 }
+		  diplomatic_influence = { who = HAN value = 400 }
+		}
+		badboy = 5
+		prestige = 25
+		536 = { add_core = HAN }
+		537 = { add_core = HAN }
+		inherit = BRA
+    }
+}
+
+### The Braunschweig Failure - The Reichsarmee arrives ###
+
+country_event = {
+	id = 150114
+	title = "HREBOH19.T"
+	desc = "HREBOH19.D"
+	#picture = "german_rhine"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HREBOH19.A"
+		prestige = -5
+		relation = { who = BOH value = -25 }
+		BOH = { country_event = { id = 150115 days = 3 } }
+    }
+}
+
+# The Braunschweig Crisis - Imperial Incident Five
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150115
+	title = "HREBOH20.T"
+	desc = "HREBOH20.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+	
+	# Allow Luneburg to annex BRA but force them to kick out Scandinavia
+
+    option = {
+        name = "HREBOH20.A"
+		536 = { add_core = HAN }
+		537 = { add_core = HAN }
+		relation = { who = DUA value = -5 }
+		badboy = 2
+		create_alliance = HAN 
+		relation = { who = HAN value = 400 }
+	    diplomatic_influence = { who = HAN value = 400 }	
+		SCA = {
+		   relation = { who = HAN value = -400 }
+	       diplomatic_influence = { who = HAN value = -400 }		
+		} 
+		HAN = { inherit = BRA }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10	
+			   modifier = {
+			      factor = 0
+				  THU = { ai = no }
+			   }			
+		}
+    }
+	
+	# Allow Luneburg to annex BRA without attempting to intervene any further.
+	
+    option = {
+        name = "HREBOH20.B"
+		536 = { add_core = BRA }
+		537 = { add_core = BRA }      
+		relation = { who = HAN value = -400 }
+		diplomatic_influence = { who = HAN value = -400 }
+		SCA = {
+		  relation = { who = HAN value = 400 }
+		  diplomatic_influence = { who = HAN value = 400 }
+		}
+	    HAN = { inherit = BRA }
+		ai_chance = {
+			factor = 80	
+			   modifier = {
+			      factor = 0
+				  THU = { ai = no }
+			   }			
+		}
+    }
+	
+	# Save Karl and force him into the Saxon Federation
+
+    option = {
+        name = "HREBOH20.C"
+		badboy = 2
+		536 = { add_core = THU }
+		537 = { add_core = THU }	
+		relation = { who = THU value = 400 }
+		diplomatic_influence = { who = THU value = 400 }
+		SCA = {
+		  relation = { who = THU value = -400 }
+		  diplomatic_influence = { who = THU value = -400 }
+		}
+		# Betrayal
+		relation = { who = HAN value = -400 }
+        diplomatic_influence = { who = HAN value = -400 }	
+	    THU = { inherit = BRA }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10
+			   modifier = {
+			      factor = 0
+				  HAN = { ai = no }
+			   }	
+		}
+    }
+}
+
+## Ministry of War presents scarring report on the state of the Reichsarmee
+
+country_event = { 
+	id = 150116
+	title = "HREBOH21.T"
+	desc = "HREBOH21.D"	
+	picture = "BOH_gov"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		year = 1843
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		NOT = { has_country_flag = the_ministry_of_war }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+    option = {
+        name = "HREBOH21.A"
+		set_country_flag = the_ministry_of_war
+		prestige = -5
+		soldiers = {
+			militancy = 2
+			consciousness = 2
+		}
+		officers = {
+			militancy = 4
+			consciousness = 4
+		}	
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+        BOH = { country_event = { id = 150117 days = 7 } }	
+    }
+}
+
+# The Reichsarmee Reform of YEAR - Imperial Incident Six
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = { 
+	id = 150117
+	title = "HREBOH22.T"
+	desc = "HREBOH22.D"	
+	picture = "bohemian_march"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# Enforce German as a Army Language
+	
+	option = { 
+	name = "HREBOH22.A"
+	    set_country_flag = army_disabled
+		set_country_flag = BOH_powerful_army
+		political_reform = two_year_draft
+	    add_country_modifier = {
+           name = BOH_powerful_reichsarmee 
+	       duration = -1
+	    }
+		any_pop = {
+		    limit = {
+			   has_pop_culture = old_czech
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = CZECH_HATE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 25
+		}
+	}
+	
+	option = { 
+	name = "HREBOH22.B"
+	    set_country_flag = army_disabled
+		set_country_flag = BOH_subpar_army
+		political_reform = two_year_draft		
+	    add_country_modifier = {
+           name = BOH_subpar_reichsarmee 
+	       duration = -1
+	    }
+		any_pop = {
+		    limit = {
+			   OR = {
+			      has_pop_culture = czech
+				  has_pop_culture = north_german
+			   }
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+		any_pop = {
+		    limit = {
+			   has_pop_culture = old_czech
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+	option = { 
+	name = "HREBOH22.C"
+	    set_country_flag = army_disabled
+		set_country_flag = BOH_grand_army
+		political_reform = mandatory_service
+	    add_country_modifier = {
+           name = BOH_grand_reichsarmee 
+	       duration = -1
+	    }
+		any_pop = {
+		    limit = {
+			   OR = {
+			      has_pop_culture = czech
+				  has_pop_culture = north_german
+			   }
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = GERMAN_HATE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 25
+		}
+	}
+}
+
+#################################################################################################
+### The Riot in Salsburg is triggered externally by Danubian Chains and are out of date order ###
+#################################################################################################
+
+# 1841 - A Riot in Salsburg - Imperial Incident Seven
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150118
+	title = "HREBOH23.T"
+	desc = "HREBOH23.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+	
+	# Force Austria to annex Salzburg
+
+    option = {
+        name = "HREBOH23.A"
+		badboy = 2
+		relation = { who = AUS value = 100 }
+		613 = { add_core = AUS }
+		BAV = { release_vassal = SAL set_country_flag = AUS_SAL country_event = { id = 260022 days = 1 } }
+		AUS = { inherit = SAL }		
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10	
+			   modifier = {
+			      factor = 2
+				  has_country_flag = AUS_agreement_GER_active
+			   }			
+		}
+    }
+	
+
+	# Allow diplomatic discussions to continue
+	
+    option = {
+        name = "HREBOH23.B"
+		badboy = -2
+		BAV = { country_event = { id = 260023 days = 1 } }
+        AUS = { country_event = { id = 260024 days = 1 } }
+		ai_chance = {
+			factor = 80		
+		}
+    }	
+	
+	# Force Bavaria to annex Salzburg
+
+    option = {
+        name = "HREBOH23.C"
+		badboy = 2
+		relation = { who = BAV value = 100 }
+		613 = { add_core = BAV }
+		BAV = { inherit = SAL }
+		AUS = { country_event = { id = 260025 days = 1 } }
+		# The punishment for a rogue player that did not read.
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = AUS_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150147
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10	
+			   modifier = {
+			      factor = 0
+				  has_country_flag = AUS_agreement_GER_active
+			   }			
+		}
+    }
+}
+
+# The Incident in Ulm
+
+country_event = { 
+	id = 150119
+	title = "HREBOH24.T"
+	desc = "HREBOH24.D"	
+	picture = "BOH_mob"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BAV
+		year = 1843
+		NOT = { has_country_flag = ulm_gone_wild }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+	}
+	
+	mean_time_to_happen = {
+		days = 62
+	}
+
+    option = {
+        name = "HREBOH24.A"
+		set_country_flag = ulm_gone_wild
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  has_country_modifier = HOLY_ROMAN_EMPEROR
+		   }
+		   country_event = { id = 150120 days = 3 }
+        }
+		random_owned = {
+		   limit = {
+		      owner = {
+		         NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+			  }
+		   }
+		   owner = { country_event = { id = 2600270 days = 3 } }
+        }		
+		prestige = -1
+		soldiers = {
+			militancy = 1
+			consciousness = 1
+		}
+		officers = {
+			militancy = 2
+			consciousness = 2
+		}
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.2
+		   }
+		}
+		any_pop = {
+		    limit = {
+			   has_pop_culture = swabian
+			}
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+		}
+    }
+}
+
+# 1843 - The Question of Ulm - Imperial Incident Eight
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150120
+	title = "HREBOH25.T"
+	desc = "HREBOH25.D"
+	picture = "BOH_mob"
+
+    is_triggered_only = yes
+	
+	# Wuttemburg should annex Ulm
+
+    option = {
+        name = "HREBOH25.A"
+		badboy = 2
+		593 = { add_core = WUR  }
+		WUR = { country_event = { id = 260029 days = 1 } inherit = ULM }
+		create_alliance = WUR
+		relation = { who = WUR value = 400 }
+		relation = { who = BAV value = -100 }
+	    diplomatic_influence = { who = WUR value = 400 }	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = WUR value = -400 }
+	       diplomatic_influence = { who = WUR value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		      tag = BAV
+			  NOT = { has_country_flag = AUS_SAL }
+		   }
+		   relation = { who = WUR value = -400 }
+	       diplomatic_influence = { who = WUR value = -400 }
+           country_event = 260030 		   
+		}
+		any_country = {
+		   limit = {
+		      tag = BAV
+			  has_country_flag = AUS_SAL
+		   }
+		   relation = { who = WUR value = -400 }
+	       diplomatic_influence = { who = WUR value = -400 }
+		   clr_country_flag = AUS_SAL
+		   country_event = 260031
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10	
+			   modifier = {
+			      factor = 5
+				  has_country_flag = AUS_agreement_GER_active
+			   }		   
+		}
+    }
+	
+
+	# Let Bavaria determine the fate of Ulm
+	
+    option = {
+        name = "HREBOH25.B"
+		badboy = -2
+		relation = { who = BAV value = 50 }
+		593 = { add_core = BAV }
+		BAV = { clr_country_flag = AUS_SAL inherit = ULM country_event = { id = 260027 days = 1 } }
+		ai_chance = {
+			factor = 80
+			   modifier = {
+			      factor = 0.6
+				  has_country_flag = AUS_agreement_GER_active
+			   }	
+			   modifier = {
+			      factor = 0
+				  WUR = { ai = no }
+			   }				   
+		}
+    }	
+	
+	# Ulm must remain free
+
+    option = {
+        name = "HREBOH25.C"
+		badboy = 2
+		create_alliance = ULM
+		relation = { who = ULM value = 400 }
+		diplomatic_influence = { who = ULM value = 400 }
+		relation = { who = BAV value = -100 }
+		relation = { who = WUR value = -100 }	
+        # Pro Danubian Wuttemberg		
+		any_country = {
+		   limit = {
+		      tag = WUR
+			}
+			country_event = 270013
+	    }			
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = ULM value = -400 }
+	       diplomatic_influence = { who = ULM value = -400 }		
+		} 
+		BAV = {
+		   country_event = 260028 
+		   relation = { who = ULM value = -400 }
+	       diplomatic_influence = { who = ULM value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		      tag = BAV
+			  has_country_flag = AUS_SAL
+		   }
+		   clr_country_flag = AUS_SAL		   
+		}		
+		# The punishment for a rogue player that did not read.
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = AUS_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150147 
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10	
+			   modifier = {
+			      factor = 0
+				  has_country_flag = AUS_agreement_GER_active
+			   }
+			   modifier = {
+			      factor = 0
+				  WUR = { ai = no }
+			   }			   
+		}
+    }
+}
+
+#################################################################################################
+############################# The Hollowing Warning Event #######################################
+#################################################################################################
+
+### The Hollowing Warning - Bohemia ###
+
+country_event = {
+	id = 150121
+	title = "HREBOH26.T"
+	desc = "HREBOH26.D"
+	picture = "adminstration"
+
+    trigger = {
+        tag = BOH
+		year = 1845
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		NOT = { has_country_flag = hollowing_warning }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 14
+    }
+
+    option = {
+        name = "HREBOH26.A"
+		set_country_flag = hollowing_warning
+		set_country_flag = hollowing_land_reform
+		rich_strata = {
+		   consciousness = -1
+		}
+		poor_strata = {
+		   consciousness = 1
+		}
+		farmers = {
+		   consciousness = 1
+		   militancy = 1
+		}
+		any_country = {
+		   limit = {
+		     any_owned_province = { is_core = GER }
+		   }
+		   country_event = 150122
+		}
+    }
+}
+
+### The Hollowing Warning - Other Countries ###
+
+country_event = {
+	id = 150122
+	title = "HREBOH27.T"
+	desc = "HREBOH27.D"
+	picture = "adminstration"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HREBOH27.A"
+		rich_strata = {
+		   consciousness = -1
+		}
+		poor_strata = {
+		   consciousness = 1
+		}
+		farmers = {
+		   consciousness = 1
+		   militancy = 1
+		}
+    }
+}
+
+#### Graubund Votes for Annexation ####
+
+country_event = { 
+	id = 150123
+	title = "HREBOH28.T"
+	desc = "HREBOH28.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = GRB
+		year = 1845
+		NOT = { has_country_flag = grau_gone_wild }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	# Yay!
+
+    option = {
+        name = "HREBOH28.A"
+		set_country_flag = grau_gone_wild
+		SWI = { country_event = { id = 150124 days = 1 } }
+		ai_chance = {
+			factor = 100	
+		}
+    }
+	
+	# GRAU GOES WILD - Memes
+	
+    option = {
+        name = "HREBOH25.B"
+		set_country_flag = grau_gone_wild
+        prestige = 1000
+		badboy = 24
+		political_reform = mandatory_service
+		government = hms_government
+		add_country_modifier = { name = small_country_draft duration = -1 } 
+		ai_chance = {
+			factor = 0		
+		}
+    }
+}
+
+#### Graubund Votes for Annexation - Switzerland ####
+
+### This will need to be approved by the Emperor... ###
+
+country_event = { 
+	id = 150124
+	title = "HREBOH29.T"
+	desc = "HREBOH29.D"	
+	picture = "belgrade"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+    option = {
+        name = "HREBOH28.A"
+		relation = { who = GRB value = 100 }
+		prestige = 10
+		any_pop = {
+		   consciousness = -1
+		   militancy = -1
+		}		
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  has_country_modifier = HOLY_ROMAN_EMPEROR
+		   }
+		   country_event = { id = 150125 days = 7 }
+        }
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+		   }
+		   country_event = { id = 1501251 days = 7 }
+        }
+    }
+}
+
+# The Graubund Annexation - Imperial Incident Nine
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+# Reminder that doing this will effectively push the Burgundian Sphere further east and Swizerland will be lost.
+
+country_event = {
+	id = 150125
+	title = "HREBOH30.T"
+	desc = "HREBOH30.D"
+	picture = "BOH_throne"
+
+    is_triggered_only = yes
+	
+	# Annexation Absolutely Denied
+	
+    option = {
+        name = "HREBOH30.A"
+		badboy = 2
+		#614 = { add_core = SWI }
+        #611 = { add_core = SWI }
+		#603 = { add_core = SWI }
+		create_alliance = GRB
+		relation = { who = GRB value = 400 }
+	    diplomatic_influence = { who = GRB value = 400 }	
+		relation = { who = SWI value = -400 }
+	    diplomatic_influence = { who = SWI value = -400 }	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = SWI value = 400 }
+	       diplomatic_influence = { who = SWI value = 400 }	
+		   relation = { who = GRB value = -400 }
+	       diplomatic_influence = { who = GRB value = -400 }		
+		} 
+		SWI = { country_event = 270007 }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 20	
+			   modifier = {
+			      factor = 0
+				  SWI = { ai = no }
+			   }				
+		}
+    }
+	
+	# We permit self-determination.
+
+    option = {
+        name = "HREBOH30.B"
+		badboy = -2
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+		SWI = { inherit = GRB }
+		relation = { who = SWI value = -200 }
+	    diplomatic_influence = { who = SWI value = -200 }	   	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = SWI value = 200 }
+	       diplomatic_influence = { who = SWI value = 200 }		
+		} 
+		ai_chance = {
+			factor = 80		
+		}
+    }
+}
+
+# The Graubund Annexation - The Empire is gone and you can't stop this from happening 
+
+country_event = {
+	id = 1501251
+	title = "HREBOHF30.T"
+	desc = "HREBOHF30.D"
+	#picture = "german_rhine"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "HREBOHF30.A"
+		prestige = -1
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+		SWI = { inherit = GRB }
+		relation = { who = SWI value = -200 }
+	    diplomatic_influence = { who = SWI value = -200 }	   	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = SWI value = 200 }
+	       diplomatic_influence = { who = SWI value = 200 }		
+		} 
+    }
+}
+
+#################################################################################################################
+############################# DOING SOMETHING ABOUT THE INEVITABLE FAMINE #######################################
+#################################################################################################################
+
+#### LAND REFORM - NOBILITY ARE NOT ANNOYED BY IMPERIAL GRACE ####
+
+country_event = {
+	id = 150126
+	title = "HREBOH31.T"
+	desc = "HREBOH31.D"
+	picture = "BOH_gov"
+
+    trigger = {
+        tag = BOH
+		year = 1845
+		has_country_flag = hollowing_land_reform
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		NOT = { check_variable = { which = IMPERIAL_GRACE value = 14 } }
+		NOT = { has_country_flag = hollowing_land_reform_passed }
+		NOT = { has_global_flag = THE_HOLLOWING }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 100
+    }
+
+    option = {
+        name = "HREBOH31.A"
+		add_country_modifier = { name = HRE_large_land_reform duration = 1825 } 
+	    any_country = { 
+	    limit = {
+	       OR = {
+	           primary_culture = north_german
+	           primary_culture = south_german
+	           primary_culture = rheinish
+			   primary_culture = swabian
+	       }
+		   NOT = { tag = RHI }
+		}
+		add_country_modifier = { name = HRE_large_land_reform duration = 1825 } 
+	    }	
+		clr_country_flag = hollowing_land_reform
+		set_country_flag = hollowing_land_reform_passed
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+		farmers = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = 2
+	    }
+	    ai_chance = {
+		   factor = 50	
+	    }
+    }
+	
+    option = {
+        name = "HREBOH31.B"
+		clr_country_flag = hollowing_land_reform
+		set_country_flag = hollowing_land_reform_passed
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		farmers = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		}
+	    ai_chance = {
+		   factor = 50	
+	    }
+    }
+}
+
+#### LAND REFORM - NOBILITY ARE ANNOYED BY IMPERIAL GRACE ####
+
+country_event = {
+	id = 1501260
+	title = "HREBOH31.T"
+	desc = "HREBOH31.D"
+	picture = "BOH_gov"
+
+    trigger = {
+        tag = BOH
+		year = 1845
+		has_country_flag = hollowing_land_reform
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+	    check_variable = { which = IMPERIAL_GRACE value = 14 }
+		NOT = { has_country_flag = hollowing_land_reform_passed }
+		NOT = { has_global_flag = THE_HOLLOWING }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 100
+    }
+
+    option = {
+        name = "HREBOH31.A"
+		add_country_modifier = { name = HRE_small_land_reform duration = 1825 } 
+	    any_country = { 
+	    limit = {
+	       OR = {
+	           primary_culture = north_german
+	           primary_culture = south_german
+	           primary_culture = rheinish
+			   primary_culture = swabian
+	       }
+		   NOT = { tag = RHI }
+		}
+		add_country_modifier = { name = HRE_small_land_reform duration = 1825 } 
+	    }	
+		clr_country_flag = hollowing_land_reform
+		set_country_flag = hollowing_land_reform_passed
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+		}
+		farmers = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = 1
+	    }
+	    ai_chance = {
+		   factor = 50	
+	    }
+    }
+	
+    option = {
+        name = "HREBOH31.B"
+		clr_country_flag = hollowing_land_reform
+		set_country_flag = hollowing_land_reform_passed
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		farmers = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+		}
+	    ai_chance = {
+		   factor = 50	
+	    }
+    }
+}
+
+#################################################################################################################
+###################################### T H E  H O L L O W I N G #################################################
+#################################################################################################################
+
+# “Making a famine where abundance lies, Thy self thy foe, to thy sweet self too cruel.”
+
+country_event = {
+	id = 150127
+	title = "HREBOH32.T"
+	desc = "HREBOH32.D"
+	#picture = "german_rhine"
+	
+	major = yes
+
+    trigger = {
+	    OR = {
+           tag = BOH
+		   tag = HLR
+		}
+		year = 1846
+		NOT = { has_global_flag = THE_HOLLOWING }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+
+    option = {
+        name = "HREBOH32.A"
+		prestige = -5
+		set_global_flag = THE_HOLLOWING
+		any_country = {
+		   limit = { tag = BRG exists = yes }
+		   country_event = 6530090 
+		}
+		any_country = {
+		   limit = { tag = PBG exists = yes }
+		   country_event = 6530091 
+		}
+		# Apocalyptic Hollowing
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { check_variable = { which =  HOLLOWING_CHECK value = 10 } } }
+		   }
+		   owner = {
+		      country_event = 150128
+		   }
+		}
+        # Catastrophic Hollowing
+		random_owned = {
+		   limit = {
+		      owner = { check_variable = { which =  HOLLOWING_CHECK value = 10 } NOT = { check_variable = { which =  HOLLOWING_CHECK value = 11 } } }
+		   }
+		   owner = {
+		      country_event = 150129 
+		   }
+		}
+        # Severe Hollowing
+		random_owned = {
+		   limit = {
+		      owner = { check_variable = { which =  HOLLOWING_CHECK value = 11 } NOT = { check_variable = { which =  HOLLOWING_CHECK value = 12 } } }
+		   }
+		   owner = {
+		      country_event = 150130
+		   }
+		}
+        # Average Hollowing
+		random_owned = {
+		   limit = {
+		      owner = { check_variable = { which =  HOLLOWING_CHECK value = 12 } }
+		   }
+		   owner = {
+		      country_event = 150131 
+		   }
+		}		
+    }
+}
+
+country_event = {
+	id = 150128
+	title = "HREBOH33.T"
+	desc = "HREBOH33.D"
+	picture = "famine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH33.A"
+	    add_country_modifier = { name = apocalyptic_hollowing duration = 1825 } 
+		any_country = {
+		   limit = {
+	           OR = {
+	               primary_culture = north_german
+	               primary_culture = south_german
+	               primary_culture = rheinish
+			       primary_culture = swabian
+				   tag = SCA
+				   tag = BRG
+				   tag = PBG
+	           }
+		   }
+		   add_country_modifier = { name = apocalyptic_hollowing duration = 1825 } 
+	    }			   
+    }
+}
+
+country_event = {
+	id = 150129
+	title = "HREBOH34.T"
+	desc = "HREBOH34.D"
+	picture = "famine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH34.A"
+		add_country_modifier = { name = catastropic_hollowing duration = 1825 }
+		any_country = {
+		   limit = {
+	           OR = {
+	               primary_culture = north_german
+	               primary_culture = south_german
+	               primary_culture = rheinish
+			       primary_culture = swabian
+				   tag = SCA
+				   tag = BRG
+				   tag = PBG
+	           }
+		   }
+		   add_country_modifier = { name = catastropic_hollowing duration = 1825 } 
+	    }		
+    }
+}
+
+country_event = {
+	id = 150130
+	title = "HREBOH35.T"
+	desc = "HREBOH35.D"
+	picture = "famine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH35.A"
+	    add_country_modifier = { name = severe_hollowing duration = 1825 }
+		any_country = {
+		   limit = {
+	           OR = {
+	               primary_culture = north_german
+	               primary_culture = south_german
+	               primary_culture = rheinish
+			       primary_culture = swabian
+				   tag = SCA
+				   tag = BRG
+				   tag = PBG
+	           }
+		   }
+		   add_country_modifier = { name = severe_hollowing duration = 1825 } 
+	    }	
+    }
+}
+
+country_event = {
+	id = 150131
+	title = "HREBOH36.T"
+	desc = "HREBOH36.D"
+	picture = "famine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH36.A"
+	    add_country_modifier = { name = average_hollowing duration = 1825 }
+		any_country = {
+		   limit = {
+	           OR = {
+	               primary_culture = north_german
+	               primary_culture = south_german
+	               primary_culture = rheinish
+			       primary_culture = swabian
+				   tag = SCA
+				   tag = BRG
+				   tag = PBG
+	           }
+		   }
+		   add_country_modifier = { name = average_hollowing duration = 1825 } 
+	    }	
+    }
+}
+
+## Province Events for Hollowing Province Modifiers
+
+province_event = {
+	id = 1501320
+	title = "HREBOH370.T"
+	desc = "HREBOH370.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = light_hollowing
+            NOT = { has_global_flag = HOLLOWING_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { has_province_modifier = light_hollowing_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH37.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = average_hollowing_province
+		    remove_province_modifier = severe_hollowing_province
+			remove_province_modifier = catastropic_hollowing_province
+		    remove_province_modifier = apocalyptic_hollowing_province
+			add_province_modifier = {
+					name = light_hollowing_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 150132
+	title = "HREBOH37.T"
+	desc = "HREBOH37.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = average_hollowing
+            NOT = { has_global_flag = HOLLOWING_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { is_core = SLO }
+		NOT = { has_province_modifier = average_hollowing_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH37.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = light_hollowing_province
+		    remove_province_modifier = severe_hollowing_province
+			remove_province_modifier = catastropic_hollowing_province
+		    remove_province_modifier = apocalyptic_hollowing_province
+			add_province_modifier = {
+					name = average_hollowing_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 150133
+	title = "HREBOH38.T"
+	desc = "HREBOH38.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = severe_hollowing
+            NOT = { has_global_flag = HOLLOWING_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { is_core = SLO }
+		NOT = { has_province_modifier = severe_hollowing_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH38.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = light_hollowing_province
+		    remove_province_modifier = average_hollowing_province
+		    remove_province_modifier = catastropic_hollowing_province
+		    remove_province_modifier = apocalyptic_hollowing_province
+			add_province_modifier = {
+					name = severe_hollowing_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 150134
+	title = "HREBOH39.T"
+	desc = "HREBOH39.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = catastropic_hollowing	
+            NOT = { has_global_flag = HOLLOWING_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { is_core = SLO }
+		NOT = { has_province_modifier = catastropic_hollowing_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH39.A"
+		state_scope = { 
+		   any_owned = {
+		   remove_province_modifier = light_hollowing_province
+		   remove_province_modifier = average_hollowing_province
+		   remove_province_modifier = severe_hollowing_province
+		   remove_province_modifier = apocalyptic_hollowing_province
+			add_province_modifier = {
+					name = catastropic_hollowing_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 150135
+	title = "HREBOH40.T"
+	desc = "HREBOH40.D"
+	
+	trigger = {
+		owner = {
+			has_country_modifier = apocalyptic_hollowing
+            NOT = { has_global_flag = HOLLOWING_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { is_core = SLO }
+		NOT = { has_province_modifier = apocalyptic_hollowing_province }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH40.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = light_hollowing_province
+		    remove_province_modifier = average_hollowing_province
+		    remove_province_modifier = severe_hollowing_province
+		    remove_province_modifier = catastropic_hollowing_province
+			add_province_modifier = {
+					name = apocalyptic_hollowing_province
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+province_event = {
+	id = 150136
+	title = "HREBOH41.T"
+	desc = "HREBOH41.D"
+	
+	trigger = {
+		owner = {
+            has_global_flag = HOLLOWING_END
+			NOT = { has_country_flag = SCA_nuked_hollowing }
+			NOT = { has_country_flag = ended_local_hollowing } 
+            NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }			
+		}
+		OR = {
+		   is_core = GER
+		   is_core = RHI
+           is_core = SIL		   
+		}
+		NOT = { is_core = SLO }
+		NOT = { has_province_modifier = hollowing_aftermath }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "HREBOH41.A"
+		state_scope = { 
+		    any_owned = {
+		    remove_province_modifier = light_hollowing_province
+		    remove_province_modifier = average_hollowing_province
+		    remove_province_modifier = severe_hollowing_province
+		    remove_province_modifier = catastropic_hollowing_province
+			remove_province_modifier = apocalyptic_hollowing_province
+			add_province_modifier = {
+					name = hollowing_aftermath
+					duration = -1
+			}
+			}
+		}
+	}
+}
+
+## Event for the End of the Hollowing
+
+country_event = {
+	id = 1501370
+	title = "HREBOH42.T"
+	desc = "HREBOH42.D"
+	#picture = "german_rhine"
+
+    trigger = {
+	    owns = 625
+		has_global_flag = THE_HOLLOWING
+		NOT = { 
+		   has_country_modifier = severe_hollowing
+		   has_country_modifier = catastropic_hollowing
+		   has_country_modifier = apocalyptic_hollowing
+           has_country_modifier = average_hollowing
+		   has_country_modifier = light_hollowing
+		}		
+		NOT = { has_global_flag = HOLLOWING_END }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+
+    option = {
+        name = "HREBOH42.A"
+		prestige = 5
+		set_global_flag = HOLLOWING_END	
+    }
+}
+
+## Event for the Final End of the Hollowing
+
+country_event = {
+	id = 150137
+	title = "HREBOH43.T"
+	desc = "HREBOH43.D"
+	picture = "german_rhine"
+
+    trigger = {
+	    owns = 625
+		year = 1896
+		has_global_flag = HOLLOWING_END
+		NOT = { has_global_flag = HOLLOWING_AFTERMATH_END }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 31
+    }
+
+    option = {
+        name = "HREBOH43.A"
+		prestige = 5
+		set_global_flag = HOLLOWING_AFTERMATH_END
+		any_owned = {
+		   remove_province_modifier = hollowing_aftermath
+		}
+		any_country = {
+		   limit = { any_owned_province = { OR = { is_core = GER is_core = RHI is_core = SIL } } }
+		   country_event = 150138
+		}
+		any_country = {
+		   limit = { any_owned_province = { OR = { is_core = DIE is_core = NET is_core = DFR } } }
+		   country_event = 1501380
+		}
+    }
+}
+
+country_event = {
+	id = 150138
+	title = "HREBOH44.T"
+	desc = "HREBOH44.D"
+	picture = "german_rhine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH44.A"
+		any_owned = {
+		   remove_province_modifier = hollowing_aftermath
+		}
+    }
+}
+
+country_event = {
+	id = 1501380
+	title = "HREBOH440.T"
+	desc = "HREBOH440.D"
+	picture = "german_rhine"
+
+    is_triggered_only = yes
+	fire_only_once = yes
+
+    option = {
+        name = "HREBOH440.A"
+		clr_global_flag = dutch_potato_blight
+		any_owned = {
+		   remove_province_modifier = dutch_aftermath
+		}
+    }
+}
+
+#################################################################################################################
+############################ Now back to our regularly scheduled Imperialism. ###################################
+#################################################################################################################
+
+# The Panic in Prague - Imperial Incident Ten
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150139
+	title = "HREBOH45.T"
+	desc = "HREBOH45.D"
+	picture = "streetriot"
+
+    trigger = {
+	    tag = BOH
+		has_global_flag = THE_HOLLOWING
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+        NOT = { has_country_flag = BOH_hollowing_responce }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 7
+    }
+
+    option = {
+        name = "HREBOH45.A"
+		
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = average_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = average_hollowing
+		      add_country_modifier = { name = light_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = severe_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = severe_hollowing
+		      add_country_modifier = { name = average_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = catastropic_hollowing  }
+		   }
+		   owner = {
+		      remove_country_modifier = catastropic_hollowing 
+		      add_country_modifier = { name = severe_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = apocalyptic_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = apocalyptic_hollowing
+		      add_country_modifier = { name = catastropic_hollowing duration = 1810 } 
+		   }
+		}
+		
+	    any_country = { 
+	       limit = { has_country_modifier = average_hollowing }
+		   remove_country_modifier = average_hollowing
+		   add_country_modifier = { name = light_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = severe_hollowing }
+		   remove_country_modifier = severe_hollowing
+		   add_country_modifier = { name = average_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = catastropic_hollowing  }
+		   remove_country_modifier = catastropic_hollowing 
+		   add_country_modifier = { name = severe_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = apocalyptic_hollowing }
+		   remove_country_modifier = apocalyptic_hollowing
+		   add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+	    }
+
+	    any_country = { 
+	       limit = { 
+		       debt_law = serfdom 
+			   OR = {
+	              primary_culture = north_german
+	              primary_culture = south_german
+	              primary_culture = rheinish
+			      primary_culture = swabian
+			   }
+		       NOT = { tag = RHI }			   			   
+		   }
+		   political_reform = debtors_prisons
+	    }
+		
+		clr_country_flag = BOH_hollowing_responce
+		
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -6
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -6
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+			ideology = {
+				value = liberal
+				factor = -0.1
+			}
+			ideology = {
+				value = conservative
+				factor = 0.1
+			}
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = -20
+	    }
+		ai_chance = {
+			factor = 75
+		}
+    }
+	
+    option = {
+        name = "HREBOH45.B"
+		clr_country_flag = BOH_hollowing_responce
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -9
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 4
+			}
+			ideology = {
+				value = conservative
+				factor = -0.1
+			}
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = -20
+	    }
+	    ai_chance = {
+		   factor = 25	
+	    }
+    }
+}
+
+# You can't do anything now Siggy. You can only stare as the children die because of what you did.
+
+# There is no responce to the Hollowing. Only Death.
+
+country_event = {
+	id = 1501391
+	title = "HREBOHF45.T"
+	desc = "HREBOHF45.D"
+	#picture = "german_rhine"
+
+    trigger = {
+	    tag = BOH
+		has_global_flag = THE_HOLLOWING
+		NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+    }
+	
+	fire_only_once = yes
+
+    mean_time_to_happen =  {
+        days = 1
+    }
+
+    option = {
+        name = "HREBOHF45.A"
+		prestige = -1
+     }
+}
+
+#### Chaos in Munster - Dietrich VI has taken over and everyone is starving ####
+
+country_event = { 
+	id = 150140
+	title = "HREBOH46.T"
+	desc = "HREBOH46.D"	
+	picture = "streetriot"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = MNR
+		year = 1847
+		NOT = { has_country_flag = munster_is_doomed }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	# AAAAAAAAAA
+
+    option = {
+        name = "HREBOH46.A"
+		set_country_flag = munster_is_doomed
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 3
+			}
+			ideology = {
+				value = conservative
+				factor = -0.1
+			}
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}		
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  has_country_modifier = HOLY_ROMAN_EMPEROR
+		   }
+		   country_event = { id = 150141 days = 7 }
+        }
+		any_country = { 
+		   limit = {
+		      tag = BOH
+			  NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+		   }
+		   country_event = { id = 1501411 days = 7 }
+        }
+    }
+}
+
+
+# Chaos in Munster - Imperial Incident Eleven
+# Localization Note - Imperial Incidents should always have red text on the option that uses Grace.
+
+country_event = {
+	id = 150141
+	title = "HREBOH47.T"
+	desc = "HREBOH47.D"
+	picture = "prussian_constitution"
+
+    is_triggered_only = yes
+	
+	# Order the Magdeburg bourgeois
+	
+    option = {
+        name = "HREBOH47.A"
+		badboy = 2	
+		create_alliance = MNR
+		relation = { who = MNR value = 400 }
+	    diplomatic_influence = { who = MNR value = 400 }
+        MNR = { set_country_flag = MNR_BOH }	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = THIS value = -50 }
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		} 
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = BRG_agreement_GER_active }
+		   }
+		   owner = {
+		      country_event = 150146
+		   }
+		}
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 1
+	    }
+		ai_chance = {
+			factor = 10
+			   modifier = {
+			      factor = 0
+				  MNR = { ai = no }
+			   }	
+			   modifier = {
+			      factor = 0
+				  has_country_flag = BRG_agreement_GER_active
+			   }				   
+		}
+    }
+	
+	# The Empire is on fire and you are telling me that you can't stop some fucking Burgundophiles from doing some...
+
+    option = {
+        name = "HREBOH47.B"
+        MNR = { country_event = { id = 150142 days = 1 } }
+		ai_chance = {
+			factor = 90	
+		}
+    }
+}
+
+# Chaos in Munster - You cannot stop Munster being overthrown by non Bohemian factions
+
+country_event = {
+	id = 1501411
+	title = "HREBOHF47.T"
+	desc = "HREBOHF47.D"
+	picture = "prussian_constitution"
+
+    is_triggered_only = yes
+	
+    option = {
+        name = "HREBOHF47.A"
+		prestige = -1
+        MNR = { country_event = { id = 150142 days = 1 } }
+    }
+}
+
+# We have been abandoned by Prague - Munster is a bit special with its outcomes.
+
+country_event = {
+	id = 150142
+	title = "HREBOH48.T"
+	desc = "HREBOH48.D"
+	picture = "prussian_constitution"
+
+    is_triggered_only = yes
+	
+	# Frisian Faction takes over
+	
+    option = {
+        name = "HREBOH48.A"
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   create_alliance = THIS
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}
+		BOH = {
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		} 
+		ai_chance = {
+			factor = 65			   
+		}
+    }
+	
+	# A Pro-Scandinavian Faction takes over
+	
+    option = {
+        name = "HREBOH48.B"
+		create_alliance = SCA
+		relation = { who = SCA value = 400 }
+		set_country_flag = MNR_SCA
+	    diplomatic_influence = { who = SCA value = 400 }	
+		BOH = {
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		} 
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		}
+		ai_chance = {
+			factor = 25			   
+		}
+    }
+	
+	# The Republicans appear and take over forming a Revolutionary Republic
+
+    option = {
+        name = "HREBOH47.B"
+		government = democracy
+		election = yes
+		nationalvalue = nv_liberty
+		ruling_party_ideology = liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = secret_ballots
+		BOH = {
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = MNR value = -400 }
+	       diplomatic_influence = { who = MNR value = -400 }		
+		}
+		ai_chance = {
+			factor = 10	
+		}
+    }
+}
+
+
+## set_global_flag = liberal_revolutions_should_now_fire
+
+
+#### Saxony Unification - Time to take down THU ####
+
+country_event = { 
+	id = 150143
+	title = "HREBOH49.T"
+	desc = "HREBOH49.D"	
+	picture = "bohemian_march"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = HAN
+		year = 1849
+		NOT = { has_country_flag = munster_is_doomed }
+		NOT = { has_global_flag = GREAT_GERMAN_WAR_ACTIVE }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+        NOT = { has_global_flag = LOCK_IMPERIAL_EVENTS }
+	}
+	
+	mean_time_to_happen = {
+		days = 150
+		   modifier = {
+		      factor = 0.01
+		      has_country_flag = start_war_now_HAN
+		   } 
+	}
+
+    option = {
+        name = "HREBOH49.A"
+		set_country_flag = enable_saxony
+		clr_country_flag = start_war_now_HAN
+		random_owned = {
+		    limit = {
+		       owner = {
+			      in_sphere = BOH
+			   }
+			}
+			owner = { set_country_flag = SAX_loyal_to_bohemia }
+	    }
+		leave_alliance = BRG
+		relation = { who = BRG value = -400 }
+	    diplomatic_influence = { who = BRG value = -400 }	
+		leave_alliance = PBG
+		relation = { who = PBG value = -400 }
+	    diplomatic_influence = { who = PBG value = -400 }	
+		any_country = {
+		   limit = {
+		      OR = { 
+			    tag = SCA
+				tag = BOH
+				tag = BRG
+				tag = PBG
+		      }
+		   }
+		   leave_alliance = HAN
+		   relation = { who = HAN value = -400 }
+	       diplomatic_influence = { who = HAN value = -400 }	
+		   leave_alliance = THU
+		   relation = { who = THU value = -400 }
+	       diplomatic_influence = { who = THU value = -400 }			   
+		}
+	    add_country_modifier = {
+				 name = small_country_draft
+				 duration = 1095
+		}
+		THU = {
+		   country_event = 150145
+	       add_country_modifier = {
+			 name = small_country_draft
+			 duration = 1095
+		   }
+		}
+		BOH = { country_event = 150144 }
+	    war = {
+		target = THU
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+		}
+    }
+}
+
+#### Bohemia - Cracks around the Edges ####
+# Doing this is extremely punishing as its seen as a illegal action. You don't get II since its irrelevent at this stage due to SGF appearing only at most a month or two after this.
+# Removed in the process of trying to work out 2GGW.
+
+country_event = { 
+	id = 150144
+	title = "HREBOH50.T"
+	desc = "HREBOH50.D"	
+	picture = "bohemian_march"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+    #option = {
+    #    name = "HREBOH50.A"
+	#	badboy = 10
+	#	prestige = -25
+	#   war = {
+	#	target = HAN
+	#		attacker_goal = {
+	#			casus_belli = conquest_any
+	#		}
+	#		defender_goal = {
+	#			casus_belli = status_quo
+	#		}
+	#	}
+	#   war = {
+	#	target = THU
+	#		attacker_goal = {
+	#			casus_belli = conquest_any
+	#		}
+	#		defender_goal = {
+	#			casus_belli = status_quo
+	#		}
+	#	}
+    #    THU = {
+	#       add_country_modifier = {
+	#	      name = a_defencive_stance
+	#	      duration = 1095
+	#	   }
+	#	}
+    #    HAN = {
+	#      add_country_modifier = {
+	#	      name = a_defencive_stance
+	#	      duration = 1095
+	#	   }
+	#	}
+	#	ai_chance = {
+	#		factor = 25
+	#	}
+    #}
+	
+	# Of course you'll get a free decision to nuke Saxony later.
+	
+    option = {
+        name = "HREBOH50.B"
+		prestige = 5
+		set_country_flag = delete_saxony
+		ai_chance = {
+			factor = 75
+		}
+    }
+}
+
+# THU notification event about HAN invading
+
+country_event = { 
+	id = 150145
+	title = "HREBOH51.T"
+	desc = "HREBOH51.D"	
+	picture = "bohemian_march"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH51.A"
+		random_owned = {
+		    limit = {
+		       owner = {
+			      in_sphere = BOH
+			   }
+			}
+			owner = { set_country_flag = SAX_loyal_to_bohemia }
+	    }
+		set_country_flag = enable_saxony
+        prestige = 1
+	}
+}
+
+##### Events for breaking Hungarian Conference Treaties for the Player #######
+
+# Player has broken BRG treaty
+
+country_event = { 
+	id = 150146
+	title = "HREBOH52.T"
+	desc = "HREBOH52.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH52.A"
+		clr_country_flag = BRG_agreement_GER_active
+        relation = { who = BRG value = -400 }
+		relation = { who = PBG value = -400 }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 2
+	    }
+	}
+}
+
+# Player has broken AUS treaty
+
+country_event = { 
+	id = 150147
+	title = "HREBOH53.T"
+	desc = "HREBOH53.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH53.A"
+		clr_country_flag = AUS_agreement_GER_active
+        relation = { who = AUS value = -400 }
+		diplomatic_influence = { who = AUS value = -400 }
+        relation = { who = BAV value = -400 } 
+        diplomatic_influence = { who = BAV value = -400 }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = 2
+	    }
+	}
+}
+
+
+##############################################################################
+##### Götterdämmerung - The Final Imperial Incident - 2GGW or Collapse #######
+##############################################################################
+
+# 150148 - The ID is just a meme
+
+country_event = { 
+	id = 666666
+	title = "HREBOH54.T"
+	desc = "HREBOH54.D"	
+	picture = "siggy"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# We have no choice. Prepare the Abdication.
+	
+    option = {
+        name = "HREBOH54.A"
+		clr_country_flag = second_great_german_war_possible
+		end_war = HAN
+		end_war = THU
+		set_country_flag = delete_saxony
+		country_event = 150149
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	# Delenda est Danubia
+	
+    option = {
+        name = "HREBOH54.B"
+		set_global_flag = LOCK_IMPERIAL_EVENTS
+        relation = { who = DUA value = -400 }
+		leave_alliance = DUA 
+        relation = { who = BRG value = -400 } 
+		relation = { who = PBG value = -400 } 
+        relation = { who = SCA value = -400 }
+		leave_alliance = SGF
+		relation = { who = SGF value = -400 } 
+		diplomatic_influence = { who = SGF value = -400 } 
+		clr_country_flag = second_great_german_war_possible
+		# 2GGW Master Event - We are now at DEFCON 1
+		country_event = 150152
+		badboy = -25
+	    war = {
+		target = SGF
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+		SGF = { add_country_modifier = { name = taiping_draft duration = 1095 } }
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = -20
+	    }		
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+########################################################################################################
+############### SGF has formed. We killed the Holy Roman Empire, but what about a Elbian Ideal... ######
+########################################################################################################
+
+country_event = {
+	id = 6666661
+	title = "HREBOHF54.T"
+	desc = "HREBOHF54.D"
+	picture = "german_rhine"
+
+    is_triggered_only = yes
+	
+    option = {
+        name = "HREBOHF54.A"
+        prestige = 3
+		any_pop = {
+		   consciousness = 1
+		   militancy = -1
+		}
+    }
+}
+
+##############################################################################
+############### THE END OF THE HOLY ROMAN EMPIRE ############################
+##############################################################################
+
+#### Who can bear this disgrace, which weighs down upon a nation which was once so glorious?—may God improve things, if it is still possible to improve them! 
+
+### Siggy on Suicide Watch
+
+country_event = { 
+	id = 150149
+	title = "HREBOHF54.T"
+	desc = "HREBOHF54.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes 
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOHF54.A"
+		prestige_factor = -0.3
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = -20
+	    }
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+		   }
+		   country_event = 150164
+		}
+		any_country = {
+		   limit = {
+		       OR = {
+			     tag = BRG
+				 tag = PBG
+			     tag = DUA
+			     tag = SCA
+		       }
+			   exists = yes
+		   }
+		   country_event = 150163
+		}
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}
+	}
+}
+
+#### 2GGW Triggers
+
+#### Manual Activiation Via 2GGW Decision
+
+### second_great_german_war_possible removed on Decision
+
+country_event = { 
+	id = 150150
+	title = "HREBOH55.T"
+	desc = "HREBOH55.D"	
+	picture = "BOH_throne"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+	   badboy = -25
+	}
+	
+    option = {
+        name = "HREBOH55.A"
+		set_global_flag = LOCK_IMPERIAL_EVENTS
+        relation = { who = DUA value = -400 }
+		leave_alliance = DUA 
+        relation = { who = BRG value = -400 } 
+		relation = { who = PBG value = -400 } 
+        relation = { who = SCA value = -400 }
+		# 2GGW Master Event - We are now at DEFCON 1	
+		country_event = 150152		
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = -20
+	    }
+	}
+}
+
+#### Automatic on Grace Overflow
+
+country_event = { 
+	id = 150151
+	title = "HREBOH56.T"
+	desc = "HREBOH56.D"	
+	picture = "BOH_throne"
+	
+    trigger = {
+	    tag = BOH
+		has_country_modifier = HOLY_ROMAN_EMPEROR	
+        check_variable = { which = IMPERIAL_GRACE value = 16 }
+    }	
+	
+	fire_only_once = yes
+	
+	immediate = {
+	   badboy = -25
+	}
+
+    option = {
+        name = "HREBOH56.A"
+		set_global_flag = LOCK_IMPERIAL_EVENTS
+		clr_country_flag = second_great_german_war_possible
+        relation = { who = DUA value = -400 }
+		leave_alliance = DUA 
+        relation = { who = BRG value = -400 } 
+		relation = { who = PBG value = -400 } 
+        relation = { who = SCA value = -400 }
+		# 2GGW Master Event - We are now at DEFCON 1
+		country_event = 150152		
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = -20
+	    }
+	}
+}
+
+########################################
+########## 2GGW Master Event ###########
+########################################
+
+#### The calm before the storm....
+#### We are firing the nukes in four
+
+country_event = { 
+	id = 150152
+	title = "HREBOH57.T"
+	desc = "HREBOH57.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH57.A"
+		# Eat shit and die. You just blew up the Treaty of Paris.
+		badboy = 24
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { has_country_flag = pacifism_disabled } }
+		   }
+		   owner = {
+		      add_country_modifier = {
+			     name = BOH_anti_war_ruling_class
+				 duration = -1
+		      }
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { has_country_flag = army_disabled } }
+		   }
+		   owner = {
+		      add_country_modifier = {
+			     name = BOH_incapable_army
+				 duration = -1
+		      }
+			  set_country_flag = BOH_incapable_army
+		   }
+		}
+		SCA = { country_event = { id = 150154 days = 1 } }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   } 
+		   country_event = { id = 150153 days = 2 } 
+		}
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+			  NOT = { vassal_of = BRG }
+			  NOT = { vassal_of = PBG }
+			  NOT = { war_with = THU }
+			  NOT = { war_with = HAN }
+			  NOT = { tag = SAX }
+			  NOT = { tag = SGF }
+		   }
+		   country_event = { id = 150155 days = 4 }
+		}	
+		random_owned = {
+		    limit = {
+			   owner = {
+			      NOT = { has_global_flag = BCW_AVOIDED }
+			   }
+			}
+			owner = { country_event = { id = 150156 days = 7 } }
+	    }
+		random_owned = {
+		    limit = {
+			   owner = {
+			      has_global_flag = BCW_AVOIDED 
+			   }
+			}
+			owner = { country_event = { id = 1501561 days = 7 } }
+	    }       		
+	}
+}
+
+#### BRG - Enact General Mobilization
+#### We are firing the nukes in three
+
+#### Burgundy also marches into Oldenburg to create a wall ####
+
+country_event = { 
+	id = 150153
+	title = "HREBOH58.T"
+	desc = "HREBOH58.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH58.A"
+		war_exhaustion = -100
+		create_vassal = OLD
+		OLD = { country_event = 1501530 }
+		any_greater_power = {
+           limit = {
+              NOT = { tag = SCA }
+			  NOT = { tag = THIS }
+			  alliance_with = THIS
+           }
+           leave_alliance = THIS
+           relation = { who = THIS value = -25 }		
+        }
+        create_alliance = SCA		
+		relation = { who = SCA value = 400 }
+		add_country_modifier = {
+		   name = BRG_2GGW
+		   duration = -1
+		}
+	}
+}
+
+#### OLD - Notification of Intervention
+
+country_event = { 
+	id = 1501530
+	title = "HREBOH580.T"
+	desc = "HREBOH580.D"	
+    picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH58.A"
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   create_alliance = THIS
+           relation = { who = THIS value = 400 } 
+           diplomatic_influence = { who = THIS value = 400 }
+		}
+		any_greater_power = {
+		   limit = {
+		      NOT = { tag = BRG }
+			  NOT = { tag = PBG }
+		   }
+           relation = { who = THIS value = -400 } 
+           diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+	}
+}
+
+#### SCA - Enact General Mobilization
+#### We are firing the nukes in two
+
+country_event = { 
+	id = 150154
+	title = "HREBOH59.T"
+	desc = "HREBOH59.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH59.A"
+		war_exhaustion = -100
+		any_greater_power = {
+           limit = {
+              NOT = { tag = BRG }
+			  NOT = { tag = PBG }
+			  NOT = { tag = THIS }
+           }
+           leave_alliance = SCA
+           relation = { who = SCA value = -25 }		
+        }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+           create_alliance = SCA		
+		   relation = { who = SCA value = 400 }
+		}
+		add_country_modifier = {
+		   name = SCA_2GGW
+		   duration = -1
+		}
+	}
+}
+
+#### HRE Tags - Align NOW - SCA tags go to BRG for mechanics purposes ###
+#### We are firing the nukes in one ###
+
+country_event = { 
+	id = 150155
+	title = "HREBOH60.T"
+	desc = "HREBOH60.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+		
+    option = {
+        name = "HREBOH60.A"
+		any_greater_power = {
+		   limit = {
+		      NOT = { tag = BRG }
+			  NOT = { tag = PBG }
+		   }
+           relation = { who = THIS value = -400 } 
+           diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   create_alliance = THIS
+           relation = { who = THIS value = 400 } 
+           diplomatic_influence = { who = THIS value = 400 }
+		}
+		military_access = BRG
+		military_access = PBG
+ 		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				  OR = {
+				     in_sphere = BRG
+					 in_sphere = PBG
+				  }
+			   }
+			   modifier = {
+			      factor = 4
+				  OR = {
+				     tag = BAV
+					 tag = AUS
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = SCA
+				  NOT = { tag = BAV }
+				  NOT = { tag = AUS }
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = BOH
+				  NOT = { tag = BAV }
+				  NOT = { tag = AUS }
+			   }	   		
+		} 
+	}
+		
+    option = {
+        name = "HREBOH60.B"
+		set_country_flag = restore_scandinavian_SOI_GGW
+		any_greater_power = {
+		   limit = {
+		      NOT = { tag = BRG }
+			  NOT = { tag = PBG }
+		   }
+           relation = { who = THIS value = -400 } 
+           diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   create_alliance = THIS
+           relation = { who = THIS value = 400 } 
+           diplomatic_influence = { who = THIS value = 400 }
+		}
+		military_access = BRG
+		military_access = PBG
+ 		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     tag = BAV
+					 tag = AUS
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     in_sphere = BRG
+					 in_sphere = PBG
+				  }
+			   }
+			   modifier = {
+			      factor = 4
+				  in_sphere = SCA
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = BOH
+			   }	   		
+		} 
+	}
+		
+    option = {
+        name = "HREBOH60.C"
+		any_greater_power = {
+		   limit = {
+		      NOT = { tag = BOH }
+		   }
+           relation = { who = THIS value = -400 } 
+           diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		BOH = { 
+		   create_alliance = THIS
+           relation = { who = THIS value = 400 } 
+           diplomatic_influence = { who = THIS value = 400 }
+		}
+		military_access = BOH
+ 		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     tag = BAV
+					 tag = AUS
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     in_sphere = BRG
+					 in_sphere = PBG
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = SCA
+			   }
+			   modifier = {
+			      factor = 4
+				  in_sphere = BOH
+			   }	   		
+		} 
+	}
+	
+    option = {
+        name = "HREBOH60.D"
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = BOH
+				tag = BRG
+				tag = PBG
+				tag = SCA
+		      }
+		   }
+           relation = { who = THIS value = -200 } 
+           diplomatic_influence = { who = THIS value = -200 }
+		   leave_alliance = THIS
+		}
+		relation = { who = SGF value = 200 } 
+		relation = { who = BAV value = 200 } 
+		relation = { who = AUS value = 200 } 
+ 		ai_chance = {
+			factor = 50
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     tag = BAV
+					 tag = AUS
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     in_sphere = BRG
+					 in_sphere = PBG
+				  }
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = SCA
+			   }
+			   modifier = {
+			      factor = 0
+				  in_sphere = BOH
+			   }	   		
+		} 
+	}
+}
+
+### The nukes are now away...
+
+###################################################################################
+############### T H E  S E C O N D  G R E A T  G E R M A N   W A R ################
+###################################################################################
+
+### “I see myself as an instrument of the Almighty and go on my way, regardless of transient opinions and views.” ###
+
+country_event = { 
+	id = 150156
+	title = "HREBOH61.T"
+	desc = "HREBOH61.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH61.A"
+		clr_global_flag = LOCK_IMPERIAL_EVENTS
+		set_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		set_global_flag = GGW_OCCURED
+		war_exhaustion = -100
+	    war = {
+		    target = BRG
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}
+		add_country_modifier = {
+		   name = BOH_2GGW
+		   duration = -1
+		}
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = -1
+	    }
+		SCA = { country_event = { id = 1501560 days = 7 } }
+		# I don't know why someone would start this war in the middle of the hollowing but go ahead if you want to see what hell looks like.
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = catastropic_hollowing  }
+		   }
+		   owner = {
+		      remove_country_modifier = catastropic_hollowing 
+		      add_country_modifier = { name = apocalyptic_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = severe_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = severe_hollowing
+		      add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = average_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = average_hollowing
+		      add_country_modifier = { name = severe_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = light_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = light_hollowing
+		      add_country_modifier = { name = average_hollowing duration = 1810 } 
+		   }
+		}	
+	    any_country = { 
+	       limit = { has_country_modifier = catastropic_hollowing  }
+		   remove_country_modifier = catastropic_hollowing 
+		   add_country_modifier = { name = apocalyptic_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = severe_hollowing }
+		   remove_country_modifier = severe_hollowing
+		   add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = average_hollowing }
+		   remove_country_modifier = average_hollowing
+		   add_country_modifier = { name = severe_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = light_hollowing }
+		   remove_country_modifier = light_hollowing 
+		   add_country_modifier = { name = average_hollowing duration = 1810 } 
+	    }
+	}
+}
+
+#### PBG Failsafe Version - This ensures that in the exceedingly rare scenario that PBG could exist prior to this war that Bohemia is capable of deccing PBG #####
+
+country_event = { 
+	id = 1501561
+	title = "HREBOH61.T"
+	desc = "HREBOH61.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH61.A"
+		clr_global_flag = LOCK_IMPERIAL_EVENTS
+		set_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		set_global_flag = GGW_OCCURED
+		war_exhaustion = -100
+	    war = {
+		    target = PBG
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}
+		add_country_modifier = {
+		   name = BOH_2GGW
+		   duration = -1
+		}
+	    change_variable = {
+		   which = HOLLOWING_CHECK
+		   value = -1
+	    }
+		SCA = { country_event = { id = 1501560 days = 7 } }
+		# I don't know why someone would start this war in the middle of the hollowing but go ahead if you want to see what hell looks like.
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = catastropic_hollowing  }
+		   }
+		   owner = {
+		      remove_country_modifier = catastropic_hollowing 
+		      add_country_modifier = { name = apocalyptic_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = severe_hollowing }
+		   }
+		   owner = {
+		      remove_country_modifier = severe_hollowing
+		      add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = average_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = average_hollowing
+		      add_country_modifier = { name = severe_hollowing duration = 1810 } 
+		   }
+		}
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_modifier = light_hollowing }
+		   }
+		   owner = {  
+		      remove_country_modifier = light_hollowing
+		      add_country_modifier = { name = average_hollowing duration = 1810 } 
+		   }
+		}	
+	    any_country = { 
+	       limit = { has_country_modifier = catastropic_hollowing  }
+		   remove_country_modifier = catastropic_hollowing 
+		   add_country_modifier = { name = apocalyptic_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = severe_hollowing }
+		   remove_country_modifier = severe_hollowing
+		   add_country_modifier = { name = catastropic_hollowing  duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = average_hollowing }
+		   remove_country_modifier = average_hollowing
+		   add_country_modifier = { name = severe_hollowing duration = 1810 } 
+	    }
+	    any_country = { 
+	       limit = { has_country_modifier = light_hollowing }
+		   remove_country_modifier = light_hollowing 
+		   add_country_modifier = { name = average_hollowing duration = 1810 } 
+	    }
+	}
+}
+
+#####################################################################################################################
+### So, this is a flavor event but its also a way to prevent Scandinavia from cheating themselves from the war ######
+#####################################################################################################################
+
+country_event = { 
+	id = 1501560
+	title = "HREBOH610.T"
+	desc = "HREBOH610.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+    option = {
+        name = "HREBOH610.A"
+		any_country = {
+           limit = {
+              alliance_with = THIS
+		      NOT = { tag = BRG }
+			  NOT = { tag = PBG }
+           }
+		   leave_alliance = THIS
+	    }
+		random_owned = {
+		   limit = {
+		      owner = { NOT = { war_with = BOH } }
+		   }
+		   owner = {
+	          war = {
+		         target = BOH
+			      attacker_goal = {
+				      casus_belli = cut_down_to_size
+			      }
+			      defender_goal = {
+				      casus_belli = cut_down_to_size
+			      }
+		      }		   
+		   }
+		}
+    }
+}
+
+########################################################################################################################
+#### Add Decisions regarding occupation of Capitals - If any Capital is occupied remove War Exaustion Limiter  #########
+########################################################################################################################
+
+#### Saxony - Loyal to Bohemia - 2GGW is active 
+
+country_event = { 
+	id = 150157
+	title = "HREBOH62.T"
+	desc = "HREBOH62.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = SAX
+		has_country_flag = SAX_loyal_to_bohemia
+		has_global_flag = GREAT_GERMAN_WAR_ACTIVE
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+    option = {
+        name = "HREBOH62.A"
+		BOH = { 	   
+		   create_vassal = THIS 
+		   create_alliance = THIS
+		   relation = { who = SAX value = 400 } 
+		   diplomatic_influence = { who = SAX value = 400 } 
+		   country_event = { id = 150158 days = 1 }
+	    }
+  		ai_chance = {
+			factor = 100  		
+		}        
+    }
+	
+    option = {
+        name = "HREBOH62.B"
+		prestige = 10
+		SCA = { relation = { who = SAX value = 400 } military_access = THIS }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = SAX value = 400 } 
+		   military_access = THIS 
+		}
+  		ai_chance = {
+			factor = 0  		
+		}  
+    }
+}
+
+country_event = { 
+	id = 150158
+	title = "HREBOH63.T"
+	desc = "HREBOH63.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH63.A"
+		SAX = {
+	       government = autonomous_dependency
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = closed_borders
+	       political_reform = mandatory_service
+	       political_reform = all_voting_pops
+		}
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				alliance_with = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+	}
+}
+
+#### Saxony - Anti-Bohemia - 2GGW is active 
+
+#### I'd put the military access options as being reccomended. The player does not have to do them but allowing Bohemia to actually win this war would be a bad idea.
+
+country_event = { 
+	id = 150159
+	title = "HREBOH64.T"
+	desc = "HREBOH64.D"	
+	picture = "Outsidepowers_BOH"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = SAX
+		   AND = {
+		     tag = HAN
+			 NOT = { exists = SAX }
+		   }
+		}
+		NOT = { has_country_flag = SAX_loyal_to_bohemia }
+		has_global_flag = GREAT_GERMAN_WAR_ACTIVE
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+    option = {
+        name = "HREBOH64.A"
+        any_pop = {
+		   militancy = 1 
+		}
+  		ai_chance = {
+			factor = 0  		
+		}        
+    }
+	
+    option = {
+        name = "HREBOH64.B"
+		prestige = 10
+		SCA = { relation = { who = THIS value = 400 } military_access = THIS }
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   relation = { who = THIS value = 400 } 
+		   military_access = THIS 
+		}
+  		ai_chance = {
+			factor = 100		
+		}  
+    }
+}
+
+#### 2GGW - Bohemia's Defeat - The End of Bohemian Power ####
+
+country_event = { 
+	id = 150160
+	title = "HREBOH65.T"
+	desc = "HREBOH65.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		has_country_flag = custom_treaty_loser
+		war = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+    option = {
+        name = "HREBOH61.A"
+		prestige_factor = -0.50
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		remove_country_modifier = BOH_anti_war_ruling_class
+		add_country_modifier = { 
+		   name = BOH_effectively_occupied 
+		   duration = -1 
+		} 
+ 	    add_country_modifier = {
+           name = BOH_shattered_reicharmee
+	       duration = -1
+	    }
+	    add_country_modifier = { 
+		    name = war_justification_blocked
+		    duration = -1
+	    }		
+		remove_country_modifier = BOH_unshakable_autocracy
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+		remove_country_modifier = BOH_2GGW  
+        remove_country_modifier = BOH_incapable_army
+		release_vassal = MSZ
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = SCA
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		SCA = { 
+		   inherit = MSZ
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  		   	   
+		}	
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+		   }
+		   country_event = 150164
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   country_event = 150165
+		}
+		any_country = {
+		   limit = {
+		       tag = SCA
+		   }
+		   country_event = 150166
+		}
+		any_country = {
+		   limit = {
+		       tag = DUA
+		   }
+		   country_event = 150167
+		}
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}
+	    change_variable = {
+		   which = GERMAN_HATE
+		   value = 2
+	    }
+	    change_variable = {
+		   which = CZECH_HATE
+		   value = 2
+	    }
+	}
+}
+
+#### 2GGW - The war burnt itself out - White Peace ####
+
+country_event = { 
+	id = 150161
+	title = "HREBOH66.T"
+	desc = "HREBOH66.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		NOT = { has_country_flag = custom_treaty_loser }
+		NOT = { BRG = { has_country_flag = custom_treaty_loser } }
+		NOT = { PBG = { has_country_flag = custom_treaty_loser } }
+		war = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+    option = {
+        name = "HREBOH66.A"
+		prestige_factor = -0.30
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+ 	    add_country_modifier = {
+           name = BOH_subpar_reichsarmee  
+	       duration = -1
+	    }       
+		remove_country_modifier = BOH_2GGW  
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		remove_country_modifier = BOH_anti_war_ruling_class
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+		   }
+		   country_event = 150164
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   country_event = 150165
+		}
+		any_country = {
+		   limit = {
+		       tag = SCA
+		   }
+		   country_event = 150166
+		}
+		any_country = {
+		   limit = {
+		       tag = DUA
+		   }
+		   country_event = 150167
+		}
+		rich_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+		}
+		poor_strata = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -8
+			}
+			ideology = {
+				value = liberal
+				factor = 0.1
+			}
+		}
+	    change_variable = {
+		   which = GERMAN_HATE
+		   value = 1
+	    }
+	    change_variable = {
+		   which = CZECH_HATE
+		   value = 1
+	    }
+	}
+}
+
+#### 2GGW - THE ULTIMATE TRIUMPH ####
+
+#### Have a description about the pope literally crowning him while the Diplomats from Burgundy and Scandinavia are kowtowing infront of him to make a point while the diplomat from the Dual Monarchy looks like he is suffering from a aneurysm.
+
+country_event = { 
+	id = 150162
+	title = "HREBOH67.T"
+	desc = "HREBOH67.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		NOT = { has_country_flag = custom_treaty_loser }
+		OR = {
+           BRG = { has_country_flag = custom_treaty_loser }
+		   PBG = { has_country_flag = custom_treaty_loser }
+		}
+		war = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+    option = {
+        name = "HREBOH67.A"
+		# Congrats. You win Europe.
+		prestige = 100
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		set_global_flag = GLORY_TO_BOHEMIA
+		remove_country_modifier = HOLY_ROMAN_EMPEROR    
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+		remove_country_modifier = BOH_2GGW  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		remove_country_modifier = BOH_anti_war_ruling_class
+		any_owned = {
+		   limit = {
+		      is_core = BOH
+		   }
+		   add_core = HLR
+		}	
+		any_owned = {
+		   limit = {
+		      is_core = GER
+		   }
+		   add_core = HLR
+		}			
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+		   }
+		   country_event = 150168
+		}
+	
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   clr_country_flag = custom_treaty_loser
+		   country_event = 150169
+		}
+		any_country = { 
+			limit = { 
+				tag = RHI 
+				exists = yes 
+			}
+			country_event = { id = 150168 days = 2 } 
+		}
+		any_country = {
+		   limit = {
+		       tag = SCA
+		   }
+		   country_event = 150170
+		}
+		any_country = {
+		   limit = {
+		       tag = DUA
+		   }
+		   country_event = 150171
+		}
+		any_pop = {
+		  militancy = -9
+		  consciousness = -9
+		}
+	    change_variable = {
+		   which = GERMAN_HATE
+		   value = -20
+	    }
+	    change_variable = {
+		   which = CZECH_HATE
+		   value = -20
+	    }
+		any_country = { 
+		   limit = {
+		      tag = SGF
+			  exists = yes		  
+		   }
+		   country_event = { id = 6666662 days = 1 }
+		} 
+        random_owned = {
+             limit = {
+			    owner = { has_global_flag = SGF_existed }
+		     }
+			 owner = { country_event = { id = 6666663 days = 3 } }
+	    } 
+ 		any_country = { 
+		   limit = {
+		      OR = {
+			    tag = AUS
+				tag = BAV
+				tag = SAL 
+		      }
+			  exists = yes	
+              NOT = { has_global_flag = SGF_existed }			  
+		   }
+		   country_event = { id = 6666664 days = 1 }
+		}       	
+		change_tag = HLR	
+		country_event = { id = 410001 days = 10 }
+	}
+}
+
+#### We are actually fucked since HLR exists - SGF ####
+
+country_event = { 
+	id = 6666662
+	title = "LMAOSGF1.T"
+	desc = "LMAOSGF1.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# Game Over
+	
+    option = {
+        name = "LMAOSGF1.A"
+		end_war = HLR
+        annex_to = HLR
+	}
+}
+
+#### The Abolition of the Illegal German Kingdom ####
+
+#### The Holy Roman Empire is after all the only true German State and not this nationalist bullshit.
+
+country_event = { 
+	id = 6666663
+	title = "LMAOSGF2.T"
+	desc = "LMAOSGF2.D"	
+	picture = "BOH_throne"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# Who did they think they were?
+	
+    option = {
+        name = "LMAOSGF2.A"
+		prestige = 10
+		SGF = { all_core = { remove_core = SGF } }
+		any_owned = {
+		   limit = { is_core = BAV }
+		   secede_province = BAV
+		} 
+		any_owned = {
+		   limit = { is_core = SAL }
+		   secede_province = SAL
+		} 
+		any_owned = {
+		   limit = { is_core = AUS }
+		   secede_province = AUS
+		} 
+		any_owned = {
+		   limit = { is_core = FRE }
+		   secede_province = FRE
+		} 
+ 		any_country = { 
+		   limit = {
+		      OR = {
+			    tag = AUS
+				tag = BAV
+				tag = SAL
+                tag = FRE				
+		      }
+			  NOT = { vassal_of = THIS }		  
+		   }
+		   country_event = { id = 6666664 days = 1 }
+		} 
+	}
+}
+
+#### The Subjugation of Danubia ####
+
+country_event = { 
+	id = 6666664
+	title = "LMAOSGF3.T"
+	desc = "LMAOSGF3.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# Our dreams are lost.
+	
+    option = {
+        name = "LMAOSGF3.A"
+		prestige = -20
+		HLR = { create_vassal = THIS }
+	}
+}
+
+################################# Events for the Rise and Fall of the Holy Roman Empire ###########################################
+
+#### Fall - Generic for DUA+BRG+SCA - No GGW ####
+
+country_event = { 
+	id = 150163
+	title = "HREBOH68.T"
+	desc = "HREBOH68.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH68.A"
+        prestige = 5
+		relation = { who = BOH value = 10 } 
+	}
+}
+
+#### Fall - Generic for German Princes - GGW or No GGW ####
+
+country_event = { 
+	id = 150164
+	title = "HREBOH69.T"
+	desc = "HREBOH69.D"	
+	picture = "prussian_constitution"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH69.A"
+        remove_country_modifier = war_justification_blocked
+		remove_country_modifier = HOLY_ROMAN_EMPIRE
+		BOH = { 
+		   relation = { who = THIS value = -100 } 
+		   diplomatic_influence = { who = THIS value = -400 }  		   	   
+		}
+	}
+}
+
+#### Fall - Event for BRG - GGW ####
+#### This is for white peace or total defeat of BOH ####
+
+country_event = { 
+	id = 150165
+	title = "HREBOH70.T"
+	desc = "HREBOH70.D"	
+	picture = "jeanaddress"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH70.A"
+        prestige = 25
+		relation = { who = BOH value = -50 } 
+		remove_country_modifier = BRG_2GGW
+		release_vassal = OLD
+	}
+}
+
+#### Fall - Event for SCA - GGW ####
+#### This is for white peace or total defeat of BOH ####
+
+country_event = { 
+	id = 150166
+	title = "HREBOH71.T"
+	desc = "HREBOH71.D"	
+	picture = "SCAwins"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH71.A"
+        prestige = 25
+		relation = { who = BOH value = -50 } 
+		remove_country_modifier = SCA_2GGW
+	}
+}
+
+#### Fall - Event for DUA - GGW ####
+#### This is for white peace or total defeat of BOH ####
+
+country_event = { 
+	id = 150167
+	title = "HREBOH72.T"
+	desc = "HREBOH72.D"	
+	picture = "prussian_constitution"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH72.A"
+        prestige = -10
+		relation = { who = BOH value = 50 } 
+		any_pop = {
+		  consciousness = 1
+		}
+	}
+}
+
+#### RISE - Generic for German Princes - GGW ####
+
+### Revoke the Privilegia - You are all now vassals ####
+
+country_event = { 
+	id = 150168
+	title = "HREBOH73.T"
+	desc = "HREBOH73.D"	
+    picture = "BOH_throne"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH73.A"
+        remove_country_modifier = war_justification_blocked
+		remove_country_modifier = HOLY_ROMAN_EMPIRE
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = BRG
+				 tag = PBG
+				 tag = SCA
+			  }
+		   }
+		   relation = { who = THIS value = -400 } 
+		   diplomatic_influence = { who = THIS value = -400 }
+        }		   
+		HLR = { 
+		   relation = { who = THIS value = 400 } 
+		   diplomatic_influence = { who = THIS value = 400 } 					
+		   create_vassal = THIS 
+		}
+	}
+}
+
+#### RISE - Event for BRG - GGW ####
+
+### The Absolute Worst Case Scenario #####
+
+country_event = { 
+	id = 150169
+	title = "HREBOH74.T"
+	desc = "HREBOH74.D"	
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH74.A"
+        prestige = -25
+		relation = { who = HLR value = -400 }		
+		relation = { who = DUA value = 50 } 
+		inherit = RHI
+		set_country_flag = RHI_DEAD_GOODBYE
+		set_country_flag = BRG_RHI_REVOLT
+		remove_country_modifier = BRG_2GGW
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			ideology = {
+				value = liberal
+				factor = 0.2
+			}
+		}
+	}
+}
+
+#### RISE - Event for SCA - GGW ####
+
+### Thrown under the Bus. The Bus is still going. You are still getting dragged along. Eat shit and die. #####
+
+country_event = { 
+	id = 150170
+	title = "HREBOH75.T"
+	desc = "HREBOH75.D"	
+	picture = "SCAloss"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH75.A"
+        prestige = -50
+		release_vassal = BRE
+		any_owned = { 
+	        limit = { 
+	           is_core = POM
+		    }
+			add_core = HLR
+	        secede_province = HLR
+        }
+		
+		relation = { who = HLR value = -400 } 
+		remove_country_modifier = SCA_2GGW
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			ideology = {
+				value = liberal
+				factor = 0.2
+			}
+		}
+	}
+}
+
+#### RISE - Event for DUA - GGW ####
+
+#### That Empire is a monster and will dethrone us. Extreme Anger.
+
+country_event = { 
+	id = 150171
+	title = "HREBOH76.T"
+	desc = "HREBOH76.D"	
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+    option = {
+        name = "HREBOH76.A"
+        prestige = -10
+		relation = { who = HLR value = -400 }  
+		any_pop = {
+		  consciousness = 1
+		}
+	}
+}
+
+### Add Failsafe Events for Bohemia falling to Liberal Rebels and into Republic ###
+
+#### The Occupation of Bohemia - Bohemia collapses to Republic and as a responce foreign forces abuse the chaos to immediatly occupy Prague ####
+
+#### This is effectively the same as a 2GGW Loss ####
+
+country_event = { 
+	id = 150172
+	title = "HREBOH77.T"
+	desc = "HREBOH77.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = BOH
+		has_country_modifier = HOLY_ROMAN_EMPEROR
+		NOT = { 
+		   OR = { 
+		     government = hms_government
+			 government = prussian_constitutionalism
+			 government = absolute_monarchy
+		   }
+		}
+		war = no		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+    option = {
+        name = "HREBOH77.A"
+	    change_variable = {
+		   which = IMPERIAL_GRACE
+		   value = -20
+	    }
+		prestige_factor = -0.50
+		government = hms_government
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		remove_country_modifier = BOH_anti_war_ruling_class
+		clr_country_flag = second_great_german_war_possible
+		add_country_modifier = { 
+		   name = BOH_effectively_occupied 
+		   duration = -1 
+		} 
+ 	    add_country_modifier = {
+           name = BOH_shattered_reicharmee
+	       duration = -1
+	    }      
+	    add_country_modifier = { 
+		    name = war_justification_blocked
+		    duration = -1
+	    }		
+		remove_country_modifier = BOH_unshakable_autocracy
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		release_vassal = MSZ
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = SCA
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		SCA = { 
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  		   	   
+		}	
+		any_country = {
+		   limit = {
+		      has_country_modifier = HOLY_ROMAN_EMPIRE
+		   }
+		   country_event = 150164
+		}
+		any_country = {
+		   limit = {
+		     OR = {
+			   tag = BRG
+			   tag = PBG
+			 }
+			 exists = yes
+		   }
+		   country_event = 150165
+		}
+		any_country = {
+		   limit = {
+		       tag = SCA
+		   }
+		   country_event = 150166
+		}
+		any_country = {
+		   limit = {
+		       tag = DUA
+		   }
+		   country_event = 150167
+		}
+	    change_variable = {
+		   which = GERMAN_HATE
+		   value = 2
+	    }
+	    change_variable = {
+		   which = CZECH_HATE
+		   value = 2
+	    }
+	}
+}
+
+### If HMS then increase German and Czech Anger by 1 but maintain HRE ###
+
+#### The Prague Uprising - Liberals have occupied Prague and are forcing a constitution - Good Job Breaking it ####
+#### This counts as the Mixed Diet from before since it was never enacted due to this place still being a absolute monarchy ####
+
+country_event = {
+	id = 150173
+	title = "HREBOH78.T"
+	desc = "HREBOH78.D"	
+	#picture = "BOH_Nuremberg_Invasion"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes
+		tag = BOH
+		government = absolute_monarchy
+		OR = {
+			any_owned_province = {
+				is_capital = yes
+				controlled_by_rebels = yes
+			}
+			revolt_percentage = 0.50
+		}
+		NOT = { has_country_flag = prague_uprising }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+		modifier = {
+			factor = 0.025
+			capital_scope = { controlled_by_rebels = yes }
+		}
+	}
+
+	option = {
+		name = "HREBOH78.A"
+		
+		set_country_flag = prague_uprising
+		remove_country_modifier = BOH_unshakable_autocracy
+		clr_country_flag = siggy_is_shaken
+		set_country_flag = siggy_is_stirred
+		prestige = -10
+		upper_house = {
+			ideology = conservative
+			value = 0.5
+		}
+		
+		random_owned = {
+			limit = {
+				owner = { NOT = { vote_franschise = universal_voting } }
+			}
+			owner = {
+				political_reform = universal_weighted_voting
+			}
+		}		
+		random_owned = {
+			limit = {
+				owner = { NOT = { political_parties = gerrymandering } }
+			}
+			owner = { political_reform = gerrymandering }
+		}		
+		random_owned = {
+			limit = {
+				owner = { NOT = { upper_house_composition = state_equal_weight } }
+			}
+			owner = { political_reform = state_equal_weight }
+		}
+		random_owned = {
+			limit = {
+				owner = { government = absolute_monarchy }
+			}
+			owner = { government = prussian_constitutionalism }
+		}
+		political_reform = all_voting_pops
+		election = yes	
+		
+		random_owned = {
+			limit = {
+				is_capital = yes
+				controlled_by = REB
+			}
+			change_controller = THIS
+		}
+		
+	    any_pop = {
+			limit = {
+				has_pop_culture = old_czech
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = -0.20 value = reactionary  } 
+			ideology = { factor = 0.60 value = conservative } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = czech
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = -0.20 value = separatist } 
+			ideology = { factor = 0.60 value = conservative } 
+		}
+	    any_pop = {
+			limit = {
+				has_pop_culture = north_german
+			}
+			ideology = { factor = -0.40 value = liberal } 
+			ideology = { factor = -0.20 value = separatist } 
+			ideology = { factor = 0.60 value = conservative } 
+		}
+
+		any_owned = {
+			limit = { 
+			   is_colonial = no
+			}
+			any_pop = {
+			    scaled_militancy = {
+				    ideology = reactionary
+				    factor = 1
+			    }
+			    scaled_militancy = {
+				    ideology = conservative
+				    factor = -8
+			     }
+			     scaled_consciousness = {
+				     ideology = conservative
+				     factor = -8
+		   	     }
+			     scaled_militancy = {
+				     ideology = liberal
+				     factor = -8
+			     }
+			     scaled_consciousness = {
+				    ideology = liberal
+				    factor = -8
+			     }
+			     scaled_militancy = {
+				    ideology = separatist
+				    factor = -8
+			     }
+		    }
+		remove_province_modifier = liberal_agitation
+	  }	  
+   }
+}	

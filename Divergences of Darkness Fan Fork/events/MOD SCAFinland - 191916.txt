@@ -210,7 +210,7 @@ country_event = {
 			ideology = { factor = 0.10 value = conservative }
 			ideology = { factor = -0.10 value = liberal } 
 	    }
-		FIN = { all_core = { remove_core = SCA } }
+		FIN = { set_country_flag = puppet_finland all_core = { remove_core = SCA } }
 	    any_owned = { 
 	    limit = { is_core = FIN }
 	    secede_province = FIN
@@ -871,7 +871,9 @@ country_event = {
 	}
 }
 
-################# THE FINNISH INDEPENDENCE WAR - TRIGGER - REMOVE CORES AND CULTURE FROM FIN #################
+################# THE FINNISH INDEPENDENCE WAR - CREATE THE STALEMATE - REMOVE CORES AND CULTURE FROM FIN #################
+################# This has been changed to represent a stalemate between Scandinavia and the Finnish National Defence Brigades rather the indipendence. The war itself is launched by a new decision. - DeNuke 2023
+
 
 country_event = {
 	id = 191937
@@ -908,18 +910,10 @@ country_event = {
 	982 = { add_core = FIN }
 	343 = { change_province_name = "Helsinki" }		
 	FIN = { all_core = { remove_core = SCA } }
-	# POM removed if not done already
-	any_country = {
-	limit = {
-	tag = POM
-	vassal_of = SCA
-	}
-	SCA = { inherit = POM }
-	}
 	# Temp Removal of NOV and RUS cores to prevent AI declaring war on FIN during warm up
-	KAR = { all_core = { remove_core = NOV } }
-	983 = { remove_core = NOV }
-	2587 = { remove_core = NOV }
+	#KAR = { all_core = { remove_core = NOV } }
+	#983 = { remove_core = NOV }
+	#2587 = { remove_core = NOV }
 	any_owned = { 
 	limit = { is_core = FIN NOT = { province_id = 994 } }
 	secede_province = FIN
@@ -957,13 +951,8 @@ country_event = {
 	artillery = 1000
 	canned_food = 1000
 	regular_clothes = 1000
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1825
-	    }
-	country_event = { id = 191938 days = 1 }
+	country_event = { id = 191938 days = 0 }
 	}
-	country_event = { id = 191945 days = 60 }
 	relation = { who = FIN value = -400 }
 	diplomatic_influence = { who = FIN value = -400 }	
 	}	
@@ -983,6 +972,7 @@ country_event = {
 	
 	option = {
 	name = "191938.A"	
+    SCA = { create_vassal = THIS }
 	BRG = { country_event = { id = 191942 days = 1 } }	
 	ai_chance = {
 	factor = 60
@@ -991,6 +981,7 @@ country_event = {
 
 	option = {
 	name = "191938.B"	
+	SCA = { create_vassal = THIS }
 	any_country = {
 	limit = {
 	owns = 625
@@ -1004,6 +995,7 @@ country_event = {
 	
 	option = {
 	name = "191938.C"
+	SCA = { create_vassal = THIS }
 	prestige = 30
 	add_accepted_culture = scandinavian
 	ai_chance = {
@@ -1063,12 +1055,9 @@ country_event = {
 	limit = {
 	owns = 625
 	}
-	create_alliance = FIN
- 	relation = { who = FIN value = 400 }
-	diplomatic_influence = { who = FIN value = 400 }	
-	leave_alliance = SCA
- 	relation = { who = SCA value = -400 }
-	diplomatic_influence = { who = SCA value = -400 }	
+	   set_country_flag = alliance_with_finland
+ 	   relation = { who = FIN value = 400 }
+	   diplomatic_influence = { who = FIN value = 400 }	
 	}
     }   	
 }
@@ -1101,7 +1090,7 @@ country_event = {
 	name = "191942.A"	
 	FIN = { country_event = { id = 191943 days = 1 } }	
 	ai_chance = {
-	factor = 80
+	factor = 40
 	modifier = {
 	factor = 0
 	NOT = {
@@ -1120,7 +1109,7 @@ country_event = {
 	set_country_flag = prince_is_dead
     FIN = { country_event = { id = 191944 days = 1 } }
 	ai_chance = {
-	factor = 20
+	factor = 60
 	    }	
 	}		
 }
@@ -1135,14 +1124,9 @@ country_event = {
 	
 	option = {
 	name = "191943.A"	
-	create_alliance = BRG
- 	relation = { who = BRG value = 400 }
-	diplomatic_influence = { who = BRG value = 400 }
-    BRG = { 	
-	leave_alliance = SCA
- 	relation = { who = SCA value = -400 }
-	diplomatic_influence = { who = SCA value = -400 }	
-	      }
+	   set_country_flag = alliance_with_finland
+ 	   relation = { who = FIN value = 400 }
+	   diplomatic_influence = { who = FIN value = 400 }
     }   	
 }
 
@@ -1227,6 +1211,8 @@ country_event = {
 
 
 ################# THE FINNISH INDEPENDENCE WAR - THE WAR IS UNLEASHED - DECLARE CONQUEST WAR - FIN CALL ALLIES #################
+
+################# This is now triggered by event by Finland ##########################
 
 country_event = {
 	id = 191945
@@ -1480,6 +1466,10 @@ country_event = {
 	}	
 	ai_chance = {
 	factor = 10
+	      modifier = {
+	         factor = 0
+	         badboy = 0.9
+	      }
 	   }		
 	}
 }
@@ -1613,15 +1603,10 @@ country_event = {
 	996 = { add_core = ING }
 	997 = { add_core = ING }
 	1006 = { add_core = ING }
-	casus_belli = { 
-			target = PSV
-			type = conquest
-			months = 60
-	}
 	war = {
 			target = PSV
 			attacker_goal = {
-				casus_belli = conquest
+				casus_belli = conquest_any
 			}
 			defender_goal = {
 				casus_belli = status_quo
@@ -1651,7 +1636,11 @@ country_event = {
 	  clr_country_flag = democracy_gov
 	}
 	ai_chance = {
-	factor = 75
+	      factor = 75
+	      modifier = {
+	         factor = 0
+	         badboy = 0.9
+	      }
 	   }		
 	}
 }

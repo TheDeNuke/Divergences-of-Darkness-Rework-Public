@@ -1100,6 +1100,15 @@ country_event = {
 			    government = prussian_constitutionalism 
 			 } 
 		  }
+	      FRK = {
+		     war = no
+		     exists = yes
+		     OR = {   
+		        government = absolute_monarchy
+			    government = hms_government
+			    government = prussian_constitutionalism 
+			 } 
+		  }
 	   }
 	}
 	
@@ -1115,6 +1124,7 @@ country_event = {
 	   set_country_flag = heirs_of_anne
 	   any_country = {  limit = { tag = BRG exists = yes } country_event = { id = 48329 days = 7 } }
 	   any_country = {  limit = { tag = PBG exists = yes } country_event = { id = 48329 days = 7 } }
+	   any_country = {  limit = { tag = FRK exists = yes } country_event = { id = 48329 days = 7 } }
 	   ai_chance = {  
 			factor = 90
 		    modifier = { 
@@ -1177,10 +1187,12 @@ country_event = {
 		   factor = 25
 			modifier = {
 				factor = 0
-				OR = {
-				   government = prussian_constitutionalism
-                   government = absolute_monarchy 	
-                }				   
+				NOT = {
+				   OR = {
+				      government = prussian_constitutionalism
+                      government = absolute_monarchy 	
+                   }
+                }				
 			}
         }
 	}
@@ -1875,17 +1887,26 @@ country_event = {
 	trigger = {
 		tag = IRE
 		has_country_flag = the_foggy_dew
-		NOT = { 
-		   OR = {
-		     government = absolute_monarchy
-			 government = prussian_constitutionalism
-			 government = hms_government
-		   }
-        }
     }
 	
 	mean_time_to_happen = { 
-	   days = 7
+	   months = 120
+		    modifier = { 
+	           factor = 0.05
+	           NOT = { government = absolute_monarchy }
+			}
+		    modifier = { 
+	           factor = 0.1
+	           militancy = 9
+			}
+		    modifier = { 
+	           factor = 0.25
+	           militancy = 8
+			}
+		    modifier = { 
+	           factor = 0.5
+	           militancy = 7
+			}
 	}
 	
 	# End of a Era...
@@ -1893,6 +1914,7 @@ country_event = {
 	option = { 
 	   name = "ENLFRA59.A"	
 	   clr_country_flag = the_foggy_dew
+	   government = presidential_dictatorship
 	   primary_culture = irish
 	   political_reform = primary_culture_only
        # The entire anglois-french speaking world hates you for this and also want to kill you

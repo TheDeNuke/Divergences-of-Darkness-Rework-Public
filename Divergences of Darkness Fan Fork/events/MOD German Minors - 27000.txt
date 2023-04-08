@@ -1,0 +1,6464 @@
+###################################### GERMAN MINORS - Swabia, Rhineland and Franconia ######################################################
+
+### This event document has been claimed by the Swiss Banks
+
+#### Switzerland Content #####
+
+#### Switzerland Startup Event ####
+
+#### This explains the upcoming referendums (western cantons in 1840 and graubund in 1845) and the absolute state that Switzerland has been in for the past few hundred years.
+
+country_event = {
+	id = 270000
+	title = "MGER1.T"
+	desc = "MGER1.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = SWI
+		NOT = { has_country_flag = the_ghost_confederation }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER1.A"
+        prestige = -1
+		set_country_flag = the_ghost_confederation
+		# This modifier should add some inherit stablity to prevent rebels from breaking it
+		add_country_modifier = { name = swiss_system duration = 7300 }
+ 		any_pop = {
+		    ideology = { factor = -0.1 value = conservative } 
+			ideology = { factor = 0.1 value = liberal } 
+        }			
+	}
+}
+
+#### Western Cantons vote for annexation by the Confederacy ####
+
+#### I hope that Burgundy approves of this ####
+
+country_event = {
+	id = 270001
+	title = "MGER2.T"
+	desc = "MGER2.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = SWI
+		year = 1840
+		NOT = { has_country_flag = the_western_cantons }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER2.A"
+        prestige = 5
+		set_country_flag = the_western_cantons
+        BRG = { country_event = { id = 270002 days = 7 } }	
+	}
+}
+
+#### The Western Cantons have voted to join Switzerland ####
+
+#### Localization Note - Explain that the expansion of Switzerland only benefits Burgundy in the long run and blocking this would be a brainlet move and will likely trigger a revolution ####
+
+country_event = {
+	id = 270002
+	title = "MGER3.T"
+	desc = "MGER3.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# So long as Switzerland reassures its alignment to us.
+	
+	option = { 
+	    name = "MGER3.A"
+        prestige = 1
+        SWI = { country_event = { id = 270004 days = 7 } }	
+	    ai_chance = {
+	       factor = 95
+	    }
+	}
+	
+	# How about no.
+	
+	option = { 
+	    name = "MGER3.B"
+        prestige = 2
+        badboy = 5
+        SWI = { country_event = { id = 270003 days = 7 } }	
+	    ai_chance = {
+	       factor = 5
+	    }
+	}
+}
+
+#### Burgundy has blocked the annexation of the Western Cantons - This is going to cause a revolution. ####
+
+country_event = {
+	id = 270003
+	title = "MGER4.T"
+	desc = "MGER4.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# So long as Switzerland reassures its alignment to us.
+	
+	option = { 
+	    name = "MGER4.A"
+        prestige = -5
+		relation = { who = BRG value = -100 }
+ 		any_pop = {
+		    ideology = { factor = -0.1 value = conservative } 
+			ideology = { factor = 0.1 value = liberal } 
+        }
+        set_country_flag = SWI_revolutionary
+	}
+}
+
+#### Burgundy requests reassurances of Alignment with us ####
+
+country_event = {
+	id = 270004
+	title = "MGER5.T"
+	desc = "MGER5.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# At least we recieve the cantons.
+	
+	option = { 
+	    name = "MGER5.A"
+        prestige = -5
+		BOH = {
+		   relation = { who = SWI value = -50 }
+	       diplomatic_influence = { who = SWI value = -50 }	
+        }		
+		BRG = {
+		   relation = { who = SWI value = 50 }
+	       diplomatic_influence = { who = SWI value = 50 }		
+		} 
+        any_country = {
+		   limit = {
+		      OR = {
+			    tag = FIO
+				tag = BAE
+              }
+           }
+           country_event = 270006
+        }		   
+	    ai_chance = {
+	       factor = 90
+	    }
+	}
+	
+	# I would prefer to not annex these cantons rather then deal with this.
+	
+	option = { 
+	    name = "MGER5.B"
+        prestige = 5
+		relation = { who = BRG value = -100 }
+ 		any_pop = {
+		    ideology = { factor = -0.1 value = conservative } 
+			ideology = { factor = 0.1 value = liberal } 
+        }
+        set_country_flag = SWI_revolutionary
+        BRG = { country_event = { id = 270005 days = 7 } }	
+	    ai_chance = {
+	       factor = 10
+	    }
+	}
+}
+
+#### Switzerland defies us ####
+
+country_event = {
+	id = 270005
+	title = "MGER6.T"
+	desc = "MGER6.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+
+	option = { 
+	    name = "MGER6.A"
+        prestige = -5
+	}
+}
+
+#### Switzerland has annexed us ####
+
+country_event = {
+	id = 270006
+	title = "MGER7.T"
+	desc = "MGER7.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# As the referendum demands
+	
+	option = { 
+	    name = "MGER7.A"
+        all_core = { add_core = SWI }
+        FROM = { inherit = THIS }
+	    ai_chance = {
+	       factor = 100
+	    }
+	}
+	
+	# A random coup out of nowhere. Incredible. Right.
+	
+	option = { 
+	    name = "MGER7.B"
+		all_core = { add_core = SWI }
+		government = hms_government
+		SWI = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+        }		
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		} 
+	    ai_chance = {
+	       factor = 0
+	    }
+	}
+}
+
+#### Rumors of a Military Coup - Graubund Failed ####
+
+country_event = {
+	id = 270007
+	title = "MGER8.T"
+	desc = "MGER8.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# Its not like a player will ever see this outside of multiplayer
+	
+	option = { 
+	    name = "MGER8.A"
+		set_country_flag = SWI_danubian_coup
+	}
+}
+
+#### Chaos in the Tagsatzung - Danubia Exists and the Holy Roman Empire is dead - Everything has gone to shit ####
+
+country_event = {
+	id = 270008
+	title = "MGER9.T"
+	desc = "MGER9.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    tag = SWI	
+		year = 1852
+		exists = SGF
+		has_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		is_ideology_enabled = anarcho_liberal
+		NOT = { has_country_flag = everything_is_collapsing_SWI }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	# What happens when the whole of Swiss Society implodes.
+	
+	option = { 
+	    name = "MGER9.A"
+		set_country_flag = everything_is_collapsing_SWI
+		remove_country_modifier = swiss_system
+		prestige = -10
+		any_pop = {
+		   militancy = 1 
+		}
+		# Coup into Military Dictatorship for Annexation into Danubia
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_flag = SWI_danubian_coup NOT = { has_country_flag = SWI_revolutionary } }
+		   }
+		   owner = {  
+		      clr_country_flag = SWI_danubian_coup
+		      country_event = 270009
+		   }
+		}
+		# Parlimentary Republican Revolutionary Republic
+		random_owned = { 
+		   limit = { 
+		      owner = { has_country_flag = SWI_revolutionary }
+		   }
+		   owner = {  
+		      clr_country_flag = SWI_danubian_coup
+		      clr_country_flag = SWI_revolutionary
+		      country_event = 270010
+		   }
+		}
+		# The Tagsatzung stablizes for a vote
+		random_owned = { 
+		   limit = { 
+		      owner = { NOT = { has_country_flag = SWI_danubian_coup } NOT = { has_country_flag = SWI_revolutionary } }
+		   }
+		   owner = {  
+		      country_event = 270011
+		   }
+		}		
+	}
+}
+
+# The National Protection Government - Congrats. You are now effectively a puppet state waiting for annexation.
+
+country_event = {
+	id = 270009
+	title = "MGER10.T"
+	desc = "MGER10.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# Its not like a player will ever see this outside of multiplayer
+	
+	option = { 
+	    name = "MGER8.A"
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		} 
+		SGF = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		   create_alliance = THIS
+        }		
+		any_pop = {
+		   militancy = -9
+		}
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = primary_culture_only
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov	
+	}
+}
+
+# Revolutionary Switzerland - Crazy Path
+
+country_event = {
+	id = 270010
+	title = "MGER11.T"
+	desc = "MGER11.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# The revolution has arrived...
+	
+	option = { 
+	    name = "MGER11.A"
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = BRG
+				 tag = SGF
+				 tag = SCA
+		         tag = BOH
+			  }
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}		
+		any_pop = {
+		   militancy = -9
+		}
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+		608 = { add_core = SWI }
+		604 = { add_core = SWI }
+		nationalvalue = nv_liberty
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    country_event = 800053
+	    any_pop = {
+		ideology = {
+			value = reactionary
+			factor = -0.1
+		}
+		ideology = {
+			value = paternal
+			factor = -0.1
+		}
+		ideology = {
+			value = anarcho_liberal
+			factor = 0.2
+		}
+        }
+	}
+}
+
+#### The Tagsatzung restores order ####
+
+### A choice between creating the Duchy of Switzerland (under a PU by Baden) or maintaining the Status Quo and attempting diplomatic Neutrality when the inevitable standoff between Burgundy and Danubia comes ####
+
+country_event = {
+	id = 270011
+	title = "MGER12.T"
+	desc = "MGER12.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes	
+	
+	# The Burgundian Faction wins out.
+	
+	option = { 
+	    name = "MGER12.A"
+		any_country = {
+		   limit = {
+		      OR = {
+				 tag = SGF
+				 tag = SCA
+		         tag = BOH
+			  }
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}
+		BRG = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		} 
+		relation = { who = BAD value = 400 }
+		government = hms_government
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		any_pop = {
+		   militancy = -9
+		}
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+	
+	# The Status Quo faction is victorious
+	
+	option = { 
+	    name = "MGER12.B"
+		any_country = {
+		   limit = {
+		      OR = {
+				 tag = SGF
+				 tag = SCA
+		         tag = BOH
+			  }
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}
+		BRG = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}		
+		any_pop = {
+		   militancy = -9
+		}
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+################ Wuttemberg Content ###################
+
+#### Copied from MOD Danubia
+
+# WUR - We were given Ulm
+# The Ambitions are Possible
+
+country_event = {
+	id = 260029
+	title = "SGF30.T"
+	desc = "SGF30.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes    
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "SGF29.A"
+		set_country_flag = WUR_ambitious
+        relation = { who = BOH value = -25 }	
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		}	
+	}
+}
+
+# WUR - We have siezed Ulm due to BAV losing the Brothers War
+# The Ambitions are Possible
+
+country_event = {
+	id = 270012
+	title = "MGER13.T"
+	desc = "MGER13.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes    
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "SGF13.A"
+		clr_country_flag = WUR_burgundy
+		clr_country_flag = WUR_danubian
+		set_country_flag = WUR_ambitious
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -5
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		}	
+	}
+}
+
+# The Danubian Potencial - Indipendent Ulm
+
+country_event = {
+	id = 270013
+	title = "MGER14.T"
+	desc = "MGER14.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes    
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "SGF14.A"
+		BAV = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}	
+		AUS = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}
+		set_country_flag = WUR_danubian
+	    government = prussian_constitutionalism
+	    ruling_party_ideology = conservative
+	    political_reform = appointed
+	    political_reform = wealth_voting 
+	    political_reform = no_meeting
+	    political_reform = censored_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		}	
+	}
+}
+
+# Between a Rock and a Hard Place - Burgundian Wurttemberg
+
+country_event = {
+	id = 270014
+	title = "MGER15.T"
+	desc = "MGER15.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes    
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER15.A"
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = BAV
+				tag = AUS
+				tag = BOH
+		      }
+			  relation = { who = THIS value = -400 }
+	          diplomatic_influence = { who = THIS value = -400 }
+           }
+        }		   
+		BRG = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}		
+	    government = prussian_constitutionalism
+	    ruling_party_ideology = conservative
+	    political_reform = appointed
+	    political_reform = wealth_voting 
+	    political_reform = no_meeting
+	    political_reform = censored_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov		
+		set_country_flag = WUR_burgundy
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -5
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -5
+			}
+		}	
+	}
+}
+
+#### The Ambitions of Wuttemberg - Introduction Event #####
+#### The House of Württemberg knows of times ahead after the end of the German Revolution where they may be able to reclaim the Stem Duchy... ####
+
+country_event = {
+	id = 270015
+	title = "MGER16.T"
+	desc = "MGER16.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = WUR
+		NOT = { has_country_flag = lol_WUR }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER16.A"
+        prestige = -1
+		set_country_flag = lol_WUR
+ 		any_pop = {
+		    ideology = { factor = -0.1 value = conservative } 
+			ideology = { factor = 0.1 value = reactionary } 
+        }			
+	}
+}
+
+#### Swabian Region during the BCW ####
+
+#### Note: The Swabian Wars will only occur if any faction in this region is ambitious. This will also clear relations with other powers for now to avert intervention ####
+
+#### Revolutionary Switzerland - This is literally our only chance
+
+country_event = {
+	id = 270016
+	title = "MGER17.T"
+	desc = "MGER17.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = SWI
+		government = parliamentary_republic
+		BRG = { war_with = PBG }
+		WUR = { exists = yes }
+		NOT = { has_country_flag = SWI_revolutionary_war }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+	    name = "MGER17.A"
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		   relation = { who = BAD value = -400 }
+	       diplomatic_influence = { who = BAD value = -400 }
+		   relation = { who = WUR value = -400 }
+	       diplomatic_influence = { who = WUR value = -400 }
+           leave_alliance = WUR
+           leave_alliance = BAD		
+           leave_alliance = SWI	   
+		}
+		add_country_modifier = { name = small_country_draft duration = 1095 }
+		set_country_flag = SWI_revolutionary_war
+        any_country = {
+		   limit = { 
+		      tag = WUR
+			  NOT = { has_country_flag = WUR_ambitious }
+           }
+		   add_country_modifier = { name = small_country_draft duration = 1095 }
+           country_event = 270018	   
+		}
+        any_country = {
+		   limit = { 
+		      tag = WUR
+			  has_country_flag = WUR_ambitious
+           }
+		   add_country_modifier = { name = small_country_draft duration = 1095 }
+           country_event = 270017
+		}	
+	    ai_chance = {
+	       factor = 99
+			   modifier = {
+			      factor = 0
+				     WUR = {
+                        OR = {
+					      in_sphere = SGF
+					      alliance_with = SGF
+						  has_country_flag = WUR_danubian
+					    }
+                     }					   
+				  }
+	    }			   	
+	}
+	
+	option = { 
+	    name = "MGER17.B"
+        prestige = -5
+		set_country_flag = SWI_revolutionary_war
+        any_country = {
+		   limit = { 
+		      tag = WUR
+			  has_country_flag = WUR_ambitious
+           }
+           country_event = 270019 
+		}
+	    ai_chance = {
+	       factor = 1
+	    }		
+	}
+}
+
+#### Switzerland has declared war on us - Ambitious ####
+
+country_event = {
+	id = 270017
+	title = "MGER18.T"
+	desc = "MGER18.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+    is_triggered_only = yes
+	
+	# Bring in On
+	
+	option = { 
+	    name = "MGER18.A"
+	    war = {
+		target = SWI
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			   }
+		 }	
+         any_country = { 
+            limit = { tag = GRB exists = yes }
+            country_event = 2700200
+         }			
+	}
+}
+
+#### Switzerland has declared war on us - Non-Ambitious ####
+
+country_event = {
+	id = 270018
+	title = "MGER19.T"
+	desc = "MGER19.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+    is_triggered_only = yes
+	
+	# Bring in On
+	
+	option = { 
+	    name = "MGER19.A"
+	    war = {
+		target = SWI
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+		 }
+         any_country = { 
+            limit = { tag = GRB exists = yes }
+            country_event = 2700200
+         }		 
+	}
+}
+
+#### Ambitious Wuttemberg (but no ambitious Switzerland)
+
+country_event = {
+	id = 270019
+	title = "MGER20.T"
+	desc = "MGER20.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = WUR	
+		has_country_flag = WUR_ambitious
+		BRG = { war_with = PBG }
+		SWI = { exists = yes }
+		NOT = { SWI = { government = parliamentary_republic } }
+		NOT = { has_country_flag = WUR_revolutionary_war }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+	    name = "MGER20.A"
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		   relation = { who = BAD value = -400 }
+	       diplomatic_influence = { who = BAD value = -400 }
+		   relation = { who = WUR value = -400 }
+	       diplomatic_influence = { who = WUR value = -400 }
+           leave_alliance = WUR
+           leave_alliance = BAD		
+           leave_alliance = SWI	   
+		}
+		add_country_modifier = { name = small_country_draft duration = 1095 }
+		set_country_flag = WUR_revolutionary_war
+        any_country = {
+		   limit = { 
+		      tag = SWI
+           }
+		   add_country_modifier = { name = small_country_draft duration = 1095 }
+           country_event = 270020 
+		}	
+	    ai_chance = {
+	       factor = 99
+			   modifier = {
+			      factor = 0
+				     SWI = {
+                        OR = {
+					      in_sphere = SGF
+					      alliance_with = SGF
+						  government = presidential_dictatorship
+					    }
+                     }					   
+				  }
+	    }			   	
+	}
+	
+	option = { 
+	    name = "MGER20.B"
+        prestige = -5
+		set_country_flag = WUR_revolutionary_war
+	    ai_chance = {
+	       factor = 1
+	    }		
+	}
+}
+
+#### Wuttemberg has declared war on us - Non-Ambitious ####
+
+country_event = {
+	id = 270020
+	title = "MGER21.T"
+	desc = "MGER21.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+    is_triggered_only = yes
+	
+	# Bring in On
+	
+	option = { 
+	    name = "MGER21.A"
+	    war = {
+		target = WUR
+			attacker_goal = {
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+		 }	
+         any_country = { 
+            limit = { tag = GRB exists = yes }
+            country_event = 2700200
+         }		 
+	}
+}
+
+#### Graubund is between a rock and a hard place due to the war - Dictatorship SWI gets cores on GRB and invades. ####
+
+country_event = {
+	id = 2700200
+	title = "MGER210.T"
+	desc = "MGER210.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+    is_triggered_only = yes
+	
+	# Oh no. Our protection.
+	
+	option = { 
+	    name = "MGER21.A"
+		any_greater_power = {
+		   leave_alliance = THIS
+	       relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+        }
+        SGF = {		
+		   leave_alliance = THIS
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		all_core = { add_core = SWI }
+		SWI = {  
+	       war = {
+		       target = THIS
+			     attacker_goal = {
+				   casus_belli = conquest_any
+			     }
+			     defender_goal = {
+				    casus_belli = cut_down_to_size
+			     }
+		    }
+		}	
+        any_country = {
+           limit = {
+             tag = WUR
+             has_country_flag = WUR_ambitious	
+           }	
+	       war = {
+		       target = THIS
+			     attacker_goal = {
+				   casus_belli = conquest_any
+			     }
+			     defender_goal = {
+				    casus_belli = cut_down_to_size
+			     }
+		    }
+        }			
+	}
+}
+
+#### Wuttemberg or Switzerland have killed each other - Go after Baden ####
+
+country_event = {
+	id = 270021
+	title = "MGER22.T"
+	desc = "MGER22.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+		OR = {
+		   AND = {
+	          tag = WUR	
+		      owns = 605
+		   }
+		   AND = {
+	          tag = SWI
+		      owns = 589
+		   }
+		}	
+		BRG = { war_with = PBG }
+		NOT = { has_country_flag = SWA_revolutionary_war }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = { 
+	    name = "MGER22.A"
+		set_country_flag = SWA_revolutionary_war
+		remove_country_modifier = small_country_draft
+        BAD = { 
+		   add_country_modifier = { name = small_country_draft duration = 1095 }
+		}
+	    war = {
+		target = BAD
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+		}	
+	    ai_chance = {
+	       factor = 99
+	    }			   	
+	}
+	
+	option = { 
+	    name = "MGER22.B"
+        prestige = -5
+		set_country_flag = SWA_revolutionary_war
+	    ai_chance = {
+	       factor = 1
+	    }		
+	}
+}
+
+#### Conquering BAD will allow the use of the "Ressurect the Stem Duchy" Decision ####
+
+#### TIME UP - Burgundy has exited the Civil War and SWA does not exist - All SWA wars are automatically terminated ####
+
+country_event = {
+	id = 270022
+	title = "MGER23.T"
+	desc = "MGER23.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+		   tag = PBG 
+		}
+		OR = {
+		   WUR = { OR = { owns = 605 war_with = SWI war_with = BAD } }
+		   SWI = { OR = { owns = 589 war_with = BAD } }		   
+		}	
+		has_global_flag = JEAN_ENDING
+		NOT = { year = 1870 }
+		NOT = { has_country_flag = burgundian_swabian_threat }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	# Threaten them with immediate intervention
+	
+	option = { 
+	    name = "MGER23.A"
+		set_country_flag = burgundian_swabian_threat
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = WUR
+				 tag = SWI
+		      }
+	          OR = {
+			     AND = {
+                    tag = WUR
+                    owns = 605
+                 }			
+			     AND = {
+                    tag = SWI
+                    owns = 589
+                 }	
+				 war_with = BAD
+				 war_with = SWI
+				 war_with = WUR
+              }	
+          }	
+          country_event = 270023
+       }		  
+	}
+}
+
+#### TIME IS UP - YOU LOSE - All wars terminated and all illegal annexations released ####
+
+### Form Swabia faster next time ####
+
+country_event = {
+	id = 270023
+	title = "MGER24.T"
+	desc = "MGER24.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER24.A"
+		prestige = 10
+		end_war = SWI
+        end_war = BAD
+        end_war = WUR
+		any_owned = {
+		   limit = { is_core = SWI }
+		   secede_province = SWI
+		}
+		any_owned = {
+		   limit = { is_core = WUR }
+		   secede_province = WUR
+		}
+		any_owned = {
+		   limit = { is_core = BAD }
+		   secede_province = BAD
+		}			
+	}
+}
+
+###### The Swabian Affair - Triggered by Burgundy at 0% War Exaustion and after BRG/PBG's post war coodown modifier ############
+
+### SGF - Burgundy wants a conference over Danubia
+
+country_event = {
+	id = 270024
+	title = "MGER25.T"
+	desc = "MGER25.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER25.A"
+		prestige = 1		
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 25 }
+	       diplomatic_influence = { who = THIS value = 25 }
+		}
+		any_pop = {
+		   militancy = -1
+		}
+		country_event = { id = 270025 days = 7 }
+	}
+}
+
+### BRG - The Conference of Stuttgart 
+
+country_event = {
+	id = 270025
+	title = "MGER26.T"
+	desc = "MGER26.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER26.A"
+		prestige = 10
+		set_global_flag = SWA_checker
+        any_country = { 
+		   limit = {
+			 tag = WUR
+			 exists = yes
+		   }
+           country_event = 270026
+        }
+        any_country = { 
+		   limit = {
+			 tag = SWI
+			 exists = yes
+		   }
+           country_event = 270027
+        }
+        any_country = { 
+		   limit = {
+			  exists = yes
+			  has_country_flag = SWA_neutral
+		   }
+           country_event = 270028
+        }
+        any_country = { 
+		   limit = {
+			  exists = yes
+			  has_country_flag = SWA_burgundian
+		   }
+           country_event = 270028
+        }		
+        any_country = { 
+		   limit = {
+			  exists = yes
+			  has_country_flag = SWA_revolutionary
+		   }
+           country_event = 270029
+        }				
+	}
+}
+
+### Indipendent WUR and SWI Voting for Fate.
+
+### WUR
+
+country_event = {
+	id = 270026
+	title = "MGER27.T"
+	desc = "MGER27.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# Pro-Danubian
+
+	option = { 
+	    name = "MGER27.A"
+		any_country = {
+		   limit = {
+		     tag = SGF
+		   }
+		   relation = { who = THIS value = 200 }
+	       diplomatic_influence = { who = THIS value = 200 }
+		}
+		clr_country_flag = WUR_danubian
+        set_global_flag = WUR_danubian
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				  has_country_flag = WUR_danubian
+			   }	
+			   modifier = {
+			      factor = 0
+				  NOT = { has_country_flag = WUR_danubian }
+			   }			   
+		}
+	}
+	
+	# Neutral or Revolutionary
+	
+	option = { 
+	    name = "MGER27.B"
+		prestige = 5
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		}
+        set_global_flag = WUR_neutral
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 0
+				  has_country_flag = WUR_burgundy
+			   }	
+			   modifier = {
+			      factor = 0
+				  has_country_flag = WUR_danubian
+			   }			   
+		}
+	}
+	
+	# Pro-Burgundian
+	
+	option = { 
+	    name = "MGER27.C"
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 200 }
+	       diplomatic_influence = { who = THIS value = 200 }
+		}
+		clr_country_flag = WUR_burgundy
+        set_global_flag = WUR_burgundian
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				  has_country_flag = WUR_burgundy
+			   }	
+			   modifier = {
+			      factor = 0
+				  NOT = { has_country_flag = WUR_burgundy }
+			   }			   
+		}
+	}
+}
+
+### SWI
+
+### BRG will support revolutionary SWI but not revolutionary SWA due to realpolitiks.
+
+country_event = {
+	id = 270027
+	title = "MGER28.T"
+	desc = "MGER28.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# Pro-Danubian
+
+	option = { 
+	    name = "MGER28.A"
+        set_global_flag = SWI_danubian
+		any_country = {
+		   limit = {
+		     tag = SGF
+		   }
+		   relation = { who = THIS value = 200 }
+	       diplomatic_influence = { who = THIS value = 200 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				  government = presidential_dictatorship
+			   }	
+			   modifier = {
+			      factor = 0
+				  NOT = { government = presidential_dictatorship }
+			   }				   
+		}
+	}
+	
+	# Neutral or Revolutionary
+	
+	option = { 
+	    name = "MGER28.B"
+		prestige = 5
+        set_global_flag = SWI_neutral
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 0
+				  government = hms_government
+			   }	
+			   modifier = {
+			      factor = 0
+				  government = presidential_dictatorship
+			   }			   
+		}
+	}
+	
+	# Pro-Burgundian
+	
+	option = { 
+	    name = "MGER28.C"
+        set_global_flag = SWI_burgundian
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 200 }
+	       diplomatic_influence = { who = THIS value = 200 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				  government = hms_government
+			   }	
+			   modifier = {
+			      factor = 0
+				  NOT = { government = hms_government }
+			   }				   
+		}
+	}
+}
+
+### Neutral SWA or Burgundian SWA - Burgundy Supports Us
+### This event can either be automatically triggered by the existance of SWA or trigger seperately if both WUR and SWI are Pro-Burgundian
+
+country_event = {
+	id = 270028
+	title = "MGER29.T"
+	desc = "MGER29.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   AND = {
+		      tag = WUR
+		      ai = no
+		   }
+		   AND = {
+		      tag = SWI
+		      ai = no
+		   }
+           AND = {
+              tag = WUR		 
+              ai = yes			  
+              SWI = { ai = yes }
+		   } 		   
+		} 		   
+	    has_global_flag = WUR_burgundian
+		has_global_flag = SWI_burgundian
+		has_global_flag = SWA_checker
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER29.A"
+		clr_global_flag = SWA_checker
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   create_alliance = THIS
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		}
+		SGF = { country_event = { id = 270030 days = 7 } }
+	}
+}
+
+### Revolutionary SWA - Burgundy is preparing to kill us.
+
+country_event = {
+	id = 270029
+	title = "MGER30.T"
+	desc = "MGER30.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER30.A"
+		clr_global_flag = SWA_checker
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		} 
+		SGF = { country_event = { id = 270039 days = 7 } }
+	}
+}
+
+### SGF - Burgundy demands non-intervention in Swabia due to active Non-Rogue Swabian State
+
+country_event = {
+	id = 270030
+	title = "MGER31.T"
+	desc = "MGER31.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+    # Fighting Swabia and Burgundy would be dangerous
+
+	option = { 
+	    name = "MGER31.A"
+		prestige = -10
+		set_country_flag = denied_swabia
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		   country_event = { id = 270031 days = 7 }
+		}			
+	    ai_chance = {
+	       factor = 75
+	    }	
+	}
+	
+	# Bring it on.
+	
+	option = { 
+	    name = "MGER31.B"
+		prestige = 5
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -100 }
+	       diplomatic_influence = { who = THIS value = -100 }
+		   country_event = { id = 270052 days = 7 }
+		}	
+	    ai_chance = {
+	       factor = 25
+	    }	
+	}
+}
+
+### End of the Conference - We are allowed to do whatever we want with Swabia
+
+country_event = {
+	id = 270031
+	title = "MGER32.T"
+	desc = "MGER32.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+
+	option = { 
+	    name = "MGER32.A"
+	    clr_global_flag = SWI_burgundian
+		clr_global_flag = WUR_burgundian
+	    any_country = {
+		   limit = {
+		      OR = {
+			    tag = SWI
+				tag = WUR
+				tag = FIO
+				tag = GRB
+				tag = BAE
+		      }
+			  exists = yes
+		   }
+		   all_core = { add_core = SWA }
+		}
+		589 = { add_core = SWA }
+		590 = { add_core = SWA }
+		591 = { add_core = SWA }
+		594 = { add_core = SWA }		
+		BAD_586 = { add_core = SWA }
+		SWI_603 = { add_core = SWA }
+		SWI_605 = { add_core = SWA }
+		# If Swabia does not already exist
+		any_country = {
+		    limit = {
+		      tag = BAD
+			  exists = yes
+		    }
+		    inherit = SWI
+		    inherit = WUR
+		    inherit = FIO
+		    inherit = BAE
+		    inherit = GRB
+			political_reform = unitary
+		    change_tag = SWA
+		}
+	    random_owned = {
+		   limit = {
+		      owner = { NOT = { has_global_flag = SWA_neutral } }
+		   }
+		   owner = { country_event = 270032 }
+		}
+	    random_owned = {
+		   limit = {
+		      owner = { has_global_flag = SWA_neutral }
+		   }
+		   owner = { country_event = 270033 }
+		}
+	}
+}
+
+### The Swabian Question - Non-Neutral Swabia
+
+country_event = {
+	id = 270032
+	title = "MGER33.T"
+	desc = "MGER33.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER33.A"
+		badboy = 1
+		relation = { who = SGF value = -100 }
+	    diplomatic_influence = { who = SGF value = -100 }
+		#create_vassal = SWA	
+		SWA = { country_event = 2700333 }
+		ai_chance = {
+			factor = 50
+			   modifier = {
+			      factor = 2
+				   OR = {
+				      ruling_party_ideology = paternal
+					  ruling_party_ideology = reactionary
+					  ruling_party_ideology = fascist
+					  ruling_party_ideology = communist
+				   }
+			   }				   
+		}	
+	}
+	
+	option = { 
+	    name = "MGER33.B"
+		badboy = -1
+		relation = { who = SGF value = 100 }
+	    diplomatic_influence = { who = SGF value = 100 }
+		SWA = { prestige = 20 add_country_modifier = { name = neutrality duration = -1 } } 
+		ai_chance = {
+			factor = 50
+			   modifier = {
+			      factor = 0
+				   OR = {
+				      ruling_party_ideology = paternal
+					  ruling_party_ideology = reactionary
+					  ruling_party_ideology = fascist
+					  ruling_party_ideology = communist
+				   }
+			   }				   
+		}	
+	}
+}
+
+### The Swabian Question - Neutral Swabia
+
+country_event = {
+	id = 270033
+	title = "MGER34.T"
+	desc = "MGER34.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER34.A"
+		badboy = 5
+		relation = { who = SGF value = -100 }
+	    diplomatic_influence = { who = SGF value = -100 }
+		#create_vassal = SWA	
+		SWA = { country_event = 2700333 }
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 4
+				   OR = {
+				      ruling_party_ideology = paternal
+					  ruling_party_ideology = reactionary
+					  ruling_party_ideology = fascist
+					  ruling_party_ideology = communist
+				   }
+			   }				   
+		}	
+	}
+	
+	option = { 
+	    name = "MGER34.B"
+		badboy = -5
+		relation = { who = SGF value = 100 }
+	    diplomatic_influence = { who = SGF value = 100 }
+		SWA = { prestige = 20 add_country_modifier = { name = neutrality duration = -1 } } 
+		ai_chance = {
+			factor = 75	
+			   modifier = {
+			      factor = 0
+				   OR = {
+				      ruling_party_ideology = paternal
+					  ruling_party_ideology = reactionary
+					  ruling_party_ideology = fascist
+					  ruling_party_ideology = communist
+				   }
+			   }				   
+		}	
+	}
+}
+
+### SWA - Burgundy orders our Subjugation
+
+country_event = {
+	id = 2700333
+	title = "MGER340.T"
+	desc = "MGER340.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER340.A"
+        FROM = { create_vassal = THIS }
+		ai_chance = {
+			factor = 100				   
+		}	
+	}
+	
+	option = { 
+	    name = "MGER340.B"
+		relation = { who = FROM value = -400 }
+	    diplomatic_influence = { who = FROM value = -400 }
+		leave_alliance = FROM
+		FROM = {
+		    war = {
+			    target = THIS
+			    attacker_goal = {
+				    casus_belli = make_puppet
+			    }
+			    defender_goal = {
+				    casus_belli = cut_down_to_size
+			    }
+		 	    call_ally = yes
+		    }
+			badboy = -8
+		}		
+		ai_chance = {
+			factor = 0				   
+		}	
+	}
+}
+
+### BRG/PBG - The Partition Solution
+### This event can either be automatically triggered by the existance of SWA or trigger seperately if both WUR and SWI are Pro-Burgundian
+
+country_event = {
+	id = 270034
+	title = "MGER35.T"
+	desc = "MGER35.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        NOT = {	
+           exists = SWA		
+		   AND = {
+	          has_global_flag = WUR_burgundian
+		      has_global_flag = SWI_burgundian
+		   }
+		   AND = {
+	          has_global_flag = WUR_danubian
+		      has_global_flag = SWI_danubian
+		   }
+		}
+		has_global_flag = SWA_checker
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER35.A"
+		clr_global_flag = SWA_checker
+		prestige = 5
+		relation = { who = SWI value = 100 }
+		relation = { who = WUR value = -50 }
+		relation = { who = BAD value = -50 }
+		SGF = { country_event = { id = 270036 days = 7 } }
+	}
+}
+
+### BRG/PBG - The Partition Solution - Both WUR and SWI are Danubian. This may be a problem
+
+country_event = {
+	id = 270035
+	title = "MGER36.T"
+	desc = "MGER36.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }
+        NOT = {	
+           exists = SWA		
+		}
+		AND = {
+	       has_global_flag = WUR_danubian
+           has_global_flag = SWI_danubian
+	    }
+		has_global_flag = SWA_checker
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER36.A"
+		clr_global_flag = SWA_checker
+		prestige = -5
+		relation = { who = SWI value = -50 }
+		relation = { who = WUR value = -50 }
+		relation = { who = BAD value = 50 }
+		SGF = { country_event = { id = 270036 days = 7 } }
+	}
+}
+
+### SGF- The Partition Solution - Burgundy wants you to agree to a partition of the region.
+
+country_event = {
+	id = 270036
+	title = "MGER37.T"
+	desc = "MGER37.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# With only the sacrifice of Switzerland and Baden this is a deal.
+
+	option = { 
+	    name = "MGER37.A"
+		clr_global_flag = SWA_checker
+		prestige = 5
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = GRB
+				tag = WUR
+				tag = ULM
+		      }
+			  exists = yes
+		   }
+		   country_event = { id = 270037 days = 0 }
+        }					   
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		   country_event = { id = 270038 days = 0 }
+		}
+        random_owned = {
+               limit = {
+                   owner = { NOT = { citizens_rights = all_voting_pops } }
+               }
+               owner = { political_reform = all_voting_pops }
+        }
+		ai_chance = {
+			factor = 75
+			   modifier = {
+			      factor = 0.75
+				  government = absolute_monarchy
+			   }
+			   modifier = {
+			      factor = 0.5
+				  AND = {
+				    has_global_flag = SWI_danubian
+					has_global_flag = WUR_danubian
+			      }
+			   }	
+			   modifier = {
+			      factor = 0.25
+				  OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }				   
+		}		
+	}
+	
+	# No u - Give us the whole of Swabia
+	
+	option = { 
+	    name = "MGER37.B"
+		clr_global_flag = SWA_checker
+		badboy = 5
+		prestige = 10
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -100 }
+	       diplomatic_influence = { who = THIS value = -100 }
+		   country_event = { id = 270052 days = 0 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 1.25
+				  government = absolute_monarchy
+			   }
+			   modifier = {
+			      factor = 2
+				  AND = {
+				    has_global_flag = SWI_danubian
+					has_global_flag = WUR_danubian
+			      }
+			   }	
+			   modifier = {
+			      factor = 3
+				  OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }				   
+		}		
+	}
+}
+
+### Swabian Minors - SGF demands our annexation according to international treaty
+
+country_event = {
+	id = 270037
+	title = "MGER38.T"
+	desc = "MGER38.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# With only the sacrifice of Switzerland and Baden this is a deal.
+
+	option = { 
+	    name = "MGER38.A"
+		all_core = { add_core = SGF }
+		annex_to = SGF
+		ai_chance = {
+			factor = 100				   
+		}		
+	}
+	
+	# We refuse to allow our annexation
+	
+	option = { 
+	    name = "MGER38.B"
+        all_core = { add_core = SGF }
+	    SGF = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+        }		   
+		ai_chance = {
+			factor = 0			   
+		}		
+	}
+}
+
+### BRG - The Treaty of Stuttgart - We have partitioned Swabia - BAD created as a vassal and SWI is turned Neutral 
+
+country_event = {
+	id = 270038
+	title = "MGER39.T"
+	desc = "MGER39.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+	
+	# We have secured our border.
+	
+	option = { 
+	    name = "MGER39.A"
+		prestige = 30
+		create_vassal = BAD
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+		608 = { add_core = SWI }
+		604 = { add_core = SWI }
+        SWI = { prestige = 20 add_country_modifier = { name = neutrality duration = -1 } }	
+	}
+}
+
+############# Great Swabian Patriotic War - Revolutionary Swabia Exists #####################
+
+### SGF - A Joint Intervention?
+
+### Warn that refusal may result in a three way war
+
+country_event = {
+	id = 270039
+	title = "MGER40.T"
+	desc = "MGER40.D"
+	picture = "swabia"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# With only the sacrifice of Switzerland and Baden this is a deal.
+
+	option = { 
+	    name = "MGER40.A"
+		clr_global_flag = SWA_checker
+		prestige = 5			  
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		   country_event = { id = 270040 days = 0 }
+		}
+		ai_chance = {
+			factor = 75
+			   modifier = {
+			      factor = 0.75
+				  government = absolute_monarchy
+			   }
+			   modifier = {
+			      factor = 0.5
+				  AND = {
+				    has_global_flag = SWI_danubian
+					has_global_flag = WUR_danubian
+			      }
+			   }	
+			   modifier = {
+			      factor = 0.25
+				  OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }				   
+		}		
+	}
+	
+	# We will intervene in our own right against the illegal regime in Swabia
+	
+	option = { 
+	    name = "MGER40.B"
+		clr_global_flag = SWA_checker
+		badboy = 5
+		prestige = 10
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -100 }
+	       diplomatic_influence = { who = THIS value = -100 }
+		   country_event = { id = 270042 days = 0 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 1.25
+				  government = absolute_monarchy
+			   }
+			   modifier = {
+			      factor = 2
+				  AND = {
+				    has_global_flag = SWI_danubian
+					has_global_flag = WUR_danubian
+			      }
+			   }	
+			   modifier = {
+			      factor = 3
+				  OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }				   
+		}		
+	}
+}
+
+### BRG - The Swabian Great Patriotic War
+
+country_event = {
+	id = 270040
+	title = "MGER41.T"
+	desc = "MGER41.D"
+	picture = "swabia"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+
+	option = { 
+	    name = "MGER41.A"
+		set_global_flag = SWA_great_patriotic_war_normal
+		SWA = {
+           add_country_modifier = { name = SWA_great_patriotic_war duration = -1 }	
+           country_event = 270041
+        }		
+		war = {
+			target = SWA
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+        SGF = {	
+		    war = {
+			    target = SWA
+			    attacker_goal = {
+				    casus_belli = custom_treaty_cb
+			    }
+			    defender_goal = {
+				    casus_belli = cut_down_to_size
+			    }
+				call_ally = yes
+		   }  
+        }		   
+	}
+}
+
+### BRG - ENEMIES ON BOTH SIDES - FUCK FUCK FUCK FUCK
+
+country_event = {
+	id = 270041
+	title = "MGER421.T"
+	desc = "MGER421.D"
+	picture = "swiss_war"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER421.A"		
+        any_pop = {
+           militancy = -9
+        }		   
+	}
+}
+
+### BRG - The Swabian Great Patriotic War
+
+country_event = {
+	id = 270042
+	title = "MGER43.T"
+	desc = "MGER43.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+
+	option = { 
+	    name = "MGER43.A"
+		set_global_flag = SWA_great_patriotic_war_crazy	
+		SWA = {
+           add_country_modifier = { name = SWA_great_patriotic_war duration = -1 }	
+           country_event = 270041
+        }
+        SGF = {
+           country_event = 270043
+        }		   
+		war = {
+			target = SWA
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+        		   
+	}
+}
+
+### SGF - The Swabian Great Patriotic War - Burgundy has declared war on Swabia - If we intervene then Burgundy will declare war on us.
+
+country_event = {
+	id = 270043
+	title = "MGER44.T"
+	desc = "MGER44.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+
+	option = { 
+	    name = "MGER44.A"
+        any_country = {
+		   limit = {
+		      OR = {
+			    tag = BRG
+				tag = PBG
+		      }
+			  exists = yes
+		   }
+           country_event = 270044
+        }				
+		war = {
+			target = SWA
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+		}
+		ai_chance = {
+			factor = 75
+        }			
+	}
+	
+	option = { 
+	    name = "MGER44.B"
+		prestige = -10		
+		ai_chance = {
+			factor = 25
+        }
+	}
+}
+
+### BRG - Danubian Confederation has forced our hand by refusing ####
+
+country_event = {
+	id = 270044
+	title = "MGER45.T"
+	desc = "MGER45.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER45.A"
+		casus_belli = {
+			target = SGF
+			type = cut_down_to_size
+			months = 60
+	    }		
+		war = {
+			target = SGF
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}
+		ai_chance = {
+			factor = 90
+        }			
+	}
+	
+	option = { 
+	    name = "MGER45.B"
+		prestige = -30	
+		ai_chance = {
+			factor = 10
+        }
+	}
+}
+
+
+### SWA - We won the Great Patriotic War by still existing and not getting the custom treaty forced on us.
+
+country_event = {
+	id = 270045
+	title = "MGER46.T"
+	desc = "MGER46.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = SWA
+		war = no
+		OR = {
+		   has_global_flag = SWA_great_patriotic_war_crazy	
+		   has_global_flag = SWA_great_patriotic_war_normal
+		}
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER46.A"
+        prestige = 40
+		any_country = {
+		   limit = {
+		      OR = {
+		         tag = SGF
+			     tag = PBG
+			     tag = BRG
+		      }
+		   }
+		   set_country_flag = swabia_two_possible
+		   clr_country_flag = custom_treaty_loser
+		}
+		any_country = {
+		   limit = {
+		      tag = PBG
+			  exists = yes
+		   }
+		   set_country_flag = PBG_failure
+		}
+		remove_country_modifier = SWA_great_patriotic_war
+		# This enables the ability to conquer SGF
+		set_country_flag = SWA_successful_revolution
+		clr_global_flag = SWA_great_patriotic_war_crazy	
+		clr_global_flag = SWA_great_patriotic_war_normal
+	}
+}
+
+### SWA - We lost the Great Patriotic War under normal conditions and the treaty of Stuttgart was forced onto us which has forced us into Neutrality for the purposes of being a buffer state
+
+country_event = {
+	id = 270046
+	title = "MGER29.T"
+	desc = "MGER29.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = SWA
+		war = no
+        has_global_flag = SWA_great_patriotic_war_normal
+		has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER29.A"
+		clr_global_flag = SWA_great_patriotic_war_normal
+		any_country = {
+		   limit = {
+		      OR = {
+		         tag = SGF
+			     tag = PBG
+			     tag = BRG
+		      }
+		   }
+		   clr_country_flag = custom_treaty_loser
+		}
+		clr_country_flag = custom_treaty_loser
+		# Restoration of the Old Confederacy
+		government = democracy
+		all_core = { remove_core = SWA }
+		any_owned = {
+		   limit = { is_core = BAD }
+		   secede_province = BAD
+		}
+		any_owned = {
+		   limit = { is_core = WUR }
+		   secede_province = WUR
+		}
+		any_owned = {
+		   limit = { is_core = GRB }
+		   secede_province = GRB
+		}
+		change_tag = SWI
+		SGF = { country_event = 270047 }
+	}
+}		
+		
+
+### SGF- We agreed to this tready and thus its done.
+
+country_event = {
+	id = 270047
+	title = "MGER37.T"
+	desc = "MGER37.D"
+	picture = "swabia"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = { 
+	    name = "MGER37.A"
+		clr_global_flag = SWA_checker
+        random_owned = {
+               limit = {
+                   owner = { NOT = { citizens_rights = all_voting_pops } }
+               }
+               owner = { political_reform = all_voting_pops }
+        }
+		prestige = 5
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = GRB
+				tag = WUR
+				tag = ULM
+		      }
+			  exists = yes
+		   }
+		   country_event = { id = 270037 days = 0 }
+        }			  
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 100 }
+	       diplomatic_influence = { who = THIS value = 100 }
+		   country_event = { id = 270048 days = 0 }
+		}
+	}
+}
+
+### BRG - The Other Treaty of Stuttgart - We have partitioned Swabia - BAD created as a vassal and SWI is turned Neutral 
+
+country_event = {
+	id = 270048
+	title = "MGER39.T"
+	desc = "MGER39.D"
+	picture = "swabia"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+	
+	# We have secured our border.
+	
+	option = { 
+	    name = "MGER39.A"
+		prestige = 30
+		create_vassal = BAD
+		614 = { add_core = SWI }
+        611 = { add_core = SWI }
+		603 = { add_core = SWI }
+		608 = { add_core = SWI }
+		604 = { add_core = SWI }
+        SWI = { prestige = 20 add_country_modifier = { name = neutrality duration = -1 } }	
+	}
+}
+
+
+### BRG - We have won the Great Patriotic War by taking out both SGF and SWA
+
+### These events are rather easy since they are obvious what occurs in them
+
+country_event = {
+	id = 270049
+	title = "MGER391.T"
+	desc = "MGER391.D"
+	picture = "swabia"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		    tag = BRG
+			tag = PBG
+	    }
+		NOT = { war_with = SGF }
+		NOT = { war_with = SWA }
+        has_global_flag = SWA_great_patriotic_war_crazy
+		NOT = { has_country_flag = custom_treaty_loser }
+		SGF = { has_country_flag = custom_treaty_loser }
+		SWA = { has_country_flag = custom_treaty_loser }		
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER391.A"
+		any_country = {
+		   limit = {
+		      OR = {
+		         tag = SGF
+			     tag = PBG
+			     tag = BRG
+		      }
+		   }
+		   clr_country_flag = custom_treaty_loser
+		 }
+		clr_global_flag = SWA_great_patriotic_war_crazy
+		prestige = 20
+		create_vassal = SWA
+		set_country_flag = BRG_form_swabia
+		SGF = { set_country_flag = denied_swabia }
+	}
+}
+
+### SGF - We have won the Great Patriotic War by taking out both BRG and SWA
+
+### These events are rather easy since they are obvious what occurs in them
+
+country_event = {
+	id = 270050
+	title = "MGER392.T"
+	desc = "MGER392.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = SGF
+		war = no
+        has_global_flag = SWA_great_patriotic_war_crazy
+		NOT = { has_country_flag = custom_treaty_loser }
+		SGF = { has_country_flag = custom_treaty_loser }
+		OR = {
+		   BRG = { has_country_flag = custom_treaty_loser }
+		   PBG = { has_country_flag = custom_treaty_loser }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER392.A"
+		prestige = 40
+		clr_global_flag = SWA_great_patriotic_war_crazy
+		any_country = {
+		   limit = {
+		      OR = {
+		         tag = SGF
+			     tag = PBG
+			     tag = BRG
+		      }
+		   }
+		   set_country_flag = swabia_two_possible	
+		   clr_country_flag = custom_treaty_loser
+		}
+		any_country = {
+		   limit = {
+		      tag = PBG
+			  exists = yes
+		   }
+		   set_country_flag = PBG_failure
+		}
+	    SWA = { all_core = { add_core = SGF } }
+		inherit = SWA
+		add_accepted_culture = swabian
+	}
+}		
+	
+### SWA - We lost the Great Patriotic War but the GPs were unable to kill each other and thus they were forced into a treaty.
+
+country_event = {
+	id = 270051
+	title = "MGER393.T"
+	desc = "MGER393.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = SWA
+		war = no
+        has_global_flag = SWA_great_patriotic_war_crazy
+		has_country_flag = custom_treaty_loser
+		NOT = {
+	       SGF = { has_country_flag = custom_treaty_loser }
+		   BRG = { has_country_flag = custom_treaty_loser }	 
+           PBG = { has_country_flag = custom_treaty_loser }		   
+        }		   
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER393.A"
+		clr_global_flag = SWA_great_patriotic_war_crazy
+		any_country = {
+		   limit = {
+		      OR = {
+		         tag = SGF
+			     tag = PBG
+			     tag = BRG
+		      }
+		   }
+		   clr_country_flag = custom_treaty_loser
+		}
+		clr_country_flag = custom_treaty_loser
+		# Restoration of the Old Confederacy
+		government = democracy
+		all_core = { remove_core = SWA }
+		any_owned = {
+		   limit = { is_core = BAD }
+		   secede_province = BAD
+		}
+		any_owned = {
+		   limit = { is_core = WUR }
+		   secede_province = WUR
+		}
+		any_owned = {
+		   limit = { is_core = GRB }
+		   secede_province = GRB
+		}
+		change_tag = SWI
+		SGF = { country_event = 270047 }
+	}
+}		
+
+
+############# The Swabian War - Normal Swabian Conditions #####################
+	
+### BRG - Danubia refused Partition
+
+country_event = {
+	id = 270052
+	title = "MGER394.T"
+	desc = "MGER394.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# Threaten them
+	
+	option = { 
+	    name = "MGER394.A"
+		prestige = 5
+		badboy = 5
+		SGF = { country_event = 270055 }
+		ai_chance = {
+			factor = 90
+        }	
+	}
+	
+	# Withdraw - Will lead to Protectorate if PBG
+	
+	option = { 
+	    name = "MGER394.B"
+		prestige_factor = -0.25
+		soldiers = {
+			militancy = 3
+			consciousness = 3
+		}
+		officers = {
+			militancy = 5
+			consciousness = 5
+		}		
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.3
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { tag = PBG }
+		   }
+		   owner = { set_country_flag = PBG_failure }
+		}			 
+		SGF = { country_event = 270053 }
+		ai_chance = {
+			factor = 10
+        }	
+	}
+}
+
+### SGF - Burgundy Withdrew - Swabia is ours.
+
+country_event = {
+	id = 270053
+	title = "MGER395.T"
+	desc = "MGER395.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER395.B"
+		prestige = 30
+		clr_global_flag = WUR_neutral
+		clr_global_flag = SWI_neutral
+		clr_global_flag = WUR_burgundian
+		clr_global_flag = SWI_burgundian
+		clr_global_flag = WUR_danubian
+		clr_global_flag = SWI_danubian
+		any_pop = { militancy = -5 }
+		add_accepted_culture = swabian
+		# Triggers the SGF annexed you event
+		any_country = {
+		   limit = {
+		      primary_culture = swabian
+			  exists = yes
+		   }
+		   country_event = 270054
+		}
+	}
+}
+
+### Swabian Minors - SGF has annexed us - This is used either for the event above or if SGF wins the war against BRG
+
+country_event = {
+	id = 270054
+	title = "MGER396.T"
+	desc = "MGER396.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER396.A"
+		all_core = { add_core = SGF }
+		annex_to = SGF
+		ai_chance = {
+			factor = 100
+        }
+	}
+	
+	option = { 
+	    name = "MGER396.B"
+		prestige = 10
+		all_core = { add_core = SGF }
+		SGF = { 
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		any_country = {
+		    limit = {
+		      owns = 390
+		    }
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		any_greater_power = {
+		    limit = {
+		      NOT = { owns = 390 }
+		    }
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		ai_chance = {
+			factor = 0
+        }
+	}
+}
+
+### SGF - Burgundy has threatened us 
+
+country_event = {
+	id = 270055
+	title = "MGER397.T"
+	desc = "MGER397.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER397.A"
+		prestige = 10
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -100 }
+	       diplomatic_influence = { who = THIS value = -100 }
+		   country_event = { id = 270062 days = 14 }
+		}
+		# Dual Monarchy is not accepting your attempt to create a Major European War over Swabia
+		DUA = {
+		   leave_alliance = THIS
+		   relation = { who = THIS value = -150 }
+		   diplomatic_influence = { who = THIS value = -150 }
+		}
+		set_global_flag = SWA_alliance_checker
+		ai_chance = {
+			factor = 75
+        }
+	}
+	
+	option = { 
+	    name = "MGER397.B"
+		set_country_flag = denied_swabia	
+		prestige_factor = -0.25
+		soldiers = {
+			militancy = 3
+			consciousness = 3
+		}
+		officers = {
+			militancy = 5
+			consciousness = 5
+		}		
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.3
+		   }
+		}
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -100 }
+	       diplomatic_influence = { who = THIS value = -100 }
+		   country_event = { id = 270056 days = 0 }
+		}
+		ai_chance = {
+			factor = 25
+			   modifier = {
+			      factor = 0.5
+				  government = absolute_monarchy
+			   }
+			   modifier = {
+			      factor = 0
+				  AND = {
+				    has_global_flag = SWI_danubian
+					has_global_flag = WUR_danubian
+			      }
+			   }	
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }				   
+		}
+	}
+}
+
+### BRG - SGF withdrew - Swabia is ours
+
+### Need to add provisions for a Neutral Swabia here.
+
+country_event = {
+	id = 270056
+	title = "MGER398.T"
+	desc = "MGER398.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER398.B"
+		clr_global_flag = WUR_neutral
+		clr_global_flag = SWI_neutral
+		clr_global_flag = WUR_burgundian
+		clr_global_flag = SWI_burgundian
+		clr_global_flag = WUR_danubian
+		clr_global_flag = SWI_danubian
+		set_country_flag = BRG_form_swabia
+		prestige = 30
+		any_pop = { militancy = -5 }
+		# Triggers the BRG vassaled you event
+		any_country = {
+		   limit = {
+		      primary_culture = swabian
+			  exists = yes
+		   }
+		   country_event = 270057
+		}
+	}
+}
+
+### Swabian Minors - Burgundy has made us a puppet - Triggers if either SGF withdraws or is defeated in war.
+
+country_event = {
+	id = 270057
+	title = "MGER399.T"
+	desc = "MGER399.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	# Create Vassal
+	
+	option = { 
+	    name = "MGER399.A"
+		FROM = { 
+		   create_vassal = THIS 
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }				
+		}	
+		ai_chance = {
+			factor = 100
+        }
+	}
+	
+	# Get fucked player.
+	
+	option = { 
+	    name = "MGER399.B"
+		SGF = { 
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		any_country = {
+		    limit = {
+		      owns = 390
+		    }
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		any_greater_power = {
+		    limit = {
+		      NOT = { owns = 390 }
+		    }
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		FROM = {
+		    war = {
+			    target = THIS
+			    attacker_goal = {
+				    casus_belli = conquest_any
+			    }
+			    defender_goal = {
+				    casus_belli = status_quo
+			    }
+		 	    call_ally = yes
+		    }
+		}
+		ai_chance = {
+			factor = 0
+        }
+	}
+}
+
+# BRG forms Swabia through decision if it holds everything under sphere and SWA does not exist.
+
+### Burgundian Faction - Align to Burgundy
+
+country_event = {
+	id = 270058
+	title = "MGER400.T"
+	desc = "MGER400.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		primary_culture = swabian
+		NOT = { tag = SWA }
+		OR = {
+	       has_global_flag = WUR_burgundian
+		   has_global_flag = SWI_burgundian
+		   tag = BAD
+		   tag = FIO
+		   tag = BAE
+		}
+		has_global_flag = SWA_alliance_checker
+		NOT = { has_country_flag = SWA_alliance_checked }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER400.A"
+        set_country_flag = SWA_alliance_checked
+		SGF = { 
+		   leave_alliance = THIS
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		any_greater_power = {
+		    limit = {
+			   NOT = { owns = 390 }
+			   NOT = { tag = SGF }
+			}
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+	}
+}
+
+### Danubian Faction - Align to Danubia
+
+country_event = {
+	id = 270059
+	title = "MGER401.T"
+	desc = "MGER401.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		primary_culture = swabian
+		NOT = { tag = SWA }
+		OR = {
+	       has_global_flag = WUR_danubian
+		   has_global_flag = SWI_danubian
+		   tag = ULM
+		   tag = AGR
+		   tag = GRB
+		}
+		has_global_flag = SWA_alliance_checker
+		NOT = { has_country_flag = SWA_alliance_checked }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER401.A"
+        set_country_flag = SWA_alliance_checked
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		any_greater_power = {
+		    limit = {
+			   NOT = { owns = 390 }
+			   NOT = { tag = SGF }
+			}
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		SGF = { 		   
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+	}
+}
+
+### Neutral Faction - Choose
+
+### They are more likely to align to BRG rather then SGF
+
+country_event = {
+	id = 270060
+	title = "MGER402.T"
+	desc = "MGER402.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		primary_culture = swabian
+		NOT = { tag = SWA }
+		OR = {
+	       has_global_flag = WUR_neutral
+		   has_global_flag = SWI_neutral
+		}
+		has_global_flag = SWA_alliance_checker
+		NOT = { has_country_flag = SWA_alliance_checked }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = { 
+	    name = "MGER402.A"
+        set_country_flag = SWA_alliance_checked
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}
+		any_greater_power = {
+		    limit = {
+			   NOT = { owns = 390 }
+			   NOT = { tag = SGF }
+			}
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		SGF = { 		   
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+		ai_chance = {
+			factor = 25
+        }
+	}
+	
+	option = { 
+	    name = "MGER402.B"
+        set_country_flag = SWA_alliance_checked
+		SGF = { 
+		   leave_alliance = THIS
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		any_greater_power = {
+		    limit = {
+			   NOT = { owns = 390 }
+			   NOT = { tag = SGF }
+			}
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+		ai_chance = {
+			factor = 75
+        }
+	}
+}
+
+### SWA - Will always align with Burgundy
+
+country_event = {
+	id = 270061
+	title = "MGER403.T"
+	desc = "MGER403.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = SWA
+		has_global_flag = SWA_alliance_checker
+		NOT = { has_country_flag = SWA_alliance_checked }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = { 
+	    name = "MGER403.A"
+        set_country_flag = SWA_alliance_checked
+		SGF = { 
+		   leave_alliance = THIS
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }
+		}
+		any_greater_power = {
+		    limit = {
+			   NOT = { owns = 390 }
+			   NOT = { tag = SGF }
+			}
+		    leave_alliance = THIS
+		    relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	    }
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+		   create_alliance = THIS
+		}
+	}
+}
+
+### BRG - The Great Swabian War 
+
+### Maximilian I would be proud.
+
+country_event = {
+	id = 270062
+	title = "MGER404.T"
+	desc = "MGER404.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	major = yes
+
+	option = { 
+	    name = "MGER404.A"			
+		clr_global_flag = WUR_neutral
+		clr_global_flag = SWI_neutral
+		clr_global_flag = WUR_burgundian
+		clr_global_flag = SWI_burgundian
+		clr_global_flag = WUR_danubian
+		clr_global_flag = SWI_danubian
+		clr_global_flag = SWA_alliance_checker
+		set_global_flag = SWABIAN_WAR_ACTIVE
+		war = {
+			target = SGF
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}			
+	}
+}
+
+
+### SGF - Defeated by Burgundy - The Usual Outcome (since for fuck sakes its Burgundy)
+
+country_event = {
+	id = 270063
+	title = "MGER405.T"
+	desc = "MGER405.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = SGF
+		war = no
+		has_global_flag = SWABIAN_WAR_ACTIVE
+		has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	fire_only_once = yes 
+
+	option = { 
+	    name = "MGER405.A"	
+		clr_global_flag = SWABIAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser		
+		prestige_factor = -0.3
+		soldiers = {
+			militancy = 3
+			consciousness = 3
+		}
+		officers = {
+			militancy = 5
+			consciousness = 5
+		}		
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.3
+		   }
+		}
+        set_country_flag = denied_swabia	
+		any_country = {
+		   limit = {
+		     owns = 390
+		   }
+		   country_event = { id = 270056 days = 0 }
+		}		
+	}
+}
+
+### BRG - Defeated by Danubia - Holy fuck
+
+country_event = {
+	id = 270064
+	title = "MGER406.T"
+	desc = "MGER406.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+		   tag = PBG
+		}
+		war = no
+		has_global_flag = SWABIAN_WAR_ACTIVE
+		has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	fire_only_once = yes 
+
+	option = { 
+	    name = "MGER406.A"	
+		clr_global_flag = SWABIAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+        set_country_flag = swabia_two_possible		
+		prestige_factor = -0.3
+		soldiers = {
+			militancy = 3
+			consciousness = 3
+		}
+		officers = {
+			militancy = 5
+			consciousness = 5
+		}		
+		rich_strata = {
+		   dominant_issue = { 
+		      value = jingoism
+	          factor = 0.3
+		   }
+		}
+		random_owned = {
+		   limit = {
+		      owner = { tag = PBG }
+		   }
+		   owner = { set_country_flag = PBG_failure }
+		}			 
+		SGF = { country_event = 270053 }		
+	}
+}
+
+### BRG - SGF held the line to stop total defeat - Forced into the partition - SWA DOES NOT EXIST
+
+country_event = {
+	id = 270065
+	title = "MGER407.T"
+	desc = "MGER407.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+		   tag = PBG
+		}
+		NOT = { exists = SWA }
+		war = no
+		has_global_flag = SWABIAN_WAR_ACTIVE
+		NOT = { has_country_flag = custom_treaty_loser }
+		SGF = { NOT = { has_country_flag = custom_treaty_loser } }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	fire_only_once = yes 
+
+    # This is not the worst possible ending... 
+	
+	option = { 
+	    name = "MGER407.A"	
+		clr_global_flag = SWABIAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser		
+		prestige_factor = -0.1
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = GRB
+				tag = WUR
+				tag = ULM
+		      }
+			  exists = yes
+		   }
+		   country_event = { id = 270037 days = 0 }
+        }			  
+		country_event = { id = 270038 days = 0 }
+	}
+}
+
+### BRG - SGF held the line to stop total defeat - Forced into SWA's Neutrality
+
+country_event = {
+	id = 2700650
+	title = "MGER408.T"
+	desc = "MGER408.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+		   tag = PBG
+		}
+		exists = SWA
+		war = no
+		has_global_flag = SWABIAN_WAR_ACTIVE
+		NOT = { has_country_flag = custom_treaty_loser }
+		SGF = { NOT = { has_country_flag = custom_treaty_loser } }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	fire_only_once = yes 
+
+    # This is not the worst possible ending... 
+	
+	option = { 
+	    name = "MGER408.A"	
+		prestige_factor = -0.1
+		clr_global_flag = SWABIAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser		
+		SWA = { prestige = 20 add_country_modifier = { name = neutrality duration = -1 } }
+	}
+}
+
+############################################# CFR CHAIN - This pushes Berg to Unify the Rhineland when the Jeanist Crisis starts #################################
+
+#### Jean's Rhinish Project ####
+#### Jean decides to completely ignore Parliment after the start of the Jeanist Crisis and attempt to unify the Rhine ###
+
+country_event = {
+	id = 270066
+	title = "MGER49.T"
+	desc = "MGER49.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BRG
+		exists = BEG
+		has_global_flag = THE_BRG_CRISIS
+		NOT = { has_country_flag = CFR_unification_chain }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # The Parliment cannot stop the rise of Burgundy
+	
+	option = { 
+	    name = "MGER49.A"	
+		relation = { who = BOH value = -25 }
+		relation = { who = DUA value = -25 }
+		relation = { who = SCA value = -25 }
+		set_country_flag = CFR_unification_chain
+		BEG = { country_event = { id = 270067 days = 7 } }
+	}
+}
+
+# Pressure from Anvers to host a unification congress in Düsseldorf ###
+
+country_event = {
+	id = 270067
+	title = "MGER50.T"
+	desc = "MGER50.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # If he wanted all of Europe to think he is a Despot then he will be getting that label...
+	
+	option = { 
+	    name = "MGER50.A"	
+        set_country_flag = dusseldorf_conference
+		relation = { who = BRG value = -10 }
+	}
+}
+
+### MAJOR - The Conference of Düsseldorf
+
+### Jean flexed his defiance against Parliment and next thing you know...
+
+country_event = {
+	id = 270068
+	title = "MGER51.T"
+	desc = "MGER51.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		has_country_flag = dusseldorf_conference
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # Lets hope that this works.
+	
+	option = { 
+	    name = "MGER51.A"	
+		any_country = {
+		   limit = {
+		      primary_culture = rheinish
+		   }
+		   country_event = 270069
+		}
+		BEG = { country_event = { id = 270070 days = 7 } }
+	}
+}
+
+### All rhinish countries are informed.
+
+country_event = {
+	id = 270069
+	title = "MGER52.T"
+	desc = "MGER52.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER52.A"	
+        relation = { who = BRG value = -10 }
+	}
+}
+
+########################################################################################################################
+################# The Duke of Berg feels the pressure due to Republican Burgundy next door #############################
+########################################################################################################################
+
+### Duke of Berg feels like he is between a rock and a hard place and feels he needs to appease the Burgundians ###
+
+country_event = {
+	id = 2700670
+	title = "MGER500.T"
+	desc = "MGER500.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		exists = PBG
+		OR = {
+		   government = hms_government
+		   government = prussian_constitutionalism
+		   government = absolute_monarchy
+		}
+		has_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		NOT = { has_country_flag = CFR_unification_chain }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+		NOT = { year = 1860 }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	fire_only_once = yes
+	
+	option = { 
+	    name = "MGER500.A"	
+		relation = { who = PBG value = -50 }
+		country_event = { id = 2700680 days = 14 }
+	}
+}
+
+### MAJOR - The Conference of Düsseldorf
+
+country_event = {
+	id = 2700680
+	title = "MGER510.T"
+	desc = "MGER510.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # Lets hope that this works.
+	
+	option = { 
+	    name = "MGER51.A"	
+		any_country = {
+		   limit = {
+		      primary_culture = rheinish
+		   }
+		   country_event = 2700690
+		}
+		BEG = { country_event = { id = 270070 days = 7 } }
+	}
+}
+
+### All rhinish countries are informed.
+
+country_event = {
+	id = 2700690
+	title = "MGER520.T"
+	desc = "MGER520.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER520.A"	
+        relation = { who = PBG value = -10 }
+	}
+}
+
+
+### Berg's Duke has his speech about unification
+
+country_event = {
+	id = 270070
+	title = "MGER53.T"
+	desc = "MGER53.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # Lets hope that this works.
+	
+	option = { 
+	    name = "MGER53.A"
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  OR = {
+			     in_sphere = BRG
+				 in_sphere = PBG
+			  }
+			  NOT = { has_country_flag = MNR_BOH }
+			  NOT = { has_country_flag = MNR_SCA }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
+		   }
+		   country_event = { id = 270071 days = 3 }
+		}
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  NOT = { in_sphere = BRG }
+			  NOT = { in_sphere = PBG }
+			  NOT = { has_country_flag = MNR_BOH }
+			  NOT = { has_country_flag = MNR_SCA }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
+		   }
+		   country_event = { id = 2700730 days = 3 }
+		}
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  OR = {
+			     has_country_flag = MNR_BOH	
+			     in_sphere = BOH
+		      }
+			  NOT = { has_country_flag = MNR_SCA }
+		   }
+		   clr_country_flag = MNR_BOH		
+		   country_event = { id = 270072 days = 3 }
+		}
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  OR = {
+			     in_sphere = SCA
+				 has_country_flag = MNR_SCA 
+			  }
+			  NOT = { has_country_flag = MNR_BOH }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
+		   }	
+           clr_country_flag = MNR_SCA 		   
+		   country_event = { id = 270073 days = 3 }
+		}
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  NOT = {
+			     OR = {
+			        government = hms_government
+				    government = prussian_constitutionalism
+				    government = absolute_monarchy
+		         }
+			  }
+		   }
+		   clr_country_flag = MNR_SCA
+		   clr_country_flag = MNR_BOH
+		   country_event = { id = 270074 days = 3 }
+		}
+	}
+}
+
+
+### Munster is loyal to Burgundy
+
+country_event = {
+	id = 270071
+	title = "MGER54.T"
+	desc = "MGER54.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # Lets hope that this works.
+	
+	option = { 
+	    name = "MGER54.A"
+        set_global_flag = MNR_BRG_CFR
+		NAS = { country_event = { id = 270078 days = 7 } }
+	}
+}
+
+### Munster is loyal to Bohemia
+
+country_event = {
+	id = 270072
+	title = "MGER55.T"
+	desc = "MGER55.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # Lets hope that this works.
+	
+	option = { 
+	    name = "MGER55.A"
+        set_global_flag = MNR_BOH_CFR
+		NAS = { country_event = { id = 270078 days = 7 } }
+	}
+}
+
+
+### Munster is loyal to Scandinavia. Creates Westphalia and annexes the North
+
+country_event = {
+	id = 270073
+	title = "MGER56.T"
+	desc = "MGER56.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # You did what now?
+	
+	option = { 
+	    name = "MGER56.A"
+		BEG = { country_event = 270076 }
+		NAS = { country_event = { id = 270078 days = 7 } }
+		any_country = {
+		   limit = {
+		      tag = OSN
+		   }
+		   country_event = 270077
+		}
+		all_core = { add_core = WES }
+		prestige = 10
+		MNR_581 = { add_core = WES }
+        change_tag = WES
+	}
+}
+
+### Munster has somehow fell completely out of sphere and is not aligned to Bohemia or Scandinavia. Creates Westphalia and annexes the North.
+
+country_event = {
+	id = 2700730
+	title = "MGER560.T"
+	desc = "MGER560.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # You did what now?
+	
+	option = { 
+	    name = "MGER560.A"
+		BEG = { country_event = 270076 }
+		NAS = { country_event = { id = 270078 days = 7 } }
+		any_country = {
+		   limit = {
+		      tag = OSN
+		   }
+		   country_event = 270077
+		}
+		all_core = { add_core = WES }
+		prestige = 10
+		MNR_581 = { add_core = WES }
+        change_tag = WES
+	}
+}
+
+### Munster is a revolutionary republic - It abuses a conference to enact a plan in Berg
+
+country_event = {
+	id = 270074
+	title = "MGER57.T"
+	desc = "MGER57.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # This should hopefully overthrow Berg...
+	
+	option = { 
+	    name = "MGER5.A"
+		set_global_flag = MNR_SGF_CFR
+		BEG = { country_event = 270075 }
+		NAS = { country_event = { id = 270078 days = 7 } }
+
+	}
+}
+
+### Revolutionaries seen outside of the Palace
+
+country_event = {
+	id = 270075
+	title = "MGER58.T"
+	desc = "MGER58.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # The Royal Guard are able to fend off the Revolutionaries
+	
+	option = { 
+	    name = "MGER58.A"
+        prestige = 5
+	    ai_chance = { 
+	       factor = 30
+	    }
+	}
+	
+    # The Duke escapes to Burgundy
+	
+	option = { 
+	    name = "MGER58.B"
+		set_global_flag = BEG_SGF_CFR
+		prestige = -5
+	    government = democracy
+	    ruling_party_ideology = liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    ai_chance = { 
+	      factor = 70
+	    }
+	}
+}
+
+### Berg is notified that Munster has left the Conference and unified the North
+
+country_event = {
+	id = 270076
+	title = "MGER59.T"
+	desc = "MGER59.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # The scandinavian loving traitors.
+	
+	option = { 
+	    name = "MGER59.A"
+		relation = { who = WES value = -400 }
+		BRG = { relation = { who = WES value = -400 } }
+	}
+}
+
+### Do you want to join the Westphalia Solution?
+
+country_event = {
+	id = 270077
+	title = "MGER60.T"
+	desc = "MGER60.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # Of course
+	
+	option = { 
+	    name = "MGER60.A"
+		all_core = { add_core = WES }
+		annex_to = WES
+	    ai_chance = { 
+	       factor = 100
+	    }
+	}
+	
+	option = { 
+	    name = "MGER60.B"
+		all_core = { add_core = WES }
+		WES = { relation = { who = THIS value = -400 } }
+	    ai_chance = { 
+	       factor = 0
+	    }
+	}
+}
+
+### Nassau's Vote - Nobody will ever play this tag so this is just done via AI chance to save time
+
+country_event = {
+	id = 270078
+	title = "MGER61.T"
+	desc = "MGER61.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # We vote for Pro-Burgundian - Will always choose unless in Bohemian Sphere
+	
+	option = { 
+	    name = "MGER61.A"
+        set_global_flag = NAS_BRG_CFR
+		set_global_flag = COMPLETE_CFR_CHAIN
+		ai_chance = {
+			factor = 99
+			   modifier = {
+			      factor = 0
+				  in_sphere = BOH
+			   }			   
+		}
+	}
+	
+	# We vote for Pro-Bohemian
+	
+	option = { 
+	    name = "MGER61.B"
+		set_global_flag = NAS_BOH_CFR
+		set_global_flag = COMPLETE_CFR_CHAIN
+		ai_chance = {
+			factor = 1	   
+		}
+	}
+}
+
+##################################################################################################################
+### The CFR Chain is completely impossible so Munster decides that its fine to just create Wesphalia #############
+##################################################################################################################
+
+### Munster is alone ###
+
+country_event = {
+	id = 2700780 
+	title = "MGER610.T"
+	desc = "MGER610.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = MNR
+		exists = PBG
+		BEG = {
+		   NOT = {
+		      OR = {
+		         government = hms_government
+		         government = prussian_constitutionalism
+		         government = absolute_monarchy
+			  }
+		   }
+		}
+		has_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		NOT = { has_country_flag = CFR_unification_chain }
+		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+		NOT = { year = 1860 }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = { 
+	    name = "MGER610.A"
+		BEG = { set_country_flag = CFR_broke }
+		any_country = {
+		    limit = { 
+			  OR = {
+			    tag = PBG
+				tag = BRG
+		      }
+			  exists = yes
+            }	
+            relation = { who = THIS value = -400 }
+		    diplomatic_influence = { who = THIS value = -400 }
+        }
+		any_country = {
+		    limit = { 
+			  tag = SCA
+			  exists = yes
+            }	
+            relation = { who = THIS value = 400 }
+		    diplomatic_influence = { who = THIS value = 400 }
+        }
+		any_country = {
+		   limit = {
+		      tag = OSN
+		   }
+		   country_event = 270077
+		}
+		all_core = { add_core = WES }
+		prestige = 10
+		MNR_581 = { add_core = WES }
+        change_tag = WES
+	}
+}
+
+country_event = {
+	id = 2700781
+	title = "This does not need localization"
+	desc = "This is the failsafe for a failsafe"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		has_country_flag = CFR_broke
+		has_global_flag = JEAN_ENDING
+		OR = {
+		   exists = PBG
+		   exists = BRG
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "Might as well"
+		clr_country_flag = CFR_broke
+		any_country = {
+		    limit = { 
+			  OR = {
+			    tag = PBG
+				tag = BRG
+		      }
+			  exists = yes
+            }	
+			create_vassal = THIS
+            relation = { who = THIS value = 400 }
+		    diplomatic_influence = { who = THIS value = 400 }
+        }
+	}
+}
+
+### CFR Outcomes ####
+
+### The Only Valid Outcomes
+
+#MNR 
+#SGF OR SCA OR BOH OR BRG
+#BEG 
+#BRG OR SGF (Only if MNR SGF)
+#NAS
+#BRG OR BOH
+
+#SGF+BRG+BRG = BRG
+#SGF+BRG+BOH = Defaults to BRG
+#SGF+SGF+ANY = SGF
+#SCA+BRG+BOH = Defaults to BRG
+#SCA+BRG+BRG = BRG
+#BOH+BRG+BOH = BOH
+#BOH+BRG+BRG = BRG
+#BRG+BRG+ANY = BRG
+
+### 270079 - Burgundian CFR - This is the normal outcome
+
+country_event = {
+	id = 270079
+	title = "MGER62.T"
+	desc = "MGER62.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		has_global_flag = COMPLETE_CFR_CHAIN
+		NOT = { 
+		   OR = {
+		      AND = { 
+		         has_global_flag = NAS_BOH_CFR
+			     has_global_flag = MNR_BOH_CFR
+		      }
+		      AND = { 
+		         has_global_flag = MNR_SGF_CFR
+			     has_global_flag = BEG_SGF_CFR
+		      }	
+           }
+       }		   	  
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # The only valid outcome
+	
+	option = { 
+	    name = "MGER62.A"	
+		clr_global_flag = COMPLETE_CFR_CHAIN
+		clr_global_flag = NAS_BOH_CFR
+		clr_global_flag = MNR_BOH_CFR
+		clr_global_flag = NAS_BRG_CFR
+		clr_global_flag = MNR_BRG_CFR
+		clr_global_flag = MNR_SGF_CFR
+	    clr_global_flag = BEG_SGF_CFR
+        any_country = {
+           limit = {
+		     exists = yes
+             primary_culture = rheinish
+			 NOT = { OR = { tag = RHI tag = BEG tag = WES } }
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+        any_country = {
+           limit = {
+		     exists = yes
+             tag = OSN
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+		set_country_flag = CFR_PRO_BRG
+		any_country = {
+		    limit = { 
+			  OR = {
+			    tag = PBG
+				tag = BRG
+		      }
+			  exists = yes
+            }	
+            relation = { who = THIS value = 400 }
+		    diplomatic_influence = { who = THIS value = 400 }
+        }		   
+		political_reform = confederalism
+		change_tag = CFR
+	}
+}
+
+### 270080 - Bohemian CFR - A player has clearly been rigging things here.
+
+country_event = {
+	id = 270080
+	title = "MGER63.T"
+	desc = "MGER63.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		has_global_flag = COMPLETE_CFR_CHAIN
+		AND = { 
+		    has_global_flag = NAS_BOH_CFR
+			has_global_flag = MNR_BOH_CFR
+		}
+    }		   	  
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # How the actual fuck...
+	
+	option = { 
+	    name = "MGER63.A"	
+		clr_global_flag = COMPLETE_CFR_CHAIN
+		clr_global_flag = NAS_BOH_CFR
+		clr_global_flag = MNR_BOH_CFR
+		clr_global_flag = NAS_BRG_CFR
+		clr_global_flag = MNR_BRG_CFR
+		clr_global_flag = MNR_SGF_CFR
+	    clr_global_flag = BEG_SGF_CFR
+        any_country = {
+           limit = {
+		     exists = yes
+             primary_culture = rheinish
+			 NOT = { OR = { tag = RHI tag = BEG tag = WES } }
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+        any_country = {
+           limit = {
+		     exists = yes
+             tag = OSN
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+		set_country_flag = CFR_PRO_BOH
+		any_country = {
+		    limit = { 
+			  OR = {
+			    tag = PBG
+				tag = BRG
+		      }
+			  exists = yes
+            }	
+            relation = { who = THIS value = -400 }
+		    diplomatic_influence = { who = THIS value = -400 }
+        }
+		BOH = {
+		   relation = { who = THIS value = 400 }
+		   diplomatic_influence = { who = THIS value = 400 }
+		}
+		political_reform = confederalism
+		change_tag = CFR
+	}
+}
+
+### 270081 - Danubian CFR - BEG is a republic in this scenario so I'm sure this will go down well in Anvers
+
+country_event = {
+	id = 270081
+	title = "MGER64.T"
+	desc = "MGER64.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+		tag = BEG
+		has_global_flag = COMPLETE_CFR_CHAIN
+		AND = { 
+		    has_global_flag = MNR_SGF_CFR
+		    has_global_flag = BEG_SGF_CFR
+		}	
+    }		   	  
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	fire_only_once = yes 
+
+    # This is legit a rogue state
+	
+	option = { 
+	    name = "MGER64.A"	
+		clr_global_flag = COMPLETE_CFR_CHAIN
+		clr_global_flag = NAS_BOH_CFR
+		clr_global_flag = MNR_BOH_CFR
+		clr_global_flag = NAS_BRG_CFR
+		clr_global_flag = MNR_BRG_CFR
+		clr_global_flag = MNR_SGF_CFR
+	    clr_global_flag = BEG_SGF_CFR
+        any_country = {
+           limit = {
+		     exists = yes
+             primary_culture = rheinish
+			 NOT = { OR = { tag = RHI tag = BEG tag = WES } }
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+        any_country = {
+           limit = {
+		     exists = yes
+             tag = OSN
+           }
+		   country_event = { id = 270082 days = 2 }
+		}
+		set_country_flag = CFR_PRO_SGF
+        any_country = {
+           limit = {
+             tag = SGF
+			 OR = {
+			    government = democracy
+				government = parliamentary_republic
+		     }
+           }
+		   relation = { who = THIS value = 400 }
+		   diplomatic_influence = { who = THIS value = 400 }
+		}
+		any_country = {
+		    limit = { 
+			  OR = {
+			    tag = PBG
+				tag = BRG
+		      }
+			  exists = yes
+            }	
+            relation = { who = THIS value = -400 }
+		    diplomatic_influence = { who = THIS value = -400 }
+        }
+		BOH = {
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		}
+		political_reform = federalism
+		change_tag = CFR
+	}
+}
+
+### Stuttgart Conference is over and its time for you to be eaten
+
+country_event = {
+	id = 270082
+	title = "MGER65.T"
+	desc = "MGER65.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+
+    # Of course
+	
+	option = { 
+	    name = "MGER65.A"
+		all_core = { add_core = CFR }
+		CFR = { inherit = THIS }
+	    ai_chance = { 
+	       factor = 100
+	    }
+	}
+	
+	option = { 
+	    name = "MGER65.B"
+		all_core = { add_core = CFR }
+		CFR = { relation = { who = THIS value = -400 } }
+	    ai_chance = { 
+	       factor = 0
+	    }
+	}
+}
+
+###### Burgundy dealing with the Rhine Events ######
+
+### We are pro-bohemian except CAE does not exist so they cannot really protect us.
+
+country_event = {
+	id = 270083
+	title = "MGER66.T"
+	desc = "MGER66.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER66.A"
+		BOH = { 
+		   diplomatic_influence = { who = THIS value = -400 }
+		   relation = { who = THIS value = -400 }
+		   leave_alliance = CFR
+		}
+		FROM = { country_event = { id = 270084 days = 1 } }
+	}
+}
+
+country_event = {
+	id = 270084
+	title = "MGER67.T"
+	desc = "MGER67.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER67.A"
+		prestige = 10
+		casus_belli = { target = CFR type = make_puppet months = 120 }
+		war = {
+			target = CFR
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	}
+}
+
+### We are pro-bohemian and CAE exists. So Burgundy is fucked.
+
+country_event = {
+	id = 270085
+	title = "MGER670.T"
+	desc = "MGER670.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER670.A"
+		any_owned = {
+		    limit = { is_core = BEG }
+			remove_core = CFR
+		    secede_province = BEG
+		}
+		CAE = { 
+		   diplomatic_influence = { who = THIS value = 400 }
+		   relation = { who = THIS value = 400 }
+		   create_alliance = CFR
+		}
+		FROM = { country_event = { id = 270086 days = 1 } }
+	}
+}
+
+### We have lost control of the Rhine - However, we will not let Berg go.
+
+country_event = {
+	id = 270086
+	title = "MGER68.T"
+	desc = "MGER68.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER68.A"
+		prestige = -10
+		relation = { who = BEG value = 400 }
+		diplomatic_influence = { who = BEG value = 400 }
+		create_alliance = BEG
+		CFR = {
+		   relation = { who = THIS value = -400 }
+		   country_event = { id = 270087 days = 1 }
+		}
+	}
+}
+
+### Our sovereignty is effectively void due to being a practical puppet of CAE - Its over.
+
+country_event = {
+	id = 270087
+	title = "MGER69.T"
+	desc = "MGER69.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER69.A"
+		prestige_factor = -0.5
+        FROM = { create_vassal = BEG }		
+		CAE = { country_event = { id = 270088 days = 1 } }
+	}
+}
+
+### Rhine has submitted to being our bitch - We will hold them as a puppet for now but we can annex them later
+
+country_event = {
+	id = 270088
+	title = "MGER70.T"
+	desc = "MGER70.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER70.A"
+		create_vassal = CFR
+		set_country_flag = CFR_is_vassal
+	}
+}
+
+### We are Burgundian Bitches - We will be puppeted by Burgundy
+
+country_event = {
+	id = 270089
+	title = "MGER71.T"
+	desc = "MGER71.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER71.A"
+		FROM = { 
+		   diplomatic_influence = { who = THIS value = 400 }
+		   relation = { who = THIS value = 400 }
+		   create_alliance = CFR
+		   country_event = { id = 270090 days = 1 }
+		}
+	}
+}
+
+### Burgundy realizes that Jean's Plan was actually successful which I mean is actually funny if this is PBG
+
+country_event = {
+	id = 270090
+	title = "MGER72.T"
+	desc = "MGER72.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER72.A"
+		prestige = 20
+		create_vassal = CFR
+	}
+}
+
+### We are revolutionary - This is not going to work unless SGF is republican
+
+country_event = {
+	id = 270091
+	title = "MGER73.T"
+	desc = "MGER73.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER73.A"
+		FROM = { country_event = { id = 270092 days = 1 } }
+	}
+}
+
+country_event = {
+	id = 270092
+	title = "MGER74.T"
+	desc = "MGER74.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER74.A"
+		prestige = 10
+		casus_belli = { target = CFR type = make_puppet months = 120 }
+		war = {
+			target = CFR
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+		}
+	}
+}
+
+### WES's is reminded why Burgundy has declared war on them.
+
+country_event = {
+	id = 270093
+	title = "MGER75.T"
+	desc = "MGER75.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER75.A"
+		prestige = 10
+	}
+}
+
+
+### Burgundy has nuked Wesphalia and may now annex it into CFR ####
+
+country_event = {
+	id = 270094
+	title = "MGER76.T"
+	desc = "MGER76.D"
+	picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    OR = {
+		  tag = BRG
+		  tag = PBG
+	    }
+		has_country_flag = nuking_westphalia
+		NOT = { exists = WES }
+		is_our_vassal = CFR
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER76.A"
+		clr_country_flag = nuking_westphalia	
+		any_owned = {
+		   limit = { is_core = WES }
+		   secede_province = CFR
+		}   
+		WES = { all_core = { remove_core = WES } remove_country_modifier = WES_great_patriotic_war }
+	}
+}
+
+##########################
+
+#### Franconia Stuff ####
+
+#########################
+
+### Ansbach getting asked to die or get invaded anyway ###
+
+country_event = {
+	id = 270095
+	title = "MGER77.T"
+	desc = "MGER77.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER77.A"
+		595 = { add_core = SGF }
+		SGF = { inherit = THIS }
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER77.B"
+		595 = { add_core = SGF }
+		SGF = {
+		   relation = { who = ASB value = -400 }
+	       diplomatic_influence = { who = ASB value = -400 }		
+		} 
+  		ai_chance = {
+			factor = 0		
+		} 
+	}
+}
+
+### FRE must die ###
+
+country_event = {
+	id = 270096
+	title = "MGER78.T"
+	desc = "MGER78.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER78.A"
+		all_core = { add_core = SGF }
+		SGF = { inherit = THIS }
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER78.B"
+		all_core = { add_core = SGF }
+		SGF = {
+		   relation = { who = FRE value = -400 }
+	       diplomatic_influence = { who = FRE value = -400 }		
+		} 
+  		ai_chance = {
+			factor = 0		
+		} 
+	}
+}
+
+### Danubia Threatens Bohemia to give back FRE ###
+
+### The event below is Bohemia ###
+
+country_event = {
+	id = 270097
+	title = "MGER79.T"
+	desc = "MGER79.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	### Sure
+	
+	option = { 
+	    name = "MGER78.A"
+		prestige = -5
+		relation = { who = SGF value = 150 }
+		release_vassal = FRE
+		relation = { who = FRE value = -400 }
+	    diplomatic_influence = { who = FRE value = -400 }
+		FRE = { country_event = 270096 }
+  		ai_chance = {
+			factor = 75		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER79.B"
+		prestige = 5
+		SGF = { country_event = 270098 }
+  		ai_chance = {
+			factor = 25	
+		} 
+	}
+}
+
+country_event = {
+	id = 270098
+	title = "MGER80.T"
+	desc = "MGER80.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	### Oh there will be a war allright...
+	
+	option = { 
+	    name = "MGER80.A"
+		relation = { who = BOH value = -150 }
+		set_country_flag = SGF_waiting_for_chance	
+	}
+}
+
+##### This will only trigger if Bohemia starts a war with Scandinavia - In the case where Bohemia goes Czech FRE will be free game ###
+
+country_event = {
+	id = 270099
+	title = "MGER81.T"
+	desc = "MGER81.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = SGF
+		has_country_flag = SGF_waiting_for_chance
+		BOH = { war_with = SCA }
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	## They were warned...
+	
+	option = { 
+	    name = "MGER81.A"
+		clr_country_flag = SGF_waiting_for_chance
+		set_country_flag = FRE_crusade
+		BOH = { country_event = 270100 }
+	    war = {
+		    target = FRE
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+			call_ally = yes
+	    }
+  		ai_chance = {
+			factor = 75		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER81.B"
+		BOH = { set_country_flag = integrate_FRE_possible }
+		clr_country_flag = SGF_waiting_for_chance
+  		ai_chance = {
+			factor = 25	
+		} 
+	}
+}
+
+### SGF declared war for Bayreuth - The assholes ###
+
+country_event = {
+	id = 270100
+	title = "MGER82.T"
+	desc = "MGER82.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	### We will destroy scandinavia and then we will destroy them.
+	
+	option = { 
+	    name = "MGER81.A"
+		set_country_flag = integrate_FRE_possible
+		relation = { who = FRE value = -150 }	
+	}
+}
+
+#######################################################################
+################### Wurzburg's Short Chain ############################
+#######################################################################
+
+### TLDR: Wurzburg's Survival Depended on the HRE ###
+### Wurzburg is a catholic theocracy in a Protestant Majority state...
+
+country_event = {
+	id = 270101
+	title = "MGER820.T"
+	desc = "MGER820.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = FRW
+		NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+		NOT = { has_country_flag = FRW_CHAIN }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = { 
+	    name = "MGER82.A"
+		set_country_flag = FRW_CHAIN
+		set_country_flag = FRW_CHAIN_TWO
+	    add_country_modifier = { 
+		   name = calm_before_storm
+		   duration = 1825
+	    }
+	}
+}
+
+### The Wurzburg Riots 
+
+### Time has ran out and a decision must be made or the country will collapse ###
+
+country_event = {
+	id = 270102
+	title = "MGER83.T"
+	desc = "MGER83.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = FRW
+		has_country_flag = FRW_CHAIN_TWO
+		NOT = { has_country_modifier = calm_before_storm }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	### Rioters sieze the state - Likely will instantly result in collapse if SGF holds ASB and FRE
+	
+	option = { 
+	    name = "MGER83.A"
+        clr_country_flag = FRW_CHAIN_TWO
+		government = parliamentary_republic
+		any_pop = { 
+			ideology = { factor = 0.10 value = liberal }	
+		}
+	    ruling_party_ideology = liberal
+		political_reform = population_equal_weight
+		political_reform = proportional_representation
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+		political_reform = all_voting_pops
+        political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    set_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov	
+		election = yes
+	    ai_chance = { 
+	       factor = 30
+	    }
+	}
+	
+	### The Archbishop refuses to resign - Will result in collapse and invasion
+	
+	option = { 
+	    name = "MGER83.B"
+        clr_country_flag = FRW_CHAIN_TWO
+		country_event = { id = 270105 days = 31 }
+	    ai_chance = { 
+	       factor = 40
+	    }
+	}
+	
+	### The Archbishop creates a constitutional monarchy with a Burgundian Duke - Will result in collapse if not in BRG sphere+alliance
+	
+	option = { 
+	    name = "MGER83.C"
+        clr_country_flag = FRW_CHAIN_TWO
+		set_country_flag = FRK_secret
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = wealth_voting
+        political_reform = yes_meeting
+        political_reform = censored_press
+        political_reform = no_trade_unions
+        political_reform = secret_ballots
+		political_reform = population_equal_weight
+		political_reform = proportional_representation
+		political_reform = culture_voting_only
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		BRG = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }
+           create_alliance = THIS		   
+		} 
+	    ai_chance = { 
+	       factor = 30
+	    }
+	}
+}
+
+### External Powers have undermined the stablity of our revolutionary republic - Collapse
+
+country_event = {
+	id = 270103
+	title = "MGER84.T"
+	desc = "MGER84.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = FRW
+        has_country_flag = FRW_please_collapse_rep
+		3340 = { OR = { owned_by = SGF owned_by = CAE } }
+		594 = { owned_by = SGF }
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = { 
+	    name = "MGER84.A"
+        clr_country_flag = FRW_please_collapse_rep
+		country_event = { id = 270105 days = 31 }
+	}
+}
+
+### Burgundy is no longer holding us in their sphere or as a alliance - Collapse
+
+country_event = {
+	id = 270104
+	title = "MGER85.T"
+	desc = "MGER85.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	trigger = {	
+	    exists = yes
+	    tag = FRW
+		has_country_flag = FRW_please_collapse_mon
+		NOT = {
+		  alliance_with = BRG
+	      in_sphere = BRG
+		  alliance_with = PBG
+	      in_sphere = PBG
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = { 
+	    name = "MGER85.A"
+		clr_country_flag = FRK_secret
+        clr_country_flag = FRW_please_collapse_mon
+		country_event = { id = 270105 days = 31 }
+	}
+}
+
+### The Frankish Empire has ordered our annexation ###
+
+### We are fucked ####
+
+country_event = {
+	id = 2701040
+	title = "MGER850.T"
+	desc = "MGER850.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER850.A"
+		clr_global_flag = memes_are_real
+        clr_country_flag = FRW_please_collapse_mon
+		clr_country_flag = FRK_secret
+		all_core = { add_core = FRK }
+		FRK = { inherit = THIS }
+	}
+}
+
+### Wurzburg Collapses - GG WP
+
+country_event = {
+	id = 270105
+	title = "MGER86.T"
+	desc = "MGER86.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER86.A"
+		set_country_flag = FRW_DEAD
+        any_country = { 
+		   limit = {
+		     owns = 566
+		   }
+		   country_event = 270106
+		}
+        any_country = { 
+		   limit = {
+		     owns = 2560
+		   }
+		   country_event = 270107
+		}	
+        any_country = { 
+		   limit = {
+		     owns = 3340
+		   }
+		   country_event = 270108
+		}		
+	}
+}
+
+
+### MGER87 to 89 has the same localization ## 
+
+### We have taken clay from Wurzburg - Fulda
+
+country_event = {
+	id = 270106
+	title = "MGER87.T"
+	desc = "MGER87.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER87.A"
+		3342 = { add_core = HEK add_core = THIS }
+	    FRW = { 
+		  any_owned = {
+		     limit = { is_core = THIS }
+		     secede_province = THIS
+		  }
+		}
+	}
+}
+
+### We have taken clay from Wurzburg - Western Wurzburg
+
+country_event = {
+	id = 270107
+	title = "MGER87.T"
+	desc = "MGER87.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER87.A"
+		596 = { add_core = HES add_core = THIS }
+		569 = { add_core = HES add_core = THIS }
+	    FRW = { 
+		  any_owned = {
+		     limit = { is_core = THIS }
+		     secede_province = THIS
+		  }
+		}
+	}
+}
+
+### We have taken clay from Wurzburg - Bamberg
+
+country_event = {
+	id = 270108
+	title = "MGER87.T"
+	desc = "MGER87.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER87.A"
+		598 = { add_core = FRE add_core = THIS }
+	    FRW = { 
+		  any_owned = {
+		     limit = { is_core = THIS }
+		     secede_province = THIS
+		  }
+		}
+	}
+}
+
+### Die or get invaded anyway - FRW ###
+
+### This is either SGF or CAE depending on circumstances on who controls Bamberg
+
+country_event = {
+	id = 270109
+	title = "MGER670.T"
+	desc = "MGER670.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER88.A"
+		597 = { add_core = FROM }
+		FROM = { inherit = THIS }
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER88.B"
+		597 = { add_core = FROM }
+		FROM = {
+		   relation = { who = FRW value = -400 }
+	       diplomatic_influence = { who = FRW value = -400 }		
+		} 
+  		ai_chance = {
+			factor = 0		
+		} 
+	}
+}
+
+#######################################################################
+################### Withdrawal from Bremen ############################
+#######################################################################
+
+### Generic Annexation Event - Either triggered by the withdrawal or by decision ###
+
+country_event = {
+	id = 270110
+	title = "MGER89.T"
+	desc = "MGER89.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER89.A"
+		539 = { add_core = FROM }
+		FROM = { inherit = THIS }
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER89.B"
+		539 = { add_core = FROM }
+		FROM = {
+		   relation = { who = BRE value = -400 }
+	       diplomatic_influence = { who = BRE value = -400 }		
+		} 
+  		ai_chance = {
+			factor = 0		
+		} 
+	}
+}
+
+### Withdrawal from Bremen - Scandinavia is forced to withdraw the Garrision if they do not hold Hamburg ###
+### This should enable the decision that is triggers the above event.
+
+country_event = {
+	id = 270111
+	title = "MGER90.T"
+	desc = "MGER90.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+	    tag = SCA
+		BRE = { vassal_of = SCA }
+		NOT = { owns = 528 }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER89.A"
+		release_vassal = BRE
+		relation = { who = BRE value = -400 }
+	    diplomatic_influence = { who = BRE value = -400 }	
+	}
+}
+
+
+############## Burgundy enforcing its rule ######################
+
+### This event will always trigger if CFR or SWA are puppets and BRG/PBG are paternal or fascist ###
+
+### BRG/PBG and CFR
+
+country_event = {
+	id = 270112
+	title = "MGER91.T"
+	desc = "MGER91.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        OR = {
+		   ruling_party_ideology = paternal
+		   ruling_party_ideology = fascist
+		   government = proletarian_dictatorship
+		}
+		is_our_vassal = CFR
+		CFR = { NOT = { government = autonomous_dependency } }
+		NOT = { has_country_flag = CFR_block_autoden }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = { 
+	    name = "MGER91.A"
+		set_country_flag = CFR_enforce_order
+		CFR = {
+           country_event = { id = 270114 days = 1 }
+	       government = autonomous_dependency
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = closed_borders
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+		}
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER91.B"
+		set_country_flag = CFR_block_autoden
+  		ai_chance = {
+			factor = 0		
+		} 
+	}	
+}
+
+### BRG/PBG and SWA
+
+country_event = {
+	id = 270113
+	title = "MGER92.T"
+	desc = "MGER92.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        OR = {
+		   ruling_party_ideology = paternal
+		   ruling_party_ideology = fascist
+		   government = proletarian_dictatorship
+		}
+		is_our_vassal = SWA
+		SWA = { NOT = { government = autonomous_dependency } }
+		NOT = { has_country_flag = SWA_block_autoden }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+
+	option = { 
+	    name = "MGER92.A"
+		set_country_flag = SWA_enforce_order
+		SWA = {
+		   country_event = { id = 270114 days = 1 }
+	       government = autonomous_dependency
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = no_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = closed_borders
+	       political_reform = mandatory_service
+	       political_reform = primary_culture_only
+		}
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER92.B"
+		set_country_flag = SWA_block_autoden
+  		ai_chance = {
+			factor = 0		
+		} 
+	}	
+}
+
+### Burgundy has reorganized your government according to their whims ####
+
+### GG WP ###
+
+country_event = {
+	id = 270114
+	title = "MGER93.T"
+	desc = "MGER93.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER93.A"
+		prestige_factor = -0.5
+		random_owned = {
+			limit = {
+				FROM = { ruling_party_ideology = paternal }
+				owner = {
+					civilized = yes
+					NOT = { ruling_party_ideology = paternal }
+				}
+			}
+			owner = { ruling_party_ideology = paternal }
+	    }
+		random_owned = {
+			limit = {
+				FROM = { ruling_party_ideology = fascist }
+				owner = {
+					civilized = yes
+					NOT = { ruling_party_ideology = fascist }
+				}
+			}
+			owner = { ruling_party_ideology = fascist }
+	    }	
+		random_owned = {
+			limit = {
+				FROM = { ruling_party_ideology = communist }
+				owner = {
+					civilized = yes
+					NOT = { ruling_party_ideology = communist }
+				}
+			}
+			owner = { ruling_party_ideology = communist }
+	    }		
+	}
+}
+
+### Failure to Restore Order on SWA - You had the badboy left over and you refused you actual idiot ###
+
+country_event = {
+	id = 270115
+	title = "MGER94.T"
+	desc = "MGER94.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        OR = {
+		   ruling_party_ideology = paternal
+		   ruling_party_ideology = fascist
+		   government = proletarian_dictatorship
+		}
+		NOT = { is_our_vassal = SWA }
+		NOT = { badboy = 12 }
+		has_country_flag = SWA_enforce_order
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	option = { 
+	    name = "MGER94.A"
+		prestige_factor = -0.25
+		clr_country_flag = SWA_enforce_order
+	}
+}
+
+### Failure to Restore Order on CFR - You had the badboy left over and you refused you actual idiot ###
+
+country_event = {
+	id = 270116
+	title = "MGER95.T"
+	desc = "MGER95.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        OR = {
+		   ruling_party_ideology = paternal
+		   ruling_party_ideology = fascist
+		   government = proletarian_dictatorship
+		}
+		NOT = { is_our_vassal = CFR }
+		NOT = { badboy = 12 }
+		has_country_flag = CFR_enforce_order
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	option = { 
+	    name = "MGER95.A"
+		prestige_factor = -0.25
+		clr_country_flag = CFR_enforce_order
+	}
+}
+
+### You are a democracy - Try a more peaceful approach to dealing with Swabia or Rhineland ###
+
+country_event = {
+	id = 270117
+	title = "MGER96.T"
+	desc = "MGER96.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		   tag = BRG
+           tag = PBG
+        }		
+        NOT = { 
+		   OR = {
+		      government = presidential_dictatorship
+			  government = fascist_monarchy
+			  government = absolute_monarchy
+			  government = proletarian_dictatorship
+			  government = fascist_dictatorship
+			}
+	    }
+		NOT = {
+		   OR = {
+		      ruling_party_ideology = paternal
+		      ruling_party_ideology = fascist
+			  ruling_party_ideology = communist
+		   }
+		}
+		OR = {
+		   has_country_flag = CFR_enforce_order
+		   has_country_flag = SWA_enforce_order
+	    }
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = { 
+	    name = "MGER96.A"
+		relation = { who = SWA value = 200 }
+		relation = { who = CFR value = 200 }
+		diplomatic_influence = { who = SWA value = 200 }
+		diplomatic_influence = { who = CFR value = 200 }
+		clr_country_flag = CFR_enforce_order
+		clr_country_flag = SWA_enforce_order
+	}
+}
+
+#######################################
+########### Oldenberg #################
+#######################################
+
+## I'm getting too olden for this shit
+
+### The Duke has been resisting pressure from Burgundy to adopt a Burgundian-Written Constitution but with the collapse of the HRE that's basically over ### 
+
+### Understandably this is controversial as almost nobody except the Great Power sitting next to Oldenberg supports this. Including the Duke himself.
+
+country_event = {
+	id = 270118
+	title = "MGER97.T"
+	desc = "MGER97.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = OLD
+		has_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		OR = {
+		   government = hms_government
+		   government = prussian_constitutionalism
+		   government = absolute_monarchy
+		}
+		NOT = { year = 1860 }
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = { 
+	    name = "MGER97.A"
+		set_country_flag = OLDen_Futures
+		prestige_factor = -0.25
+		any_country = {
+		   limit = {
+		      OR = {
+				tag = SGF
+				tag = BOH
+		      }
+			  relation = { who = THIS value = -400 }
+	          diplomatic_influence = { who = THIS value = -400 }
+           }
+        }		   
+		BRG = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}		
+	    government = prussian_constitutionalism
+	    ruling_party_ideology = conservative
+	    political_reform = appointed
+	    political_reform = wealth_voting 
+	    political_reform = no_meeting
+	    political_reform = censored_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = gerrymandering
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    set_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov	
+	}
+}
+
+### Oldenberg Outcome One - Scandinavia still holds Bremen after formation of CFR. WES does not exist.
+
+### Schloss Oldenburg under Siege ####
+
+### The Duke can either adjust the constitution to remove Burgundian Influence from it and appease them, retain the influence by fighting back against the protestors or Scandinavian Marines intervene in the crisis and sieze the state
+
+country_event = {
+	id = 270119
+	title = "MGER98.T"
+	desc = "MGER98.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = OLD
+		exists = CFR
+		BRE = { vassal_of = SCA }
+		NOT = { exists = WES }
+		has_country_flag = OLDen_Futures
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    # Burgundy retains its influence and Oldenburg joins CFR later on after the BCW if CFR is a puppet of BRG
+
+	option = { 
+	    name = "MGER98.A"
+		clr_country_flag = OLDen_Futures
+		set_country_flag = OLD_to_annex
+	    ai_chance = {
+	       factor = 25
+	    }
+	}
+	
+    # The Nobility forces the Duke takes back control over the state
+
+	option = { 
+	    name = "MGER98.B"
+		clr_country_flag = OLDen_Futures
+		political_reform = landed_voting
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}	
+	    ai_chance = {
+	       factor = 25
+	    }
+	}
+	
+    # The Scandinavian Marines intervene
+
+	option = { 
+	    name = "MGER98.C"
+		clr_country_flag = OLDen_Futures
+	    government = autonomous_dependency
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}
+		SCA = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		   create_vassal = THIS
+		}			
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+### Oldenberg Outcome Two - Wesphalia Exists
+
+### Schloss Oldenburg under Siege ####
+
+### The Duke can either retain the influence by fighting back against the protestors or get overthrown by Neo-Dalkist Republicans 
+
+country_event = {
+	id = 270120
+	title = "MGER99.T"
+	desc = "MGER99.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = OLD
+		exists = CFR
+		exists = WES
+		has_country_flag = OLDen_Futures
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+     # Burgundy retains its influence and Oldenburg joins CFR later on after the BCW if CFR is a puppet of BRG
+
+	option = { 
+	    name = "MGER99.A"
+		clr_country_flag = OLDen_Futures
+		set_country_flag = OLD_to_annex
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+	
+    # Neo-Dalkist Republicans overthrow the state.
+
+	option = { 
+	    name = "MGER99.B"
+		clr_country_flag = OLDen_Futures
+		government = presidential_dictatorship
+		540 = { add_core = WES }
+		annex_to = WES
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+### Oldenberg Outcome Three - Scandinavia is not in Bremen somehow
+
+### Schloss Oldenburg under Siege ####
+
+### The Duke can either adjust the constitution to remove Burgundian Influence from it and appease them, retain the influence by fighting back against the protestors
+
+country_event = {
+	id = 270121
+	title = "MGER100.T"
+	desc = "MGER100.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = OLD
+		exists = CFR
+		BRE = { NOT = { vassal_of = SCA } }
+		NOT = { exists = WES }
+		has_country_flag = OLDen_Futures
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    # Burgundy retains its influence and Oldenburg joins CFR later on after the BCW if CFR is a puppet of BRG
+
+	option = { 
+	    name = "MGER100.A"
+		clr_country_flag = OLDen_Futures
+		set_country_flag = OLD_to_annex
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+	
+    # The Nobility forces the Duke takes back control over the state
+
+	option = { 
+	    name = "MGER100.B"
+		clr_country_flag = OLDen_Futures
+		political_reform = landed_voting
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}	
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+### Since we let the Burgundian Influence Continue - CFR is a puppet now and we are annexed as a result ###
+
+country_event = {
+	id = 270122
+	title = "MGER101.T"
+	desc = "MGER101.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+		tag = OLD
+		CFR = { vassal_of = BRG }
+		has_country_flag = OLD_to_annex
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = { 
+	    name = "MGER101.A"
+		clr_country_flag = OLD_to_annex
+		540 = { add_core = CFR }
+		annex_to = CFR
+	}
+}
+
+### Generic Annexation Event - Oldenberg is neutral and someone next door has decided to kill us off after taking over Bremen ###
+
+### When you burn bridges with the Burgundians or get occupied by the Scandinavians and they failed this is what you deserve ###
+
+country_event = {
+	id = 270123
+	title = "MGER102.T"
+	desc = "MGER102.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER102.A"
+		540 = { add_core = FROM }
+		annex_to = FROM
+  		ai_chance = {
+			factor = 100		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER102.B"
+		540 = { add_core = FROM }
+		FROM = {
+		   relation = { who = OLD value = -400 }
+	       diplomatic_influence = { who = OLD value = -400 }		
+		} 
+  		ai_chance = {
+			factor = 0		
+		} 
+	}
+}
+
+#### SCA - You must withdraw from Oldenberg since you no longer control Hamburg ###
+
+country_event = {
+	id = 270124
+	title = "MGER103.T"
+	desc = "MGER103.D"
+	#picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+	    tag = SCA
+		OLD = { vassal_of = SCA }
+		NOT = { owns = 528 }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = { 
+	    name = "MGER103.A"
+		release_vassal = OLD
+		OLD = { government = absolute_monarchy }
+		relation = { who = OLD value = -400 }
+	    diplomatic_influence = { who = OLD value = -400 }	
+	}
+}
+
+#### SCA - Burgundy says get the fuck of out Oldenburg or our alliance is over ###
+
+country_event = {
+	id = 270125
+	title = "MGER104.T"
+	desc = "MGER104.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER104.A"
+		release_vassal = OLD
+		relation = { who = OLD value = -400 }
+	    diplomatic_influence = { who = OLD value = -400 }
+        540 = { add_core = CFR }		
+		OLD = { government = absolute_monarchy annex_to = CFR }        		
+  		ai_chance = {
+			factor = 99		
+		} 
+	}
+	
+	option = { 
+	    name = "MGER104.B"
+		leave_alliance = FROM
+		relation = { who = FROM value = -300 }
+  		ai_chance = {
+			factor = 1		
+		} 
+	}
+}
+
+#The Alemannian-Danubian Revolution
+country_event = { 
+	id = 270126
+	title = "MGER105.T"
+	desc = "MGER105.D"
+	
+	trigger = { 
+		tag = SGF
+		war = no 
+		NOT = { 
+			OR = { 
+				government = parliamentary_republic 
+				government = democracy
+			}
+		}
+		SWA = { 
+			exists = yes 
+			OR = { 
+				government = parliamentary_republic 
+				government = democracy
+			}
+			has_country_flag = SWA_successful_revolution
+		}
+		NOT = { has_country_flag = revolution_swabia } 
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = { 
+		name = "MGER105.A"
+		government = democracy 
+		nationalvalue = nv_liberty
+		set_country_flag = revolution_swabia
+		SWA = { country_event = 270127 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+		name = "MGER105.B" 
+		set_country_flag = revolution_swabia
+		any_pop = { 
+				scaled_militancy = { 
+					ideology = liberal
+					factor = 5
+				}
+				scaled_militancy = { 
+					ideology = anarcho_liberal 
+					factor = 7
+				}
+				scaled_militancy = { 
+					ideology = socialist 
+					factor = 7
+				}
+				scaled_militancy = { 
+					ideology = communist 
+					factor = 7
+				}
+			}
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 270127
+	title = "MGER106.T"
+	desc = "MGER106.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "MGER106.A" #We will lead Germany! 
+		inherit = SGF 
+		add_accepted_culture = south_german
+		country_event = { id = 270128 days = 10 }
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "MGER106.B"
+		relation = { who = SGF value = 150 }
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+country_event = { 
+	id = 270128
+	title = "MGER107.T"
+	desc = "MGER107.D"
+	
+	major = yes
+	
+	is_triggered_only = yes 	
+	
+	option = { 
+		name = "MGER107.A"
+		change_tag = SGF
+		capital = 593 
+	}
+}
+
+#### Was ist des Deutschen Vaterland ####
+
+# The Bohemian Claim - Bohemia is not Czech
+# You get 30 infamy if you claim Central Bohemia
+
+country_event = { 
+	id = 270129
+	title = "MGER108.T"
+	desc = "MGER108.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	# Bohemia is rightful German Clay
+	# RED TEXT RED TEXT RED TEXT
+	
+	option = { 
+		name = "MGER105.A"
+        badboy = 30		
+		any_greater_power = {
+		   limit = { NOT = { alliance_with = THIS } }
+		   relation = { who = THIS value = -100 }
+		}
+		BOH = { all_core = { add_core = THIS } }
+		set_country_flag = pariah_ai
+	    ai_chance = { 
+	      factor = 25
+	         modifier = { 
+	            factor = 0
+		        NOT = { rank = 1 }
+		     }
+	         modifier = { 
+	            factor = 0
+		        NOT = { OR = { government = fascist_dictatorship government = fascist_monarchy } }
+		     }
+	    }
+	}
+	
+	# Lets stick to Upper Silesia
+	
+	option = { 
+		name = "MGER105.B"
+        badboy = 15
+		SIL_684 = { add_core = THIS }
+		ai_chance = { 
+			factor = 50
+		}
+	}
+	
+    # I would prefer not being a pariah state
+	
+	option = { 
+		name = "MGER105.C"
+        relation = { who = BOH value = 100 }	
+		ai_chance = { 
+			factor = 25
+		}
+	}
+}
+
+# The Bohemian Claim - Bohemia is Czech
+# You get 40 infamy if you claim Central Bohemia
+
+country_event = { 
+	id = 270130
+	title = "MGER109.T"
+	desc = "MGER109.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	# What on earth is international law?
+	# You are now a Pariah State
+	# RED TEXT RED TEXT RED TEXT
+	
+	option = { 
+		name = "MGER109.A"
+        badboy = 40	
+		any_greater_power = {
+		   limit = { NOT = { alliance_with = THIS } }
+		   relation = { who = THIS value = -150 }
+		}
+		BOH = { all_core = { add_core = THIS } }
+		set_country_flag = pariah_ai
+	    ai_chance = { 
+	      factor = 25
+	         modifier = { 
+	            factor = 0
+		        NOT = { rank = 1 }
+		     }
+	         modifier = { 
+	            factor = 0
+		        NOT = { OR = { government = fascist_dictatorship government = fascist_monarchy } }
+		     }
+	    }
+	}
+	
+	# Lets stick to Upper Silesia
+	
+	option = { 
+		name = "MGER109.B"
+        badboy = 15
+		SIL_684 = { add_core = THIS }
+		ai_chance = { 
+			factor = 50
+		}
+	}
+	
+    # I would prefer not being a pariah state
+	
+	option = { 
+		name = "MGER109.C"
+        relation = { who = BOH value = 100 }	
+		ai_chance = { 
+			factor = 25
+		}
+	}
+}
+
+# The Conference of Amsterdam
+
+# Major
+
+country_event = { 
+	id = 270131
+	title = "MGER110.T"
+	desc = "MGER110.D"
+	
+	is_triggered_only = yes
+	major = yes
+	
+	# For the German People!
+	
+	option = { 
+		name = "MGER110.A"
+        all_core = { add_core = GER }
+		annex_to = GER
+		ai_chance = { 
+			factor = 99
+	         modifier = { 
+	            factor = 0
+		        NOT = { government = absolute_monarchy government = fascist_monarchy }
+				GER = { OR = { government = absolute_monarchy government = fascist_monarchy } }
+		     }
+	         modifier = { 
+	            factor = 0
+		        NOT = { government = fascist_dictatorship government = presidential_dictatorship }
+				GER = { OR = { government = fascist_dictatorship government = presidential_dictatorship } }
+		     }
+	         modifier = { 
+	            factor = 0
+		        NOT = { government = proletarian_dictatorship government = socialist_republic }
+				GER = { OR = { government = proletarian_dictatorship government = socialist_republic } }
+		     }				 
+		}
+	}
+	
+	# You are radicals and traitors to the German People
+	
+	option = { 
+		name = "MGER110.B"
+		any_greater_power = {
+		   limit = { NOT = { tag = GER } }
+		   relation = { who = THIS value = 200 }
+		}
+		prestige = 20
+        all_core = { add_core = GER }
+		GER = { country_event = 270132 }
+		ai_chance = { 
+			factor = 1
+		}
+	}
+}
+
+# They said no.
+
+country_event = { 
+	id = 270132
+	title = "MGER111.T"
+	desc = "MGER111.D"
+	
+	is_triggered_only = yes
+	
+	# We will be back in Amsterdam soon...
+	
+	option = { 
+		name = "MGER111.A"
+        prestige = -10
+	}
+}

@@ -1,0 +1,2323 @@
+#### German Overhaul Decisions #####
+
+political_decisions = {
+
+    ###### PRE-HOLY ROMAN EMPIRE COLLAPSE DECISIONS #####
+
+	# This decision starts the Great German War for Bohemia. You can use this at any time after the possible flag is set.
+
+	start_2GGW = {
+		picture = austro_prussian_war
+		potential = {
+	        tag = BOH
+            has_country_modifier = HOLY_ROMAN_EMPEROR	
+		}
+		
+		allow = {
+            is_greater_power = yes
+		    has_country_flag = second_great_german_war_possible		
+		}
+		
+		effect = {
+		    prestige = -1
+		    clr_country_flag = second_great_german_war_possible
+			country_event = { id = 150150 days = 0 }
+	        change_variable = {
+		       which = IMPERIAL_GRACE
+		       value = -20
+	        }
+		}
+		
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+	treaty_of_berlin = {
+		picture = treaty_signing
+		potential = {
+	        tag = SCA
+			has_global_flag = pommerania_war_early
+		}
+		
+		allow = {
+			war = yes
+			# Berlin, Madeburg, Leignitz, Leipzig or Prague
+			OR = {
+			   549 = { controlled_by = THIS province_control_days = 100 }
+			   3338 = { controlled_by = THIS province_control_days = 100 }
+			   559 = { controlled_by = THIS province_control_days = 100 }
+			   625 = { controlled_by = THIS province_control_days = 100 }
+			   553 = { controlled_by = THIS province_control_days = 100 }
+			}
+			# Do not have anything in Schleswig-Holstein or Copenhagen Occupied
+			372 = { controlled_by = THIS }
+			HOL = {
+				all_core = {
+					controlled_by = THIS
+				}
+			}
+			SCH = {
+				all_core = {
+					controlled_by = THIS
+				}
+			}
+		}
+		
+		effect = {
+		    clr_global_flag = pommerania_war_early
+			end_war = BOH
+			inherit = MSZ
+			545 = { add_core = BOH }
+			country_event = 150074
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	treaty_of_hamburg = {
+		picture = treaty_signing
+		potential = {
+	        tag = BOH
+			has_global_flag = pommerania_war_early
+		}
+		
+		allow = {
+			war = yes
+			# Schleswig, Kiel or Copenhagen if you want to be really spicy
+			OR = {
+			   369 = { controlled_by = THIS province_control_days = 100 }
+			   370 = { controlled_by = THIS province_control_days = 100 }
+			   371 = { controlled_by = THIS province_control_days = 100 }
+			   372 = { controlled_by = THIS province_control_days = 100 }
+			}
+			# Do not have cores in Brandenburg or Prague occupied
+			625 = { controlled_by = THIS }
+			BRN = {
+				all_core = {
+					controlled_by = THIS
+				}
+			}
+		}
+		
+		effect = {
+		    set_country_flag = early_POM
+		    clr_global_flag = pommerania_war_early
+			end_war = SCA
+			inherit = MSZ
+			545 = { add_core = SCA }
+			SCA = { country_event = 150072 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	
+	form_saxony = {
+		#picture = reichstag
+		potential = {
+	        OR = {
+			   tag = THU
+			   tag = HAN
+			}
+			OR = {
+			   has_country_flag = enable_saxony
+			   AND = {
+			      NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+				  year = 1860
+			   }
+			}
+		}
+		
+		allow = {
+		    war = no
+			owns = 554
+			owns = 532
+		}
+		
+		effect = {
+		    clr_country_flag = enable_saxony
+		    prestige = 20
+		    HAN = { clr_country_flag = enable_saxony all_core = { add_core = SAX remove_core = HAN } }
+			THU = { clr_country_flag = enable_saxony all_core = { add_core = SAX remove_core = THU } }
+			536 = { remove_core = BRA }
+			537 = { remove_core = BRA }
+			change_tag = SAX			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# SGF is formed by event - This decision is just a dummy
+	
+	FAKE_form_SGF = {
+		#picture = reichstag
+		potential = {
+		    ai = no
+	        primary_culture = south_german
+			NOT = { tag = SGF }
+			NOT = { tag = GER }
+		}
+		
+		allow = {
+		   has_country_flag = wait_for_events
+		}
+		
+		effect = {
+		    prestige = 20
+		    BAV = {
+                remove_country_modifier = HOLY_ROMAN_EMPIRE
+	            remove_country_modifier = war_justification_blocked			
+		        all_core = { add_core = SGF } 		
+            }
+		    AUS = {
+                remove_country_modifier = HOLY_ROMAN_EMPIRE
+	            remove_country_modifier = war_justification_blocked			
+		        all_core = { add_core = SGF } 		
+            }
+			change_tag = SGF		
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+    ###### POST-HOLY ROMAN EMPIRE COLLAPSE DECISIONS #####
+	
+	end_the_occupation_BOH = {
+		#picture = reichstag
+		potential = {
+		    tag = BOH
+			has_country_modifier = BOH_effectively_occupied 
+		}
+		
+		allow = {
+		   NOT = { war_exhaustion = 1 }	
+		   OR = {
+		      exists = SGF
+			  year = 1852
+		   }
+		}
+		
+		effect = {
+		    prestige = 1
+		    remove_country_modifier = BOH_effectively_occupied 	
+			country_event = { id = 152005 days = 31 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Bohemia's Grand Reformation - I'm sure this will go well
+	
+	the_grand_reformation_BOH = {
+		#picture = reichstag
+		potential = {
+		    tag = BOH
+            NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+			NOT = { has_country_flag = BOH_grand_reformation }
+		}
+		
+		allow = {
+		   OR = {
+		      state_n_government = 1
+			  AND = {
+			     ai = yes
+				 year = 1861
+			  }
+		   }
+		   has_country_flag = BOH_grand_reforms_possible
+		}
+		
+		effect = {
+		    prestige = 5
+		    set_country_flag = BOH_grand_reformation
+			clr_country_flag = BOH_grand_reforms_possible
+			country_event = { id = 152008 days = 14 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# FAKE - Form CAE - This allows you to form the big tag, but is a fake version of the decision
+	
+	FAKE_form_CAE_BOH = {
+		picture = german_confederation
+		potential = {
+		    ai = no
+		    tag = BOH
+            NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+			NOT = { has_country_flag = BOH_is_czech }
+			NOT = { has_country_flag = CAE_enabled }
+		}
+		
+		allow = {
+           has_country_flag = wait_for_events
+		}
+		
+		effect = {
+		    prestige = 5
+			political_reform = confederalism
+		    change_tag = CAE
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Form CAE - This allows you to form the big tag - You must own Pommerania, Holstein and Saxony must not exist
+	
+	
+	form_CAE_BOH = {
+		picture = german_confederation
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled
+			NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
+		}
+		
+		allow = {
+		   OR = {
+		      nationalism_n_imperialism = 1
+			  AND = {
+			     ai = yes
+				 year = 1871
+			  }
+		   }
+		   all_core = { owned_by = THIS }
+		   POM = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 AND = { 
+				    all_core = { owned_by = POM }
+				    in_sphere = THIS
+				 }
+		      }
+		   }
+		   HOL = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 AND = { 
+				    all_core = { owned_by = HOL }
+				    in_sphere = THIS
+				 }
+		      }
+		   }
+		   NOT = { exists = SAX }
+		   NOT = { exists = NGF }
+		}
+		
+		effect = {
+		    SCA = { clr_country_flag = protectorate_decisions_active }
+		    prestige = 30
+			add_accepted_culture = north_german	
+			all_core = { add_core = CAE }
+            PRU_546 = { add_core = CAE }
+            SCA_544 = { add_core = CAE }		
+			HOL_369 = { add_core = CAE }
+			HAM_532 = { add_core = CAE }
+			SAX_1 = { add_core = CAE }
+			536 = { add_core = CAE }
+			537 = { add_core = CAE }
+			545 = { add_core = CAE }
+			any_owned = {
+			   limit = {
+			      province_id = 585
+			    }
+				add_core = CAE
+		    }
+			any_country = {
+			   limit = {
+				  primary_culture = north_german
+				  NOT = { tag = THIS }
+				  NOT = { tag = BRE }
+				  NOT = { tag = OLD }
+				}
+				country_event = { id = 152037 days = 1 }
+		    }	
+			political_reform = confederalism
+            change_tag = CAE			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Its free real estate
+	
+	delete_NGF = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			NGF = { exists = yes NOT = { alliance_with = SCA in_sphere = SCA vassal_of = SCA } }
+			NOT = { has_country_flag = delete_NGF }
+		}
+		
+		allow = {
+		   OR = {
+		     is_greater_power = yes
+			 is_secondary_power = yes
+		   }
+		   NGF = {
+             NOT = { 
+                alliance_with = BOH
+                in_sphere = BOH
+             }
+           }	
+		   NOT = { any_greater_power = { alliance_with = NGF } }		   
+		}
+		
+		effect = {
+		    set_country_flag = delete_NGF
+			NGF = { 
+			   all_core = { 
+			      limit = { NOT = { owned_by = SCA } } 
+				  add_core = BOH 
+			   } 
+		    }
+		    badboy = 5
+	        war = {
+		       target = NGF
+			      attacker_goal = {
+				     casus_belli = annex_core_country
+			      }
+			      defender_goal = {
+				     casus_belli = cut_down_to_size
+			      }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.7
+			   }
+		}
+	}
+	
+	# Fishing for a Cassus Belli - Bring up the Hamburg Massacre
+	
+	finding_massacre_BOH = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled		
+			OR = { 
+			   owns = 549
+			   NGF = { vassal_of = SCA }
+			}
+			NOT = { exists = HOL }
+			NOT = { owns = 528 }
+			NOT = { has_country_flag = massacre_BOH }
+		}
+		
+		allow = {
+		   OR = {
+		     nationalism_n_imperialism = 1
+			 AND = {
+			    ai = yes
+				year = 1867
+		     }
+			 AND = {
+			    exists = PBG
+				exists = BRG
+		     }
+		   }  
+		}
+		
+		effect = {
+		    set_country_flag = massacre_BOH
+			remove_country_modifier = calm_before_storm
+		    badboy = 5
+			random_owned = {
+			   limit = { 
+			      owner = { NOT = { owns = 549 } }
+			   }
+			   owner = { country_event = 152040 }
+			}
+			random_owned = {
+			   limit = { 
+			      owner = { owns = 549 NOT = { owns = 534 } }
+			   }
+			   owner = { country_event = 152041 }
+			}		
+			random_owned = {
+			   limit = { 
+			      owner = { owns = 549 owns = 534 }
+			   }
+			  owner = { country_event = 152042 }
+			}			
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              is_disarmed = yes
+			   }
+		}
+	}
+	
+	# Kill Saxony - If Holstein already exists or Hamburg is owned by Bohemia then this should allow Bohemia to kill off Saxony without any real issues or trap events.
+	# However, if Saxony had intervened in any form of northern war earlier this is replaced by a alternative decision which is a trap.
+	
+	delete_saxony_BOH = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled		
+			OR = {
+			   exists = HOL
+			   owns = 528
+			}
+			owns = 546
+            exists = SAX			
+			has_country_flag = delete_saxony
+			SAX = { NOT = { has_country_flag = SAX_intervention } }
+		}
+		
+		allow = {
+		   OR = {
+		     nationalism_n_imperialism = 1
+			 AND = {
+			    exists = PBG
+				exists = BRG
+		     }
+		   }  
+		}
+		
+		effect = {
+		    clr_country_flag = delete_saxony
+			BRN = { all_core = { add_core = SAX } }
+			ELX = { all_core = { add_core = SAX } } 
+		    badboy = 5
+	        war = {
+		       target = SAX
+			      attacker_goal = {
+				     casus_belli = conquest_any
+			      }
+			      defender_goal = {
+				     casus_belli = acquire_all_cores
+				     country = SAX
+			      }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.7
+			   }
+		}
+	}
+	
+	# Kill Saxony - Bohemia gets trap-carded by Saxony that starts a revolt in POM and BRN
+	
+	delete_saxony_BOH_fake = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled		
+			OR = {
+			   exists = HOL
+			   owns = 528
+			}
+			owns = 546
+            exists = SAX			
+			has_country_flag = delete_saxony
+			SAX = { has_country_flag = SAX_intervention }
+		}
+		
+		allow = {
+		   OR = {
+		     nationalism_n_imperialism = 1
+			 AND = {
+			    exists = PBG
+				exists = BRG
+		     }
+		   }  
+		}
+		
+		effect = {
+		    clr_country_flag = delete_saxony
+		    badboy = 5
+	        SAX = { set_country_flag = the_trap_card }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.7
+			   }
+		}
+	}
+	
+	### Intergrating Pommerania if it exists for BOH
+	
+	annex_POM_BOH = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled		
+            exists = POM
+			POM = { OR = { vassal_of = THIS in_sphere = THIS } }
+			NOT = { has_country_flag = annexed_POM }
+		}
+		
+		allow = {
+		   OR = {
+		     nationalism_n_imperialism = 1
+			 AND = {
+			    exists = PBG
+				exists = BRG
+		     }
+		   }  
+		}
+		
+		effect = {
+		    set_country_flag = annexed_POM
+			inherit = POM
+	   }
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+	
+	# FAKE - Form GCF - This allows you to form the big tag, but is a fake version of the decision
+	
+	FAKE_form_GCF_BOH = {
+		picture = german_confederation
+		potential = {
+		    ai = no
+		    tag = CAE
+			NOT = { has_country_flag = enable_manual_GCF }
+		}
+		
+		allow = {
+           has_country_flag = wait_for_events
+		}
+		
+		effect = {
+		    prestige = 5
+			#political_reform = federalism
+		    change_tag = GCF		
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# FAKE - Form GCF - This allows you to form the big tag, but is a fake version of the decision
+	
+	form_GCF_BOH = {
+		picture = german_confederation
+		potential = {		   
+		    tag = CAE
+			has_country_flag = enable_manual_GCF
+			NOT = { has_country_flag = founded_GCF }
+		}
+		
+		allow = {
+		   is_greater_power = yes
+		   mass_politics = 1
+		   all_core = { owned_by = THIS }
+		   SGF = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 in_sphere = THIS
+		      }
+		   }
+		}
+		
+		effect = {
+		    prestige = 30
+			set_country_flag = FALL_ROT_POSSIBLE
+			add_accepted_culture = south_german
+			SGF = { all_core = { add_core = GCF } }
+            all_core = { add_core = GCF }
+			all_core = { remove_core = CAE }
+	        any_country = {
+	           limit = {
+		          tag = CFR
+			      vassal_of = THIS
+		       }
+			   all_core = { add_core = GCF }
+		       annex_to = THIS
+	        }
+            inherit = SGF
+			#political_reform = federalism
+            change_tag = GCF			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Burgundy killed itself so now you can just conquer the west for free
+	
+	conquer_the_west_SWA = {
+		#picture = german_confederation
+		potential = {		   
+		    tag = SGF
+			NOT = { has_country_flag = SGF_swabia }
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }
+			   }
+			   NOT = {
+			      BRG = { is_greater_power = yes }
+				  PBG = { is_greater_power = yes }	  
+			   }
+			}
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   NOT = {
+		      SWA = { is_vassal = yes }
+		   }
+		   revolution_n_counterrevolution = 1
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+			set_country_flag = SGF_swabia
+			set_country_flag = AI_can_break_neutrality
+		    badboy = 5
+		    prestige = 20
+			add_accepted_culture = swabian  
+            WUR_589 = { add_core = SGF }
+            BAD_586 = { add_core = SGF }
+            SWI_603 = { add_core = SGF }	
+            SWI_605 = { add_core = SGF }				 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+		}
+	}
+	
+	conquer_the_west_CAE = {
+		#picture = german_confederation
+		potential = {		   
+		    tag = CAE
+			NOT = { has_country_flag = CAE_rhine }
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }
+			   }
+			   NOT = {
+			      BRG = { is_greater_power = yes }
+				  PBG = { is_greater_power = yes }
+			   }
+			}
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   NOT = {
+			  CFR = { is_vassal = yes }
+		   }
+		   revolution_n_counterrevolution = 1
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    set_country_flag = CAE_rhine
+		    badboy = 5
+		    prestige = 20
+			add_accepted_culture = rheinish
+            566 = { add_core = CAE }
+			564 = { add_core = CAE }
+			540 = { add_core = CAE }
+			539 = { add_core = CAE }
+            MNR_581 = { add_core = CAE }
+            MNR_585 = { add_core = CAE }	
+            HSK_583 = { add_core = CAE }	
+            PRU_575 = { add_core = CAE }
+            HES_564 = { add_core = CAE }			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+		}
+	}
+	
+	conquer_the_west_NGF = {
+		#picture = german_confederation
+		potential = {		   
+		    tag = NGF
+			NOT = { has_country_flag = NGF_rhine }
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }
+			   }
+			   NOT = {
+			      BRG = { is_greater_power = yes }
+				  PBG = { is_greater_power = yes }
+			   }
+			}
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   NOT = {
+			  CFR = { is_vassal = yes }
+		   }
+		   revolution_n_counterrevolution = 1
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    set_country_flag = NGF_rhine
+		    badboy = 5
+		    prestige = 20
+			add_accepted_culture = rheinish 
+            566 = { add_core = NGF }
+			564 = { add_core = NGF }
+			540 = { add_core = NGF }
+			539 = { add_core = NGF }
+            MNR_581 = { add_core = NGF }
+            MNR_585 = { add_core = NGF }	
+            HSK_583 = { add_core = NGF }	
+            PRU_575 = { add_core = NGF }
+            HES_564 = { add_core = NGF }			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+		}
+	}
+	
+	# These are the early trigger points for the German Phoenix
+	
+	light_the_phoenix_SGF = {
+		picture = frankfurt_parliament
+		potential = {		   
+		    tag = SGF 
+			NOT = { has_global_flag = early_phoenix }
+			NOT = { has_global_flag = german_phoenix }
+			owns = 605
+			owns = 589
+			owns = 586
+			NOT = { year = 1900 exists = HLR exists = GER }
+			NOT = { PBG = { government = presidential_dictatorship } }
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   revolution_n_counterrevolution = 1
+		   is_ideology_enabled = communist
+		   all_core = { owned_by = THIS }
+		   is_disarmed = no
+		   war = no
+		   NOT = { truce_with = CAE }
+           NOT = { truce_with = SCA }
+           NOT = { truce_with = NGF }		   
+		}
+		
+		effect = {
+			set_global_flag = early_phoenix
+			prestige = 10
+		    badboy = 1		
+			country_event = { id = 280011 days = 7 }		 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.9
+		      }
+	          modifier = {
+	             factor = 0
+			     has_recently_lost_war = yes
+		      } 
+	          modifier = {
+	             factor = 0
+			     has_unclaimed_cores = yes
+		      }
+		}
+	}
+	
+	the_phoenix_gambit_CAE = {
+		picture = frankfurt_parliament
+		potential = {		   
+		    tag = CAE
+			NOT = { has_global_flag = early_phoenix }
+			NOT = { has_global_flag = german_phoenix }
+			owns = 564
+			owns = 581
+			owns = 583
+			owns = 540
+			NOT = { year = 1900 exists = HLR exists = GER }
+			NOT = { PBG = { government = presidential_dictatorship } }				
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   revolution_n_counterrevolution = 1
+		   is_ideology_enabled = communist
+		   all_core = { owned_by = THIS }
+		   is_disarmed = no
+		   war = no
+		   NOT = { truce_with = SGF }	
+		}
+		
+		effect = {
+			set_country_flag = early_phoenix
+		    badboy = 5
+			SGF = { country_event = { id = 280012 days = 62 } }	 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+	          modifier = {
+	             factor = 0
+			     has_recently_lost_war = yes
+		      } 
+	          modifier = {
+	             factor = 0
+			     has_unclaimed_cores = yes
+		      }
+		}
+	}
+	
+	fall_rot = {
+		picture = franco_prussian_memorial
+		
+		potential = {		   
+		    has_country_flag = FALL_ROT_POSSIBLE
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   has_global_flag = great_wars_enabled
+		   is_disarmed = no
+		   war = no
+		   NOT = {
+		      has_country_modifier = integrating_north_GER
+			  has_country_modifier = integrating_south_GER
+			  truce_with = BRG
+			  truce_with = PBG
+			  truce_with = FRK
+		   }
+		}
+		
+		effect = {
+			clr_country_flag = FALL_ROT_POSSIBLE
+		    badboy = 5
+			country_event = { id = 280077 days = 14 }  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+	          modifier = {
+	             factor = 0
+			     has_recently_lost_war = yes
+		      } 
+	          modifier = {
+	             factor = 0
+			     has_unclaimed_cores = yes
+		      }
+		}
+	}
+	
+	# SGF was successful in the Phoenix and holds Karlsrule and Berlin but there is no Relevent Burgundy to start a Fall Rot on.
+	
+	german_unification_failsafe = {
+		picture = Germania
+		
+		potential = {		   
+		    tag = SGF
+		    has_country_flag = FALL_ROT_POSSIBLE
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }			    
+			   }
+			   NOT = {
+			      BRG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+				  PBG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+			   }
+			}			  
+		}
+		
+		allow = {
+		   is_greater_power = yes
+		   owns = 586
+		   owns = 528
+		   owns = 549
+		   owns = 605
+		}
+		
+		effect = {
+		    clr_country_flag = FALL_ROT_POSSIBLE
+			prestige = 20
+		    random_owned = { limit = { owner = { OR = { government = hms_government government = prussian_constitutionalism government = democracy government = parliamentary_republic } } }
+		    owner = { political_reform = federalism }
+		    }
+			change_tag = GER
+			add_accepted_culture = north_german
+			add_accepted_culture = south_german
+			add_accepted_culture = rheinish 
+			add_accepted_culture = swabian 
+			any_country = {
+				limit = {
+					is_culture_group = germanic
+					NOT = { primary_culture = prussian }
+					NOT = { vassal_of = BRG }
+					NOT = { vassal_of = FRK }
+					NOT = { vassal_of = PBG }
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# NGF was successful in the Phoenix and holds Munich and Munster but there is no Relevent Burgundy to start a Fall Rot on.
+	
+	german_unification_failsafe_NGF = {
+		picture = Germania
+		
+		potential = {		   
+		    tag = NGF
+		    has_country_flag = FALL_ROT_POSSIBLE
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }
+			   }
+			   NOT = {
+			      BRG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+				  PBG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+			   }
+			}			  
+		}
+		
+		allow = {
+		   is_greater_power = yes
+		   owns = 581
+		   owns = 599
+		   owns = 564
+		   owns = 619
+		}
+		
+		effect = {
+		    clr_country_flag = FALL_ROT_POSSIBLE
+			prestige = 20
+		    random_owned = { limit = { owner = { OR = { government = hms_government government = prussian_constitutionalism government = democracy government = parliamentary_republic } } }
+		    owner = { political_reform = federalism }
+		    }
+			change_tag = GER
+			add_accepted_culture = north_german
+			add_accepted_culture = south_german
+			add_accepted_culture = rheinish 
+			add_accepted_culture = swabian 
+			any_country = {
+				limit = {
+					is_culture_group = germanic
+					NOT = { primary_culture = prussian }
+					NOT = { vassal_of = BRG }
+					NOT = { vassal_of = FRK }
+					NOT = { vassal_of = PBG }
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# CAE was successful in the Phoenix and holds Munich and Munster but there is no Relevent Burgundy to start a Fall Rot on.
+	
+	german_unification_failsafe_CAE = {
+		picture = Germania
+		
+		potential = {		   
+		    tag = CAE
+		    has_country_flag = FALL_ROT_POSSIBLE
+			NOT = { exists = FRK }
+			OR = {
+			   AND = {
+			     NOT = { exists = BRG }
+			     NOT = { exists = PBG }			     
+			   }
+			   NOT = {
+			      BRG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+				  PBG = { any_owned_province = { is_core = RHI } is_greater_power = yes }
+			   }
+			}			  
+		}
+		
+		allow = {
+		   is_greater_power = yes
+		   owns = 581
+		   owns = 599
+		   owns = 564
+		   owns = 619
+		}
+		
+		effect = {
+		    clr_country_flag = FALL_ROT_POSSIBLE
+			prestige = 20
+			political_reform = federalism
+			GER = { all_core = { add_core = CFR } }
+			add_accepted_culture = north_german
+			add_accepted_culture = south_german
+			add_accepted_culture = rheinish 
+			add_accepted_culture = swabian 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	
+	# Kill Saxony - If Holstein already exists or Hamburg is owned by Bohemia then this should allow Bohemia to kill off Saxony
+	
+	#### The Burgundy version of this is under BRG Decisions ####
+	
+	form_swabia = {
+		picture = Triglav
+		potential = {		   
+		    primary_culture = swabian
+			NOT = { tag = SWA }
+			NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+		}
+		
+		allow = {
+		   SWI = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 AND = { 
+				    all_core = { owned_by = SWI }
+				    in_sphere = THIS
+				 }
+		      }
+		   }
+		   BAD = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 AND = { 
+				    all_core = { owned_by = BAD }
+				    in_sphere = THIS
+				 }
+		      }
+		   } 
+		   WUR = {
+		      OR = {
+		         all_core = { owned_by = THIS }
+				 AND = { 
+				    all_core = { owned_by = WUR }
+				    in_sphere = THIS
+				 }
+		      }
+		   } 
+		}
+		
+		effect = {
+		   random_owned = {
+		      limit = {
+			     owner = { 
+				    capital = 586
+					NOT = { government = parliamentary_republic }
+			     }
+			  }
+			  owner = { set_country_flag = SWA_burgundian }
+		   } 
+		   random_owned = {
+		      limit = {
+			     owner = { 
+				    has_country_flag = WUR_ambitious
+					NOT = { government = parliamentary_republic }
+			     }
+			  }
+			  owner = { clr_country_flag = WUR_ambitious set_country_flag = SWA_neutral }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { 
+				    government = parliamentary_republic
+			     }
+			  }
+			  owner = { set_country_flag = SWA_revolutionary }
+			}	
+		   random_owned = {
+		      limit = {
+			     owner = { 
+				    NOT = { tag = SWI }
+			     }
+			  }
+			  owner = { political_reform = unitary }
+			}
+		   random_owned = {
+		      limit = {
+			     owner = { 
+				    tag = SWI 
+			     }
+			  }
+			  owner = { political_reform = federalism }
+			}			
+		    any_country = {
+			   limit = {
+			      primary_culture = swabian
+			   }
+			   annex_to = THIS
+			}
+			589 = { add_core = SWA }
+			590 = { add_core = SWA }
+			591 = { add_core = SWA }
+			594 = { add_core = SWA }
+			any_owned = {
+			    limit = {
+			      province_id = 593
+			    }
+				add_core = SWA
+		    }			
+			BAD_586 = { add_core = SWA }
+			SWI_603 = { add_core = SWA }
+			SWI_605 = { add_core = SWA }
+            change_tag = SWA			
+			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	##### SCANDINAVIAN INTERGRATION DECISIONS #####
+	
+	alleviate_the_hollowing = {
+		#picture = Triglav
+		potential = {		   
+		    tag = SCA
+			NGF = { 
+			   vassal_of = THIS
+			   any_owned_province = { has_province_modifier = hollowing_aftermath }
+	        }	
+			has_country_flag = protectorate_decisions_active			
+		}
+		
+		allow = {	
+		    compound_steam_engines = 1
+		   	money = 3000000   
+		}
+		
+		effect = {
+		   treasury = -3000000
+		   prestige = 5
+           years_of_research = 1		   
+		   NGF = { 
+		      set_country_flag = SCA_nuked_hollowing 
+			  any_owned = { remove_province_modifier = hollowing_aftermath }
+		   }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	develop_elbe_weser = {
+		#picture = Triglav
+		potential = {		   
+		    tag = SCA
+			NGF = { 
+			   vassal_of = THIS
+	        }	
+			has_country_flag = protectorate_decisions_active	
+            NOT = { has_country_flag = elbe_and_weser }			
+		}
+		
+		allow = {	
+		    market_regulations = 1
+			iron_railroad = 1
+			steamers = 1
+			battleship_column_doctrine = 1
+		   	money = 500000  
+		}
+		
+		effect = {
+		   treasury = -500000 
+		   set_country_flag = elbe_and_weser
+		   prestige = 5	   
+		   any_country = { limit = { tag = NGF NOT = { iron_railroad = 1 } } activate_technology = iron_railroad }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# This does nothing apart from make you look cool and give you one year of research
+	
+	promote_nordism = {
+		#picture = Triglav
+		potential = {		   
+		    tag = SCA
+			NGF = { 
+			   vassal_of = THIS
+	        }	
+			has_country_flag = protectorate_decisions_active	
+            NOT = { has_country_flag = nordism }			
+		}
+		
+		allow = {	
+		    functionalism = 1
+			realism = 1
+			state_n_government = 1
+		   	money = 1000000  
+		}
+		
+		effect = {
+		   treasury = 1000000
+		   set_country_flag = nordism
+		   prestige = 5
+           years_of_research = 1		   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	purge_junkers = {
+		#picture = Triglav
+		potential = {		   
+		    tag = SCA
+			NGF = { 
+			   vassal_of = THIS
+	        }	
+			has_country_flag = protectorate_decisions_active	
+			NOT = { has_country_flag = NGF_purged }
+            NOT = { year = 1870 }			
+		}
+		
+		allow = {	
+		    OR = { 
+				nationalism_n_imperialism = 1 	
+				has_country_flag = SCA_counter_hollowing
+			}
+			OR = {
+			   AND = {
+		          has_country_flag = nordism
+		          has_country_flag = elbe_and_weser		
+               }
+               AND = {
+                  ai = yes
+                  year = 1890
+               }
+			   AND = { 
+			      ai = yes
+				  has_global_flag = german_phoenix
+			   }
+            }			   
+			NGF = { NOT = { any_owned_province = { has_province_modifier = hollowing_aftermath } } }			
+		}
+		
+		effect = {
+		   prestige = 10
+		   treasury = 500000
+		   set_country_flag = NGF_purged
+		   NGF = { 
+		      set_country_flag = NGF_purged 
+		      any_pop = {
+			    limit = { strata = rich has_pop_culture = north_german }
+			    scaled_militancy = {
+				    ideology = reactionary
+				    factor = 8
+			    }
+			    scaled_consciousness = {
+				   ideology = reactionary
+				   factor = 8
+			    }
+			    scaled_militancy = {
+				    ideology = conservative
+				    factor = 6
+			    }
+			    scaled_consciousness = {
+				    ideology = conservative
+				    factor = 6
+			    }
+			    scaled_militancy = {
+				    ideology = liberal
+				    factor = -8
+			    }
+			    scaled_consciousness = {
+				    ideology = liberal
+				    factor = -8
+			    }
+				reduce_pop = 0.7
+                move_pop = 354 				
+		     }			  			  
+		  }		   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	
+	delete_POM = {
+		#picture = reichstag
+		potential = {		   
+		    tag = SCA
+			POM = { exists = yes NOT = { alliance_with = SCA in_sphere = SCA vassal_of = SCA } }
+			NOT = { has_country_flag = delete_POM }
+			OR = { 
+			   AND = {
+			      exists = NGF
+			      is_our_vassal = NGF
+			   }
+			   NOT = { year = 1870 }
+			}
+		}
+		
+		allow = {
+		   OR = {
+		     is_greater_power = yes
+			 is_secondary_power = yes
+		   }
+		   POM = {
+             NOT = { 
+                alliance_with = BOH
+                in_sphere = BOH
+             }
+           }	
+		   NOT = { any_greater_power = { alliance_with = POM } }		   
+		}
+		
+		effect = {
+		    set_country_flag = delete_POM
+		    badboy = 5
+			POM = { all_core = { add_core = THIS } }
+	        war = {
+		       target = POM
+			      attacker_goal = {
+				     casus_belli = conquest_any
+			      }
+			      defender_goal = {
+				     casus_belli = cut_down_to_size
+			      }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.25
+			   }
+		}
+	}
+	
+	## Annexing POM if it exists and NGF also exists.
+	
+	annex_POM_SCA = {
+		#picture = reichstag
+		potential = {		   
+		    tag = SCA
+			POM = { exists = yes OR = { alliance_with = SCA in_sphere = SCA vassal_of = SCA } }
+			NOT = { has_country_flag = delete_POM }
+			OR = { 
+			   AND = {
+			      exists = NGF
+			      is_our_vassal = NGF
+			   }
+			   NOT = { year = 1870 }
+			}
+		}
+		
+		allow = {
+		   OR = {
+		     is_greater_power = yes
+			 is_secondary_power = yes
+		   }
+		   POM = {
+             OR = { 
+                in_sphere = THIS
+				vassal_of = THIS
+             }
+           }			   
+		}
+		
+		effect = {
+		    set_country_flag = delete_POM
+		    badboy = 5
+			POM = { all_core = { add_core = THIS } }
+	        inherit = POM
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.25
+			   }
+		}
+	}
+	
+	# Purge Bohemian Loyalists in Pommerania
+	
+	SCA_remove_BOH_cores = {
+		#picture = reichstag
+		potential = {		   
+		    tag = SCA
+			any_owned_province = { is_core = BOH }
+			any_owned_province = { is_core = POM }
+			NOT = { has_country_flag = delete_BOH_loyalists }
+		}
+		
+		allow = {
+		   OR = {
+		     is_greater_power = yes
+			 is_secondary_power = yes
+		   }
+		   state_n_government = 1 
+		}
+		
+		effect = {
+		    set_country_flag = delete_BOH_loyalists
+			POM = { all_core = { remove_core =  BOH } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+    ###### POST-BCW DECISIONS #####
+	
+	the_swabian_affair = {
+		#picture = Triglav
+		potential = {		   
+		    OR = {
+			   tag = BRG
+			   tag = PBG
+			}
+			has_global_flag = JEAN_ENDING			
+			NOT = { has_country_flag = swabian_affair }
+			NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+            NOT = { exists = HLR }
+            NOT = { exists = GER }			
+		}
+		
+		allow = {
+		   war = no
+		   OR = {
+		      has_country_flag = burgundian_rhine
+			  NOT = { exists = CFR }
+		   }
+           OR = {
+             CFR = { vassal_of = THIS }
+             BEG = { vassal_of = THIS }
+           }		
+		   OR = {
+              NOT = { exists = WES }
+              NOT = { exists = CFR }		
+           }			  
+           NOT = { war_exhaustion = 10 }	
+           NOT = { has_country_modifier = burgundian_cooldown }		   
+		}
+		
+		effect = {
+		   badboy = 1
+		   prestige = -1
+		   SGF = { country_event = 270024 }
+		   set_country_flag = swabian_affair 
+	       add_country_modifier = {
+		      name = burgundian_cooldown
+		      duration = 720
+	       } 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### The Burgundian Rhine - Burgundy deals with CFR
+	
+	the_burgundian_rhine = {
+		#picture = Triglav
+		potential = {		   
+		    OR = {
+			   tag = BRG
+			   tag = PBG
+			}
+			has_global_flag = JEAN_ENDING
+			exists = CFR
+			NOT = { has_country_flag = burgundian_rhine }	
+			NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+            NOT = { exists = HLR }
+            NOT = { exists = GER }	
+		}
+		
+		allow = {
+            NOT = { war_exhaustion = 10 }	      		
+		}
+		
+		effect = {
+		   set_country_flag = burgundian_rhine
+		   badboy = 1
+		   prestige = -1
+		   any_country = {
+		      limit = {
+			     tag = CFR 
+				 has_country_flag = CFR_PRO_BRG
+			   }
+			   country_event = 270089		   
+		   }
+		   any_country = {
+		      limit = {
+			     tag = CFR 
+				 has_country_flag = CFR_PRO_BOH
+				 NOT = { exists = CAE }
+			   }
+			   country_event = 270083		   
+		   }
+		   any_country = {
+		      limit = {
+			     tag = CFR 
+				 has_country_flag = CFR_PRO_BOH
+				 exists = CAE
+			   }
+			   country_event = 270085
+			   
+		   }
+		   any_country = {
+		      limit = {
+			     tag = CFR 
+				 has_country_flag = CFR_PRO_SGF
+			   }
+			   country_event = 270091	   
+		   }
+	       add_country_modifier = {
+		      name = burgundian_cooldown
+		      duration = 365
+	       } 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Nuking Westphalia has a cleanup event afterwards and a "last stand" event for Westphalia to give them a massive mobilization bonus so they can slightly annoy Burgundy before dying.
+
+	
+	nuke_westphalia = {
+		#picture = Triglav
+		potential = {		   
+		    OR = {
+			   tag = BRG
+			   tag = PBG
+			}
+			has_global_flag = JEAN_ENDING
+			exists = WES
+			NOT = { has_country_flag = nuking_westphalia }	
+			NOT = { has_global_flag = GLORY_TO_BOHEMIA }
+		}
+		
+		allow = {
+            CFR = { vassal_of = THIS }           	
+            NOT = { war_exhaustion = 1 }         		
+		}
+		
+		effect = {
+		   badboy = 1
+		   prestige = -1
+		   set_country_flag = nuking_westphalia		   
+		   WES = { 
+		      all_core = { add_core = CFR } 
+	          country_event = 270093
+  	          add_country_modifier = { 
+		          name = WES_great_patriotic_war
+		          duration = 1440
+	          }
+		   }
+	       war = {
+		       target = WES
+			      attacker_goal = {
+				     casus_belli = conquest_any
+			      }
+			      defender_goal = {
+				     casus_belli = release_puppet
+					 target = CFR
+			      }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Delete Bremen - This is always accessable by NGF or CAE if SCA does not hold Bremen as a puppet ###
+	
+	annex_the_free_state = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			OR = {
+ 			  tag = CAE
+			  tag = GCF
+			  tag = NGF
+			  tag = GER
+			}
+			exists = BRE
+			NOT = { BRE = { vassal_of = SCA } }
+			NOT = { has_country_flag = annexation_of_bremen }
+		}
+		
+		allow = { 
+		   war = no
+		   is_disarmed = no
+		}
+		
+		effect = { 
+		    prestige = 1
+			set_country_flag = annexation_of_bremen
+			BRE = { country_event = { id = 270110 days = 1 } }
+		}		
+	}
+	
+	### Delete Oldenburg - Oldenburg is not under Burgundian or Scadinavian Control - Take it over ###
+	
+	annex_oldenburg = { 
+	
+		picture = reichstag
+		
+		potential = { 
+			OR = {
+ 			  tag = CAE
+			  tag = GCF
+			  tag = NGF
+			  tag = GER
+			}
+			exists = OLD
+			NOT = {
+			   OLD = { 
+			       OR = {
+  				      vassal_of = SCA 
+				      in_sphere = BRG 
+					  alliance_with = BRG 
+					  alliance_with = PBG 
+					  in_sphere = PBG
+					  has_country_flag = OLD_to_annex
+				   } 
+				} 
+		    }
+			NOT = { has_country_flag = annexation_of_oldenburg }
+		}
+		
+		allow = { 
+		   war = no
+		   is_disarmed = no
+		   owns = 539
+		}
+		
+		effect = { 
+		    prestige = 1
+			set_country_flag = annexation_of_oldenburg
+			OLD = { country_event = { id = 270123 days = 1 } }
+		}		
+	}
+	
+	force_scandinavia_out_OLD = { 
+	
+		#picture = reichstag
+		
+		potential = { 
+			OR = { 
+			  tag = BRG
+			  tag = PBG
+			  tag = FRK
+			}
+			exists = OLD
+			OLD = { vassal_of = SCA }
+			NOT = { has_country_flag = BRG_gunboat_diplomacy }
+		}
+		
+		allow = { 
+		   war = no
+		   is_disarmed = no
+		   alliance_with = SCA
+		   is_our_vassal = CFR
+		}
+		
+		effect = { 
+		    relation = { who = SCA value = -10 }
+			set_country_flag = BRG_gunboat_diplomacy
+			SCA = { country_event = { id = 270125 days = 1 } }
+		}		
+	}
+	
+	annex_westphalia_post_phoenix = { 
+	
+		#picture = reichstag
+		
+		potential = { 
+			OR = {
+			   tag = GCF
+			   AND = {
+			      tag = SGF
+				  owns = 549
+			   }
+			   AND = {
+			      tag = NGF
+				  owns = 599
+			   }
+			}
+			exists = WES
+		}
+		
+		allow = { 
+		   war = no
+		   is_disarmed = no
+		   NOT = { war_exhaustion = 10 }
+		}
+		
+		effect = { 
+		    prestige = 10
+		    any_country = {
+			   limit = {
+			      tag = WES
+				  OR = {
+				     alliance_with = THIS
+					 in_sphere = THIS
+				  }
+			   }
+			   all_core = { add_core = THIS }
+			   annex_to = THIS
+			}
+		    relation = { who = WES value = -400 }
+	        diplomatic_influence = { who = WES value = -400 }
+		    any_country = {
+			   limit = {
+			      tag = WES
+				  NOT = {
+				     OR = {
+				        alliance_with = THIS
+					    in_sphere = THIS
+				     }
+			      }
+			   }
+			   all_core = { add_core = THIS }
+			}
+		}		
+	}
+	
+	
+	#### Violate Neutrality - This if Swabia is Neutral and you want to invade it - This will give you a ton of badboy ###
+	
+    violate_neutrality_SWA = {
+        picture = declare_neutrality
+        alert = no
+        potential = {
+			OR = {
+               SWI = {
+                   neighbour = THIS
+                   has_country_modifier = neutrality
+               }
+               SWA = {
+                   neighbour = THIS
+                   has_country_modifier = neutrality
+               }
+			}
+        }
+
+        allow = {
+		    is_greater_power = yes
+		    OR = {
+               SWI = { has_country_modifier = neutrality }
+               SWA = { has_country_modifier = neutrality }
+            } 			   
+        }
+
+        effect = {
+            badboy = 20
+            set_country_flag = swiss_neutrality_violator
+            SWI = {
+                set_country_flag = neutrality_violated
+                remove_country_modifier = neutrality
+                relation = { who = THIS value = -300 }
+            }
+            SWA = {
+                set_country_flag = neutrality_violated
+                remove_country_modifier = neutrality
+                relation = { who = THIS value = -300 }
+            }
+            diplomatic_influence = { who = SWI value = -300 }
+			diplomatic_influence = { who = SWA value = -300 }
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                NOT = { has_country_flag = AI_can_break_neutrality }
+            }
+	        modifier = {
+	            factor = 0
+	            badboy = 0.2
+			}
+        }
+    }
+	
+	#########################################
+	#### Was ist des Deutschen Vaterland ####
+	#########################################
+	
+	### Master Decision - Needed to see other German Expansion Decisions
+	### Basically any german unifier can see this but only GCF and GER can use this.
+	### Localization can imply that someone wrote this song even in the DoD timeline but you can't fufill this idea until you actually control all German Cores
+	
+	was_ist_des_vatherland = {
+	picture = Germania
+		potential = {
+		    OR = {
+			    tag = GER
+				tag = GCF
+				tag = CAE
+				tag = SGF
+				tag = NGF
+	        }
+			NOT = { has_country_flag = ubergrossdeutschland }		
+		}
+	
+		allow = {
+			war = no
+			is_greater_power = yes
+			OR = {
+			   tag = GER
+			   tag = GCF
+	        }
+			GER = {	all_core = { owned_by = THIS } }
+			NOT = { 
+			  truce_with = BOH
+			  truce_with = BRG
+			  truce_with = PBG
+			  truce_with = FRK
+			}
+		}
+    
+		
+		effect = {
+		   prestige = 20
+		   badboy = 1
+		   set_country_flag = ubergrossdeutschland
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	## North Silesia - Free to All 
+	
+	ist_nord_silesia = {
+	#picture = Germania
+		potential = {
+			OR = {
+			   tag = GER
+			   tag = GCF
+	        }
+			has_country_flag = ubergrossdeutschland
+            NOT = { has_country_flag = nord_silesia }			
+		}
+	
+		allow = {
+			war = no
+			is_greater_power = yes
+			GER = {	all_core = { owned_by = THIS } }
+		}
+    
+		
+		effect = {
+		   badboy = 5
+		   PRU_682 = { add_core = THIS }
+		   set_country_flag = nord_silesia
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.7
+			   }
+		}
+	}
+	
+	## The Solution to the Bohemian Question
+	## No implications here at all you absolutely awful state
+	
+	ist_bohmen = {
+	picture = czech_autonomy
+		potential = {
+			OR = {
+			   tag = GER
+			   tag = GCF
+	        }
+			has_country_flag = ubergrossdeutschland
+            NOT = { has_country_flag = bohemia_check }			
+		}
+	
+		allow = {
+			war = no
+			is_greater_power = yes
+			owns = 682
+			682 = { is_core = THIS }
+			OR = {
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
+			   AND = {
+			       government = proletarian_dictatorship
+				   war_policy = jingoism
+			   }
+			}
+		}
+    
+		
+		effect = {
+		   set_country_flag = bohemia_check
+		   prestige = 5
+		   any_pop = {
+		      ideology = {
+		         value = fascist
+	             factor = 0.05
+		      }
+		      dominant_issue = { 
+		         value = jingoism
+	             factor = 0.1
+		      }
+		   }
+		   random_owned = {
+		       limit = { owner = { NOT = { has_global_flag = BOH_is_czech } } }
+			   owner = { country_event = 270129 }
+		   }
+		   random_owned = {
+		       limit = { owner = { has_global_flag = BOH_is_czech } }
+			   owner = { country_event = 270130 }
+		   }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.1
+			   }
+	           modifier = {
+	              factor = 0
+	              is_disarmed = yes
+			   }
+	           modifier = {
+	              factor = 0
+	              has_recently_lost_war = yes
+			   }
+		}
+	}
+	
+	## The Conference of Amsterdam - Dietsland Exists	
+	## This is Germany Only - German Confederation is denied this.
+	
+	ist_dietsland = {
+	#picture = czech_autonomy
+		potential = {
+			tag = GER
+			has_country_flag = ubergrossdeutschland
+			exists = DIE
+            NOT = { has_country_flag = dutch_are_detuch }			
+		}
+	
+		allow = {
+			war = no			
+			is_greater_power = yes
+			NOT = { DIE = { is_greater_power = yes } }
+		}
+    		
+		effect = {
+		   prestige = 5
+		   DIE = { country_event = { id = 270131 days = 7 } }
+		   set_country_flag = dutch_are_detuch
+		}  
+		 		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	ist_dietsland_radical = {
+	#picture = czech_autonomy
+		potential = {
+			tag = GER
+			has_country_flag = ubergrossdeutschland
+			NOT = { exists = DIE }
+            NOT = { has_country_flag = dutch_are_detuch }			
+		}
+	
+		allow = {
+			war = no			
+			is_greater_power = yes
+			has_country_flag = bohemia_check
+			OR = {
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
+			   AND = {
+			       government = proletarian_dictatorship
+				   war_policy = jingoism
+			   }
+			}			
+		}
+    		
+		effect = {
+		   prestige = 5
+		   badboy = 30
+		   NET = { all_core = { add_core = GER } }
+		   set_country_flag = dutch_are_detuch
+		}  
+		 		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+				  OR = {
+	                 badboy = 0.1
+					 has_country_flag = pariah_ai
+			      }
+			   }
+	           modifier = {
+	              factor = 0
+	              is_disarmed = yes
+			   }
+	           modifier = {
+	              factor = 0
+	              has_recently_lost_war = yes
+			   }
+	           modifier = { 
+	              factor = 0
+		          NOT = { rank = 1 }
+		       }
+		}
+	}
+	
+	# This can be used at any time so long as you own Prussia. Unlike the other decisions above it does not require the Grossdeutchland Flag
+	
+	integrate_prussia = {
+    picture = MarzBerlin	
+		
+	potential = { 
+	   OR = { tag = GER tag = HLR tag = CAE tag = GCF tag = NGF } 
+	   690 = { owned_by = THIS is_core = PRU }
+	   698 = { owned_by = THIS is_core = PRU }
+	   NOT = { has_country_flag = integrate_prussia }  
+	}
+	
+	allow = { 
+	   nationalism_n_imperialism = 1 	
+	}
+	
+	effect = { 
+	   badboy = 5
+	   PRU_691 = { add_core = THIS }
+	   PRU_695 = { add_core = THIS }
+	   set_country_flag = integrate_prussia
+	}
+	
+	ai_will_do = { 
+	   factor = 1	
+	     modifier = {
+	        factor = 0
+			badboy = 0.7
+		   }  
+	   }
+	}
+	
+
+	ist_pruben = { 
+    picture = MarzBerlin	
+		
+	potential = { 
+	   OR = { 
+	      tag = GER 
+		  tag = GCF
+	   }   
+	   has_country_flag = ubergrossdeutschland
+	   690 = { is_core = PRU }
+	   698 = { is_core = PRU }
+	   NOT = { has_country_flag = integrate_prussia }
+	}
+	
+	allow = { 
+		war = no			
+		is_greater_power = yes	
+    }
+	
+	effect = { 
+	   badboy = 10 
+	   PRU_691 = { add_core = THIS }
+	   PRU_695 = { add_core = THIS }
+	   set_country_flag = integrate_prussia
+    }
+	
+	ai_will_do = { 
+	   factor = 1	
+	     modifier = {
+	        factor = 0
+			badboy = 0.5
+		   }  
+	   }
+	}
+	
+	GER_accepting_dutch = { 
+    #picture = MarzBerlin	
+		
+	potential = { 
+	   OR = { 
+	      tag = GER 
+		  tag = GCF
+	   }   
+	   has_country_flag = ubergrossdeutschland	   
+	   375 = { owned_by = THIS is_core = THIS }
+	   380 = { owned_by = THIS is_core = THIS }
+	   NOT = { accepted_culture = dutch }
+	}
+	
+	allow = { 
+		war = no			
+		is_greater_power = yes
+	    social_science = 1
+	    citizens_rights = all_voting_pops
+		NOT = { religious_policy = moralism }	
+    }
+	
+	effect = { 
+	   prestige = 10
+	   add_accepted_culture = dutch
+	   add_accepted_culture = frisian
+    }
+	
+	ai_will_do = { 
+	   factor = 1	
+	   }
+	}
+	
+	# So the trick with this is that you can take Bohemia but you won't be able to accept Bohemian without being democratic.
+	# The problem is that you can't take Bohemia without being a Dictatorship so this has some intresting hoops to jump through.
+	
+	GER_accepting_bohemian = { 
+    picture = czech_autonomy
+		
+	potential = { 
+	   tag = GER
+	   has_country_flag = ubergrossdeutschland	   
+	   625 = { owned_by = THIS is_core = THIS }
+	   631 = { owned_by = THIS is_core = THIS }
+	   NOT = {
+			OR = {
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
+			   government = proletarian_dictatorship
+			}
+	   }
+	   NOT = { accepted_culture = czech }
+	}
+	
+	allow = { 
+		war = no			
+		is_greater_power = yes
+	    social_science = 1
+	    citizens_rights = all_voting_pops
+		NOT = { religious_policy = moralism }	
+    }
+	
+	effect = { 
+	   prestige = 10
+	   add_accepted_culture = czech
+    }
+	
+	ai_will_do = { 
+	   factor = 1	
+	   }
+	}
+
+}

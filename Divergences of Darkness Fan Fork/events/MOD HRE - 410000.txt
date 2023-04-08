@@ -1,2510 +1,3362 @@
 country_event = { 
 
-	id = 410001
+	id = 410001 		#Sigismund choice
 	title = "HRE1.T"
 	desc = "HRE1.D"
 
 	is_triggered_only = yes
 	
 	option = { 
-	name = "410001.A" 
-	any_country = {
-        			limit = {
-        				OR = {
-        					primary_culture = rheinish
-        					primary_culture = north_german
-        					primary_culture = south_german
-        				}
-        				in_sphere = THIS
-        			}	
-        			country_event = 410002
-        		}
-	any_owned = { 
-		limit = { region = PRU_546 }
-		secede_province = POM
-		remove_core = THIS 
-		}	
-	POM = { all_core = { remove_core = SCA  }   }
-	BOH = { diplomatic_influence = { who = POM value = 200 }
-        }
+	name = "HRE1.A" #Compromise
+	set_country_flag = HRE_compromise
+	country_event = { id = 410002 days = 2 }
+    }
 	
+	option = { 
+	
+	name = "HRE1.B" #The instrument of the Almighty
+	set_country_flag = HRE_manifesto
+	country_event = { id = 410052 days = 2 }
+	}
+}
+
+country_event = { 
+
+	id = 410002 		#The expended Reichstag
+	title = "HRE2.T"
+	desc = "HRE2.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HRE2.A" 
+	country_event = { id = 410003 days = 2 }
+	random_owned = {
+			limit = {
+				owner = { government = absolute_monarchy }
+				}
+	       owner = { government = prussian_constitutionalism }
+		}
+	random_owned = {
+			limit = {
+				owner = { government = prussian_constitutionalism }
+				}
+	       owner = { government = hms_government }
+		}
+	random_owned = {
+			limit = {
+				OR = { 
+				owner = { vote_franschise = none_voting }
+				owner = { vote_franschise = landed_voting  }
+				owner = { vote_franschise = wealth_weighted_voting }
+					}
+				}
+	       owner = { political_reform = wealth_voting }
+		}
+	political_reform = appointed
+	political_reform = yes_meeting
+	political_reform = state_press
+	political_reform = gerrymandering
+	add_accepted_culture = rheinish
+	add_accepted_culture = south_german 
+	add_accepted_culture = north_german 
+	add_accepted_culture = swabian
+	set_variable = {
+		   which = IMPERIAL_REPUBLICANS
+		   value = 10
+	    }
+	GER = { all_core = { add_core = THIS } }
+	HOL = { all_core = { remove_core = THIS } }
+	571 = { remove_core = THIS } 
+	573 = { remove_core = THIS } 
+	572 = { remove_core = THIS } 
+	576 = { remove_core = THIS } 
+	any_country = {
+	  limit = {
+		is_culture_group = germanic	
+		in_sphere = THIS 
+		NOT = {
+			tag = THIS
+				}
+			}
+		country_event = 11101
+		}
+	add_country_modifier = { 
+		name = disorganized_eco_HRE 
+		duration = -1 
+		}
+	add_country_modifier = { 
+		name = Reichsarmee_HRE 
+		duration = -1 
+		}
+	add_country_modifier = { 
+		name = Not_Roman_nor_German_HRE 
+		duration = -1 
+		}
     }
 }
 
-country_event = {
-        	id = 410002
-        	title = "410002.T"
-        	desc = "410002.D"
 
-        	is_triggered_only = yes
+country_event = { 
 
-        	option = {
-        		name = "410002.A"
-        		FROM = { diplomatic_influence = { who = THIS value = -200 } }
-        		BOH = { diplomatic_influence = { who = THIS value = 200 } }
-        	}
+	id = 410003 		#The Imperial Capital
+	title = "HRE3.T"
+	desc = "HRE3.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HRE3.A" #Frankfurt
+	capital = 564
+	country_event = { id = 410004 days = 2 }
+	change_variable = {
+		   which = IMPERIAL_REPUBLICANS
+		   value = 1
+	    }
+    }
+	
+	option = { 
+	name = "HRE3.B" #Nuremberg
+	country_event = { id = 410004 days = 2 }
+	capital = 3341
+    }
+	
+	option = { 
+	name = "HRE3.C" #Regensburg
+	country_event = { id = 410004 days = 2 }
+	capital = 602
+    }
+
 }
 
 country_event = { 
-        id = 410003
-        title = "HRE3.T"
-        desc = "HRE3.D"
 
-       	trigger = { 
-		primary_culture = north_german 
-		has_country_flag = prague_proclamation
-		}
-		
-		mean_time_to_happen = { 
-		days = 1 
-		}
-		
-		option = { 
-		name = "410003.A"
-		clr_country_flag = prague_proclamation
-		set_country_flag = wants_annex
-		RAP = {
-			change_variable = {
-				which = unified_HRE
-				value = 1
-			}
-			change_variable = {
-				which = Elbian_accep
-				value = 1
-				}
-			}
-		ai_chance = { 
-		factor = 40
-			modifier = { 
-				factor = 2.5
-				government = theocracy 
-				}
-			modifier = { 
-				factor = 1.4
-				government = absolute_monarchy 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = reactionary
-				}
-			modifier = { 
-				factor = 1.2
-				ruling_party_ideology = conservative
-				}
-			modifier = { 
-				factor = 1.2
-				alliance_with = HLR
-				}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 100 }
-				}
-			modifier = { 
-				factor = 1.5 
-				NOT = { year = 1840 }
-				}
-			}
-		}
-		
-		option = { 
-		name = "410003.B"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Negotiations_HRE
-				value = 1
-			}
-		}
-				ai_chance = { 
-				factor = 30
-			modifier = { 
-				factor = 1.5
-				government = prussian_constitutionalism 
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = liberal 
-					}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 50 }
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = conservative
-					}
-				}
-			}
-		
-		option = { 
-		name = "410003.C"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Refusal_HRE
-				value = 1
-			}
-			change_variable = {
-				which = Elbian_refusal
-				value = 1
-				}
-			}
-		ai_chance = { 
-		factor = 30
-		modifier = { 
-				factor = 1.5
-				government = hms_government 
-				}
-			modifier = { 
-				factor = 2
-				government = democracy 
-				}
-			modifier = { 
-				factor = 2
-				government = socialist_republic
-				}
-			modifier = { 
-				factor = 2
-				government = parliamentary_republic 
-				}
-			modifier = { 
-				factor = 3
-				government = presidential_dictatorship 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = liberal 
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1840
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1843
-					}
-			modifier = { 
-				factor = 1.2
-				year = 1845
-					}
-			}
-		}
+	id = 410004 		#The Problems of the Empire
+	title = "HRE4.T"
+	desc = "HRE4.D"
 
-		
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE4.A" 
+		any_owned = { 
+			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = ELX } }
+				add_province_modifier = { name = Woes_of_Industry duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = BAD is_core = WUR is_core = AUS is_core = ASB is_core = FRE is_core = THU is_core = BAV } NOT = { is_capital = yes } }
+				add_province_modifier = { name = Strong_Princes duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = FRW is_core = OSN is_core = BAE is_core = SAL } }
+				add_province_modifier = { name = Strong_Clergy duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = ULM is_core = SWI is_core = GRB is_core = BRE is_core = FRM } NOT = { is_capital = yes } }
+				add_province_modifier = { name = Old_Liberties duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = HEK is_core = HSK } }
+			add_province_modifier = { name = Wasted_North duration = -1 } 
+		}
+    }
+
+}
+
+country_event = { 
+
+	id = 410005		#The Political Clubs
+	title = "HRE5.T"
+	desc = "HRE5.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE
+		NOT = { has_country_flag = political_clubs } 
+		is_ideology_enabled = anarcho_liberal
 	}
 	
-country_event = { 
-        id = 410004
-        title = "HRE4.T"
-        desc = "HRE4.D"
+	mean_time_to_happen = { 
+		months = 6 
+			modifier = { 
+			factor = 0.01 
+			year = 1852 
+		}
+	}
+	
+	option = { 
+		name = "HRE5.A"
+		set_country_flag = political_clubs
+		any_pop = { 
+			limit = { 
+			   location = { is_core = GER }
+			}
+			consciousness = 1 
+			ideology = {
+				   value = anarcho_liberal
+				   factor = 0.05
+				}
+			}
+	}
+}
 
-		trigger = { 
-		primary_culture = rheinish 
-		has_country_flag = prague_proclamation
+
+country_event = { 
+
+	id = 410006		#The Relief Petition
+	title = "HRE6.T"
+	desc = "HRE6.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE
+		has_country_flag = political_clubs
+		NOT = { has_country_flag = ended_local_hollowing } 
+		NOT = { has_country_flag = Republicanism_1 } 
+		year = 1854
+	}
+	
+	mean_time_to_happen = { 
+		months = 6 
+			modifier = { 
+			factor = 0.01 
+			year = 1855
 		}
-		
-		mean_time_to_happen = { 
-		days = 1 
+	}
+	
+	option = { 
+		name = "HRE6.A"
+		set_country_flag = Republicanism_1
+		change_variable = {
+		   which = IMPERIAL_REPUBLICANS
+		   value = 2
+	    }
+		any_pop = { 
+			limit = { 
+			   location = { is_core = GER }
+			}
+		consciousness = 1 
 		}
-		
-		option = { 
-		name = "410004.A"
-		clr_country_flag = prague_proclamation 
-		set_country_flag = wants_annex
-		RAP = {
-			change_variable = {
-				which = unified_HRE
-				value = 1
-			}
-			change_variable = {
-				which = Rhenish_acceptance
-				value = 1
-				}
-			}
-			ai_chance = { 
-		factor = 30
+	}
+}
+
+
+country_event = { 
+
+	id = 410007		#The Relief Petition 2 
+	title = "HRE7.T"
+	desc = "HRE7.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE
+		NOT = { has_country_flag = ended_local_hollowing } 
+		has_country_flag = Republicanism_1
+		NOT = { has_country_flag = Republicanism_2 } 
+		year = 1858
+	}
+	
+	mean_time_to_happen = { 
+		months = 6 
 			modifier = { 
-				factor = 2.5
-				government = theocracy 
-				}
-			modifier = { 
-				factor = 1.4
-				government = absolute_monarchy 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = reactionary
-				}
-			modifier = { 
-				factor = 1.2
-				ruling_party_ideology = conservative
-			
-				}
-			modifier = { 
-				factor = 1.2
-				alliance_with = HLR
-				}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 100 }
-				}
-			modifier = { 
-				factor = 1.5 
-				NOT = { year = 1840 }
-				}
-			}			
+			factor = 0.01 
+			year = 1859
 		}
-		
-		option = { 
-		name = "410004.B"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Negotiations_HRE
-				value = 1
+	}
+	
+	option = { 
+		name = "HRE7.A"
+		set_country_flag = Republicanism_2
+		change_variable = {
+		   which = IMPERIAL_REPUBLICANS
+		   value = 2
+	    }
+		any_pop = { 
+			limit = { 
+			   location = { is_core = GER }
+			}
+		consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410008 		#OUTRAGE because you fixed sth else than the Hollowing first
+	title = "HRE8.T"
+	desc = "HRE8.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_COMPROMISE
+		OR = { 
+			has_country_flag = New_Reichsarmee_HRE
+			has_country_flag = Cultural_Reform_HRE
+			has_country_flag = First_Eco_reform_HRE
+			}
+		NOT = { has_country_flag = ended_local_hollowing } 
+		NOT = { has_country_flag = Republicanism_3 } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 6 
+	}
+	
+	option = { 
+		name = "HRE8.A"
+		set_country_flag = Republicanism_3
+		change_variable = {
+		   which = IMPERIAL_REPUBLICANS
+		   value = 5
+	    }
+		any_pop = { 
+			limit = { 
+				location = { is_core = GER }
+			}
+		consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410009 		#The Relief Petition goes to the Reichstag
+	title = "HRE9.T"
+	desc = "HRE9.D"
+	
+	trigger = { 
+	    tag = HLR 
+	    has_country_flag = HRE_COMPROMISE
+	    check_variable = { which = IMPERIAL_REPUBLICANS value = 15 }
+	    NOT = { has_country_flag = road_to_Imperial_Republic } 
+	}
+	
+	mean_time_to_happen = { 
+	   days = 15 
+	}
+	
+	option = {
+		name = "HRE9.A"
+		set_country_flag = road_to_Imperial_Republic
+		country_event = { id = 410010 days = 3 }
+	}
+}
+
+country_event = { 
+
+	id = 410010 		#The Banquet Scandal
+	title = "HRE10.T"
+	desc = "HRE10.D"
+	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "HRE10.A"
+		country_event = { id = 410011 days = 1 } 
+		prestige = -1 
+		capital_scope = {
+				state_scope = {
+					any_pop = {
+						militancy = 3
+						ideology = {
+							value = anarcho_liberal
+							factor = 0.05
+					}
+				}
 			}
 		}
-			ai_chance = { 
-				factor = 40
-				modifier = { 
-				factor = 1.5
-				government = prussian_constitutionalism 
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = liberal 
-					}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 50 }
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = conservative
-						}
-					}	
-				}
-		
-		option = { 
-		name = "410004.C"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Refusal_HRE
-				value = 1
+	}
+}
+
+country_event = { 
+
+	id = 410011 		#Riots in $CAPITAL$ : Sigismund flees back to Prague
+	title = "HRE11.T"
+	desc = "HRE11.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HRE11.A" #Wait what ? 
+	country_event = { id = 410013 days = 1 } 
+	}
+}
+
+country_event = {
+	id = 410012
+	title = "HRE12.T"
+	desc = "HRE12.D"
+	
+	trigger = {	
+		exists = yes
+		tag = HLR
+		OR = {
+			any_owned_province = {
+				is_capital = yes
+				controlled_by_rebels = yes
 			}
-			change_variable = {
-				which = Rhenish_refusal
-				value = 1
+			revolt_percentage = 0.25
+		}
+		NOT = { has_country_flag = road_to_Imperial_Republic }
+	}
+
+	mean_time_to_happen = {
+		days = 7
+		modifier = {
+			factor = 0.025
+			capital_scope = { controlled_by_rebels = yes }
+		}
+	}
+
+	option = {
+		name = "HRE12.A"
+		set_country_flag = road_to_Imperial_Republic
+		prestige = -10
+		country_event = { id = 410013 days = 3 }
+		random_owned = {
+			limit = {
+				is_capital = yes
+				controlled_by = REB
+			}
+			change_controller = THIS
+		}
+		any_owned = {
+			limit = { 
+			   is_colonial = no
+			}
+			any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = separatist
+				factor = -4
 				}
 			}
-			ai_chance = { 
-		factor = 30
-		modifier = { 
-				factor = 1.5
-				government = hms_government 
-				}
-			modifier = { 
-				factor = 2
-				government = democracy 
-				}
-			modifier = { 
-				factor = 2
-				government = socialist_republic
-				}
-			modifier = { 
-				factor = 2
-				government = parliamentary_republic 
-				}
-			modifier = { 
-				factor = 3
-				government = presidential_dictatorship 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = liberal 
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1840
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1843
-					}
-			modifier = { 
-				factor = 1.2
-				year = 1845
-					}
-				}
-			}
+		remove_province_modifier = liberal_agitation
+			}		
+		}
 }	
 
 country_event = { 
-        id = 410005
-        title = "HRE5.T"
-        desc = "HRE5.D"
 
-       	trigger = { 
-		primary_culture = south_german 
-		has_country_flag = prague_proclamation
-		}
-		
-		mean_time_to_happen = { 
-		days = 1 
-		}
-		
-		option = { 
-		name = "410005.A"
-		clr_country_flag = prague_proclamation
-		set_country_flag = wants_annex
-		RAP = {
-			change_variable = {
-				which = unified_HRE
-				value = 1
-			}
-			change_variable = {
-				which = Danubian_acceptance
-				value = 1
-				}
-			}	
-			ai_chance = { 
-		factor = 30
-			modifier = { 
-				factor = 2.5
-				government = theocracy 
-				}
-			modifier = { 
-				factor = 1.4
-				government = absolute_monarchy 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = reactionary
-				}
-			modifier = { 
-				factor = 1.2
-				ruling_party_ideology = conservative
-				}
-			modifier = { 
-				factor = 1.2
-				alliance_with = HLR
-				}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 100 }
-				}
-			modifier = { 
-				factor = 1.5 
-				NOT = { year = 1840 }
-				}
-			}
-		}
-		
-		option = { 
-		name = "410005.B"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Negotiations_HRE
-				value = 1
-			}
-		}
-			ai_chance = { 
-		factor = 30
-		modifier = { 
-				factor = 1.5
-				government = prussian_constitutionalism 
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = liberal 
-					}
-			modifier = {
-				factor = 1.2
-				relation = { who = HLR value = 50 }
-				}
-			modifier = { 
-				factor = 1.4
-				ruling_party_ideology = conservative
-					}
-				}
-			}
-		
-		option = { 
-		name = "410005.C"
-		clr_country_flag = prague_proclamation
-		RAP = {
-			change_variable = {
-				which = Refusal_HRE
-				value = 1
-			}
-			change_variable = {
-				which = Danubian_refusal
-				value = 1
-				}
-			}
-		ai_chance = { 
-		factor = 40
-		modifier = { 
-				factor = 1.5
-				government = hms_government 
-				}
-			modifier = { 
-				factor = 2
-				government = democracy 
-				}
-			modifier = { 
-				factor = 2
-				government = socialist_republic
-				}
-			modifier = { 
-				factor = 2
-				government = parliamentary_republic 
-				}
-			modifier = { 
-				factor = 3
-				government = presidential_dictatorship 
-				}
-			modifier = { 
-				factor = 1.5
-				ruling_party_ideology = liberal 
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1840
-					}
-			modifier = { 
-				factor = 1.1
-				year = 1843
-					}
-			modifier = { 
-				factor = 1.2
-				year = 1845
-					}
-			}
-		}	
-}
-
+	id = 410013		#The Republik is proclaimed! Time to bring back the Declaration of Human rights and citizens
+	title = "HRE13.T"
+	desc = "HRE13.D"
 	
-country_event = { 
-		id = 410009
-		title = "HRE9.T"
-		desc = "HRE9.D"
-		
-		is_triggered_only = yes 
-		major = yes 
-		
+	is_triggered_only = yes 
+	
+	major = yes
+
 	option = { 
-		name = "410009.A"
-		set_country_flag = prag_p
-		RAP = {	set_variable = {
-				which = unified_HRE
-				value = 0
-			}
-			set_variable = {
-				which = Negotiations_HRE
-				value = 0
-			}
-			set_variable = {
-				which = Refusal_HRE
-				value = 0
-			}
-			set_variable = {
-				which = Elbian_accep
-				value = 0
-			}
-			set_variable = {
-				which = Elbian_refusal
-				value = 0
-			}
-			set_variable = {
-				which = Rhenish_refusal
-				value = 0
-			}
-			set_variable = {
-				which = Rhenish_acceptance
-				value = 0
-			}
-			set_variable = {
-				which = Danubian_acceptance
-				value = 0
-			}
-			set_variable = {
-				which = Danubian_refusal 
-				value = 0
-				}
-			}
-		any_country = {
-        			limit = {
-        				OR = {
-        					primary_culture = rheinish
-        					primary_culture = north_german
-        					primary_culture = south_german
-        				}
-        				in_sphere = THIS
-					    NOT = { vassal_of = BRG }
-						NOT = { substate_of = BRG }
-        			}	
-        			set_country_flag = prague_proclamation
-        		}
-	}
-}
-
-country_event = { 
-		id = 410010
-		title = "HRE10.T"
-		desc = "HRE10.D"
-		
-		fire_only_once = yes 
-
-		trigger = { 
-		tag = HLR 
-		has_country_flag = prag_p
-		}
-		
-		mean_time_to_happen = { 
-		months = 2
-		}
-		
-		option = { 
-		name = "410010.A"
-		any_pop = { 
-		limit = { culture = czech }
-		consciousness = 1 
-			}
-		any_country = { 
-		limit = { has_country_flag = wants_annex }
-		country_event = 410034
-		}
-		set_country_flag = results 
-		}
-}
-
-country_event = { 
-		id = 410011
-		title = "HRE11.T"
-		desc = "HRE11.D"	
-		
-		trigger = { 
-		tag = HLR 
-		has_country_flag = results 
-		RAP = { check_variable = {
-				which = unified_HRE
-				value = 15 
-				}
-			}
-		}
-		
-		mean_time_to_happen = { 
-		days = 1 
-		}
-		
-		option = { 
-		name = "410011.A"
-		any_country = {
-        			limit = {
-        				OR = {
-        					primary_culture = rheinish
-        					primary_culture = north_german
-        					primary_culture = south_german
-        				}
-        				in_sphere = THIS
-					    NOT = { vassal_of = BRG }
-						NOT = { substate_of = BRG }
-        			}	
-				country_event = 11101
-			}
-		inherit = FRM
-		GER = {
-				all_core = {
-					add_core = HLR
-				}
-			}
+		name = "HRE13.A" #Constitution will be implemented after peace
+		government = presidential_dictatorship 
 		primary_culture = rheinish 
-		set_country_flag = frankfurt_unify 
-		add_accepted_culture = czech 
-		add_accepted_culture = north_german 
-		add_accepted_culture = south_german 
-		capital = 564
-		prestige = 50 
-		564 = {
-				life_rating = 5
-			}
-		clr_country_flag = results 
-		}
-	}
-	
-country_event = { ###Total refusal 
-		id = 410012
-		title = "HRE12.T"
-		desc = "HRE12.D"	
-		
-		trigger = { 
-		tag = HLR 
-		has_country_flag = results 
-		RAP = { check_variable = {
-				which = Refusal_HRE
-				value = 15 
+		political_reform = none_voting
+		ruling_party_ideology = anarcho_liberal 
+		any_owned = { 
+			limit = { 
+				is_core = BOH 
+				NOT = { is_core = GER } 
 				}
+				remove_core = THIS 
+				secede_province = BOH 
 			}
-		}
-		
-		mean_time_to_happen = { 
-		days = 1 
-		}
-		
-		option = { 
-		name = "410012.A"
-		set_country_flag = rhine_reb
-		set_country_flag = elbe_reb 
-		set_country_flag = danube_reb 
-		random_country = { 
-			limit = {
-				primary_culture = south_german
-				number_of_states = 2
-			}
-			country_event = 410013
-		}
-		random_country = { 
-			limit = {
-				primary_culture = north_german
-				
-			    NOT = { vassal_of = BRG }
-				NOT = { substate_of = BRG }
-			}
-			country_event = 410018
-		}
-		random_country = { 
-			limit = {
-				primary_culture = rheinish
-			    NOT = { vassal_of = BRG }
-				NOT = { substate_of = BRG }
-			}
-			country_event = 410016
-		}
-		prestige = -20 
-		clr_country_flag = results 
-		}
-	}
-	
-country_event = {
-
-	id = 410013 #Danubian Federation
-	is_triggered_only = yes
-
-	title = "HRE13.T"
-	desc = "HRE13.D"
-
-	option = { #Accept
-		name = "410013.A" 
-		prestige = 10
-
-		any_country = {
-				limit = {
-					primary_culture = south_german
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-		#Austria
-		AUS = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Bavaria
-		BAV = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Wurtemberg
-		WUR = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Wurzburg
-		FRW = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Franconia
-		FRE = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Baden
-		BAD = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Swiss
-		SWI = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Tirol
-		AUS_612 = {
-			add_core = SGF
-		}
-		#SAX_1 = { add_core = SGF }
-		change_tag = SGF
-		HLR = { country_event = { id = 410014 days = 2 } } 
+		create_vassal = BOH 
+		BOH = { country_event = 410014 } 
+		country_event = { id = 410015 days = 3 } 
 	}
 }
-	
-country_event = {
 
-	id = 410014 #Danubian Federation
-	is_triggered_only = yes
+country_event = { 
 
+	id = 410014		#Sigismund rallies Bohemia against the Republic
 	title = "HRE14.T"
 	desc = "HRE14.D"
 	
-	fire_only_once = yes
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = danube_reb
-	SGF = { exists = yes }
-	}
-
-	mean_time_to_happen = { 
-	days = 1 
-	}
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410014.A"
-	any_owned = { 
-	limit = { is_core = SGF }
-	secede_province = SGF
-		}
-	casus_belli = {
-				target = SGF
-				type = conquest
-				months = 60
-			}
-	war = {
-			target = SGF
-			attacker_goal = {
-				casus_belli = conquest
-			}
+		name = "HRE14.A" #Time to rally everyone and take back the Throne
+		government = absolute_monarchy 
+		political_reform = none_voting
+		ruling_party_ideology = reactionary 
+		capital = 625
+		any_owned = { 
+			add_core = HLR 
 		}
 	}
 }
 
-country_event = {
+country_event = { 
 
-	id = 410018 #Elbian Federation
-	is_triggered_only = yes
-
-	title = "HRE13.T"
-	desc = "HRE13.D"
-
-	option = { #Accept
-		name = "410018.A" 
-		prestige = 10
-		any_country = {
-				limit = {
-					primary_culture = north_german
-					NOT = {
-						tag = THIS
-						tag = KRL 
-					}
-				}
-				annex_to = THIS
-			}
-		PRU_581 = { add_core = NGF }	#Westphalia
-		HAN_534 = { add_core = NGF }	#East Frisia
-		HAM_528 = { add_core = NGF }	#Hanover
-		PRU_546 = { add_core = NGF }	#Pomerania
-		SAX_1 = { add_core = NGF }		#Thuringia
-		HOL_369 = { add_core = NGF }	#Holstein
-		PRU_553 = { add_core = NGF }	#Anhalt
-		PRU_549 = { add_core = NGF }	#Brandenburg
-		SAX_558 = { add_core = NGF }	#Saxony
-		change_tag = NGF
-		HLR = { country_event = { id = 410015 days = 2 } } 
-	}
-}
+	id = 410015		#The Relief Decree : all food exports are forbidden and all hoarders will be condemned to the Fallschwertmaschine
+	title = "HRE15.T"
+	desc = "HRE15.D"
 	
-country_event = {
-
-	id = 410015 #Elbian Federation
-	title = "HRE14.T"
-	desc = "HRE14.D"
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = elbe_reb
-	NGF = { exists = yes }
-	}
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}
-	
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410015.A"
-	any_owned = { 
-	limit = { 
-	is_core = NGF
-	NOT = { is_core = SAX }
-	}
-	secede_province = NGF
+		name = "HRE15.A"
+		country_event = { id = 410016 days = 3 }
+		political_reform = debtors_prisons
+		any_pop = {
+		    limit = {
+			   pop_type = farmers 
+			}
+		    ideology = { factor = -0.1 value = reactionary } 
+		    ideology = { factor = -0.1 value = conservative } 
+		    ideology = { factor = 0.15 value = anarcho_liberal } 
 		}
-	casus_belli = {
-				target = NGF
-				type = conquest
-				months = 60
-			}
-	war = {
-			target = NGF
-			attacker_goal = {
-				casus_belli = conquest
-			}
+	    set_country_flag = ended_local_hollowing
+		add_country_modifier = {
+			name = global_baby_boom
+			duration = 730
 		}
-	}
-}
-
-country_event = {
-
-	id = 410016 #Rhenish Federation
-	is_triggered_only = yes
-
-	title = "HRE13.D"
-	desc = "HRE13.T"
-
-	option = { #Accept
-		name = "410016.A" 
-		prestige = 10
-        set_global_flag = CFR_exists
-        set_global_flag = CFR_completed
-		any_country = {
-				limit = {
-					primary_culture = rheinish
-			        NOT = { vassal_of = BRG }
-					NOT = { substate_of = BRG }
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-		RHI = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		BEG = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		MNR = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		NAS = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		FRM = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		HEK = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		HES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		WES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		#Wurzburg
-		FRW = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Wurtemberg
-		WUR = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Baden
-		BAD = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Swiss
-		SWI = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		change_tag = CFR
-		FROM = { country_event = 410017 }
+		any_owned = { 
+			remove_province_modifier = Wasted_North
+			remove_province_modifier = light_hollowing_province
+			remove_province_modifier = average_hollowing_province
+			remove_province_modifier = severe_hollowing_province
+			remove_province_modifier = catastropic_hollowing_province
+			remove_province_modifier = apocalyptic_hollowing_province
+			remove_province_modifier = hollowing_aftermath
+	    }
 	}
 }
-	
-country_event = {
 
-	id = 410017 #Rhenish Federation
+country_event = { 
 
-	title = "HRE14.T"
-	desc = "HRE14.D"
+	id = 410016			#2nd Erklärung der Menschen und Bürgerrechte
+	title = "HRE16.T"
+	desc = "HRE16.D"
 	
-	fire_only_once = yes
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = rhine_reb
-	CFR = { exists = yes }
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410017.A"
-	any_owned = { 
-	limit = { is_core = CFR }
-	secede_province = CFR
-		}
-	casus_belli = {
-				target = CFR
-				type = conquest
-				months = 60
+		name = "HRE16.A"
+		prestige = 10 
+		country_event = { id = 410017 days = 3 }
+		remove_country_modifier = Reichsarmee_HRE
+		remove_country_modifier = Not_Roman_nor_German_HRE
+		any_owned = { remove_province_modifier = Old_Liberties } 
+		any_pop = {
+		    limit = {
+			   literacy = 0.6
 			}
-	war = {
-			target = CFR
-			attacker_goal = {
-				casus_belli = conquest
-			}
+		ideology = { factor = -0.075 value = reactionary } 
+		ideology = { factor = -0.075 value = conservative } 
+		ideology = { factor = 0.15 value = anarcho_liberal }
 		}
 	}
 }
 
-country_event = {
+country_event = { 
 
-	id = 410019 #HRE back to Bohemia 
+	id = 410017		#Secularization of the State and Church Lands
+	title = "HRE17.T"
+	desc = "HRE17.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "HRE15.A"
+		money = 50000
+		country_event = { id = 410058 days = 4 }
+		country_event = { id = 410018 days = 3 }
+		any_pop = { 
+		limit = {
+			   religion = protestant 
+			}
+		    ideology = { factor = 0.1 value = anarcho_liberal }
+		    militancy = -4
+		}
+		any_owned = { 
+		    remove_province_modifier = Strong_Clergy
+		}
+		any_pop = {
+		    limit = {
+			   pop_type = clergymen 
+			   religion = catholic 
+			}
+		militancy = 4
+		}
+		any_country = { 
+			limit = { tag = PAP exists = yes } 
+			relation = { who = THIS value = -200 }
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410018		#Abolishment of the Princedoms and new Republican administration
+	title = "HRE18.T"
+	desc = "HRE18.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "HRE18.A"
+	any_owned = { 
+	remove_province_modifier = Strong_Princes 
+		}
+	country_event = { id = 410019 days = 5 }
+	}
+}
+
+country_event = { 
+
+	id = 410019	#Urban misery 
 	title = "HRE19.T"
 	desc = "HRE19.D"
 	
-	trigger = { 
-	tag = HLR 
-	NOT = { 549 = { owned_by = HLR } }	
-	NOT = { BOH = { exists = yes } }
-	war = no 
-	}
-	
-	mean_time_to_happen = { 
-	days = 5 }
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410019.A" 
-	change_tag = BOH 
-	clr_country_flag = Bavarian_Protectorate
-	any_country = {
-				any_owned = {
-						limit = { is_core = HLR } 
-	remove_core = HLR 
-			}
-		}
+		name = "HRE19.A" #The Imperial Republic will be social or will not be
+		any_owned = { remove_province_modifier = Woes_of_Industry }
+		country_event = { id = 410023 days = 14 } 
+		BOH = { country_event = 410020 } 
+		
 	}
-}	
+	
+	option = { 
+		name = "HRE19.B" #Work with the industrial Bourgeoisie
+		any_owned = { remove_province_modifier = Woes_of_Industry }
+		add_country_modifier = { name = Bourgeois_Agreement duration = 1825 }
+		country_event = { id = 410023 days = 14 } 
+		BOH = { country_event = 410020 } 
+	}
+}
 
 country_event = { 
 
-	id = 410020 #HRE mixed overall
+	id = 410020	#The Prague Declaration : Sigismund declares the acts of the Reichstag null and void and call for the German nation to gather around him
 	title = "HRE20.T"
 	desc = "HRE20.D"
 	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = results 
-	NOT = {
-		RAP = {
-			check_variable = {
-				which = Refusal_HRE
-				value = 15 
-				}
-			}
-		}
-	NOT = {
-		RAP = {
-			check_variable = {
-				which = unified_HRE
-				value = 15 
-				}
-			}
-		}
-	}
+	is_triggered_only = yes 
 	
-	mean_time_to_happen = { 
-	days = 2 }
+	major = yes 
 	
 	option = { 
-	name = "410020.A"
-	clr_country_flag = results 
-	set_country_flag = locresults 
+	name = "HRE20.A"
+	BRG = { country_event = { id = 410021 days = 3 } }
+	SCA = { country_event = { id = 410021 days = 4 } }
+	HLR = { country_event = { id = 410022 days = 2 } }
+	country_event = { id = 410024 days = 15 } 
 	}
 }
-
-#####Rhineland results
-
+	
 country_event = { 
 
-	id = 410021 #Rhineland accept
+	id = 410021	#Sigismund ready to give concessions as long as the Republic is crushed
 	title = "HRE21.T"
 	desc = "HRE21.D"
 	
-	fire_only_once = yes 
+	is_triggered_only = yes 
 	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = { check_variable = { 
-	which = Rhenish_acceptance
-	value = 4 
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}
 	
 	option = { 
-	name = "410021.A"
-	add_accepted_culture = rheinish 
-	set_country_flag = rhine_accepts
-	any_country = {
-				limit = {
-					primary_culture = rheinish
-			        NOT = { vassal_of = BRG }
-					NOT = { substate_of = BRG }
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-	RHI = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-	BEG = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		MNR = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		NAS = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		FRM = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		HEK = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		HES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
-		WES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = HLR
-			}
-		}
+	name = "HRE21.A" #We will partition Germany together
 	}
 }
 
 country_event = { 
 
-	id = 410022 #Rhineland refuses
-	title = "HRE22.T"
-	desc = "HRE22.D"
+	id = 410022	#Das Vaterland ist in Gefahr!
+	title = "HRE20.T"
+	desc = "HRE20.D"
 	
-	fire_only_once = yes 
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = {
-	check_variable = { 
-	which = Rhenish_refusal
-	value = 4 
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}	
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410022.A"
-	set_country_flag = rhine_reb 
-	random_country = { 
-	limit = {
-		primary_culture = rheinish 
-	    NOT = { vassal_of = BRG }
-		NOT = { substate_of = BRG }
-			}
-	country_event = 410016
+	name = "HRE22.A"
+	add_country_modifier = { 
+		name = REVOLUTIONARY_FERVOUR_HRE #mobilization modifier 
+		duration = 1825 
 		}
 	}
 }
-
+	
 country_event = { 
 
-	id = 410023 #Rhineland mixed 1/3
+	id = 410023	#The Weights and Measures
 	title = "HRE23.T"
 	desc = "HRE23.D"
 	
-	fire_only_once = yes 
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	NOT = {
-		RAP = {
-			check_variable = { 
-			which = Rhenish_refusal
-			value = 4 
-				}
-			}
-		}
-	NOT = { 
-		RAP = {
-			check_variable = { 
-			which = Rhenish_acceptance
-			value = 4 
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 3 
-	}
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410023.A" 
-	set_country_flag = rhine_negotiation
-	random_country = { 
-	limit = {
-		primary_culture = rheinish 
-	    NOT = { vassal_of = BRG }
-		NOT = { substate_of = BRG }
-			}
-	country_event = 410024
-			}
-		}
-}
-
-country_event = { 
-
-	id = 410024 #Rhineland mixed 2/3
-	title = "410024.T"
-	desc = "410024.D"
-	
-	is_triggered_only = yes
-	fire_only_once = yes 
-	
-	option = { #Accept
-	name = "410024.A" 
-	prestige = 10
-    set_global_flag = CFR_exists
-    set_global_flag = CFR_completed
-	any_country = {
-				limit = {
-					primary_culture = rheinish
-			        NOT = { vassal_of = BRG }
-					NOT = { substate_of = BRG }
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-		RHI = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		BEG = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		MNR = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		NAS = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		FRM = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		HEK = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		HES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		WES = {
-			all_core = {
-				limit = {
-					is_core = GER
-				}
-				add_core = CFR
-			}
-		}
-		#Wurzburg
-		FRW = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Wurtemberg
-		WUR = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Baden
-		BAD = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		#Swiss
-		SWI = {
-			all_core = {
-				add_core = CFR
-			}
-		}
-		change_tag = CFR
-		FROM = { country_event = 410025 }
-		FROM = { create_vassal = THIS }
+	name = "HRE23.A"
+	remove_country_modifier = disorganized_eco_HRE
+	prestige = 4 
 	}
 }
 
 country_event = { 
 
-	id = 410025 #Rhineland mixed 3/3
+	id = 410024	#The Reconquest of the Empire
+	title = "HRE24.T"
+	desc = "HRE24.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "HRE24.A"
+		set_global_flag = COALITION_WAR
+		BRG = { country_event = 410025 } 
+		SCA = { country_event = 410025 } 
+		HLR = { release_vassal = THIS country_event = { id = 410026 days = 2 } }
+		war = {
+			target = HLR
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}
+		}
+	}
+}
+	
+country_event = { 
+
+	id = 410025	#The Third Great German War
 	title = "HRE25.T"
 	desc = "HRE25.D"
 	
-	is_triggered_only = yes
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410025.A"
-	HLR = {
-			create_vassal = CFR
-				}
+		name = "HRE25.A"
+		war = {
+			target = HLR
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		}
 	}
 }
 
-#####Elbe results
-
 country_event = { 
 
-	id = 410026 #Elbe accept
+	id = 410026	#The Monarchist Coalition
 	title = "HRE26.T"
 	desc = "HRE26.D"
 	
-	fire_only_once = yes 
+	is_triggered_only = yes 
 	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = { check_variable = { 
-	which = Elbian_accep
-	value = 5
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}
+	major = yes
 	
 	option = { 
-	name = "410026.A"
-	add_accepted_culture = north_german 
-	set_country_flag = elbe_accepts
-	any_country = {
-				limit = {
-					primary_culture = north_german
-					NOT = {
-						tag = KRL
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-	PRU_581 = { add_core = HLR }	#Westphalia
-	HAN_534 = { add_core = HLR }	#East Frisia
-	HAM_528 = { add_core = HLR }	#Hanover
-	PRU_546 = { add_core = HLR }	#Pomerania
-	SAX_1 = { add_core = HLR }		#Thuringia
-	HOL_369 = { add_core = HLR }	#Holstein
-	PRU_553 = { add_core = HLR }	#Anhalt
-	PRU_549 = { add_core = HLR }	#Brandenburg
-	SAX_558	 = { add_core = HLR }	#Saxony
+		name = "HRE26.A"
+		#add_country_modifier ?
 	}
 }
 
 country_event = { 
 
-	id = 410027 #Elbe refuses
+	id = 410027	#Anglois Reaction to the Imperial debacle -the Montmorency Manifesto
 	title = "HRE27.T"
 	desc = "HRE27.D"
 	
-	fire_only_once = yes 
-	
 	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = {
-	check_variable = { 
-	which = Elbian_refusal
-	value = 5
-			}
-		}
+	tag = DUA 
+	has_global_flag = COALITION_WAR
+	HLR = { war_with = BOH } 
+	BOH = { any_owned_province = { controlled_by = HLR } } 
+	NOT = { has_country_flag = manifesto_montmorency } 
 	}
+	
+	fire_only_once = yes 
 	
 	mean_time_to_happen = { 
 	days = 1 
-	}	
+	}
+	
+	
 	
 	option = { 
-	name = "410027.A"
-	set_country_flag = elbe_reb 
-	random_country = { 
-	limit = {
-		primary_culture = north_german 
-			}
-	country_event = 410018
-		}
+		name = "HRE27.A"
+		HLR = { country_event = 410028 } 
 	}
 }
 
 country_event = { 
 
-	id = 410028 #Rhineland mixed 1/3
+	id = 410028	#Anglois Reaction to the Imperial debacle -the Montmorency Manifesto -HLR event
 	title = "HRE28.T"
 	desc = "HRE28.D"
 	
-	fire_only_once = yes 
+	is_triggered_only = yes 
 	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	NOT = {
-	RAP = {
-	check_variable = { 
-			which = Elbian_accep
-			value = 5
-			}
-		}
-	}
-	NOT = { 
-	RAP = {
-	check_variable = { 
-			which = Elbian_refusal
-			value = 5 
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 3 
-	}
+	major = yes
 	
 	option = { 
-	name = "410028.A" 
-	set_country_flag = elbe_negotiation
-	random_country = { 
-	limit = {
-		primary_culture = north_german 
-		
-			}
-	country_event = 410029
-			}
+		name = "HRE28.A"
+		any_pop = { 
+		consciousness = 1 
 		}
+	}
+	
 }
 
 country_event = { 
 
-	id = 410029 #Elbe mixed 2/3
+	id = 410029	#Capture of Sigismund
 	title = "HRE29.T"
 	desc = "HRE29.D"
 	
-	is_triggered_only = yes
-	fire_only_once = yes 
+	trigger = { 
+		tag = HLR 
+		war_with = BOH 
+		625 = { controlled_by = THIS } 
+		BOH = { national_provinces_occupied = 0.25 } 
+		NOT = { any_owned_province = { controlled_by = BOH } }
+		NOT = { has_country_flag = sigismund_captured }
+	}
 	
-	option = { #Accept
-	name = "410029.A" 
-	prestige = 10
-	any_country = {
-				limit = {
-					primary_culture = north_german
-					NOT = {
-						tag = KRL
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-	PRU_581 = { add_core = NGF }	#Westphalia
-	HAN_534 = { add_core = NGF }	#East Frisia
-	HAM_528 = { add_core = NGF }	#Hanover
-	PRU_546 = { add_core = NGF }	#Pomerania
-	SAX_1 = { add_core = NGF }		#Thuringia
-	HOL_369 = { add_core = NGF }	#Holstein
-	PRU_553 = { add_core = NGF }	#Anhalt
-	PRU_549 = { add_core = NGF }	#Brandenburg
-	SAX_558	 = { add_core = NGF }	#Saxony
-	change_tag = NGF
-	FROM = { create_vassal = THIS}
-	FROM = { country_event = 410043 }
+	mean_time_to_happen = { 
+		days = 15 
+		modifier = { 
+			factor = 0.01 
+			BOH = { national_provinces_occupied = 0.50 } 
+		}
+	}
+	
+	
+	option = { 
+		name = "HRE29.A"
+		end_war = BOH 
+		inherit = BOH
+		set_country_flag = sigismund_captured
 	}
 }
 
-#####Danube results
-
 country_event = { 
 
-	id = 410030 #Danube accept
+	id = 410030	#Trial and execution of the last Roman Emperor
 	title = "HRE30.T"
 	desc = "HRE30.D"
 	
-	fire_only_once = yes 
-	
 	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = {
-	check_variable = { 
-	which = Danubian_acceptance
-	value = 5
-			}
-		}
+		tag = HLR 
+		capital_scope = { controlled_by = THIS } 
+		has_country_flag = sigismund_captured
+		NOT = { has_global_flag = sigismund_executed }
 	}
 	
 	mean_time_to_happen = { 
-	days = 1 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			national_provinces_occupied = 0.25
+		}
+		modifier = { 
+			factor = 0.01 
+			BRG = { national_provinces_occupied = 0.15 }
+		}
 	}
 	
 	option = { 
-	name = "410030.A"
-	add_accepted_culture = south_german 
-	set_country_flag = danube_accepts
-	any_country = {
-				limit = {
-					primary_culture = south_german
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
+		name = "HRE30.A"
+		prestige = 25 
+		set_global_flag = sigismund_executed
+		any_pop = { 
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
 			}
-	#Austria
-		AUS = {
-			all_core = {
-				add_core = HLR
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
 			}
-		}
-		#Bavaria
-		BAV = {
-			all_core = {
-				add_core = HLR
+			scaled_militancy = {
+				ideology = conservative
+				factor = 3
 			}
-		}
-		#Wurtemberg
-		WUR = {
-			all_core = {
-				add_core = HLR
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = -4
 			}
 		}
-		#Baden
-		BAD = {
-			all_core = {
-				add_core = HLR
+		any_country = { 
+			limit = { tag = DUA exists = yes }
+				country_event = { id = 410031 days = 5 } 
 			}
-		}
-		#Wurzburg
-		FRW = {
-			all_core = {
-				add_core = HLR
-			}
-		}
-		#Franconia
-		FRE = {
-			all_core = {
-				add_core = HLR
-			}
-		}
-		#Swiss
-		SWI = {
-			all_core = {
-				add_core = HLR
-			}
-		}
-		#Tirol
-		AUS_612 = {
-			add_core = HLR
-		}
-		SAX_1 = { add_core = HLR }
 	}
 }
 
+
 country_event = { 
 
-	id = 410031 #Danube refuses
+	id = 410031	#Trial and execution of the last Roman Emperor -DUA declares war
 	title = "HRE31.T"
 	desc = "HRE31.D"
 	
-	fire_only_once = yes 
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	RAP = {
-	check_variable = { 
-	which = Danubian_refusal
-	value = 4
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 1 
-	}	
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410031.A"
-	set_country_flag = danube_reb 
-	random_country = { 
-	limit = {
-		primary_culture = south_german 
+		name = "HRE31.A"
+		war = {
+			target = HLR
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
 			}
-	country_event = 410013
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
 		}
+		military_access = BRG
 	}
 }
 
 country_event = { 
 
-	id = 410032 #Danube mixed 1/3
+	id = 410032	#Trial and execution of the last Roman Emperor -DUA declares war
 	title = "HRE32.T"
 	desc = "HRE32.D"
 	
-	fire_only_once = yes 
-	
-	trigger = { 
-	tag = HLR 
-	has_country_flag = locresults 
-	NOT = {
-	RAP = {
-	check_variable = { 
-			which = Danubian_acceptance
-			value = 5 
-				}
-			}
-		}
-	NOT = { 
-	RAP = {
-	check_variable = { 
-			which = Danubian_refusal
-			value = 5 
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = { 
-	days = 3 
-	}
+	is_triggered_only = yes 
 	
 	option = { 
-	name = "410032.A" 
-	set_country_flag = danube_negotiation
-	random_country = { 
-	limit = {
-		primary_culture = south_german 
-			}
-	country_event = 410033
-			}
-		}
+		name = "HRE32.A" #The tree of liberty must be refreshed with the blood of tyrants!
+	}
 }
 
 country_event = { 
 
-	id = 410033 #Danube mixed 2/3
+	id = 410033	#Victory over Burgundy
 	title = "HRE33.T"
 	desc = "HRE33.D"
 	
-	is_triggered_only = yes
-	fire_only_once = yes 
-	
-	option = { #Accept
-	name = "410033.A" 
-	prestige = 10
-	any_country = {
-				limit = {
-					primary_culture = south_german
-					NOT = {
-						tag = THIS
-					}
-				}
-				annex_to = THIS
-			}
-	#Austria
-		AUS = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Bavaria
-		BAV = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Wurtemberg
-		WUR = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Wurzburg
-		FRW = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Franconia
-		FRE = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Baden
-		BAD = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Swiss
-		SWI = {
-			all_core = {
-				add_core = SGF
-			}
-		}
-		#Tirol
-		AUS_612 = {
-			add_core = SGF
-		}
-		#SAX_1 = { add_core = SGF }
-	change_tag = SGF
-	FROM = { create_vassal = THIS }
-	FROM = { country_event = 410042 }
-	}
-}
-
-country_event = { 
-
-	id = 410034 #Annexation
-	title = "410034.T"
-	desc = "410034.D"
-	
-	is_triggered_only = yes
-	fire_only_once = yes 
-	
-	option = { 
-	name = "410034.A"
-	FROM = {
-			inherit = THIS
-		}
-	}
-}
-
-country_event = { 
-	
-	id = 410007
-	title = "HRE7.T"
-	desc = "HRE7.D"
-
 	trigger = { 
 	tag = HLR 
-	has_country_flag = locresults 
-	OR = {
-		has_country_flag = elbe_accepts
-		has_country_flag = elbe_negotiation 
-		has_country_flag = elbe_reb
-		}
-	
-	OR = {
-		has_country_flag = rhine_accepts
-		has_country_flag = rhine_negotiation 
-		has_country_flag = rhine_reb
-		}
-	
-	OR = {
-		has_country_flag = danube_accepts
-		has_country_flag = danube_negotiation 
-		has_country_flag = danube_reb
-		}
+	has_global_flag = COALITION_WAR
+	NOT = { war_with = BRG }
+	BRG = { has_country_flag = custom_treaty_loser exists = yes } 
 	}
 	
 	mean_time_to_happen = { 
-	days = 1 
+		days = 1
 	}
 	
 	option = { 
-	name = "410007.A"
-	set_country_flag = negotiations
-	clr_country_flag = locresults 
+		name = "HRE33.A" #Just annex the Rhineland and prop the Parliamentarians
+		set_country_flag = victory_over_BRG
+		create_alliance = BRG
+		RHI = { all_core = { add_core = HLR } } 
+		BRG = { country_event = 410034 }
+	}
+	
+	option = { 
+		name = "HRE33.B" #Annex the Rhineland and Dutch
+		set_country_flag = victory_over_BRG
+		create_alliance = BRG
+		RHI = { all_core = { add_core = HLR } } 
+		NET = { all_core = { add_core = HLR } } 
+		BRB = { all_core = { remove_core = HLR } } 
+		BRG = { country_event = 410035 }
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				alliance_with = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+		badboy = 12
+	}
+	
+	option = { 
+		name = "HRE33.C" #Establish sister-republics
+		set_country_flag = victory_over_BRG
+		RHI = { all_core = { add_core = HLR } } 
+		NET = { all_core = { add_core = HLR } } 
+		BRB = { all_core = { remove_core = HLR } } 
+		inherit = BRG 
+		any_owned = { 
+			limit = { is_core = LRR }
+			secede_province = LRR 
+		}
+		create_vassal = LRR
+		LRR = { 
+			capital = 411 
+			government = parliamentary_republic 
+		}
+		any_owned = { 
+			limit = { is_core = BRB }
+			secede_province = BRB 
+		}
+		create_vassal = BRB
+		BRB = { 
+			capital = 390 
+			government = parliamentary_republic 
+		}
+		create_alliance = BRB
+		any_owned = { 
+			limit = { is_core = BRG NOT = { OR = { is_core = HLR is_core = BRB is_core = LRR is_core = BOG region = FRA_399 is_colonial = yes } } }
+			add_core = FLA 
+			secede_province = FLA 
+		}
+		create_vassal = FLA
+		FLA = { 
+			capital = 392 
+			government = parliamentary_republic 
+		}
+		create_alliance = FLA
+		#Add Stuff about colonies 
+		VOC = { country_event = 410051 }
+		any_owned = { limit = { province_id = 1651 } secede_province = JAP } 
+		any_owned = { limit = { is_core = LWE } secede_province = LWE } 
+		any_owned = { limit = { OR = { province_id = 1318 province_id = 3273 } } secede_province = DUA } 
+		any_owned = { limit = { NOT = { OR = { is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				vassal_of = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+		badboy = 24
+	}
+	
+	option = { 
+		name = "HRE33.E" #Integrate all Germanics and release a big FLA/LRR puppet
+		set_country_flag = victory_over_BRG
+		inherit = BRG
+		RHI = { all_core = { add_core = HLR } } 
+		NET = { all_core = { add_core = HLR } } 
+		VOC = { country_event = 410051 }
+		any_owned = { 
+			limit = { is_core = BRG NOT = { OR = { is_core = HLR is_core = BRB is_core = BOG is_core = RHI is_colonial = yes } } }
+			add_core = FLA 
+			secede_province = FLA 
+		}
+		any_owned = { 
+			limit = { is_core = FLA }
+			secede_province = FLA 
+		}
+		FLA = { 
+			capital = 392 
+			government = parliamentary_republic 
+		}
+		create_vassal = FLA 
+		create_alliance = FLA
+		#Add Stuff about colonies 
+		any_owned = { limit = { province_id = 1651 } secede_province = JAP } 
+		any_owned = { limit = { is_core = LWE } secede_province = LWE } 
+		any_owned = { limit = { OR = { province_id = 1318 province_id = 3273 } } secede_province = DUA } 
+		any_owned = { limit = { NOT = { OR = { is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
+		random_country = {
+			limit = {
+				NOT = { has_country_modifier = neutrality }
+				vassal_of = THIS
+				war = no
+			}
+			THIS = {
+				war = {
+					attacker_goal = {
+						casus_belli = call_allies_cb
+					}
+					call_ally = yes
+				}
+			}
+		}
+		badboy = 40
 	}
 }
 
+
 country_event = { 
+
+	id = 410034	#Victory over Burgundy - HLR propps the Parliamentarians and takes the Rhineland
+	title = "HRE34.T"
+	desc = "HRE34.D"
 	
-	id = 410035 ###Emperor angry with the negotiators 
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "HRE34.A"
+		any_owned = { 
+			limit = { 
+				is_core = RHI 
+			}
+			remove_core = BRG 
+			add_core = HLR
+			secede_province = HLR 
+		}
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = JEAN_ABD_CLEAR
+		clr_country_flag = WLL_PAR_BRG
+		clr_country_flag = WLL_LOY_BRG
+		clr_country_flag = LUX_PAR_BRG
+		clr_country_flag = LUX_LOY_BRG
+		clr_country_flag = BRB_PAR_BRG
+		clr_country_flag = BRB_LOY_BRG
+		clr_country_flag = FLA_PAR_BRG
+		clr_country_flag = FLA_LOY_BRG
+		clr_country_flag = PIC_PAR_BRG
+		clr_country_flag = PIC_LOY_BRG
+		clr_country_flag = RHI_PAR_BRG
+		clr_country_flag = RHI_LOY_BRG
+		clr_country_flag = RHI_INDIE_BRG
+		clr_global_flag = THE_BRG_CRISIS
+		clr_country_flag = JEAN_DECISIONS_ENABLED	
+		set_global_flag = JEAN_ENDING
+		set_global_flag = BCW_AVOIDED
+		government = parliamentary_republic
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = no_draft
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		set_country_flag = constitutional_monarchy_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		set_country_flag = market_liberal_election_win
+		clr_country_flag = paternal_election_win	
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = paternal_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		set_country_flag = market_liberal_party_in_power	
+		BRG = { all_core = { add_core = PBG } }
+		PBG = { all_core = { remove_core = BRG } }
+		change_tag = PBG
+	}
+}
+
+
+country_event = { 
+
+	id = 410035	#Victory over Burgundy - HLR propps the Parliamentarians and takes the Rhineland + Netherlands
 	title = "HRE35.T"
 	desc = "HRE35.D"
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "HRE35.A"
+		any_owned = { 
+			limit = { 
+				is_core = RHI 
+			}
+			remove_core = BRG 
+			add_core = HLR
+			secede_province = HLR 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NET
+				NOT = { is_core = BRB } 
+			}
+			remove_core = BRG 
+			add_core = HLR
+			secede_province = HLR 
+		}
+		clr_country_flag = custom_treaty_loser
+		clr_country_flag = JEAN_ABD_CLEAR
+		clr_country_flag = WLL_PAR_BRG
+		clr_country_flag = WLL_LOY_BRG
+		clr_country_flag = LUX_PAR_BRG
+		clr_country_flag = LUX_LOY_BRG
+		clr_country_flag = BRB_PAR_BRG
+		clr_country_flag = BRB_LOY_BRG
+		clr_country_flag = FLA_PAR_BRG
+		clr_country_flag = FLA_LOY_BRG
+		clr_country_flag = PIC_PAR_BRG
+		clr_country_flag = PIC_LOY_BRG
+		clr_country_flag = RHI_PAR_BRG
+		clr_country_flag = RHI_LOY_BRG
+		clr_country_flag = RHI_INDIE_BRG
+		clr_global_flag = THE_BRG_CRISIS
+		clr_country_flag = JEAN_DECISIONS_ENABLED	
+		set_global_flag = JEAN_ENDING
+		set_global_flag = BCW_AVOIDED
+		government = parliamentary_republic
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = no_draft
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		set_country_flag = constitutional_monarchy_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		set_country_flag = market_liberal_election_win
+		clr_country_flag = paternal_election_win	
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = paternal_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		set_country_flag = market_liberal_party_in_power	
+		BRG = { all_core = { add_core = PBG } }
+		PBG = { all_core = { remove_core = BRG } }
+		change_tag = PBG
+	}
+}
 
+country_event = { 
+
+	id = 410036	#The Scandinavian Peace with Honour
+	title = "HRE36.T"
+	desc = "HRE36.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "HRE36.A"
+		end_war = FROM 
+		prestige = -5 
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "HRE36.B"
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410037	#The End of the Imperial Republic - Sigismund is alive
+	title = "HRE36.T"
+	desc = "HRE36.D"
+	
 	trigger = { 
 	tag = HLR 
-	has_country_flag = negotiations
+	has_global_flag = COALITION_WAR 
+	has_country_flag = custom_treaty_loser
+	OR = { BOH = { exists = yes } NOT = { has_global_flag = sigismund_executed } }
 	}
 	
 	mean_time_to_happen = { 
-	months = 12 
-	}
-	
-	option = { 
-	name = "410035.A"
-	clr_country_flag = negotiations 
-	set_country_flag = unification
-	SGF = { country_event = 410036 }
-	NGF = { country_event = 410038 }
-	CFR = { country_event = 410040 }
-	}
-}
-
-country_event = { 
-
-	id = 410036 
-	title = "410036.T"
-	desc = "410036.D"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "410036.A"
-	FROM = { country_event = 410037 }
-	}
-	
-}
-
-country_event = { 
-	id = 410037
-	title = "HRE37.T"
-	desc = "HRE37.D"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "410037.A"
-	release_vassal = FROM
-	casus_belli = {
-				target = SGF
-				type = conquest
-				months = 60
-			}
-	war = {
-			target = SGF 
-			attacker_goal = {
-				casus_belli = conquest
-				}
-			}
+		days = 3 
 		}
-}	
-
-country_event = { 
-
-	id = 410038 
-	title = "410038.T"
-	desc = "410038.D"
-	
-	is_triggered_only = yes 
 	
 	option = { 
-	name = "410038.A"
-	FROM = { country_event = 410039 }
+		name = "HRE36.A"
+		clr_global_flag = COALITION8WAR
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		any_country = { 
+			limit = { war_with = HLR } 
+			end_war = HLR 
+			}
+		prestige_factor = -0.90 
+		#Cede all Burgundian territories to Burgundy 
+		any_owned = { 
+		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
+			remove_core = THIS 
+			secede_province = SCA
+			}
+		any_country = { 
+			limit = { tag = BOH exists = yes } 
+			inherit = THIS
+			}
+		government = absolute_monarchy
+		capital = 625
+		ai_chance = { 
+			factor = 100 
+		}
 	}
-	
 }
 
 country_event = { 
-	id = 410039
+
+	id = 410038	#The End of the Imperial Republic - Sigismund is dead
+	title = "HRE36.T"
+	desc = "HRE36.D"
+	
+	trigger = { 
+	tag = HLR 
+	has_global_flag = COALITION_WAR 
+	has_country_flag = custom_treaty_loser
+	OR = { BOH = { exists = yes } NOT = { has_global_flag = sigismund_executed } }
+		}
+	
+	mean_time_to_happen = { 
+		days = 3 
+		}
+	
+	option = { 
+		name = "HRE36.A"
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		any_country = { 
+			limit = { war_with = HLR } 
+			end_war = HLR 
+			}
+		prestige_factor = -0.90 
+		#Cede all Burgundian territories to Burgundy 
+		any_owned = { 
+		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
+			remove_core = THIS 
+			secede_province = SCA
+			}
+		inherit = BOH #in case of Vendée situation
+		government = absolute_monarchy
+		capital = 625
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+
+}
+
+country_event = { 
+
+	id = 410039	#Fleeing Paris
 	title = "HRE39.T"
 	desc = "HRE39.D"
 	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "410039.A"
-	release_vassal = FROM
-	casus_belli = {
-				target = NGF
-				type = conquest
-				months = 60
-			}
-	war = {
-			target = NGF  
-			attacker_goal = {
-				casus_belli = conquest
-				}
-			}
-		}
-}	
-
-country_event = { 
-
-	id = 410040
-	title = "410040.T"
-	desc = "410040.D"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "410040.A"
-	FROM = { country_event = 410041 }
+	trigger = { 
+	tag = DUA 
+	capital = 425
+	any_owned_province = { AND = { is_core = FRA controlled_by = HLR } }
+	has_global_flag = COALITION_WAR
+	NOT = { has_country_flag = abandoned_Paris } 
 	}
 	
+	option = { 
+	name = "HRE39.A"
+	capital = 300 
+	set_country_flag = abandoned_Paris
+	prestige = -25 
+	any_pop = { 
+		limit = { culture = french } 
+		militancy = 1 
+		}
+	}
 }
 
 country_event = { 
-	id = 410041
+
+	id = 410040	#Coming back to Paris
+	title = "HRE40.T"
+	desc = "HRE40.D"
+	
+	trigger = { 
+	tag = DUA 
+	has_global_flag = COALITION_WAR
+	has_country_flag = abandoned_Paris
+	war = no 
+	owns = 425 
+	}
+	
+	option = { 
+	name = "HRE39.A"
+	capital = 425 
+	clr_country_flag = abandoned_Paris
+	prestige = -25 
+	any_pop = { 
+		limit = { culture = french } 
+		militancy = 1 
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410041	#Peace of Amiens
 	title = "HRE41.T"
 	desc = "HRE41.D"
 	
 	is_triggered_only = yes 
 	
 	option = { 
-	name = "410041.A"
-	release_vassal = FROM
-	casus_belli = {
-				target = CFR
-				type = conquest
-				months = 60
-			}
-	war = {
-			target = CFR   
-			attacker_goal = {
-				casus_belli = conquest
-				}
-			}
-		}
-}
-
-country_event = { 
-
-	id = 410042 #SGF mixed 3/3
-	title = "HRE25.T"
-	desc = "HRE25.D"
-	
-	is_triggered_only = yes
-	
-	option = { 
-	name = "410042.A"
-	HLR = {
-			create_vassal = SGF
-				}
-	}
-}
-
-country_event = { 
-
-	id = 410043 #Elbe mixed 3/3
-	title = "HRE43.T"
-	desc = "HRE43.D"
-	
-	is_triggered_only = yes
-	
-	option = { 
-	name = "410043.A"
-	HLR = {
-			create_vassal = NGF
-				}
-	}
-}
-
-
-####################### Bohemian Nationalism ##################### 
-
-country_event = { 
-	id = 410050
-	title = "HRE50.T"
-	desc = "HRE50.D"
-	picture = "Bohemian_Nationalism"
-
-	trigger = { 
-	tag = HLR 
-	has_country_flag = frankfurt_unify 
-	NOT = { BOH = { exists = yes } }
-	NOT = { has_country_flag = Czechia }
-	NOT = { has_country_flag = civil_war_happened }
-	}
-	
-	mean_time_to_happen = { 
-	months = 24 
-	}
-	
-	option = { 
-	name = "410050.A"
-	set_country_flag = Czechia 
-	}
-	
-	
-}
-
-country_event = { 
-	id = 410051
-	title = "HRE51.T"
-	desc = "HRE51.D"
-	picture = "Barricades_BOH"
-
-	trigger = { 
-	tag = HLR 
-	NOT = { BOH = { exists = yes } }
-	has_country_flag = Czechia
-	NOT = { has_global_flag = BOH_civil_war }
-	NOT = { has_global_flag = BOH_civil_war_ended }
-	}
-
-	mean_time_to_happen = { 
-	months = 36 
-	}
-	
-	option = { 
-	name = "410051.A"
-	set_global_flag = Prague_waiting
-	any_pop = {
-			limit = {
-				culture = czech
-				location = {
-					is_core = BOH
-				}
-			}
-			militancy = 1
-			consciousness  = 2
-		}
-	any_owned = {
+		name = "HRE41.A" 
+		HLR = { country_event = 410042 }
+		any_owned = { 
 			limit = { 
-				is_core = BOH  
+				OR = { is_core = FRA is_core = OCC is_core = BRT } 
 			}
-			add_province_modifier = {
-				name = nationalist_agitation
-				duration = 3650
-			}
+			secede_province = FROM 
+		} 
+		prestige_factor = -0.25 
+		any_pop = { 
+			militancy = 2 
 		}
 	}
 }
+
+country_event = { 
+
+	id = 410042	#Peace of Amiens -HLR event
+	title = "HRE42.T"
+	desc = "HRE42.D"
+	
+    is_triggered_only = yes 
+	option = { 
+	name = "HRE42.A" #One big French Republic 
+	any_owned = { 
+			limit = { 
+				OR = { is_core = FRA is_core = OCC is_core = BRT is_core = BOG region = FRA_399 } 
+			}
+			secede_province = FRA 
+		} 
+	diplomatic_influence = { who = FRA value = 400 }
+	relation = { who = FRA value = 200 } 
+	FRA = { 
+		capital = 425
+		OCC = { all_core = { add_core = THIS } }
+		add_accepted_culture = provencal 
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	}
+	
+	option = { 
+	name = "HRE42.B" #France and Occitanian Republics
+	any_owned = { 
+			limit = { 
+				OR = { is_core = FRA is_core = BRT is_core = BOG region = FRA_399 } 
+			}
+			secede_province = FRA 
+		} 
+	diplomatic_influence = { who = FRA value = 400 }
+	relation = { who = FRA value = 200 } 
+	FRA = { 
+		capital = 425
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	any_owned = { 
+			limit = { 
+				is_core = OCC 
+			}
+			secede_province = OCC 
+		} 
+	diplomatic_influence = { who = OCC value = 400 }
+	relation = { who = OCC value = 200 } 
+	OCC = { 
+		capital = 455
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	}
+	
+	option = { 
+	name = "HRE42.C" #Bretons as well
+	BRT = { 
+		capital = 424
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	any_owned = { 
+			limit = { 
+				OR = { is_core = FRA is_core = BOG region = FRA_399 } 
+			}
+			secede_province = FRA 
+		} 
+	diplomatic_influence = { who = FRA value = 400 }
+	relation = { who = FRA value = 200 } 
+	FRA = { 
+		capital = 425
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	any_owned = { 
+			limit = { 
+				is_core = OCC 
+			}
+			secede_province = OCC 
+		} 
+	diplomatic_influence = { who = OCC value = 400 }
+	relation = { who = OCC value = 200 } 
+	OCC = { 
+		capital = 455
+		government = parliamentary_republic 
+		ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = universal_voting
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = proportional_representation
+		political_reform = secret_ballots
+		political_reform = unitary
+		political_reform = mandatory_service
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = election_started
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800053
+		add_country_modifier = { 
+			name = growing_unrest 
+			duration = 1825 
+			}
+		}
+	any_owned = { 
+			limit = { 
+				is_core = BRT 
+			}
+			secede_province = BRT 
+		} 
+	diplomatic_influence = { who = BRT value = 400 }
+	relation = { who = BRT value = 200 } 
+	}
+}
+	
 	
 country_event = { 
-	id = 410054
-	title = "HRE54.T"
-	desc = "HRE54.D"
-
-	major = yes 
+	id = 410043 #Problems in Bohemia and Silesia with the new Republic 
+	title = "HRE43.T"
+	desc = "HRE43.D" 
 	
 	trigger = { 
 	tag = HLR 
-	NOT = { BOH = { exists = yes } }
-	has_global_flag = Prague_waiting
-	NOT = { has_global_flag = BOH_civil_war }
-	NOT = { has_global_flag = BOH_civil_war_ended }
+	has_global_flag = sigismund_executed
+	has_global_flag = COALITION_WAR
+	BOH = { exists = no } 
+	war_exhaustion = 25 
+	NOT = { has_country_flag = Bohemian_problems } 
 	}
-
+	
 	mean_time_to_happen = { 
-	months = 36 
-	}	
+		months = 3
+		modifier = { 
+			factor = 0.01 
+			war_exhaustion = 40 
+		}
+	}
 	
 	option = { 
-	name = "410054.A"
-	set_country_flag = civil_war_happened 
-	clr_global_flag = Prague_waiting 
-	set_global_flag = BOH_civil_war 
+	name = "HRE43.A"
+	set_country_flag = Bohemian_problems 
 	any_owned = { 
-	limit = { 
-	region = AUS_625 
+		limit = { is_core = BOH NOT = { is_core = GER } }
+		add_province_modifier = { 
+			name = nationalist_agitation 
+			duration = 3650 
+			}
+		any_pop = { 
+			ideology = { factor = -0.1 value = anarcho_liberal } 
+			ideology = { factor = 0.1 value = reactionary } 
+			militancy = 2 
+			}
 		}
-	secede_province = BOH 
-	}
-	any_owned = { 
-	limit = { 
-	region = PRU_682
-		}
-	secede_province = BOH 
-	}
-	any_owned = { 
-	limit = { 
-	region = AUS_626
-		}
-	secede_province = BOH 
-	}
-	random_list = { 
-	50 = { any_owned = { limit = { region = SAX_558 } secede_province = BOH	 }	}
-	50 = { any_pop = { militancy = 1 } }	
-	}
-	any_country = {
-	limit = {
-	tag = SLV
-	exists = SLV
-	vassal_of = HLR
-	}
-	HLR = { 
-	release_vassal = SLV 
-	leave_alliance = SLV
-    relation = {
-	who = SLV
-	value = -400
-	}
-    diplomatic_influence = {
-	who = SLV
-	value = -400
-	          } 
-	     }
-	}
-	any_country = {
-	limit = {
-	tag = GLM
-	exists = GLM
-	vassal_of = HLR
-	}
-	HLR = { 
-	release_vassal = GLM
-	leave_alliance = GLM
-    relation = {
-	who = GLM
-	value = -400
-	}
-    diplomatic_influence = {
-	who = GLM
-	value = -400
-	          } 
-	     }
-	}
-	any_pop = {
-			limit = {
-			has_pop_culture = south_german
-			}
-			ideology = { factor = -0.40 value = conservative }
-			ideology = { factor = -0.40 value = market_liberal }
-			ideology = { factor = 0.40 value = separatist } 
-	}
-	any_pop = {
-			scaled_militancy = {
-				ideology = separatist
-				factor = 8
-			}
-			scaled_consciousness = {
-				ideology = separatist
-				factor = 8
-			}
-	}
-	BOH = {
-	any_owned = { remove_core = HLR }
-	treasury = 100000
-	ammunition = 10000
-	small_arms = 10000
-	artillery = 10000
-	canned_food = 10000
-	regular_clothes = 10000
-	add_country_modifier = {
-				name = neutrality
-				duration = -1
-			}
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 1000
-			}
-    add_country_modifier = {
-	            name = preparing_for_war 
-				duration = 1000
-		    }
-    set_country_flag = holding_war_BOH
-	country_event = { id = 410057 days = 70 }
-	     }
 	}
 }
 
-country_event = {
-
-	id = 410055
-	title = "HRE55.T"
-	desc = "HRE55.D"
-	picture = "Outsidepowers_BOH"
+country_event = { 
+	id = 410044 #Riots against the draft and the agricultural relief
+	title = "HRE44.T"
+	desc = "HRE44.D" 
 	
 	trigger = { 
-	has_global_flag = BOH_civil_war 
-	NOT = { has_global_flag = BOH_civil_war_ended }
-	NOT = { has_country_flag = BOH_intervention }
-	NOT = { is_vassal = yes }
-	NOT = { is_substate = yes }
-	NOT = { tag = BOH }
-	any_neighbor_country = { tag = HLR }
+		tag = HLR 
+		has_country_flag = Bohemian_problems
+		war_exhaustion = 60
+		NOT = { has_country_flag = Bohemian_Brigands } 
 	}
 	
 	mean_time_to_happen = { 
-	days = 1 
+		months = 2
+		modifier = { 
+			factor = 0.01 
+			war_exhaustion = 65
+		}
 	}
 	
 	option = { 
-	name = "HRE55.A"
-    add_country_modifier = {
-	            name = preparing_for_war 
-				duration = 720
-    }
-	add_country_modifier = {
-				name = taiping_draft
-				duration = 720
+		name = "HRE44.A"
+		set_country_flag = Bohemian_Brigands
+		any_owned = { 
+			limit = { is_core = BOH NOT = { is_core = GER } }
+			any_pop = { 
+				limit = { pop_type = farmers } 
+				ideology = { factor = 0.1 value = reactionary } 
 			}
-	HLR = { 
-    relation = {
-	who = THIS
-	value = -400
-	}	
-    diplomatic_influence = {
-	who = THIS
-	value = -400
-	     }
-    }
-	leave_alliance = HLR	
-	set_country_flag = BOH_intervention
-	casus_belli = {
-			target = HLR
-			type = cut_down_to_size
-			months = 60
+			any_pop = { 
+				limit = { pop_type = aristocrats } 
+				ideology = { factor = 0.1 value = reactionary } 
+			}
+			any_pop = { 
+				limit = { culture = old_czech } 
+				ideology = { factor = 0.1 value = reactionary } 
+			}
+			any_pop = { 
+				scaled_militancy = { 
+					ideology = reactionary 
+					factor = 8 
+					}
+				scaled_militancy = { 
+					ideology = conservative 
+					factor = 4 
+				}
+			}
+		}
 	}
-	war = {
-			target = HLR 
+}
+
+
+country_event = { 
+	id = 410045 #The Christian and Imperial Army 
+	title = "HRE45.T"
+	desc = "HRE45.D" 
+	
+	trigger = { 
+		tag = HLR 
+		any_owned_province = { AND = { is_core = BOH controlled_by = REB } }
+		has_country_flag = Bohemian_Brigands
+		NOT = { has_country_flag = Bohemian_revolt } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		months = 1  
+		modifier = { 
+			factor = 0.1 
+			war_exhaustion = 75
+		}
+		modifier = { 
+			factor = 0.01 
+			HLR = { national_provinces_occupied = 0.1 }
+		}
+	}
+	
+	option = { 
+		name = "HRE45.A"
+		set_country_flag = Bohemian_revolt
+		any_owned = { 
+			limit = { is_core = BOH NOT = { is_core = GER is_core = SIL } }
+			secede_province = BOH 
+			}
+		BOH = { 
+			capital = 625 
+			government = theocracy 
+			add_country_modifier = { 
+				name = small_country_draft
+				duration = 365
+				}
+			}	
+		war = {
+			target = BOH
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = conquest_any
 			}
 			defender_goal = {
-				casus_belli = war_reparations
-			}
-	}
-	 ai_chance = {  
-			factor = 100
-		}
-	}
-	
-	option = { 
-	name = "HRE55.B"
-	set_country_flag = BOH_intervention
-	ai_chance = {  
-			factor = 0
-		}
-	}
-}
-
-country_event = { 
-
-	id = 410056
-	title = "HRE56.T"
-	desc = "HRE56.D"
-	
-	trigger = { 
-	tag = BOH 
-	has_global_flag = BOH_civil_war
-	war = no 
-	NOT = { has_country_flag = holding_war_BOH }
-    }
-		
-	mean_time_to_happen = { 
-	days = 1 
-	}	
-	
-	option = { 
-	name = "410056.A"
-	clr_global_flag = BOH_civil_war
-	set_global_flag = BOH_civil_war_ended
-	any_owned = { remove_core = HLR }
-	prestige = 50 
-	HLR = { country_event = 410058 }
-	country_event = 410060
-	}	
-}
-
-country_event = { 
-	id = 410057
-	title = "HRE57.T"
-	desc = "HRE57.D"
-	picture = "BOH_mob"
-
-	is_triggered_only = yes
-	
-	option = {
-	name = "410057.A"
-	clr_country_flag = holding_war_BOH
-	remove_country_modifier = neutrality
-	BOH = { all_core = { add_core = HLR } }
-	war = {
-			target = HLR 
-			attacker_goal = {
 				casus_belli = status_quo
 			}
-			defender_goal = {
-				casus_belli = annex_core_country
-			}
 		}
 	}
 }
-	
-country_event = { 
-	id = 410058
-	title = "HRE58.T"
-	desc = "HRE58.D"
-
-	is_triggered_only = yes
-	
-	option = {
-	name = "410058.A"
-	remove_accepted_culture = czech 
-	prestige = -40
-	}
-}
 
 country_event = { 
-
-	id = 410059
-	title = "HRE59.T"
-	desc = "HRE59.D"
+	id = 410046 #The end of the Coalition War -glorious victory
+	title = "HRE46.T"
+	desc = "HRE46.D" 
 	
 	trigger = { 
-	tag = HLR 
-	NOT = { BOH = { has_country_flag = holding_war_BOH } }
-	has_global_flag = BOH_civil_war
-	owns = 625
-	war = no 
+		tag = HLR 
+		has_global_flag = COALITION_WAR
+		war = no 
+		owns = 625
+		FRA = { exists = yes government = parliamentary_republic } 
+		has_country_flag = victory_over_BRG 
 	}
-		
+	
 	mean_time_to_happen = { 
-	days = 1 
-	}	
+		days = 5 
+	}
 	
 	option = { 
-	name = "410059.A"
-	prestige = 50 
-	clr_global_flag = BOH_civil_war
-	set_global_flag = BOH_civil_war_ended
+		name = "HRE46.A"
+		prestige = 75 
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		clr_global_flag = COALITION_WAR 
+		set_country_flag = aftermath_Coalition
+	}
+}
+
+
+country_event = { 
+	id = 410047 #The end of the Coalition War - victory nonetheless
+	title = "HRE47.T"
+	desc = "HRE47.D" 
+	
+	trigger = { 
+		tag = HLR 
+		has_global_flag = COALITION_WAR
+		war = no 
+		owns = 625
+		NOT = { FRA = { exists = yes government = parliamentary_republic } }
+		has_country_flag = victory_over_BRG 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "HRE47.A"
+		prestige = 25
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		clr_global_flag = COALITION_WAR 
+		set_country_flag = aftermath_Coalition
 	}
 }
 
 country_event = { 
-	id = 410060
-	title = "HRE60.T"
-	desc = "HRE60.D"
-
-	is_triggered_only = yes
+	id = 410048 #The end of the Coalition War - The Republic lives on
+	title = "HRE48.T"
+	desc = "HRE48.D" 
 	
-	option = {
-	name = "410060.A"
-				government = democracy
-				political_reform = state_equal_weight
-				political_reform = wealth_voting
-				political_reform = yes_meeting
-				political_reform = free_press
-				political_reform = all_trade_unions
-				political_reform = first_past_the_post
-				political_reform = gerrymandering
-                country_event = 800054
-			ai_chance = {  
-			factor = 50 }
-		}
+	trigger = { 
+		tag = HLR 
+		has_global_flag = COALITION_WAR
+		war = no 
+		owns = 625
+		NOT = { FRA = { exists = yes government = parliamentary_republic } }
+		NOT = { has_country_flag = victory_over_BRG } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
 	option = { 
-	name = "410060.B"
-				government = prussian_constitutionalism
-				political_reform = appointed
-				political_reform = wealth_voting
-				political_reform = yes_meeting
-				political_reform = free_press
-				political_reform = no_trade_unions
-				political_reform = first_past_the_post
-				political_reform = non_secret_ballots
-				country_event = 800050
-		ai_chance = {  
-			factor = 50 }
-		}
+		name = "HRE48.A"
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		clr_global_flag = COALITION_WAR 
+		set_country_flag = aftermath_Coalition
+	}
 }
 
 country_event = { 
-	id = 410070
-	title = "BOHR.T"
-	desc = "BOHR.D"
-	picture = "rhapsody"
+	id = 410049 #The end of the Coalition War - The Republic lives on but without Bohemia
+	title = "HRE49.T"
+	desc = "HRE49.D" 
 	
 	trigger = { 
-	OR = { tag = HLR tag = BOH}
-	owns = 625 
-	romanticism = 1 
+		tag = HLR 
+		has_global_flag = COALITION_WAR
+		war = no 
+		NOT = { owns = 625 }
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "HRE49.A"
+		prestige = -25 
+		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
+		clr_global_flag = COALITION_WAR 
+		set_country_flag = aftermath_Coalition
+	}
+}
+
+country_event = { 
+	id = 410050 #Revolutionary trials
+	title = "HRE50.T"
+	desc = "HRE50.D" 
+	
+	trigger = { 
+		tag = HLR 
+		has_global_flag = COALITION_WAR
+		NOT = { has_country_flag = revolutionary_trials } 
 	}
 	
 	fire_only_once = yes 
 	
 	option = { 
-	name = "410070.A"
-	prestige = 2
+		name = "HRE50.A"
+		set_country_flag = revolutionary_trials
+		any_pop = { 
+			consciousness = 3
+			ideology = {
+				   value = anarcho_liberal
+				   factor = 0.01
+				}
+			scaled_militancy = { 
+				ideology = anarcho_liberal
+				factor = -4
+				}
+			}
+		any_pop = { 
+			limit = { 
+				pop_majority_ideology = reactionary 
+				OR = { type = officers type = aristocrats type = capitalists } 
+				}
+			reduce_pop = 0.9 
+			militancy = -2 
+			consciousness = 5
+		}
+	}
+}
+
+country_event = {
+		
+	id = 410051 # Annexation of Burgundy releases the VOC 
+
+	is_triggered_only = yes
+
+	title = "333270.T"
+	desc = "333270.D"
+	picture = "jeanaddress"
+
+	immediate = {
+		set_global_flag = VOC_TROUBLES
+		any_country = {
+			limit = {
+			    tag = TNJ
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = BLG
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = YOG
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = BTM
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = PLM
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = GOW
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+		any_country = {
+			limit = {
+			    tag = BUT
+				vassal_of = BRG				
+			}
+			set_country_flag = VOC_vassal
+		}
+	}
+
+	option = {
+		name = "333270.A"
+		government = presidential_dictatorship
+	    political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = no_trade_unions
+		political_reform = first_past_the_post
+		political_reform = underground_parties
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = democracy_gov
+		BRG = { 
+		  diplomatic_influence = { who = VOC value = -400 } 
+		  release_vassal = THIS
+		  release_vassal = TNJ
+		  release_vassal = BLG
+		  release_vassal = YOG
+		  release_vassal = BTM
+		  release_vassal = PLM
+		  release_vassal = GOW
+		  release_vassal = BUT
+		}
+		leave_alliance = BRG
+		remove_country_modifier = voc_balance
+		civilized = yes	
+        research_points = 10000
+		any_pop = { limit = { is_primary_culture = no } militancy = 1 }					
+		any_country = {
+		   limit = {
+		      has_country_flag = VOC_vassal
+			  exists = yes
+			}
+			country_event = { id = 333297 days = 2 }
+		}
+		country_event = {
+			id = 333271
+			days = 20
+		}
+	}
+}
+#Events
+
+country_event = { 
+
+	id = 410052 		#The princely patchwork
+	title = "HRE52.T"
+	desc = "HRE52.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HRE52.A" 
+	country_event = { id = 410053 days = 2 }
+	GER = { all_core = { add_core = THIS } }
+	HOL = { all_core = { remove_core = THIS } }
+	571 = { remove_core = THIS } 
+	573 = { remove_core = THIS } 
+	572 = { remove_core = THIS } 
+	576 = { remove_core = THIS } 
+	government = absolute_monarchy
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	set_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 10
+	    }
+	any_country = {
+	    limit = {
+		   is_culture_group = germanic	
+		   vassal_of = THIS 
+		   in_sphere = THIS 
+		   NOT = { tag = THIS }
+		}
+		add_country_modifier = { 
+			name = neutrality 
+			duration = -1 
+		}
+	}
+	add_country_modifier = { 
+		name = disorganized_eco_HRE 
+		duration = -1 
+		}
+	add_country_modifier = { 
+		name = Reichsarmee_HRE 
+		duration = -1 
+		}
+	add_country_modifier = { 
+		name = Not_Roman_nor_German_HRE 
+		duration = -1 
+		}
+    }
+}
+
+
+country_event = { 
+
+	id = 410053 		#The Imperial Capital
+	title = "HRE53.T"
+	desc = "HRE53.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "HRE53.A" #Prague
+	capital = 625
+	change_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 1
+	    }
+    }
+	
+	option = { 
+	name = "HRE53.B" #Nuremberg
+	3341 = { secede_province = THIS } 
+	capital = 3341
+    }
+	
+	option = { 
+	name = "HRE53.C" #Regensburg
+	602 = { secede_province = THIS } 
+	capital = 602
+    }
+
+}
+
+country_event = { 
+
+	id = 410054 		#The Norf annexed
+	title = "HRE54.T"
+	desc = "HRE54.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE54.A" # Don't rock the boat
+		any_owned = { 
+			limit = { is_core = THU }
+			add_province_modifier = { name = Strong_Princes duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = FRW is_core = OSN } }
+			add_province_modifier = { name = Strong_Clergy duration = -1 } 
+			}
+		any_owned = { 
+			limit = { is_core = BRE }
+			add_province_modifier = { name = Old_Liberties duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = HEK is_core = HSK } }
+			add_province_modifier = { name = Wasted_North duration = -1 } 
+		}
+	}
+	
+	option = { 
+		name = "HRE54.B" #Force integration
+		prestige = 2 
+		set_country_flag = angered_North_HLR
+		change_variable = {
+			which = GERMAN_REVOLUTION
+			value = 2
+		}
 	}
 }
 
 country_event = { 
-	id = 410071
-	title = "HRE71.T"
-	desc = "HRE71.D"
+
+	id = 410055		#The Rhine annexed
+	title = "HRE55.T"
+	desc = "HRE55.D"
+
+	is_triggered_only = yes
 	
-	major = yes 
-	
-	trigger = { 
-	tag = HLR 
-	year = 1900 
-	owns = 576 
-	NOT = { year = 1901 }
-	}
-	
-	mean_time_to_happen = { 
-	months = 8 
+	option = { 
+		name = "HRE55.A" # Don't rock the boat
+		any_owned = { 
+			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = ELX } }
+			add_province_modifier = { name = Woes_of_Industry duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = HEK is_core = HSK } }
+			add_province_modifier = { name = Wasted_North duration = -1 } 
+		}
 	}
 	
 	option = { 
-	name = "410071.A"
+		name = "HRE55.B" #Force integration
+		prestige = 10 
+		set_country_flag = angered_Rhine_HLR
+		change_variable = {
+			which = GERMAN_REVOLUTION
+			value = 2
+		}
 	}
+}
+
+country_event = { 
+
+	id = 410056		#The South annexed
+	title = "HRE56.T"
+	desc = "HRE56.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE56.A" # Don't rock the boat
+		any_owned = { 
+			limit = { OR = { is_core = AUS is_core = ASB is_core = FRE is_core = BAV } NOT = { OR = { is_core = SAL is_core = ULM is_capital = yes }  } }
+			add_province_modifier = { name = Strong_Princes duration = -1 } 
+				}
+		any_owned = { 
+			limit = { OR = { is_core = FRW is_core = SAL } }
+			add_province_modifier = { name = Strong_Clergy duration = -1 } 
+				}
+		any_owned = { 
+			limit = { is_core = ULM }
+			add_province_modifier = { name = Old_Liberties duration = -1 } 
+			}
+	}
+	
+	option = { 
+		name = "HRE56.B" #Force integration
+		prestige = 10
+		set_country_flag = angered_South_HLR
+		change_variable = {
+			which = GERMAN_REVOLUTION
+			value = 2
+		}
+	}
+}
+
+country_event = { 
+
+	id = 410057	#Swabia annexed
+	title = "HRE57.T"
+	desc = "HRE57.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE57.A" # Don't rock the boat
+		any_owned = { 
+			limit = { OR = { is_core = BAD is_core = WUR } NOT = { is_core = ULM } }
+				add_province_modifier = { name = Strong_Princes duration = -1 } 
+			}
+		any_owned = { 
+			limit = { is_core = BAE }
+				add_province_modifier = { name = Strong_Clergy duration = -1 } 
+			}
+		any_owned = { 
+			limit = { OR = { is_core = ULM is_core = SWI is_core = GRB is_core = FIO } }
+				add_province_modifier = { name = Old_Liberties duration = -1 } 
+			}
+	}
+	
+	option = { 
+		name = "HRE57.B" #Force integration
+		prestige = 5
+		set_country_flag = angered_Swabia_HLR
+		change_variable = {
+			which = GERMAN_REVOLUTION
+			value = 2
+		}
+	}
+}
+
+#Flavor event about Imperial Republic
+
+country_event = { 
+
+	id = 410058	##Flavor event about Jews in Imperial Republic 
+	title = "HRE58.T"
+	desc = "HRE58.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE58.A" 
+		add_accepted_culture = ashkenazi 
+		any_pop = { 
+			limit = { culture = ashkenazi }
+			militancy = -2 
+			ideology = {
+				   value = anarcho_liberal
+				   factor = 0.1
+				}
+		}
+		any_pop = { 
+			limit = { NOT = { culture = ashkenazi } }
+			scaled_militancy = { 
+				issue = residency
+				factor = 2
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 7752305 #Gilbert Braun
+    title = "HRE580.T"
+    desc = "HRE580.D"
+
+    trigger = {
+        OR = {
+            AND = {
+                tag = HLR
+                NOT = { 
+                    government = absolute_monarchy
+                    government = prussian_constitutionalism
+                    government = hms_government
+                    government = fascist_monarchy
+                }
+            }
+            AND = {
+                tag = GER 
+                NOT = { 
+                    government = absolute_monarchy
+                    government = prussian_constitutionalism
+                    government = hms_government
+                    government = fascist_monarchy
+                }
+            }
+            AND = {
+                tag = SCO 
+                is_vassal = no 
+                NOT = { 
+                    government = absolute_monarchy
+                    government = prussian_constitutionalism
+                    government = hms_government
+                    government = fascist_monarchy
+                }
+            }
+        }
+        NOT = { has_country_flag = gilly_braun }
+    }
+
+    mean_time_to_happen = {
+        months = 6
+    }
+
+    option = {
+        name = "HRE580.A"
+        set_country_flag = gilly_braun
+        prestige = 2
+		any_pop = {
+           ideology = {
+               value = anarcho_liberal
+               factor = 0.05
+           }
+		}
+    }
+}
+
+country_event = { 
+
+	id = 410059	##Imperial Republic embassy
+	title = "HRE59.T"
+	desc = "HRE59.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE59.A"
+		FROM = { country_event = 410060 }
+		create_alliance = FROM 
+		relation = { who = FROM value = 200 } 
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+		name = "HRE59.B"
+		FROM = { country_event = 410061 }
+		relation = { who = FROM value = -50 } 
+	}
+}
+
+country_event = { 
+
+	id = 410060	##Imperial Republic embassy -success
+	title = "HRE60.T"
+	desc = "HRE60.D"
+
+	is_triggered_only = yes
+	
+	major = yes 
+	
+	option = { 
+		name = "HRE60.A"
+		prestige = 2 
+		relation = { who = FROM value = 100 } 
+	}
+}
+
+country_event = { 
+
+	id = 410061	##Imperial Republic embassy -failure
+	title = "HRE61.T"
+	desc = "HRE61.D"
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = "HRE61.A"
+		relation = { who = FROM value = -50 } 
+	}
+}
+
+#German Revolution Absolutist HRE
+
+country_event = { 
+	id = 410062	# German Revolution : you really rallied the whole of Germany against you, bravo
+	title = "HRE62.T"
+	desc = "HRE62.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		owns = 564
+		owns = 539
+		owns = 589
+		owns = 599
+		check_variable = { which = GERMAN_REVOLUTION value = 17 }
+		OR = { 
+			AND = { 
+				has_country_flag = angered_Swabia_HLR
+				has_country_flag = angered_North_HLR
+				has_country_flag = angered_South_HLR
+			}
+			AND = { 
+				has_country_flag = angered_Swabia_HLR
+				has_country_flag = angered_Rhine_HLR 
+				has_country_flag = angered_North_HLR
+			}
+			AND = { 
+				has_country_flag = angered_Swabia_HLR
+				has_country_flag = angered_Rhine_HLR  
+				has_country_flag = angered_North_HLR
+			}
+			AND = { 
+				has_country_flag = angered_Swabia_HLR
+				has_country_flag = angered_Rhine_HLR  
+				has_country_flag = angered_South_HLR
+			}
+			AND = { 
+				has_country_flag = angered_North_HLR
+				has_country_flag = angered_Rhine_HLR  
+				has_country_flag = angered_South_HLR
+			}
+		}
+		NOT = { has_country_flag = German_revolution } 
+		NOT = { has_country_flag = HRE_unified } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE62.A"
+		set_country_flag = German_revolution
+		capital = 625 
+		any_owned = { 
+			limit = { is_core = GER } 
+			secede_province = GER 
+		}
+		GER = { 
+			capital = 564
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		
+	}
+	
+	
+}
+
+
+country_event = { 
+	id = 410063	#German Revolution : Danubia and Swabia rise up
+	title = "HRE63.T"
+	desc = "HRE63.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		owns = 564
+		owns = 539
+		owns = 589
+		owns = 599
+		check_variable = { which = GERMAN_REVOLUTION value = 15 }
+		has_country_flag = angered_Swabia_HLR 
+		has_country_flag = angered_South_HLR
+		NOT = { has_country_flag = angered_Rhine_HLR has_country_flag = angered_North_HLR }
+		NOT = { has_country_flag = German_revolution } 
+		NOT = { has_country_flag = HRE_unified } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE63.A"
+		set_country_flag = German_revolution
+		capital = 625 
+		
+		any_owned = { 
+			limit = { OR = { is_core = BAD is_core = WUR is_core = ULM is_core = SWI is_core = GRB is_core = FIO is_core = FRW is_core = SAL is_core = AUS is_core = ASB is_core = FRE is_core = BAV } } 
+			secede_province = GER 
+		}
+		GER = { 
+			capital = 599
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = GER
+			}
+		}
+		
+	}
+	
+}
+
+country_event = { 
+	id = 410064	#German Revolution : The North and Rhine
+	title = "HRE64.T"
+	desc = "HRE64.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		owns = 564
+		owns = 539
+		owns = 589
+		owns = 599
+		check_variable = { which = GERMAN_REVOLUTION value = 15 }
+		has_country_flag = angered_North_HLR
+		has_country_flag = angered_Rhine_HLR
+		NOT = { has_country_flag = angered_South_HLR has_country_flag = angered_Swabia_HLR }
+		NOT = { has_country_flag = German_revolution } 
+		NOT = { has_country_flag = HRE_unified } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE64.A"
+		set_country_flag = German_revolution
+		capital = 625 
+		any_owned = { 
+			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = HEK is_core = HSK is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = THU is_core = OSN is_core = BRE } } 
+			secede_province = GER 
+		}
+		GER = { 
+			capital = 564
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = GER
+			}
+		}
+		
+	}
+	
+}
+
+country_event = { 
+	id = 410065	#German Revolution : The North and the South
+	title = "HRE65.T"
+	desc = "HRE65.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		owns = 564
+		owns = 539
+		owns = 589
+		owns = 599
+		check_variable = { which = GERMAN_REVOLUTION value = 15 }
+		has_country_flag = angered_North_HLR
+		has_country_flag = angered_South_HLR
+		NOT = { has_country_flag = angered_Rhine_HLR has_country_flag = angered_Swabia_HLR }
+		NOT = { has_country_flag = German_revolution } 
+		NOT = { has_country_flag = HRE_unified } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE62.A"
+		set_country_flag = German_revolution
+		capital = 625 
+		any_owned = { 
+			limit = { OR = { is_core = FRW is_core = SAL is_core = AUS is_core = ASB is_core = FRE is_core = BAV is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = THU is_core = OSN is_core = BRE } } 
+			secede_province = GER 
+		}
+		GER = { 
+			capital = 599
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = GER
+			}
+		}
+		
+	}
+	
+}
+
+country_event = { 
+	id = 4100650 #German Revolution : The whole Rhine
+	title = "HRE650.T"
+	desc = "HRE650.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		owns = 564
+		owns = 539
+		owns = 589
+		owns = 599
+		check_variable = { which = GERMAN_REVOLUTION value = 15 }
+		has_country_flag = angered_Rhine_HLR
+		has_country_flag = angered_Swabia_HLR
+		NOT = { has_country_flag = angered_North_HLR has_country_flag = angered_South_HLR }
+		NOT = { has_country_flag = German_revolution } 
+		NOT = { has_country_flag = HRE_unified } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE650.A"
+		set_country_flag = German_revolution
+		capital = 625 
+		any_owned = { 
+			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = HEK is_core = HSK is_core = BAD is_core = WUR is_core = ULM is_core = SWI is_core = GRB is_core = FIO } } 
+			secede_province = GER 
+		}
+		GER = { 
+			capital = 564
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = acquire_all_cores
+				country = GER
+			}
+		}
+		
+	}
+	
+}
+
+country_event = { 
+	id = 410066	#Variable increases -standard Republican
+	title = "HRE66.T"
+	desc = "HRE66.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		NOT = { has_country_flag = first_wave_german } 
+		NOT = { has_country_flag = German_revolution } 
+		year = 1860 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1862
+		}
+	}
+	
+	option = { 
+		name = "HRE66.A" 
+		set_country_flag = first_wave_german 
+		any_pop = { 
+			limit = { location = { is_core = GER } }
+			ideology = {
+				   value = anarcho_liberal 
+				   factor = 0.06
+			}
+			ideology = {
+				   value = liberal 
+				   factor = 0.04
+			}
+		}
+		change_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 2
+	    }
+	}
+}
+
+country_event = { 
+	id = 410067	#Variable increases -Communists exist
+	title = "HRE67.T"
+	desc = "HRE67.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_flag = first_wave_german
+		NOT = { has_country_flag = second_wave_german } 
+		is_ideology_enabled = communist 
+		NOT = { has_country_flag = German_revolution } 
+		
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1862
+		}
+	}
+	
+	option = { 
+		name = "HRE67.A" 
+		set_country_flag = second_wave_german 
+		any_pop = { 
+			limit = { location = { is_core = GER } }
+			ideology = {
+				   value = anarcho_liberal 
+				   factor = 0.04
+				}
+			ideology = {
+				   value = socialist 
+				   factor = 0.02
+				}
+			ideology = {
+				   value = communist 
+				   factor = 0.005
+			}
+		}
+		change_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 2
+	    }
+	}
+}
+
+country_event = { 
+	id = 410068	#Variable increases -Republican Socialist rally 
+	title = "HRE68.T"
+	desc = "HRE68.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto 
+		has_country_flag = second_wave_german
+		NOT = { has_country_flag = third_wave_german } 
+		year = 1885
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1887 
+		}
+	}
+	
+	option = { 
+		name = "HRE68.A" 
+		set_country_flag = third_wave_german 
+		any_pop = { 
+			limit = { location = { is_core = GER } }
+			ideology = {
+				   value = anarcho_liberal 
+				   factor = 0.02
+				}
+			ideology = {
+				   value = socialist 
+				   factor = 0.04
+				}
+			ideology = {
+				   value = communist 
+				   factor = 0.01
+			}
+		}
+		change_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 2
+	    }
+	}
+}
+
+country_event = { 
+	id = 410069	#Variable increases -Republican Socialist rally -that should make the Germans go Revolution really at that point
+	title = "HRE69.T"
+	desc = "HRE69.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto 
+		has_country_flag = fourth_wave_german
+		year = 1895
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1897 
+		}
+	}
+	
+	option = { 
+		name = "HRE69.A" 
+		set_country_flag = fourth_wave_german 
+		any_pop = { 
+			limit = { location = { is_core = GER } }
+			ideology = {
+				   value = communist
+				   factor = 0.05
+				}
+		}
+		change_variable = {
+		   which = GERMAN_REVOLUTION
+		   value = 2
+	    }
+	}
+}
+
+
+country_event = { 
+	id = 410070	#The last German revolution
+	title = "HRE70.T"
+	desc = "HRE70.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto 
+		check_variable = { which = GERMAN_REVOLUTION value = 20 }
+		has_country_flag = second_wave_german 
+		NOT = { has_country_flag = German_revolution } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1880 
+		}
+	}
+	
+	option = { 
+		name = "HRE70.A"
+		any_owned = { 
+			limit = { 
+				OR = { is_core = GER is_core = NET }
+			}
+			secede_province = GER
+		}
+		set_country_flag = German_revolution
+		capital = 625 	
+		GER = { 
+		capital = 564
+			government = socialist_republic  
+			ruling_party_ideology = socialist 
+			add_country_modifier = { 
+				name = taiping_draft 
+				duration = 720 
+			}
+		}
+		war = { 
+			target = GER 
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		
+	}
+}
+
+country_event = { 
+	id = 4100700	#The breakup of the Holy Roman Empire : you chose autocracy and didn't follow through, too bad
+	title = "HRE700.T"
+	desc = "HRE700.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		NOT = { 
+			OR = { 
+				government = absolute_monarchy 
+				government = prussian_constitutionalism
+				government = fascist_monarchy 
+			}
+		}
+		NOT = { has_country_flag = German_revolution } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE700.A"
+		capital = 625
+		set_country_flag = German_revolution 
+		any_owned = { 
+			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = HEK is_core = HSK is_core = NET } } 
+			add_core = CFR 
+			remove_core = THIS 
+			remove_core = BOH 
+			secede_province = CFR
+		}
+		CFR = { add_accepted_culture = dutch add_accepted_culture = frisian } 
+		any_owned = { 
+			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = THU is_core = OSN is_core = BRE is_core = ELX } }
+			add_core = NGF 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = NGF 
+		}
+		any_owned = { 
+			limit = { OR = { is_core = BAD is_core = WUR is_core = ULM is_core = SWI is_core = GRB is_core = FIO is_core = ELS  } }
+			add_core = SWA 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = SWA 
+		}
+		any_owned = { 
+			limit = { OR = { is_core = FRW is_core = SAL is_core = AUS is_core = ASB is_core = FRE is_core = BAV } }
+			add_core = SGF 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = SGF 
+		}
+		any_owned = { 
+			limit = { is_core = PRU }
+			add_core = PRU 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = PRU 
+		}
+		any_owned = { 
+			limit = { is_core = SIL }
+			add_core = SIL 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = SIL 
+		}
+		any_owned = { 
+			limit = { is_core = LST }
+			add_core = LST 
+			remove_core = THIS 
+			remove_core = BOH
+			secede_province = LST  
+		}
+		change_tag = BOH 
+		primary_culture = czech 
+	}
+	
+}
+	
+country_event = { 
+	id = 410071	#The Not!Okhrana sponsors "police syndicalism"
+	title = "HRE71.T"
+	desc = "HRE71.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_modifier = secret_police
+		has_country_flag = German_revolution
+		year = 1890
+		NOT = { has_country_flag = police_syndicalism } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE71.A"
+		set_country_flag = police_syndicalism
+		political_reform = state_controlled  
+		any_pop = { 
+			limit = { 
+				pop_type = craftsmen
+			}
+			ideology = {
+				   value = communist
+				   factor = -0.02
+				}
+			ideology = {
+				   value = socialist
+				   factor = -0.04
+			}
+			ideology = {
+				   value = paternal
+				   factor = 0.05
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 410072	#Suicide of Otto Hayek, leader of the Republican Socialists 
+	title = "HRE72.T"
+	desc = "HRE72.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_modifier = secret_police
+		has_country_flag = German_revolution
+		year = 1895
+		NOT = { has_country_flag = hayek_dead } 
+		has_country_flag = split_party
+	}
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "HRE72.A"
+		set_country_flag = hayek_dead 
+		any_pop = { 
+				scaled_consciousness = { 
+					ideology = communist 
+					factor = 3
+				}
+				scaled_consciousness = { 
+					ideology = socialist  
+					factor = 3
+				}
+				scaled_militancy = { 
+					ideology = socialist  
+					factor = 1
+				}
+				scaled_militancy = { 
+					ideology = communist  
+					factor = 4
+				}
+			ideology = {
+				   value = communist
+				   factor = -0.02
+				}
+			ideology = {
+				   value = socialist
+				   factor = -0.04
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 410073	#Death of the Minister of Safety Van Richtofen : done by a double agent of the secret police
+	title = "HRE73.T"
+	desc = "HRE73.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		has_country_modifier = secret_police
+		year = 1902 
+	} 
+	
+	mean_time_to_happen = {
+		months = 12 
+	}
+	
+	option = { 
+		name = "HRE73.A" #HE DID WHAT ?
+		prestige = -2
+	}
+	
+}
+
+country_event = { 
+	id = 410074	#Formation of the White Tugendbund
+	title = "HRE74.T"
+	desc = "HRE74.D"
+	
+	trigger = { 
+		tag = HLR 
+		has_country_flag = HRE_manifesto
+		is_ideology_enabled = fascist 
+	} 
+	
+	mean_time_to_happen = {
+		months = 12 
+	}
+	
+	option = { 
+		name = "HRE73.A"
+		any_pop = { 
+			limit = { 
+				location = { is_core = HLR }
+				is_primary_culture = yes
+			}
+			ideology = {  
+				value = fascist
+				factor = 0.05
+			}
+		}
+	}
+	
 }

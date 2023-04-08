@@ -1629,6 +1629,7 @@ country_event = {
 		casus_belli = {
 			target = NUS
 			type = conquest
+			months = 120
 		}
 		NUS = {
 			country_event = 333281
@@ -1744,6 +1745,7 @@ country_event = {
 		casus_belli = {
 			target = VOC
 			type = conquest
+			months = 120
 		}
 		VOC = {
 			country_event = 333281
@@ -2046,10 +2048,12 @@ country_event = {
 		casus_belli = {
 			target = NUS
 			type = establish_protectorate_casus_belli
+			months = 120
 		}
 		casus_belli = {
 			target = NUS
 			type = conquest
+			months = 120
 		}
 	}
 }
@@ -2067,6 +2071,7 @@ country_event = {
 
 	option = {
 		name = "333285.A"
+		civilized = no
 		release_vassal = TNJ
 		release_vassal = BLG
 		release_vassal = YOG
@@ -2179,6 +2184,11 @@ country_event = {
 			 }
 			 exists = yes
 	       }
+		   add_casus_belli = {
+			    target = VOC
+			    type = make_puppet
+			    months = 24
+		   }
 		   country_event = { id = 333290 days = 1 }
 		}
 		ai_chance = {
@@ -2266,6 +2276,11 @@ country_event = {
 			 }
 			 exists = yes
 	       }
+		   add_casus_belli = {
+			    target = VOC
+			    type = make_puppet
+			    months = 24
+		   }
 		   country_event = { id = 333290 days = 1 }
 		}
 		ai_chance = {
@@ -2320,6 +2335,11 @@ country_event = {
 			 }
 			 exists = yes
 	       }
+		   add_casus_belli = {
+			    target = VOC
+			    type = make_puppet
+			    months = 24
+		   }
 		   country_event = { id = 333290 days = 1 }
 		}
 		clr_global_flag = VOC_REVOLT_DUA
@@ -2383,7 +2403,7 @@ country_event = {
 		war = {
 			target = VOC
 			attacker_goal = {
-				casus_belli = conquest_any
+				casus_belli = make_puppet
 			}
 			defender_goal = {
 				casus_belli = status_quo
@@ -2550,12 +2570,18 @@ country_event = {
 			tag = BRG
 			tag = PBG
 		}
-		NOT = { exists = VOC }
+		OR = {
+		   is_our_vassal = VOC
+		   AND = {
+		      NOT = { exists = NUS }
+			  NOT = { exists = VOC }
+		   }
+        }		
 		war = no
 	}
 
 	mean_time_to_happen = {
-		days = 15
+		days = 100
 	}
 
 	title = "333292.T"
@@ -2566,6 +2592,7 @@ country_event = {
 		clr_global_flag = VOC_ANNEXATION
 		set_global_flag = BRG_VOC
 		VOC = {
+		    civilized = no
 			all_core = {
 				remove_core = VOC
 			}
@@ -2574,6 +2601,7 @@ country_event = {
 
 	option = {
 		name = "333292.A"
+		VOC = { civilized = no annex_to = THIS }
 		prestige = 10
 		any_country = {
 		   limit = {
@@ -2598,7 +2626,7 @@ country_event = {
 
 	option = {
 		name = "333293.A"
-		VOC = { all_core = { remove_core = VOC } }
+		all_core = { remove_core = THIS }
 		NUS = { all_core = { add_core = IND } }
 		change_tag = IND
 		set_global_flag = VOC_indonesia

@@ -252,7 +252,7 @@ political_decisions = {
 			set_country_flag = SCO_recognized
 			set_global_flag = SCO_loss
 			any_owned = {
-				limit = { is_core = THIS }
+				limit = { is_core = THIS NOT = { provid = 3355 } } 
 				remove_core = SCA
 			}
 			any_country = {
@@ -269,6 +269,102 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+	Resolve_the_Scottish_problem = { 
+		potential = { 
+			tag = SCA 
+			SCO = { exists = no } 
+			owns = 269 #Edinburgh 
+			has_country_flag = enable_SCO_intergration
+			NOT = { has_country_flag = SCO_decisions_held } 
+			NOT = { has_country_flag = intergrat_of_scotland }
+		}
+		
+		allow = { 
+			has_country_flag = created_the_Royal_North_Sea_Company 
+			has_country_flag = amended_the_highlands_clearance 
+			has_country_flag = manned_the_english_border
+			war = no 
+		}
+		
+		effect = { 
+			set_country_flag = intergrat_of_scotland
+			country_event = { id = 48270 days = 15 }
+		} 
+	}
+	
+	Create_the_North_Sea_Company = { 
+		potential = { 
+			tag = SCA 
+			SCO = { exists = no } 
+			owns = 269 #Edinburgh 
+			has_country_flag = enable_SCO_intergration
+			NOT = { has_country_flag = SCO_decisions_held } 
+			NOT = { has_country_flag = created_the_Royal_North_Sea_Company }
+		}
+		
+		allow = { 
+			iron_steamers = 1 
+			market_regulation = 1 
+			money = 250000
+		}
+		
+		effect = { 
+			money = -250000
+			add_country_modifier = { 
+				name = royal_north_sea_company 
+				duration = -1 
+			}
+			set_country_flag = created_the_Royal_North_Sea_Company
+		} 
+	}
+	
+	Amend_the_Clearance = { 
+		potential = { 
+			tag = SCA 
+			SCO = { exists = no } 
+			owns = 269 #Edinburgh 
+			has_country_flag = enable_SCO_intergration
+			NOT = { has_country_flag = SCO_decisions_held } 
+			NOT = { has_country_flag = amended_the_highlands_clearance }
+		}
+		
+		allow = { 
+			investment_banks = 1 
+			organic_chemistry = 1 
+		}
+		
+		effect = { 
+			prestige = 5
+			267 = { life_rating = 3 } 
+			270 = { life_rating = 2 }
+			set_country_flag = amended_the_highlands_clearance
+		} 
+	}
+	
+	Man_the_Border = { 
+		potential = { 
+			tag = SCA 
+			SCO = { exists = no } 
+			owns = 269 #Edinburgh 
+			has_country_flag = enable_SCO_intergration
+			NOT = { has_country_flag = SCO_decisions_held } 
+			NOT = { has_country_flag = manned_the_english_border }
+		}
+		
+		allow = { 
+			point_defense_system = 1 
+			blue_and_brown_water_schools = 1 
+			money = 75000
+		}
+		
+		effect = { 
+			272 = { fort = 2 } 
+			money = -75000
+			set_country_flag = manned_the_english_border
+		} 
+	}
+	
 	
 	SCO_claim = {
 		potential = {
@@ -399,6 +495,54 @@ political_decisions = {
 		    prestige = 5
             inherit = FIN
 			clr_country_flag = puppet_finland
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	launch_the_war_FIN = {
+		potential = {
+			tag = FIN
+			NOT = { has_country_flag = puppet_finland }
+			vassal_of = SCA
+			SCA = { has_country_flag = WINTER_IS_ALMOST }
+		}
+		
+		allow = {
+			SCA = {
+			   OR = {
+			      war_with = BOH
+				  war_with = BRG
+				  war_with = DUA
+				  war_with = RUS
+			   }
+		    }
+		}
+		
+		effect = {
+           SCA = { release_vassal = THIS country_event = { id = 191945 days = 1 } }
+		   any_country = {
+		      limit = {
+			     war_with = THIS
+			  }
+			  end_war = THIS
+		   }
+	       add_country_modifier = {
+				name = small_country_draft
+				duration = 1825
+	       }
+           any_country = {
+                limit = { has_country_flag = alliance_with_finland }	
+				clr_country_flag = alliance_with_finland
+				relation = { who = FIN value = 400 }
+	            diplomatic_influence = { who = FIN value = 400 }
+				create_alliance = FIN
+				relation = { who = SCA value = -400 }
+	            diplomatic_influence = { who = SCA value = -400 }
+				leave_alliance = SCA
+           }				
 		}
 		
 		ai_will_do = {
@@ -609,28 +753,30 @@ political_decisions = {
 				544 = { is_core  = THIS }
 				has_country_flag = lol_rekt
 			}
+			HOL = { all_core = { owned_by = THIS } }
 		}
 		
 		allow = { 
+		    mass_politics = 1
 		    OR = {
-			is_greater_power = yes 
-			government = fascist_dictatorship
-			government = fascist_monarchy
+			   is_greater_power = yes 
+			   government = fascist_dictatorship
+			   government = fascist_monarchy
 			}			
 			OR = { 
-			war_policy = jingoism
-			government = absolute_monarchy
-			government = presidential_dictatorship
-			government = fascist_dictatorship
-			government = fascist_monarchy
-			government = proletarian_dictatorship
-			has_global_flag = SCO_loss
-		         }
+			    war_policy = jingoism
+			    government = absolute_monarchy
+			    government = presidential_dictatorship
+			    government = fascist_dictatorship
+			    government = fascist_monarchy
+			    government = proletarian_dictatorship
 		    }
+		}
 		
 		effect = {
 			set_country_flag = lol_rekt
-			PRU_546 = { add_core = SCA }
+            PRU_546 = { add_core = SCA }
+            SCA_544 = { add_core = SCA }	
 			badboy = 10
 		}
 
@@ -648,8 +794,12 @@ political_decisions = {
 		potential = {
 			tag = SCA
 			is_greater_power = yes
-			OR = {
-				has_country_flag = baltic_claimed
+			has_country_flag = NGF_purged
+			OR = {			    
+				AND = {
+				    has_country_flag = baltic_claimed
+					year = 1875
+			    }
 				year = 1890
 			}
 			NOT = { has_country_flag = north_integration }
@@ -657,8 +807,21 @@ political_decisions = {
 
 		allow = {
 			industrial_score = 200
-			press_rights = free_press
-			public_meetings = yes_meeting
+			OR = { 
+			   mass_politics = 1
+			   AND = { 
+			      ai = yes
+				  year = 1900
+			   }
+			   AND = { 
+			      ai = yes
+				  has_global_flag = german_phoenix
+			   }
+			   AND = {	   
+			      press_rights = free_press
+			      public_meetings = yes_meeting
+			   }
+			}
 			OR = {
 				vote_franschise = wealth_weighted_voting
 				vote_franschise = wealth_voting
@@ -667,17 +830,6 @@ political_decisions = {
 			}
 			OR = {
 				549 = {
-					OR = {
-						owned_by = THIS
-						owner = {
-							in_sphere = THIS
-						}
-						owner = {
-							vassal_of = THIS
-						}
-					}
-				}
-				534 = {
 					OR = {
 						owned_by = THIS
 						owner = {
@@ -747,20 +899,21 @@ political_decisions = {
 			factor = 1
 		}
 	}
-			
-
+	
+	
+	
+    # This will neeed to be adjusted to account for specific things.
 
 	nordtyskland = {
 		picture = form_scandinavia
 		potential = { 
 			tag = SCA 
-			is_greater_power = yes 
-			has_country_flag = baltic_claimed
-			NOT = { has_global_flag = hre_formed has_global_flag = cae_formed has_country_flag = nordtyskland }
+			is_greater_power = yes
+            has_country_flag = north_integration			
+			NOT = { exists = CAE exists = HLR exists = GCF exists = GER has_country_flag = nordtyskland }
 		}
 	
-		allow = { 
-			has_country_flag = north_integration
+		allow = { 			
 			549 = {
 				OR = {
 					owned_by = THIS
@@ -772,7 +925,7 @@ political_decisions = {
 					}
 				}
 			}
-			534 = {
+			532 = {
 				OR = {
 					owned_by = THIS
 					owner = {
@@ -783,29 +936,7 @@ political_decisions = {
 					}
 				}
 			}
-			555 = {
-				OR = {
-					owned_by = THIS
-					owner = {
-						in_sphere = THIS
-					}
-					owner = {
-						vassal_of = THIS
-					}
-				}
-			}
-			695 = {
-				OR = {
-					owned_by = THIS
-					owner = {
-						in_sphere = THIS
-					}
-					owner = {
-						vassal_of = THIS
-					}
-				}
-			}
-			690 = {
+			554 = {
 				OR = {
 					owned_by = THIS
 					owner = {
@@ -820,24 +951,28 @@ political_decisions = {
 	
 		effect = { 
 			set_country_flag = nordtyskland
-			PRU_553 = { add_core = THIS }
+			set_country_flag = NGF_purged
+			545 = { add_core = THIS }
+			536 = { add_core = THIS }
+			537 = { add_core = THIS }
+			HAM_532 = { add_core = THIS }
 			PRU_549 = { add_core = THIS }
-			HAM_528 = { add_core = THIS }
-			HAN_534 = { add_core = THIS }
-			PRU_581 = { add_core = THIS }
+			PRU_553 = { add_core = THIS }
+			SAX_1 = { add_core = THIS }
+			SAX_559 = { add_core = THIS }
+			SAX_558 = { add_core = THIS }
 			any_country = {
 				limit = {
-					primary_culture = prussian
-					in_sphere = THIS
+					OR = {
+					  tag = OLD
+					  tag = BRE
+					}
+					OR = {
+					   in_sphere = THIS
+					   vassal_of = THIS
+					}
 				}
-				country_event = 11101
-			}
-			any_country = {
-				limit = {
-					primary_culture = north_german
-					in_sphere = THIS
-				}
-				country_event = 11101
+				annex_to = THIS
 			}
 		}
 		
