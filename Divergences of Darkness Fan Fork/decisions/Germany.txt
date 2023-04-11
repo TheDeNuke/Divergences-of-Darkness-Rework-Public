@@ -348,6 +348,13 @@ political_decisions = {
 				country_event = { id = 152037 days = 1 }
 		    }	
 			political_reform = confederalism
+	        any_pop = {
+			   militancy = -9
+			}
+	        add_country_modifier = {
+                name = calm_before_storm
+	            duration = 100
+	        }
             change_tag = CAE			
 		}
 		
@@ -472,6 +479,58 @@ political_decisions = {
 		}
 	}
 	
+	invite_saxon_tags = {
+		#picture = reichstag
+		potential = {		   
+		    tag = BOH
+			has_country_flag = CAE_enabled		
+			OR = {
+			   exists = HOL
+			   owns = 528
+			}
+			owns = 546
+            OR = { 
+               exists = HAN
+               exists = BRA
+               exists = THU
+            }			   
+		}
+		
+		allow = {
+		   OR = {
+		     nationalism_n_imperialism = 1
+			 AND = {
+			    exists = PBG
+				exists = BRG
+		     }
+		   }  
+		}
+		
+		effect = {
+		    clr_country_flag = delete_saxony
+			badboy = 5
+			any_country = {
+			limit = {
+			    OR = {
+				   tag = HAN
+				   tag = BRA
+				   tag = THU
+				}
+				exists = yes
+		    }
+			country_event = 1520370
+		    }
+	    }
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.7
+			   }
+		}
+	}
+	
 	# Kill Saxony - If Holstein already exists or Hamburg is owned by Bohemia then this should allow Bohemia to kill off Saxony without any real issues or trap events.
 	# However, if Saxony had intervened in any form of northern war earlier this is replaced by a alternative decision which is a trap.
 	
@@ -486,7 +545,6 @@ political_decisions = {
 			}
 			owns = 546
             exists = SAX			
-			has_country_flag = delete_saxony
 			SAX = { NOT = { has_country_flag = SAX_intervention } }
 		}
 		
@@ -502,20 +560,15 @@ political_decisions = {
 		
 		effect = {
 		    clr_country_flag = delete_saxony
-			BRN = { all_core = { add_core = SAX } }
-			ELX = { all_core = { add_core = SAX } } 
-		    badboy = 5
-	        war = {
-		       target = SAX
-			      attacker_goal = {
-				     casus_belli = conquest_any
-			      }
-			      defender_goal = {
-				     casus_belli = acquire_all_cores
-				     country = SAX
-			      }
-			}
-		}
+			badboy = 5
+			any_country = {
+			limit = {
+			    tag = SAX
+				exists = yes
+		    }
+			country_event = 1520370
+		    }
+	    }
 		
 		ai_will_do = {
 			factor = 1
@@ -664,7 +717,18 @@ political_decisions = {
 	        }
             inherit = SGF
 			#political_reform = federalism
-            change_tag = GCF			
+            change_tag = GCF
+		    any_country = {
+				limit = {
+				   is_culture_group = germanic
+				   NOT = { primary_culture = prussian }
+				   NOT = { vassal_of = BRG }
+				   NOT = { vassal_of = FRK }
+				   NOT = { vassal_of = PBG }
+				   in_sphere = THIS
+			    }
+			    country_event = 11101
+		    }			
 		}
 		
 		ai_will_do = {
@@ -713,7 +777,8 @@ political_decisions = {
             WUR_589 = { add_core = SGF }
             BAD_586 = { add_core = SGF }
             SWI_603 = { add_core = SGF }	
-            SWI_605 = { add_core = SGF }				 
+            SWI_605 = { add_core = SGF }
+            SWI = { all_core = { add_core = SGF } }			
 		}
 		
 		ai_will_do = {
@@ -846,8 +911,15 @@ political_decisions = {
 			owns = 605
 			owns = 589
 			owns = 586
-			NOT = { year = 1900 exists = HLR exists = GER }
-			NOT = { PBG = { government = presidential_dictatorship } }
+			NOT = { 
+			     year = 1900 
+				 exists = HLR 
+				 exists = GER 
+		    }
+			OR = {
+			   NOT = { PBG = { government = presidential_dictatorship } }
+			   NOT = { exists = PBG }
+			}
 		}
 		
 		allow = {
@@ -899,8 +971,15 @@ political_decisions = {
 			owns = 581
 			owns = 583
 			owns = 540
-			NOT = { year = 1900 exists = HLR exists = GER }
-			NOT = { PBG = { government = presidential_dictatorship } }				
+			NOT = { 
+			     year = 1900 
+				 exists = HLR 
+				 exists = GER 
+		    }
+			OR = {
+			   NOT = { PBG = { government = presidential_dictatorship } }
+			   NOT = { exists = PBG }
+			}
 		}
 		
 		allow = {
@@ -943,7 +1022,22 @@ political_decisions = {
 		picture = franco_prussian_memorial
 		
 		potential = {		   
+		    OR = {
+			   AND = {
+			      tag = SGF
+			      owns = 459
+			   }
+			   AND = {
+			      tag = NGF
+			      owns = 599
+			   }
+			   AND = {
+			      tag = GCF
+			      owns = 599
+			   }
+			}
 		    has_country_flag = FALL_ROT_POSSIBLE
+			NOT = { has_global_flag = FALL_ROT_OCCURED }
 		}
 		
 		allow = {
@@ -964,6 +1058,7 @@ political_decisions = {
 		}
 		
 		effect = {
+		    set_global_flag = FALL_ROT_OCCURED
 			clr_country_flag = FALL_ROT_POSSIBLE
 		    badboy = 5
 			country_event = { id = 280077 days = 14 }  
@@ -1997,10 +2092,7 @@ political_decisions = {
 	ist_nord_silesia = {
 	#picture = Germania
 		potential = {
-			OR = {
-			   tag = GER
-			   tag = GCF
-	        }
+			tag = GER
 			has_country_flag = ubergrossdeutschland
             NOT = { has_country_flag = nord_silesia }			
 		}
@@ -2033,10 +2125,7 @@ political_decisions = {
 	ist_bohmen = {
 	picture = czech_autonomy
 		potential = {
-			OR = {
-			   tag = GER
-			   tag = GCF
-	        }
+			tag = GER
 			has_country_flag = ubergrossdeutschland
             NOT = { has_country_flag = bohemia_check }			
 		}
@@ -2129,7 +2218,10 @@ political_decisions = {
 	ist_dietsland_radical = {
 	#picture = czech_autonomy
 		potential = {
-			tag = GER
+		    OR = {
+			   tag = GER
+			   tag = GCF
+			}
 			has_country_flag = ubergrossdeutschland
 			NOT = { exists = DIE }
             NOT = { has_country_flag = dutch_are_detuch }			

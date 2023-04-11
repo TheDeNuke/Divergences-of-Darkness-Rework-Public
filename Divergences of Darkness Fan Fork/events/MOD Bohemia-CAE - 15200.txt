@@ -2788,7 +2788,25 @@ country_event = {
 		   relation = { who = BRN value = 400 } 
 		   diplomatic_influence = { who = BRN value = 400 }  
 		   relation = { who = ELX value = 400 } 
-		   diplomatic_influence = { who = ELX value = 400 }  		   	   
+		   diplomatic_influence = { who = ELX value = 400 }  		  
+		   relation = { who = SAX value = 400 } 
+		   diplomatic_influence = { who = SAX value = 400 }  		
+		   relation = { who = THU value = 400 } 
+		   diplomatic_influence = { who = THU value = 400 }  		
+		   relation = { who = BRA value = 400 } 
+		   diplomatic_influence = { who = BRA value = 400 }  				   
+		}
+		SGF = { 
+		   relation = { who = BRN value = -400 } 
+		   diplomatic_influence = { who = BRN value = -400 }  
+		   relation = { who = ELX value = -400 } 
+		   diplomatic_influence = { who = ELX value = -400 }  		  
+		   relation = { who = SAX value = -400 } 
+		   diplomatic_influence = { who = SAX value = -400 }  		
+		   relation = { who = THU value = -400 } 
+		   diplomatic_influence = { who = THU value = -400 }  		
+		   relation = { who = BRA value = -400 } 
+		   diplomatic_influence = { who = BRA value = -400 }  				   
 		}
 		remove_country_modifier = BOH_unshakable_autocracy
 		clr_country_flag = BOH_no_defence_outcomes		
@@ -4683,6 +4701,10 @@ country_event = {
 	
 	is_triggered_only = yes
 	fire_only_once = yes 
+	
+	immediate = {
+      FROM = { release_vassal = THIS }
+	}
 
     # Of course
 	
@@ -4698,14 +4720,60 @@ country_event = {
 	option = { 
 	    name = "CAEBOH39.B"
 		all_core = { add_core = CAE }
-		CAE = { relation = { who = THIS value = -400 } diplomatic_influence = { who = THIS value = -400 } }
+		CAE = { leave_alliance = THIS relation = { who = THIS value = -400 } diplomatic_influence = { who = THIS value = -400 } }
 	    ai_chance = { 
 	       factor = 0
 	    }
 	}
 }
 
-### CAE Unification ####
+### You are being invited to the Elbian Confederation and there is no possible no button.
+
+country_event = {
+	id = 1520370
+	title = "CAEBOH39.T"
+	desc = "CAEBOH39.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	immediate = {
+      FROM = { release_vassal = THIS }
+	}
+
+    # Of course
+	
+	option = { 
+	    name = "O fuck"
+		annex_to = BOH
+	    ai_chance = { 
+	       factor = 100
+	    }
+	}
+	
+	option = { 
+	    name = "No u"
+		BOH = {
+		    leave_alliance = THIS 
+			relation = { who = THIS value = -400 } 
+			diplomatic_influence = { who = THIS value = -400 }
+	        war = {
+	            target = THIS			
+		        attacker_goal =  { 
+			        casus_belli = conquest_any
+		        }
+		        defender_goal = {
+			        casus_belli = conquest_any
+		        }
+			    call_ally = yes
+            }	
+		}
+	    ai_chance = { 
+	       factor = 0
+	    }
+	}
+}
 
 ### Skip 152038 and 152039
 
@@ -6453,7 +6521,7 @@ country_event = {
     }
 	
     mean_time_to_happen = {
-        days = 31
+        days = 3
     }
 
 	option = { 
@@ -6491,7 +6559,7 @@ country_event = {
     }
 	
     mean_time_to_happen = {
-        days = 31
+        days = 3
     }
 	
 	immediate = { release_vassal = SAX }
@@ -7201,6 +7269,69 @@ country_event = {
 	}
 }
 
+### Die Katastrophe - German Confederation or Elbian Confederation was thrown out of Germany through unusual means.
+
+country_event = {
+	id = 152089
+	title = "CAESCA471.T"
+	desc = "CAESCA471.D"
+	#picture = "german_rhine"
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+    trigger = {
+        OR = {
+		   tag = CAE
+		   tag = GCF
+		}
+		exists = yes
+		year = 1870
+		is_ideology_enabled = communist
+		war = no
+		NOT = {  
+		   has_global_flag = BOH_is_czech
+		   has_country_flag = die_katastrophe
+		   has_country_flag = BOH_treaty_failsafe
+		   owns = 549
+		   owns = 599
+		}		
+    }
+	
+    mean_time_to_happen = {
+        days = 31
+    }
+	
+	
+	option = { 
+	    name = "CAESCA471.A"
+		change_tag = BOH
+		prestige_factor = -0.5
+		rich_strata = {
+			militancy = 2
+			consciousness = 2
+	    }
+		soldiers = {
+			militancy = 2
+			consciousness = 2
+		}
+		officers = {
+			militancy = 4
+			consciousness = 4
+		}
+		remove_country_modifier = calm_before_storm
+		remove_country_modifier = BOH_eternal_regency
+        set_country_flag = die_katastrophe
+		random_owned = { limit = { owner = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism } NOT = { has_country_flag = CAE_bohemian_compromise } } }
+		owner = { country_event = 152089 } }
+		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise } }
+		owner = { country_event = 152090 } }	
+		random_owned = { limit = { owner = { NOT = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism has_country_flag = CAE_bohemian_compromise } } } }
+		owner = { country_event = 152091 } }	
+	}
+}
+
 ## A Enforced Compromise - You are forced into the Bohemian Compromise if you like it or not.
 
 country_event = {
@@ -7543,6 +7674,7 @@ country_event = {
 		   government = socialist_republic
 		   government = proletarian_dictatorship
 		}
+		NOT = { has_global_flag = BOH_is_czech }
     }
 	
     mean_time_to_happen = {

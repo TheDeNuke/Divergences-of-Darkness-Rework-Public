@@ -334,8 +334,8 @@ political_decisions = {
 		potential = {
 			capital_scope = { 
 				continent =  europe
-			}
-			NOT = { tag = PBG tag = FRK tag = BRG tag = SCA }
+				}
+			NOT = { OR = { tag = PBG tag = FRK tag = BRG tag = SCA } }
 			NOT = {
 				has_global_flag = ASG_organized
 				capital_scope = { continent = oceania }
@@ -451,10 +451,10 @@ political_decisions = {
 						region = GAN_3290
 						}
 					}
-					add_core = ASG
+					add_core = ASS
 				}
-			ASG = {
-			    capital = 3337
+			ASS = {
+			    capital = 2491
 				primary_culture = THIS
 				set_country_flag = civilize_after_release
 				tech_school = developing_tech_school
@@ -652,17 +652,90 @@ political_decisions = {
 				limit = { owner = { tag = GAN OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } } } 
 				2468 = { 
 					change_province_name = "Yanning"
+					change_region_name = "Yanning"
 				}
 			}
 			random_owned = {
 				limit = { owner = { tag = GAN NOT = { OR = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } } } } 
 				2468 = { 
 					change_province_name = "Tanluan"
+					change_region_name = "Tanluan"
 				}
 			}
 		}
 	
 	}
+	
+	#monument_to_zheng_he = { 
+	#	
+	#	potential = { 
+	#		tag = GAN 
+	#	has_country_flag = sydney_capital
+	#		NOT = { has_country_flag = zheng_he_monument } 
+	#	}
+	#	
+	#	allow = { 
+	#		nationalism_n_imperialism = 1 
+	#		money = 25000
+	#	}
+	#	
+	#	effect = { 
+	##		set_country_flag = zheng_he_monument
+	#	money = -25000
+	#		country_event = { 
+	#			id = days = 80 
+	#		}
+	#	}
+	#
+	#}
+
+	
+	the_coal_rush_GAN = { 
+		potential = { 
+			civilized = yes 
+			year = 1850 
+			OR = { 
+				AND = { owns = 3296 NOT = { has_global_flag = coal_rush_3296 } }
+				AND = { owns = 3298 NOT = { has_global_flag = coal_rush_3298 } }
+				AND = { owns = 3301 NOT = { has_global_flag = coal_rush_3301 } }
+				AND = { owns = 3309 NOT = { has_global_flag = coal_rush_3309 } }
+			}
+		}
+		
+		allow = { 
+			mechanized_mining = 1
+			year = 1860 
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 3296 }
+				3296 = { 
+					 trade_goods = coal  
+				}
+				owner = { set_global_flag = coal_rush_3296 }
+			}
+			random_owned = {
+				limit = { province_id = 3298 }
+				3298 = { trade_goods = coal } 
+				2485 = { trade_goods = coal } 
+				owner = { set_global_flag = coal_rush_3298 }
+			}
+			random_owned = {
+				limit = { province_id = 3301 }
+				3301 = { trade_goods = coal } 
+				3302 = { trade_goods = coal } 
+				owner = { set_global_flag = coal_rush_3301 }
+			}
+			random_owned = {
+				limit = { province_id = 3309 }
+				3309 = { trade_goods = coal } 
+				3310 = { trade_goods = coal } 
+				owner = { set_global_flag = coal_rush_3309 }
+			}
+		}
+	}
+	
 	
 	the_black_flag_army = { 
 	
@@ -699,6 +772,7 @@ political_decisions = {
 			artillery = -25
 			SCA = { 
 				country_event = 95788 
+				country_event = { id = 95789 days = 15 } 
 			}
 		}
 	}
@@ -1028,6 +1102,7 @@ political_decisions = {
 				any_owned_province = { 
 						is_core = THIS 
 						is_colonial = yes 
+						NOT = { OR = { province_id = 2244 province_id = 2406 } }
 				}
 			}
 			is_greater_power = yes 	
@@ -1546,4 +1621,158 @@ political_decisions = {
 
 		ai_will_do = { factor = 1 }
 	}
+	
+	GAN_rename_Westralia = {
+		picture = "gtfo"
+		potential = {
+			primary_culture = ganguan 
+			OR = {
+				AND = { owns = 3337 owns = 3335 NOT = { has_global_flag = GAN_rename_Margere } }
+				AND = { owns = 3332 NOT = { has_global_flag = GAN_rename_NZ } }
+				AND = { owns = 3326 NOT = { has_global_flag = GAN_rename_riviere } }
+				AND = { owns = 2498 NOT = { has_global_flag = GAN_rename_weltevree } }
+				AND = { owns = 2500 NOT = { has_global_flag = GAN_rename_terrejean } }
+				AND = { owns = 2482 NOT = { has_global_flag = GAN_rename_tasmania } }
+			}
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+			random_owned = {
+				limit = { province_id = 3337 }
+				3337 = { 
+					change_province_name = "Yungang"
+					state_scope = { change_region_name = "Beiwan" }
+				}
+				2505 = { change_province_name = "Yawang" }
+				2506 = { change_province_name = "Mengjian" }
+				3335 = { change_province_name = "Zhujigang" }
+				owner = { set_global_flag = GAN_rename_Margere }
+			}
+			
+			random_owned = {
+				limit = { province_id = 3332 }
+				3332 = { 
+					change_province_name = "Lingshui"
+					state_scope = { change_region_name = "Xinze" }
+				}
+				3333 = { change_province_name = "Keleiwei" }
+				3334 = { change_province_name = "Dingqu" }
+				2602 = { change_province_name = "Moling" }
+				3331 = { change_province_name = "Nuotong" }
+				owner = { set_global_flag = GAN_rename_NZ }
+			}
+			
+			random_owned = {
+				limit = { province_id = 3326 }
+				3326 = { 
+					change_province_name = "Yanguan"
+					state_scope = { change_region_name = "Xinie" }
+				}
+				3327 = { change_province_name = "Buyong" }
+				owner = { set_global_flag = GAN_rename_riviere }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2498 }
+				2498 = { 
+					change_province_name = "Kanglin"
+					state_scope = { change_region_name = "Kanglin" }
+				}
+				2497 = { change_province_name = "Yinghai" }
+				3329 = { change_province_name = "Fuquan" }
+				3330 = { change_province_name = "Gumei" }
+				owner = { set_global_flag = GAN_rename_weltevree }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2500 }
+				2500 = { 
+					change_province_name = "Jinli"
+					state_scope = { change_region_name = "Tailuo" }
+				}
+				3336 = { change_province_name = "Shiyang" }
+				2504 = { change_province_name = "Sangpu" }
+				2496 = { change_province_name = "Moshe" }
+				owner = { set_global_flag = GAN_rename_terrejean }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2482 }
+				2482 = { 
+					change_province_name = "Lantao"
+					state_scope = { change_region_name = "Hainan" }
+				}
+				3324 = { change_province_name = "Zhenling" }
+				3325 = { change_province_name = "Jingchang" }
+				owner = { set_global_flag = GAN_rename_tasmania }
+			}
+		}
+			
+
+		ai_will_do = { factor = 1 }
+	}
+	
+	SCA_rename_Vargo = {
+		picture = "gtfo"
+		potential = {
+			primary_culture = scandinavian
+			owns = 2482 
+			OR = { has_global_flag = GAN_rename_tasmania has_global_flag = BRG_rename_Tasmania } 
+			
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+				random_owned = {
+				limit = { province_id = 2482 }
+				2482 = { 
+					change_province_name = "Surtland"
+					state_scope = { change_region_name = "Vargholm" }
+				}
+				3324 = { change_province_name = "Carlshavn" }
+				3325 = { change_province_name = "Stibolt" }
+				owner = { clr_global_flag = GAN_rename_tasmania clr_global_flag = BRG_rename_Tasmania }
+			}
+		}
+			
+
+		ai_will_do = { factor = 1 }
+	}
+	
+	BRG_rename_Vargo = {
+		picture = "gtfo"
+		potential = {
+			primary_culture = burgundian
+			owns = 2482 
+			NOT = { has_global_flag = BRG_rename_Tasmania } 
+		}
+		
+		allow = {
+			war = no
+		}
+		
+		effect = {
+				random_owned = {
+				limit = { province_id = 2482 }
+				2482 = { 
+					change_province_name = "Terre Brulée"
+					state_scope = { change_region_name = "Ile aux Loups" }
+				}
+				3324 = { change_province_name = "Port Charles" }
+				3325 = { change_province_name = "Marion" }
+				owner = { clr_global_flag = GAN_rename_tasmania set_global_flag = BRG_rename_Tasmania }
+			}
+		}
+			
+
+		ai_will_do = { factor = 1 }
+	}
+	
 }

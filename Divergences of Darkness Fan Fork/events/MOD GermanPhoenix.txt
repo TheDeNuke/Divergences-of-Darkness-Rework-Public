@@ -4180,15 +4180,15 @@ country_event = {
 
 country_event = {
 	id = 2800550
-	title = "GEP56.T"
-	desc = "GEP56.D"
+	title = "GEP57.T"
+	desc = "GEP57.D"
 	#picture = "fascist_march"
 	
 	major = yes
     is_triggered_only = yes
 	
 	option = { 
-	    name = "GEP56.A"
+	    name = "GEP57.A"
 	    any_pop = {
 			militancy = -5
 			consciousness = -5
@@ -4200,8 +4200,8 @@ country_event = {
 
 country_event = {
 	id = 280056
-	title = "GEP57.T"
-	desc = "GEP57.D"
+	title = "GEP58.T"
+	desc = "GEP58.D"
 	picture = "fascist_march"
 	
 	fire_only_once = yes
@@ -4218,7 +4218,7 @@ country_event = {
     }
 	
 	option = { 
-	    name = "GEP57.A"
+	    name = "GEP58.A"
 		NGF = { 
 	       remove_country_modifier = taiping_draft
 		}
@@ -4286,8 +4286,8 @@ country_event = {
 
 country_event = {
 	id = 280057
-	title = "GEP58.T"
-	desc = "GEP58.D"
+	title = "GEP590.T"
+	desc = "GEP590.D"
 	picture = "fascist_march"
 	
 	fire_only_once = yes
@@ -4306,7 +4306,7 @@ country_event = {
 	### Is this going to be a joke about North German Work Ethic?
 	
 	option = { 
-	    name = "GEP58.A"
+	    name = "GEP590.A"
 		prestige = 40
 		clr_global_flag = GBW_ACTIVE
 		SGF = {	   
@@ -4381,7 +4381,7 @@ country_event = {
     }
 	
 	option = { 
-	    name = "GEP57.A"
+	    name = "GEP59.A"
 		NGF = { 
 	       remove_country_modifier = taiping_draft
 		}
@@ -6571,6 +6571,17 @@ country_event = {
 		}
         change_tag = GER
 		any_country = {
+				limit = {
+				is_culture_group = germanic
+				NOT = { primary_culture = prussian }
+				NOT = { vassal_of = BRG }
+				NOT = { vassal_of = FRK }
+				NOT = { vassal_of = PBG }
+				in_sphere = THIS
+			}
+			country_event = 11101
+		}
+		any_country = {
 		   limit = {
 		      exists = yes
 			  has_global_flag = GGW_OCCURED
@@ -6631,6 +6642,17 @@ country_event = {
 		set_country_flag = phoenix_rot
 		political_reform = federalism
         GER = { all_core = { add_core = THIS } }
+		any_country = {
+				limit = {
+				is_culture_group = germanic
+				NOT = { primary_culture = prussian }
+				NOT = { vassal_of = BRG }
+				NOT = { vassal_of = FRK }
+				NOT = { vassal_of = PBG }
+				in_sphere = THIS
+			}
+			country_event = 11101
+		}
 		any_country = {
 		   limit = {
 		      exists = yes
@@ -6695,6 +6717,17 @@ country_event = {
 		political_reform = federalism
         GER = { all_core = { add_core = THIS } }
 		any_country = {
+				limit = {
+				is_culture_group = germanic
+				NOT = { primary_culture = prussian }
+				NOT = { vassal_of = BRG }
+				NOT = { vassal_of = FRK }
+				NOT = { vassal_of = PBG }
+				in_sphere = THIS
+			}
+			country_event = 11101
+		}
+		any_country = {
 		   limit = {
 		      exists = yes
 			  has_global_flag = GGW_OCCURED
@@ -6727,6 +6760,8 @@ country_event = {
 
 ### I guess you could call this a Great German War to end all Great German Wars ###
 
+### If at war with FRK then automatically add a modifier ####
+
 ### SECOND GREAT GERMAN WAR ###
 
 country_event = {
@@ -6739,19 +6774,30 @@ country_event = {
 	major = yes
 	
 	option = { 
-	    name = "GEP82.A"
+	    name = "GEP83.A"
 		remove_country_modifier = war_justification_blocked
 		FROM = { remove_country_modifier = war_justification_blocked }
 	    war = {
 		    target = FROM
 			attacker_goal = {
-				casus_belli = dismantle_cb_add
+				casus_belli = dismantle_cb_add_new
 			}
 			defender_goal = {
-				casus_belli = dismantle_cb_add
+				casus_belli = dismantle_cb_add_new
 			}
 			call_ally = yes
 		}		
+		random_owned = {
+		   limit = {
+		      owner = { war_with = FRK }
+		   }
+		   owner = {
+	       add_country_modifier = {
+		       name = david_verses_goliath
+		       duration = 3650
+	       }		
+           }		   
+	    }
 	}
 } 
 
@@ -6773,13 +6819,182 @@ country_event = {
 	    war = {
 		    target = FROM
 			attacker_goal = {
-				casus_belli = dismantle_cb_add
+				casus_belli = dismantle_cb_add_new
 			}
 			defender_goal = {
-				casus_belli = dismantle_cb_add
+				casus_belli = dismantle_cb_add_new
 			}
 			call_ally = yes
-		}		
+		}	
+		random_owned = {
+		   limit = {
+		      owner = { war_with = FRK }
+		   }
+		   owner = {
+	       add_country_modifier = {
+		       name = david_verses_goliath
+		       duration = 3650
+	       }		
+           }		   
+	    }		
+	}
+} 
+
+### FRK/PBG/BRG started a war with a tag with fall_rot_possible - Start a GGW
+
+### SECOND GREAT GERMAN WAR ###
+
+country_event = {
+	id = 2800820
+	title = "GEP830.T"
+	desc = "GEP830.D"
+	#picture = "meeting_german_princes"
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		    AND = {
+			   tag = SGF
+			   owns = 459
+			}
+			AND = {
+			   tag = NGF
+			   owns = 599
+			}
+			AND = {
+			   tag = GCF
+			   owns = 599
+			}
+		}
+		OR = {
+		   war_with = FRK
+		   war_with = PBG
+		   war_with = BRG
+		}
+		has_country_flag = FALL_ROT_POSSIBLE
+		NOT = { has_global_flag = GGW_OCCURED }
+	}
+	
+	major = yes
+	
+	option = { 
+	    name = "GEP830.A"
+		clr_country_flag = FALL_ROT_POSSIBLE
+		set_global_flag = FALL_ROT_OCCURED
+		remove_country_modifier = war_justification_blocked
+		FROM = { remove_country_modifier = war_justification_blocked }
+		random_owned = {
+		   limit = {
+		      owner = { war_with = FRK }
+		   }
+		   owner = {
+	       add_country_modifier = {
+		       name = david_verses_goliath
+		       duration = 3650
+	       }	
+           casus_belli = { target = FRK type = dismantle_cb months = 12 }
+           casus_belli = { target = FRK type = dismantle_cb_add months = 12 }	
+           }		   
+	    }
+		random_owned = {
+		   limit = {
+		      owner = { war_with = BRG }
+		   }
+		   owner = {	
+           casus_belli = { target = BRG type = dismantle_cb months = 12 }
+           casus_belli = { target = BRG type = dismantle_cb_add months = 12 }	
+           }		   
+	    }
+		random_owned = {
+		   limit = {
+		      owner = { war_with = PBG }
+		   }
+		   owner = {
+           casus_belli = { target = PBG type = dismantle_cb months = 12 }
+           casus_belli = { target = PBG type = dismantle_cb_add months = 12 }	
+           }		   
+	    }
+	}
+} 
+
+### THIRD GREAT GERMAN WAR ###
+
+country_event = {
+	id = 2800830
+	title = "GEP840.T"
+	desc = "GEP840.D"
+	#picture = "meeting_german_princes"
+	
+	trigger = {	
+	    exists = yes
+		OR = {
+		    AND = {
+			   tag = SGF
+			   owns = 459
+			}
+			AND = {
+			   tag = NGF
+			   owns = 599
+			}
+			AND = {
+			   tag = GCF
+			   owns = 599
+			}
+		}
+		OR = {
+		   war_with = FRK
+		   war_with = PBG
+		   war_with = BRG
+		}
+		has_country_flag = FALL_ROT_POSSIBLE
+		has_global_flag = GGW_OCCURED
+	}
+	
+	major = yes
+	
+	option = { 
+	    name = "GEP840.A"
+		clr_country_flag = FALL_ROT_POSSIBLE
+		set_global_flag = FALL_ROT_OCCURED
+		remove_country_modifier = war_justification_blocked
+		FROM = { remove_country_modifier = war_justification_blocked }
+		random_owned = {
+		   limit = {
+		      owner = { OR = { tag = SGF tag = NGF } }
+		   }
+	       change_tag = GER
+		}
+		random_owned = {
+		   limit = {
+		      owner = { war_with = FRK }
+		   }
+		   owner = {
+	       add_country_modifier = {
+		       name = david_verses_goliath
+		       duration = 3650
+	       }	
+           casus_belli = { target = FRK type = dismantle_cb months = 12 }
+           casus_belli = { target = FRK type = dismantle_cb_add months = 12 }	
+           }		   
+	    }
+		random_owned = {
+		   limit = {
+		      owner = { war_with = BRG }
+		   }
+		   owner = {
+           casus_belli = { target = BRG type = dismantle_cb months = 12 }
+           casus_belli = { target = BRG type = dismantle_cb_add months = 12 }	
+           }		   
+	    }
+		random_owned = {
+		   limit = {
+		      owner = { war_with = PBG }
+		   }
+		   owner = {
+           casus_belli = { target = PBG type = dismantle_cb months = 12 }
+           casus_belli = { target = PBG type = dismantle_cb_add months = 12 }	
+           }		   
+	    }		
 	}
 } 
 
