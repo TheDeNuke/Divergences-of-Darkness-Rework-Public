@@ -49,6 +49,12 @@ political_decisions = {
 			}
 			any_country = {
 				limit = {
+					NOT = { recruitment_reform = peasant_levys }
+				}
+				set_country_flag = levys_abolished
+			}
+			any_country = {
+				limit = {
 					government = khanate
 					NOT = { has_country_flag = nomad }
 				}
@@ -134,6 +140,39 @@ political_decisions = {
 			       name = war_justification_blocked
 			       duration = -1
 	            }
+			}
+			
+			any_country = {
+				limit = {
+					OR = {
+					  recruitment_reform = peasant_levys
+					  recruitment_reform = restricted_recruitment
+					}
+				}
+                any_owned = {
+                   limit = {
+                      has_pop_type = soldiers
+                      has_pop_type = labourers
+					  is_colonial = no
+                   }
+                   any_pop = { limit = { NOT = { is_accepted_culture = yes is_primary_culture = yes } type = soldiers } militancy = 1 pop_type = labourers  }
+                }
+                any_owned = {
+                   limit = {
+                       has_pop_type = soldiers
+                       has_pop_type = farmers
+					   is_colonial = no
+                   }
+                   any_pop = { limit = { NOT = { is_accepted_culture = yes is_primary_culture = yes } type = soldiers } militancy = 1 pop_type = farmers }
+                }
+                any_owned = {
+                    limit = {
+                       has_pop_type = soldiers
+					   is_colonial = no
+                       NOT = { has_pop_type = farmers has_pop_type = labourers }                     
+                    }
+                    any_pop = { limit = { NOT = { is_accepted_culture = yes is_primary_culture = yes } type = soldiers } militancy = 1 pop_type = farmers }
+                }
 			}
 			
 			any_country = {
@@ -240,28 +279,6 @@ political_decisions = {
 					name = war_justification_blocked
 					duration = -1
 				}
-			}
-			
-			any_country = {
-				limit = {
-					ideological_thought = 1
-				}
-			    add_country_modifier = {
-				    name = political_ideology 
-				    duration = -1
-			    }
-			    remove_country_modifier = the_rights_of_man 
-			}
-			
-			any_country = {
-				limit = {
-					enlightenment_thought = 1
-					NOT = { ideological_thought = 1 }
-				}
-			    add_country_modifier = {
-				    name = the_rights_of_man 
-				    duration = -1
-			    }
 			}
 			
 			any_country = {

@@ -384,6 +384,7 @@ political_decisions = {
 				owns = 300              
                 DUA = { exists = yes }			
 				FRA = { exists = no }
+				ANF = { exists = no }
 				OR = { 
 				   NOT = { tag = ENL }
 				   has_country_flag = ENL_UNLOCK_DECISIONS
@@ -475,6 +476,12 @@ political_decisions = {
 		effect = {
 		    prestige = 5
 			set_country_flag = AEN_RADICAL_DECISIONS_UNLOCKED	
+			clr_country_flag = english_claimed
+			clr_country_flag = welsh_claimed
+			clr_country_flag = irish_claimed
+			remove_accepted_culture = english
+			remove_accepted_culture = welsh
+			remove_accepted_culture = irish
 		}
 		
 		ai_will_do = {
@@ -585,7 +592,10 @@ political_decisions = {
 	AEN_reconquer_ireland = { 
 	picture = ireland
 		potential = {
-		    tag = AEN
+		    OR = {
+			  tag = DUC
+		      tag = AEN
+			}
 		    OR = {
 	           has_global_flag = AEN_ENDING
 	           has_country_flag = AEN_UNLOCK_DECISIONS
@@ -602,7 +612,7 @@ political_decisions = {
 	
 	    effect = { 
 		   prestige = 10
-		   IRE = { all_core = { add_core = AEN } }
+		   IRE = { all_core = { add_core = THIS } }
 		   set_country_flag = irish_reconquest
 		}	
 	}
@@ -675,6 +685,9 @@ political_decisions = {
 	# Fascist or Monarchy
 	
 	AEN_reconquer_anglois_homeland = { 
+	
+	picture = Pas_de_Calais
+	
 		potential = {
 		    tag = AEN
 		    OR = {
@@ -701,19 +714,130 @@ political_decisions = {
 	    effect = { 
 		   set_country_flag = reconquesta_francia
 		   prestige = 10
-		   FRA_418 = { add_core = AEN }
-		   FRA_420 = { add_core = AEN }
-		   FRA_435 = { add_core = AEN }
-		   402 = { add_core = AEN }
+		   FRA_420 = { add_core = THIS }
+		   FRA = { all_core = { add_core = THIS } }
+		   ANF = { all_core = { add_core = THIS } }
+		   
 		}		
 	}
 	
-	# This is a trap monarchy only decision
 	
-	#reform_DUA = { 
-	# I won't write this one for now.
-	#}	
+	#### You don't need all your cores for this, but you need at least Paris, Normandy and Britanny under your control.
 	
+	create_anglois_commonwealth = { 
+	
+	picture = Paris_taken
+	
+		potential = {
+		    tag = AEN
+		    has_country_flag = reconquesta_francia
+			NOT = { has_country_flag = restoration_of_order }
+		}
+		
+	    allow = { 
+		   is_greater_power = yes
+		   owns = 425
+		   owns = 418
+		   owns = 420
+		   owns = 436
+		   NOT = { exists = FRK }	   
+	    }
+	
+	    effect = { 
+		   set_country_flag = restoration_of_order
+		   prestige = 50
+		   political_reform = unitary
+		   FRA_399 = { add_core = THIS }
+		   FRA_420 = { add_core = THIS }
+		   FRA = { all_core = { add_core = THIS } }
+		   ANF = { all_core = { add_core = THIS } }
+		   all_core = { add_core = DUC }
+		   capital = 425
+		   change_tag = DUC
+		}	
+	}
+	
+	# Aquitaine State - Claiming Protestant Occitania may be out of the question by now, but there is one last bastion of Anglois in the south...
+
+	the_last_sons_of_france = { 
+		potential = {
+		    tag = DUC
+			exists = yes
+			NOT = { has_country_flag = all_sons_return }
+		}
+		
+	    allow = { 
+		   is_greater_power = yes
+		   all_core = { owned_by = THIS }
+		   NOT = { exists = FRK }	   
+	    }
+	
+	    effect = { 
+		   prestige = 10
+		   set_country_flag = all_sons_return
+		   FRA_458 = { add_core = THIS }
+		}	
+	}
+
+	
+	absolute_anglois_supremecy_DUC = {
+	
+    picture = indoctrinal_education_communist
+
+		potential = {
+			tag = DUC
+			exists = yes
+			NOT = { has_country_flag = DUC_final_stage }			
+		}
+		
+		allow = {
+			NOT = { exists = ENL }
+			NOT = { exists = AEN }
+			NOT = { exists = FRA }
+			NOT = { exists = ANF }
+			458 = { is_core = DUC }
+			owns = 458		
+			war = no
+			school_reforms = good_schools
+			invention = national_radio_networks
+			invention = social_engineering
+			invention = social_anthropology
+		}
+		
+		effect = { 
+		prestige = 5 
+		set_country_flag = DUC_final_stage
+		remove_accepted_culture = english
+		remove_accepted_culture = breton
+		remove_accepted_culture = french
+		FRA_399 = { remove_core = BRG remove_core = PBG remove_core = CHA remove_core = FRK add_core = ANF }
+		FRA_458 = { remove_core = OCC remove_core = ARI remove_core = PRV remove_core = AQT add_core = ANF }
+	    ENL = { all_core = { add_core = AEN } all_core = { remove_core = ENL } }
+		FRA = { all_core = { add_core = ANF } all_core = { remove_core = FRA } }
+		BRT = { all_core = { add_core = ANF } all_core = { remove_core = BRT } }
+	    any_owned = {
+				limit = {
+					is_core = ANF
+				}
+				remove_province_modifier = anglois_cultural_unity
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+			}
+	    any_owned = {
+				limit = {
+					is_core = AEN
+				}
+				remove_province_modifier = anglois_cultural_unity
+				add_province_modifier = {
+					name = anglois_cultural_unity
+					duration = -1
+				}
+			}
+		}
+	}
+
 	# ENL stuff
 	
 	ENL_reintegrate_wales = { 
@@ -785,6 +909,111 @@ political_decisions = {
 	
 	
 	######################################
+	
+	#### Inciting Scottish Nationalism Decisions
+	
+	ENGLISHDUA_scottish_trigger = { 
+	picture = Resolve_the_Scottish_problem
+		potential = {
+		    tag = DUA
+		    has_global_flag = english_int
+			SCA = { 
+			   has_country_flag = haggislads
+			   owns = 269
+			}		
+			NOT = { 
+			   has_global_flag = BAGPIPESAREOVER
+			   has_country_flag = Helping_HAGGIS
+			}
+		}
+		
+	    allow = {  
+			is_greater_power = yes
+			war = no
+			is_disarmed = no
+			NOT = { truce_with = SCA }
+		}   
+	
+	    effect = { 		
+		   SCA = { country_event = 48268 }
+		   prestige = 10
+		   set_country_flag = Helping_HAGGIS
+		   set_global_flag = BAGPIPESAREOVER
+		}	
+	}
+	
+	AEN_scottish_trigger = { 
+	picture = Resolve_the_Scottish_problem
+		potential = {
+		    tag = AEN
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = AEN_UNLOCK_DECISIONS
+			}	
+			SCA = { 
+			   has_country_flag = haggislads
+			   owns = 269
+			}		
+			NOT = { 
+			   has_global_flag = BAGPIPESAREOVER
+			   has_country_flag = Helping_HAGGIS
+			}
+		}
+		
+	    allow = {  
+			is_greater_power = yes
+			war = no
+			is_disarmed = no
+			NOT = { truce_with = SCA }
+		}   
+	
+	    effect = { 		
+		   SCA = { country_event = 48268 }
+		   prestige = 10
+		   set_country_flag = Helping_HAGGIS
+		   set_global_flag = BAGPIPESAREOVER
+		}	
+	}
+	
+	ENL_scottish_trigger = { 
+	picture = Resolve_the_Scottish_problem
+		potential = {
+		    tag = ENL
+			OR = {
+			   government = hms_government
+			   government = democracy
+			   government = parliamentary_republic
+			}
+		    OR = {
+	           has_global_flag = AEN_ENDING
+	           has_country_flag = ENL_UNLOCK_DECISIONS
+			}	
+			SCA = { 
+			   has_country_flag = haggislads
+			   owns = 269
+			}		
+			NOT = { 
+			   has_global_flag = BAGPIPESAREOVER
+			   has_country_flag = Helping_HAGGIS
+			}
+		}
+		
+	    allow = {  
+			is_greater_power = yes
+			war = no
+			is_disarmed = no
+			NOT = { truce_with = SCA }
+		}   
+	
+	    effect = { 		
+		   SCA = { country_event = 48269 }
+		   prestige = 10
+		   set_country_flag = Helping_HAGGIS
+		   set_global_flag = BAGPIPESAREOVER
+		}	
+	}
+	
+	######################################	
 	
 	## Dual Monarchy and Revolution Decisions
 	

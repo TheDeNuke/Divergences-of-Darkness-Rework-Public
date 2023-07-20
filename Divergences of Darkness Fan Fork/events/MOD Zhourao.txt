@@ -1817,7 +1817,7 @@ country_event = {
 		tag = GAN
 		has_country_flag = custom_treaty_loser
 		has_global_flag = punish_GAN_JAP
-		truce_with = JAP
+		NOT = { war_with = JAP }
 	}
 	
 	mean_time_to_happen = { 
@@ -2016,7 +2016,7 @@ country_event = {
 		tag = GAN
 		has_country_flag = custom_treaty_loser
 		has_global_flag = punish_GAN_DUA
-		truce_with = DUA
+		NOT = { war_with = DUA }
 	}
 	
 	mean_time_to_happen = { 
@@ -2909,7 +2909,7 @@ province_event = {
 		}
 		owner = {
 			civilized = yes
-			has_country_flag = master_AST
+			has_country_flag = AST_master
 			NOT = { is_culture_group = southeast_asian }
 		}
 		OR = {
@@ -2931,7 +2931,11 @@ province_event = {
 		months = 30
 	    modifier = {
 			factor = 0.1
-			year = 1925
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.01
+			year = 1880
 		}
 	}
 	
@@ -2996,7 +3000,7 @@ province_event = {
 		}
 		owner = {
 			civilized = yes
-			has_country_flag = master_AST
+			has_country_flag = ASG_master
 			NOT = { is_culture_group = southeast_asian }
 		}
 		OR = {
@@ -3018,7 +3022,11 @@ province_event = {
 		months = 30
 	    modifier = {
 			factor = 0.1
-			year = 1925
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.01
+			year = 1880
 		}
 	}
 	
@@ -3083,7 +3091,7 @@ province_event = {
 		}
 		owner = {
 			civilized = yes
-			has_country_flag = master_AST
+			has_country_flag = ASS_master
 			NOT = { is_culture_group = southeast_asian }
 		}
 		OR = {
@@ -3105,7 +3113,11 @@ province_event = {
 		months = 30
 	    modifier = {
 			factor = 0.1
-			year = 1925
+			year = 1870
+		}
+	    modifier = {
+			factor = 0.01
+			year = 1880
 		}
 	}
 	
@@ -4485,5 +4497,88 @@ country_event = {
 					factor = -3
 				}
 		}
+	}
+}
+
+
+country_event = {
+	id = 95840 #Monument to Zheng He unfurled
+	title = "ZHO140.T"
+	desc = "ZHO140.D"
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "ZHO140.A"
+		set_country_flag = historiography_zheng
+		prestige = 15 
+		any_pop = { 
+			limit = { culture = ganguan }
+			militancy = -1 
+		}
+	}
+}
+
+country_event = {
+	id = 95841 #Monument to Zheng He unfurled
+	title = "ZHO141.T"
+	desc = "ZHO141.D"
+	
+	trigger = { 
+		tag = GAN 
+		has_country_flag = historiography_zheng
+		year = 1890 
+	}
+	
+	mean_time_to_happen = { 
+		months = 100 
+		modifier = { 
+			factor = 0.5 
+			year = 1900 
+		}
+		modifier = { 
+			factor = 0.1
+			year = 1905 
+		}
+	}
+
+	option = { 
+		name = "ZHO141.A"
+		clr_country_flag = historiography_zheng
+		prestige = -1 
+		any_pop = { 
+			limit = { culture = ganguan } 
+			consciousness = 1 
+			ideology = { factor = 0.01 value = reactionary } 
+		}
+	}
+}
+
+country_event = {
+	id = 958410 #Fix for GAN and the Zhusha situation
+	title = "ZHO142.T"
+	desc = "ZHO142.D"
+	
+	trigger = { 
+		tag = GAN 
+		OR = { has_global_flag = DUA_intervene_Zhusha has_global_flag = JAP_intervene_Zhusha has_global_flag = waiting_zhusha has_global_flag = punish_GAN_DUA has_global_flag = punish_GAN_JAP } 
+		war = no 
+		OR = { truce_with = DUA truce_with = JAP year = 1866 }
+	}
+	
+	mean_time_to_happen = { 
+		days = 100 
+	}
+	
+	option = { 
+		name = "ZHO141.A"
+		clr_global_flag = DUA_intervene_Zhusha
+		clr_global_flag = JAP_intervene_Zhusha
+		clr_global_flag = waiting_zhusha
+		clr_global_flag = punish_GAN_DUA
+		clr_global_flag = punish_GAN_JAP
+		random_owned = { owner = { limit = { truce_with = DUA } prestige = 25 } }
+		random_owned = { owner = { limit = { truce_with = JAP } prestige = 25 } }
+		militancy = -1 
 	}
 }

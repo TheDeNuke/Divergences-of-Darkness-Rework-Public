@@ -252,7 +252,7 @@ political_decisions = {
 			set_country_flag = SCO_recognized
 			set_global_flag = SCO_loss
 			any_owned = {
-				limit = { is_core = THIS NOT = { provid = 3355 } } 
+				limit = { is_core = THIS NOT = { province_id = 3355 } } 
 				remove_core = SCA
 			}
 			any_country = {
@@ -305,7 +305,7 @@ political_decisions = {
 		
 		allow = { 
 			iron_steamers = 1 
-			market_regulation = 1 
+			market_regulations = 1 
 			money = 250000
 		}
 		
@@ -401,6 +401,106 @@ political_decisions = {
 	           modifier = {
 	              factor = 0
 	              badboy = 0.5
+			   }
+		}
+	}
+	
+	### Novogrod Alliance ####
+	
+	deny_panrussian_novogrod = {
+	    picture = novogrod1000
+		potential = {
+			tag = SCA	
+			has_global_flag = finnish_chain_ended
+			has_global_flag = panrussian_NOV
+			has_country_flag = SCA_christian_mode
+			exists = NOV
+			NOT = { exists = FIN }
+			NOT = { has_country_flag = NOV_intervention_blocked }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+			war = no
+			is_disarmed = no
+		    NOT = { NOV = { war_with = MOS } }
+			NOT = { truce_with = NOV }
+		}
+		
+		effect = {
+            set_country_flag = NOV_intervention_blocked
+			badboy = 5
+			NOV = { country_event = 232615 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.8
+			   }
+		}
+	}
+	
+	## This is the only one that both Liberal and Non-Liberal Novogrod is permitted to do.
+	
+	alliance_with_novogrod = {
+	    picture = novogrod1000
+		potential = {
+			tag = SCA	
+			has_global_flag = finnish_chain_ended
+			has_global_flag = isolat_NOV
+			exists = NOV
+			NOT = { exists = FIN }
+			NOT = { has_country_flag = NOV_intervention_blocked }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+		    NOT = { NOV = { war_with = MOS } }
+			NOT = { truce_with = NOV }
+		}
+		
+		effect = {
+            set_country_flag = NOV_intervention_blocked
+			NOV = { country_event = 232613 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	the_pomor_annexation = {
+	    picture = novogrod1000
+		potential = {
+			tag = SCA	
+			has_global_flag = finnish_chain_ended
+			has_global_flag = failstate_NOV
+			has_country_flag = SCA_christian_mode
+			exists = PMY
+			NOT = { exists = FIN }
+			NOT = { has_country_flag = NOV_intervention_blocked }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+			war = no
+			is_disarmed = no
+		    NOT = { NOV = { war_with = MOS } }
+		}
+		
+		effect = {
+            set_country_flag = NOV_intervention_blocked
+			badboy = 5
+			PMY = { country_event = 232614 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              badboy = 0.8
 			   }
 		}
 	}
@@ -515,14 +615,18 @@ political_decisions = {
 			   OR = {
 			      war_with = BOH
 				  war_with = BRG
-				  war_with = DUA
+				  war_with = PBG
 				  war_with = RUS
+				  AND = {
+				     war_with = PLC
+					 NOT = { exists = RUT }
+				  }
 			   }
 		    }
 		}
 		
 		effect = {
-           SCA = { release_vassal = THIS country_event = { id = 191945 days = 1 } }
+           SCA = { release_vassal = THIS country_event = { id = 1919450 days = 1 } }
 		   any_country = {
 		      limit = {
 			     war_with = THIS
@@ -531,7 +635,7 @@ political_decisions = {
 		   }
 	       add_country_modifier = {
 				name = small_country_draft
-				duration = 1825
+				duration = -1
 	       }
            any_country = {
                 limit = { has_country_flag = alliance_with_finland }	
@@ -828,6 +932,10 @@ political_decisions = {
 				vote_franschise = universal_weighted_voting
 				vote_franschise = universal_voting
 			}
+            OR = { 
+               NGF = { vassal_of = THIS }
+               NOT = { exists = NGF }
+            }
 			OR = {
 				549 = {
 					OR = {
@@ -859,7 +967,6 @@ political_decisions = {
 			prestige = 20
 			set_country_flag = north_integration
 			add_accepted_culture = north_german
-			add_accepted_culture = prussian
 			any_pop = {
 				limit = {
 					culture = scandinavian
@@ -909,11 +1016,15 @@ political_decisions = {
 		potential = { 
 			tag = SCA 
 			is_greater_power = yes
-            has_country_flag = north_integration			
+            has_country_flag = north_integration		
 			NOT = { exists = CAE exists = HLR exists = GCF exists = GER has_country_flag = nordtyskland }
 		}
 	
-		allow = { 			
+		allow = { 	
+            OR = { 
+               NGF = { vassal_of = THIS }
+               NOT = { exists = NGF }
+            }			   
 			549 = {
 				OR = {
 					owned_by = THIS
@@ -972,6 +1083,7 @@ political_decisions = {
 					   vassal_of = THIS
 					}
 				}
+				all_core = { add_core = SCA }
 				annex_to = THIS
 			}
 		}

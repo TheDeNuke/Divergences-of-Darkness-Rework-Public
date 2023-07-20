@@ -297,6 +297,7 @@ country_event = {
 	
 	option = { 
 	name = "203513.A"
+	political_reform = normal_recruitment
 	set_country_flag = tatar_bismarck
 	military_reform = yes_foreign_weapons
 	activate_technology = flintlock_rifles
@@ -975,7 +976,7 @@ country_event = {
 	title = "TAR31.T"
 	desc = "TAR31.D"	
 	picture = "angry_cossack"
-	
+
 	trigger = { 
 	tag = KHK 
 	has_global_flag = PLC_EASTERN_COLLAPSE
@@ -990,7 +991,7 @@ country_event = {
 	
 	option = { 
 	name = "TAR31.A" 
-	set_country_flag = KHK_angry_host
+	set_global_flag = KHK_angry_host
 	}
 }
 
@@ -1002,7 +1003,7 @@ country_event = {
 	
 	trigger = { 
 	tag = KHK 
-	has_country_flag = KHK_angry_host
+	has_global_flag = KHK_angry_host
 	}
 	
 	fire_only_once = yes 
@@ -1015,9 +1016,10 @@ country_event = {
 	name = "TAR32.A" 
 	government = presidential_dictatorship 
 	political_reform = none_voting
+	political_reform = mandatory_service
 	remove_country_modifier = neutrality 
 	set_country_flag = cossack_neutrality_ended 
-	set_global_flag = move_CSK
+	set_global_flag = move_CSK	
 	any_pop = { 
 	militancy = 4 
 	consciousness = 5 
@@ -1029,6 +1031,7 @@ country_event = {
 	
 	option = { 
 	name = "TAR32.B" 
+	clr_global_flag = KHK_angry_host
 	prestige = 1
 	ai_chance = { 
 	factor = 50 
@@ -1180,6 +1183,7 @@ country_event = {
 	end_war = ZAZ
 	end_war = KHK 
 	end_war = DON 
+	clr_global_flag = KHK_angry_host
 	clr_country_flag = custom_treaty_loser
 	any_owned = { 
 	limit = { 
@@ -1212,9 +1216,10 @@ country_event = {
 	picture = "angry_cossack"
 	
 	trigger = { 
-	tag = CSK 
-	government = presidential_dictatorship 
-	has_country_flag = KHK_angry_host 
+	   tag = CSK 
+	   government = presidential_dictatorship 
+	   has_global_flag = KHK_angry_host 
+	   war = no
 	}
 	
 	mean_time_to_happen = { 
@@ -1226,29 +1231,40 @@ country_event = {
 	option = { 
 	name = "TAR37.A"
 	government = democracy
+	clr_global_flag = KHK_angry_host 
 	remove_country_modifier = cossack_lifestyle
 	ai_chance = { 
-		factor = 20 
+		factor = 5
+ 		   modifier = {
+		      factor = 0
+		      exists = RUT
+		   }
 		}
 	}
 	
 	option = { 
 	name = "TAR37.B"
 	government = absolute_monarchy
+	clr_global_flag = KHK_angry_host 
 	remove_country_modifier = cossack_lifestyle
 	ai_chance = { 
-		factor = 50
+		factor = 45
+ 		   modifier = {
+		      factor = 0
+		      exists = RUT
+		   }
 		}
 	}
 	
 	option = { 
 	name = "TAR37.C"
+	clr_global_flag = KHK_angry_host 
 	remove_country_modifier = cossack_lifestyle
 	any_pop = { 
 	militancy = -1
 	}
 	ai_chance = { 
-		factor = 30 
+		factor = 50 
 		}
 	}
 }
@@ -2287,9 +2303,9 @@ country_event = {
 	}
 }
 
-################ The Tatar Problem - Triggered by decision by either MOS after the pacifist modifier expires or NOV that owns Moscow - NOV/MOS must win to form RUS ##############################
+################ The Tatar Problem #############################
 
-#### Unciv Tatarstan is threatened by Muscovy Unification and is given another three years worth of Research Points ####
+#### Tatarstan is threatened by Russian Unification but for now is capable of not permitting Russia to claim its current territory ####
 
 country_event = { 
 	id = 203557
@@ -2297,27 +2313,20 @@ country_event = {
 	desc = "TAR57.D"
 	picture = "angry_cossack"	
 	
-	trigger = { 
-	   tag = TAR
-	   civilized = no
-	   exists = MOS
-	   NOT = { has_country_flag = tatar_warning }
-	}
-	
+	is_triggered_only = yes
 	fire_only_once = yes 
-	
-	mean_time_to_happen = { 
-	   days = 7
-	}
 	
 	option = { 
 	name  = "TAR57.A"
-	set_country_flag = tatar_warning
+	any_owned = {
+	   limit = { is_core = RUS }
+	   remove_core = RUS
+	}
 	prestige = -1
 	}
 }
 
-#### The Tatar Threat - North Russian State/Muscovy is effectively told that so long as the Tatars are relevent then Russia shall never be a Great Power. Thus the Tatar Empire must end. ####
+#### The Tatar Threat - Russia has ran into the wall known as Tatarstan - Tatarstan must die if Russia is to triumph ####
 
 country_event = { 
 	id = 203558
@@ -2371,82 +2380,11 @@ country_event = {
 	name = "TAR59.A"
  	    any_pop = {
 		    militancy = -2
-	    }
-	    any_owned = {
-		   limit = {
-		        is_core = KAZ
-		   }
-		   secede_province = KAZ
 	    }	
-	    any_owned = {
-		   limit = {
-		        is_core = BAH
-		   }
-		   secede_province = BAH
-	    }
-	    any_owned = {
-		   limit = {
-		        is_core = ASK
-				NOT = { region = RUS_1039 }
-		   }
-		   secede_province = ASK
-	    }
-	    any_owned = {
-		   limit = {
-		        is_core = SIB
-		   }
-		   secede_province = SIB
-	    }
-	    any_owned = {
-		   limit = {
-		        is_core = ZAZ
-				NOT = { province_id = 968 }
-				NOT = { province_id = 970 }
-		   }
-		   secede_province = ZAZ
-	    }		
-        KAZ = { 
-		   government = presidential_dictatorship 
-		   add_country_modifier = { name = taiping_draft duration = 720 }
-   	       war = {
-			   target = TAR
-			      attacker_goal = {
-				     casus_belli = cut_down_to_size
-			      }
-			      defender_goal = {
-				     casus_belli = civil_war
-			      }
-		    }
-		}
-        ASK = { 
-		   government = presidential_dictatorship 
-		   add_country_modifier = { name = taiping_draft duration = 720 }
-   	       war = {
-			   target = TAR
-			      attacker_goal = {
-				     casus_belli = cut_down_to_size
-			      }
-			      defender_goal = {
-				     casus_belli = civil_war
-			      }
-		    }
-		}
-        ZAZ = { 
-		   add_country_modifier = { name = taiping_draft duration = 720 }
-   	       war = {
-			   target = TAR
-			      attacker_goal = {
-				     casus_belli = cut_down_to_size
-			      }
-			      defender_goal = {
-				     casus_belli = civil_war
-			      }
-		    }
-		}
 	}
 }
 
-### Tatarstan forces the Russian Tag into a whitepeace. I guess you are going to have to form Russia and deal with them later. ###
+### Tatarstan forces the Russian Tag into a whitepeace. Southern Direction is blocked for now but they have not stalled so you are going to be dealing with them after they deal with the Northern or Western Directions. ###
 
 country_event = { 
 	id = 203560
@@ -2470,12 +2408,14 @@ country_event = {
 	name = "TAR60.A"
 	   clr_global_flag = GREAT_TATAR_WAR
 	   clr_country_flag = tatar_killing_attempt
-       prestige_factor = -0.25
+       prestige_factor = -0.2
 	   set_country_flag = TAR_attempt_failed
 	}
 }
 
 ### Russian Tag defeats Tatarstan and Tatarstan implodes into a bunch of Military Warlords after the Khan is killed ###
+
+### Russia also gets the left side of the Volga and Saraj which they would have usually taken earlier if not for Tatarstan Existing.
 
 country_event = { 
 	id = 203561
@@ -2500,7 +2440,16 @@ country_event = {
 	   prestige_factor = -0.5
 	   remove_country_modifier = CLM_fight
 	   clr_global_flag = GREAT_TATAR_WAR
-	   clr_country_flag = custom_treaty_loser    
+	   clr_country_flag = custom_treaty_loser
+	   RUS_1035 = { add_core = RUS }
+       RUS_1039 = { add_core = RUS } 	   
+	   any_owned = {
+		   limit = {
+		        is_core = RUS
+		   }
+		   secede_province = RUS
+	   }
+	   RUS = { prestige = 20 set_country_flag = left_volga }	  
        all_core = { remove_core = TAR }	   
 	   any_owned = {
 		   limit = {
@@ -2556,15 +2505,12 @@ country_event = {
 		   }
 		   secede_province = KHK
 	   }
-	   government = presidential_dictatorship
-	   KAZ = { government = presidential_dictatorship }
-	   ASK = { government = presidential_dictatorship }
-	   BAH = { government = presidential_dictatorship }	   
+	   government = presidential_dictatorship  
        change_tag = CRI  	   
 	}
 }
 
-### Tatarstan defeats Southern Russian Tag and the funny occurs ###
+### Tatarstan defeats Russia and they lose all Cossack Territories and suffer a expansion stalling ###
 
 country_event = { 
 	id = 203562
@@ -2574,7 +2520,7 @@ country_event = {
 	
 	trigger = {    
 	   has_country_flag = tatar_killing_attempt
-	   primary_culture = russian
+	   tag = RUS
 	   war = no
 	   has_global_flag = GREAT_TATAR_WAR
 	   has_country_flag = custom_treaty_loser
@@ -2590,124 +2536,48 @@ country_event = {
 	   clr_country_flag = custom_treaty_loser
 	   clr_country_flag = tatar_killing_attempt
 	   set_country_flag = TAR_attempt_failed
-	   set_global_flag = MOS_shattered
-	   prestige_factor = -0.9
-       # Become Moscow again
-       change_tag = MUS	
-	   capital = 1008
-       # Add warlord cores back. Also add MOS cores just to be sure.
-       1020 = { add_core = MUS add_core = TVE add_core = NZH remove_core = MOS }
-       1011 = { remove_core = MUS remove_core = MOS }
-	   RUS_1008 = { add_core = MUS remove_core = MOS }
-	   RUS_1020 = { remove_core = MUS remove_core = MOS add_core = RYA  }	
-	   RUS_998 = { remove_core = MUS remove_core = MOS add_core = TVE }
-	   RUS_1015 = { remove_core = MUS remove_core = MOS add_core = SMO }  
+	   prestige_factor = -0.4
 	   any_owned = {
 		   limit = {
-		        is_core = NZH
+		        is_core = DON
 		   }
-		   secede_province = NZH
+		   remove_core = RUS
+		   secede_province = TAR
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = RYA
+		        is_core = AKH
 		   }
-		   secede_province = RYA
+		   remove_core = RUS
+		   secede_province = TAR
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = TVE
+		        is_core = VOR
 		   }
-		   secede_province = TVE
+		   remove_core = RUS
+		   secede_province = TAR
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = RYA
+		        is_core = KHK
 		   }
-		   secede_province = RYA
+		   remove_core = RUS
+		   secede_province = TAR
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = SMO
+		        is_core = ZAZ
 		   }
-		   secede_province = SMO
+		   remove_core = RUS
+		   secede_province = TAR
 	   }
-	}
-}
-
-### Tatarstan somehow defeats Northern Russian Tag. Treat this as Novogrod and then go into isolation. ###
-
-country_event = { 
-	id = 203563
-	title = "TAR63.T"
-	desc = "TAR63.D"
-	picture = "Tatar_imam"	
-	
-	trigger = {    
-	   has_country_flag = tatar_killing_attempt
-	   primary_culture = north_russian
-	   war = no
-	   has_global_flag = GREAT_TATAR_WAR
-	   has_country_flag = custom_treaty_loser
-	}
-	
-	mean_time_to_happen = { 
-	   days = 1
-	}
-	
-	option = { 
-	name = "TAR63.A"
-	   prestige_factor = -0.5
-	   set_global_flag = isolat_NOV
-	   clr_global_flag = panrussian_NOV
-	   clr_global_flag = GREAT_TATAR_WAR
-	   clr_country_flag = custom_treaty_loser
-	   clr_country_flag = tatar_killing_attempt
-	   set_country_flag = TAR_attempt_failed
-	   # Add Moscow Shattered Flag if it does not already exist
-	   set_global_flag = MOS_shattered
-       # Add warlord cores back. Also add MOS cores just to be sure.
-       1020 = { add_core = MUS add_core = TVE add_core = NZH remove_core = MOS }
-       1011 = { remove_core = MUS remove_core = MOS }
-	   RUS_1008 = { add_core = MUS remove_core = MOS }
-	   RUS_1020 = { remove_core = MUS remove_core = MOS add_core = RYA  }	
-	   RUS_998 = { remove_core = MUS remove_core = MOS add_core = TVE }
-	   RUS_1015 = { remove_core = MUS remove_core = MOS add_core = SMO } 
-	   any_owned = {
-		   limit = {
-		        is_core = MUS
-		   }
-		   secede_province = MUS
-	   }	   
-	   any_owned = {
-		   limit = {
-		        is_core = NZH
-		   }
-		   secede_province = NZH
-	   }
-	   any_owned = {
-		   limit = {
-		        is_core = RYA
-		   }
-		   secede_province = RYA
-	   }
-	   any_owned = {
-		   limit = {
-		        is_core = TVE
-		   }
-		   secede_province = TVE
-	   }
-	   any_owned = {
-		   limit = {
-		        is_core = RYA
-		   }
-		   secede_province = RYA
-	   }
-	   any_owned = {
-		   limit = {
-		        is_core = SMO
-		   }
-		   secede_province = SMO
+       any_pop = {
+          militancy = 1
+       }		  
+	   add_country_modifier = {
+		  name = RUS_stall_expansion
+		  duration = 9125
 	   }
 	}
 }
@@ -2799,9 +2669,9 @@ country_event = {
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = KZE
+		        is_core = KZH
 		   }
-		   secede_province = KZE
+		   secede_province = KZH
 	   }
 	   any_owned = {
 		   limit = {
@@ -2820,7 +2690,7 @@ country_event = {
 ### Crimea owns Kazan and has still not formed Tatarstan by 1865 - Instantly Collapse ###
 
 country_event = { 
-	id = 203565
+	id = 2035650
 	title = "Crimean Collapse"
 	desc = "You should have considered forming Tatarstan by now AI"
 	picture = "Tatar_imam"	
@@ -2900,9 +2770,9 @@ country_event = {
 	   }
 	   any_owned = {
 		   limit = {
-		        is_core = KZE
+		        is_core = KZH
 		   }
-		   secede_province = KZE
+		   secede_province = KZH
 	   }
 	   any_owned = {
 		   limit = {
@@ -2915,3 +2785,328 @@ country_event = {
 	   BAH = { government = presidential_dictatorship }	   	   
 	}
 }
+
+### Sloboda Ukraine has stalled - Instantly Collapse ###
+
+country_event = { 
+	id = 2035651
+	title = "Kharkov has stalled"
+	desc = "AI. What are you doing. You should have formed Ukraine ages ago."
+	picture = "Tatar_imam"	
+	
+	trigger = { 
+	   tag = KHK
+	   ai = yes
+	   year = 1860	   
+	   war = no
+	   OR = {
+	     owns = 1019
+         owns = 972
+         owns = 980
+       }		 
+	}
+	
+	mean_time_to_happen = { 
+	   days = 31
+	}
+
+	
+	option = { 
+	name = "game over yeah"
+	   prestige_factor = -0.5 
+       all_core = { remove_core = KHK }	  
+       978 = { add_core = KHK }
+       963 = { add_core = KHK }
+       962 = { add_core = KHK } 	   
+	   any_owned = {
+		   limit = {
+		        is_core = BAH
+		   }
+		   secede_province = BAH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = KAZ
+		   }
+		   secede_province = KAZ
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = ASK
+		   }
+		   secede_province = ASK
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = SIB
+		   }
+		   secede_province = SIB
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = DON
+		   }
+		   secede_province = DON
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = AKH
+		   }
+		   secede_province = AKH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = VOR
+		   }
+		   secede_province = VOR
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = ZAZ
+		   }
+		   secede_province = ZAZ
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = KZH
+		   }
+		   secede_province = KZH
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = NOG
+		   }
+		   secede_province = NOG
+	   }
+	   any_owned = {
+		   limit = {
+		        is_core = CRI
+		   }
+		   secede_province = CRI
+	   }	      	   
+	}
+}
+
+#### Angry Hetman murders Tatars ####
+
+country_event = { 
+	id = 203565
+	title = "TAR65.T"
+	desc = "TAR65.D"
+	picture = "Tatar_imam"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "TAR65.A"
+		CRI = { country_event = 203566 } 
+		war = {
+			target = CRI 
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = { 
+			casus_belli = custom_treaty_cb
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 203566
+	title = "TAR66.T" #CSK declared war on us
+	desc = "TAR66.D"
+	picture = "Tatar_imam"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "TAR66.A"
+	}
+}
+
+country_event = { 
+	id = 203567
+	title = "TAR67.T"
+	desc = "TAR67.D"
+	picture = "Tatar_imam"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "TAR67.A"
+		TAR = { country_event = 203566 } 
+		war = {
+			target = TAR 
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = { 
+			casus_belli = custom_treaty_cb
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 203568
+	title = "TAR68.T"
+	desc = "TAR68.D"
+	picture = "Tatar_imam"
+	
+	major = yes 
+	
+	trigger = { 
+		tag = CRI 
+		has_country_flag = custom_treaty_loser 
+		truce_with = KHK
+	}
+	
+	option = { 
+		name = "TAR68.A"
+		clr_country_flag = custom_treaty_loser
+		any_owned = { 
+			limit = { OR = { is_core = DON is_core = ZAZ is_core = VOR is_core = AKH } } 
+			remove_core = THIS
+			secede_province = KHK 			
+		}
+		prestige_factor = -0.5
+		KHK = { country_event = 203569 }
+	}
+}
+
+country_event = { 
+	id = 203569
+	title = "TAR69.T"
+	desc = "TAR69.D"
+	picture = "Tatar_imam"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "TAR69.A"
+		prestige = 25 
+		any_pop = { 
+			limit = { has_pop_culture = cossack } 
+			militancy = -5 
+		}
+	}
+}
+	
+
+country_event = { 
+	id = 203570
+	title = "TAR70.T"
+	desc = "TAR70.D"
+	picture = "Tatar_imam"
+	
+	major = yes 
+	
+	trigger = { 
+		tag = TAR 
+		has_country_flag = custom_treaty_loser 
+		truce_with = KHK 
+	} 
+
+	
+	option = { 
+		name = "TAR70.A"
+		clr_country_flag = custom_treaty_loser
+		change_tag = CRI 
+		KHK = { country_event = 203569 }
+		any_owned = { 
+			limit = { OR = { is_core = DON is_core = ZAZ is_core = VOR is_core = AKH } } 
+			remove_core = THIS
+			secede_province = KHK 		
+		}
+		any_owned = { 
+			limit = { is_core = KAZ } 
+			remove_core = THIS 
+			secede_province = KAZ
+			
+		}
+		any_owned = { 
+			limit = { is_core = ASK }
+            remove_core = THIS 			
+			secede_province = ASK			
+		}
+		prestige_factor = -0.5
+	}
+}
+
+country_event = { 
+	id = 203571
+	title = "TAR71.T"
+	desc = "TAR71.D"
+	picture = "Tatar_imam"
+	
+	trigger = { 
+		tag = KHK 
+		has_country_flag = custom_treaty_loser 
+		truce_with = CRI
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "TAR71.A"
+		clr_country_flag = custom_treaty_loser 
+		any_owned = { 
+			limit = { OR = { is_core = CRI is_core = ZAZ } }
+			secede_province = CRI 
+		}
+		any_owned = { 
+			limit = { is_core = VOR }
+			secede_province = VOR 
+		}
+		CRI = { country_event = 203573 } 
+	}
+}
+
+country_event = { 
+	id = 203572
+	title = "TAR72.T"
+	desc = "TAR72.D"
+	picture = "Tatar_imam"
+	
+	trigger = { 
+		tag = KHK 
+		has_country_flag = custom_treaty_loser 
+		truce_with = TAR
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "TAR71.A"
+		clr_country_flag = custom_treaty_loser 
+		any_owned = { 
+			limit = { OR = { is_core = CRI is_core = ZAZ } }
+			secede_province = TAR 
+		}
+		any_owned = { 
+			limit = { is_core = VOR }
+			secede_province = VOR 
+		}
+		TAR = { country_event = 203573 } 
+	}
+}
+
+country_event = { 
+	id = 203573
+	title = "TAR73.T"
+	desc = "TAR73.D"
+	picture = "Tatar_imam"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "TAR73.A"
+		create_vassal = KHK 
+		create_vassal = DON
+		prestige = 25
+	}
+}
+	

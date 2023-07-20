@@ -413,6 +413,13 @@ country_event = {
 		name = "HRE12.A"
 		set_country_flag = road_to_Imperial_Republic
 		prestige = -10
+		any_owned = { 
+			limit = { 
+				is_core = BOH 
+				NOT = { is_core = GER } 
+			}
+		    remove_core = THIS 
+		}
 		country_event = { id = 410013 days = 3 }
 		random_owned = {
 			limit = {
@@ -480,14 +487,6 @@ country_event = {
 		primary_culture = rheinish 
 		political_reform = none_voting
 		ruling_party_ideology = anarcho_liberal 
-		any_owned = { 
-			limit = { 
-				is_core = BOH 
-				NOT = { is_core = GER } 
-				}
-				remove_core = THIS 
-				secede_province = BOH 
-			}
 		create_vassal = BOH 
 		BOH = { country_event = 410014 } 
 		country_event = { id = 410015 days = 3 } 
@@ -668,7 +667,10 @@ country_event = {
 	
 	option = { 
 	name = "HRE20.A"
-	BRG = { country_event = { id = 410021 days = 3 } }
+	any_country = { 
+		limit = { OR = { tag = BRG tag = PBG } exists = yes } 
+			country_event = { id = 410021 days = 3 } 
+		}
 	SCA = { country_event = { id = 410021 days = 4 } }
 	HLR = { country_event = { id = 410022 days = 2 } }
 	country_event = { id = 410024 days = 15 } 
@@ -731,10 +733,24 @@ country_event = {
 	
 	option = { 
 		name = "HRE24.A"
+	    add_country_modifier = {
+			name = small_country_draft
+		    duration = 1000
+	    }
 		set_global_flag = COALITION_WAR
-		BRG = { country_event = 410025 } 
+		any_country = { 
+		limit = { OR = { tag = BRG tag = PBG } exists = yes } 
+			country_event = 410025  
+		}
 		SCA = { country_event = 410025 } 
-		HLR = { release_vassal = THIS country_event = { id = 410026 days = 2 } }
+		HLR = { 
+		   release_vassal = THIS 
+	       add_country_modifier = {
+				name = taiping_draft
+				duration = 1000
+	       }
+		   country_event = { id = 410026 days = 2 } 
+		}
 		war = {
 			target = HLR
 			attacker_goal = {
@@ -757,6 +773,10 @@ country_event = {
 	
 	option = { 
 		name = "HRE25.A"
+	    add_country_modifier = {
+		   name = taiping_draft
+		   duration = 1000
+	    }
 		war = {
 			target = HLR
 			attacker_goal = {
@@ -781,7 +801,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE26.A"
-		#add_country_modifier ?
+
 	}
 }
 
@@ -858,6 +878,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE29.A"
+		BOH = { remove_country_modifier = small_country_draft }
 		end_war = BOH 
 		inherit = BOH
 		set_country_flag = sigismund_captured
@@ -943,6 +964,7 @@ country_event = {
 			}
 		}
 		military_access = BRG
+		HLR = { country_event = 410032 }
 	}
 }
 
@@ -968,8 +990,11 @@ country_event = {
 	trigger = { 
 	tag = HLR 
 	has_global_flag = COALITION_WAR
-	NOT = { war_with = BRG }
-	BRG = { has_country_flag = custom_treaty_loser exists = yes } 
+	NOT = { OR = { war_with = BRG war_with = PBG } }
+	OR = { 
+		BRG = { has_country_flag = custom_treaty_loser exists = yes } 
+		PBG = { has_country_flag = custom_treaty_loser exists = yes } 
+		}
 	}
 	
 	mean_time_to_happen = { 
@@ -981,7 +1006,17 @@ country_event = {
 		set_country_flag = victory_over_BRG
 		create_alliance = BRG
 		RHI = { all_core = { add_core = HLR } } 
-		BRG = { country_event = 410034 }
+		any_country = { 
+		limit = { OR = { tag = BRG tag = PBG } exists = yes } 
+			country_event = 410034  
+		}
+		ai_chance = { 
+			factor = 30 
+			modifier = { 
+				factor = 0 
+				PBG = { exists = yes } 
+			}
+		}
 	}
 	
 	option = { 
@@ -991,7 +1026,10 @@ country_event = {
 		RHI = { all_core = { add_core = HLR } } 
 		NET = { all_core = { add_core = HLR } } 
 		BRB = { all_core = { remove_core = HLR } } 
-		BRG = { country_event = 410035 }
+		any_country = { 
+		limit = { OR = { tag = BRG tag = PBG } exists = yes } 
+			country_event = 410035 
+		}
 		random_country = {
 			limit = {
 				NOT = { has_country_modifier = neutrality }
@@ -1008,6 +1046,13 @@ country_event = {
 			}
 		}
 		badboy = 12
+		ai_chance = { 
+			factor = 40
+			modifier = { 
+				factor = 0 
+				PBG = { exists = yes } 
+			}
+		}
 	}
 	
 	option = { 
@@ -1017,6 +1062,7 @@ country_event = {
 		NET = { all_core = { add_core = HLR } } 
 		BRB = { all_core = { remove_core = HLR } } 
 		inherit = BRG 
+		inherit = PBG
 		any_owned = { 
 			limit = { is_core = LRR }
 			secede_province = LRR 
@@ -1069,12 +1115,16 @@ country_event = {
 			}
 		}
 		badboy = 24
+		ai_chance = { 
+			factor = 25
+		}
 	}
 	
 	option = { 
 		name = "HRE33.E" #Integrate all Germanics and release a big FLA/LRR puppet
 		set_country_flag = victory_over_BRG
 		inherit = BRG
+		inherit = PBG
 		RHI = { all_core = { add_core = HLR } } 
 		NET = { all_core = { add_core = HLR } } 
 		VOC = { country_event = 410051 }
@@ -1114,6 +1164,9 @@ country_event = {
 			}
 		}
 		badboy = 40
+		ai_chance = { 
+			factor = 5 
+		}
 	}
 }
 
@@ -1135,6 +1188,7 @@ country_event = {
 				is_core = RHI 
 			}
 			remove_core = BRG 
+			remove_core = PBG
 			add_core = HLR
 			secede_province = HLR 
 		}
@@ -1223,6 +1277,7 @@ country_event = {
 				is_core = RHI 
 			}
 			remove_core = BRG 
+			remove_core = PBG
 			add_core = HLR
 			secede_province = HLR 
 		}
@@ -1232,6 +1287,7 @@ country_event = {
 				NOT = { is_core = BRB } 
 			}
 			remove_core = BRG 
+			remove_core = PBG
 			add_core = HLR
 			secede_province = HLR 
 		}
@@ -1357,6 +1413,14 @@ country_event = {
 		prestige_factor = -0.90 
 		#Cede all Burgundian territories to Burgundy 
 		any_owned = { 
+			limit = { OR = { is_core = BRG is_core = PBG } }
+			secede_province = CFR 
+		}
+		any_country = { 
+			limit = { OR = { tag = PBG tag = BRG } exists = yes }
+			inherit = CFR
+		}
+		any_owned = { 
 		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
 			remove_core = THIS 
 			secede_province = SCA
@@ -1399,6 +1463,14 @@ country_event = {
 			}
 		prestige_factor = -0.90 
 		#Cede all Burgundian territories to Burgundy 
+		any_owned = { 
+			limit = { OR = { is_core = BRG is_core = PBG } }
+			secede_province = CFR 
+		}
+		any_country = { 
+			limit = { OR = { tag = PBG tag = BRG } exists = yes }
+			inherit = CFR
+		}
 		any_owned = { 
 		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
 			remove_core = THIS 
@@ -3225,7 +3297,7 @@ country_event = {
 	trigger = { 
 		tag = HLR 
 		has_country_flag = HRE_manifesto
-		has_country_modifier = secret_police
+		police_reform = secret_police
 		has_country_flag = German_revolution
 		year = 1890
 		NOT = { has_country_flag = police_syndicalism } 
@@ -3269,7 +3341,7 @@ country_event = {
 	trigger = { 
 		tag = HLR 
 		has_country_flag = HRE_manifesto
-		has_country_modifier = secret_police
+		police_reform = secret_police
 		has_country_flag = German_revolution
 		year = 1895
 		NOT = { has_country_flag = hayek_dead } 
@@ -3322,7 +3394,7 @@ country_event = {
 	trigger = { 
 		tag = HLR 
 		has_country_flag = HRE_manifesto
-		has_country_modifier = secret_police
+		police_reform = secret_police
 		year = 1902 
 	} 
 	

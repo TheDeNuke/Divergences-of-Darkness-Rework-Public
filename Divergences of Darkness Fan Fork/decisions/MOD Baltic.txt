@@ -10,6 +10,7 @@ political_decisions = {
 		    tag = PLC
             debt_law = serfdom
             has_country_flag = serfdom_not_abolished
+			NOT = { has_country_flag = serfdom_removal_blocked }
         }
         allow = {
 		    has_global_flag = NOBILITY_ARE_GONE
@@ -246,6 +247,216 @@ political_decisions = {
         }
         ai_will_do = { factor = 1 }
     }
+	
+### Stanislaw's Hell ####
+
+	reintegrate_lithuania = {
+	
+	    picture = lithuania
+	
+		potential = {
+            tag = PLC
+			has_country_flag = stanislaw_timelimit
+			NOT = { has_country_flag = the_mess_to_clean_up }
+			NOT = { has_country_flag = gotterlit }
+		}
+			
+		allow = {
+		    OR = {
+		       NOT = { debt_law = serfdom }
+			   NOT = { has_country_flag = LIT_nobility_pissed }
+			   AND = {
+			      is_greater_power = yes
+				  LIT = { in_sphere = THIS }
+			   }
+			   money = 1500000
+			}
+		}
+			
+		effect = {
+		   set_country_flag = gotterlit
+		   prestige = 5
+		   LIT = {
+		      government = prussian_constitutionalism
+		   }
+           inherit = LIT
+		   any_owned = {
+		      limit = { is_core = LIT NOT = { is_core = SMO } NOT = { is_core = PRU } }
+		      add_core = PLC
+		   }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	## This can be used immediately if the Lithuanian Nobility is pissed off due to it being obviously a greater priority then the Lithuanian Nobility.
+	
+	prevent_general_rada = {
+	
+	    picture = greater_ukraine
+	
+		potential = {
+            tag = PLC
+			has_country_flag = stanislaw_timelimit
+			NOT = { has_country_flag = to_stop_rada }
+		}
+			
+		allow = {
+			OR = {
+			   NOT = { exists = LIT }
+			   has_country_flag = LIT_nobility_pissed
+			}
+		}
+			
+		effect = {
+		   set_country_flag = to_stop_rada 
+		   prestige = 5
+		   country_event = { id = 2224442 days = 7 }
+ 		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	our_path_to_the_sea = {
+	
+	    picture = danzig_imperial_shipyard
+	
+		potential = {
+            tag = PLC
+			has_country_flag = stanislaw_timelimit
+			NOT = { has_country_flag = time_to_float }
+		}
+			
+		allow = {
+		    OR = { 
+			   is_greater_power = yes
+			   is_secondary_power = yes
+			}
+			NOT = { exists = LIT }
+			NOT = { exists = KIE }
+			NOT = { exists = RUT }
+		}
+			
+		effect = {
+		   set_country_flag = time_to_float
+		   prestige = 5
+		   country_event = { id = 22244450 days = 7 }
+ 		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### This may be useful to rush the abolishment of serfdom.
+	### Gee this is just so liberal I'm sure nothing could go wrong.
+	
+	create_provisional_constitution = {
+	
+	    picture = treaty_signing
+	
+		potential = {
+            tag = PLC
+			has_country_flag = stanislaw_timelimit
+			NOT = { has_country_flag = stanislaw_constitution }
+		}
+			
+		allow = {
+		    OR = { 
+			   is_greater_power = yes
+			   is_secondary_power = yes
+			}
+			NOT = { exists = LIT }
+			NOT = { exists = KIE }
+			NOT = { exists = RUT }
+			state_n_government = 1
+		}
+			
+		effect = {
+		   set_country_flag = stanislaw_constitution
+		   plurality = 75
+           ruling_party_ideology = liberal	   
+	       political_reform = yes_meeting
+	       political_reform = free_press
+	       political_reform = secret_ballots
+	       political_reform = all_voting_pops
+		   prestige = 5
+           any_pop = {
+			  consciousness = 6
+		   }
+ 		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### THE NEW TREATY OF LUBLIN ####
+	
+	stanislaw_lublin = {
+	
+	    picture = become_poland_lithuania
+	
+		potential = {
+            tag = PLC
+			has_country_flag = stanislaw_timelimit
+			NOT = { has_country_flag = stanislaw_lublin }
+		}
+			
+		allow = {
+		    is_greater_power = yes
+			state_n_government = 1
+			has_country_flag = stanislaw_constitution
+			has_country_flag = PLC_ported
+			NOT = { debt_law = serfdom }
+		}
+			
+		effect = {
+		   set_country_flag = stanislaw_lublin
+		   prestige = 40
+		   badboy = 5
+		   any_pop = {
+				limit = {
+					OR = {
+					   has_pop_culture = north_german
+					   has_pop_culture = prussian
+					   has_pop_culture = russian
+					   has_pop_culture = cossack
+					}
+				}
+				militancy = 6
+		   }
+		   relation = { who = RUS value = -200 }
+		   relation = { who = SCA value = -200 }
+		   relation = { who = BOH value = -200 }
+		   relation = { who = CAE value = -200 }
+		   relation = { who = GCF value = -200 }
+		   relation = { who = HLR value = -200 }
+		   ## Jewish Burghers have written your constitution and its liberal as fuck. Good Job
+		   random_owned = {
+		      limit = { owner = { has_country_flag = PLC_orthodox NOT = { has_country_flag = PLC_angry_jews } } }
+			  owner = { country_event = 2224448 }
+		   }
+		   ## The Nobility has written your constitution since you pissed off the jews and thus your most important supporters
+		   random_owned = {
+		      limit = { owner = { has_country_flag = PLC_angry_jews NOT = { has_country_flag = PLC_orthodox } } }
+			  owner = { country_event = 22244480 }
+		   }
+		   ## You pissed off both major intrest groups and all you have left is the army. Eternal Royal Dictatorship it is.
+		   random_owned = {
+		      limit = { owner = { has_country_flag = PLC_angry_jews has_country_flag = PLC_orthodox } }
+			  owner = { country_event = 2224449 }
+		   }
+ 		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
 ### The Future of Poland ####
 
@@ -339,11 +550,12 @@ political_decisions = {
 	
 		potential = {
 		    OR = {
-			tag = KIE
-            tag = UKR
-			tag = VOL
-			tag = BLR
+			   tag = KIE
+               tag = UKR
+			   tag = VOL
+			   tag = BLR
 			}
+			NOT = { has_country_flag = BLOCK_UKR }
 			NOT = { has_global_flag = RUT_death_moment }
 			NOT = { has_global_flag = first_partition_start }
 		}
@@ -442,9 +654,10 @@ political_decisions = {
 	
 		potential = {
 		    OR = {
-			tag = KIE
-			tag = VOL
+			   tag = KIE
+			   tag = VOL
 			}
+			NOT = { has_country_flag = BLOCK_UKR }
 		}
 			
 		allow = {
@@ -966,7 +1179,7 @@ political_decisions = {
 			owns = 354
 			owns = 546 	
 			OR = {
-			NOT = { exists = PLC }
+			   NOT = { exists = PLC }
 			   AND = {
 			      revolution_n_counterrevolution = 1
 			      has_global_flag = NOBILITY_ARE_GONE
@@ -987,6 +1200,44 @@ political_decisions = {
 	              factor = 0
 	              badboy = 0.6
 			   }
+		}
+	}
+	
+	### Time to demolish the Commonwealth - This decision forces the General Rada if the Commonwealth dodged it.
+	
+	force_rada_SCA = {
+	
+	    picture = greater_ukraine
+	
+		potential = {
+		    tag = SCA	
+			PLC = { 
+			   has_country_modifier = hyperappeasement_PLC 
+			   NOT = { has_country_flag = THE_SECOND_SEJM } 
+			}		
+		}
+			
+		allow = {	
+		   is_greater_power = yes
+           is_sphere_leader_of = KIE
+		   is_sphere_leader_of = LIT	   
+		   OR = {
+		     has_global_flag = isolat_NOV
+			 has_global_flag = failstate_NOV
+		   }
+		   NOT = { exists = RUS }
+		   NOT = { has_country_flag = there_goes_the_commonwealth }
+		}
+			
+		effect = {
+		   set_country_flag = there_goes_the_commonwealth
+		   badboy = 1
+		   prestige = 5
+           PLC = { set_country_flag = general_rada_inevitable }
+		}
+		
+		ai_will_do = {
+			factor = 1
 		}
 	}
 	
@@ -1740,8 +1991,7 @@ political_decisions = {
 
 		potential = {
 			tag = PLC 
-			#NOT = { has_global_flag = first_partition_start }
-			#NOT = { has_global_flag = first_partition }
+			NOT = { has_country_flag = stainslaw_timelimit }
 			NOT = { has_global_flag = lublin_new_begin }	
 			NOT = { has_country_flag = lublin_new }
 			NOT = { has_country_flag = lublin_failure }
@@ -1801,6 +2051,14 @@ political_decisions = {
 			add_accepted_culture = belarusian
 			political_reform = federalism
 			badboy = 5
+			693 = { remove_core = PML }
+			any_country = {
+			   limit = {
+			      tag = PML
+				  exists = yes
+			   }
+			   annex_to = PLC 
+			}
 			any_country = {
 				limit = {
 				    exists = yes
@@ -1851,6 +2109,7 @@ political_decisions = {
 			   has_country_flag = lublin_new
 			   has_country_flag = commonback
 			} 
+			NOT = { has_country_flag = stainslaw_timelimit }
 			NOT = { has_country_flag = treaty_hadiach }
 		}
 
@@ -1869,8 +2128,10 @@ political_decisions = {
 		effect = { 
 			set_country_flag = treaty_hadiach
 			prestige = 20
-			add_accepted_culture = ruthenian
-			add_accepted_culture = lithuanian
+	        add_accepted_culture = ruthenian
+	        add_accepted_culture = galician	
+		    add_accepted_culture = lithuanian 
+		    add_accepted_culture = belarusian
 			any_pop = {
 				limit = {
 					culture = polish
@@ -1934,9 +2195,97 @@ political_decisions = {
 		}
 	}
 	
+	end_tatarstan = {
+	
+	    picture = tatarstan
+
+		potential = {
+			tag = PLC
+			has_country_flag = treaty_hadiach
+			has_global_flag = PLC_EASTERN_COLLAPSE
+			exists = TAR
+			NOT = { has_country_flag = end_of_tatarstan }
+		}
+	
+		allow = {
+            is_greater_power = yes
+            is_disarmed = no
+			war = no
+			has_recently_lost_war = no 
+            crisis_exist = no		
+			nationalism_n_imperialism = 1
+			has_country_flag = lublin_new
+            any_neighbor_country = { tag = TAR }		
+		}
+	
+		effect = {
+		    set_country_flag = tatar_war_PLC	
+			set_country_flag = end_of_tatarstan
+	        war = {
+	           target = TAR
+		       attacker_goal =  { 
+			      casus_belli = conquest_any
+		       }
+		       defender_goal = {
+			      casus_belli = cut_down_to_size_no_infamy
+		      }	
+			  call_ally = yes
+	       }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}		
+	
+	end_cossakia = {
+	
+	    picture = military_parade
+
+		potential = {
+			tag = PLC
+			has_country_flag = treaty_hadiach
+			has_global_flag = PLC_EASTERN_COLLAPSE
+			exists = CSK
+			NOT = { has_country_flag = end_of_cossakia }
+		}
+	
+		allow = {
+            is_greater_power = yes
+            is_disarmed = no
+			war = no
+			has_recently_lost_war = no 
+            crisis_exist = no		
+			nationalism_n_imperialism = 1
+			has_country_flag = lublin_new
+            any_neighbor_country = { tag = CSK }		
+		}
+	
+		effect = {
+		    set_country_flag = cossack_war_PLC	
+			set_country_flag = end_of_cossakia
+	        war = {
+	           target = CSK
+		       attacker_goal =  { 
+			      casus_belli = conquest_any
+		       }
+		       defender_goal = {
+			      casus_belli = cut_down_to_size_no_infamy
+		      }	
+			  call_ally = yes
+	       }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+	
+	### Before you can even use the below decision you must first demolish Tatarstan and Cossackia
+	
 	greater_commonwealth = {
 	
-	     picture = become_poland_lithuania
+	    picture = become_poland_lithuania
 
 		potential = {
 			tag = PLC
@@ -1949,6 +2298,8 @@ political_decisions = {
 		    is_greater_power = yes
 			nationalism_n_imperialism = 1
 			has_country_flag = lublin_new
+			NOT = { exists = TAR }
+			NOT = { exists = CSK }
 		}
 	
 		effect = {
@@ -1956,7 +2307,6 @@ political_decisions = {
 			prestige = 10
 			BLR = { all_core = { add_core = PLC } }
 			UKR = { all_core = { add_core = PLC } }
-			RUS_358 = { add_core = PLC }
 			961 = { add_core = PLC }
 			971 = { add_core = PLC }
 			972 = { add_core = PLC }
@@ -1988,6 +2338,1083 @@ political_decisions = {
 			factor = 1
 		}
 	}
+	
+	#### Polish Voivodeships ####
+	
+	### Targets are CSK, KHK, ZAZ, DON, VOR, CRI, TAR, AKH and ASK
+	
+	### You cannot sphere annex these guys. Only Conquest.
+	
+	### Once you've annexed and intergrated all these tags the top flag will be removed and AKH will have their little CSK rebellion.
+	
+	### Sloboda Ukraine Host
+	
+	PLC_KILL_KHK = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = KHK
+			NOT = {
+			   is_our_vassal = KHK
+			   owns = 978
+			   war_with = KHK
+			   exists = CSK
+			   exists = TAR
+            }
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes
+            owns = 958	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = KHK
+			relation = { who = KHK value = -300 }
+			diplomatic_influence = { who = KHK value = -300 }
+			war = {
+				   target = KHK
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes		
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			   }
+				modifier = {
+	              factor = 0
+	                 KHK = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### Zaporozhian Host
+	
+	PLC_KILL_ZAZ = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = ZAZ
+			NOT = {
+			   is_our_vassal = ZAZ
+			   owns = 972
+			   war_with = ZAZ
+			   exists = CSK
+			   exists = TAR
+            }
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes
+            owns = 956				
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = ZAZ
+			relation = { who = ZAZ value = -300 }
+			diplomatic_influence = { who = ZAZ value = -300 }
+			war = {
+				   target = ZAZ
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			   }
+				modifier = {
+	              factor = 0
+	                 ZAZ = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### Crimean River
+	
+	PLC_KILL_CRI = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = CRI
+			NOT = {
+			   owns = 967
+			   war_with = CRI
+			   exists = CSK
+			   exists = TAR
+            }
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes	
+            is_disarmed = no
+			war = no
+			OR = {
+			   owns = 972
+			   CRI = { owns = 969 }
+			}
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = CRI
+			relation = { who = CRI value = -300 }
+			diplomatic_influence = { who = CRI value = -300 }
+			war = {
+				   target = CRI
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			    }
+				modifier = {
+	              factor = 0
+	                 CRI = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### Don Host
+	
+	PLC_KILL_VOR = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = VOR
+			NOT = {
+			   is_our_vassal = VOR
+			   owns = 1019
+			   war_with = VOR
+			   exists = CSK
+			   exists = TAR
+            }
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes	
+            is_disarmed = no
+			war = no
+			OR = {
+			   is_our_vassal = KHK
+			   owns = 978
+			}
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = VOR
+			relation = { who = VOR value = -300 }
+			diplomatic_influence = { who = VOR value = -300 }
+			war = {
+				   target = VOR
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			    }
+				modifier = {
+	              factor = 0
+	                 VOR = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### Donets Host 
+	
+	PLC_KILL_DON = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = DON
+			NOT = {
+			   is_our_vassal = DON
+			   owns = 980
+			   war_with = DON
+			   exists = CSK
+			   exists = TAR
+            }	
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes	
+            is_disarmed = no
+			war = no
+			owns = 973
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = DON
+			relation = { who = DON value = -300 }
+			diplomatic_influence = { who = DON value = -300 }
+			war = {
+				   target = DON
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			    }
+				modifier = {
+	              factor = 0
+	                 DON = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### These last two can only be done if you hold Azov or have Donets Host hold Azov
+
+	### Akhtuba Host - You cannot create this as a vassal until you kill off ASK
+	
+	PLC_KILL_AKH = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = AKH
+			NOT = {
+			   is_our_vassal = AKH
+			   owns = 1039
+			   war_with = AKH
+			   exists = CSK
+			   exists = TAR
+            }		
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_greater_power = yes	
+            is_disarmed = no
+			war = no
+			OR = {
+			   owns = 1047
+			   is_our_vassal = AKH
+			}
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = AKH
+			relation = { who = AKH value = -300 }
+			diplomatic_influence = { who = AKH value = -300 }
+			war = {
+				   target = AKH
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			    }
+				modifier = {
+	              factor = 0
+	                 AKH = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### Astrakhan
+	
+	PLC_KILL_ASK = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			exists = ASK
+            NOT = {				
+			   exists = CSK
+			   exists = TAR		
+            }	
+			NOT = { has_country_flag = PLC_waiting_vassal }
+		}
+			
+		allow = {	
+            is_greater_power = yes	
+            is_disarmed = no
+			war = no
+			owns = 1047
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+            badboy = 3
+			leave_alliance = ASK
+			relation = { who = ASK value = -300 }
+			diplomatic_influence = { who = ASK value = -300 }
+			war = {
+				   target = ASK
+				   attacker_goal = {
+					   casus_belli = conquest_any
+				   }
+				   defender_goal = {
+					   casus_belli = cut_down_to_size_no_infamy
+				   }
+				   call_ally = yes
+			 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+				modifier = {
+	              factor = 0
+	              badboy = 0.8
+			    }
+				modifier = {
+	              factor = 0
+	                 ASK = { 
+				        OR = {
+						    brigades_compare = 1
+					        alliance_with = BOH
+					        alliance_with = SCA 
+					        alliance_with = CAE
+					        alliance_with = GER
+					        alliance_with = HLR
+					        alliance_with = GCF
+					    }
+                    }					
+			   }
+		}
+	}
+	
+	### These are the decisions to actually create the Voivodeships - To do this you must own all of the cores of the Voivodeship which will then run the setup event.
+	
+	### Sloboda Ukraine Host
+	
+	PLC_VOIVODESHIP_KHK = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			KHK = { all_core = { owned_by = THIS } }
+			NOT = { exists = KHK }
+			NOT = { is_our_vassal = KHK }
+			NOT = { 978 = { is_core = PLC }	}	 
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+		    set_country_flag = PLC_waiting_vassal
+			977 = { remove_core = KHK }
+			1018 = { remove_core = KHK }
+		    any_owned = {
+			   limit = {
+			      is_core = KHK
+			   }
+			   secede_province = KHK
+			}
+			relation = { who =  KHK value = 400 }
+			diplomatic_influence = { who = KHK value = 400 }
+			KHK = { country_event = 223002 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Zaporozhian Host
+	
+	PLC_VOIVODESHIP_ZAZ = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			ZAZ = { all_core = { owned_by = THIS } }
+			NOT = { exists = ZAZ }
+			NOT = { is_our_vassal = ZAZ }
+			NOT = { 972 = { is_core = PLC }	}	
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+		    set_country_flag = PLC_waiting_vassal
+			961 = { remove_core = PLC add_core = ZAZ }
+		    any_owned = {
+			   limit = {
+			      is_core = ZAZ
+			   }
+			   secede_province = ZAZ
+			}
+			relation = { who = ZAZ value = 400 }
+			diplomatic_influence = { who = ZAZ value = 400 }
+			ZAZ = { country_event = 223002 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Don Host
+	
+	PLC_VOIVODESHIP_VOR = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			VOR = { all_core = { owned_by = THIS } }
+			NOT = { exists = VOR }
+			NOT = { is_our_vassal = VOR }
+			NOT = { 1019 = { is_core = PLC } }	
+			NOT = { has_country_flag = PLC_waiting_vassal }
+		}
+			
+		allow = {	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+		    set_country_flag = PLC_waiting_vassal
+			977 = { remove_core = KHK }
+			1018 = { remove_core = KHK }
+		    any_owned = {
+			   limit = {
+			      is_core = VOR
+			   }
+			   secede_province = VOR
+			}
+			relation = { who = VOR value = 400 }
+			diplomatic_influence = { who = VOR value = 400 }
+			VOR = { country_event = 223002 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Donets Host 
+	
+	PLC_VOIVODESHIP_DON = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			DON = { all_core = { owned_by = THIS } }
+			NOT = { exists = DON }
+			NOT = { is_our_vassal = DON }
+			NOT = { 980 = { is_core = PLC } }
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+		}
+			
+		allow = {	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+		    set_country_flag = PLC_waiting_vassal
+		    any_owned = {
+			   limit = {
+			      is_core = DON
+			   }
+			   secede_province = DON
+			}
+			relation = { who = DON value = 400 }
+			diplomatic_influence = { who = DON value = 400 }
+			DON = { country_event = 223002 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Akhtuba is only setup as a protectorate though - No Voivodeship.
+	
+	PLC_PROTECTORATE_AKH = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = enable_borderlands_conquest 
+			AKH = { all_core = { owned_by = THIS } }
+			NOT = { exists = ASK }
+			NOT = { exists = AKH }
+			NOT = { is_our_vassal = AKH }  
+            NOT = { has_country_flag = PLC_waiting_vassal }			
+        }		
+			
+		allow = {	
+            is_disarmed = no
+			war = no
+			has_unclaimed_cores = no
+			has_recently_lost_war = no 
+            crisis_exist = no			
+		}
+			
+		effect = {
+		    set_country_flag = PLC_waiting_vassal
+		    any_owned = {
+			   limit = {
+			      province_id = 2610 
+			   }
+			   remove_core = AKH
+			   add_core = NOG
+			   secede_province = NOG
+			}	
+		    any_owned = {
+			   limit = {
+			      province_id = 1182
+				  NOT = { is_core = AKH }
+			   }
+			   remove_core = AKH
+			   add_core = NOG
+			   secede_province = NOG
+			}				
+		    any_owned = {
+			   limit = {
+			      is_core = AKH
+			   }
+			   secede_province = AKH
+			}
+
+			relation = { who = AKH value = 400 }
+			diplomatic_influence = { who = AKH value = 400 }
+			AKH = { country_event = 223002 }
+	    }			
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### ... and at the end of it all you can finally claim what you always wanted - Cores on Crimea.
+	
+	the_crimean_triumph = {
+	
+	    picture = russian_naval_crimea
+
+		potential = {
+			tag = PLC
+			has_country_flag = enable_tatar_decision
+		}
+	
+		allow = {
+            is_greater_power = yes
+            owns = 967 		
+		}
+	
+		effect = {
+		       prestige = 10
+		       clr_country_flag = enable_tatar_decision
+			   CRI = { all_core = { add_core = PLC } }
+	           967 = { 
+				    life_rating = 5
+				    change_province_name = "Sewastopol" 
+				    add_province_modifier = {
+				    	name = gateway_to_russia
+						duration = 7300
+	 				}
+               }								   			   
+	    }
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	#### The Conquest of Smolensk ####
+	
+	#### Muscovy has collapsed and now we can just march in and take over Smolensk as its our rightful clay ####
+	
+	PLC_smolensk = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = greater_commonwealth
+			has_country_flag = smolensk_open
+			has_global_flag = MOS_shattered
+            has_global_flag = NOBILITY_ARE_GONE          					
+		}
+			
+		allow = {	
+            OR = {			
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}			
+		}
+			
+		effect = {
+		    clr_country_flag = smolensk_open
+		    prestige = 5
+			SMO = { all_core = { add_core = THIS } }
+		    any_country = {
+				limit = {
+					tag = SMO
+					OR = {
+					   in_sphere = THIS
+                       vassal_of = THIS
+					}
+				}
+				annex_to = THIS
+		   }
+		   relation = { who = SMO value = -400 }
+	       diplomatic_influence = { who = SMO value = -400 }	   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### The Lyapunov Claim ###
+	
+	PLC_lyapunov_claim = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = greater_commonwealth
+			has_global_flag = MOS_shattered
+            has_global_flag = NOBILITY_ARE_GONE    
+            NOT = { has_country_flag = lyapunov_claim }			
+		}
+			
+		allow = {
+            owns = 943
+		    is_greater_power = yes
+            MUS = { in_sphere = THIS }						
+		}
+			
+		effect = {
+		    set_country_flag = lyapunov_claim
+		    prestige = 5
+			TVE = { all_core = { add_core = MUS } }
+            RYA	= { all_core = { add_core = MUS } }	
+            1020 = { add_core = MUS }
+            any_owned = {
+               limit = { 
+                 is_core = SMO 
+               }
+               remove_core = MOS 
+               remove_core = MUS
+            }			   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Construct Weak Muscovy ###
+	
+	PLC_build_shitty_muscovy = {
+	
+	    #picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = greater_commonwealth
+			has_global_flag = MOS_shattered
+            has_global_flag = NOBILITY_ARE_GONE    
+            has_country_flag = lyapunov_claim
+			NOT = { has_country_flag = shitty_muscovy_constructed }
+		}
+			
+		allow = {
+			is_greater_power = yes
+            MUS = {
+			    in_sphere = THIS
+				all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+		    }					
+		}
+			
+		effect = {
+		    set_country_flag = shitty_muscovy_constructed
+			prestige = 20
+            any_owned = {
+               limit = { 
+                 is_core = SMO 
+               }
+               remove_core = MOS 
+               remove_core = MUS
+            }
+            any_owned = {
+               limit = { 
+                 is_core = PLC
+               }
+               remove_core = MOS 
+               remove_core = MUS
+            }
+			any_owned = {
+			   limit = {
+			      is_core = MUS
+			   }
+			   secede_province = MUS
+			}			
+		    any_country = {
+			   limit = {
+			     primary_culture = russian
+			   }
+			   annex_to = MUS
+			}
+		    MUS = { 
+			   change_tag = MOS 
+			   set_country_flag = shitty_muscovy 
+			   set_country_flag = MUS_MOS
+			   clr_country_flag = MUS_MOS_TRAP
+			   clr_country_flag = TVE_MOS
+			   clr_country_flag = RYA_MOS
+			   clr_country_flag = NZH_MOS
+			   clr_country_flag = SMO_MOS_MON
+			   clr_country_flag = SMO_MOS_VOZ
+			   clr_country_flag = SMO_MOS_REP
+			}		    
+		    country_event = { id = 223021 days = 3 } 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+    piast_union = {
+
+        picture = PIAST
+
+        potential = {
+            tag = PLC
+            has_country_flag = treaty_hadiach
+            NOT = { has_country_flag = piast_wedding }
+            TES = { exists = yes NOT = { is_vassal = yes } } 
+
+        }
+
+        allow = {
+            is_greater_power = yes
+            mass_politics = 1
+			OR = {
+			   government = hms_government
+			   government = prussian_constitutionalism
+			   government = absolute_monarchy
+			}
+            TES = { in_sphere = THIS war = no } 
+        }
+
+        effect = {
+            set_country_flag = piast_wedding
+            prestige = 5
+            inherit = TES 
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+	
+	## Actual Baltic Decisions - Wow Wee 
+	
+	### The Baltics are no longer controlled by Scandinavia and you can intervene for free.
+	
+	### Note that UNLESS Scandinavia cores do not exist on these provinces then you CANNOT enter the Baltics. You will either have to manually conquer the territory or liberate the Native Tags.
+	
+	PLC_the_baltic_claim = {
+	
+	    picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = greater_commonwealth
+            has_global_flag = NOBILITY_ARE_GONE          		
+			354 = { NOT = { is_core = PLC is_core = SCA } }
+			NOT = { has_country_flag = PLC_the_balter_problem }
+			NOT = { has_country_flag = baltic_crisis_activated }
+            NOT = { has_country_flag = BANNED_FROM_BALTICS }			
+		}
+			
+		allow = {	
+            OR = {			
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}			
+		}
+			
+		effect = {
+		    prestige = 5
+			RUS_358 = { add_core = PLC }
+			RUS_354 = { add_core = PLC }
+			RUS_349 = { add_core = PLC }
+		    any_country = {
+				limit = {
+					NOT = { tag = THIS }
+					OR = {
+					   tag = LAT
+					   tag = LIV
+					   tag = EST
+					}
+					OR = {
+					   in_sphere = THIS
+                       vassal_of = THIS
+					}
+				}
+				country_event = 11101
+		   }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	## PLC holds the baltics either as a result of the above decision or manually.
+	
+	## I would put a redtext note here that you need to do this to get accepted cultures. So the core loss is acceptable for now.
+	
+	PLC_the_balter_problem = {
+	
+	    picture = balticlake
+	
+		potential = {
+		    tag = PLC	
+			has_country_flag = greater_commonwealth
+            has_global_flag = NOBILITY_ARE_GONE		
+			354 = { is_core = LIV }
+			LIV = { all_core = { owned_by = THIS } }
+			NOT = { has_country_flag = PLC_the_balter_problem }
+		}
+			
+		allow = {		
+            OR = {			
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}	
+			war = no
+			owns = 358
+			owns = 354
+			owns = 349				
+		}
+			
+		effect = {
+		    set_country_flag = PLC_the_balter_problem
+		    prestige = 5
+			RUS_358 = { remove_core = PLC }
+			RUS_354 = { remove_core = PLC }
+			RUS_349 = { remove_core = PLC }
+		    # SCA baltic termination event
+		    SCA = { country_event = 191945 }		    
+			country_event = { id = 192027 days = 14 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	#### If the above decision is impossible due to Livonia no longer having cores on the province then you use this classic decision.
 
 	baltic_cultures = {
 
@@ -1997,24 +3424,17 @@ political_decisions = {
 			OR = {
 			   has_country_flag = lublin_new
 			   has_country_flag = commonback
-			}		
+			}	
+            354 = { NOT = { is_core = LIV } }
 			NOT = { has_country_flag = my_latvian_brother }
+			NOT = { has_country_flag = pro_baltic_plc }
 		}
 	
 		allow = {
 			war = no
+			owns = 358
 			owns = 354
-			government = hms_government
-			OR = {
-				citizens_rights = culture_voting_only
-				citizens_rights = all_voting_pops
-			}
-			OR = {
-				vote_franschise = universal_weighted_voting
-				vote_franschise = universal_voting
-			}
-			nationalism_n_imperialism = 1
-			KRL = { all_core = { owned_by = THIS } }
+			owns = 349			
 		}
 	
 		effect = {
@@ -2028,80 +3448,504 @@ political_decisions = {
 			factor = 1
 		}
 	}	
+	
+	## This removes all Balter Privileges and abolishes the Livonian State. Effectively terminating the modifier completely.
 
-	all_the_commonwealths = {
-
+	PLC_end_of_livonia = {
+	
+	    picture = annex_united_baltic_duchy
+	
 		potential = {
-			tag = PLC
-			has_country_flag = lublin_new
-			owns = 354		
-			NOT = { has_country_flag = commonblob }
+		    tag = PLC	
+            has_country_flag = balter_delenda_est_PLC
+			owns = 695
+			LIV = { all_core = { owned_by = THIS } }
 		}
-	
-		allow = {
-			war = no
-			mass_politics = 1
-			is_greater_power = yes
-			has_country_flag = my_latvian_brother
-			has_country_flag = treaty_hadiach
-			NOT = { TAR = { is_greater_power = yes } }
-			all_core = { owned_by = THIS }
+			
+		allow = {	
+            OR = {			
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}			
 		}
-	
+			
 		effect = {
-		    set_country_flag = commonblob
-			prestige = 50
-			badboy = 15
-			relation = { who = RUS value = -400 }
-			relation = { who = SCA value = -400 }
-			relation = { who = BOH value = -400 }
-			relation = { who = CAE value = -400 }
-			relation = { who = GCF value = -400 }
-			relation = { who = HLR value = -400 }
-			relation = { who = GER value = -400 }
-			EST = { all_core = { add_core = PLC } }	
-			LAT = { all_core = { add_core = PLC } }	
-			CRI = { all_core = { add_core = PLC } }
-			DON = { all_core = { add_core = PLC } }
-			VOR = { all_core = { add_core = PLC } }
-			ZAZ = { all_core = { add_core = PLC } }
-			RUS_354 = { add_core = PLC }
-			RUS_1015 = { add_core = PLC }
-			MOL_673 = { add_core = PLC }
-			RUS_676 = { add_core = PLC }
-		    any_country = {
-				limit = {
-					NOT = { tag = THIS }
-					OR = {
-					tag = LAT
-					tag = LIV
-					tag = SMO
-					tag = KHK
-					tag = ZAZ
-					tag = VOR
-					tag = MOL
-					tag = DON
-					tag = UKR
-					tag = RUT
-					tag = BLR
-					tag = CRI
-					tag = EST
-					}
-					OR = {
-					in_sphere = THIS
-                    vassal_of = THIS
-					}
-				}
-				country_event = 11101
-		   }
+		   clr_country_flag = balter_delenda_est_PLC
+		   prestige = 20
+		   set_country_flag = my_latvian_brother
+		   set_global_flag = balters_are_gone
+		   add_accepted_culture = estonian
+		   add_accepted_culture = latvian	
+		   remove_accepted_culture = prussian	
+		   LIV = { 
+		      all_core = { add_core = PLC remove_core = KRL remove_core = LIV }
+		   } 
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }		   
 		}
-
+		
 		ai_will_do = {
 			factor = 1
-	        modifier = {
-	        factor = 0
-	        badboy = 0.3
-			}
 		}
 	}
+	
+	## This removes all Balter Privileges and abolishes the Livonian State. Effectively terminating the modifier completely.	
+	## This is also the only way for Russia to accept the Baltic Cultures
+	
+	RUS_end_of_livonia = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    tag = RUS	
+            has_country_flag = balter_delenda_est_RUS
+			LIV = { all_core = { owned_by = THIS } }
+		}
+			
+		allow = {	
+            OR = {			
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}			
+		}
+			
+		effect = {
+		   clr_country_flag = balter_delenda_est_RUS
+		   prestige = 20
+		   add_accepted_culture = estonian
+		   add_accepted_culture = latvian	
+		   BLT = {
+		      remove_accepted_culture = prussian
+		   }	
+		   LIV = { 
+		      all_core = { remove_core = KRL remove_core = LIV }
+		   } 
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }		   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	## The Natives liberated themselves. OTL strikes again.	
+	
+	LAT_end_of_livonia = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    tag = LAT
+			354 = { is_core = LIV }
+		}
+			
+		allow = {	
+           OR = {
+              revolution_n_counterrevolution = 1
+              year = 1880
+           }
+		   all_core = { owned_by = THIS }
+		   exists = EST
+		   NOT = { exists = KRL }
+		   NOT = { exists = LIV }		   
+		}
+			
+		effect = {
+		   prestige = 20
+           any_country = {
+                  limit = {
+                     OR = {
+                        has_country_flag = pro_baltic_rus
+                        has_country_flag = pro_baltic_plc
+                     }
+                  }
+                  clr_country_flag = pro_baltic_rus
+                  clr_country_flag = pro_baltic_plc
+           }				  
+		   LIV = { 
+		      all_core = { remove_core = KRL remove_core = LIV }
+		   } 
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }	
+           EST = {
+              any_owned = {
+		          limit = { 
+                      has_province_modifier = baltic_privileges
+		          }
+		          remove_province_modifier = baltic_privileges
+              }
+           }			  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	## UDU has taken over all of Livonia and Scandinavia still holds cores on Livonia for some reason.
+	
+	UDU_end_scandinavian_claims = {
+	
+	    picture = balticlake
+	
+		potential = {
+		    tag = UDU
+			354 = { is_core = SCA }
+		}
+			
+		allow = {	
+		   all_core = { owned_by = THIS }	   
+		}
+			
+		effect = {
+		   prestige = 20
+		   354 = { remove_core = SCA }
+		   # SCA baltic termination event
+		   SCA = { country_event = 191945 }				  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### These are the late game decisions in regards to removing the Balter Modifiers - Anyone can do these.
+	
+	terminate_balter_modifiers_local = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    OR = {
+			   AND = {
+		          owns = 354
+			      NOT = { owns = 695 }
+			   }
+			   AND = {
+		          owns = 695
+			      NOT = { owns = 354 }
+			   }
+			}
+            OR = {
+			   AND = {
+			      NOT = { tag = RUS }
+			      NOT = { tag = PLC }
+			      NOT = { tag = SCA }
+			   }
+               has_country_flag = pro_baltic_rus
+               has_country_flag = pro_baltic_plc
+            }
+			NOT = { has_country_flag = local_purge_balters }
+		}
+			
+		allow = {	
+           OR = {
+		      ruling_party_ideology = communist
+              mass_politics = 1
+              year = 1920
+		   }
+		   NOT = { ruling_party_ideology = reactionary }
+		   NOT = { ruling_party_ideology = paternal }
+		   NOT = { ruling_party_ideology = fascist }
+		   LIV = { all_core = { owned_by = THIS } }  
+		}
+			
+		effect = {
+		   set_country_flag = local_purge_balters
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }				  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	terminate_balter_modifiers_global = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    owns = 354
+			owns = 695
+            OR = {
+			   AND = {
+			      NOT = { tag = RUS }
+			      NOT = { tag = PLC }
+			      NOT = { tag = SCA }
+			   }
+               has_country_flag = pro_baltic_rus
+               has_country_flag = pro_baltic_plc
+            }
+			NOT = { has_global_flag = balters_are_gone }
+		}
+			
+		allow = {	
+           OR = {
+		      ruling_party_ideology = communist
+              mass_politics = 1
+              year = 1920
+		   }
+		   NOT = { ruling_party_ideology = reactionary }
+		   NOT = { ruling_party_ideology = paternal }
+		   NOT = { ruling_party_ideology = fascist }
+		   LIV = { all_core = { owned_by = THIS } }  
+		}
+			
+		effect = {
+		   set_global_flag = balters_are_gone
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }				  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# The Uniformity Policy Completed
+	# This needs both Prussia and Riga unlike the other one.
+	
+	# Also extremely hard due to the fact that you need to go from a non-democratic government and into this thing.
+	
+	SCA_uniformity_policy = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    tag = SCA
+		    owns = 354
+			owns = 695
+            has_country_flag = PRO_SCANDINAVIAN_LAND_REFORM
+			NOT = { has_country_flag = baltic_crisis_activated }  
+			NOT = { has_country_flag = baltic_crisis_prevented }
+			NOT = { has_global_flag = baltics_free }
+		}
+			
+		allow = {	
+		   war = no
+           OR = {
+		      AND = {
+			     revolution_n_counterrevolution = 1
+			     social_science = 1
+				 experimental_psychology = 1
+				 market_regulations = 1
+			  }
+			  AND = {
+			      NOT = { ruling_party_ideology = reactionary }
+		          NOT = { ruling_party_ideology = paternal }
+		          NOT = { ruling_party_ideology = fascist }
+			      mass_politics = 1
+			  }
+		      ruling_party_ideology = communist        
+              year = 1920
+		   }
+		   LIV = { all_core = { owned_by = THIS } }  
+		}
+			
+		effect = {
+		   clr_country_flag = PRO_NATIVE_LAND_REFORM
+		   clr_country_flag = PRO_BALTIC_GERMAN
+		   clr_country_flag = PRO_SCANDINAVIAN_LAND_REFORM
+		   clr_country_flag = no_generic_LIV
+           set_global_flag = balters_are_gone	   
+		   set_country_flag = baltic_crisis_prevented
+		   prestige = 20
+		   add_accepted_culture = estonian
+		   add_accepted_culture = latvian	
+		   remove_accepted_culture = prussian	
+		   LIV = { 
+		      all_core = { add_core = SCA remove_core = KRL }
+		      primary_culture = scandinavian
+		      remove_accepted_culture = prussian
+	  	   }
+		   any_owned = {
+		      limit = { is_core = KRL }
+		      remove_core = KRL
+		   }	
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }				  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# The Great Reduction Completed
+		
+	SCA_great_reduction = {
+	
+	    picture = annex_united_baltic_duchy
+	
+		potential = {
+		    tag = SCA
+		    owns = 354
+            has_country_flag = PRO_BALTER_LAND_REFORM
+			NOT = { has_country_flag = baltic_crisis_activated }  
+			NOT = { has_country_flag = baltic_crisis_prevented }
+			NOT = { has_global_flag = baltics_free }
+		}
+			
+		allow = {	
+		   war = no
+           OR = {
+		      AND = {
+			     revolution_n_counterrevolution = 1
+			     NOT = { debt_law = serfdom }
+			     NOT = { border_policy = closed_borders }
+			     slavery = no_slavery
+			     vote_franschise = universal_voting
+			     upper_house_composition = population_equal_weight
+			     public_meetings = yes_meeting
+			     press_rights = free_press
+			     trade_unions = all_trade_unions
+			     political_parties = secret_ballots
+			     citizens_rights = all_voting_pops	
+				 child_labor = child_labor_illegal
+			  }
+			  AND = {
+			      NOT = { ruling_party_ideology = reactionary }
+		          NOT = { ruling_party_ideology = paternal }
+		          NOT = { ruling_party_ideology = fascist }
+			      mass_politics = 1
+			  }
+		      ruling_party_ideology = communist        
+              year = 1920
+		   }
+		   LIV = { all_core = { owned_by = THIS } }  
+		}
+			
+		effect = {
+		   clr_country_flag = PRO_NATIVE_LAND_REFORM
+		   clr_country_flag = PRO_BALTIC_GERMAN
+		   clr_country_flag = PRO_SCANDINAVIAN_LAND_REFORM
+		   clr_country_flag = no_generic_LIV		   
+		   set_country_flag = baltic_crisis_prevented
+		   prestige = 20
+		   add_accepted_culture = estonian
+		   add_accepted_culture = latvian	
+		   remove_accepted_culture = prussian	
+		   LIV = { 
+		      all_core = { add_core = SCA remove_core = KRL remove_core = LIV }
+		   }
+		   any_owned = {
+		      limit = { is_core = LIV }
+		      remove_core = LIV 
+		   }
+		   any_owned = {
+		      limit = { is_core = KRL }
+		      remove_core = KRL
+		   }	
+           any_owned = {
+		       limit = { 
+                   has_province_modifier = baltic_privileges
+		       }
+		       remove_province_modifier = baltic_privileges
+           }				  
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### LARP LARP LARP
+	
+    integrate_UDU = {
+        picture = annex_united_baltic_duchy
+        potential = {
+            OR = {
+                tag = GER
+                tag = GCF 
+                tag = HLR
+            }
+			is_greater_power = yes
+			UDU = { exists = yes } 
+            OR = {
+                government = fascist_dictatorship
+                government = fascist_monarchy
+                government = absolute_monarchy
+                AND = {
+                    tag = GCF
+                    OR = {
+                        ruling_party_ideology = reactionary 
+                        ruling_party_ideology = paternal
+                        ruling_party_ideology = fascist
+                    }
+                    NOT = {
+                        government = proletarian_dictatorship
+                        government = socialist_republic
+                        government = parliamentary_republic
+                        government = democracy
+                        government = bourgeois_dictatorship
+                        government = hms_government
+                    }
+                }
+            }                      
+            NOT = { has_global_flag = balters_are_gone }
+            NOT = { has_country_flag = integrated_UDU }
+        }
+
+        allow = {
+            war = no
+			has_country_flag = ubergrossdeutschland
+			680 = { owned_by = THIS }
+            UDU = { 
+			    vassal_of = THIS
+				war = no
+			    OR = {
+                   government = fascist_dictatorship
+                   government = fascist_monarchy
+				   government = absolute_monarchy
+                   ruling_party_ideology = reactionary 
+                   ruling_party_ideology = paternal
+                   ruling_party_ideology = fascist
+				}
+				NOT = { 
+				   government = democracy
+				   government = parliamentary_republic
+			    }                            
+            }           
+        }
+
+        effect = {
+            badboy = 6
+            add_accepted_culture = prussian
+            set_country_flag = integrated_UDU
+            UDU = { 
+                all_core = { add_core = THIS }
+            }
+            inherit = UDU
+        }
+
+        ai_will_do = { 
+            factor = 1
+        }
+    }
 }

@@ -157,7 +157,12 @@ country_event = {
 		   create_alliance = THIS
 		}
 		ai_chance = {
-			factor = 100
+			factor = 99
+			modifier = {
+				factor = 0
+				primary_culture = swabian
+				in_sphere = SGF
+			}
 		}
 	}
 	
@@ -176,7 +181,11 @@ country_event = {
 		name = "EVTOPTC191916"
 		prestige = 1
 		ai_chance = {
-			factor = 0
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { primary_culture = swabian }
+			}
 		}
 	}
 }
@@ -193,7 +202,8 @@ country_event = {
 	
 	option = {
 		name = "SCACOL1.A" # The Empire of the North!
-		prestige = 1	
+		country_event = 191980
+		prestige = 1			
 	    add_country_modifier = {
 			name = unionster_dominance
 			duration = 54750
@@ -1084,7 +1094,6 @@ country_event = {
 	    clr_country_flag = paternal_party_in_power
 	    clr_country_flag = anarcho_liberal_party_in_power
 	    clr_country_flag = market_liberal_party_in_power
-		clr_country_flag = SCA_old_order
 		remove_country_modifier = SCA_political_chaos
 		clr_country_flag = SCA_old_order
 		set_country_flag = SCA_christian_mode
@@ -1123,6 +1132,64 @@ country_event = {
 	}
 }
 
+#### Added event as a failsafe to prevent Old Order lasting if SCA is no longer a monarchy ####
+
+country_event = {		
+	id = 1919051 # The End of the Old Order
+	title = "SCACOL4I.T"
+	desc = "SCACOL4I.D"
+	picture = "stortinget"
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCA
+		has_country_flag = SCA_christian_mode
+		OR = {
+		   government = democracy
+		   government = parliamentary_republic
+		   government = socialist_republic
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "SCACOL4I.A"
+		remove_country_modifier = new_king_dominance
+		clr_country_flag = SCA_christian_mode
+		set_country_flag = SCA_hans_mode
+		prestige = -1
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -9
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -9
+			}
+		}
+	}
+}
 
 
 ### The Federal Union Party ###
@@ -3030,12 +3097,14 @@ country_event = {
 		327 = { life_rating = 1 } #Orebro
 		316 = { life_rating = 1 } #Frederisktag
 		any_pop = { 
-			location = { is_core = GER } 
+		    limit = {
+			   location = { is_core = GER }
+            }			
 			militancy = 3 
 			consciousness = 5
 		}
 		any_country = { 
-			limit = { culture_group = germanic } 
+			limit = { is_culture_group = germanic } 
 			relation = { who = THIS value = -25 }
 		}
 		any_owned = { 
@@ -3058,7 +3127,7 @@ country_event = {
 		clr_country_flag = SCA_population_increase
         set_country_flag = SCA_counter_hollowing
 		any_country = { 
-			limit = { culture_group = germanic } 
+			limit = { is_culture_group = germanic } 
 			relation = { who = THIS value = -50 }
 		}
 		any_pop = { 

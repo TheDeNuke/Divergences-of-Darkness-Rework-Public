@@ -285,6 +285,7 @@ country_event = {
 	
 	option = {
 		name = "DODFFP10.A"
+		election = yes
 	    clr_country_flag = show_trials_ongoing
 	}
 } 
@@ -347,6 +348,10 @@ country_event = {
 		ai_chance = {
 			factor = 50
 			modifier = {
+				factor = 1.5
+				has_country_flag = legal_socialism
+			}
+			modifier = {
 				factor = 0.5
 				communist = 20
 			}
@@ -398,6 +403,10 @@ country_event = {
 		election = yes
 		ai_chance = {
 			factor = 25
+			modifier = {
+				factor = 2
+				has_country_flag = legal_socialism
+			}
 			modifier = {
 				factor = 0.5
 				communist = 20
@@ -456,6 +465,10 @@ country_event = {
 			modifier = {
 				factor = 3
 				communist = 40
+			}
+			modifier = {
+				factor = 0.5
+				has_country_flag = legal_socialism
 			}
 		}
 	}
@@ -809,6 +822,7 @@ country_event = {
 		civilized = yes
 		is_ideology_enabled = fascist
 		ruling_party_ideology = fascist	
+		fascist = 10
 		NOT = { has_country_modifier = the_rise_of_fascism }
 	    OR = {
 		   government = absolute_monarchy
@@ -1260,18 +1274,8 @@ country_event = {
 		prestige = 40
 	    any_pop = {
 	       consciousness = -3
-	    }
-	    any_pop = {
-	       militancy = -3
-	    }
-		any_country = {
-		   limit = {
-		      capital_scope = { continent = europe }
-		   }
-		   any_pop = {
-		      ideology = { factor = 0.10 value = liberal } 
-		   }
-		}		
+		   militancy = -3
+	    }	
 	}
 }
 
@@ -1359,7 +1363,7 @@ country_event = {
 	}		
 }
 
-# You are a AI and still have Cultural Tech School at 70 percent literacy. Making fine art will not make you relevent as a nation. Please stop.
+# You are a AI and still have Cultural Tech School at 80 percent literacy. Making fine art will not make you relevent as a nation. Please stop.
 
 country_event = {
 	id = 443056
@@ -1370,7 +1374,7 @@ country_event = {
 	trigger = {	 
 	    tech_school = culture_tech_school
 	    ai = yes	
-        literacy = 0.7		
+        literacy = 0.8	
 	}
 	
 	mean_time_to_happen = {
@@ -1623,7 +1627,7 @@ country_event = {
 	    exists = yes	
         ruling_party_ideology = paternal
 		is_ideology_enabled = fascist
-		fascist = 15
+		fascist = 10
 		NOT = {
 		   OR = {
 		      government = democracy
@@ -1882,19 +1886,19 @@ country_event = {
 		}
 		is_ideology_enabled = fascist
 		OR = {		   
-		   fascist = 30
+		   fascist = 20
 		   AND = { 
 		      has_country_flag = depression_effects
-			  fascist = 15
-			  communist = 15
+			  fascist = 10
+			  communist = 10
 		   }
 		   AND = { 
 		      is_disarmed = yes
-			  fascist = 15
+			  fascist = 10
 		   }		   
 		   AND = { 
 		      ruling_party_ideology = paternal
-			  fascist = 15
+			  fascist = 10
 		   }
 		}
 		OR = {
@@ -2947,6 +2951,1269 @@ country_event = {
 		name = "DODFFP31.A"
 		remove_country_modifier = first_among_great_powers	
 	}
+}
+
+##### Socialists and Communists Chain 
+
+#### Paternals and Fascists Chains
+
+#### The International Proletariat - Start of the Socialist Loop ####
+
+country_event = {
+	id = 443076
+	title = "DODFFP32.T"
+	desc = "DODFFP32.D"
+	picture = "communist_congress"
+
+	trigger = {	 
+	    exists = yes	
+		civilized = yes
+		is_ideology_enabled = social_liberal
+        ruling_party_ideology = socialist	
+		communist = 10
+		OR = {
+		   government = democracy
+		   government = parliamentary_republic
+		   government = hms_government
+		   government = prussian_constitutionalism
+		}
+		OR = {
+           NOT = { tag = SGF }
+		   NOT = { has_global_flag = german_phoenix }
+		   has_country_flag = phoenix_failure
+		}
+		NOT = { has_country_flag = the_international_proletariat }
+	}
+	
+	## Same MTTH rules as the Fascist or Paternal Chain apart from LIBERALS or FASCISTS
+	
+	mean_time_to_happen = {
+		months = 24
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 40
+		}
+		modifier = {
+			factor = 0.8
+			war_exhaustion = 75
+		}
+		modifier = {
+			factor = 0.8
+			has_recently_lost_war = yes
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 3
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 4
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.8
+			anarcho_liberal = 10
+		}
+		modifier = {
+			factor = 0.8
+			liberal = 10
+		}
+		modifier = {
+			factor = 0.8
+			social_liberal = 10
+		}
+		modifier = {
+			factor = 0.5
+			paternal = 10
+		}
+		modifier = {
+			factor = 0.5
+			fascist = 10
+		}
+		modifier = {
+			factor = 0.5
+			is_disarmed = yes
+		}
+		modifier = {
+			factor = 0.1
+			communist = 20
+		}
+	}
+	
+	# Pro-Internationalist Socialism
+	# The Internationalie shall unite the Human Race!
+	
+	option = {
+		name = "DODFFP32.A"
+		   prestige = 5
+	       any_pop = { 
+		      ideology = { factor = 0.05 value = communist } 	
+			  scaled_militancy = {
+				  ideology = fascist
+				  factor = 8
+			  }
+			  scaled_militancy = {
+				  ideology = paternal
+				  factor = 8
+			  }
+			  scaled_militancy = {
+				   ideology = anarcho_liberal
+				   factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = liberal
+				  factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = market_liberal
+				  factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = conservative
+				  factor = 3
+			  }
+			  scaled_militancy = {
+				  ideology = social_liberal
+				  factor = 1
+			  }
+			  scaled_militancy = {
+				  ideology = socialist
+				  factor = -5
+			  }
+			  scaled_militancy = {
+				  ideology = communist
+				  factor = -9
+			  }
+		   }			  
+		   set_country_flag = the_international_proletariat
+		   set_country_flag = international_communism	       			   
+           ai_chance = {
+                 factor = 50
+			      modifier = {
+				     factor = 0.75
+					 government = hms_government
+				  }
+			      modifier = {
+				     factor = 0.5
+					 government = prussian_constitutionalism
+				  }
+			      modifier = {
+				     factor = 0.5
+					 plurality = 90
+				  }
+			      modifier = {
+				     factor = 2
+					 fascist = 30
+				  }
+			      modifier = {
+				     factor = 1.5
+					 fascist = 20
+				  }
+			      modifier = {
+				     factor = 1.25
+					 fascist = 10
+				  }
+			      modifier = {
+				     factor = 1.5
+					 communist = 20
+				  }
+			      modifier = {
+				     factor = 1.75
+					 nationalvalue = nv_fraternity
+				  }
+			      modifier = {
+				     factor = 1.5
+					 OR = {
+					    nationalvalue = nv_unity
+					    nationalvalue = nv_prosperity
+					    nationalvalue = nv_equality
+					 }
+				  }
+			      modifier = {
+				     factor = 0.5
+					 OR = {
+					    nationalvalue = nv_glory
+					    nationalvalue = nv_dominion
+                        nationalvalue = nv_liberty						
+					 }
+				  }
+			      modifier = {
+				     factor = 0.25
+					 OR = {					    
+					    nationalvalue = nv_supremacy
+					    nationalvalue = nv_productivity
+					    nationalvalue = nv_freedom
+					 }
+				  }
+		   }
+	}
+	
+	# Social Democracy Socialism
+    # Excuse me sir but this is a Socialist Democracy
+	
+	option = {
+		name = "DODFFP32.B"
+		   prestige = -5
+	       any_pop = { 
+		      ideology = { factor = 0.05 value = socialist } 
+			  scaled_militancy = {
+				  ideology = communist
+				  factor = 8
+			  }			  
+	       }
+		   set_country_flag = the_international_proletariat
+           set_country_flag = legal_socialism
+		   
+           ai_chance = {
+               factor = 50
+			      modifier = {
+				     factor = 0.1
+					 fascist = 30
+				  }
+			      modifier = {
+				     factor = 0.5
+					 fascist = 20
+				  }
+			      modifier = {
+				     factor = 0.75
+					 fascist = 10
+				  }
+			      modifier = {
+				     factor = 0.5
+					 communist = 20
+				  }
+			      modifier = {
+				     factor = 1.25
+					 government = hms_government
+				  }
+			      modifier = {
+				     factor = 1.5
+					 government = prussian_constitutionalism
+				  }
+			      modifier = {
+				     factor = 1.5
+					 plurality = 90
+				  }	
+			      modifier = {
+				     factor = 0.25
+					 nationalvalue = nv_fraternity
+				  }
+			      modifier = {
+				     factor = 0.5
+					 OR = {
+					    nationalvalue = nv_unity
+					    nationalvalue = nv_prosperity
+					    nationalvalue = nv_equality
+					 }
+				  }
+			      modifier = {
+				     factor = 1.5
+					 OR = {
+					    nationalvalue = nv_glory
+					    nationalvalue = nv_dominion
+                        nationalvalue = nv_liberty						
+					 }
+				  }
+			      modifier = {
+				     factor = 1.75
+					 OR = {					    
+					    nationalvalue = nv_supremacy
+					    nationalvalue = nv_productivity
+					    nationalvalue = nv_freedom
+					 }
+				  }
+           }		
+	}	
+}
+
+#### The Fire Falters and the Fire Rises
+
+### The Fire Falters
+
+### You've created a Socialist Utopia and thus Internationalism might as well just be dead in this nation. ###
+
+country_event = {
+	id = 443077
+	title = "DODFFP33.T"
+	desc = "DODFFP33.D"
+	picture = "banquet"
+
+	trigger = {	 
+	    exists = yes	
+		has_country_flag = international_communism
+        wage_reform = good_minimum_wage
+        work_hours = eight_hours
+        safety_regulations = good_safety
+        unemployment_subsidies = good_subsidies
+        pensions = good_pensions
+        health_care = good_health_care
+        school_reforms = good_schools
+        penal_system = rehabilitation	
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	# BLESSED CHUNGUS
+
+	option = {
+		name = "DODFFP33.A"
+		   prestige = 10
+	       any_pop = { 
+		      ideology = { factor = 0.1 value = social_liberal } 
+		      militancy = -9
+		   }			  
+		   clr_country_flag = international_communism	
+           set_country_flag = legal_socialism		   
+	}	
+}
+
+### You've successfully elected Social Liberals and they have more then 30 percent ideological control which have for all intents and purposes discredited this strain of socialism out of existance ###
+
+country_event = {
+	id = 443078
+	title = "DODFFP34.T"
+	desc = "DODFFP34.D"
+	picture = "banquet"
+
+	trigger = {	 
+	    exists = yes	
+		has_country_flag = international_communism
+        ruling_party_ideology = social_liberal
+		social_liberal = 30
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	# CLASS TRAITORS
+
+	option = {
+		name = "DODFFP34.A"
+		   prestige = -1
+	       any_pop = { 
+		      ideology = { factor = 0.1 value = social_liberal } 
+		   }			  
+		   clr_country_flag = international_communism	
+           set_country_flag = legal_socialism		   
+	}	
+}
+
+#### The Fire Rises 
+
+#### The Failure of Democracy - Social Democrats have ran straight into a brick wall due to some form of a catastropic failure.
+
+country_event = {
+	id = 443079
+	title = "DODFFP35.T"
+	desc = "DODFFP35.D"
+	picture = "communist_crowd"
+
+	trigger = {	 
+	    exists = yes	
+		ruling_party_ideology = socialist
+		has_country_flag = legal_socialism	
+        communist = 10	
+        average_militancy = 3		
+		war = no
+		OR = {
+		    is_disarmed = yes
+		    has_country_flag = depression_effects
+			has_country_modifier = in_bankrupcy
+			has_country_modifier = generalised_debt_default
+			has_country_modifier = regency_government
+		    average_militancy = 9
+			AND = {
+			   average_militancy = 5
+			   communist = 30
+			}
+			AND = {
+			   average_militancy = 7
+			   communist = 20
+			}
+	    }
+		OR = {
+           NOT = { tag = SGF }
+		   NOT = { has_global_flag = german_phoenix }
+		   has_country_flag = phoenix_failure
+		}
+        NOT = {
+		   has_country_modifier = general_strike
+		   has_country_modifier = betrayal_of_the_left
+		   any_owned_province = {
+			  is_capital = yes
+			  NOT = { controlled_by = THIS }
+		   }
+        }		   	
+	}
+
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	# We will make deals with the right to put out this revolution in its crib.
+	# RED TEXT - WARNING WILL RESULT IN NATIONAL VALUE CHANGING
+
+	option = {
+		name = "DODFFP35.A"
+		prestige = 5
+		add_country_modifier = {
+			name = general_strike
+			duration = 1000
+		}
+	    country_event = { id = 443080 days = 14 }
+        ai_chance = {
+            factor = 50
+			   modifier = {
+				  factor = 0
+				  fascist = 30
+			   }
+			   modifier = {
+				  factor = 0.5
+				  fascist = 20
+			  }
+			  modifier = {
+				  factor = 0.75
+				  fascist = 10
+			  }
+			  modifier = {
+				  factor = 1.25
+				  government = hms_government
+			  }
+              modifier = {
+				  factor = 1.5
+				  government = prussian_constitutionalism
+		      }
+			  modifier = {
+				  factor = 1.25
+				  plurality = 90
+			  }	
+			  modifier = {
+				  factor = 1.25
+				  has_country_flag = depression_effects
+			  }	
+        }
+	}	
+	
+    # The people have spoken. We will join our brothers in the revolution.
+	
+	option = {
+		name = "DODFFP35.B"
+		   prestige = -5
+	       any_pop = { 
+		      ideology = { factor = 0.1 value = social_liberal } 
+		      ideology = { factor = 0.05 value = communist } 	
+			  scaled_militancy = {
+				  ideology = fascist
+				  factor = 8
+			  }
+			  scaled_militancy = {
+				  ideology = paternal
+				  factor = 8
+			  }
+			  scaled_militancy = {
+				   ideology = anarcho_liberal
+				   factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = liberal
+				  factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = market_liberal
+				  factor = 6
+			  }
+			  scaled_militancy = {
+				  ideology = conservative
+				  factor = 3
+			  }
+			  scaled_militancy = {
+				  ideology = social_liberal
+				  factor = 1
+			  }
+			  scaled_militancy = {
+				  ideology = socialist
+				  factor = -5
+			  }
+			  scaled_militancy = {
+				  ideology = communist
+				  factor = -9
+			  }
+		   }
+		   set_country_flag = international_communism	
+           clr_country_flag = legal_socialism	
+           ai_chance = {
+              factor = 50
+			      modifier = {
+				     factor = 0.75
+					 government = hms_government
+				  }
+			      modifier = {
+				     factor = 0.5
+					 government = prussian_constitutionalism
+				  }
+			      modifier = {
+				     factor = 0.75
+					 has_country_flag = depression_effects
+				  }
+			      modifier = {
+				     factor = 0.75
+					 plurality = 90
+				  }
+			      modifier = {
+				     factor = 2
+				     fascist = 30
+			      } 
+			      modifier = {
+				     factor = 1.5
+				     fascist = 20
+			      }
+			      modifier = {
+				     factor = 1.25
+				     fascist = 10
+			      }
+           }		   
+	}	
+}
+
+#### The Suppression of the Communists - You've just done what the SPD did and now you'll be suffering from the aftereffects of such a action.
+
+#### So much for left unity.
+
+country_event = {
+	id = 443080
+	title = "DODFFP36.T"
+	desc = "DODFFP36.D"
+	picture = "failed_revolution"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "DODFFP36.A"
+		   prestige = -5
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 50 }
+			  }
+			  owner = { plurality = -50 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 25 NOT = { plurality = 50 } }
+			  }
+			  owner = { plurality = -25 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 10 NOT = { plurality = 25 } }
+			  }
+			  owner = { plurality = -10 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_fraternity }
+			  }
+			  owner = { nationalvalue = nv_productivity }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_prosperity }
+			  }
+			  owner = { nationalvalue = nv_dominion }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_equality }
+			  }
+			  owner = { nationalvalue = nv_order }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_unity }
+			  }
+			  owner = { nationalvalue = nv_supremacy }
+		   }
+		   set_country_flag = communists_banned		   
+		   remove_country_modifier = general_strike
+		   add_country_modifier = {
+			    name = betrayal_of_the_left
+			    duration = 10950
+		   }
+	       any_pop = { 
+	          militancy = 1
+		      ideology = { factor = 0.1 value = paternal } 	      
+	       }	
+		   any_pop = {
+				limit = { pop_majority_ideology = paternal }
+				militancy = -3
+		   }	
+		   any_pop = { limit = { pop_majority_ideology = communist } reduce_pop = 0.9 }
+		   any_pop = { 
+			   limit = {
+				   OR = {
+					   social_movement = yes
+					   political_movement = yes
+				    }
+				} 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+		   }
+		   any_pop = {
+				limit = {
+					OR = { type = soldiers type = officers }
+					pop_majority_ideology = communist
+					}
+					militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                    random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }						
+			}				
+			any_pop = { ideology = { factor = -0.10 value = communist } }			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_communist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_communist
+				  remove_country_modifier = charismatic_leader_communist
+			   }
+			}				
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_communist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_communist
+				  remove_country_modifier = popular_figurehead_communist
+			   }
+		   }		
+		   any_pop = {
+		       militancy = -8
+			   consciousness = -8
+			   scaled_consciousness = {
+				   factor = 9
+				   ideology = communist
+			   }
+			   scaled_militancy = {
+				   factor = 9
+				   ideology = communist
+	 		   }		  
+		   }
+           any_owned = {
+		       limit = { 
+				   has_province_modifier = communist_stronghold	
+				}
+				remove_province_modifier = communist_stronghold
+           }
+	 }
+}
+
+### The End of a Era - Obviously this modifier can be removed by either a ruling communist party or the modifier expiring which takes thirty years. It CANNOT be removed if the country is a Right Wing Dictatorship #####
+
+country_event = {
+	id = 443081
+	title = "DODFFP37.T"
+	desc = "DODFFP37.D"
+	picture = "communist_congress"
+
+	trigger = {	 
+	    exists = yes	
+		has_country_flag = communists_banned
+		OR = {
+		   government = democracy
+		   government = parliamentary_republic
+		   government = hms_government
+		   government = socialist_republic
+		   ruling_party_ideology = communist
+		}
+        OR = { 
+           NOT = { has_country_modifier = betrayal_of_the_left }
+		   government = socialist_republic
+           ruling_party_ideology = communist		   
+        }	
+        NOT = {
+            OR = {
+               ruling_party_ideology = fascist
+               ruling_party_ideology = paternal
+               ruling_party_ideology = reactionary
+            }
+        }			
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+	option = {
+		name = "DODFFP37.A"
+		prestige = 5
+		remove_country_modifier = betrayal_of_the_left
+	    clr_country_flag = communists_banned
+	    any_pop = { 
+		   ideology = { factor = 0.01 value = communist }
+		}
+	}
+}
+
+#### The Internationalists have too much power and there is a active political crisis ####
+
+country_event = {
+	id = 443082
+	title = "DODFFP38.T"
+	desc = "DODFFP38.D"
+	picture = "communist_rally"
+
+	trigger = {	 
+	    exists = yes	
+		ruling_party_ideology = socialist
+		has_country_flag = international_communism
+		OR = {
+		   AND = {
+              communist = 30	
+			  socialist = 30
+		   }
+		   AND = {
+              communist = 20	
+			  socialist = 40
+		   }
+		   socialist = 60
+		}		   
+        average_militancy = 3		
+		war = no
+		OR = {
+		    is_disarmed = yes
+		    has_country_flag = depression_effects
+			has_country_modifier = in_bankrupcy
+			has_country_modifier = generalised_debt_default
+			has_country_modifier = regency_government
+		    average_militancy = 7
+			AND = {
+			   average_militancy = 5
+			   communist = 30
+			}
+	    }
+		OR = {
+           NOT = { tag = SGF }
+		   NOT = { has_global_flag = german_phoenix }
+		   has_country_flag = phoenix_failure
+		}
+        NOT = {
+		   has_country_modifier = general_strike
+		   any_owned_province = {
+			  is_capital = yes
+			  NOT = { controlled_by = THIS }
+		   }
+        }		   	
+	}
+
+	mean_time_to_happen = {
+		months = 1
+	}
+
+	# Rewrite the Constitution to ban reactionary aka anything not socialist parties
+
+	option = {
+		name = "DODFFP38.A"
+		prestige = -5
+		random_owned = { 
+		   limit = { owner = { OR = { government = hms_government government = prussian_constitutionalism } } }
+		   owner = { set_country_flag = constitutional_crisis_socialist } 
+		}
+		random_owned = { 
+		   limit = { owner = { NOT = { OR = { government = hms_government government = prussian_constitutionalism } } } }
+		   owner = { country_event = { id = 443084 days = 3 } }
+        }		
+        ai_chance = {
+            factor = 25
+			   modifier = {
+				  factor = 0.75
+				  has_country_flag = depression_effects
+			   }
+			   modifier = {
+				  factor = 0.75
+			      plurality = 90
+			   }
+			   modifier = {
+				  factor = 2
+				  fascist = 30
+			   }
+			   modifier = {
+				  factor = 1.5
+				  fascist = 20
+			   }
+			   modifier = {
+				  factor = 1.25
+				  fascist = 10
+			   }
+        }
+	}	
+	
+    # This has gone too far. We need to stop this nonsense.
+	
+	option = {
+		name = "DODFFP38.B"
+		   prestige = -5
+		   add_country_modifier = {
+			   name = general_strike
+			   duration = 44
+		   }
+		   country_event = { id = 443085 days = 30 }
+	       any_pop = { 
+			  scaled_militancy = {
+				  ideology = communist
+				  factor = 9
+			  }
+		   }	
+           ai_chance = {
+              factor = 75
+			  modifier = {
+				  factor = 0
+			      fascist = 30
+			  }
+			  modifier = {
+				  factor = 0.5
+				  fascist = 20
+			  }
+			  modifier = {
+				  factor = 0.75
+				  fascist = 10
+			  }
+			  modifier = {
+				  factor = 1.25
+				  plurality = 90
+			  }	
+			  modifier = {
+				  factor = 1.25
+				  has_country_flag = depression_effects
+			  }	
+           }		   
+	}
+}
+
+#### The Monarch has been observing the ongoing political crisis and you just ran into his trap by trying to rewrite the constitution without a referendum to remove his position ###
+
+country_event = {
+	id = 443083
+	title = "DODFFP39.T"
+	desc = "DODFFP39.D"
+	picture = "communist_riot"
+
+	trigger = {	 
+	    exists = yes	
+		has_country_flag = constitutional_crisis_socialist		   	
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	# The Monarch is powerless to stop the inevitable revolution.
+
+	option = {
+		name = "DODFFP39.A"
+		clr_country_flag = constitutional_crisis_socialist	
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		set_country_flag = parliamentary_republic_gov
+		government = parliamentary_republic
+		country_event = { id = 443084 days = 3 }
+        ai_chance = {
+            factor = 50
+			   modifier = {
+				  factor = 0.75
+				  has_country_flag = depression_effects
+			   }
+			   modifier = {
+				  factor = 0.75
+			      plurality = 90
+			   }
+			   modifier = {
+				  factor = 2
+				  fascist = 30
+			   }
+			   modifier = {
+				  factor = 1.5
+				  fascist = 20
+			   }
+			   modifier = {
+				  factor = 1.25
+				  fascist = 10
+			   }
+        }
+	}	
+	
+    # Overthrow the Government and enact a immediate purge of Communist and International Socialist Activities. 
+	# Ally with Collaborators in the Socialist Party to destroy the Internationalists in the Socialist Party
+
+	option = {
+		name = "DODFFP39.B"
+		   clr_country_flag = constitutional_crisis_socialist
+		   prestige = -5
+		   ruling_party_ideology = reactionary
+		   set_country_flag = reactionary_party_in_power
+		   clr_country_flag = socialist_party_in_power
+		   clr_country_flag = international_communism
+		   set_country_flag = legal_socialism	
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 50 }
+			  }
+			  owner = { plurality = -50 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 25 NOT = { plurality = 50 } }
+			  }
+			  owner = { plurality = -25 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 10 NOT = { plurality = 25 } }
+			  }
+			  owner = { plurality = -10 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_fraternity }
+			  }
+			  owner = { nationalvalue = nv_productivity }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_prosperity }
+			  }
+			  owner = { nationalvalue = nv_dominion }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_equality }
+			  }
+			  owner = { nationalvalue = nv_order }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { nationalvalue = nv_unity }
+			  }
+			  owner = { nationalvalue = nv_supremacy }
+		   }
+		   set_country_flag = communists_banned
+		   add_country_modifier = {
+			    name = betrayal_of_the_left
+			    duration = 10950
+		   }
+	       any_pop = { 
+	          militancy = 1
+		      ideology = { factor = 0.1 value = paternal } 	      
+	       }	
+		   any_pop = {
+				limit = { pop_majority_ideology = paternal }
+				militancy = -3
+		   }	
+		   any_pop = { limit = { pop_majority_ideology = communist } reduce_pop = 0.9 }
+		   any_pop = { 
+			   limit = {
+				   OR = {
+					   social_movement = yes
+					   political_movement = yes
+				    }
+				} 
+				militancy = -7
+				random_list = { 50 = { reduce_pop = 0.99 } 50 = { reduce_pop = 0.98 } }
+		   }
+		   any_pop = {
+				limit = {
+					OR = { type = soldiers type = officers }
+					pop_majority_ideology = communist
+					}
+					militancy = -9 ideology = { factor = 0.35 value = conservative }	
+                    random_list = { 50 = { reduce_pop = 0.9 } 50 = { reduce_pop = 0.85 } }						
+			}				
+			any_pop = { ideology = { factor = -0.10 value = communist } }			
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = charismatic_leader_communist }
+			   }
+			   owner = {
+			      clr_country_flag = charismatic_leader
+			      clr_country_flag = charismatic_leader_communist
+				  remove_country_modifier = charismatic_leader_communist
+			   }
+			}				
+			random_owned = { 
+			   limit = { 
+			       owner = { has_country_modifier = popular_figurehead_communist }
+			   }
+			   owner = {
+			      clr_country_flag = popular_figurehead
+			      clr_country_flag = popular_figurehead_communist
+				  remove_country_modifier = popular_figurehead_communist
+			   }
+		   }		
+		   any_pop = {
+		       militancy = -8
+			   consciousness = -8
+			   scaled_consciousness = {
+				   factor = 9
+				   ideology = communist
+			   }
+			   scaled_militancy = {
+				   factor = 9
+				   ideology = communist
+	 		   }		  
+		   }
+           any_owned = {
+		       limit = { 
+				   has_province_modifier = communist_stronghold	
+				}
+				remove_province_modifier = communist_stronghold
+           }		   
+           ai_chance = {
+              factor = 50
+			  modifier = {
+				  factor = 0
+			      fascist = 30
+			  }
+			  modifier = {
+				  factor = 0.5
+				  fascist = 20
+			  }
+			  modifier = {
+				  factor = 0.75
+				  fascist = 10
+			  }
+			  modifier = {
+				  factor = 1.25
+				  plurality = 90
+			  }	
+			  modifier = {
+				  factor = 1.25
+				  has_country_flag = depression_effects
+			  }	
+           }		   
+	}
+}
+
+#### The Radical Constitution - You have successfully rewritten the constitution since you are a Republic ####
+
+country_event = {
+	id = 443084
+	title = "DODFFP40.T"
+	desc = "DODFFP40.D"
+	picture = "storming_palace_communists"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "DODFFP40.A"
+		government = socialist_republic
+		political_reform = universal_voting
+		political_reform = population_equal_weight
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = all_trade_unions
+		political_reform = no_slavery
+		political_reform = proportional_representation
+		political_reform = all_voting_pops
+		political_reform = open_borders
+		political_reform = secret_ballots
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    set_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov			
+		clr_country_flag = tory_election_win
+		set_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	 }
+}
+
+### The Socialists refused to rewrite the Constitution and the Communists are fundementally pissed off ####
+
+country_event = {
+	id = 443085
+	title = "DODFFP41.T"
+	desc = "DODFFP41.D"
+	picture = "communist_riot"
+
+	is_triggered_only = yes
+	
+	### The Socialists manage to restore order and manage to persuade some Communists to become more Moderate in the process.
+
+	option = {
+		name = "DODFFP41.A"
+		   prestige = 5
+		   set_country_flag = legal_socialism
+		   clr_country_flag = international_communism
+		   any_pop = { 
+		       ideology = { factor = -0.05 value = communist } 
+			   ideology = { factor = 0.05 value = socialist } 
+		       militancy = -2
+			   consciousness = -2
+			   scaled_consciousness = {
+				   factor = 5
+				   ideology = communist
+			   }
+			   scaled_militancy = {
+				   factor = 5
+				   ideology = communist
+	 		   }		  
+		   }
+           ai_chance = {
+              factor = 50
+			  modifier = {
+				  factor = 0
+			      communist = 35
+			  }
+			  modifier = {
+				  factor = 0.5
+				  communist = 25
+			  }
+			  modifier = {
+				  factor = 0.75
+				  communist = 15
+			  }
+			  modifier = {
+				  factor = 0.75
+				  has_country_flag = depression_effects
+			  }	
+			  modifier = {
+				  factor = 1.25
+				  plurality = 80
+			  }	
+			  modifier = {
+				  factor = 1.5
+				  plurality = 90
+			  }	
+			  modifier = {
+				  factor = 1.5
+				  government = hms_government
+			  }
+			  modifier = {
+				  factor = 1.75
+			      government = prussian_constitutionalism
+			  }
+           }		   
+	}
+	
+	### The Socialists are undable to stem the revolutionary tide - WILL RESULT IN THE REVOLUTION COMRADE.
+
+	option = {
+		name = "DODFFP41.B"
+		prestige = -5
+		remove_country_modifier = general_strike
+		country_event = 443086	
+        ai_chance = {
+              factor = 50
+			  modifier = {
+				  factor = 2
+			      communist = 35
+			  }
+			  modifier = {
+				  factor = 1.5
+				  communist = 25
+			  }
+			  modifier = {
+				  factor = 1.25
+				  communist = 15
+			  }
+			  modifier = {
+				  factor = 1.25
+				  has_country_flag = depression_effects
+			  }	
+			  modifier = {
+				  factor = 0.75
+				  plurality = 80
+			  }	
+			  modifier = {
+				  factor = 0.75
+				  plurality = 90
+			  }	
+			  modifier = {
+				  factor = 0.5
+				  government = hms_government
+			  }
+			  modifier = {
+				  factor = 0.25
+			      government = prussian_constitutionalism
+			  }
+        }		
+	}		
+}
+
+### The COUNTRY Revolution ####
+
+country_event = {
+	id = 443086
+	title = "DODFFP42.T"
+	desc = "DODFFP42.D"
+	picture = "storming_palace_communists"
+
+    major = yes
+	is_triggered_only = yes
+	
+	### THE REVOLUTION IS HERE
+
+	option = {
+		name = "DODFFP42.A"
+		random_owned = {
+			limit = { owner = { has_country_modifier = regency_government } }
+			owner = { remove_country_modifier = regency_government }
+		}
+		government = proletarian_dictatorship
+		political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = state_controlled
+		political_reform = underground_parties
+		political_reform = closed_borders
+		political_reform = mandatory_service
+		political_reform = all_voting_pops
+		political_reform = no_slavery
+		social_reform = good_minimum_wage
+		social_reform = eight_hours
+		social_reform = good_subsidies
+		social_reform = good_pensions
+		social_reform = good_health_care
+		prestige_factor = -0.1
+		random_owned = {
+			limit = { owner = { has_country_modifier = the_red_scare } }
+			owner = { remove_country_modifier = the_red_scare }
+		}
+		clr_country_flag = communist_purge
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+		country_event = 800052	   
+	}		
 }
 
 # The Maelstrom - Used to simulate political chaos after a democratic revolution post-invention of fascism/mass politics.

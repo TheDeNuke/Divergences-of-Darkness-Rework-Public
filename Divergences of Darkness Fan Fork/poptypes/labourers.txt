@@ -342,7 +342,7 @@ country_migration_target =
 	}
 	modifier = {
 		factor = 1.4
-		primary_culture = boer
+		country = { tag = BTV }
 	}
 	modifier = {
 		factor = 0.9
@@ -1962,101 +1962,70 @@ promote_to = {
 		group = {
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.003
-				}
 			}
 			modifier = {
 				factor = -2
-								state_scope = {
 				soldiers = 0.06 
-				}
 			}
 			modifier = {
 				factor = -2
-								state_scope = {
 				soldiers = 0.01 
 			}
-			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.013 
-				}
 			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.016 
-				}
 			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.02 
-				}
 			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.023 
-				}
 			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.026 
-				}
 			}
 			modifier = {
 				factor = -2
-				state_scope = {
 				soldiers = 0.03 
-				}
 			}
-		}
-		modifier = {
+			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.035 
-				}
 			}
 			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.038
-				}
 			}
 			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.04
-				}
 			}
 			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.043
-				}
 			}
 			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.045
-				}
 			}
 			modifier = {
 				factor = -5
-				state_scope = {
 				soldiers = 0.048
-				}
 			}
-			modifier = {
-				factor = -50
-				state_scope = {
-				soldiers = 0.05
-				}
-			}
+        }	
+		
+		modifier = {
+			factor = -100
+			soldiers = 0.05
+		}
 		group = {
 			modifier = {
 				factor = 1
@@ -2164,6 +2133,21 @@ promote_to = {
 			}
 		}
 		
+
+		
+        modifier = {
+            factor = -100
+            is_primary_culture = no
+            is_accepted_culture = no
+			location = { is_colonial = no }
+			country = {
+                OR = { 
+			       recruitment_reform = restricted_recruitment 
+			       recruitment_reform = peasant_levys 
+			   }
+			}
+        }
+		
         modifier = {
             factor = -100
             soldiers = 0.01
@@ -2200,12 +2184,10 @@ ideologies = {
 
 	social_liberal = {
 		factor = 1
+
 		modifier = {
-			factor = 2.5
-			has_global_flag = post_colonial_era_fired
-			NOT = { ruling_party_ideology = communist }
-			NOT = { ruling_party_ideology = fascist }
-			NOT = { ruling_party_ideology = paternal }
+			factor = 1.75
+            has_global_flag = post_colonial_era_fired
 		}
 		modifier = {
 			factor = 1.75
@@ -2277,6 +2259,23 @@ ideologies = {
 				has_country_flag = charismatic_leader_social_liberal
 			}
 		}
+		# If Life Needs are not met then Social Liberals will lose a lot of popularity. This is latte socialism after all.
+		modifier = {
+			factor = 0.75
+			NOT = { life_needs = 0.5 }
+		}
+		modifier = {
+			factor = 0.5
+			NOT = { life_needs = 0.25 }
+		}
+		modifier = {
+			factor = 0
+			NOT = { life_needs = 0.1 }
+		}
+        modifier = {
+            factor = 0.5
+            NOT = { everyday_needs = 0.25 }
+        }
 		modifier = {
 			factor = 0.5
 			country = { NOT = { plurality = 10 } }
@@ -2415,7 +2414,7 @@ ideologies = {
 		}
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -2644,12 +2643,6 @@ ideologies = {
 				has_country_flag = fascist_purge
 			}
 		}
-		modifier = {
-			factor = 0.2
-			country = { 
-				has_country_flag = fascist_purge
-			}
-		}
 
 		modifier = {
 			factor = 2
@@ -2718,6 +2711,12 @@ ideologies = {
 				has_country_flag = charismatic_leader_fascist
 			}
 		}
+        modifier = {
+            factor = 1.1
+            country = {
+                ruling_party_ideology = paternal
+            }
+        }
 		modifier = {
 			factor = 1.5
 			country = { 
@@ -2747,8 +2746,12 @@ ideologies = {
 				nationalvalue = nv_dominion
 			}
 			ruling_party_ideology = fascist
-			NOT = { government = fascist_dictatorship }
-			NOT = { government = fascist_monarchy }
+			NOT = {
+			    country = {
+			       government = fascist_dictatorship
+				   government = fascist_monarchy
+			    }
+		    }
 		}
         modifier = {
             factor = 3
@@ -2934,7 +2937,7 @@ ideologies = {
         }
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -3027,7 +3030,7 @@ ideologies = {
 			}
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.3
 			country = { 
 				has_country_flag = fascist_purge
 			}
@@ -3276,7 +3279,7 @@ ideologies = {
 		
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -3500,7 +3503,7 @@ ideologies = {
 		
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -3523,10 +3526,7 @@ ideologies = {
 
 	conservative = {
 		factor = 1
-		modifier = {
-			factor = 0.75
-			has_global_flag = post_colonial_era_fired
-		}
+
 		modifier = {
 			factor = 0.75
 			is_ideology_enabled = anarcho_liberal
@@ -3869,7 +3869,7 @@ ideologies = {
 		}
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -3892,13 +3892,7 @@ ideologies = {
 	
 	market_liberal = {
 		factor = 1.1
-		modifier = {
-			factor = 2.5
-			has_global_flag = post_colonial_era_fired
-			NOT = { ruling_party_ideology = communist }
-			NOT = { ruling_party_ideology = fascist }
-			NOT = { ruling_party_ideology = paternal }
-		}
+
 		#modifier = {
 		#	factor = 1.25
 		#	is_ideology_enabled = socialist
@@ -4134,7 +4128,7 @@ ideologies = {
 		}			
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -4157,10 +4151,7 @@ ideologies = {
 	
     socialist = {
 		factor = 1
-		modifier = {
-			factor = 0.75
-			has_global_flag = post_colonial_era_fired
-		}
+
 		modifier = {
 			factor = 1.05
 			country = { 
@@ -4174,7 +4165,7 @@ ideologies = {
 			}
 		}
 		modifier = {
-			factor = 0.7
+			factor = 0.5
 			country = { 
 				has_country_flag = communist_purge
 			}
@@ -4226,7 +4217,7 @@ ideologies = {
 				nationalvalue = nv_equality
 			}
 			NOT = { ruling_party_ideology = communist }
-		    NOT = { government = socialist_republic }
+		    country = { NOT = { government = socialist_republic } }
 		}
 		modifier = {
 			factor = 1.5
@@ -4241,7 +4232,7 @@ ideologies = {
 			factor = 1.2
 			nationalvalue = nv_fraternity
 			NOT = { ruling_party_ideology = communist }
-		    NOT = { government = socialist_republic }
+		    country = { NOT = { government = socialist_republic } }
 		}
 		modifier = {
 			factor = 2
@@ -4316,6 +4307,78 @@ ideologies = {
             factor = 1.1
             social_reform_want = 0.3
         }
+		## Lower Strata will prefer Socialism to Liberalism if their Everyday Needs are not met.
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.03
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.06
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.09
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.12
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.15
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.18
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.21
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.24
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.27
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.1
+			political_reform_want = 0.30
+			NOT = { everyday_needs = 1.0 }
+		}
+		## For every point two after this they switch to communist or other extreme ideologies due to extreme percived ignorance
+		modifier = {
+			factor = 0.8
+			political_reform_want = 0.5
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 0.8
+			political_reform_want = 0.7
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 0.8
+			political_reform_want = 0.8
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 0.8
+			political_reform_want = 1.0
+			NOT = { everyday_needs = 1.0 }
+		}
 		modifier = {
 			factor = 1.25
 			NOT = { life_needs = 0.5 }
@@ -4331,10 +4394,7 @@ ideologies = {
 			NOT = { life_needs = 0.1 }
 			NOT = { is_ideology_enabled = communist }
 		}
-		modifier = {
-			factor = 1.2
-			trade_unions = all_trade_unions
-		}
+
         modifier = {
             factor = 1.25
             consciousness = 5
@@ -4430,7 +4490,7 @@ ideologies = {
 		}	
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -4463,7 +4523,10 @@ ideologies = {
 		modifier = {
 			factor = 0.2
 			country = { 
-				has_country_flag = communist_purge
+			    OR = {
+				    has_country_flag = communist_purge
+					has_country_flag = communists_banned
+			    }
 			}
 		}
 		modifier = {
@@ -4472,22 +4535,7 @@ ideologies = {
 				has_country_flag = show_trials_ongoing
 			}
 		}
-		modifier = {
-			factor = 0.1
-            NOT = {
-                militancy = 2
-                country = { government = proletarian_dictatorship }
-				country = { government = socialist_republic }
-            }
-		}			
-		modifier = {
-			factor = 0.25
-            NOT = {
-                militancy = 5
-                country = { government = proletarian_dictatorship }
-				country = { government = socialist_republic }
-            }
-		}			
+			
 		
 		modifier = {
 			factor = 2
@@ -4545,7 +4593,7 @@ ideologies = {
 		}
 
 		modifier = {
-			factor = 1.2
+			factor = 1.1
 			country = { 
 				has_global_flag = the_great_experiment_communist
 			}
@@ -4666,15 +4714,23 @@ ideologies = {
 				nationalvalue = nv_equality
 			}
 			ruling_party_ideology = communist 
-			NOT = { government = proletarian_dictatorship }
-			NOT = { government = socialist_republic }
+			NOT = { 
+			   country = { 
+			       government = socialist_republic 
+			       government = proletarian_dictatorship 
+			   } 
+			}
 		}
 		modifier = {
 			factor = 1.2
 			nationalvalue = nv_fraternity
 			ruling_party_ideology = communist 
-			NOT = { government = proletarian_dictatorship }
-			NOT = { government = socialist_republic }
+			NOT = { 
+			   country = { 
+			       government = socialist_republic 
+			       government = proletarian_dictatorship 
+			   } 
+			}
 		}
 		modifier = {
 			factor = 1.2
@@ -4684,21 +4740,53 @@ ideologies = {
 				nationalvalue = nv_dominion
 			}
 			ruling_party_ideology = communist
-			NOT = { government = proletarian_dictatorship }
-			NOT = { government = socialist_republic }
+			NOT = { 
+			   country = { 
+			       government = socialist_republic 
+			       government = proletarian_dictatorship 
+			   } 
+			}
 		}
 		modifier = {
 			factor = 1.5
 			nationalvalue = nv_supremacy
 			ruling_party_ideology = communist
-			NOT = { government = proletarian_dictatorship }
-			NOT = { government = socialist_republic }
+			NOT = { 
+			   country = { 
+			       government = socialist_republic 
+			       government = proletarian_dictatorship 
+			   } 
+			}
 		}
 
 		modifier = {
 			factor = 0.5
 			country = { civilized = no }
 		}
+		modifier = {
+			factor = 0.75
+			NOT = { consciousness = 1 }
+		}
+		modifier = {
+			factor = 0.75
+			NOT = { consciousness = 2 }
+		}
+		modifier = {
+			factor = 0.75
+			NOT = { consciousness = 3 }
+		}
+        modifier = {
+            factor = 1.05
+            consciousness = 9
+        }
+        modifier = {
+            factor = 1.05
+            consciousness = 8
+        }
+        modifier = {
+            factor = 1.05
+            consciousness = 7
+        }
 
 		modifier = {
 			factor = 1.2
@@ -4736,82 +4824,92 @@ ideologies = {
             }
         }
 		modifier = {
-			factor = 1.1
-			social_reform_want = 0.1
-		}
-		modifier = {
-			factor = 1.1
-			social_reform_want = 0.2
-		}
-		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.3
 		}
 		modifier = {
-			factor = 1.1	
+			factor = 1.15	
 			social_reform_want = 0.4
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.5
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.6
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.7
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.8
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 0.9
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			social_reform_want = 1
 		}
+		## For every point two after this they switch to communist or other extreme ideologies due to extreme percived ignorance
 		modifier = {
-			factor = 1.25
-			consciousness = 5
-			NOT = { everyday_needs = 0.25 }
-			state_scope = { rich_strata_luxury_needs = 0.25 }
+			factor = 1.2
+			political_reform_want = 0.5
+			NOT = { everyday_needs = 1.0 }
 		}
 		modifier = {
-			factor = 1.25
-			consciousness = 7
-			country = {
-				NOT = { rich_tax = 0.25 }
-				poor_tax = 0.75
-			}
+			factor = 1.2
+			political_reform_want = 0.7
+			NOT = { everyday_needs = 1.0 }
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.2
+			political_reform_want = 0.8
+			NOT = { everyday_needs = 1.0 }
+		}
+		modifier = {
+			factor = 1.2
+			political_reform_want = 1.0
+			NOT = { everyday_needs = 1.0 }
+		}
+
+
+		modifier = {
+			factor = 1.25
 			NOT = { life_needs = 1.0 }
-			social_reform_want = 0.4
+			social_reform_want = 0.3
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.25
 			NOT = { life_needs = 1.0 }
 			social_reform_want = 0.5
 		}
 		modifier = {
-			factor = 1.1
-			NOT = { life_needs = 1.0 }
-			social_reform_want = 0.6
-		}
-		modifier = {
-			factor = 1.1
+			factor = 1.25
 			NOT = { life_needs = 1.0 }
 			social_reform_want = 0.7
 		}
 		modifier = {
-			factor = 0.7
+			factor = 1.25
+			NOT = { life_needs = 1.0 }
+			social_reform_want = 0.9
+		}
+		modifier = {
+			factor = 1.2
+			country = { has_country_flag = international_communism }
+		}
+		modifier = {
+			factor = 0.6
 			life_needs = 1.0
+			NOT = { country = { has_country_flag = international_communism } }
+		}
+		modifier = {
+			factor = 0.7
+			country = { has_country_flag = legal_socialism }
 		}
 		modifier = {
 			factor = 0.3
@@ -4824,19 +4922,19 @@ ideologies = {
 		}
 		modifier = {
 			factor = 1.1
-			consciousness = 5
+			consciousness = 4
 			life_needs = 1.0
 			NOT = { everyday_needs = 0.1 }
 		}
 		modifier = {
-			factor = 1.1
+			factor = 1.15
 			consciousness = 6
 			life_needs = 1.0
 			NOT = { everyday_needs = 0.25 }
 		}
 		modifier = {
-			factor = 1.1
-			consciousness = 7
+			factor = 1.15
+			consciousness = 8
 			life_needs = 1.0
 			NOT = { everyday_needs = 0.5 }
 		}
@@ -4854,7 +4952,7 @@ ideologies = {
 		}
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -4877,16 +4975,22 @@ ideologies = {
 
     liberal = {
 		factor = 1
-		modifier = {
-			factor = 0.75
-            is_ideology_enabled = anarcho_liberal
-		}
+
 		modifier = {
 			factor = 0.25
             is_ideology_enabled = socialist
 			continent = europe
-			NOT = { has_global_flag = the_revolution_avenged }
-            NOT = { has_global_flag = post_colonial_era_fired }
+			country = {
+			   NOT = { 
+			      government = democracy
+				  government = hms_government
+				  government = parliamentary_republic
+			   }
+			}
+			NOT = { 
+			   has_global_flag = the_revolution_avenged 
+			   has_global_flag = post_colonial_era_fired		   
+			}
 		}
 		modifier = {
 			factor = 0.25
@@ -5026,48 +5130,93 @@ ideologies = {
 			country = { civilized = yes }
 		}
 		modifier = {
-			factor = 1.5
+			factor = 1.75
+			OR = {
+			   consciousness = 3
+			   political_reform_want = 0.10
+			}			   
 			NOT = { is_ideology_enabled = anarcho_liberal }
 		}
+		## Lower Strata will prefer Socialism to Liberalism if their Everyday Needs are not met.
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.03
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.06
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.09
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.12
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.15
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.18
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.21
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.24
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.27
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
 			political_reform_want = 0.30
+			OR = {
+			  everyday_needs = 1.0
+			  NOT = { is_ideology_enabled = socialist }
+			}
 		}
 		modifier = {
 			factor = 1.1
@@ -5105,24 +5254,25 @@ ideologies = {
 				}
 			}
 		}
+		## Lower Strata will not support Classical Liberals after Social Liberalism is founded if any Social Reform Need
 		modifier = {
-			factor = 0.85
+			factor = 0.7
 			social_reform_want = 0.10
 			is_ideology_enabled = social_liberal
 		}
 		modifier = {
-			factor = 0.8
+			factor = 0.4
 			social_reform_want = 0.20
 			is_ideology_enabled = social_liberal
 		}
 		modifier = {
-			factor = 0.75
+			factor = 0.1
 			social_reform_want = 0.30
 			is_ideology_enabled = social_liberal
 		}
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -5251,41 +5401,22 @@ ideologies = {
 		modifier = {
 			factor = 0.5
 			NOT = { militancy = 1 }
-			NOT = { government = bourgeois_dictatorship }
 		}			
 		modifier = {
 			factor = 0.5
 			NOT = { militancy = 3 }
-			NOT = { government = bourgeois_dictatorship }
 		}	
 		modifier = {
 			factor = 0.5
 			NOT = { militancy = 5 }
-			NOT = { government = bourgeois_dictatorship }
 		}
 		modifier = {
 			factor = 0.5
 			NOT = { literacy =  0.30 }
-			OR = {
-				government = proletarian_dictatorship
-				government = presidential_dictatorship
-				government = bourgeois_dictatorship
-				government = fascist_dictatorship
-				government = fascist_monarchy
-				government = absolute_monarchy
-			}
 		}
 		modifier = {
 			factor = 0.25
-			NOT = { literacy = 0.15 }
-			OR = {
-				government = proletarian_dictatorship
-				government = presidential_dictatorship
-				government = bourgeois_dictatorship
-				government = fascist_dictatorship
-				government = fascist_monarchy
-				government = absolute_monarchy
-			}			
+			NOT = { literacy = 0.15 }			
 		}
 		modifier = {
 			factor = 1.1
@@ -5331,129 +5462,10 @@ ideologies = {
 			factor = 2	
 			political_reform_want = 0.8
 		}
-		modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				health_care = trinket_health_care
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				health_care = low_health_care
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				health_care = acceptable_health_care
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				health_care = good_health_care  
-			}
-			modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				safety_regulations = trinket_safety
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				safety_regulations = low_safety
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				safety_regulations = acceptable_safety
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				safety_regulations = good_safety 
-			}
-			modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				work_hours = fourteen_hours
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				work_hours = twelve_hours
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				work_hours  = ten_hours
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				work_hours = eight_hours
-			}
-			modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				wage_reform = trinket_wage
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				wage_reform = low_minimum_wage
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				wage_reform = acceptable_minimum_wage
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				wage_reform = good_minimum_wage
-			}
-			modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				unemployment_subsidies = trinket_subsidies
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				unemployment_subsidies = low_subsidies
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				unemployment_subsidies = acceptable_subsidies
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				unemployment_subsidies = good_subsidies
-			}
-			modifier = {
-				factor = 1.01
-				everyday_needs = 0.8
-				pensions = trinket_pensions
-			}
-			modifier = {
-				factor = 1.02
-				everyday_needs = 0.8
-				pensions = low_pensions
-			}
-			modifier = {
-				factor = 1.03
-				everyday_needs = 0.8
-				pensions = acceptable_pensions
-			}
-			modifier = {
-				factor = 1.04
-				everyday_needs = 0.8
-				pensions = good_pensions
-			}
+
         ##############Two-Party System#############
         modifier = {
-            factor = 0.5
+            factor = 0.25
             ###Only pops that can normally vote
             OR = {
                 is_primary_culture = yes
@@ -10671,5 +10683,204 @@ rehabilitation = {
 		factor = 1.6
 		literacy = 0.9
 	  }
-   }
+}
+   
+############################################################## Police Reforms ########################################################################
+
+regional_police = {
+    factor = 1
+    modifier = {
+        factor = 0
+        OR = {
+            country = { civilized = no }
+            NOT = { militancy = 1 }
+			NOT = { country = { has_country_flag = electricity_invented } }
+			NOT = { is_next_reform = regional_police }
+        }
+    }
+
+	modifier = {
+		factor = 1.25
+		OR = {
+            nationalvalue = nv_supremacy
+            nationalvalue = nv_might		 			
+			nationalvalue = nv_dominion
+			nationalvalue = nv_order
+			nationalvalue = nv_productivity
+		}
+	}
+
+	modifier = {
+		factor = 2
+		OR = {
+			pop_majority_ideology = communist
+			pop_majority_ideology = fascist
+			pop_majority_ideology = paternal
+			pop_majority_ideology = reactionary
+		}
+	}
+	
+	modifier = {
+		factor = 2
+		OR = {
+			pop_majority_ideology = fascist
+			pop_majority_ideology = paternal
+			pop_majority_ideology = reactionary
+		}
+	}
+	
+	modifier = {
+		factor = 2
+	    vote_franschise = none_voting
+		pop_majority_ideology = communist
+	}
+
+	modifier = {
+		factor = 0.75
+		consciousness = 8
+	}	
+	modifier = {
+		factor = 0.75
+		consciousness = 9
+	}	
+	
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 4 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 2
+				middle_strata_militancy = 2
+			}
+		}
+	}	
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 5 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 3
+				middle_strata_militancy = 3
+			}
+		}
+	}
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 6 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 4
+				middle_strata_militancy = 4
+			}
+		}
+	}
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 7 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 5
+				middle_strata_militancy = 5
+			}
+		}
+	}
+}
+
+national_police = {
+    factor = 1
+    modifier = {
+        factor = 0
+        OR = {
+            country = { civilized = no }
+            NOT = { militancy = 1 }
+			NOT = { country = { has_country_flag = revolution_n_counter_researched } }
+			NOT = { is_next_reform = national_police }
+        }
+    }
+
+	modifier = {
+		factor = 1.25
+		OR = {
+            nationalvalue = nv_supremacy
+            nationalvalue = nv_might		 			
+			nationalvalue = nv_dominion
+			nationalvalue = nv_order
+			nationalvalue = nv_productivity
+		}
+	}
+
+	modifier = {
+		factor = 2
+		OR = {
+			pop_majority_ideology = fascist
+			pop_majority_ideology = paternal
+			pop_majority_ideology = reactionary
+		}
+	}
+	
+	modifier = {
+		factor = 2
+	    vote_franschise = none_voting
+		pop_majority_ideology = communist
+	}
+	
+	modifier = {
+		factor = 1.25
+		OR = {
+			pop_majority_ideology = conservative
+			pop_majority_ideology = market_liberal
+		}
+	}
+
+	modifier = {
+		factor = 0.75
+		consciousness = 8
+	}	
+	modifier = {
+		factor = 0.75
+		consciousness = 9
+	}	
+	
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 4 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 2
+				middle_strata_militancy = 2
+			}
+		}
+	}	
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 5 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 3
+				middle_strata_militancy = 3
+			}
+		}
+	}
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 6 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 4
+				middle_strata_militancy = 4
+			}
+		}
+	}
+	modifier = {
+		factor = 1.25
+		NOT = { consciousness = 7 }
+		state_scope = { 
+			OR = {
+				poor_strata_militancy = 5
+				middle_strata_militancy = 5
+			}
+		}
+	}
+}
+
 }

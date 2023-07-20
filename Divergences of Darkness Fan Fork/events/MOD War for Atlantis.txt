@@ -3969,21 +3969,16 @@ country_event = {
 	relation = { who = FROM value = -200 }
 	diplomatic_influence = { who = FROM value = -200 }
 	leave_alliance = FROM
-	add_casus_belli = {
-	      target = FROM
-		  type = cut_down_to_size
-		  months = 120
-	    }
 	war = { 
 		target = FROM
 			attacker_goal = {
-				casus_belli = cut_down_to_size
+				casus_belli = cut_down_to_size_no_infamy
 			}
 			defender_goal = {
 				casus_belli = install_democracy
 			}
 			call_ally = yes
-		}
+	}
 	FROM = { country_event = 7755153 } 
 	ai_chance = { 
 	factor = 15
@@ -3993,7 +3988,7 @@ country_event = {
 			}
             modifier = { 
 	          factor = 0
-	          sphere_owner = { is_sphere_leader_of = THIS }
+	          sphere_owner = { OR = { tag = AZL tag = ATL } }
 	        }
             modifier = { 
 	          factor = 0
@@ -4012,13 +4007,21 @@ country_event = {
 	        factor = 60
             modifier = { 
 	          factor = 0.5
-	          sphere_owner = { is_sphere_leader_of = THIS }
+	          sphere_owner = { OR = { tag = AZL tag = ATL } }
 	        }
 		}
 	}
 	
 	option = { 
 	name = "ATL112.C" #Perhaps it is time for democracy to flourish ? 
+	random_owned = {
+		 limit = { owner = { NOT = { plurality = 50 } } }
+		 owner = { plurality = 50 }
+	}
+	random_owned = {
+		 limit = { owner = { plurality = 50 NOT = { plurality = 75 } } }
+		 owner = { plurality = 25 }
+	}
 	government = parliamentary_republic 
 	political_reform = no_slavery
 	political_reform = universal_voting
@@ -4029,18 +4032,6 @@ country_event = {
 	political_reform = gerrymandering
 	political_reform = non_secret_ballots
 	FROM = { country_event = 7755158 } 
-	any_pop = {
-	   limit = { literacy = 0.6 }
-	   ideology = { factor = 0.2 value = liberal }
-	}
-	any_pop = {
-	   limit = { literacy = 0.4 NOT = { literacy = 0.6 } }
-	   ideology = { factor = 0.1 value = liberal }
-    }
-	any_pop = {
-	   limit = { literacy = 0.3 NOT = { literacy = 0.4 } }
-	   ideology = { factor = 0.05 value = liberal }		 				
-    }
 	any_pop = { 
 		scaled_militancy = {
 				ideology = communist
@@ -4090,7 +4081,7 @@ country_event = {
 	# Spherelings will almost always agree
     modifier = { 
 	    factor = 3
-	    sphere_owner = { is_sphere_leader_of = THIS }
+	    sphere_owner = { OR = { tag = AZL tag = ATL } }
 	}
 	# Reactionaries and Radicals have a good laugh
     modifier = { 
@@ -4101,7 +4092,7 @@ country_event = {
             ruling_party_ideology = fascist
             ruling_party_ideology = paternal
         }			
-		NOT = { sphere_owner = { is_sphere_leader_of = THIS } }
+		NOT = { sphere_owner = { OR = { tag = AZL tag = ATL } } }
 	}
 	# A de-facto abolition of the monarchy is not going to happen
     modifier = { 
@@ -4111,7 +4102,7 @@ country_event = {
 		  government = prussian_constitutionalism
 		  government = absolute_monarchy
 	    }
-		NOT = { sphere_owner = { is_sphere_leader_of = THIS } }
+		NOT = { sphere_owner = { OR = { tag = AZL tag = ATL } } }
 	}
 	# Secondary Powers are not happy
     modifier = { 
@@ -4237,6 +4228,14 @@ country_event = {
 	    limit = { tag = AZL exists = yes } 
 	    country_event = 7755157 
 		}
+	    random_owned = {
+		     limit = { owner = { NOT = { plurality = 50 } } }
+		     owner = { plurality = 50 }
+	    }
+	    random_owned = {
+		     limit = { owner = { plurality = 50 NOT = { plurality = 75 } } }
+		     owner = { plurality = 25 }
+	    }
 		government = parliamentary_republic 
 	    set_country_flag = parliamentary_republic_gov
 		clr_country_flag = communist_gov
@@ -4260,16 +4259,6 @@ country_event = {
 				}
 			}
 			owner = { ruling_party_ideology = liberal }
-		}
-		capital_scope = {
-			any_pop = {
-				limit = { literacy = 0.4 }
-				ideology = { factor = 0.1 value = anarcho_liberal }
-			}
-		}
-		any_pop = {
-			limit = { pop_majority_ideology = anarcho_liberal }
-			ideology = { factor = 0.1 value = anarcho_liberal }
 		}
 		any_pop = {
 			scaled_militancy = {

@@ -2984,7 +2984,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
 	major = yes
@@ -3060,7 +3060,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
 	major = yes
@@ -3135,7 +3135,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
 	major = yes
@@ -3279,7 +3279,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
 	major = yes
@@ -3407,7 +3407,7 @@ country_event = {
 	}
 }
 
-#63 - ANARCHY 1 (White Peace)
+#63 - ANARCHY 1 - Choice to Collapse
 
 country_event = { 
 
@@ -3418,23 +3418,147 @@ country_event = {
 	
 	trigger = {	
 	    exists = yes
-	    tag = BRG
-		exists = PBG		
+	    tag = PBG
+		exists = BRG	
 		has_global_flag = JEAN_CIVIL_WAR 	
-        NOT = { war_with = PBG }		
+        NOT = { war_with = BRG }		
 		NOT = { has_global_flag = THE_BRG_CRISIS }
 		NOT = { has_global_flag = JEAN_ENDING }	
         NOT = { has_global_flag = JEAN_CIVIL_WAR_BEGINNING }					
 	}
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
+	### PBG is unable to restore order to the north and promprly collapses ###
+	
+	option = { 
+	name = "653061.A"	
+	clr_global_flag = JEAN_CIVIL_WAR
+	set_global_flag = JEAN_ENDING
+	clr_country_flag = PBG_IC_check
+	BRG = { country_event = 6530610 }
+	ai_chance = { factor = 20 }
+	}
+	
+	### PBG is able to restore order to the north but Lorraine leaves as a rogue government ###
+	
+	option = { 
+	name = "653061.B"	
+	inherit = BRG
+	end_war = BTV
+	end_war = LWE
+	end_war = NFL
+	end_war = GRQ
+	end_war = TRN	
+	prestige = 10
+	random_owned = {
+	   limit = { owner = { ai = yes } }
+	   owner = { set_country_flag = reconquer_lorraine }
+	}
+	any_country = {
+	limit = {
+	tag = LRR
+	exists = no
+	}
+	government = absolute_monarchy
+	ruling_party_ideology = reactionary
+	political_reform = none_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = underground_parties
+    political_reform = four_year_draft
+    clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+    clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+    clr_country_flag = parliamentary_republic_gov
+    clr_country_flag = democracy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = election_started
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = market_liberal_party_in_power
+	}
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      NOT = { is_greater_power = yes }
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919003
+	}
+	any_country = {
+	   limit = {
+	      has_country_flag = former_BRG_ally
+	      is_greater_power = yes
+	   }
+	   clr_country_flag = former_BRG_ally
+	   country_event = 1919002
+	}
+	any_pop = { 
+	      limit = { location = { NOT = { is_core = LRR } } }
+	      militancy = -10
+	      ideology = { factor = 0.2 value = market_liberal } 
+		  ideology = { factor = 0.2 value = anarcho_liberal } 
+		  ideology = { factor = -0.4 value = reactionary } 
+	}
+	political_reform = no_draft
+	BRG = { all_core = { add_core = PBG } }
+	BRG = { all_core = { remove_core = BRG } }
+	clr_country_flag = regency_blocker
+	add_country_modifier = { name = regency_government duration = -1 }
+	clr_global_flag = JEAN_CIVIL_WAR
+	clr_country_flag = PBG_IC_check
+	set_global_flag = JEAN_ENDING
+	any_owned = { 
+		limit = { is_core = LRR }
+		secede_province = LRR  
+	}
+	relation = { who = LRR value = -400 }
+	diplomatic_influence = { who = LRR value = -400 }
+	ai_chance = { factor = 80 }
+	}
+}
+	
+#### Anarchy - PBG was unable to restore order over the North ####	
+	
+country_event = { 
+
+	id = 6530610
+	title = "JEAN420.T"
+	desc = "JEAN420.D"
+	picture = "german_radicals"
+	
+	is_triggered_only = yes
 	major = yes
 	
 	option = { 
-	name = "653061.A"
+	name = "6530610.A"
 	prestige = -50
 	any_country = {
 	limit = {
@@ -3442,9 +3566,6 @@ country_event = {
 	}
 	clr_country_flag = former_BRG_ally
 	}
-	clr_global_flag = JEAN_CIVIL_WAR
-	set_global_flag = JEAN_ENDING
-	PBG = { clr_country_flag = PBG_IC_check }
 	end_war = BTV
 	end_war = LWE
 	end_war = NFL
@@ -3808,7 +3929,7 @@ country_event = {
 	major = yes
 	
 	mean_time_to_happen = {
-		days = 1
+		days = 3
 	}
 	
 	option = { 

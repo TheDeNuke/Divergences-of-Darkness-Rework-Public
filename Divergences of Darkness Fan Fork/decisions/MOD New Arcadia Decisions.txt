@@ -3345,4 +3345,72 @@ political_decisions = {
 		   ANI = { all_core = { add_core = ARC } }
         } 
     }
+	
+    #### Extra ATS Decisions ####
+	
+    ATS_claim = { 		
+		potential = { 
+			tag = ARC 
+			NOT = { ATS = { exists = yes } } 
+			NOT = { OR = { has_country_flag = athesia_arcadia  has_country_flag = athesia_arcadia_2 } }
+		}
+		
+		allow = { 
+			OR = { 
+				AND = { 
+					machine_guns = 1 
+					steel_steamers = 1 
+				}
+				mass_politics = 1 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = athesia_arcadia
+			badboy = 3
+			ATS = { all_core = { add_core = THIS } } 
+			any_country = { limit = { owns = 199 } relation = { who = THIS value = -100 } }
+		}		
+	}
+	
+	ATS_puppet = { 		
+		potential = { 
+			tag = ARC 
+			ATS = { exists = yes } 
+			NOT = { OR = { has_country_flag = athesia_arcadia has_country_flag = athesia_arcadia_2 } }
+		}
+		
+		allow = { 
+			ATS = { in_sphere = THIS } 
+			steel_steamers = 1 
+		}
+		
+		effect = { 
+			set_country_flag = athesia_arcadia
+			create_vassal = ATS
+		}		
+	}
+	
+	ATS_annexation = { 	
+		potential = { 
+			tag = ARC 
+			ATS = { exists = yes } 
+			has_country_flag = athesia_arcadia_2
+			NOT = { OR = { has_country_flag = athesia_arcadia has_country_flag = athesia_arcadia_3 } }
+			OR = { government = proletarian_dictatorship government = fascist_dictatorship government = absolute_monarchy government = fascist_monarchy government = presidential_dictatorship }
+		}
+		
+		allow = { 
+			mass_politics = 1 
+		}
+		
+		effect = { 
+			set_country_flag = athesia_arcadia_3
+			ATS = { all_core = { add_core = THIS } } 
+			any_country = { 
+				limit = { tag = ATS vassal_of = THIS }
+				annex_to = THIS
+			}
+		}	
+	}
 }

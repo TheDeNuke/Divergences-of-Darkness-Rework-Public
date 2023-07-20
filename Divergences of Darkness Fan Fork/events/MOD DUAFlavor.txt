@@ -557,7 +557,7 @@ country_event = {
 	tag = DUA
 	year = 1850	
 	has_country_flag = french_integration 
-	NOT = { accepted_culture = french }
+	NOT = { has_global_flag = french_int }
 	NOT = { exists = FRA }
 	}
 	
@@ -630,6 +630,7 @@ country_event = {
 	clr_country_flag = freedom_of_religion
 	remove_country_modifier = counterevolution
 	add_accepted_culture = french
+	add_accepted_culture = breton
 	any_pop = {
 			limit = {
 				culture = french
@@ -1366,6 +1367,7 @@ country_event = {
 	clr_country_flag = freedom_of_religion
 	remove_country_modifier = counterevolution
 	add_accepted_culture = english
+	remove_accepted_culture = french
 	any_pop = {
 			limit = {
 				culture = english
@@ -2264,6 +2266,7 @@ country_event = { ##The Total Revolution
 
 	option = { 
 	name = "650247.A"
+	remove_accepted_culture = french
 	set_country_flag = global_revolt
 	set_global_flag = glorious_revolution
 	any_country = {
@@ -2491,6 +2494,7 @@ country_event = { ##The Anglois success.
 	remove_country_modifier = anglois_dilemma
 	remove_country_modifier = counterevolution
 	prestige = 100 
+	add_accepted_culture = breton
 	add_accepted_culture = french 
 	add_accepted_culture = english 
 	add_accepted_culture = provencal 
@@ -4009,6 +4013,7 @@ country_event = { #Death of the Dauphin, Orléans
 	has_country_flag = dual_integration 
 	NOT = { 
 	OR = { 
+	has_country_flag = dual_republic_start
 	has_country_flag = OCC_revolted
 	has_country_flag = ENL_revolted
 	has_country_flag = global_revolt 
@@ -4061,9 +4066,10 @@ country_event = { #Death of the Dauphin, Liverpool
 	
 	trigger = { 
 	tag = DUA 
-	has_country_flag = dual_integration 
+	has_country_flag = dual_integration 	
 	NOT = { 
-	OR = { 
+	OR = {
+    has_country_flag = dual_republic_start	
 	has_country_flag = OCC_revolted
 	has_country_flag = ENL_revolted
 	has_country_flag = global_revolt 
@@ -4120,6 +4126,7 @@ country_event = {
 	}
 	NOT = { 
 		OR = { 
+		    has_country_flag = dual_republic_start
 			has_country_flag = edward_york
 			has_country_flag = elisabeth
 			has_country_flag = henry_gascony
@@ -4332,6 +4339,11 @@ country_event = { #Coronation of Henri XI
 	tag = DUA 
 	year = 1861 
 	has_country_flag = travel_dauphin
+	OR = {
+	   government = hms_government
+	   government = prussian_constitutionalism
+	   government = absolute_monarchy
+	}
 	}
 	
 	mean_time_to_happen = { 
@@ -4363,7 +4375,8 @@ country_event = {
 	major = yes
 	
 	option = { 
-	name = "650290.A" 
+	name = "650290.A"
+    DUA = { clr_country_flag = army_reform_banned }
 	any_owned = {
 				limit = {
 					is_core = DUA 
@@ -4677,6 +4690,25 @@ country_event = { ##The End of the Dual Monarchy - Either triggered by ENL or by
 		
 	option = { 
 	name = "650294.A"
+	clr_country_flag = army_reform_banned
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = DUA
+			exists = yes
+        }	
+        end_war = DUA 
+    }		
 	prestige = -50
 	any_owned = {
 				limit = {
@@ -4705,6 +4737,14 @@ country_event = { ##The End of the Dual Monarchy - Either triggered by ENL or by
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
 	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { release_vassal = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
+	}
 	change_tag = ANF 
 	any_owned = { 
 		limit = {
@@ -4720,11 +4760,16 @@ country_event = { ##The End of the Dual Monarchy - Either triggered by ENL or by
 		}
 		remove_core = ANF
 	}
+	any_owned = { 
+	   limit = { is_core = BRT }
+	   secede_province = BRT
+	}
 	ENL = { all_core = { remove_core = ANF } }
 	set_global_flag = fall_DUA
 	remove_accepted_culture = english 
 	remove_accepted_culture = welsh
     remove_accepted_culture = irish	
+	add_accepted_culture = breton
 	add_accepted_culture = french
     }		 
 }
@@ -4743,6 +4788,7 @@ country_event = {
 	trigger = { 
 	    tag = DUA 
 		exists = ENL
+		NOT = { exists = FRA }
 		has_global_flag = the_age_of_nationalism_fired
 		NOT = { has_global_flag = fall_DUA }
 	}
@@ -4751,6 +4797,25 @@ country_event = {
 		
 	option = { 
 	name = "650295.A"
+	clr_country_flag = army_reform_banned
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = DUA
+			exists = yes
+        }	
+        end_war = DUA 
+    }
 	prestige = -100
 	any_owned = {
 				limit = {
@@ -4783,6 +4848,14 @@ country_event = {
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
 	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { release_vassal = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
+	}
 	change_tag = FRA 
 	any_owned = { 
 		limit = {
@@ -4797,6 +4870,10 @@ country_event = {
 			}
 		}
 		remove_core = FRA
+	}
+	any_owned = { 
+	   limit = { is_core = BRT }
+	   secede_province = BRT
 	}
 	ENL = { all_core = { remove_core = FRA } }
 	set_global_flag = fall_DUA
@@ -4870,6 +4947,25 @@ country_event = { ##Total Collapse of the Anglois Dream - French Revolution
 		
 	option = { 
 	name = "650295.A"
+	clr_country_flag = army_reform_banned
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = DUA
+			exists = yes
+        }	
+        end_war = DUA 
+    }
 	prestige = -100
 	any_owned = {
 				limit = {
@@ -4898,6 +4994,14 @@ country_event = { ##Total Collapse of the Anglois Dream - French Revolution
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
 	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { release_vassal = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
+	}
 	change_tag = FRA 
 	any_owned = { 
 		limit = {
@@ -4913,8 +5017,12 @@ country_event = { ##Total Collapse of the Anglois Dream - French Revolution
 		}
 		remove_core = FRA
 	}
+	any_owned = { 
+	   limit = { is_core = BRT }
+	   secede_province = BRT
+	}
 	ENL = { all_core = { remove_core = FRA } }
-	set_global_flag = fall_DUA
+	set_global_flag = fall_DUA	
 	remove_accepted_culture = english 
 	remove_accepted_culture = welsh 
 	remove_accepted_culture = irish 
@@ -4953,7 +5061,7 @@ country_event = { ##Total Collapse of the Anglois Dream - French Revolution
 	clr_country_flag = fascist_gov
 	clr_country_flag = anarcho_liberal_gov
 	clr_country_flag = socialist_republic_gov
-	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = fascist_monarchy_gov
 	}
 }
 
@@ -4974,6 +5082,7 @@ country_event = { ##The Retreat to England
     NOT = { any_owned_province = { is_core = FRA } }
 	NOT = { any_owned_province = { is_core = ANF } }
 	NOT = { has_global_flag = fall_DUA }
+	NOT = { war_with = ENL }
 	}
 
 	mean_time_to_happen = { 
@@ -4982,7 +5091,26 @@ country_event = { ##The Retreat to England
 	
 	option = { 
 	name = "650296.A"
+	clr_country_flag = army_reform_banned
 	set_global_flag = fall_DUA
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = DUA
+			exists = yes
+        }	
+        end_war = DUA 
+    }
 	prestige = -50
 	any_owned = {
 				limit = {
@@ -5002,6 +5130,14 @@ country_event = { ##The Retreat to England
 	random_owned = {
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { inherit = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
 	}
 	change_tag = AEN
 	any_owned = { 
@@ -5027,7 +5163,7 @@ country_event = { ##The Retreat to England
 	remove_accepted_culture = provencal 
 	remove_accepted_culture = basque	
 	FRA = { all_core = { remove_core = AEN } }
-	AFN = { all_core = { remove_core = AEN } }
+	ANF = { all_core = { remove_core = AEN } }
 	#add_accepted_culture = english 
 	#add_accepted_culture = welsh 
 	#add_accepted_culture = irish 
@@ -5045,6 +5181,25 @@ country_event = { ##The Retreat to England - Treaty of Paris
 	
 	option = { 
 	name = "6502960.A"
+	clr_country_flag = army_reform_banned
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = DUA
+			exists = yes
+        }	
+        end_war = DUA 
+    }
 	prestige = -50
 	any_owned = {
 				limit = {
@@ -5064,6 +5219,14 @@ country_event = { ##The Retreat to England - Treaty of Paris
 	random_owned = {
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { inherit = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
 	}
 	change_tag = AEN
 	any_owned = { 
@@ -5106,7 +5269,7 @@ country_event = { ##The Retreat to England - Treaty of Paris
 	remove_accepted_culture = provencal 
 	remove_accepted_culture = basque	
 	FRA = { all_core = { remove_core = AEN } }
-	AFN = { all_core = { remove_core = AEN } }
+	ANF = { all_core = { remove_core = AEN } }
 	#add_accepted_culture = english 
 	#add_accepted_culture = welsh 
 	#add_accepted_culture = irish 
@@ -5139,13 +5302,40 @@ country_event = { ##The End of Anglois France
 		
 	option = { 
 	name = "650297.A"
+	clr_country_flag = army_reform_banned
+	any_country = {
+	    limit = {
+		    OR = {
+			   tag = ENL
+			   tag = IRE
+			   tag = ENG 
+			   tag = AEN
+			   tag = WLS
+			   tag = OCC
+			   tag = SCO
+			   tag = FRA
+			   tag = ANF
+			}
+			war_with = ANF
+			exists = yes
+        }	
+        end_war = ANF 
+    }
 	prestige = -50
 	all_core = { add_core = FRA }
 	all_core = { remove_core = ANF }
 	random_owned = {
 	   limit = { owner = { is_our_vassal = AUV } }
 	   owner = { release_vassal = AUV }
-	}	   
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = NTL } }
+	   owner = { release_vassal = NTL }
+	}
+	random_owned = {
+	   limit = { owner = { is_our_vassal = AQT } }
+	   owner = { release_vassal = AQT }
+	}	
 	change_tag = FRA 
 	set_country_flag = end_ANGFRA
 	remove_accepted_culture = irish 
@@ -5203,6 +5393,10 @@ country_event = { ##The End of Anglois France
 				remove_core = FRA
 			}
 		}
+	    any_owned = { 
+	      limit = { is_core = BRT }
+	      secede_province = BRT
+	    }
 		ENL = { all_core = { remove_core = FRA } }
 	}
 }
@@ -5917,6 +6111,7 @@ country_event = {
 	
 	option = { 
 	name = "For Honour: No Sacrifices! §R(NOT RECOMMENDED)§W"
+	remove_accepted_culture = french
 	set_global_flag = DUA_lastresort
 	clr_country_flag = our_last_resort_begins
 	prestige = 10

@@ -8,18 +8,19 @@ Mods:
 - Ported Content from PDM Divide by Zero. Credits are listed on their page.
 - and of course PDM itself which was the original base of Divergences of Darkness
 
-The mod team:
+The current and former mod team:
 
 -  DeNuke - Project Manager
 -  Attalus - The Co-Project Manager/Consul of Divergences
 -  Zerzura - Localization Lead and Coder
 
 -  Theodorex - Victoria 3 Project Lead and Assistance
--  Periares - Concept Designer, Coder and Localization
+-  Periares - FLAGS, Concept Designer, Coder and Localization
 -  NPMister - Concept Designer and Localization
--  Zeeloat - Concept Designer and Localization
+-  Zeeloat - Concept Designer and Localization (Hopefully still alive)
 -  Arleck - Concept Designer and Localization
 -  J Master - Concept Designer and Localization
+-  Zdzisław Wiertara - Concept Design, Localization, Map, Slavic Stuff
 -  Athmos - Concept Designer
 -  Polyfox - Concept Designer
 -  S Alvia - Concept Designer 
@@ -27,6 +28,11 @@ The mod team:
 -  Renesio - Concept Designer
 -  dgl - Concept Designer
 -  Trask - Concept Designer and the Founder
+-  Ryzelon - Concept Designer
+-  Torekayim - Concept Designer
+-  Atlas - Concept Designer
+-  Mr. Parrot - Concept Designer (here and Vic3)
+-  Majulah Melaka - Concept Designer
 -  Conquest - Coder/Scripter and the developer of the Popularizer tool.
 -  Ddima - Localization
 -  Tecumseh - Localization
@@ -39,7 +45,10 @@ The mod team:
 -  lipad - Localization
 -  pax - Localization
 -  multidavid - Localization
+-  YPestis25 - Localization
+-  Noaxh - Localization
 -  dorcl - Chinese Localization
+-  Two_Watt - Art
 -  ape - Localization and Local Ape
 
 Special Thanks to:
@@ -54,4 +63,5 @@ Special Thanks to:
 - The VIC3 MOD and its team - For continuing our legacy into a new age
 - HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
 - Bsharri/Flyrion/Trask - The original DoD FF founder
+- TGC for economic tweaks
 - The various testers

@@ -347,7 +347,6 @@ political_decisions = {
 				}
 				country_event = { id = 152037 days = 1 }
 		    }	
-			political_reform = confederalism
 	        any_pop = {
 			   militancy = -9
 			}
@@ -1090,7 +1089,10 @@ political_decisions = {
 		
 		potential = {		   
 		    tag = SGF
-		    has_country_flag = FALL_ROT_POSSIBLE
+			OR = {
+			   has_global_flag = GERMAN_ANARCHY
+		       has_country_flag = FALL_ROT_POSSIBLE
+			}
 			NOT = { exists = FRK }
 			OR = {
 			   AND = {
@@ -1155,8 +1157,12 @@ political_decisions = {
 		
 		potential = {		   
 		    tag = NGF
-		    has_country_flag = FALL_ROT_POSSIBLE
+			OR = {
+			   has_global_flag = GERMAN_ANARCHY
+		       has_country_flag = FALL_ROT_POSSIBLE
+			}
 			NOT = { exists = FRK }
+			NOT = { has_country_flag = recently_released_NGF }
 			OR = {
 			   AND = {
 			     NOT = { exists = BRG }
@@ -1258,8 +1264,126 @@ political_decisions = {
 		}
 	}
 	
+	### This is mostly useful for the German Anarchy or EXTREMELY insane German Players.
 	
-	# Kill Saxony - If Holstein already exists or Hamburg is owned by Bohemia then this should allow Bohemia to kill off Saxony
+	form_NGF = {
+		picture = Germania
+		
+		potential = {	
+            OR = {		
+		        primary_culture = north_german
+				tag = WES
+		    }
+			NOT = {
+			   exists = CAE
+			   exists = HLR
+			   exists = GER
+			   has_country_modifier = HOLY_ROMAN_EMPIRE
+			}			
+		}
+		
+		allow = {
+		   OR = { 
+			   is_greater_power = yes
+               is_secondary_power = yes
+           }
+		   POM = {
+			  all_core = {
+			     OR = {
+				   owned_by = THIS
+					  owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+						 vassal_of = THIS
+					   }
+			       }
+			  }
+		   }
+		   BRN = {
+			  all_core = {
+			     OR = {
+				   owned_by = THIS
+					  owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+						 vassal_of = THIS
+					   }
+			       }
+			  }
+		   }
+		   HOL = {
+			  all_core = {
+			     OR = {
+				   owned_by = THIS
+					  owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+						 vassal_of = THIS
+					   }
+			       }
+			  }
+		   }
+		   ELX = {
+			  all_core = {
+			     OR = {
+				   owned_by = THIS
+					  owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+						 vassal_of = THIS
+					   }
+			       }
+			  }
+		   }	
+		   SAX = {
+			  all_core = {
+			     OR = {
+				   owned_by = THIS
+					  owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+						 vassal_of = THIS
+					   }
+			       }
+			  }
+		   }		   
+		}
+		
+		effect = {
+			prestige = 20
+		    random_owned = { limit = { owner = { OR = { government = hms_government government = prussian_constitutionalism government = democracy government = parliamentary_republic } } }
+		    owner = { political_reform = federalism }
+		    }
+			SAX_1 = { add_core = NGF }
+			HAM_532 = { add_core = NGF }
+			PRU_553 = { add_core = NGF }
+			PRU_549 = { add_core = NGF }
+			SAX_559 = { add_core = NGF }
+			PRU_546 = { add_core = NGF }
+			HOL_369 = { add_core = NGF }
+			536 = { add_core = NGF }
+			537 = { add_core = NGF }
+			545 = { add_core = NGF }
+			544 = { add_core = NGF }			
+			change_tag = NGF
+			any_country = {
+				limit = {
+					primary_culture = north_german
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
 	
 	#### The Burgundy version of this is under BRG Decisions ####
 	
@@ -1350,19 +1474,19 @@ political_decisions = {
 			   }
 			   annex_to = THIS
 			}
-			589 = { add_core = SWA }
-			590 = { add_core = SWA }
-			591 = { add_core = SWA }
-			594 = { add_core = SWA }
+			589 = { remove_core = BAD add_core = SWA }
+			590 = { remove_core = BAD add_core = SWA }
+			591 = { remove_core = BAD add_core = SWA }
+			594 = { remove_core = BAD add_core = SWA }
 			any_owned = {
 			    limit = {
 			      province_id = 593
 			    }
 				add_core = SWA
 		    }			
-			BAD_586 = { add_core = SWA }
-			SWI_603 = { add_core = SWA }
-			SWI_605 = { add_core = SWA }
+			BAD_586 = { remove_core = WUR add_core = SWA }
+			SWI_603 = { remove_core = BAD remove_core = WUR add_core = SWA }
+			SWI_605 = { remove_core = BAD remove_core = WUR add_core = SWA }
             change_tag = SWA			
 			
 		}
@@ -1692,6 +1816,7 @@ political_decisions = {
 		
 		allow = {
 		   war = no
+		   all_core = { owned_by = THIS }
 		   OR = {
 		      has_country_flag = burgundian_rhine
 			  NOT = { exists = CFR }
@@ -1742,7 +1867,8 @@ political_decisions = {
 		}
 		
 		allow = {
-            NOT = { war_exhaustion = 10 }	      		
+            NOT = { war_exhaustion = 10 }
+            all_core = { owned_by = THIS }			
 		}
 		
 		effect = {
@@ -1959,6 +2085,7 @@ political_decisions = {
 			   }
 			}
 			exists = WES
+			NOT = { has_country_flag = phoenix_annex_wesphalia }
 		}
 		
 		allow = { 
@@ -1969,6 +2096,7 @@ political_decisions = {
 		
 		effect = { 
 		    prestige = 10
+			set_country_flag = phoenix_annex_wesphalia
 		    any_country = {
 			   limit = {
 			      tag = WES
@@ -2054,6 +2182,56 @@ political_decisions = {
         }
     }
 	
+	
+    reconquer_teschen = {
+	    picture = czech_autonomy
+		potential = {
+		    OR = {
+			   tag = CAE
+			   tag = BOH
+			   tag = GCF
+		    }
+			has_country_flag = ubergrossdeutschland
+			OR = {
+			   exists = TES
+			   NOT = { 689 = { is_core = THIS } }
+			}
+            NOT = { has_country_flag = tes_vi_bohemia }			
+		}
+	
+		allow = {
+			war = no			
+			OR = {
+			   is_greater_power = yes
+			   is_secondary_power = yes
+			}
+			OR = { 
+			   has_country_flag = ubergrossdeutschland
+			   has_country_flag = BOH_is_czech
+			}					
+		}
+    		
+		effect = {
+		   prestige = 5
+		   TES = { all_core = { add_core = THIS } }
+		   any_country = {
+		      limit = {
+			     tag = TES
+				 in_sphere = THIS
+		      }
+			  annex_to = THIS
+		   }
+	       leave_alliance = TES
+	       relation = { who = TES value = -400 }
+	       diplomatic_influence = { who = TES value = -400 }			   
+		   set_country_flag = tes_vi_bohemia
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	#########################################
 	#### Was ist des Deutschen Vaterland ####
 	#########################################
@@ -2072,11 +2250,14 @@ political_decisions = {
 				tag = SGF
 				tag = NGF
 	        }
-			NOT = { has_country_flag = ubergrossdeutschland }		
+			NOT = { has_country_flag = ubergrossdeutschland }	
+            NOT = { has_country_flag = SGF_COLLAPSE_INEVITABLE }
+            NOT = { has_country_flag = RAIN_CHECK_HOLD }			
 		}
 	
 		allow = {
 			war = no
+			nationalism_n_imperialism = 1
 			is_greater_power = yes
 			OR = {
 			   tag = GER
@@ -2427,5 +2608,352 @@ political_decisions = {
 	   factor = 1	
 	   }
 	}
+	
+	#### German Tag Constructing Poland #####
+	
+	#### Its time to go wear the Polish Crown ###
+	
+	protector_take_out_krakow = { 
+    #picture = czech_autonomy
+		
+	potential = { 
+	   has_country_flag = protector_of_poland  
+       exists = KRA	   
+	   NOT = { is_our_vassal = KRA }
+	}
+	
+	allow = { 
+		war = no
+        NOT = { truce_with = KRA }		
+	}
+	
+	effect = { 
+	    leave_alliance = KRA
+	    relation = { who = KRA value = -400 }
+	    diplomatic_influence = { who = KRA value = -400 }	
+	    war = {
+		    target = KRA
+			    attacker_goal = {
+				    casus_belli = conquest_any
+			    }
+                defender_goal = {
+                    casus_belli = release_puppet
+                    country = PZN
+                }
+	    }
+    }
+	
+	ai_will_do = { 
+	   factor = 1
+	      modifier = {
+	         factor = 0
+			 KRA = { in_sphere = SCA }
+		  } 
+	      modifier = {
+	         factor = 0
+	         is_disarmed = yes
+		  }
+	      modifier = {
+	         factor = 0
+	         has_recently_lost_war = yes
+	      }		  
+	   }
+	}
+	
+	protector_take_out_warsaw = { 
+    #picture = czech_autonomy
+		
+	potential = { 
+	   has_country_flag = protector_of_poland  
+       exists = CPL   
+	   NOT = { is_our_vassal = CPL }
+	}
+	
+	allow = { 
+		war = no
+        NOT = { truce_with = CPL }		
+	}
+	
+	effect = { 
+	    leave_alliance = CPL
+	    relation = { who = CPL value = -400 }
+	    diplomatic_influence = { who = CPL value = -400 }	
+	    war = {
+		    target = CPL
+			    attacker_goal = {
+				    casus_belli = conquest_any
+			    }
+                defender_goal = {
+                    casus_belli = release_puppet
+                    country = PZN
+                }
+	    }
+    }
+	
+	ai_will_do = { 
+	   factor = 1
+	      modifier = {
+	         factor = 0
+			 CPL = { in_sphere = SCA }
+		  }  	
+	      modifier = {
+	         factor = 0
+	         is_disarmed = yes
+		  }
+	      modifier = {
+	         factor = 0
+	         has_recently_lost_war = yes
+	      }		  
+	   }
+	}
+	
+	protector_construct_poland = { 
+    #picture = czech_autonomy
+		
+	potential = { 
+	   has_country_flag = protector_of_poland  
+	}
+	
+	allow = { 
+		war = no
+        PZN = {
+			in_sphere = THIS
+            all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+	   }
+       CPL = {
+		   in_sphere = THIS
+		   all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+	   }	
+       KRA = {
+		   in_sphere = THIS
+		   all_core = {
+					OR = {
+						owned_by = THIS
+						owner = {
+							in_sphere = THIS
+						}
+						owner = {
+							vassal_of = THIS
+						}
+					}
+				}
+		}		
+	}
+	
+	effect = { 
+	    clr_country_flag = protector_of_poland 
+	    inherit = CPL
+		inherit = KRA
+        prestige = 20
+	    any_owned = {
+		   limit = {
+		        is_core = CPL
+		   }
+		   secede_province = PZN
+	    }
+	    any_owned = {
+		   limit = {
+		        is_core = KRA
+		   }
+		   secede_province = PZN
+	    }
+        MAZ = { 
+		   all_core = { add_core = POL remove_core = GLM remove_core = MAZ } 
+		}		
+	    KRA = { 
+		   all_core = { add_core = POL remove_core = GLM remove_core = KRA } 
+		}
+		PZN = { 
+		   all_core = { add_core = POL remove_core = GLM remove_core = PZN }
+		   change_tag = POL
+		}	  
+    }
+	
+	ai_will_do = { 
+	   factor = 1	  
+	}
+	}
+	
+	#### Czech Stuff - Its not Germany but its also Germany ####
+	
+	the_bohemian_problem_czechs = { 
+    picture = czech_autonomy
+		
+	potential = { 
+	   tag = BOH
+	   has_global_flag = BOH_is_czech
+	}
+	
+	allow = { 
+		war = no
+		OR = { 
+		   has_country_flag = czech_legion_BOH
+		   revolution_n_counterrevolution = 1
+		}
+        NOT = { truce_with = SGF }		
+	}
+	
+	effect = { 
+	    country_event = { id = 152118 days = 7 }
+    }
 
+	ai_will_do = { 
+	   factor = 1	
+	      modifier = {
+	         factor = 0
+	         SGF = { is_disarmed = yes }
+		  }	  
+	   }
+	}
+	
+	liberation_of_slovaks = { 
+    picture = form_czechoslovakia
+		
+	potential = { 
+	   tag = BOH
+	   has_country_flag = CZE_possible
+	   NOT = { exists = PLC }	
+	   NOT = { has_country_flag = claim_slovaks }
+	}
+	
+	allow = { 
+		war = no
+		is_greater_power = yes
+		mass_politics = 1	
+		all_core = { owned_by = THIS }
+	}
+	
+	effect = { 
+	    badboy = 3
+		prestige = 10
+		SLV = { all_core = { add_core = THIS } }
+		set_country_flag = claim_slovaks
+		add_accepted_culture = slovak
+		add_accepted_culture = sorb
+    }
+
+	ai_will_do = { 
+	   factor = 1	 
+	}
+	}
+	
+	## Form a Venedic State
+	
+	form_CZE = { 
+    picture = create_zapadoslavia
+		
+	potential = { 
+	   tag = BOH
+	   has_country_flag = CZE_possible
+	   has_country_flag = claim_slovaks
+       NOT = { exists = PLC }	   
+	}
+	
+	allow = { 
+		war = no
+		is_greater_power = yes
+		all_core = { owned_by = THIS }
+		POL = {
+		   all_core = {
+			   OR = {
+				  owned_by = THIS
+				  owner = {
+				     in_sphere = THIS
+				  }
+				  owner = {
+					  vassal_of = THIS
+				  }
+			   }
+		   }
+		}
+	}
+	
+	effect = { 
+		prestige = 30
+		add_accepted_culture = polish
+		all_core = { add_core = CZE }
+		any_country = {
+		   limit = {
+		      primary_culture = polish
+			  OR = {
+			     in_sphere = BOH
+				 vassal_of = BOH
+			  }
+			  exists = yes
+		   }
+		   all_core = { add_core = CZE }
+		   annex_to = BOH
+		}
+		any_country = {
+		   limit = {
+		      primary_culture = polish
+			  NOT = {
+			     OR = {
+			        in_sphere = BOH
+				    vassal_of = BOH
+			     }
+		      }
+			  exists = yes
+		   }
+		   all_core = { add_core = CZE }
+		}
+		POL = { all_core = { add_core = CZE } }
+		change_tag = CZE 
+    }
+
+	ai_will_do = { 
+	   factor = 1	 
+	}
+	}
+	
+	integrate_silesia = {
+		picture = MarzBerlin
+		potential = {
+			has_country_flag = ubergrossdeutschland
+			has_country_flag = promised_polish_freedom
+			SIL = { vassal_of = THIS }
+			NOT = { has_country_flag = silesia_integrated }
+		}
+		
+		allow = {
+			war = no 
+			all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+			set_country_flag = silesia_integrated
+			SIL = { all_core = { add_core = THIS } }
+			inherit = SIL
+			country_event = 152126
+		}
+		
+		ai_will_do = { factor = 1 }
+	}	
 }
+
+
+
+
+
+
+

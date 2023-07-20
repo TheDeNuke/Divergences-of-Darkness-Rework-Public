@@ -188,6 +188,12 @@ political_decisions = {
 			   }
 			   owner =  { country_event = { id = 110660 days = 1 } }
 			}
+			random_owned = {
+			   limit = {
+			      owner = { OR = { government = theocracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government government = fascist_monarchy }  }
+			   }
+			   owner =  { country_event = { id = 124353 days = 0 } }
+			}
 			change_tag = ITA
 			all_core = { remove_core = ITC }
 			remove_country_modifier = the_compromesso
@@ -382,6 +388,7 @@ political_decisions = {
             NOT = { tag = ARI }			
 			NOT = { tag = SAR }
 			NOT = { tag = PIE }	
+			NOT = { tag = CAT }	
 		}
 		
 		allow = {		
@@ -428,7 +435,8 @@ political_decisions = {
 			}			
             }
             NOT = { tag = ITC }
-            NOT = { tag = ARI }			
+            NOT = { tag = ARI }	
+            NOT = { tag = CAT }			
 		}
 		
 		allow = {			
@@ -928,159 +936,6 @@ political_decisions = {
 		}
 	}
 	
-	roma_capital = {
-	picture = Roma
-		potential = {
-			tag = ITA
-			NOT = { capital = 749 }
-		}
-		allow = {
-			prestige = 45
-			is_greater_power = yes
-			NOT = { war = yes }
-			owns = 749 
-			owns = 753
-			owns = 754
-		}
-		effect = {
-			 prestige = 5
-			 capital = 749
-		     749 = {
-			 add_province_modifier = {
-				 name = gateway_to_harbor
-				 duration = 720
-			 } 
-			 add_province_modifier = {
-				 name = small_baby_boom
-				 duration = 14600
-			 }
-			 add_province_modifier = {
-				 name = baby_boom
-				 duration = 1825
-			 }
-		     }
-			 any_country = {
-				limit = {
-					is_culture_group = italian
-					NOT = { 
-						primary_culture = catalan
-						primary_culture = athesian
-					}
-					in_sphere = THIS
-				}
-				country_event = 11101
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	venetians_culture = { 
-		potential = { 
-			OR = { 
-				tag = ITA
-				AND = { 
-					has_country_flag = italian_integration
-					tag = ARI 
-				}
-			}
-			NOT = { primary_culture = venetian }
-			NOT = { accepted_culture = venetian }
-		}
-
-		allow = { 
-			is_greater_power = yes 
-			owns = 729
-		}
-
-		effect = { 
-			add_accepted_culture = venetian
-		}
-
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	restore_the_south_ITA = {
-		potential = {
-			tag = ITA
-			has_country_flag = weak_italy
-			owns = 749
-		}
-		allow = {
-            OR = { 
-			   is_greater_power = yes
-			   OR = {
-			      government = fascist_dictatorship
-			      government = fascist_monarchy
-			   }
-			owns = 754
-		    }
-		}
-		
-		effect = {
-			prestige = 10
-			NAP = { all_core = { add_core = ITA } }
-            clr_country_flag = weak_italy		
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	italia_irredenta = {
-		potential = {
-			tag = ITA
-			NOT = { has_country_flag = italia_ulterior }
-		}
-
-		allow = {
-			is_greater_power = yes
-			NOT = { has_global_flag = italians_banned }
-			all_core = {
-				owned_by = THIS
-			}
-		}
-
-		effect = {
-			set_country_flag = italia_ulterior
-			762 = { add_core = ITA }
-			763 = { add_core = ITA }
-			764 = { add_core = ITA }
-			765 = { add_core = ITA }
-			766 = { add_core = ITA }
-			3255 = { add_core = ITA }
-			AUS_729 = { 
-				add_core = ITA
-			}
-			AUS_736 = {
-				add_core = ITA
-			}
-			AUS_780 = {
-				add_core = ITA
-			}
-			any_country = {
-					limit = {
-						tag = SIC
-						exists = yes
-						in_sphere = THIS
-					}
-					country_event = 11101
-			}
-			any_country = {
-					limit = {
-						tag = VEN
-						exists = yes
-						in_sphere = THIS
-					}
-					country_event = 11101
-			}
-		}
-	}
-	
 	call_council_of_italy = {
 	picture = council_Etruria
 		potential = {
@@ -1399,7 +1254,12 @@ political_decisions = {
 		}
 		
 		allow = { 
-			OR = { is_secondary_power = yes is_greater_power = yes stronger_army_than = SAR stronger_army_than = PIE }
+			OR = { 
+			   is_secondary_power = yes 
+			   is_greater_power = yes 
+			   PIE = { exists = yes brigades_compare = 0.5 }
+			   SAR = { exists = yes brigades_compare = 0.5 }
+            }
 		}
 			
 		effect = { 
@@ -1506,7 +1366,10 @@ political_decisions = {
 		    year = 1847
 			OR = { 
 			   rank = 16 
-			   AND = { rank = 20 stronger_army_than = LOM } 
+			   AND = { 
+			      rank = 20 
+				  LOM = { brigades_compare = 0.5 }
+               }				  
 			}
 			LOM = { has_country_flag = struggle_for_northern_italy }
 			NOT = { exists = MAN }
@@ -1528,4 +1391,245 @@ political_decisions = {
 			}
 		}	
 	}	
+	
+	### Italy Post-Unification ###
+	
+	roma_capital = {
+	picture = Roma
+		potential = {
+			tag = ITA
+			NOT = { capital = 749 }
+		}
+		allow = {
+			prestige = 45
+			is_greater_power = yes
+			NOT = { war = yes }
+			owns = 749 
+			owns = 753
+			owns = 754
+		}
+		effect = {
+			 prestige = 5
+			 capital = 749
+		     749 = {
+			 add_province_modifier = {
+				 name = gateway_to_harbor
+				 duration = 720
+			 } 
+			 add_province_modifier = {
+				 name = small_baby_boom
+				 duration = 14600
+			 }
+			 add_province_modifier = {
+				 name = baby_boom
+				 duration = 1825
+			 }
+		     }
+			 any_country = {
+				limit = {
+					is_culture_group = italian
+					NOT = { 
+						primary_culture = catalan
+						primary_culture = athesian
+					}
+					in_sphere = THIS
+				}
+				country_event = 11101
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	venetians_culture = { 
+		potential = { 
+			OR = { 
+				tag = ITA
+				AND = { 
+					has_country_flag = italian_integration
+					tag = ARI 
+				}
+			}
+			NOT = { primary_culture = venetian }
+			NOT = { accepted_culture = venetian }
+		}
+
+		allow = { 
+			is_greater_power = yes 
+			owns = 729
+		}
+
+		effect = { 
+			add_accepted_culture = venetian
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	restore_the_south_ITA = {
+		potential = {
+			tag = ITA
+			has_country_flag = weak_italy
+			owns = 749
+		}
+		allow = {
+            OR = { 
+			   is_greater_power = yes
+			   OR = {
+			      government = fascist_dictatorship
+			      government = fascist_monarchy
+			   }
+			owns = 754
+		    }
+		}
+		
+		effect = {
+			prestige = 10
+			NAP = { all_core = { add_core = ITA } }
+            clr_country_flag = weak_italy		
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Non-Republican Italy dealing with the pope
+	
+	# It does not matter if the pope hates the country or is only a prisoner. As the country is still at least a monarchy there is no overt conflict of interest.
+	
+	ITA_lateran_treaty = {
+		picture = the_roman_question
+		potential = {
+			tag = ITA
+			OR = {
+			   government = hms_government
+			   government = prussian_constitutionalism
+			   government = absolute_monarchy
+			}
+			NOT = { has_country_flag = dealing_with_poop_ITA }
+		}
+		
+		allow = {    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+			OR = {
+			   ruling_party_ideology = conservative
+			   ruling_party_ideology = market_liberal
+			   ruling_party_ideology = paternal
+			   ruling_party_ideology = reactionary
+			   ruling_party_ideology = fascist
+			}			   
+		    revolution_n_counterrevolution = 1
+		}
+		
+		effect = {	
+           set_country_flag = dealing_with_poop_ITA		
+		   prestige = 5		   
+		   any_pop = { militancy = -1 }
+		   country_event = { id = 124354 days = 14 }	    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Republican Italy dealing with the pope
+	
+	ITA_the_main_problem = {
+		picture = the_roman_question
+		potential = {
+			tag = ITA
+			NOT = {
+			   OR = {
+			      government = hms_government
+			      government = prussian_constitutionalism
+			      government = absolute_monarchy
+			   }
+			}
+			NOT = { has_country_flag = dealing_with_poop_ITA }
+		}
+		
+		allow = {    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+			OR = {
+			   ruling_party_ideology = conservative
+			   ruling_party_ideology = market_liberal
+			   ruling_party_ideology = paternal
+			   ruling_party_ideology = reactionary
+			   ruling_party_ideology = fascist
+			}
+		    revolution_n_counterrevolution = 1
+		}
+		
+		effect = {		
+		   set_country_flag = dealing_with_poop_ITA
+		   prestige = 5
+		   any_pop = { militancy = -1 }
+		   country_event = { id = 124356 days = 14 }	    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	italia_irredenta = {
+		potential = {
+			tag = ITA
+			NOT = { has_country_flag = italia_ulterior }
+		}
+
+		allow = {
+			is_greater_power = yes
+			NOT = { has_global_flag = italians_banned }
+			all_core = {
+				owned_by = THIS
+			}
+		}
+
+		effect = {
+			set_country_flag = italia_ulterior
+			762 = { add_core = ITA }
+			763 = { add_core = ITA }
+			764 = { add_core = ITA }
+			765 = { add_core = ITA }
+			766 = { add_core = ITA }
+			3255 = { add_core = ITA }
+			AUS_729 = { 
+				add_core = ITA
+			}
+			AUS_736 = {
+				add_core = ITA
+			}
+			AUS_780 = {
+				add_core = ITA
+			}
+			any_country = {
+					limit = {
+						tag = SIC
+						exists = yes
+						in_sphere = THIS
+					}
+					country_event = 11101
+			}
+			any_country = {
+					limit = {
+						tag = VEN
+						exists = yes
+						in_sphere = THIS
+					}
+					country_event = 11101
+			}
+		}
+	}
 }

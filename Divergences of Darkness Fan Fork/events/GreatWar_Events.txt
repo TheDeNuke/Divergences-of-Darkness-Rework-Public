@@ -2635,6 +2635,7 @@ country_event = {
 	set_global_flag = final_partition
 	set_global_flag = PLC_broken_early
     set_country_flag = PLC_has_departed
+	clr_country_flag = enable_borderlands_conquest
 	change_tag = POL	
 	# Holy shit that's a lot of core removals
 	UKR = { all_core = { remove_core = POL } }
@@ -13487,48 +13488,6 @@ country_event = {
             }
         }
 		
-		# If in a truce with Scandinavia then give them a Puppet Pommerania and Holstein
-		
-        random_country = {
-            limit = {
-                tag = SCA
-                truce_with = THIS
-                THIS = { owns = 547 }
-            }
-            THIS = {
-                any_owned = {
-                    limit = { is_core = POM }
-                    secede_province = POM
-                }
-            }
-            release_vassal = POM
-            diplomatic_influence = {
-                who = POM
-                value = 200
-            }
-            THIS = {
-                diplomatic_influence = {
-                    who = POM
-                    value = -200
-                }
-            }
-        }
-		
-        random_country = {
-            limit = {
-                tag = SCA
-                truce_with = THIS
-                THIS = { owns = 528 }
-            }
-			HOL_369 = { add_core = SCA }
-            THIS = {
-                any_owned = {
-                    limit = { is_core = HOL }
-                    secede_province = SCA
-                }
-            }
-        }
-		
 		any_country = {
 		    limit = {
 			   tag = TES
@@ -13537,29 +13496,19 @@ country_event = {
 			government = democracy
 	    }
 		
-		# Cede territory to the various tags
+		## Secede everything else to North Germany
+		## If South Germany exists then Autoannex it into South Germany
+		## If South Germany does not exist then form Germany and give it the Fake Germany flag.
+		
+		any_country = {
+		   limit = { tag = NGF exists = no }
+		   set_country_flag = recently_released_NGF
+		}
 		
         any_owned = {
-             limit = { is_core = CFR }
-             secede_province = CFR
-        }
-		
-        any_owned = {
-             limit = { is_core = SWA }
-             secede_province = SWA
-        }
-		
-		# If NGF and SGF do not have cores then enjoy the inevitable Anarchy
-		
-        any_owned = {
-             limit = { is_core = NGF }
+             limit = { is_core = GER }
              secede_province = NGF
-        }		
-		
-        any_owned = {
-             limit = { is_core = SGF }
-             secede_province = SGF
-        }
+        }				 
 
 		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
 		random_owned = {
@@ -15084,6 +15033,7 @@ country_event = {
 
 	option = {
 		name = "EVTOPTA96010" #We welcome peace
+		set_country_flag = GERMANY_LOST
 		clr_country_flag = dismantle_declared
 		clr_country_flag = in_great_war
 		clr_country_flag = calling_all_allies
@@ -15097,23 +15047,13 @@ country_event = {
 		remove_country_modifier = great_war3
 		war_exhaustion = 40
 				
-		# If Swabian Primary then swith to South German Primary
+		# If Swabian or North German Primary then swith to South German Primary
 		
 		random_owned = {
-		   limit = { owner = { primary_culture = swabian } }
+		   limit = { owner = { OR = { primary_culture = rheinish primary_culture = swabian primary_culture = north_german } } }
 		      owner = {
 		         primary_culture = south_german
 				 capital = 599
-              }
-        }
-		
-		# If Rheinish Primary then swith to North German Primary
-		
-		random_owned = {
-		   limit = { owner = { primary_culture = rheinish } }
-		      owner = {
-		         primary_culture = north_german
-				 capital = 532
               }
         }
 		
@@ -15314,70 +15254,6 @@ country_event = {
                 }
             }
         }
-		
-		# If in a truce with Scandinavia then give them a Puppet Pommerania and Holstein
-		
-        random_country = {
-            limit = {
-                tag = SCA
-                truce_with = THIS
-                THIS = { owns = 547 }
-            }
-            THIS = {
-                any_owned = {
-                    limit = { is_core = POM }
-                    secede_province = POM
-                }
-            }
-            release_vassal = POM
-            diplomatic_influence = {
-                who = POM
-                value = 200
-            }
-            THIS = {
-                diplomatic_influence = {
-                    who = POM
-                    value = -200
-                }
-            }
-        }
-		
-        random_country = {
-            limit = {
-                tag = SCA
-                truce_with = THIS
-                THIS = { owns = 528 }
-            }
-			HOL_369 = { add_core = SCA }
-            THIS = {
-                any_owned = {
-                    limit = { is_core = HOL }
-                    secede_province = SCA
-                }
-            }
-        }
-		
-		# Cede territory to the various tags
-		
-        any_owned = {
-             limit = { is_core = CFR }
-             secede_province = CFR
-        }
-		
-        any_owned = {
-             limit = { is_core = SWA }
-             secede_province = SWA
-        }
-		
-        any_owned = {
-             limit = { is_core = NGF }
-             secede_province = NGF
-        }		
-		
-        any_owned = {
-             limit = { is_core = SGF }
-             secede_province = SGF
-        }
 
 		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
 		random_owned = {
@@ -15481,7 +15357,7 @@ country_event = {
 					is_cultural_union = no
 					tag = ROM
 				}
-				NOT = { is_primary_culture = THIS }
+				NOT = { is_culture_group = germanic }
 				NOT = { has_country_flag = post_colonial_country }
 				NOT = { has_country_flag = unreleasable_country }
 			}
@@ -15954,32 +15830,6 @@ country_event = {
 			name = no_more_war
 			duration = 3650
 		}
-		
-		# NGF has its Danubian, Rheinish, and Swabian cultures removed and change tag to NGF
-		
-		random_owned = {
-		   limit = { owner = { primary_culture = north_german } }
-		      owner = {
-			     inherit = NGF
-		         remove_accepted_culture = swabian
-		         remove_accepted_culture = rheinish
-		         remove_accepted_culture = south_german
-				 change_tag = NGF
-              }
-        }			  
-			
-		# SGF has its Elbian, Swabian and Rheinish Culture removed
-		
-		random_owned = {
-		   limit = { owner = { primary_culture = south_german } }
-		      owner = { 
-			     inherit = SGF
-		         remove_accepted_culture = swabian
-		         remove_accepted_culture = rheinish
-		         remove_accepted_culture = north_german
-				 change_tag = SGF
-              }
-        }
 	}
 }
 

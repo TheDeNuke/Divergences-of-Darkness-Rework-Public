@@ -378,6 +378,7 @@ political_reforms = {
 		}
 		appointed = {
 			rules = { rich_only = yes }
+			rich_vote = 2
 			global_immigrant_attract = 0.01
 			allow = {
 				NOT = { has_country_flag = government_busy_with_something }
@@ -385,6 +386,7 @@ political_reforms = {
 		}
 		state_equal_weight = {
 			rules = { state_vote = yes }
+			rich_vote = 1
 			allow = {
 				NOT = { has_country_flag = government_busy_with_something }
 				NOT = { vote_franschise = none_voting }
@@ -406,6 +408,7 @@ political_reforms = {
 	voting_system = {
 		first_past_the_post = {
 			rules = { largest_share = yes }
+			rich_vote = 2
 			allow = { 
 				NOT = { vote_franschise = none_voting }
 				NOT = { has_country_flag = autoden_gov }
@@ -808,29 +811,39 @@ political_reforms = {
 	
 	centralization = {
 		totalitarianism = {
+		    administrative_multiplier = 2
+			badboy = 0.005	
 			global_immigrant_attract = -1
 			global_assimilation_rate = 0.05
 			tax_efficiency = 0.05
 			mobilisation_size = 0.05
-			cb_generation_speed_modifier = 0.25
-			badboy = 0.005
-			suppression_points_modifier = 0.2
+			cb_generation_speed_modifier = 0.25					
+			ruling_party_support = 0.25		
+			literacy_con_impact = -0.15
+	        social_reform_desire = -0.15
+			issue_change_speed = -0.25
+	        political_reform_desire = -0.15
+			suppression_points_modifier = 0.4
+			global_pop_militancy_modifier = -0.01
+	        core_pop_militancy_modifier = -0.02
+	        core_pop_consciousness_modifier = -0.02
 			allow = {
 			    NOT = { has_country_flag = government_busy_with_something }
 				has_global_flag = revolution_n_counter_researched
+			    OR = {
+				   ruling_party_ideology = reactionary
+				   ruling_party_ideology = paternal
+				   ruling_party_ideology = fascist
+				   ruling_party_ideology = communist
+				}
 				OR = {
 					has_country_flag = communist_gov
 					has_country_flag = fascist_gov
 					has_country_flag = fascist_monarchy_gov
-					AND = { 
-						ruling_party_ideology = reactionary
-						OR = {
-							has_country_flag = clean_up_colonial_government
-							has_country_flag = absolute_monarchy_gov
-							has_country_flag = presidential_dictatorship_gov
-							has_country_flag = theocratic_government
-						}
-					}
+				    has_country_flag = clean_up_colonial_government
+				    has_country_flag = absolute_monarchy_gov
+					has_country_flag = presidential_dictatorship_gov
+					has_country_flag = theocratic_government
 				}
 			}
 		}
@@ -906,6 +919,49 @@ political_reforms = {
 				is_cultural_union = no
 				NOT = { AND = { tag = DUA NOT = { has_country_flag = DUA_schooling } } }
 				NOT = { AND = { tag = SPA NOT = { has_global_flag = CST_ENDING } } }
+			}
+		}
+	}
+		
+	recruitment_reform = {
+		peasant_levys = {
+		    supply_consumption = -0.25
+			org_regain = -0.25
+			mobilisation_size = 0.1
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+				NOT = { has_country_flag = levys_abolished }		
+			}
+		}
+		
+		restricted_recruitment = {
+            land_unit_start_experience = 10  
+			org_regain = 0.10
+			mobilisation_size = 0.02
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+				NOT = { has_country_flag = army_reform_banned }	
+				NOT = { debt_law = serfdom }
+			}
+		}
+		
+		cantonist_recruitment = {		
+		    leadership_modifier = -0.1
+            tax_efficiency = -0.03		
+			global_assimilation_rate = 0.02
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+				NOT = { has_country_flag = army_reform_banned }	
+				NOT = { debt_law = serfdom }
+			}
+		}
+		
+		normal_recruitment = {
+            leadership_modifier = 0.1
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+				NOT = { has_country_flag = army_reform_banned }	
+				NOT = { debt_law = serfdom }
 			}
 		}
 	}
@@ -1378,6 +1434,77 @@ social_reforms = {
 			political_reform_desire = -0.05
 			allow = {
 				NOT = { has_country_flag = government_busy_with_something }
+			}
+		}
+	}
+	
+	police_reform = {
+		administrative = yes
+		next_step_only = yes
+		secret_police = {
+			administrative_multiplier = 3
+			ruling_party_support = 0.25
+			literacy_con_impact = -0.15
+	        social_reform_desire = -0.15
+			issue_change_speed = -0.25
+	        political_reform_desire = -0.15
+			suppression_points_modifier = 0.6
+			global_pop_militancy_modifier = -0.02
+	        core_pop_militancy_modifier = -0.04
+	        core_pop_consciousness_modifier = -0.02
+			allow = {
+			    NOT = { has_country_flag = government_busy_with_something }
+				has_global_flag = revolution_n_counter_researched
+			    OR = {
+				   ruling_party_ideology = reactionary
+				   ruling_party_ideology = paternal
+				   ruling_party_ideology = fascist
+				   ruling_party_ideology = communist
+				}
+				OR = {
+					has_country_flag = communist_gov
+					has_country_flag = fascist_gov
+					has_country_flag = fascist_monarchy_gov
+				    has_country_flag = clean_up_colonial_government
+				    has_country_flag = absolute_monarchy_gov
+					has_country_flag = presidential_dictatorship_gov
+					has_country_flag = theocratic_government
+				}
+			}
+		}
+		no_police = {
+		    core_pop_militancy_modifier = 0.01
+			allow = {
+				NOT = { 
+				   has_country_flag = government_busy_with_something
+				   has_country_flag = communist_gov
+				   has_country_flag = fascist_gov
+				   has_country_flag = fascist_monarchy_gov
+			    }
+			}	  
+	    }
+		regional_police = {
+			administrative_multiplier = 1
+			suppression_points_modifier = 0.2
+	        core_pop_militancy_modifier = -0.02
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+			}
+		}
+		national_police = {
+			administrative_multiplier = 2
+			ruling_party_support = 0.05
+			literacy_con_impact = -0.05
+	        social_reform_desire = -0.05
+			issue_change_speed = -0.05
+	        political_reform_desire = -0.05
+			suppression_points_modifier = 0.4
+			global_pop_militancy_modifier = -0.01
+	        core_pop_militancy_modifier = -0.03
+	        core_pop_consciousness_modifier = -0.01
+			allow = {
+				NOT = { has_country_flag = government_busy_with_something }
+				has_global_flag = revolution_n_counter_researched
 			}
 		}
 	}

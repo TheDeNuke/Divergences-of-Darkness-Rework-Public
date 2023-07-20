@@ -1,0 +1,565 @@
+####DID YOU THINK THAT WAS THE END?####
+
+political_decisions = {
+
+    ### Redtext - You have no friends anymore. This is the path of a Pariah State.
+   
+	the_conquests_of_francia = {
+		#picture = charlemagne
+		potential = {
+			tag = FRK
+			all_core = { owned_by = THIS }
+			# You cannot be a democracy to do this 
+			vote_franschise = none_voting
+			OR = {
+				ruling_party_ideology = fascist
+				ruling_party_ideology = reactionary
+				ruling_party_ideology = paternal
+			}
+			NOT = { has_country_flag = new_charlemagne }
+			NOT = { has_country_flag = waiting_charle }
+		}
+			
+		allow = {
+			war = no 
+			rank = 1
+			NOT = {
+			    NGF = { owns = 599 }
+				SGF = { owns = 549 }
+				GER = { exists = yes }
+				GCF = { exists = yes }
+				HLR = { exists = yes }
+			}
+		}
+		
+		effect = {
+		    prestige = -1
+		    random_owned = {
+			   limit = {
+			      owner = { AND = { ruling_party_ideology = paternal government = absolute_monarchy }				  }
+			   }
+			   owner = { set_country_flag = waiting_charle country_event = 653200 }
+			}
+		    random_owned = {
+			   limit = {
+			      owner = { OR = { NOT = { government = absolute_monarchy } ruling_party_ideology = fascist } }
+			   }
+			   owner = { badboy = 1 set_country_flag = new_charlemagne country_event = 6532000 }
+			}
+		}
+		
+		# I'm going to keep this locked from the AI for now, but if someone wants to watch the AI go insane then feel free to change 0 to 1
+		ai_will_do = { factor = 0 }
+	}
+	
+	reclaim_spanish_march = {
+		#picture = IDK something catalan
+		potential = {
+			tag = FRK
+			has_country_flag = new_charlemagne
+			NOT = { has_country_flag = frankish_catalonia }
+		}
+		
+		allow = {
+			war = no 
+		}
+			
+		effect = {	
+			badboy = 10
+			set_country_flag = frankish_catalonia
+			SPA_498 = { add_core = THIS }
+			498 = {
+				owner = { leave_alliance = THIS }
+				relation = { who = THIS value = -400 }
+			}
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	elbian_conquest = {
+		#picture = 
+		potential = {
+			tag = FRK
+			has_country_flag = new_charlemagne
+			NOT = { has_country_flag = beyond_the_elbe }
+		}
+		
+		allow = { 
+			war = no 
+		}
+		
+		effect = {
+			badboy = 50
+			set_country_flag = beyond_the_elbe
+			NGF = { all_core = { add_core = THIS } }
+			545 = { add_core = THIS }
+			536 = { add_core = THIS }
+			537 = { add_core = THIS }
+			HAM_532 = { add_core = THIS }
+			SAX_1 = { add_core = THIS }
+			SAX_559 = { add_core = THIS }
+			SAX_558 = { add_core = THIS }
+		}
+	
+		ai_will_do = { factor = 1 }
+	}
+	
+	danubian_conquest = { 
+		potential = {
+			tag = FRK
+			has_country_flag = new_charlemagne
+			has_country_flag = beyond_the_elbe
+			NOT = { has_country_flag = beyond_the_danube }
+		}
+		
+		allow = {
+			war = no 
+		}
+		
+		effect = {
+			badboy = 50
+			set_country_flag = beyond_the_danube
+			SGF = {
+				all_core = { add_core = THIS }
+			}
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	italian_conquest = {
+		potential = {
+			tag = FRK 
+			has_country_flag = new_charlemagne
+			NOT = { has_country_flag = over_the_alps }
+		}
+		
+		allow  = {
+			war = no 
+		}
+		
+		effect = { 
+			badboy = 50 
+			set_country_flag = over_the_alps
+			SAR_720 = { add_core = THIS }
+			GEN_724 = { add_core = THIS }
+			AUS_726 = { add_core = THIS }
+			PAP_741 = { add_core = THIS }
+			TUS_744 = { add_core = THIS }
+			AUS_729 = { add_core = THIS }
+			PAP_752 = { add_core = THIS }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	english_conquest = {
+		potential = {
+			tag = FRK 
+			has_country_flag = new_charlemagne
+			has_country_flag = beyond_the_elbe
+			has_country_flag = beyond_the_danube
+			has_country_flag = frankish_catalonia
+			has_country_flag = over_the_alps
+			NOT = { has_country_flag = new_1066 }
+		}
+		
+		allow = {
+			war = no 
+			#modern_naval_doctrine_1920 = 1
+			#modern_ship_constrution = 1
+		}
+		
+		effect = { 
+			badboy = 50
+			ENL = { 
+				all_core = {
+					limit = {
+						NOT = { is_core = NAN }
+					}
+					add_core = THIS 
+				}
+			}
+			AEN = { 
+				all_core = {
+					limit = {
+						NOT = {
+							is_core = IRE 
+							is_core = SCO 
+							is_core = FRA 
+							is_core = ANF
+							is_core = OCC
+						}
+					}
+					add_core = THIS 
+				}
+			}
+			WLS = { all_core = { add_core = THIS } }
+			set_country_flag = new_1066
+		}
+		
+		ai_will_do = { factor = 1 }
+	}	
+	
+	#####But what if you want a kinder, gentler European tyrant? 
+	
+	nous_es_europe = {
+		#picture = 
+		potential = {
+			tag = FRK 
+			all_core = { owned_by = THIS }
+			OR = {
+				government = democracy
+				government = parliamentary_republic
+				government = proletarian_dictatorship
+				government = socialist_republic
+			}
+			NOT = { has_country_flag = we_are_europe }
+		}
+		
+		allow = {
+			war = no 
+			rank = 1
+			OR = {
+			   invention = postwar_society
+			   government = proletarian_dictatorship
+			}
+			OR = {
+				NOT = {
+					GER = { exists = yes }
+					GCF = { exists = yes }
+					HLR = { exists = yes }
+				}
+				OR = { 
+					GER = { has_country_modifier = punitive_effects truce_with = THIS }
+					GCF = { has_country_modifier = punitive_effects truce_with = THIS }
+					HLR = { has_country_modifier = punitive_effects truce_with = THIS }
+				}
+			}
+		}
+		
+		effect = {
+		    prestige = 100
+			set_country_flag = we_are_europe
+		}
+		
+		ai_will_do = { factor = 0 }
+	}
+	
+	new_elbian_policy = {
+		#picture
+		potential = {
+			tag = FRK 
+			has_country_flag = we_are_europe
+			NOT = { NGF = { is_greater_power = yes } }
+			NOT = { CAE = { is_greater_power = yes } }
+			NOT = { has_country_flag = our_elbians }
+		}
+		
+		allow = {
+			NGF = {
+				all_core = {
+					OR = {
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+						}
+					}
+				}
+			}
+			NOT = { CAE = { exists = yes } }
+		}
+		
+		effect = {
+			set_country_flag = our_elbians
+		    random_owned = {
+			   limit = { owner = { government = proletarian_dictatorship } }
+			   owner = { badboy = 40 }
+			}		
+			NGF = { all_core = { add_core = THIS } }
+			any_country = {
+				limit = {
+					primary_culture = north_german
+					in_sphere = THIS 
+				}
+				all_core = { add_core = THIS } 
+				annex_to = THIS 
+			}
+			PRU = { all_core = { remove_core = THIS } } #just in case NGF somehow took Prussia beforehand
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	new_danubian_policy = {
+		#picture
+		potential = {
+			tag = FRK 
+			has_country_flag = we_are_europe
+			NOT = { SGF = { is_greater_power = yes } }
+			NOT = { has_country_flag = our_danubians }
+		}
+		
+		allow = {
+			SGF = {
+				all_core = {
+					OR = {
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+						}
+					}
+				}
+			}
+			SLO = {
+				all_core = {
+					OR = {
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+		    random_owned = {
+			   limit = { owner = { government = proletarian_dictatorship } }
+			   owner = { badboy = 40 }
+			}
+			set_country_flag = our_danubians
+			SGF = { all_core = { add_core = THIS } }
+			SLO = { all_core = { add_core = THIS } }
+			any_country = {
+				limit = {
+					OR = {
+						primary_culture = south_german
+						primary_culture = slovene
+					}
+					NOT = { tag = YUG }
+					in_sphere = THIS 
+				}
+				annex_to = THIS 
+			}
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	new_italian_policy = {
+		#picture
+		potential = {
+			tag = FRK 
+			has_country_flag = we_are_europe
+			NOT = { ITC = { is_greater_power = yes } }
+			NOT = { ITA = { is_greater_power = yes } }
+			#NOT = { ITV = { is_greater_power = yes } }
+			NOT = { ARI = { is_greater_power = yes } }
+			NOT = { has_country_flag = our_italians }
+		}
+		
+		allow = {
+			war = no 
+			ITA = {
+			   all_core = {
+					OR = {
+					   owned_by = THIS
+					   is_core = SIC
+					   is_core = NAP
+					   owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+					     vassal_of = THIS
+					   }
+				   }
+			   }
+		   }
+		}
+		
+		effect = {
+		    random_owned = {
+			   limit = { owner = { government = proletarian_dictatorship } }
+			   owner = { badboy = 40 }
+			}
+			set_country_flag = our_italians
+			any_country = {
+				limit = {
+					OR = {
+						primary_culture = north_italian
+						primary_culture = central_italian
+						primary_culture = venetian
+					}
+					in_sphere = THIS 
+				}
+				all_core = { add_core = THIS } 
+				annex_to = THIS 
+			}
+			SAR_720 = { add_core = THIS }
+			GEN_724 = { add_core = THIS }
+			AUS_726 = { add_core = THIS }
+			PAP_741 = { add_core = THIS }
+			TUS_744 = { add_core = THIS }
+			AUS_729 = { add_core = THIS }
+			PAP_752 = { add_core = THIS }			
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+	
+	new_iberian_policy = {
+		#picture
+		potential = {
+			tag = FRK 
+			has_country_flag = we_are_europe
+			NOT = { exists = ARA }
+			NOT = { exists = ARI }
+			NOT = { CAT = { is_greater_power = yes } }
+			NOT = { NAV = { is_greater_power = yes } }
+			NOT = { has_country_flag = our_iberians }
+		}
+		
+		allow = {
+			war = no 
+			CAT = {
+			   all_core = {
+					OR = {
+					   owned_by = THIS
+					   owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+					     vassal_of = THIS
+					   }
+				   }
+			   }
+		    }
+			NAV = {
+			   all_core = {
+					OR = {
+					   owned_by = THIS
+					   owner = {
+					     in_sphere = THIS
+					   }
+					   owner = {
+					     vassal_of = THIS
+					   }
+				   }
+			   }
+		    }
+		}
+		
+		effect = {
+		    random_owned = {
+			   limit = { owner = { government = proletarian_dictatorship } }
+			   owner = { badboy = 40 }
+			}
+			set_country_flag = our_iberians
+			NAV = { all_core = { add_core = THIS } }
+			CAT = { all_core = { add_core = THIS } }
+			ALD = { all_core = { remove_core = THIS } }
+			any_country = {
+				limit = {
+					OR = {
+						primary_culture = basque
+						primary_culture = catalan
+					}
+					in_sphere = THIS 
+				}
+				all_core = { add_core = THIS } 
+				annex_to = THIS 
+			}
+		}
+		
+		ai_will_do = { factor = 1 }
+    }
+	
+	new_english_policy = {
+		#picture
+		potential = {
+			tag = FRK 
+			has_country_flag = we_are_europe
+			NOT = { ENL = { is_greater_power = yes } }
+			NOT = { ENG = { is_greater_power = yes } }
+			NOT = { AEN = { is_greater_power = yes } }
+			NOT = { WLS = { is_greater_power = yes } }
+			NOT = { NTL = { is_greater_power = yes } }
+			NOT = { has_country_flag = our_english }
+		}
+		
+		allow = {
+			war = no 
+			ENL = {
+				all_core = {
+					OR = {
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+							vassal_of = THIS 
+						}
+					}
+				}
+			}
+			WLS = {
+				all_core = {
+					OR = {
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+							vassal_of = THIS 
+						}
+					}
+				}
+			}
+			AEN = {
+				all_core = {
+					OR = {
+						is_core = IRE
+						owned_by = THIS 
+						owner = {
+							in_sphere = THIS 
+							vassal_of = THIS 
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+		    random_owned = {
+			   limit = { owner = { government = proletarian_dictatorship } }
+			   owner = { badboy = 40 }
+			}
+			set_country_flag = our_english
+			ENL = { all_core = { add_core = THIS } }
+			WLS = { all_core = { add_core = THIS } }
+			AEN = {
+				all_core = {
+					limit = {
+						NOT = { 
+							is_core = IRE 
+							is_core = SCO 
+						}
+					}
+					add_core = THIS 
+				}
+			}
+			any_country = {
+				limit = {
+					OR = {
+						primary_culture = english 
+						primary_culture = welsh 
+						primary_culture = anglois 
+					}
+					in_sphere = THIS 
+				}
+				all_core = { add_core = THIS } 
+				annex_to = THIS 
+			}
+		}
+		
+		ai_will_do = { factor = 1 }
+	}
+}

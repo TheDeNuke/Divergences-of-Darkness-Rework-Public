@@ -13,15 +13,19 @@ country_event = {
 	trigger = {
         exists = yes
 		is_vassal = no
-		civilized = yes		
-		NOT = { government = proletarian_dictatorship }
-		NOT = { government = socialist_republic }
-		NOT = { government = autonomous_dependency }
+		civilized = yes	
+        NOT = {
+           OR = {
+		      government = proletarian_dictatorship		   
+              government = socialist_republic
+		      government = autonomous_dependency
+		      has_country_modifier = show_trials_active 
+		   }
+		}
 		is_ideology_enabled = communist
 		OR = {
 		   ruling_party_ideology = communist
 		   communist = 40
-		   socialist = 80
 		}
 		average_militancy = 3
 		OR = {
@@ -38,7 +42,6 @@ country_event = {
 			national_provinces_occupied = 0.10
 			is_disarmed = yes
 			communist = 20
-			socialist = 40
 			average_militancy = 5
 		}
 	}
@@ -124,6 +127,7 @@ country_event = {
 		government = socialist_republic
 		is_ideology_enabled = communist
 		NOT = { government = proletarian_dictatorship }
+		NOT = { has_country_modifier = show_trials_active }
 		communist = 70
 		average_militancy = 3
 		OR = {
@@ -211,14 +215,15 @@ country_event = {
 	trigger = {	exists = yes
 		is_vassal = no
 		civilized = yes
+		NOT = { has_country_modifier = show_trials_active }
 		OR = {
-		government = democracy  
-		government = parliamentary_republic
+		   government = democracy  
+		   government = parliamentary_republic
 		}
 		OR = {
-		ruling_party_ideology = reactionary
-		reactionary = 40
-		}
+		   ruling_party_ideology = reactionary
+		   reactionary = 40
+		}		
 		average_militancy = 3
 		OR = {
 			has_country_modifier = regency_government
@@ -319,6 +324,7 @@ country_event = {
 	}
 	option = {
 		name = "This is only temporary until the crisis passes"
+		plurality = -25
 		random_owned = {
 			limit = { owner = { has_country_modifier = regency_government } }
 			owner = { remove_country_modifier = regency_government }
@@ -376,6 +382,7 @@ country_event = {
 	trigger = {	exists = yes
 		is_vassal = no
 		civilized = yes
+		NOT = { has_country_modifier = show_trials_active }
 		OR = {
 		  government = democracy  
 		  government = parliamentary_republic
@@ -476,6 +483,7 @@ country_event = {
 	}
 	option = {
 		name = "This is only temporary until the crisis passes"
+		plurality = -25
 		random_owned = {
 			limit = { owner = { has_country_modifier = the_brown_scare } }
 			owner = { remove_country_modifier = the_brown_scare }
@@ -541,6 +549,7 @@ country_event = {
 		      government = fascist_dictatorship 
 			  government = fascist_monarchy 
 			  government = autonomous_dependency
+			  has_country_modifier = show_trials_active
 		   } 
 		}
 		is_ideology_enabled = fascist
@@ -1910,6 +1919,7 @@ country_event = {
 
 	trigger = {
 		ai = no
+		election = no
 		OR = {
 			government = prussian_constitutionalism
 			government = hms_government

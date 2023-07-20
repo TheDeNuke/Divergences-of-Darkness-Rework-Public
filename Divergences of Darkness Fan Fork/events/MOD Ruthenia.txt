@@ -1,0 +1,2016 @@
+#### Slava Ukraini ####
+#### https://www.youtube.com/watch?v=0iDxXJ9vNQQ ####
+
+### Decisions in MOD Rus:
+### form_russia_western_ruthenia
+### RUT_northern_expansion
+### RUT_invade_MOS
+### move_capital_RUS
+
+#### Event Chain Activation Event #### 
+#### This requires you to hold the three primary capitals of Ruthenia and not have the RUT_lithuania Flag ###
+
+### The Opening of the Second General Rada - The Political Rada #
+
+### Proclamation of Ruthenian Rights
+
+country_event = { 
+	id = 222700
+	title = "RUT1.T" 
+	desc = "RUT1.D"
+	picture = "generalrada"
+	
+	trigger = { 
+	   tag = RUT
+	   owns = 958
+	   owns = 718
+	   owns = 702
+	   war = no
+	   NOT = { exists = PLC }
+	   NOT = { year = 1905 }
+	   NOT = { has_country_flag = RUT_lithuania }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7   
+	}
+	
+	option = { 
+	name = "RUT1.A"   
+       set_country_flag = cannot_annex_rus
+	   primary_culture = ruthenian
+	   add_accepted_culture = belarusian
+	   add_accepted_culture = galician
+	   # Good General Rada
+	   random_owned = {
+	       limit = { 
+		      owner = { 
+			     NOT = { has_global_flag = THE_NORTHERN_BEAR }
+			     NOT = { has_global_flag = THE_WESTERN_BEAR }
+			     NOT = { has_global_flag = THE_SOUTHERN_BEAR }	
+              }
+           }
+           owner = { 
+              prestige = 5
+              country_event = { id = 222701 days = 3 }
+           }
+       }
+	   # Bad General Rada
+	   random_owned = {
+	       limit = { 
+		      owner = { 
+			     OR = {
+			        has_global_flag = THE_NORTHERN_BEAR
+			        has_global_flag = THE_WESTERN_BEAR
+			        has_global_flag = THE_SOUTHERN_BEAR	
+			     }
+              }
+           }
+           owner = { 
+              prestige = -5
+              country_event = { id = 222723 days = 3 }
+           }
+       }	   
+	}
+}
+
+#################### GOOD GENERAL RADA - NO RUSSIA ########################################
+
+### The Resignation of the Hetman - Establishment of the Provisional Government ###
+
+country_event = { 
+	id = 222701
+	title = "RUT2.T" 
+	desc = "RUT2.D"
+	#picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT2.A"
+	   government = presidential_dictatorship
+	   political_reform = unitary
+	   political_reform = none_voting
+	   political_reform = appointed
+	   political_reform = yes_meeting
+	   political_reform = state_press
+	   political_reform = underground_parties
+       political_reform = two_year_draft
+	   political_reform = culture_voting_only
+       clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+       clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+       clr_country_flag = parliamentary_republic_gov
+       clr_country_flag = democracy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win		
+	   clr_country_flag = paternal_election_win
+	   clr_country_flag = conservative_party_in_power
+	   clr_country_flag = liberal_party_in_power
+	   clr_country_flag = reactionary_party_in_power
+	   clr_country_flag = socialist_party_in_power
+	   clr_country_flag = communist_party_in_power
+	   clr_country_flag = fascist_party_in_power
+	   set_country_flag = paternal_party_in_power
+	   clr_country_flag = anarcho_liberal_party_in_power
+	   clr_country_flag = market_liberal_party_in_power   
+	   any_pop = {
+	      consciousness = 1
+	      militancy = -1
+	   }
+	   country_event = { id = 222702 days = 14 }
+	}
+}
+
+### A Distraction to the Second Rada - A Peasant March in Kiev
+
+### You used Peasants to win the war - Thus have Peasants
+
+country_event = { 
+	id = 222702
+	title = "RUT3.T" 
+	desc = "RUT3.D"
+	picture = "BOH_mob"
+	
+	is_triggered_only = yes
+	
+	# Let them protest
+	
+	option = { 
+	name = "RUT3.A"
+	   prestige = -5
+	   any_pop = { 
+	      limit = { 
+		     is_culture_group = central_slavic
+		     strata = poor
+	      }
+	      consciousness = 4
+	      militancy = 2
+	   }
+	   set_country_flag = RUT_resolution
+	   ai_chance = {
+		   factor = 90
+	   }
+	}
+
+    # Crackdown on these Peasants
+
+	option = { 
+	name = "RUT3.B"
+	    prestige = 5
+		political_reform = no_meeting
+	    any_pop = { 
+	       limit = { 
+		      is_culture_group = central_slavic
+		      strata = poor
+	       }
+	       consciousness = 6
+	       militancy = -2
+	   }
+	   set_country_flag = RUT_fucked_it
+	   ai_chance = {
+		   factor = 10
+	   }
+	}
+}
+
+### The government was overthrown by the Liberal Elites allied with the Peasants
+
+country_event = { 
+	id = 222703
+	title = "RUT4.T" 
+	desc = "RUT4.D"
+	picture = "storming_palace_communists"
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_fucked_it
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 3
+	}
+	
+	option = { 
+	name = "RUT4.A"
+	   clr_country_flag = RUT_fucked_it 
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_secret_ballots
+	   any_pop = {
+	      consciousness = -3
+	      militancy = -5
+	   }
+	   # Political Chain Ending - Liberal Republic
+	   country_event = { id = 222709 days = 14 } 
+	}
+}
+
+### The Second Rada is able to get back the business of state after the Peasant Protests die down and establishes political parties and free speech
+
+country_event = { 
+	id = 222704
+	title = "RUT5.T" 
+	desc = "RUT5.D"
+	#picture = "storming_palace_communists"
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_resolution
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 3
+	}
+	
+	option = { 
+	name = "RUT5.A"
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_secret_ballots
+	   clr_country_flag = RUT_resolution
+	   any_pop = {
+	      consciousness = -2
+	      militancy = -1
+	   }
+	   country_event = { id = 222705 days = 14 } 
+	}
+}
+
+### The Head of State Debate - This is awful ###
+
+country_event = { 
+	id = 222705
+	title = "RUT6.T" 
+	desc = "RUT6.D"
+	#picture = "storming_palace_communists"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	## We will crown a King
+	
+	option = { 
+	name = "RUT6.A"
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = socialist
+				factor = 4
+			}
+	     }
+	     set_country_flag = RUT_republicans_mobilize
+	     ai_chance = {
+		     factor = 80
+	     }
+	}
+	
+	## What is this. The 17th Century?
+	
+	option = { 
+	name = "RUT6.B"
+		any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -2
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = socialist
+				factor = -4
+			}
+	     }
+	     # Political Chain Ending - Liberal Republic
+	     country_event = { id = 222709 days = 14 } 
+	     ai_chance = {
+		     factor = 20
+	     }
+	}
+}
+
+### The Republicans mobilize against Monarchism
+
+country_event = { 
+	id = 2227040
+	title = "RUT7.T" 
+	desc = "RUT7.D"
+	picture = "vozhd"
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_republicans_mobilize
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	### The attempted coup was defeated before it even started
+	
+	option = { 
+	name = "RUT7.A"
+       clr_country_flag = RUT_republicans_mobilize
+	   country_event = { id = 222707 days = 14 } 
+	   any_pop = { 
+		   ideology = {
+		        value = conservative
+			    factor = 0.2
+	 	   }
+		   ideology = {
+		        value = separatist
+			    factor = 0.2
+		   }
+		   consciousness = -3
+		   militancy = -3
+	   }	
+	   ai_chance = {
+		  factor = 75
+            modifier = {
+               factor = 0.25
+               CSK = {
+                  exists = yes
+                  ai = yes				  
+		          OR = {
+		             government = absolute_monarchy
+			         government = presidential_dictatorship
+		          }
+			   }
+            }
+	   }	   
+	}
+	
+	### The coup is successful and the Republicans restrict civil liberties tempoarly.
+	
+	option = { 
+	name = "RUT7.B"
+	   political_reform = underground_parties
+	   political_reform = yes_meeting
+	   political_reform = state_press
+       clr_country_flag = RUT_republicans_mobilize
+	   ## This flag will trigger the Liberal Republic event if there is no angry hetman.
+	   set_country_flag = RUT_backdoor_deal
+	   any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 6
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = socialist
+				factor = -8
+			}
+	   }
+	   ai_chance = {
+		  factor = 25
+            modifier = {
+               factor = 3
+               CSK = {
+                  exists = yes
+                  ai = yes				  
+		          OR = {
+		             government = absolute_monarchy
+			         government = presidential_dictatorship
+		          }
+			   }
+            }
+	   }
+	}
+}
+
+### The Angry Hetman - It turns out that CSK is ran by someone we could abuse to unify with us.
+
+country_event = { 
+	id = 2227050
+	title = "RUT8.T" 
+	desc = "RUT8.D"
+	picture = "angry_cossack"
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_backdoor_deal
+	   CSK = {
+	      exists = yes
+		  OR = {
+		     government = absolute_monarchy
+			 government = presidential_dictatorship
+		  }
+	   }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	### That dictator is going nowhere near our government.
+	
+	option = { 
+	name = "RUT8.A"
+	   clr_country_flag = RUT_backdoor_deal
+       clr_country_flag = RUT_republicans_mobilize
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_secret_ballots
+	   # Political Chain Ending - Liberal Republic
+	   country_event = { id = 222709 days = 14 } 
+	   ai_chance = {
+		  factor = 25
+	   }	   
+	}
+	
+	### We will proclaim him the Hetman of all Ukraine!
+	
+	### There is no infomation event for CSK since it would never trigger for player CSK
+	### No Cheating. This is a easter egg.
+	
+	option = { 
+	name = "RUT8.B"
+	   clr_country_flag = RUT_backdoor_deal
+       clr_country_flag = RUT_republicans_mobilize
+	   # Political Chain Ending - Greater Ruthenia
+	   country_event = { id = 222706 days = 14 } 	
+	   prestige = 25
+	   any_pop = { 
+		   consciousness = -5
+		   militancy = -5
+	   }
+	   CSK = {
+	      any_pop = { 
+		      consciousness = -5
+		      militancy = -5
+	      }
+	   }
+	   ai_chance = {
+		  factor = 75
+            modifier = {
+               factor = 0
+               CSK = { ai = no }
+            }
+	   }
+	}
+}
+
+### A Hetman of all Ukraine and Rus!!! ###
+
+country_event = { 
+	id = 222706
+	title = "RUT9.T" 
+	desc = "RUT9.D"
+	#picture = "angry_cossack"
+	
+	major = yes
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT9.A"	
+	   relation = { who = SCA value = -50 }
+	   prestige = 25
+	   set_country_flag = ultra_hetman_RUT
+	   create_vassal = CSK	 
+	   ## INCORRECT GOVERNMENT TYPE - THE STUARTS ARE COMING TO KICK YOUR SHIT IN.
+       SCA = { country_event = { id = 222713 days = 7 } }	   
+	}
+}
+
+### The Final Session of the Second Rada - Who do we elect as Monarch?
+
+#### The Second Rada has somehow managed to get to the point of attempting to elect a monarch without falling apart ###
+
+country_event = { 
+	id = 222707
+	title = "RUT10.T" 
+	desc = "RUT10.D"
+	#picture = "angry_cossack"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	## Crown the Haydamak Leader
+	
+	option = { 
+	name = "RUT10.A"	
+	   relation = { who = SCA value = 50 }
+	   prestige = -10
+	   any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = -4
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = -8
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = 1
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 3
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = 3
+			}
+			scaled_consciousness = {
+				ideology = socialist
+				factor = 3
+			}
+	   }
+ 	   # Political Chain Ending - Non-Panrussian PruCon Kingdom
+	   country_event = { id = 222708 days = 14 }    
+	   ai_chance = {
+		  factor = 60
+	   }	   
+	}
+	
+	## Adopt the Rurik Scion's Ideas 
+	
+	option = { 
+	name = "RUT10.B"	
+	   relation = { who = SCA value = -50 }
+	   prestige = 10
+	   any_pop = {
+			scaled_militancy = {
+				ideology = reactionary
+				factor = 4
+			}
+			scaled_consciousness = {
+				ideology = reactionary
+				factor = 4
+			}
+			scaled_militancy = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_consciousness = {
+				ideology = conservative
+				factor = 2
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_consciousness = {
+				ideology = liberal
+				factor = -1
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = -3
+			}
+			scaled_militancy = {
+				ideology = socialist
+				factor = -3
+			}
+			scaled_consciousness = {
+				ideology = socialist
+				factor = -3
+			}
+	   }
+ 	   # Political Chain Ending - HMS Panrussian Kingdom
+	   country_event = { id = 222712 days = 14 }  	
+	   ai_chance = {
+		  factor = 40
+	   }
+	}
+}
+
+#### RUTHENIAN CHAIN ENDINGS #####
+
+#### Non-Panrussian PruCon Kingdom ####
+
+#### This is either caused by crowning the Haydamak Leader or getting a Stuart imposed on you ###
+
+country_event = { 
+	id = 222708
+	title = "RUT10.T" 
+	desc = "RUT10.D"
+	picture = "autocracy"
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT10.A"	
+	   set_country_flag = RUT_antipanrussian	   
+	   religion = uniate
+	   SCA = {
+	      create_alliance = THIS
+	      relation = { who = THIS value = 400 }
+          diplomatic_influence = { who = THIS value = 400 } 
+	   }
+	   clr_country_flag = cannot_annex_rus
+	   RUS = {
+	      relation = { who = THIS value = -400 }
+          diplomatic_influence = { who = THIS value = -400 } 
+	   }
+	   plurality = -25
+	   nationalvalue = nv_order	   
+	   government = prussian_constitutionalism   
+	   ruling_party_ideology = conservative
+	   political_reform = restricted_recruitment
+       political_reform = appointed
+       political_reform = wealth_weighted_voting
+       political_reform = yes_meeting
+       political_reform = censored_press
+       political_reform = no_trade_unions
+       political_reform = first_past_the_post
+       political_reform = harassment
+	   political_reform = no_draft
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   set_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov
+	}
+}
+
+#### Decentralized Liberal Panrussian Republic ####
+
+#### There is a metric ton of ways for this path to be triggered. You can see them if you scroll up by generally if any efforts to crown a king or dictator fails then it gets directed here - Note that this path appeases the Peasants and will in no way be prepared for a war with Scandinavia. ###
+### Needless to say there is a high chance of Ruthenian Nationalists just overthrowing the government in this scenario due to the fact that they know that Panrussian Ideas will just get their nation rolled over by Scandinavia ###
+
+country_event = { 
+	id = 222709
+	title = "RUT11.T" 
+	desc = "RUT11.D"
+	picture = "election_win"
+	
+	# This trigger is for one particular scenario with the others triggering this event manually.
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_backdoor_deal
+	   CSK = {
+	         OR = {
+		         exists = no
+				 AND = { 
+				    exists = yes
+		            NOT = { government = absolute_monarchy }
+			        NOT = { government = presidential_dictatorship }
+			     }
+		     }
+	   }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	### For the Freedom of the Peasants and Liberals!
+	
+	option = { 
+	name = "RUT11.A"
+	   set_country_flag = RUT_slavia_ukraini 
+       clr_country_flag = RUT_republicans_mobilize
+	   clr_country_flag = RUT_backdoor_deal	
+	   political_reform = mandatory_service   
+       government = parliamentary_republic	   
+       nationalvalue = nv_liberty
+	   political_reform = federalism
+	   ruling_party_ideology = liberal
+	   plurality = 50
+	   political_reform = population_equal_weight
+	   political_reform = proportional_representation
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+	   political_reform = all_voting_pops
+       political_reform = gerrymandering
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   set_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov	
+	}
+}
+
+### The Question of Unifying Russia under our banner
+
+### OH SHIT ITS ALTERNATIVE BANDERA AND HIS BOYS BREAKING DOWN YOUR DOOR FOR HAVING IDEAS REGARDING PANRUSSIAN LIBERALISM.
+
+country_event = { 
+	id = 222710
+	title = "RUT12.T" 
+	desc = "RUT12.D"
+	picture = "street_riot_2"
+	
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = RUT_slavia_ukraini 
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+	
+	### The Ruthenian Nationalists instigate a Military Coup and purge Panrussian Elements
+	
+	option = { 
+	name = "RUT11.A"
+	   clr_country_flag = RUT_slavia_ukraini 
+	   # Political Chain Ending - Government of National Protection
+	   country_event = { id = 222711 days = 7 }
+	   religion = uniate
+	   any_pop = { limit = { religion = orthodox } militancy = 5 reduce_pop = 0.99 }
+	   any_pop = { limit = { religion = orthodox pop_type = clergymen } militancy = 9 reduce_pop = 0.5 }
+	   any_pop = { 
+		   consciousness = 1
+		   militancy = 1
+	   }
+	   ai_chance = {
+		  factor = 65
+	   }	   
+	}
+	
+	### The Ruthenian Nationalists are crushed.
+	
+	option = { 
+	name = "RUT11.B"
+	   clr_country_flag = RUT_slavia_ukraini 
+	   prestige = 25
+	   any_pop = { 
+		   consciousness = -1
+		   militancy = -1
+	   }
+	   religion = orthodox	
+	   ## INCORRECT GOVERNMENT TYPE - THE STUARTS ARE COMING TO KICK YOUR SHIT IN.
+       SCA = { country_event = { id = 222714 days = 7 } }	  	   
+	   ai_chance = {
+		  factor = 35
+	   }	   
+	}
+}
+
+### Government of National Protection - The absolute worst ending but Scandinavia absolutely loves it. ###
+
+country_event = { 
+	id = 222711
+	title = "RUT12.T" 
+	desc = "RUT12.D"
+	picture = "vozhd"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT12.A"
+	   set_country_flag = RUT_antipanrussian
+	   SCA = {
+	      create_alliance = THIS
+	      relation = { who = THIS value = 400 }
+          diplomatic_influence = { who = THIS value = 400 } 
+	   }
+	   clr_country_flag = cannot_annex_rus
+	   RUS = {
+	      relation = { who = THIS value = -400 }
+          diplomatic_influence = { who = THIS value = -400 } 
+	   }
+	   government = presidential_dictatorship
+	   ruling_party_ideology = reactionary
+	   plurality = -50
+	   nationalvalue = nv_might
+	   political_reform = restricted_recruitment
+	   political_reform = unitary
+	   political_reform = none_voting
+	   political_reform = appointed
+	   political_reform = yes_meeting
+	   political_reform = state_press
+	   political_reform = underground_parties
+	   political_reform = no_draft
+	   political_reform = culture_voting_only
+       clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+       clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+       clr_country_flag = parliamentary_republic_gov
+       clr_country_flag = democracy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win		
+	   clr_country_flag = paternal_election_win
+	   clr_country_flag = conservative_party_in_power
+	   clr_country_flag = liberal_party_in_power
+	   clr_country_flag = reactionary_party_in_power
+	   clr_country_flag = socialist_party_in_power
+	   clr_country_flag = communist_party_in_power
+	   clr_country_flag = fascist_party_in_power
+	   set_country_flag = paternal_party_in_power
+	   clr_country_flag = anarcho_liberal_party_in_power
+	   clr_country_flag = market_liberal_party_in_power   
+	}
+}
+
+#### Panrussian HMS Kingdom ####
+
+#### This is the result of crowning the Rurik Scion and is the same thing as the liberal republic but not as overtly radical. ###
+
+country_event = { 
+	id = 222712
+	title = "RUT13.T" 
+	desc = "RUT13.D"
+	picture = "autocracy"
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT13.A"		      
+       government = hms_government   
+	   religion = orthodox
+       nationalvalue = nv_order
+	   political_reform = federalism
+	   ruling_party_ideology = conservative
+	   plurality = 25
+	   political_reform = cantonist_recruitment
+	   political_reform = population_equal_weight
+	   political_reform = proportional_representation
+	   political_reform = four_year_draft
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+	   political_reform = all_voting_pops
+       political_reform = gerrymandering
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov	
+	   ## INCORRECT GOVERNMENT TYPE - THE STUARTS ARE COMING TO KICK YOUR SHIT IN.
+       SCA = { country_event = { id = 222715 days = 7 } }	 
+	}
+}
+
+#### YET ANOTHER WAR FOR SCANDINAVIA ####
+
+#### Illegal Cossack-Ran State - Presidental Dictatorship RUT with CSK Puppet ####
+
+country_event = { 
+	id = 222713
+	title = "RUT14.T" 
+	desc = "RUT14.D"
+	picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	### We will tame these dirty people - HIGH CHANCE OF WAR
+	
+	option = { 
+	name = "RUT12.A"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222717 }
+	   ai_chance = {
+		  factor = 99
+            modifier = {
+               factor = 0
+               war_with = BOH
+            }
+            modifier = {
+               factor = 0
+               war_with = CAE
+            }
+            modifier = {
+               factor = 0
+               war_with = GER
+            }
+            modifier = {
+               factor = 0
+               war_with = NGF
+            }
+            modifier = {
+               factor = 0
+               war_with = HLR
+            }
+	   }	
+	}
+	
+	### We are currently too busy to intervene but we will diplomatically protest by cutting ties.
+	
+	option = { 
+	name = "RUT12.A"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222716 }
+	   ai_chance = {
+		  factor = 1
+	   }	
+	}
+}
+
+#### Illegal Panrussian Democratic Republic - Liberal Republic managed to survive the Ruthenian Nationalists ####
+
+country_event = { 
+	id = 222714
+	title = "RUT15.T" 
+	desc = "RUT15.D"
+	picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	### We will tame these dirty people - HIGH CHANCE OF WAR
+	
+	option = { 
+	name = "RUT15.A"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222717 }
+	   ai_chance = {
+		  factor = 99
+            modifier = {
+               factor = 0
+               war_with = BOH
+            }
+            modifier = {
+               factor = 0
+               war_with = CAE
+            }
+            modifier = {
+               factor = 0
+               war_with = GER
+            }
+            modifier = {
+               factor = 0
+               war_with = NGF
+            }
+            modifier = {
+               factor = 0
+               war_with = HLR
+            }
+	   }	
+	}
+	
+	### We are currently too busy to intervene but we will diplomatically protest by cutting ties.
+	
+	option = { 
+	name = "RUT15.A"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222716 }
+	   ai_chance = {
+		  factor = 1
+	   }	
+	}
+}
+
+#### Illegal Panrussian HMS Monarchy - A Rurik was crowned and now you get to deal with the absolute nightmare as a result of it. ####
+
+country_event = { 
+	id = 222715
+	title = "RUT16.T" 
+	desc = "RUT16.D"
+	picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	### We will tame these dirty people - HIGH CHANCE OF WAR
+	
+	option = { 
+	name = "RUT16.A"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222717 }
+	   ai_chance = {
+		  factor = 99
+            modifier = {
+               factor = 0
+               war_with = BOH
+            }
+            modifier = {
+               factor = 0
+               war_with = CAE
+            }
+            modifier = {
+               factor = 0
+               war_with = GER
+            }
+            modifier = {
+               factor = 0
+               war_with = NGF
+            }
+            modifier = {
+               factor = 0
+               war_with = HLR
+            }
+	   }	
+	}
+	
+	### We are currently too busy to intervene but we will diplomatically protest by cutting ties.
+	
+	option = { 
+	name = "RUT16.B"
+	   leave_alliance = RUT
+	   relation = { who = RUT value = -400 }
+       diplomatic_influence = { who = RUT value = -400 }  
+	   RUT = { country_event = 222716 }
+	   ai_chance = {
+		  factor = 1
+	   }	
+	}
+}
+
+### Scandinavia refuses to intervene due to distractions but has cut diplomatic ties with us ####
+
+country_event = { 
+	id = 222716
+	title = "RUT17.T" 
+	desc = "RUT17.D"
+	#picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT17.A"
+       prestige = 5
+	   set_country_flag = panrussian_RUT
+	   clr_country_flag = cannot_annex_rus
+	   RUS = {
+	      relation = { who = THIS value = -400 }
+          diplomatic_influence = { who = THIS value = -400 } 
+	   }
+       any_pop = {
+         militancy = -1
+       }		 
+	}
+}
+
+### The Ultimatum from Copenhagen ####
+### SCANDINAVIA DEMANDS THAT WE CROWN A STUART AND CEASE ALL PANRUSSIAN ACTIVITIES OR BE INVADED ####
+
+country_event = { 
+	id = 222717
+	title = "RUT18.T" 
+	desc = "RUT18.D"
+	#picture = "street_riot_2"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	### We must submit or risk war.
+	
+	option = { 
+	name = "RUT18.A"
+	   prestige = -25
+	   plurality = -25
+	   random_owned = {
+	      limit = { owner = { is_our_vassal = CSK } }
+		  owner = { release_vassal = CSK }
+	   }
+	   release_vassal = CSK
+	   clr_country_flag = ultra_hetman_RUT
+	   any_pop = { 
+		   consciousness = 2
+		   militancy = 2
+	   }
+	   country_event = 222709
+	   ai_chance = {
+		  factor = 25
+	   }	   
+	}
+	
+	### Scandinavian diplomat, go fuck yourself
+	
+	option = { 
+	name = "RUT18.B"
+	   prestige = 5
+	   any_pop = { 
+		   consciousness = -2
+		   militancy = -2
+	   }
+	   add_country_modifier = {
+		   name = slavia_rus
+		   duration = -1
+	   }
+       SCA = { country_event = { id = 222718 days = 7 } }	  	   
+	   ai_chance = {
+		  factor = 75
+	   }	   
+	}
+}
+
+### The Ruthenian War ####
+### I'll let the localizer find a quote for this one...
+
+country_event = { 
+	id = 222718
+	title = "RUT19.T" 
+	desc = "RUT19.D"
+	#picture = "street_riot_2"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	### We will crush these Cossack Bastards
+	
+	option = { 
+	name = "RUT19.A"
+	set_global_flag = special_military_operation
+	war = {
+		target = RUT
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = humiliate
+			}
+			call_ally = yes
+	}  
+	}	
+}
+
+#### The Treaty of Minsk - Ruthenia is Dismantled by Scandinavia ####
+
+country_event = { 
+	id = 222719
+	title = "RUT20.T" 
+	desc = "RUT20.D"
+	picture = "SCAwins"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = RUT
+	   has_global_flag = special_military_operation
+	   has_country_flag = custom_treaty_loser
+	   NOT = { war_with = SCA }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+
+	option = { 
+	name = "RUT20.A"
+	   religion = uniate
+	   set_country_flag = ruthenian_ruthenia
+	   set_country_flag = RUT_antipanrussian
+	   clr_country_flag = cannot_annex_rus
+	   RUS = {
+	      relation = { who = THIS value = -400 }
+          diplomatic_influence = { who = THIS value = -400 } 
+	   }
+	   remove_country_modifier = slavia_rus
+	   clr_global_flag = special_military_operation
+	   clr_country_flag = custom_treaty_loser
+	   936 = { add_core = BLR }
+	   all_core = { remove_core = RUT }
+	   any_owned = {
+	      limit = { is_core = BLR }
+		  secede_province = BLR
+	   }
+	   any_owned = {
+	      limit = { is_core = VOL }
+		  secede_province = VOL
+	   }
+	   SCA = { country_event = { id = 222720 days = 1 } }
+	   change_tag = UKR   
+	}   
+}
+
+### Scandinavian Victory Event ###
+
+country_event = { 
+	id = 222720
+	title = "RUT21.T" 
+	desc = "RUT21.D"
+	picture = "SCAwins"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+
+	option = { 
+	name = "RUT21.A"
+	   prestige = 20
+	   relation = { who = BLR value = 400 }
+       diplomatic_influence = { who = BLR value = 400 }  	 
+	   relation = { who = VOL value = 400 }
+       diplomatic_influence = { who = VOL value = 400 }  
+	   relation = { who = UKR value = 400 }
+       diplomatic_influence = { who = UKR value = 400 }  	   
+	}   
+}
+
+#### The Treaty of Vilnius - Glorious Victory ####
+
+country_event = { 
+	id = 222721
+	title = "RUT22.T" 
+	desc = "RUT22.D"
+	picture = "cossacks_soldiers"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = RUT
+	   has_global_flag = special_military_operation
+	   NOT = { has_country_flag = custom_treaty_loser }
+	   NOT = { war_with = SCA }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 7
+	}
+
+	option = { 
+	name = "RUT22.A"
+	   set_country_flag = ruthenian_ruthenia
+	   set_country_flag = panrussian_RUT
+	   clr_country_flag = cannot_annex_rus
+	   RUS = {
+	      relation = { who = THIS value = -400 }
+          diplomatic_influence = { who = THIS value = -400 } 
+	   }
+	   prestige = 40
+       any_pop = {
+          militancy = -5
+       }
+	   remove_country_modifier = slavia_rus
+	   clr_global_flag = special_military_operation
+	   SCA = { country_event = { id = 222722 days = 1 } }
+	}   
+}
+
+### Scandinavian Failure Event - You've fucking guaranteed Russia now. Idiot. ###
+
+country_event = { 
+	id = 222722
+	title = "RUT23.T" 
+	desc = "RUT23.D"
+	picture = "SCAloss"
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT23.A"
+	   prestige = -10
+	   any_owned = {
+	      limit = { is_core = RUT }
+		  secede_province = RUT
+	   }
+	   relation = { who = SAM value = -400 }
+       diplomatic_influence = { who = SAM value = -400 }  	    
+	}   
+}
+
+###### BAD GENERAL RADA - RUSSIA EXISTS #######
+
+#### The Ruthenian Nationalists and Russophiles fight each other and any sense of functionality in the rada implodes ####
+
+country_event = { 
+	id = 222723
+	title = "RUT24.T" 
+	desc = "RUT24.D"
+	#picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT24.A"
+	   prestige = -5
+	   relation = { who = RUS value = -20 }
+	   any_pop = {
+	      limit = { religion = orthodox }
+	      consciousness = 2
+	      militancy = 2
+	   }
+	   any_pop = {
+	      limit = { religion = uniate }
+	      consciousness = 2
+	      militancy = 2
+	   }
+	   country_event = { id = 222724 days = 14 }
+	}
+}
+
+#### Chaos erupts in the Rada as the Russophile and Ruthenian Nationalist Groups directly fight with one another. ####
+
+country_event = { 
+	id = 222724
+	title = "RUT25.T" 
+	desc = "RUT25.D"
+	picture = "street_riot_2"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	## The Russophiles win and prepare for annexation into Russia
+	
+	option = { 
+	name = "RUT25.A"
+	    relation = { who = RUS value = 400 }
+	    religion = orthodox
+        government = presidential_dictatorship
+	    nationalvalue = nv_order
+		political_reform = cantonist_recruitment
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = appointed
+	    political_reform = yes_meeting
+	    political_reform = state_press
+	    political_reform = underground_parties
+        political_reform = mandatory_service
+	    political_reform = culture_voting_only
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    set_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power  
+		RUS = { country_event = 222725 }
+		ai_chance = {
+			factor = 10
+	         modifier = { 
+	            factor = 2
+				RUS = { OR = { government = absolute_monarchy government = presidential_dictatorship } }
+		     }
+	         modifier = { 
+	            factor = 4.5
+			    has_global_flag = THE_WESTERN_BEAR
+		     }
+	         modifier = { 
+	            factor = 9
+				RUS = { OR = { government = democracy government = parliamentary_republic } }
+		     }
+	         modifier = { 
+	            factor = 0
+		        is_greater_power = yes
+		     }
+	         modifier = { 
+	            factor = 0.75
+		        is_secondary_power = yes
+		     }
+		}
+	}
+	
+	## The Ruthenian Nationalists win
+	
+	option = { 
+	name = "RUT25.B"
+	    religion = uniate
+		country_event = 222726
+	    relation = { who = RUS value = -400 }
+		ai_chance = {
+			factor = 90
+			 # Panslavic Russia by default has a massive amount of pull to the point where its 50/50
+	         modifier = { 
+	            factor = 0.5
+				has_global_flag = THE_WESTERN_BEAR
+		     }
+			 # Absolute Monarchy or Dictatorship Russia is able to do some manipulation but its not super effective.
+	         modifier = { 
+	            factor = 0.9
+				RUS = { OR = { government = absolute_monarchy government = presidential_dictatorship } }
+		     }
+			 # Democratic Republic appeases the people
+	         modifier = { 
+	            factor = 0.1
+				RUS = { OR = { government = democracy government = parliamentary_republic } }
+		     }
+			 # Eurasianists are extremely zealous
+	         modifier = { 
+	            factor = 0
+				RUS = { OR = { government = fascist_dictatorship government = fascist_monarchy } }
+		     }
+			 # Revolutionary Zeal
+	         modifier = { 
+	            factor = 0
+				RUS = { OR = { government = proletarian_dictatorship government = socialist_republic } }
+		     }			 
+	    }
+	}
+}
+
+#### Russophiles in Ruthenia ask for unification with Russia ####
+
+country_event = { 
+	id = 222725
+	title = "RUT240.T" 
+	desc = "RUT240.D"
+	picture = "generalrada"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	### Return to glorious motherland.
+	
+	option = { 
+	name = "RUT240.A"
+	   prestige = 5
+	   inherit = RUT
+	   RUT = { clr_country_flag = cannot_annex_rus }
+	}
+}
+
+#### The Republic of Peasants and overglorified Liberal Elites has been created ####
+
+country_event = { 
+	id = 222726
+	title = "RUT250.T" 
+	desc = "RUT250.D"
+	picture = "cossacks_soldiers"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT250.A"
+	   set_country_flag = RUSSIA_IS_MAD
+	   political_reform = no_draft	   
+       government = parliamentary_republic	   
+       nationalvalue = nv_liberty
+	   political_reform = federalism
+	   ruling_party_ideology = liberal
+	   plurality = 50
+	   political_reform = restricted_recruitment
+	   political_reform = population_equal_weight
+	   political_reform = proportional_representation
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+	   political_reform = all_voting_pops
+       political_reform = gerrymandering
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   set_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov	
+	}
+}
+
+#### Ruthenia has snubbed us with their nationalism ####
+
+### What do you mean Ruthenia is not Russia?
+
+country_event = { 
+	id = 222727
+	title = "RUT26.T" 
+	desc = "RUT26.D"
+	picture = "cossacks_soldiers"
+	
+	trigger = { 
+	   tag = RUS
+	   has_country_flag = RUSSIA_IS_MAD
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 3
+	}
+
+	option = { 
+	name = "RUT26.A"
+	    clr_country_flag = RUSSIA_IS_MAD
+	    add_country_modifier = {
+           name = preparing_for_war
+	       duration = 31
+	    }
+		leave_alliance = RUT
+	    relation = { who = RUT value = -400 }
+        diplomatic_influence = { who = RUT value = -400 } 
+	    # Warning event
+	    RUT = { country_event = 222728 }
+		# War Event
+		country_event = { id = 222729 days = 31 }
+		ai_chance = {
+			factor = 90
+	         modifier = { 
+	            factor = 0
+				is_disarmed = yes
+		     }
+	    }
+	}   
+	
+	option = { 
+	name = "RUT26.B"
+	    clr_country_flag = RUSSIA_IS_MAD
+	    prestige = -10
+		# This allows for normal expansion after the stalled modifier expires.
+		set_global_flag = PLC_broken_early
+		leave_alliance = RUT
+	    relation = { who = RUT value = -400 }
+        diplomatic_influence = { who = RUT value = -400 } 
+	    RUT = {
+		  clr_country_flag = cannot_annex_rus
+	    }
+	    add_country_modifier = {
+		   name = RUS_stall_expansion
+		   duration = 5475
+	    }		
+		ai_chance = {
+			factor = 1
+	    }
+	} 
+}
+
+### The Russians are going to invade us ###
+
+country_event = { 
+	id = 222728
+	title = "RUT27.T" 
+	desc = "RUT27.D"
+	#picture = "cossacks_soldiers"
+	
+	is_triggered_only = yes	
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT27.A"
+	   clr_country_flag = cannot_annex_rus
+	   any_pop = { 
+		   consciousness = -5
+		   militancy = -5
+	   }
+	   add_country_modifier = {
+		   name = slavia_rus
+		   duration = -1
+	   }
+	}
+}
+
+### The Russo-Ruthenian War ###
+
+### I've never seen this one before...
+
+country_event = { 
+	id = 222729
+	title = "RUT28.T" 
+	desc = "RUT28.D"
+	picture = "partition_of_PLC"
+
+	is_triggered_only = yes
+	
+	option = { 
+	name = "RUT28.A"
+	set_global_flag = special_military_operation_two
+	war = {
+		target = RUT
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = humiliate
+			}
+			call_ally = yes
+	}  
+	}	
+}
+
+#### The Destruction of Ruthenia ####
+
+##### Little and White Russia are unified with the motherland...
+
+country_event = { 
+	id = 222730
+	title = "RUT29.T" 
+	desc = "RUT29.D"
+	picture = "cossacks_soldiers"
+	major = yes
+	
+	trigger = { 
+	   tag = RUS
+	   has_global_flag = special_military_operation_two
+	   NOT = { exists = RUT }
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 3
+	}
+
+	option = { 
+	name = "RUT29.A"
+        prestige = 20
+	    clr_global_flag = special_military_operation_two
+		RUT = { remove_country_modifier = slavia_rus }
+	}   
+}
+
+#### David beats Goliath ####
+
+#### They will come again another day, but for now we can celebrate ###
+
+country_event = { 
+	id = 222731
+	title = "RUT30.T" 
+	desc = "RUT30.D"
+	picture = "cossacks_soldiers"
+	major = yes
+	
+	trigger = { 
+	   tag = RUT
+	   has_global_flag = special_military_operation_two
+	   NOT = { war_with = RUS }
+	   exists = yes
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 3
+	}
+
+	option = { 
+	name = "RUT30.A"
+        prestige = 20
+	    clr_global_flag = special_military_operation_two
+		set_global_flag = PLC_broken_early
+		RUS = {
+	       add_country_modifier = {
+		      name = RUS_stall_expansion
+		      duration = 9125
+	       }
+        }		   
+	}   
+}
+
+#### Ruthenian Failsafe - Russia exists and thus Panrussian Ideals are impossible ####
+
+country_event = { 
+	id = 2227220
+	title = "RUT31.T" 
+	desc = "RUT31.D"
+	picture = "generalrada"
+
+	trigger = { 
+	   tag = RUT
+	   has_country_flag = panrussian_RUT
+	   exists = RUS
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	option = { 
+	name = "RUT31.A"
+	   prestige = -10
+	   clr_country_flag = panrussian_RUT
+	   set_country_flag = RUT_antipanrussian
+	}   
+}
+
+#### Ruthenia has declared itself the Rightful Heir of Rus - There will be war soon. ####
+
+#### RED TEXT PARTS OF THIS SO PEOPLE SEE THIS EVENT ###
+
+country_event = { 
+	id = 2227230
+	title = "RUT32.T" 
+	desc = "RUT32.D"
+	picture = "generalrada"
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = { 
+	name = "RUT32.A"
+	   prestige = -10
+	}   
+}
+
+### War of the Three Sisters
+ 
+### Great Russia fights Little Russia and White Russia
+
+country_event = { 
+	id = 2227240
+	title = "RUT33.T" 
+	desc = "RUT33.D"
+	#picture = "street_riot_2"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	### Only one will inherit the legacy of Rus
+	
+	option = { 
+	name = "RUT33.A"
+	### Only one can win here and whoever does takes it all.
+	any_country = {
+	   limit = {
+	      tag = CSK
+		  has_country_flag = panrussian_CSK
+	   }
+	   set_country_flag = CSK_prick 
+	}	   
+	war = {
+		target = MOS
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			defender_goal = {
+				casus_belli = civil_war
+			}
+	}  
+	}	
+}
+
+# Panrussian Cossacks see that Ruthenia is invading Muscovy and they need to intervene or fail.
+
+country_event = { 
+	id = 2227250
+	title = "RUT34.T" 
+	desc = "RUT34.D"
+	picture = "cossacks_soldiers"
+	
+	fire_only_once = yes
+
+	trigger = { 
+	   tag = CSK
+	   has_country_flag = panrussian_CSK
+	   has_country_flag = CSK_prick 
+	   RUT = { war_with = MOS }
+	   NOT = { vassal_of = RUT }   
+	}
+
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	
+	option = {
+	name = "RUT34.A"
+	clr_country_flag = CSK_prick 
+	prestige = 1
+	leave_alliance = MOS
+	leave_alliance = NOV
+	leave_alliance = RUT
+	add_country_modifier = {
+		name = for_freedom_CSK
+		duration = 1095
+	}
+ 	war = {
+		target = MOS
+			attacker_goal = {
+				casus_belli = cut_down_to_size_no_infamy
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size_no_infamy
+			}
+    }
+ 	war = {
+		target = RUT
+			attacker_goal = {
+				casus_belli = cut_down_to_size_no_infamy
+			}
+			defender_goal = {
+				casus_belli = cut_down_to_size_no_infamy
+			}
+    }	
+	ai_chance = { 
+	   factor = 100
+	   }	
+	}
+	
+	option = {
+	name = "RUT34.B"
+	clr_country_flag = CSK_prick 
+	clr_country_flag = panrussian_CSK
+	prestige = -1
+	ai_chance = { 
+	   factor = 0
+	   }	
+	}
+}

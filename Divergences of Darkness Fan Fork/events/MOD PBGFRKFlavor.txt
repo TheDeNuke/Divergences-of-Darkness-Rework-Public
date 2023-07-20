@@ -758,7 +758,7 @@ country_event = {
 	desc = "BRG59.D"
 	picture = "actress"
 	
-	 fire_only_once = yes
+	fire_only_once = yes
 	
 	trigger = { 
 	   tag = PBG 
@@ -766,8 +766,6 @@ country_event = {
 	   has_country_flag = PBG_castles
 	   year = 1888
 	}
-	
-	fire_only_once = yes 
 	
 	mean_time_to_happen = { 
 		months = 60
@@ -953,6 +951,7 @@ country_event = {
 		  tag = FRK
 	   }
        owns = 425
+	   war = no
        nationalism_n_imperialism = 1   
 	   has_global_flag = JEAN_ENDING
 	   OR = {
@@ -980,6 +979,7 @@ country_event = {
 	option = { 
 	name = "BRG62.A"	   
 	   set_country_flag = france_reorg
+	   clr_country_flag = france_good_reorg
 	   random_owned = {
 	      limit = { owner = { NOT = { centralization = unitary centralization = totalitarianism } } }
 		  owner = { political_reform = unitary }
@@ -1129,6 +1129,10 @@ country_event = {
        nationalism_n_imperialism = 1   
 	   has_global_flag = JEAN_ENDING
 	   NOT = {
+	      has_country_flag = france_good_reorg
+		  exists = DUA
+		  exists = FRA
+		  exists = ANF
 	      OR = {
 	         government = hms_government
 		     government = prussian_constitutionalism
@@ -1138,9 +1142,6 @@ country_event = {
 		     government = fascist_dictatorship
 		  }
 	   }   	   
-	   NOT = { exists = DUA }
-	   NOT = { exists = FRA }
-	   NOT = { exists = ANF }
 	}
 	
 	mean_time_to_happen = { 
@@ -1154,6 +1155,7 @@ country_event = {
 		  owner = { political_reform = confederalism }
 	   }
 	   political_reform = confederalism
+	   set_country_flag = france_good_reorg
 	   clr_country_flag = france_reorg
        FRK = { clr_country_flag = france_reorg }	   
 	   any_country = {
@@ -1196,10 +1198,11 @@ country_event = {
 	picture = "PBGvictory"
 	
 	trigger = { 
-	   tag = BOG
+	   tag = BOG	  
 	   primary_culture = anglois
        has_country_modifier = intergrating_france
 	   425 = { is_core = ANF }
+	   war = no
 	   NOT = {
 	      OR = {
 		     vassal_of = BRG
@@ -1249,6 +1252,7 @@ country_event = {
 	   primary_culture = french
        has_country_modifier = intergrating_france
 	   425 = { is_core = FRA }
+	   war = no
 	   NOT = {
 	      OR = {
 		     vassal_of = BRG
@@ -2541,6 +2545,7 @@ country_event = {
 			   tag = FRA
 			   tag = OCC
 			   tag = DIE
+			   tag = NET
 			   tag = SWA
 	         }
 		     exists = no
@@ -2551,6 +2556,16 @@ country_event = {
 	
 	option = {
 	name = "BRG82.A"
+	clr_country_flag = france_reorg 
+	any_country = {
+	   limit = {
+	      tag = BOG
+		  exists = yes
+		  vassal_of = THIS
+	   }
+	   annex_to = THIS
+	}
+	clr_country_flag = FRANKISH_EMPIRE_FAILED
 	clr_country_flag = idealist_FRK_active
 	political_reform = unitary
 	remove_accepted_culture = provencal
@@ -2602,6 +2617,12 @@ country_event = {
 	}
 	any_owned = {
 	   limit = {
+	      is_core = NET
+	   }
+	   secede_province = NET
+	}
+	any_owned = {
+	   limit = {
 	      is_core = SWA
 	   }
 	   secede_province = SWA
@@ -2613,12 +2634,197 @@ country_event = {
 			tag = FRA
 			tag = OCC
 			tag = DIE
+			tag = NET
 			tag = SWA
 	      }
 		  exists = yes
 	   }
 	   clr_country_flag = frankish_revolter 
 	   country_event = 653148
+	}
+	any_country = {
+	   limit = {
+	      OR = {
+	        tag = CFR 
+			tag = FRA
+			tag = OCC
+			tag = DIE
+			tag = NET
+			tag = SWA
+	      }
+		  exists = no
+	   }
+	   clr_country_flag = frankish_revolter 
+	}
+	}
+}
+
+#### The Frankish Civil War - For Totalitarian FRK only ####
+
+#### Deciding to White Peace a Great War is a stupid fucking idea and you should be ashamed for it.
+# Frankish Empire failed is set by GCF or GER in 280104 since they collapse because they white peaced and thus you collapse because YOU white peaced.
+# Yeah, this seems a bit sudden but TBH you could excuse it as the result of massive outrage due to the Ante Bellum treaty.
+
+# This will only trigger for the Totalitarian Version of FRK and the above version will always be the priority when switching from a democracy to a dictatorship even if the Frankish Empire flag exists.
+
+country_event = {
+	id = 6531470
+	title = "BRG820.T"
+	desc = "BRG820.D"
+	picture = "paneuropean"
+	
+	major = yes
+
+	trigger = {	
+	    exists = yes	
+		tag = FRK
+		has_global_flag = FALL_ROT_OCCURED		
+	    has_country_flag = FRANKISH_EMPIRE_FAILED
+		NOT = {
+		   OR = {
+		      has_country_flag = idealist_FRK_active
+		      government = democracy
+			  government = parliamentary_republic
+			  government = socialist_republic
+			  government = proletarian_dictatorship
+		   }
+		}
+		war = no 
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	immediate = {
+	   any_country = {
+	      limit = {
+	         OR = {
+	           tag = CFR 
+			   tag = FRA
+			   tag = OCC
+			   tag = DIE
+			   tag = NET
+			   tag = SWA
+	         }
+		     exists = no
+		  }
+		  set_country_flag = frankish_revolter 
+	   }	   
+	}
+	
+	option = {
+	name = "BRG820.A"
+	clr_country_flag = france_reorg 
+	any_country = {
+	   limit = {
+	      tag = BOG
+		  exists = yes
+		  vassal_of = THIS
+	   }
+	   annex_to = THIS
+	}
+	random_owned = {
+	   limit = {
+	      owner = { NOT = { has_country_modifier = regime_collapse } }
+	   }
+	   owner = {
+	      prestige = -50
+	      plurality = 50
+	      set_country_flag = regime_collapse		
+          add_country_modifier = {
+             name = regime_collapse
+             duration = 3650
+          }
+	   }
+	}
+	clr_country_flag = FRANKISH_EMPIRE_FAILED
+	remove_accepted_culture = provencal
+	remove_accepted_culture = swabian
+	remove_accepted_culture = french
+	remove_accepted_culture = anglois
+	remove_accepted_culture = frisian
+	remove_accepted_culture = rheinish
+	589 = { add_core = SWA }
+	590 = { add_core = SWA }
+	591 = { add_core = SWA }
+	594 = { add_core = SWA }		
+	BAD_586 = { add_core = SWA }
+	SWI_603 = { add_core = SWA }
+	SWI_605 = { add_core = SWA }
+    566 = { add_core = CFR }
+	564 = { add_core = CFR }
+    540 = { add_core = CFR }
+    539 = { add_core = CFR }
+    MNR_581 = { add_core = CFR }
+    MNR_585 = { add_core = CFR }	
+    HSK_583 = { add_core = CFR }	
+    PRU_575 = { add_core = CFR }
+    HES_564 = { add_core = CFR }	
+	any_owned = {
+	   limit = {
+	      is_core = CFR
+	   }
+	   secede_province = CFR
+	}
+	any_owned = {
+	   limit = {
+	      is_core = FRA
+	   }
+	   secede_province = FRA
+	}
+	any_owned = {
+	   limit = {
+	      is_core = OCC
+	   }
+	   secede_province = OCC
+	}
+	any_owned = {
+	   limit = {
+	      is_core = DIE
+	   }
+	   secede_province = DIE
+	}
+	any_owned = {
+	   limit = {
+	      is_core = NET
+	   }
+	   secede_province = NET
+	}
+	any_owned = {
+	   limit = {
+	      is_core = SWA
+	   }
+	   secede_province = SWA
+	}
+	any_country = {
+	   limit = {
+	      OR = {
+	        tag = CFR 
+			tag = FRA
+			tag = OCC
+			tag = DIE
+			tag = NET
+			tag = SWA
+	      }
+		  exists = yes
+	   }
+	   clr_country_flag = frankish_revolter 
+	   country_event = 653148
+	}
+	any_country = {
+	   limit = {
+	      OR = {
+	        tag = CFR 
+			tag = FRA
+			tag = OCC
+			tag = DIE
+			tag = NET
+			tag = SWA
+	      }
+		  exists = no
+	   }
+	   clr_country_flag = frankish_revolter 
 	}
 	}
 }
@@ -2634,6 +2840,29 @@ country_event = {
 	option = {
 	name = "BRG83.A"
 	   government = democracy
+	   ruling_party_ideology = anarcho_liberal
+       political_reform = population_equal_weight
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+       political_reform = proportional_representation
+       political_reform = secret_ballots
+       political_reform = unitary
+       political_reform = mandatory_service
+       clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+       clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+       clr_country_flag = parliamentary_republic_gov
+       set_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = election_started
 	   add_country_modifier = { 
 	      name = taiping_draft
 	      duration = 1095
@@ -2776,8 +3005,8 @@ country_event = {
 }
 
 country_event = {
-	id = 653122 #Rise of the Bloc Français
-	name = "BRG998.T"
+	id = 6531220 #Rise of the Bloc Français
+	title = "BRG998.T"
 	desc = "BRG998.D"
 	picture = "french_revolution_1848"
 	
@@ -2840,8 +3069,8 @@ country_event = {
 }
 
 country_event = {
-	id = 653123 #Rise of the OAS
-	name = "BRG999.T"
+	id = 6531230 #Rise of the OAS
+	title = "BRG999.T"
 	desc = "BRG999.D"
 	picture = "french_revolution_1848"
 	

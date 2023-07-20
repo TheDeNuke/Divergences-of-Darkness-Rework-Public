@@ -894,26 +894,32 @@ unification_casus_belli = {
 	can_use = {
 		NOT = { is_our_vassal = THIS }
 		THIS = { NOT = { tag = HLR } }
-		THIS = { NOT = { is_culture_group = germanic } }
 		THIS = { 
+		    OR = {
+		       NOT = { is_culture_group = germanic }
+			   has_global_flag = GERMAN_ANARCHY
+		    }
 			culture_has_union_tag = yes
 			nationalism_n_imperialism = 1
-			is_greater_power = yes
 			is_cultural_union = no
 			NOT = { has_country_modifier = neutrality }
 		}
-		OR = {
+	    THIS = {
+		   OR = {
+		      is_culture_group = germanic
+			  is_greater_power = yes
+		   }
+		}		   
+	    OR = {
 			war_with = THIS
 			THIS = { total_amount_of_divisions = 1 }
 		}
 		OR = {
-			NOT = { is_culture_group = THIS }
+			NOT = { is_culture_group = THIS }				
 			AND = {
-				war_with = THIS
+				#war_with = THIS
 				is_culture_group = THIS
 				part_of_sphere = no
-				THIS = { NOT = { tag = HLR } }
-				THIS = { NOT = { is_culture_group = germanic } }
 			}
 		}	
 		number_of_states = 2
@@ -926,10 +932,11 @@ unification_casus_belli = {
 			}
 			NOT = { any_owned_province = { is_capital = yes } }
 		}
-		OR = {
-			war_with = THIS
-			THIS = { NOT = { has_country_modifier = punitive_effects } }
-		}
+		#OR = {
+		#	war_with = THIS
+		#	THIS = { NOT = { has_country_modifier = punitive_effects } }
+		#}
+		THIS = { NOT = { has_country_modifier = punitive_effects } }
 	}
 	allowed_states = {
 		any_owned_province = {
@@ -1027,11 +1034,21 @@ unification_annex_casus_belli = {
 	
 	can_use = {
 		NOT = { is_our_vassal = THIS }
-		THIS = {
+		THIS = { NOT = { tag = HLR } }
+		THIS = { 
+		    OR = {
+		       NOT = { is_culture_group = germanic }
+			   has_global_flag = GERMAN_ANARCHY
+		    }
 			culture_has_union_tag = yes
 			nationalism_n_imperialism = 1
-			is_greater_power = yes
 			NOT = { has_country_modifier = neutrality }
+		}
+	    THIS = {
+		   OR = {
+		      is_culture_group = germanic
+			  is_greater_power = yes
+		   }
 		}
 		OR = {
 			war_with = THIS
@@ -1040,11 +1057,9 @@ unification_annex_casus_belli = {
 		OR = {
 			NOT = { is_culture_group = THIS }
 			AND = {
-				war_with = THIS
+				#war_with = THIS
 				is_culture_group = THIS
 				part_of_sphere = no
-				THIS = { NOT = { tag = HLR } }
-				THIS = { NOT = { is_culture_group = germanic } }
 			}
 		}
 		NOT = { number_of_states = 2 }
@@ -1054,10 +1069,11 @@ unification_annex_casus_belli = {
 				is_cultural_union = yes
 			}
 		}
-		OR = {
-			war_with = THIS
-			THIS = { NOT = { has_country_modifier = punitive_effects } }
-		}
+		#OR = {
+		#	war_with = THIS
+		#	THIS = { NOT = { has_country_modifier = punitive_effects } }
+		#}
+		THIS = { NOT = { has_country_modifier = punitive_effects } }
 	}
 	
 	po_annex = yes
@@ -3084,6 +3100,7 @@ acquire_state = {
 				NOT = {
 					has_country_modifier = no_more_war
 					has_country_modifier = war_justification_blocked
+					has_country_modifier = HOLY_ROMAN_EMPEROR
 				}
 			}
         }
@@ -8572,6 +8589,7 @@ take_capital = {
                 has_country_modifier = no_more_war
 				has_country_modifier = war_justification_blocked
                 has_country_modifier = neutrality
+				has_country_modifier = HOLY_ROMAN_EMPEROR
             }
         }
         OR = {

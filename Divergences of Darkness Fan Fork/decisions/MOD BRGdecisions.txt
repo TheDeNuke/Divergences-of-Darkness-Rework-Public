@@ -330,6 +330,10 @@ political_decisions = {
 				factor = 0
 	            is_disarmed = yes
 			}
+	        modifier = {
+	           factor = 0
+			   has_unclaimed_cores = yes
+		    }			   	   
 	    }
 	}
 	
@@ -1466,7 +1470,6 @@ political_decisions = {
 		}
 		
 		effect = { 
-		badboy = 1
 		set_country_flag = the_director_demands
 		war = {
 			target = NET
@@ -2042,7 +2045,46 @@ political_decisions = {
 		}
 		
 		ai_will_do = { factor = 1 }
-	}		
+	}	
+
+	reconquer_lorraine  = {
+		picture = embrace_the_boer
+		potential = {
+		    ai = yes
+			OR = {
+			   AND = {
+			      tag = BRG
+				  NOT = { exists = PBG }
+			   }
+			   AND = {
+			      tag = PBG
+				  NOT = { exists = BRG }
+			   }
+			}
+			NOT = { exists = RHI }
+			has_country_flag = reconquer_lorraine
+		}
+		
+		allow = {
+		    war = no
+	        NOT = { war_exhaustion = 10 }
+		}
+		
+		effect = {
+		   clr_country_flag = reconquer_rhineland
+		   war = {
+			   target = LRR
+			   attacker_goal = {
+				   casus_belli = conquest_any
+			   }
+			   defender_goal = {
+				   casus_belli = cut_down_to_size
+			   }
+		    }
+		}
+		
+		ai_will_do = { factor = 1 }
+	}	
 	
 	# Burgundian Decisions in relation to Germany
 	
@@ -2444,7 +2486,7 @@ political_decisions = {
         picture = oriflamme
 		
 		potential = { 
-		    tag = BRG			
+		    tag = BRG				
             OR = {			
 			   has_country_flag = form_frankish_empire	
 			   AND = {
@@ -2468,7 +2510,21 @@ political_decisions = {
 		
 		allow = { 
 		    is_greater_power = yes
-			mass_politics = 1
+			OR = {
+			   mass_politics = 1
+			   AND = {
+			      ai = yes
+				  year = 1904
+			   }
+			}
+			# Must own critical cores such as Amsterdam, Anvers and Nancy for this state to make sense.
+			owns = 390
+			owns = 375
+			owns = 411
+			OR = {
+			  owns = 575
+			  is_our_vassal = RHI
+			}				    
 			OR = {
 			  CFR = { vassal_of = THIS }
 			  BOG = { vassal_of = THIS }
@@ -2482,7 +2538,7 @@ political_decisions = {
                  NOT = { exists = DUA }
               }
               NOT = { government = presidential_dictatorship }
-            }			  
+            }		                     			
 			NOT = { has_country_flag = NEUCHATEL }
 		}
 		
@@ -2534,6 +2590,8 @@ political_decisions = {
    
    # LMAO DIE ANGLOIS
    
+   # AI will not do this if GCF is allied to DUA to prevent early 2GGW or 3GGW
+   
    executing_the_anglois = { 
         picture = kill_dua
 		
@@ -2571,6 +2629,16 @@ political_decisions = {
 		
 		ai_will_do = {
 			factor = 1
+	        modifier = {
+	            factor = 0
+	            DUA = {
+				  OR = {
+				     alliance_with = GCF
+					 alliance_with = GER
+					 alliance_with = SGF
+				  }
+				}
+			}
 		}
    } 
    
@@ -3565,7 +3633,21 @@ political_decisions = {
 		
 		allow = { 
 		    is_greater_power = yes
-			mass_politics = 1
+			OR = {
+			   mass_politics = 1
+			   AND = {
+			      ai = yes
+				  year = 1904
+			   }
+			}
+			# Must own critical cores such as Amsterdam, Anvers and Nancy for this state to make sense.
+			owns = 390
+			owns = 375
+			owns = 411
+			OR = {
+			  owns = 575
+			  is_our_vassal = RHI
+			}
 			CFR = { vassal_of = THIS }
 			SWA = { vassal_of = THIS }	
             NOT = { exists = DUA }		  
@@ -3645,7 +3727,21 @@ political_decisions = {
 		
 		allow = { 
 		    is_greater_power = yes
-			mass_politics = 1
+			OR = {
+			   mass_politics = 1
+			   AND = {
+			      ai = yes
+				  year = 1904
+			   }
+			}
+			# Must own critical cores such as Amsterdam, Anvers and Nancy for this state to make sense.
+			owns = 390
+			owns = 375
+			owns = 411
+			OR = {
+			  owns = 575
+			  is_our_vassal = RHI
+			}
 			CFR = { OR = { vassal_of = THIS in_sphere = THIS } }
 			SWA = { OR = { vassal_of = THIS in_sphere = THIS } }
             NOT = { exists = DUA }		  
@@ -3724,7 +3820,12 @@ political_decisions = {
 		
 		potential = { 
 		    tag = FRK
-            NOT = { owns = 425 }
+            NOT = {
+			   AND = {
+			      owns = 425
+				  owns = 443
+			   }
+			}
 			NOT = { BOG = { owns = 425 } }
 			NOT = { 
 			   OR = { 
@@ -3794,7 +3895,12 @@ political_decisions = {
 		potential = { 
 		    tag = FRK
 			has_country_flag = idealist_FRK_active
-            NOT = { owns = 425 }
+            NOT = {
+			   AND = {
+			      owns = 425
+				  owns = 443
+			   }
+			}
 			NOT = { BOG = { owns = 425 } }
 			OR = {
 			  exists = ANF
@@ -3893,6 +3999,7 @@ political_decisions = {
 		    ai = yes
 		    exists = yes
 		    in_sphere = FRK
+			FRK = { has_country_flag = idealist_FRK_active }
             OR = {
 		      tag = OCC
 		      tag = SWA

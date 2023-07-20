@@ -4546,9 +4546,9 @@ country_event = {
         625 = { change_province_name = "Praha" }		
 		set_global_flag = BOH_is_czech
 		primary_culture = old_czech
+		add_accepted_culture = czech
 		nationalvalue = nv_fraternity
-		remove_country_modifier = calm_before_storm
-		remove_accepted_culture = czech
+		remove_country_modifier = calm_before_storm		
 		remove_country_modifier = regency_government
 		remove_country_modifier = BOH_time_of_troubles
         remove_country_modifier = BOH_subpar_new_army
@@ -4556,10 +4556,10 @@ country_event = {
         remove_country_modifier = BOH_powerful_new_army
 		remove_country_modifier = BOH_diplomatic_collapse
 		remove_country_modifier = war_justification_blocked
-	    add_country_modifier = { 
-		   name = BOH_new_czech_era
-		   duration = 7300
-	    }
+	    #add_country_modifier = { 
+		#   name = BOH_new_czech_era
+		#   duration = 7300
+	    #}
 		clr_country_flag = BOH_will_collapse
 	    government = parliamentary_republic
 	    ruling_party_ideology = anarcho_liberal
@@ -4867,13 +4867,17 @@ country_event = {
 		ai_chance = {
 			factor = 25
 			   modifier = {
+			      factor = 0
+				  in_sphere = SGF
+			   }
+			   modifier = {
 			      factor = 2
 				  capital = 534
 			   }	
 			   modifier = {
 			      factor = 1.5
 				  in_sphere = BOH
-			   }
+			   }	
 			   modifier = {
 			      factor = 1.5
 				  SCA = { NOT = { government = absolute_monarchy government = prussian_constitutionalism government = hms_government } }
@@ -4933,6 +4937,10 @@ country_event = {
 		ai_chance = {
 			factor = 25
 			   modifier = {
+			      factor = 0
+				  in_sphere = SGF
+			   }
+			   modifier = {
 			      factor = 2
 				  capital = 532
 			   }
@@ -4951,7 +4959,8 @@ country_event = {
 			   modifier = {
 			      factor = 0.5
 				  BOH = { AND = { government = presidential_dictatorship has_country_flag = tolerant_protestants } }
-			   }			   
+			   }	
+			   
 		}
 	}
 }
@@ -6902,7 +6911,6 @@ country_event = {
 	option = { 
 	    name = "CAESCA43.A"
 		clr_global_flag = NGF_check_aftermath
-		set_country_flag = NGF_purged
 		prestige = 10
 		any_country = {
 		   limit = {
@@ -6915,10 +6923,10 @@ country_event = {
 		   end_war = NGF
 		   annex_to = THIS
 	    }
-	    government = presidential_dictatorship
-	    ruling_party_ideology = paternal
+	    government = democracy
+	    ruling_party_ideology = conservative
 	    political_reform = unitary
-	    political_reform = none_voting
+	    political_reform = landed_voting
 	    political_reform = party_appointed
         political_reform = no_meeting
 	    political_reform = state_press
@@ -6943,8 +6951,8 @@ country_event = {
 	    clr_country_flag = semi_constitutional_monarchy_gov
 	    clr_country_flag = constitutional_monarchy_gov
 	    clr_country_flag = parliamentary_republic_gov
-	    clr_country_flag = democracy_gov
-	    set_country_flag = presidential_dictatorship_gov
+	    set_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
     	clr_country_flag = fascist_gov
 	    clr_country_flag = anarcho_liberal_gov
 	    clr_country_flag = socialist_republic_gov			
@@ -6957,7 +6965,7 @@ country_event = {
 		  name = small_country_draft
 		  duration = 1440
 	    }		
-        SCA = { release_vassal = THIS country_event = { id = 152085 days = 1 } }	
+        SCA = { set_country_flag = NGF_purged release_vassal = THIS country_event = { id = 152085 days = 1 } }	
 	}
 }
 
@@ -7300,12 +7308,15 @@ country_event = {
 		remove_country_modifier = BOH_shattered_reicharmee
 		remove_country_modifier = war_justification_blocked
         set_country_flag = die_katastrophe
-		random_owned = { limit = { owner = { NOT = { government = absolute_monarchy government = presidential_dictatorship has_country_flag = CAE_bohemian_compromise } } }
+		random_owned = { limit = { owner = { NOT = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship  government = socialist_republic government = absolute_monarchy government = presidential_dictatorship has_country_flag = CAE_bohemian_compromise } } }
 		owner = { country_event = 152089 } }
-		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise } }
+		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise NOT = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship government = socialist_republic } } }
 		owner = { country_event = 152090 } }	
 		random_owned = { limit = { owner = { OR = { government = absolute_monarchy government = presidential_dictatorship } } }
-		owner = { country_event = 152091 } }	
+		owner = { country_event = 152091 } }
+		### GG WELL CZECHED ##
+		random_owned = { limit = { owner = { OR = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship  government = socialist_republic } } }
+		owner = { country_event = 152094 } }		
 	}
 }
 
@@ -7360,19 +7371,22 @@ country_event = {
 		remove_country_modifier = calm_before_storm
 		remove_country_modifier = BOH_eternal_regency
         set_country_flag = die_katastrophe
-		random_owned = { limit = { owner = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism } NOT = { has_country_flag = CAE_bohemian_compromise } } }
+		random_owned = { limit = { owner = { OR = { government = democracy government = hms_government government = prussian_constitutionalism } NOT = { has_country_flag = CAE_bohemian_compromise } } }
 		owner = { country_event = 152089 } }
-		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise } }
+		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise NOT = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship government = socialist_republic } } }
 		owner = { country_event = 152090 } }	
-		random_owned = { limit = { owner = { NOT = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism has_country_flag = CAE_bohemian_compromise } } } }
+		random_owned = { limit = { owner = { NOT = { OR = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship  government = socialist_republic government = democracy government = hms_government government = prussian_constitutionalism has_country_flag = CAE_bohemian_compromise } } } }
 		owner = { country_event = 152091 } }	
+		### GG WELL CZECHED ##
+		random_owned = { limit = { owner = { OR = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship government = socialist_republic } } }
+		owner = { country_event = 152094 } }
 	}
 }
 
 ### Die Katastrophe - German Confederation or Elbian Confederation was thrown out of Germany through unusual means.
 
 country_event = {
-	id = 152089
+	id = 1520890
 	title = "CAESCA471.T"
 	desc = "CAESCA471.D"
 	#picture = "german_rhine"
@@ -7424,12 +7438,15 @@ country_event = {
 		remove_country_modifier = calm_before_storm
 		remove_country_modifier = BOH_eternal_regency
         set_country_flag = die_katastrophe
-		random_owned = { limit = { owner = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism } NOT = { has_country_flag = CAE_bohemian_compromise } } }
+		random_owned = { limit = { owner = { OR = { government = democracy government = hms_government government = prussian_constitutionalism } NOT = { has_country_flag = CAE_bohemian_compromise } } }
 		owner = { country_event = 152089 } }
-		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise } }
+		random_owned = { limit = { owner = { has_country_flag = CAE_bohemian_compromise NOT = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship government = socialist_republic } } }
 		owner = { country_event = 152090 } }	
-		random_owned = { limit = { owner = { NOT = { OR = { government = democracy government = hms_government government = parliamentary_republic government = prussian_constitutionalism has_country_flag = CAE_bohemian_compromise } } } }
+		random_owned = { limit = { owner = { NOT = { OR = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship  government = socialist_republic government = democracy government = hms_government government = prussian_constitutionalism has_country_flag = CAE_bohemian_compromise } } } }
 		owner = { country_event = 152091 } }	
+		### GG WELL CZECHED ##
+		random_owned = { limit = { owner = { OR = { government = parliamentary_republic government = proletarian_dictatorship government = fascist_dictatorship government = socialist_republic } } }
+		owner = { country_event = 152094 } }
 	}
 }
 
@@ -7774,6 +7791,7 @@ country_event = {
 		   government = fascist_dictatorship
 		   government = socialist_republic
 		   government = proletarian_dictatorship
+		   government = parliamentary_republic
 		}
 		NOT = { has_global_flag = BOH_is_czech }
     }
@@ -7790,8 +7808,8 @@ country_event = {
 		625 = { change_province_name = "Praha" }
 		set_global_flag = BOH_is_czech
 		primary_culture = old_czech
+		add_accepted_culture = czech
 		nationalvalue = nv_fraternity
-		remove_accepted_culture = czech
 		remove_country_modifier = regency_government
 		remove_country_modifier = BOH_time_of_troubles
         remove_country_modifier = BOH_subpar_new_army
@@ -7799,10 +7817,10 @@ country_event = {
         remove_country_modifier = BOH_powerful_new_army
 		remove_country_modifier = BOH_diplomatic_collapse
 		remove_country_modifier = war_justification_blocked
-	    add_country_modifier = { 
-		   name = BOH_new_czech_era
-		   duration = 7300
-	    }
+	    #add_country_modifier = { 
+		#   name = BOH_new_czech_era
+		#   duration = 7300
+	    #}
 		release_vassal = MSZ
 		any_owned = { 
 	        limit = { 
@@ -8211,8 +8229,8 @@ country_event = {
 
 country_event = {
 	id = 152099
-	title = "CESCA58.T"
-	desc = "CAESCAE8.D"
+	title = "CAESCA58.T"
+	desc = "CAESCA58.D"
 	picture = "german_rhine"
 	
 	fire_only_once = yes
@@ -8222,6 +8240,8 @@ country_event = {
     trigger = {
         tag = BOH
 		has_country_flag = elbian_divorce
+	    war = no
+		NOT = { has_country_flag = custom_treaty_loser }
         NOT = {		
            OR = {
                government = democracy
@@ -8237,8 +8257,7 @@ country_event = {
     }
 	
 	option = { 
-	    name = "CAESCA58.A"	
-        prestige_factor = -0.1		
+	    name = "CAESCA58.A"		
         clr_country_flag = elbian_divorce	
 		release_vassal = FRE
 		release_vassal = MSZ
@@ -8247,8 +8266,43 @@ country_event = {
 		625 = { change_province_name = "Praha" }
 		set_global_flag = BOH_is_czech
 		primary_culture = old_czech
+		add_accepted_culture = czech
 		nationalvalue = nv_fraternity
-		remove_accepted_culture = czech
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    country_event = 800053
 		remove_country_modifier = regency_government
 		remove_country_modifier = BOH_time_of_troubles
         remove_country_modifier = BOH_subpar_new_army
@@ -8256,14 +8310,1670 @@ country_event = {
         remove_country_modifier = BOH_powerful_new_army
 		remove_country_modifier = BOH_diplomatic_collapse
 		remove_country_modifier = war_justification_blocked
-	    add_country_modifier = { 
-		   name = BOH_new_czech_era
-		   duration = 7300
-	    }		
+	    #add_country_modifier = { 
+		#   name = BOH_new_czech_era
+		#   duration = 7300
+	    #}		
 		GER = { all_core = { remove_core = BOH } }
 		any_owned = {
 		   limit = { is_core = NGF }		   
            secede_province = NGF
 		}
 	}
+}
+
+### North Germany Government Events ####
+
+### If NGF controls its critical cores then its government is determined depending on the state of the south at the time ########
+
+### The Junker Restoration - Junker aligned Paternals completely take over the North due to SGF being a cesspool of liberals ###
+### I'll let you work out who the King is. The longer the name - The better ###
+
+country_event = {
+	id = 152100
+	title = "CAESCA59.T"
+	desc = "CAESCA59.D"
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+	major = yes
+	 
+    trigger = {
+        tag = NGF
+		exists = yes
+		is_ideology_enabled = paternal
+		owns = 549
+		owns = 534
+		owns = 532
+		war = no
+		SGF = {
+		   OR = {
+		      government = democracy
+			  government = parliamentary_republic
+		   }
+		}
+		NOT = { vassal_of = SCA }
+		NOT = { has_country_flag = NGF_government_selected }		
+    }
+	
+    mean_time_to_happen = {
+       days = 200
+    }
+	
+	option = { 
+	    name = "CAESCA59.A"		
+		set_country_flag = NGF_government_selected
+	    government = absolute_monarchy
+	    ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = primary_culture_only
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov	
+	}
+}
+
+### The North German Revolution - Revolution due to a saturation of Liberals as a result of SGF being a Auth Shithole ###
+
+country_event = {
+	id = 152101
+	title = "CAESCA60.T"
+	desc = "CAESCA60.D"
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+	major = yes
+	 
+    trigger = {
+        tag = NGF
+		exists = yes
+		is_ideology_enabled = paternal
+		owns = 549
+		owns = 534
+		owns = 532
+		war = no
+		SGF = {
+		   NOT = {
+		      OR = {
+		         government = democracy
+				 government = hms_government
+				 government = parliamentary_republic
+				 government = socialist_republic
+		      }
+		   }
+		}
+		NOT = { vassal_of = SCA }
+		NOT = { has_country_flag = NGF_government_selected }		
+    }
+	
+    mean_time_to_happen = {
+       days = 200
+    }
+	
+	option = { 
+	    name = "CAESCA60.A"		
+		set_country_flag = NGF_government_selected
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	}
+}
+
+### The North German Political Choice - SGF is actually rather moderate so we can choose to be moderate (or not) as well ###
+
+country_event = {
+	id = 152102
+	title = "CAESCA61.T"
+	desc = "CAESCA61.D"
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+	major = yes
+	 
+    trigger = {
+        tag = NGF
+		exists = yes
+		is_ideology_enabled = paternal
+		owns = 549
+		owns = 534
+		owns = 532
+		war = no
+		SGF = {
+		   government = hms_government
+		}
+		NOT = { vassal_of = SCA }
+		NOT = { has_country_flag = NGF_government_selected }		
+    }
+	
+    mean_time_to_happen = {
+       days = 200
+    }
+	
+	option = { 
+	    name = "CAESCA61.A"		
+		set_country_flag = NGF_government_selected
+	    government = absolute_monarchy
+	    ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = primary_culture_only
+	    set_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+		ai_chance = {
+			factor = 10
+		}
+	}
+	
+	option = { 
+	    name = "CAESCA61.B"	
+		set_country_flag = NGF_government_selected
+	    government = hms_government
+	    ruling_party_ideology = conservative
+        political_reform = state_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = first_past_the_post
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = four_year_draft
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win		
+		ai_chance = {
+			factor = 80
+		}
+	}
+	
+	option = { 
+	    name = "CAESCA61.C"		
+		set_country_flag = NGF_government_selected
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+		ai_chance = {
+			factor = 10
+		}
+	}
+}
+
+
+#### Czech Stuff - The content below is pretty Czech ####
+
+## The Elbian Collapse - You have a Czech Government and have not triggered Die Katastrophe
+
+# Instant Facepalm
+
+country_event = {
+	id = 152103
+	title = "CZE1.T"
+	desc = "CZE1.D"
+	picture = "german_rhine"
+	
+	fire_only_once = yes
+	
+	major = yes
+	 
+    trigger = {
+        tag = BOH
+		exists = yes
+		has_country_flag = CAE_enabled
+		war = no
+		OR = {
+		   government = parliamentary_republic
+		   government = proletarian_dictatorship
+		   government = socialist_republic
+		   government = fascist_dictatorship
+		}
+		NOT = {  
+		   has_global_flag = BOH_is_czech
+		   has_country_flag = die_katastrophe
+		   has_country_flag = BOH_treaty_failsafe
+		}		
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = { 
+	    name = "CZE1.A"		
+		set_country_flag = die_katastrophe
+        clr_country_flag = elbian_divorce	
+		release_vassal = FRE
+		release_vassal = MSZ
+		clr_country_flag = CAE_bohemian_compromise
+		prestige_factor = -0.50   
+		625 = { change_province_name = "Praha" }
+		set_global_flag = BOH_is_czech
+		primary_culture = old_czech
+		add_accepted_culture = czech
+		remove_country_modifier = regency_government
+		remove_country_modifier = BOH_time_of_troubles
+        remove_country_modifier = BOH_subpar_new_army
+		remove_country_modifier = BOH_grand_new_army
+        remove_country_modifier = BOH_powerful_new_army
+		remove_country_modifier = BOH_diplomatic_collapse
+		remove_country_modifier = war_justification_blocked
+	    #add_country_modifier = { 
+		#   name = BOH_new_czech_era
+		#   duration = 7300
+	    #}		
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = MSZ
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		relation = { who = BRN value = -400 } 
+		diplomatic_influence = { who = BRN value = -400 }  
+		relation = { who = ELX value = -400 } 
+		diplomatic_influence = { who = ELX value = -400 }  
+		relation = { who = MSZ value = -400 } 
+		diplomatic_influence = { who = MSZ value = -400 } 	
+		SCA = { 
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  
+		   relation = { who = MSZ value = 400 } 
+		   diplomatic_influence = { who = MSZ value = 400 } 		   
+		}
+		any_pop = { limit = { strata = rich culture = czech } reduce_pop = 0.6 }
+		any_pop = { limit = { strata = middle culture = czech } reduce_pop = 0.8 }
+		any_pop = { limit = { strata = poor culture = czech } reduce_pop = 0.99 }
+	}
+}
+
+### Czech Bohemia must always be a Parlimentary Republic and never a Presidental Republic - Switch to Parlimentary Republic ###
+
+country_event = {
+	id = 152104
+	title = "CZE2.T"
+	desc = "CZE2.D"
+	#picture = "german_rhine"
+	
+	fire_only_once = yes
+	 
+    trigger = {
+        tag = BOH
+		exists = yes
+		has_global_flag = BOH_is_czech	
+		government = democracy
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = { 
+	    name = "CZE2.A"		
+		government = parliamentary_republic
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = democracy_gov
+	}
+}
+
+#####################################################################################
+####################### The Czech Revolution ########################################
+#####################################################################################
+
+#### Failsafe Terminator Event because Bohemia went Czech Prior to the revolution but after support started ####
+
+country_event = {
+	id = 152105
+	title = "CZE3.T"
+	desc = "CZE3.D"
+	picture = "czech_indie"
+	
+	fire_only_once = yes
+	 
+    trigger = {
+        tag = SGF
+		exists = yes
+		has_global_flag = BOH_is_czech	
+		has_country_flag = czech_supporting
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = { 
+	    name = "CZE3.A"		
+		prestige = 3
+		clr_country_flag = czech_supporting
+		clr_country_flag = czech_final_stage
+		set_country_flag = ignited_czech		
+	}
+}
+
+### The AI is less likely to suppress the earlier levels but more likely to suppress the later levels.
+
+### Weights are if SGF is a GP or has Port Access and if BOH is a GP or not.
+
+#### Tier One - Rumors #####
+
+country_event = {
+	id = 152106
+	title = "CZE4.T"
+	desc = "CZE4.D"
+	picture = "deliberation"
+	
+    is_triggered_only = yes
+	
+	### This is all fake news
+	
+	option = { 
+	    name = "CZE4.A"	
+        set_country_flag = czechs_tier_one		
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   militancy = 1
+		   consciousness = 1
+		}		
+	    ai_chance = {
+	       factor = 75
+			   modifier = {
+			      factor = 1.25
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 1.25
+				  SGF = { owns = 736 }
+			   }	
+			   modifier = {
+			      factor = 0.75
+				  is_greater_power = yes
+			   }			   
+
+	    }
+	}
+	
+	### Investigate these rumors
+	
+	option = { 
+	    name = "CZE4.B"	
+        set_country_flag = czechs_tier_zero	
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   consciousness = 1
+		}		
+	    ai_chance = {
+	       factor = 25
+			   modifier = {
+			      factor = 0.75
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 0.75
+				  SGF = { owns = 736 }
+			   }
+	    }
+	}
+}
+
+#### Tier Two - Visible Movements or Legions #####
+
+country_event = {
+	id = 152107
+	title = "CZE5.T"
+	desc = "CZE5.D"
+	picture = "Bohemian_Nationalism"
+	
+    is_triggered_only = yes
+	
+	### If we do nothing then they will calm down
+	
+	option = { 
+	    name = "CZE5.A"	
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = czechs_tier_zero }
+		   }
+		   owner = { clr_country_flag = czechs_tier_zero set_country_flag = czechs_tier_one }
+       	}
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = czechs_tier_one }
+		   }
+		   owner = { clr_country_flag = czechs_tier_one set_country_flag = czechs_tier_two }
+       	}
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   militancy = 3
+		   consciousness = 5
+		}		
+	    ai_chance = {
+	       factor = 50
+			   modifier = {
+			      factor = 1.25
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 1.25
+				  SGF = { owns = 736 }
+			   }
+			   modifier = {
+			      factor = 0.75
+				  is_greater_power = yes
+			   }	
+	    }
+	}
+	
+	### Suppress them.
+	
+	option = { 
+	    name = "CZE5.B"	
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   militancy = 1
+		   consciousness = 3
+		}		
+	    ai_chance = {
+	       factor = 50
+			   modifier = {
+			      factor = 0.75
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 0.75
+				  SGF = { owns = 736 }
+			   }
+	    }
+	}
+}
+
+
+#### Tier Three - Nationalists actively control territory #####
+
+country_event = {
+	id = 152108
+	title = "CZE6.T"
+	desc = "CZE6.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	### IF WE JUST APPEASE THEM THEN EVERYTHING WILL BE OK
+	
+	option = { 
+	    name = "CZE6.A"	
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = czechs_tier_zero }
+		   }
+		   owner = { clr_country_flag = czechs_tier_zero set_country_flag = czechs_tier_one }
+       	}
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = czechs_tier_one }
+		   }
+		   owner = { clr_country_flag = czechs_tier_one set_country_flag = czechs_tier_two }
+       	}
+		random_owned = {
+		   limit = {
+		      owner = { has_country_flag = czechs_tier_two }
+		   }
+		   owner = { clr_country_flag = czechs_tier_two set_country_flag = czechs_tier_three }
+       	}
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   militancy = 5
+		   consciousness = 7	   
+		}		
+	    ai_chance = {
+	       factor = 25
+			   modifier = {
+			      factor = 1.5
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 1.5
+				  SGF = { owns = 736 }
+			   }
+			   modifier = {
+			      factor = 0.5
+				  is_greater_power = yes
+			   }			   
+	    }
+	}
+	
+	### Massacre them for all I care just do ANYTHING to stop them.
+	
+	option = { 
+	    name = "CZE6.B"	
+		any_pop = { 
+		   limit = {
+		      culture = old_czech
+		   }
+		   militancy = 3
+		   consciousness = 5
+		   reduce_pop = 0.99
+		}		
+	    ai_chance = {
+	       factor = 75
+			   modifier = {
+			      factor = 0.75
+				  SGF = { is_greater_power = yes }
+			   }
+			   modifier = {
+			      factor = 0.75
+				  SGF = { owns = 736 }
+			   }
+	    }
+	}
+}
+
+#### Tier Zero - The Czech Legion has siezed control of Upper Silesia along with regional polish allies. However, their efforts are weak and have revealed their benefactor: The Danubians ####
+
+### War is inevitable ####
+
+country_event = {
+	id = 152109
+	title = "CZE7.T"
+	desc = "CZE7.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE7.A"	
+		any_owned = { 
+		   limit = {
+		      is_core = SIL
+			  NOT = { region = PRU_682 }
+		   }
+		   remove_core = BOH
+		   secede_province = SIL
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = no
+		   }
+		   country_event = 152112
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = yes
+		   }
+		   all_core = { add_core = SIL }
+		   annex_to = SIL
+		}
+		SIL = { 
+		   add_accepted_culture = old_czech
+		   add_country_modifier = { name = small_country_draft duration = 3650 } 
+	       ammunition = 500
+	       small_arms = 500
+	       artillery = 500
+	       canned_food = 500
+	       regular_clothes = 600		   		   
+		}
+		SGF = { country_event = { id = 152113 days = 2 } }
+	}
+}
+
+#### Tier One - The Czech Legion has siezed control of Upper Silesia and Moravia along with regional polish allies. In doing so they have revealed their true benfactor: The Danubians ####
+
+### War is inevitable ####
+
+country_event = {
+	id = 152110
+	title = "CZE8.T"
+	desc = "CZE8.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE8.A"	
+		any_owned = { 
+		   limit = {
+		      is_core = SIL
+			  NOT = { region = PRU_682 }
+		   }
+		   remove_core = BOH
+		   secede_province = SIL
+		}
+		any_owned = { 
+		   limit = {
+		      region = AUS_626
+		   }
+		   remove_core = BOH
+		   add_core = SIL
+		   secede_province = SIL
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = no
+		   }
+		   country_event = 152112
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = yes
+		   }
+		   all_core = { add_core = SIL }
+		   annex_to = SIL
+		}
+		SIL = { 
+		   add_accepted_culture = old_czech
+		   add_country_modifier = { name = small_country_draft duration = 3650 } 
+	       ammunition = 500
+	       small_arms = 500
+	       artillery = 500
+	       canned_food = 500
+	       regular_clothes = 600		   		   
+		}
+		SGF = { country_event = { id = 152113 days = 2 } }
+	}
+}
+
+#### Tier Two - The Czech Legion has siezed control of everything south of Prague along with regional polish allies. In doing so they have revealed their true benfactor: The Danubians ####
+
+### War is inevitable ####
+
+country_event = {
+	id = 152111
+	title = "CZE9.T"
+	desc = "CZE9.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE9.A"	
+		any_owned = { 
+		   limit = {
+		      is_core = SIL
+			  NOT = { region = PRU_682 }
+		   }
+		   remove_core = BOH
+		   secede_province = SIL
+		}
+		any_owned = { 
+		   limit = {
+		      region = AUS_626
+		   }
+		   remove_core = BOH
+		   add_core = SIL
+		   secede_province = SIL
+		}
+		any_owned = { 
+		   limit = {
+		      region = AUS_625
+			  NOT = { province_id = 625 }
+		   }
+		   remove_core = BOH
+		   add_core = SIL
+		   secede_province = SIL
+		}
+		any_owned = { 
+		   limit = {
+		      province_id = 630
+		   }
+		   remove_core = BOH
+		   add_core = SIL
+		   secede_province = SIL
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = no
+		   }
+		   country_event = 152112
+		}
+		any_country = { 
+		   limit = { 
+		     tag = TES
+			 exists = yes
+			 ai = yes
+		   }
+		   all_core = { add_core = SIL }
+		   annex_to = SIL
+		}
+		SIL = { 
+		   add_accepted_culture = old_czech
+		   add_country_modifier = { name = small_country_draft duration = 3650 } 
+	       ammunition = 500
+	       small_arms = 500
+	       artillery = 500
+	       canned_food = 500
+	       regular_clothes = 600		   		   
+		}
+		SGF = { country_event = { id = 152113 days = 2 } }
+	}
+}
+
+### Player Only Event - Do you want to get annexed into Silesia?
+
+country_event = {
+	id = 152112
+	title = "CZE10.T"
+	desc = "CZE10.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE10.A"	
+		all_core = { add_core = SIL }
+        change_tag_no_core_switch = SIL
+		annex_to = SIL
+	}
+	
+	option = { 
+	    name = "CZE10.B"	
+		all_core = { add_core = SIL }
+	}
+}
+
+### The Establishment of the Revolution - Puppet SIL and warn of the inevitable war in about 30 days ####
+
+country_event = {
+	id = 152113
+	title = "CZE11.T"
+	desc = "CZE11.D"
+	picture = "czech_indie"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE11.A"	
+		relation = { who = SIL value = 400 }
+		diplomatic_influence = { who = SIL value = 400 } 
+		create_alliance = SIL
+		create_vassal = SIL
+		BOH = { country_event = { id = 152114 days = 31 } }
+	}
+}
+
+### The Czech Revolution - MAJOR EVENT ####
+
+country_event = {
+	id = 152114
+	title = "CZE12.T"
+	desc = "CZE12.D"
+	#picture = "german_rhine"
+	
+    is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+	    name = "CZE12.A"
+		set_global_flag = czech_revolution_in_progress
+        SIL = { political_reform = mandatory_service all_core = { add_core = THIS } }		
+	    war = {
+	       target = SIL
+		      attacker_goal =  { 
+			     casus_belli = conquest_any
+		      }
+		      defender_goal = {
+			     casus_belli = custom_treaty_cb
+		      }	
+	    }
+	}
+}
+
+#### OUTCOMES - Victory, Defeat and Tier Three ####
+
+### The Fall of Prague ####
+
+### Danubians are marching through Prague. What next?
+
+country_event = {
+	id = 152115
+	title = "CZE13.T"
+	desc = "CZE13.D"
+	picture = "czech_indie"
+
+	
+	fire_only_once = yes
+	 
+    trigger = {
+        tag = BOH
+		exists = yes
+		war = no
+		OR = {
+		   exists = SIL
+		   has_country_flag = custom_treaty_loser
+		}
+		has_global_flag = czech_revolution_in_progress		
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = { 
+	    name = "CZE13.A"
+		clr_global_flag = czech_revolution_in_progress
+		clr_country_flag = custom_treaty_loser
+		GER = { all_core = { remove_core = BOH } }
+		any_owned = {
+		   limit = {
+		      NOT = { 
+			     region = PRU_682
+				 region = SIL_684
+			  }
+			}
+			remove_core = SIL
+	    }
+		inherit = SIL
+		set_country_flag = czech_legion_BOH
+		SGF = { set_country_flag = czech_legion_BOH }
+		release_vassal = FRE
+		release_vassal = MSZ
+		clr_country_flag = CAE_bohemian_compromise
+		prestige_factor = -0.50   
+		625 = { change_province_name = "Praha" }
+		set_global_flag = BOH_is_czech
+		primary_culture = old_czech
+		add_accepted_culture = czech
+		nationalvalue = nv_fraternity
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    country_event = 800053
+		remove_country_modifier = regency_government
+		remove_country_modifier = BOH_time_of_troubles
+        remove_country_modifier = BOH_subpar_new_army
+		remove_country_modifier = BOH_grand_new_army
+        remove_country_modifier = BOH_powerful_new_army
+		remove_country_modifier = BOH_diplomatic_collapse
+		remove_country_modifier = war_justification_blocked		
+		relation = { who = SGF value = 400 }
+		diplomatic_influence = { who = SGF value = 400 } 
+		create_alliance = SGF
+	}
+}
+
+#### SGF completely botched it ####
+
+### The Treaty of Prague - Humeliated and lose a fuckton of money
+
+country_event = {
+	id = 152116
+	title = "CZE14.T"
+	desc = "CZE14.D"
+	picture = "BOH_Nuremberg_Burning"
+	
+	fire_only_once = yes
+	 
+    trigger = {
+        tag = SGF
+		exists = yes
+		war = no
+		has_global_flag = czech_revolution_in_progress	
+		NOT = { exists = SIL }
+		BOH = { NOT = { has_country_flag = custom_treaty_loser } }		
+    }
+	
+    mean_time_to_happen = {
+        days = 7
+    }
+	
+	option = { 
+	    name = "CZE14.A"
+		clr_global_flag = czech_revolution_in_progress	
+		treasury = -2000000
+		BOH = {
+		   any_pop = {
+		      militancy = -9
+		      consciousness = -9 
+		   }
+		   treasury = 2000000
+		   prestige = 30 
+		}
+		prestige_factor = -0.25
+		any_pop = {
+		   militancy = 5
+		   consciousness = 5 
+		}
+	}
+}
+
+### The Prague Spring - Tier 3 Support results in a peaceful coup ####
+
+country_event = {
+	id = 152117
+	title = "CZE15.T"
+	desc = "CZE15.D"
+	#picture = "german_rhine"
+	
+    is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+	    name = "CZE15.A"
+		GER = { all_core = { remove_core = BOH } }
+		set_country_flag = czech_legion_BOH
+		SGF = { set_country_flag = czech_legion_BOH }
+		release_vassal = FRE
+		release_vassal = MSZ
+		clr_country_flag = CAE_bohemian_compromise
+		prestige_factor = -0.50   
+		625 = { change_province_name = "Praha" }
+		set_global_flag = BOH_is_czech
+		primary_culture = old_czech
+		add_accepted_culture = czech
+		nationalvalue = nv_fraternity
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    country_event = 800053
+		remove_country_modifier = regency_government
+		remove_country_modifier = BOH_time_of_troubles
+        remove_country_modifier = BOH_subpar_new_army
+		remove_country_modifier = BOH_grand_new_army
+        remove_country_modifier = BOH_powerful_new_army
+		remove_country_modifier = BOH_diplomatic_collapse
+		remove_country_modifier = war_justification_blocked		
+		relation = { who = SGF value = 400 }
+		diplomatic_influence = { who = SGF value = 400 } 
+		create_alliance = SGF
+	}
+}
+
+########### THE BOHEMIAN PROBLEM ##################
+
+### The Bohemian Questions ####
+
+### The decision is called the_bohemian_problem_czechs if you want to localize it.
+
+country_event = {
+	id = 152118
+	title = "CZE16.T"
+	desc = "CZE16.D"
+	picture = "czech_indie"
+	
+	fire_only_once = yes
+	 
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE16.A"
+		set_country_flag = CZE_possible
+		remove_accepted_culture = czech
+	    add_country_modifier = { 
+		   name = BOH_new_czech_era
+		   duration = 7300
+	    }
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = GER
+				 tag = SGF
+			  }
+			  exists = yes
+		      has_country_flag = czech_legion_BOH
+			  NOT = { tag = THIS }
+		   }
+		   country_event = { id = 152119 days = 3 }
+		}
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = GER
+				 tag = SGF
+			  }
+			  exists = yes
+		      NOT = { has_country_flag = czech_legion_BOH }
+			  NOT = { tag = THIS }
+		   }
+		   country_event = { id = 152120 days = 3 }
+		}
+  		ai_chance = {
+			factor = 80	
+			   modifier = {
+			      factor = 0.3
+				  AND = {
+				     has_global_flag = NOBILITY_IS_GONE
+					 PLC = { is_greater_power = yes }
+			      }
+			   }
+			   modifier = {
+			      factor = 0.8
+				  in_sphere = SGF
+			   }			   
+		} 		
+	}
+	
+	option = { 
+	    name = "CZE16.B"
+		relation = { who = SGF value = 400 }
+  		ai_chance = {
+			factor = 20 	
+			   modifier = {
+			      factor = 0
+				  OR = {
+				     ruling_party_ideology = fascist
+					 ruling_party_ideology = communist
+			      }
+			   }				
+		} 		
+	}
+}
+
+### The Czech Betrayal - SGF supplied the revolution - They went ham on the Germans ####
+
+country_event = {
+	id = 152119
+	title = "CZE17.T"
+	desc = "CZE17.D"
+	picture = "BOH_mob"
+	
+	fire_only_once = yes
+	 
+    is_triggered_only = yes
+	
+	### Sieze West Bohemia - BOH_629
+	
+	option = { 
+	    name = "CZE17.A"
+		badboy = 3
+		prestige = 10
+        BOH = { country_event = 152121 }
+  		ai_chance = {
+			factor = 80				
+		} 		
+	}
+	
+	### Tell the Poles in Upper Silesia that if they start a uprising we will support their indipendence on German Unification.
+	
+	option = { 
+	    name = "CZE17.B"
+		badboy = 6
+		prestige = 20
+		BOH = { country_event = 152122 }
+  		ai_chance = {
+			factor = 20 		
+		} 		
+	}
+	
+	### Do nothing. A Alliance is better then making a enemy that's likely to side with the Burgundians.
+	
+	option = { 
+	    name = "CZE17.C"
+		prestige = -10
+		relation = { who = BOH value = 400 }
+		diplomatic_influence = { who = BOH value = 400 } 
+		create_alliance = BOH	
+  		ai_chance = {
+			factor = 20 		
+		} 		
+	}
+}
+
+### The Czech Oppression - SGF did not cause the Czech Revolution - They went ham on the Germans ####
+
+country_event = {
+	id = 152120
+	title = "CZE18.T"
+	desc = "CZE18.D"
+	picture = "BOH_mob"
+	
+	fire_only_once = yes
+	 
+    is_triggered_only = yes
+	
+	### Sieze West Bohemia - BOH_629
+	
+	option = { 
+	    name = "CZE18.A"
+		badboy = 3
+		prestige = 10
+        BOH = { country_event = 152121 }
+  		ai_chance = {
+			factor = 80				
+		} 		
+	}
+	
+	### Tell the Poles in Upper Silesia that if they start a uprising we will support their indipendence on German Unification.
+	
+	option = { 
+	    name = "CZE18.B"
+		badboy = 6
+		prestige = 20
+		BOH = { country_event = 152122 }
+  		ai_chance = {
+			factor = 20 		
+		} 		
+	}
+	
+	### Do nothing. We must maintain positive relationships with the Czechs.
+	
+	option = { 
+	    name = "CZE18.C"
+		prestige = -10
+		relation = { who = BOH value = 400 }
+		diplomatic_influence = { who = BOH value = 400 } 
+		create_alliance = BOH	
+  		ai_chance = {
+			factor = 20 		
+		} 		
+	}
+}
+
+### Danubia has abused our political chaos to take over West Bohemia - Goddammed GERMS - We will get our revenge! ####
+
+country_event = {
+	id = 152121
+	title = "CZE19.T"
+	desc = "CZE19.D"
+	picture = "bohemian_march"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE19.A"
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = PBG
+				 tag = BRG
+				 tag = FRK
+		      }
+			  exists = yes
+		   }		   
+		   relation = { who = THIS value = 100 }
+		   diplomatic_influence = { who = THIS value = 100 } 
+		}
+		relation = { who = SGF value = -300 }
+		diplomatic_influence = { who = SGF value = -300 } 
+		leave_alliance = SGF	
+		any_owned = { 
+		   limit = {
+		      region = BOH_629
+		   }
+		   add_core = SGF
+		   secede_province = SGF
+		}		
+	}
+}
+
+### Danubia has abused our political chaos to take over West Bohemia and has supported Polish and Bohemian Rebels in Sileisa ####
+
+country_event = {
+	id = 152122
+	title = "CZE20.T"
+	desc = "CZE20.D"
+	picture = "bohemian_march"
+	
+    is_triggered_only = yes
+	
+	# We will retrieve the Silesians one day...
+	
+	option = { 
+	    name = "CZE20.A"
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = PBG
+				 tag = BRG
+				 tag = FRK
+		      }
+			  exists = yes
+		   }		   
+		   relation = { who = THIS value = 100 }
+		   diplomatic_influence = { who = THIS value = 100 } 
+		}
+		relation = { who = SGF value = -400 }
+		diplomatic_influence = { who = SGF value = -400 } 
+		leave_alliance = SGF	
+		any_owned = { 
+		   limit = {
+		      region = BOH_629
+		   }
+		   add_core = SGF
+		   secede_province = SGF
+		}
+		any_owned = { 
+		   limit = {
+		      is_core = SIL
+		   }
+		   secede_province = SIL
+		}
+		### They did not intervene
+		SGF = { country_event = 152123 }
+  		ai_chance = {
+			factor = 10		
+		} 			
+	}
+	
+	### This is too far - Prepare for War ####
+	
+	option = { 
+	    name = "CZE20.B"
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = PBG
+				 tag = BRG
+				 tag = FRK
+		      }
+			  exists = yes
+		   }		   
+		   relation = { who = THIS value = 100 }
+		   diplomatic_influence = { who = THIS value = 100 } 
+		}
+		relation = { who = SGF value = -400 }
+		diplomatic_influence = { who = SGF value = -400 } 
+		leave_alliance = SGF	
+		any_owned = { 
+		   limit = {
+		      region = BOH_629
+		   }
+		   remove_core = BOH
+		   add_core = SGF
+		   secede_province = SGF
+		}
+		any_owned = { 
+		   limit = {
+		      is_core = SIL
+		   }
+		   secede_province = SIL
+		}
+		### They are going to declare war on us.
+		SGF = { country_event = 152124 }
+		country_event = { id = 152125 days = 30 }
+  		ai_chance = {
+			factor = 90		
+			   modifier = {
+			      factor = 0
+				  is_disarmed = yes
+			   }
+		} 			
+	}
+}
+
+### The Gambit was Successful - I hope that in future you will ensure that the Polish Sileisans are given their freedom ####
+
+country_event = {
+	id = 152123
+	title = "CZE21.T"
+	desc = "CZE21.D"
+	picture = "bohemian_march"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE21.A"
+		set_country_flag = promised_polish_freedom
+		SIL = { remove_accepted_culture = old_czech }
+		relation = { who = SIL value = 400 }
+		diplomatic_influence = { who = SIL value = 400 } 
+		leave_alliance = SGF	
+		create_vassal = SIL	
+	}
+}
+
+### The Gambit was Successful but its clear that Czechia is going to declare war on us for that ####
+
+country_event = {
+	id = 152124
+	title = "CZE22.T"
+	desc = "CZE22.D"
+	picture = "bohemian_march"
+	
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE22.A"
+		set_country_flag = promised_polish_freedom
+		SIL = { remove_accepted_culture = old_czech }
+		relation = { who = SIL value = 400 }
+		diplomatic_influence = { who = SIL value = 400 } 
+		leave_alliance = SGF	
+		create_vassal = SIL	
+	}
+}
+
+### The Czechia War - LMAO ####
+
+country_event = {
+	id = 152125
+	title = "CZE23.T"
+	desc = "CZE23.D"
+	#picture = "german_rhine"
+	
+	major = yes
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE23.A"
+		BOH_629 = { add_core = BOH }
+	    war = {
+	        target = SIL			
+		    attacker_goal =  { 
+			    casus_belli = conquest_any
+		    }
+		    defender_goal = {
+			    casus_belli = cut_down_to_size
+		    }
+			call_ally = yes
+        }
+	}
+}
+
+#SO! ABOUT THAT POLISH AUTONOMY.
+
+country_event = {
+	id = 152126
+	title = "CZE24.T"
+	desc = "CZE24.D"
+	picture = "sejm"
+	
+	is_triggered_only = yes 
+	
+	#UGH fine i guess we have to keep our promise
+	option = {
+		name = "CZE24.A"
+		release_vassal = SIL
+		682 = { add_core = THIS }
+		3338 = { add_core = THIS }
+		SIL = {
+			any_owned = {
+				limit = { is_core = THIS }
+				secede_province = THIS 
+			}
+		}
+		relation = { who = SIL value = 400 }
+		diplomatic_influence = { who = SIL value = 400 } 
+		create_alliance = SIL
+		SIL = {
+			primary_culture = polish
+			add_accepted_culture = south_german
+		}
+		ai_chance = {
+			factor = 90		
+			modifier = {
+				factor = 0
+				OR = {
+					ruling_party_ideology = fascist
+					ruling_party_ideology = paternal 
+					ruling_party_ideology = reactionary
+				}
+			}
+			modifier = {
+				factor = 2
+				war_policy = pacifism
+			}
+		}
+	} 
+	
+	#Wow, that's funny! Good one, Hans, as if we would EVER give anything to Slavs
+	option = {
+		name = "CZE24.BA"
+		badboy = 7
+		any_owned = {
+			limit = { is_core = SIL }
+			add_province_modifier = {
+				name = nationalist_agitation
+				duration = 1825
+			}
+		}
+		any_pop = {
+			limit = {
+				culture = polish
+			}
+			militancy = 6
+			consciousness = 5
+			ideology = {
+				value = separatist
+				factor = 0.3
+			}
+		}
+		ai_chance = {
+			factor = 10		
+			modifier = {
+				factor = 2
+				OR = {
+					ruling_party_ideology = fascist
+					ruling_party_ideology = paternal 
+					ruling_party_ideology = reactionary
+				}
+			}
+			modifier = {
+				factor = 0
+				war_policy = pacifism
+			}
+		}
+	} 
 }
