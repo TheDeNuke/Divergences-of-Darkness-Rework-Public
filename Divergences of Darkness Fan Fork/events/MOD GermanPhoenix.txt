@@ -622,6 +622,125 @@ country_event = {
 	}
 }
 
+### There is no hope in Germany - CAE exists
+
+country_event = {
+	id = 2800140
+	title = "GEPDEAD1.T"
+	desc = "GEPDEAD1.D"
+	picture = "reichsbanner"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+	    exists = yes
+        tag = CAE
+		NOT = { exists = SGF }
+		has_global_flag = german_phoenix
+		NOT = { has_country_flag = enable_manual_GCF }
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+	
+	option = { 
+	    name = "GEP15.A"
+		set_country_flag = enable_manual_GCF
+		set_country_flag = PHOENIX_BLOCKED
+        prestige = 5
+	    any_pop = { 
+		   ideology = {
+		        value = anarcho_liberal
+			    factor = 0.1
+		   }
+		   ideology = {
+		        value = socialist
+			    factor = 0.1
+		   }
+		   consciousness = 2
+	    }
+	}
+}
+
+### There is no hope in Germany - NGF exists and is not a vassal.
+
+country_event = {
+	id = 2800141
+	title = "GEPDEAD2.T"
+	desc = "GEPDEAD2.D"
+	picture = "reichsbanner"
+	
+	fire_only_once = yes 
+	
+    trigger = {
+	    exists = yes
+        tag = NGF		
+		has_global_flag = german_phoenix
+		NOT = { vassal_of = SCA }
+		NOT = { exists = CAE }
+		NOT = { exists = SGF }
+		NOT = { has_country_flag = NGF_conquer_south }
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+	
+	option = { 
+	    name = "GEPDEAD2.A"
+		set_country_flag = NGF_conquer_south
+		set_country_flag = PHOENIX_BLOCKED
+        prestige = 5
+	    any_pop = { 
+		   ideology = {
+		        value = anarcho_liberal
+			    factor = 0.1
+		   }
+		   ideology = {
+		        value = socialist
+			    factor = 0.1
+		   }
+		   consciousness = 2
+	    }
+	}
+}
+
+### There is no hope in Germany - Germany is fucking dead bro. Nice Phoenix you got there but it is meaningless
+
+### Triggers for Frankfurt Owner
+
+country_event = {
+	id = 2800142
+	title = "GEPDEAD4.T"
+	desc = "GEPDEAD4.D"
+	picture = "reichsbanner"
+	
+	fire_only_once = yes 	
+	major = yes
+	
+    trigger = {
+	    exists = yes
+        owns = 564
+		has_global_flag = german_phoenix
+		NOT = { exists = SGF }
+		NOT = { exists = NGF }
+		NOT = { exists = CAE }
+		NOT = { has_global_flag = GERMAN_ANARCHY }
+    }
+	
+    mean_time_to_happen = {
+        days = 14
+    }
+	
+	option = { 
+	    name = "GEPDEAD4.A"
+		prestige = 10
+		set_global_flag = GERMAN_ANARCHY
+		set_country_flag = PHOENIX_BLOCKED
+	}
+}
+
 ### The Reichsbanner Calls for Congress
 
 country_event = {
@@ -637,6 +756,7 @@ country_event = {
         tag = SGF
 		has_global_flag = german_phoenix
         NOT = { has_country_flag = the_banner_congress }
+		NOT = { has_country_flag = PHOENIX_BLOCKED }
     }
 	
     mean_time_to_happen = {

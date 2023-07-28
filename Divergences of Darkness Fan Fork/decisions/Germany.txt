@@ -677,7 +677,7 @@ political_decisions = {
 		}
 	}
 	
-	# FAKE - Form GCF - This allows you to form the big tag, but is a fake version of the decision
+	# Form GCF - This allows you to form the big tag, but is a fake version of the decision
 	
 	form_GCF_BOH = {
 		picture = german_confederation
@@ -901,6 +901,42 @@ political_decisions = {
 		}
 	}
 	
+	### This gives NGF cores over the whole of the South ###
+	
+	conquer_the_south_NGF = {
+		#picture = german_confederation
+		potential = {		   
+		    tag = NGF
+			has_country_flag = NGF_conquer_south
+			NOT = { has_country_flag = NGF_souf }
+		}
+		
+		allow = {
+		   OR = {
+		      is_secondary_power = yes
+		      is_greater_power = yes
+		   }
+		   all_core = { owned_by = THIS }
+		}
+		
+		effect = {
+		    set_country_flag = NGF_souf
+		    badboy = 5
+		    prestige = 20
+			add_accepted_culture = south_german
+			BAV_595 = { add_core = THIS } 
+            SGF = { all_core = { limit = { NOT = { is_core = WUR } } add_core = THIS } } 		
+		}
+		
+		ai_will_do = {
+			factor = 1
+		      modifier = {
+		        factor = 0
+			    badboy = 0.7
+		      }
+		}
+	}
+	
 	# These are the early trigger points for the German Phoenix
 	
 	light_the_phoenix_SGF = {
@@ -966,6 +1002,7 @@ political_decisions = {
 		picture = frankfurt_parliament
 		potential = {		   
 		    tag = CAE
+			exists = SGF
 			NOT = { has_global_flag = early_phoenix }
 			NOT = { has_global_flag = german_phoenix }
 			owns = 564
