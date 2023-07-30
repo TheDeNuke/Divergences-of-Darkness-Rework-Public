@@ -13505,17 +13505,68 @@ country_event = {
 		## Secede everything else to North Germany
 		## If South Germany exists then Autoannex it into South Germany
 		## If South Germany does not exist then form Germany and give it the Fake Germany flag.
+
+        ## If SGF exists then all provinces go to SGF and they get the fall rot flag.
+          
+        random_country = {
+            limit = {
+                tag = SGF
+                exists = yes
+            }
+	        PRU_549 = { add_core = SGF }
+            SAX_558 = { add_core = SGF }
+            SAX_559 = { add_core = SGF }
+            SAX_1 = { add_core = SGF }
+            PRU_553 = { add_core = SGF }
+            HAM_532 = { add_core = SGF }
+            HOL_369 = { add_core = SGF }
+            SCA_544 = { add_core = SGF }
+            PRU_546	= { add_core = SGF }	
+		    536 = { add_core = SGF }
+		    537 = { add_core = SGF }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = GER }
+					add_core = SGF
+                    secede_province = SGF
+                }
+            }
+	        any_owned = { 
+                limit = { is_core = NGF }
+			    add_core = SGF
+			    remove_core = NGF
+            }
+		    add_country_modifier = { 
+		       name = ready_for_rot
+		       duration = 7300
+	        }
+	        add_country_modifier = {
+		       name = integrating_north_GER
+		       duration = 3650
+	        }
+			set_country_flag = FALL_ROT_POSSIBLE
+        }
+		
+		## If SGF does not exist then release all GER provinces to NGF
+		
+        random_country = {
+            limit = {
+                tag = SGF
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = GER }
+                    secede_province = NGF
+                }
+            }
+        }
 		
 		any_country = {
-		   limit = { tag = NGF exists = no }
+		   limit = { tag = NGF exists = yes }
 		   set_country_flag = recently_released_NGF
 		}
 		
-        any_owned = {
-             limit = { is_core = GER }
-             secede_province = NGF
-        }				 
-
 		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
 		random_owned = {
 			limit = {

@@ -5713,17 +5713,17 @@ country_event = {
 		   set_country_flag = dummy_NGF_annex_into_BOH
 		}
 		# I might want to replace this with just adding the NGF cores here
-	    PRU_549 = { add_core = NGF }
-        SAX_558 = { add_core = NGF }
-        SAX_559 = { add_core = NGF }
-        SAX_1 = { add_core = NGF }
-        PRU_553 = { add_core = NGF }
-        HAM_532 = { add_core = NGF }
-        HOL_369 = { add_core = NGF }
-        SCA_544 = { add_core = NGF }
-        PRU_546	= { add_core = NGF }	
-		536 = { add_core = NGF }
-		537 = { add_core = NGF }	
+	    PRU_549 = { remove_core = SCA add_core = NGF }
+        SAX_558 = { remove_core = SCA add_core = NGF }
+        SAX_559 = { remove_core = SCA add_core = NGF }
+        SAX_1 = { remove_core = SCA add_core = NGF }
+        PRU_553 = { remove_core = SCA add_core = NGF }
+        HAM_532 = { remove_core = SCA add_core = NGF }
+        HOL_369 = { remove_core = SCA add_core = NGF }
+        SCA_544 = { remove_core = SCA add_core = NGF }
+        PRU_546	= { remove_core = SCA add_core = NGF }	
+		536 = { remove_core = SCA add_core = NGF }
+		537 = { remove_core = SCA add_core = NGF }	
 	    any_owned = { 
             limit = { is_core = NGF }
 			remove_core = SCA
@@ -6026,17 +6026,17 @@ country_event = {
         clr_global_flag = BOH_SAX
 		clr_global_flag = SCA_SAX
 		set_global_flag = NEU_SAX
-	    PRU_549 = { add_core = NGF }
-        SAX_558 = { add_core = NGF }
-        SAX_559 = { add_core = NGF }
-        SAX_1 = { add_core = NGF }
-        PRU_553 = { add_core = NGF }
-        HAM_532 = { add_core = NGF }
-        HOL_369 = { add_core = NGF }
-        SCA_544 = { add_core = NGF }
-        PRU_546	= { add_core = NGF }	
-		536 = { add_core = NGF }
-		537 = { add_core = NGF }	
+	    PRU_549 = { remove_core = BOH add_core = NGF }
+        SAX_558 = { remove_core = BOH add_core = NGF }
+        SAX_559 = { remove_core = BOH add_core = NGF }
+        SAX_1 = { remove_core = BOH add_core = NGF }
+        PRU_553 = { remove_core = BOH add_core = NGF }
+        HAM_532 = { remove_core = BOH add_core = NGF }
+        HOL_369 = { remove_core = BOH add_core = NGF }
+        SCA_544 = { remove_core = BOH add_core = NGF }
+        PRU_546	= { remove_core = BOH add_core = NGF }	
+		536 = { remove_core = BOH add_core = NGF }
+		537 = { remove_core = BOH add_core = NGF }	
 	    any_owned = { 
             limit = { is_core = NGF }
 			remove_core = BOH
@@ -6180,6 +6180,17 @@ country_event = {
 				factor = 8
 			}
 		}
+	    PRU_549 = { remove_core = SCA }
+        SAX_558 = { remove_core = SCA }
+        SAX_559 = { remove_core = SCA }
+        SAX_1 = { remove_core = SCA }
+        PRU_553 = { remove_core = SCA }
+        HAM_532 = { remove_core = SCA }
+        HOL_369 = { remove_core = SCA }
+        SCA_544 = { remove_core = SCA }
+        PRU_546	= { remove_core = SCA }	
+		536 = { remove_core = SCA }
+		537 = { remove_core = SCA }	
 	    any_owned = { 
             limit = { is_core = NGF }
 			remove_core = SCA
@@ -6266,8 +6277,11 @@ country_event = {
         tag = NGF
 		exists = yes
 		vassal_of = SCA
-		NOT = { SCA = { has_country_flag = custom_treaty_loser } }
-		has_global_flag = NGF_check_aftermath	
+		has_global_flag = NGF_check_aftermath
+		SCA = {
+  		    NOT = { has_country_flag = custom_treaty_loser }
+		    NOT = { war_with = BOH }	
+	    }		
     }
 	
     mean_time_to_happen = {
@@ -6291,9 +6305,12 @@ country_event = {
     trigger = {
         tag = NGF
 		exists = yes
-		vassal_of = SCA
-		SCA = { has_country_flag = custom_treaty_loser }
+		vassal_of = SCA		
 		has_global_flag = NGF_check_aftermath	
+		SCA = {
+  		    has_country_flag = custom_treaty_loser 
+		    NOT = { war_with = BOH }	
+	    }
     }
 	
     mean_time_to_happen = {
@@ -6323,7 +6340,10 @@ country_event = {
 		vassal_of = BOH	
 		has_global_flag = NGF_check_aftermath
 		has_global_flag = BOH_SAX
-		NOT = { BOH = { has_country_flag = custom_treaty_loser } }
+		BOH = { 
+		   NOT = { has_country_flag = custom_treaty_loser }
+		   NOT = { war_with = SCA }
+        }
     }
 	
     mean_time_to_happen = {
@@ -6351,8 +6371,10 @@ country_event = {
 		exists = yes
 		vassal_of = BOH
 		has_global_flag = NGF_check_aftermath
-		BOH = { has_country_flag = custom_treaty_loser }
-        	
+		BOH = { 
+		   has_country_flag = custom_treaty_loser 
+		   NOT = { war_with = SCA }
+        }		   
     }
 	
     mean_time_to_happen = {
@@ -6617,6 +6639,7 @@ country_event = {
 			}
 	    }
 		exists = SAX
+		NOT = { BOH = { war_with = THIS } }
 		NOT = { has_country_flag = NGF_unification_chain }
     }
 	
@@ -6675,6 +6698,7 @@ country_event = {
 			}
 	    }
 		NOT = { exists = SAX }
+		NOT = { BOH = { war_with = THIS } }
 		NOT = { has_country_flag = NGF_unification_chain }
     }
 	
@@ -6799,8 +6823,7 @@ country_event = {
     is_triggered_only = yes
 
 	option = { 
-	    name = "CAESCA41.A"
-		SCA = { create_vassal = THIS country_event = { id = 152082 days = 1 } }
+	    name = "CAESCA41.A"	
 		inherit = BRN
 		inherit = ELX
 		any_owned = {
@@ -6812,6 +6835,7 @@ country_event = {
 		tech_school = commerce_tech_school
 		political_reform = confederalism
 		change_tag = NGF	
+		SCA = { create_vassal = NGF country_event = { id = 152082 days = 1 } }
 		ai_chance = {
 			factor = 100
 	    }		
@@ -6872,6 +6896,12 @@ country_event = {
 
 	option = { 
 	    name = "CAESCA42.A"
+		any_owned = {
+		   limit = { 
+		      is_core = NGF
+		   }
+		   secede_province = NGF
+		}
 		set_country_flag = protectorate_decisions_active
 		NGF = {
 	       government = autonomous_dependency

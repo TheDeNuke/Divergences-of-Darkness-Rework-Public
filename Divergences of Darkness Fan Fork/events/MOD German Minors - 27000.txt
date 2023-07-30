@@ -4598,6 +4598,7 @@ country_event = {
 	option = { 
 	    name = "MGER67.A"
 		prestige = 10
+		set_country_flag = CFR_should_puppet
 		casus_belli = { target = CFR type = make_puppet months = 120 }
 		war = {
 			target = CFR
@@ -4768,6 +4769,7 @@ country_event = {
 	option = { 
 	    name = "MGER74.A"
 		prestige = 10
+		set_country_flag = CFR_should_puppet
 		casus_belli = { target = CFR type = make_puppet months = 120 }
 		war = {
 			target = CFR
@@ -4778,6 +4780,82 @@ country_event = {
 				casus_belli = cut_down_to_size
 			}
 		}
+	}
+}
+
+### The Player or the AI protected the Rhine Confederation somehow. Sieze Berg NOW.
+
+country_event = {
+	id = 2700920
+	title = "MGER740.T"
+	desc = "MGER740.D"
+	picture = "german_rhine"
+	
+	trigger = {	
+	    exists = yes
+	    OR = {
+		  tag = BRG
+		  tag = PBG
+	    }
+		war = no
+		has_country_flag = CFR_should_puppet
+		NOT = { CFR = { vassal_of = THIS } }
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	option = { 
+	    name = "MGER740.A"
+		prestige = -10
+		clr_country_flag = CFR_should_puppet
+		CFR = { country_event = 2700921 }
+
+	}
+}
+
+### Berg has refused to cooperate with our government even if Burgundy was defeated in that last war.
+
+country_event = {
+	id = 2700921
+	title = "MGER741.T"
+	desc = "MGER741.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER741.A"
+		any_owned = {
+		    limit = { is_core = BEG }
+			remove_core = CFR
+		    secede_province = BEG
+		}
+		FROM = { country_event = { id = 2700922 days = 1 } }
+	}
+}
+
+### We have lost control of the Rhine - However, we will not let Berg go.
+
+country_event = {
+	id = 2700922
+	title = "MGER742.T"
+	desc = "MGER742.D"
+	picture = "german_rhine"
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	
+	option = { 
+	    name = "MGER742.A"
+		prestige = -10
+		create_vassal = BEG
+		relation = { who = BEG value = 400 }
+		diplomatic_influence = { who = BEG value = 400 }
+		create_alliance = BEG
+		CFR = { relation = { who = THIS value = -400 } }		   		
 	}
 }
 
