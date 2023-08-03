@@ -1913,6 +1913,7 @@ political_decisions = {
 	    picture = romanians_marching
 		potential = { 
 		tag = ROM 
+		NOT = { is_vassal = yes }
 		NOT = { has_country_flag = ROM_cherson }
 			}
 			
@@ -1920,9 +1921,9 @@ political_decisions = {
 		nationalism_n_imperialism = 1 
 		OR = { is_secondary_power = yes is_greater_power = yes }
 		OR = { 
-		all_core = { owned_by = THIS }
-		war_policy = jingoism
-			}
+		   all_core = { owned_by = THIS }
+		   war_policy = jingoism
+		}
 		}	
 		
 		effect = { 
@@ -3543,6 +3544,7 @@ political_decisions = {
 		potential = {
 		    tag = LAT
 			354 = { is_core = LIV }
+			NOT = { has_country_flag = LAT_terminator_SCA }
 		}
 			
 		allow = {	
@@ -3557,6 +3559,7 @@ political_decisions = {
 		}
 			
 		effect = {
+		   set_country_flag = LAT_terminator_SCA
 		   prestige = 20
            any_country = {
                   limit = {
@@ -3601,6 +3604,7 @@ political_decisions = {
 		potential = {
 		    tag = UDU
 			354 = { is_core = SCA }
+			NOT = { has_country_flag = UDU_terminator_SCA }
 		}
 			
 		allow = {	
@@ -3608,6 +3612,7 @@ political_decisions = {
 		}
 			
 		effect = {
+		   set_country_flag = UDU_terminator_SCA
 		   prestige = 20
 		   354 = { remove_core = SCA }
 		   # SCA baltic termination event
@@ -3904,8 +3909,11 @@ political_decisions = {
                         government = hms_government
                     }
                 }
+				AND = {
+				   government = proletarian_dictatorship
+				   UDU = { government = proletarian_dictatorship }
+				}			   
             }                      
-            NOT = { has_global_flag = balters_are_gone }
             NOT = { has_country_flag = integrated_UDU }
         }
 
@@ -3917,6 +3925,7 @@ political_decisions = {
 			    vassal_of = THIS
 				war = no
 			    OR = {
+				   government = proletarian_dictatorship
                    government = fascist_dictatorship
                    government = fascist_monarchy
 				   government = absolute_monarchy
@@ -3935,6 +3944,11 @@ political_decisions = {
             badboy = 6
             add_accepted_culture = prussian
             set_country_flag = integrated_UDU
+	        PRU_691 = { add_core = THIS }
+	        PRU_695 = { add_core = THIS }
+	        697 = { add_core = THIS }
+	        698 = { add_core = THIS }
+	        set_country_flag = integrate_prussia
             UDU = { 
                 all_core = { add_core = THIS }
             }
@@ -3943,6 +3957,10 @@ political_decisions = {
 
         ai_will_do = { 
             factor = 1
+	           modifier = {
+	              factor = 0
+			      badboy = 0.5
+		       } 		   
         }
     }
 }

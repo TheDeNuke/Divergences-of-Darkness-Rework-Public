@@ -8896,6 +8896,7 @@ country_event = {
 	option = {
 		name = "EVTOPTA96010" #We welcome peace
 		set_country_flag = burgundy_has_failed
+		clr_country_flag = CFR_should_puppet
 		clr_country_flag = dismantle_declared
 		clr_country_flag = in_great_war
 		clr_country_flag = calling_all_allies
@@ -9656,6 +9657,7 @@ country_event = {
 	option = {
 		name = "EVTOPTA96010" #We welcome peace
 		clr_country_flag = dismantle_declared
+		clr_country_flag = CFR_should_puppet
 		clr_country_flag = in_great_war
 		clr_country_flag = calling_all_allies
 		clr_country_flag = enemy_of_my_enemy
@@ -13294,9 +13296,36 @@ country_event = {
 		remove_country_modifier = great_war3
 		war_exhaustion = 40
 		
-		# Remove Primary Cores
+		# Remove Primary Cores for Non-BOH
 		
-		all_core = { remove_core = THIS }
+		random_owned = {
+		    limit = {
+		       owner = { tag = HLR }
+			}
+		    owner = { all_core = { remove_core = HLR } }
+		}
+
+		random_owned = {
+		    limit = {
+		       owner = { tag = GCF }
+			}
+		    owner = { all_core = { remove_core = GCF } }
+		}
+
+		random_owned = {
+		    limit = {
+		       owner = { tag = CAE }
+			}
+		    owner = { all_core = { remove_core = CAE } }
+		}
+		
+		# Make sure that this tag does not have cores on Germany
+		
+		GER = { all_core = { remove_core = THIS } }
+		
+		# Istria will be liberated
+		
+		AUS_736 = { remove_core = THIS }
 		
 		# Add Swabian and Confederation Cores to allow for Dismantlement
 		
@@ -15118,6 +15147,10 @@ country_event = {
 				 capital = 599
               }
         }
+		
+		# Istria will be liberated
+		
+		AUS_736 = { remove_core = THIS remove_core = SGF remove_core = AUS }
 		
 		# Remove all additional accepted cultures
 		
@@ -17015,7 +17048,9 @@ country_event = {
             secede_province = SAM
         }
 		   
-        ####################		
+        ####################
+
+		
 		
 		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
 		random_owned = {
@@ -17126,12 +17161,12 @@ country_event = {
 					}
 				}
 				NOT = { primary_culture = scandinavian }
-				NOT = { primary_culture = sami }
 				NOT = { has_country_flag = post_colonial_country }
 			}
 			all_core = {
 				limit = {
 					is_core = THIS
+					NOT = { is_core = SMI }
 					state_scope = {
 						NOT = { any_owned_province = { is_capital = yes } }
 					}
