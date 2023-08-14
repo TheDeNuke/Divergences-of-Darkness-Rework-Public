@@ -847,6 +847,23 @@ country_event = {
 	clr_global_flag = A_SHITSHOW_PLA
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+			   is_overseas = no
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+        }
 	}
 }
 
@@ -1895,22 +1912,26 @@ country_event = {
 	clr_global_flag = Liberian_war
 	set_country_flag = jour_de_colere
 	any_pop = { 
-	limit = { culture = afro_frankish } 
-	reduce_pop = 0.7 
-		}
-	random_state = {
-			limit = {
-				is_slave = no
-				is_colonial = no
-			}
-			is_slave = yes
-			any_pop = {
-				limit = {
-					culture = afro_frankish
-				}
-				pop_type = slaves
-			}
-		}
+	   limit = { has_pop_culture = afro_frankish location = { is_core = LIB } }
+	   reduce_pop = 0.7 
+	}
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+			   is_overseas = no
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+        }
 	}
 }
 
@@ -2025,25 +2046,58 @@ country_event = {
 	
 	option = { 
 	name = "PLA55.A" 
-	any_pop = { 
-	limit = { 
-	OR = { culture = plantagenian culture = septiman }
-			}
-	reduce_pop = 0.4
-		}
-	any_pop = { 
-	limit = { 
-	OR = { culture = plantagenian culture = septiman } type = aristocrats 
-			}
-	reduce_pop = 0.01
-		}
-	any_pop = { 
-	limit = { 
-	OR = { culture = plantagenian culture = septiman } type = bureaucrats 
-			}
-	reduce_pop = 0.2 
-		}
 	prestige = -10 
+	any_pop = { 
+	   limit = { 
+	       OR = { culture = plantagenian culture = septiman }
+		   NOT = { type = soldiers }
+		   strata = poor
+	   }
+	   reduce_pop = 0.5
+	}
+	any_pop = { 
+	   limit = { 
+	       OR = { culture = plantagenian culture = septiman }
+		   type = soldiers
+	   }
+	   reduce_pop = 0.25
+	   move_pop = 148
+	}
+	any_pop = { 
+	   limit = { 
+	       OR = { culture = plantagenian culture = septiman }		   
+		   strata = middle
+		   NOT = { type = officers }
+		   NOT = { type = bureaucrats }
+		   NOT = { type = clergymen }
+	   }
+	   reduce_pop = 0.5
+	}
+	any_pop = { 
+	   limit = { 
+	       OR = { culture = plantagenian culture = septiman }
+		   OR = { type = clergymen type = bureaucrats }
+	   }
+	   reduce_pop = 0.25
+	   move_pop = 148
+	}
+	any_pop = { 
+	   limit = { 
+	       OR = { culture = plantagenian culture = septiman }
+		   type = officers
+	   }
+	   reduce_pop = 0.8
+	   move_pop = 148
+	}
+	any_pop = { 
+	   limit = { 
+	      OR = { culture = plantagenian culture = septiman } 
+	      strata = rich
+	   }			
+	   reduce_pop = 0.7
+	   move_pop = 148
+	}
+	
 	}
 }
 
@@ -2069,16 +2123,13 @@ country_event = {
 	name = "PLA56.A"
 	clr_country_flag = caporalisme_agraire 
 	political_reform = serfdom
-	random_state = {
-			any_pop = {
-				limit = {
-					type = farmers
-				}
-				pop_type = slaves
-			}
-		}
-	}
-	
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { NOT = { has_pop_culture  = afro_frankish } } militancy = 5 consciousness = 5 pop_type = serfs }     
+    }
+	}	
 }
 
 country_event = { 
