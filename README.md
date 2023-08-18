@@ -63,5 +63,5 @@ Special Thanks to:
 - The VIC3 MOD and its team - For continuing our legacy into a new age
 - HPM and HFM devs - Your projects are the reason why Vicky 2 is still alive to this day.
 - Bsharri/Flyrion/Trask - The original DoD FF founder
-- TGC for economic tweaks
+- TGC for economic tweaks and new modifier icons
 - The various testers
