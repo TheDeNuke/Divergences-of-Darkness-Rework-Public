@@ -1630,9 +1630,11 @@ country_event = {
 	
 	option = { 
 	name = "RUT240.A"
+	   set_global_flag = PLC_broken_early
 	   prestige = 5
 	   inherit = RUT
 	   RUT = { clr_country_flag = cannot_annex_rus }
+	   BLR = { all_core = { limit = { NOT = { is_core = RUS } } add_core = RUG } }     
 	}
 }
 
@@ -1825,6 +1827,7 @@ country_event = {
 	option = { 
 	name = "RUT29.A"
         prestige = 20
+        set_global_flag = PLC_broken_early
 	    clr_global_flag = special_military_operation_two
 		RUT = { remove_country_modifier = slavia_rus }
 	}   
@@ -1857,8 +1860,8 @@ country_event = {
 	option = { 
 	name = "RUT30.A"
         prestige = 20
-	    clr_global_flag = special_military_operation_two
 		set_global_flag = PLC_broken_early
+	    clr_global_flag = special_military_operation_two		
 		RUS = {
 	       add_country_modifier = {
 		      name = RUS_stall_expansion
@@ -2017,5 +2020,104 @@ country_event = {
 	ai_chance = { 
 	   factor = 0
 	   }	
+	}
+}
+
+## You annexed Slovakia and are now requested to deal with it.
+
+country_event = {
+	id = 2227251
+	name = "RUT340.T"
+	desc = "RUT340.D"
+	picture = "cossacks_soldiers"
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		OR = {
+			primary_culture = polish
+			primary_culture = ruthenian
+			primary_culture = north_russian
+			primary_culture = russian
+			primary_culture = cossack 
+		}
+		SLV = { 
+			exists = no
+			all_core = { owned_by = THIS }
+		}
+		NOT = { has_country_flag = decided_SLV }
+	}
+	
+	mean_time_to_happen = { 
+		days = 7 
+	}
+	
+	immediate = { 950 = { remove_core = SLV add_core = THIS } }
+	
+	option = { 
+		name = "RUT340.A"
+		badboy = -3
+		set_country_flag = decided_SLV
+		release_vassal = SLV
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0
+				OR = {
+					ruling_party_ideology = fascist
+					ruling_party_ideology = paternal 
+				}
+			}
+			modifier = {
+				factor = 1.5
+				OR = {
+					war_policy = anti_military
+					war_policy = pacifism
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "RUT340.B"
+		badboy = 2
+		set_country_flag = decided_SLV
+		any_pop = {
+			limit = {
+				culture = slovak
+			}
+			militancy = 5
+			consciousness = 5
+			ideology = {
+                value = separatist
+                factor = 0.2
+            }
+		}
+		any_owned = {
+			limit = {
+				is_core = SLV
+			}
+			add_province_modifier {
+				name = nationalist_agitation
+				duration = 3650
+			}
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 3
+				OR = {
+					ruling_party_ideology = fascist
+					ruling_party_ideology = paternal 
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					war_policy = anti_military
+					war_policy = pacifism
+				}
+			}
+		}
 	}
 }

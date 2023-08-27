@@ -85,6 +85,7 @@ install_democracy
 install_fascism
 install_socrep
 install_communism
+revolutionary_war
 unification_humiliate_cb
 take_from_sphere
 liberate_country
@@ -6299,6 +6300,7 @@ install_democracy = {
 			government = fascist_dictatorship
 			government = fascist_monarchy
 			government = socialist_republic
+			THIS = { has_country_flag = revolutionary_war }
 		}
 		OR = {
 			war_with = THIS
@@ -6590,6 +6592,92 @@ install_socrep = {
 			}
 		}
 		country_event = 96088
+	}
+}
+
+# REVOLUTIONARY WAR
+
+revolutionary_war = {
+	sprite_index = 19
+	is_triggered_only = yes
+	months = 12
+	construction_speed = 1.5
+	crisis = no
+
+	badboy_factor = 1.5
+	prestige_factor = 1
+	peace_cost_factor = 50
+	penalty_factor = 1
+
+	break_truce_prestige_factor = 1
+	break_truce_infamy_factor = 1
+	break_truce_militancy_factor = 1
+	truce_months = 48
+	
+	good_relation_prestige_factor = 1
+	good_relation_infamy_factor = 1
+	good_relation_militancy_factor = 1
+
+	can_use = {
+		THIS = {
+			NOT = { has_country_flag = in_great_war }
+			is_greater_power = yes
+			has_country_flag = revolutionary_war
+			OR = {
+			   government = democracy
+			   government = parliamentary_republic
+			}
+		}
+		NOT = { has_global_flag = great_wars_enabled }
+		civilized = yes
+		NOT = { is_our_vassal = THIS }
+		OR = {
+			war_with = THIS
+			THIS = {
+				NOT = { has_country_modifier = neutrality }
+				total_amount_of_divisions = 1
+			}
+		}
+		OR = {
+			war_with = THIS
+			THIS = {
+				NOT = {
+					has_country_flag = in_great_war
+					has_country_modifier = no_more_war
+					has_country_modifier = war_justification_blocked
+				}
+			}
+		}
+	}
+	
+	po_remove_prestige = yes
+
+	war_name = WAR_NAME
+	
+	on_add = {
+		move_issue_percentage = {
+			from = jingoism 
+			to = pro_military
+			value = 0.05
+		}
+	}
+	
+	on_po_accepted = {
+		THIS = {
+			set_country_flag = friendly_democracy
+			any_country = {
+				limit = {
+				    NOT = {
+					    OR = {
+						   government = democracy
+						   government = parliamentary_republic
+						}
+					}
+				}
+				relation = { who = THIS value = -50 }
+			}
+		}
+		country_event = 96085
 	}
 }
 

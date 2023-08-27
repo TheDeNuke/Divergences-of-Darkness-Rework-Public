@@ -53,7 +53,6 @@ country_event = {
 				factor = 3.5
 				OR = {
 					government = proletarian_dictatorship
-					government = bourgeois_dictatorship
 					government = fascist_dictatorship
 					government = fascist_monarchy
 					government = presidential_dictatorship
@@ -117,7 +116,6 @@ country_event = {
 				factor = 2
 				OR = {
 					government = proletarian_dictatorship
-					government = bourgeois_dictatorship
 					government = fascist_dictatorship
 					government = fascist_monarchy
 					government = presidential_dictatorship
@@ -171,7 +169,6 @@ country_event = {
 				factor = 0
 				OR = {
 					government = proletarian_dictatorship
-					government = bourgeois_dictatorship
 					government = fascist_dictatorship
 					government = fascist_monarchy
 					government = presidential_dictatorship
@@ -285,7 +282,6 @@ country_event = {
 	
 	option = {
 		name = "DODFFP10.A"
-		election = yes
 	    clr_country_flag = show_trials_ongoing
 	}
 } 
@@ -4212,7 +4208,1088 @@ country_event = {
 		clr_country_flag = social_liberal_election_win
 		clr_country_flag = market_liberal_election_win		
 		clr_country_flag = paternal_election_win
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		set_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov		
 		country_event = 800052	   
+	}		
+}
+
+####### The Transitional Government ###################
+
+### Make sure that this event does not trigger if red_guard_gov is active and set the flag for legal purge.
+
+### Establishment of the Transitional Government ####
+
+country_event = {
+	id = 443087
+	title = "DODFFP43.T"
+	desc = "DODFFP43.D"
+	picture = "bad_badboy"
+
+	trigger = {	
+	    exists = yes
+		war = no
+		has_country_flag = transitional_government
+		NOT = { has_country_flag = red_guard_gov }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+    }
+
+	option = {
+		name = "DODFFP43.A"	
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 50 }
+			  }
+			  owner = { plurality = -50 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 25 NOT = { plurality = 50 } }
+			  }
+			  owner = { plurality = -25 }
+		   }
+		   random_owned = {
+		      limit = {
+			     owner = { plurality = 10 NOT = { plurality = 25 } }
+			  }
+			  owner = { plurality = -10 }
+		   }		
+		random_owned = {
+			limit = { owner = { government = hms_government } }
+			owner = { set_country_flag = trans_hms }
+		}
+		random_owned = {
+			limit = { owner = { government = democracy } }
+			owner = { set_country_flag = trans_presrep }
+		}
+		random_owned = {
+			limit = { owner = { government = parliamentary_republic } }
+			owner = { set_country_flag = trans_parlrep }
+		}
+		ruling_party_ideology = conservative
+		clr_country_flag = transitional_government
+		set_country_flag = trans_gov
+		set_country_flag = show_trials_possible
+		government = bourgeois_dictatorship
+		political_reform = none_voting
+		political_reform = appointed
+		#political_reform = no_meeting
+		#political_reform = state_press
+		#political_reform = state_controlled
+		#political_reform = underground_parties
+		political_reform = mandatory_service
+		political_reform = all_voting_pops
+		political_reform = no_slavery
+		clr_country_flag = communist_purge
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win 
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		clr_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+	    set_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov		
+        any_pop = { militancy = -9 }		
+	}		
+}
+
+### The Enabling Act - Emergency Provisions ####
+
+country_event = {
+	id = 4430870
+	title = "DODFFP430.T"
+	desc = "DODFFP430.D"
+	picture = "deliberation"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = trans_provisions }
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+    }
+
+	option = {
+		name = "DODFFP430.A"
+		prestige = -1
+		set_country_flag = trans_provisions
+		set_country_flag = directorate_takeover_one
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = state_controlled
+		political_reform = underground_parties
+        any_pop = { militancy = 1 }	
+        ai_chance = {
+              factor = 80
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP430.B"
+		prestige = 1
+		set_country_flag = trans_provisions
+        any_pop = { militancy = -2 }		
+        ai_chance = {
+              factor = 20
+        }
+	}
+}
+
+### Government Switch Events
+
+### The Old Institution - Abolish the Monarchy? ####
+
+### Weighted on factors similar to the monarchy abolition event under greatwars ###
+
+country_event = {
+	id = 443088
+	title = "DODFFP44.T"
+	desc = "DODFFP44.D"
+	picture = "autocracy"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+		has_country_flag = trans_hms
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = trans_switcher }
+	}
+	
+	mean_time_to_happen = {
+		days = 48
+    }
+
+	option = {
+		name = "DODFFP44.A"
+		prestige = 5
+		set_country_flag = trans_switcher
+        any_pop = { militancy = 1 }	
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = -9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = -8
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = -8
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = 2
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = 6
+			}
+		}
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 0.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 1.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 0.5
+				    has_country_flag = depression_effects
+			    }	
+			    modifier = {
+				    factor = 0.75
+				    plurality = 80
+			    }	
+			    modifier = {
+				    factor = 0.75
+				    plurality = 90
+			    }	
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP44.B"
+		prestige = -5
+		set_country_flag = trans_switcher
+		clr_country_flag = trans_hms
+		set_country_flag = trans_parlrep
+        any_pop = { militancy = -2 }
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = 9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = 5
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = -4
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = -8
+			}
+		}		
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 1.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 0.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 1.5
+			        socialist = 25
+			    }
+			    modifier = {
+				    factor = 2
+				    anarcho_liberal = 25
+			    }
+			    modifier = {
+				    factor = 1.5
+				    has_country_flag = depression_effects
+			    }	
+			    modifier = {
+				    factor = 1.25
+				    plurality = 80
+			    }	
+			    modifier = {
+				    factor = 1.25
+				    plurality = 90
+			    }
+        }
+	}
+}
+
+### The Abuse of Power - Weaken the President? ####
+
+### Weighted on factors similar to the monarchy abolition event under greatwars ###
+
+country_event = {
+	id = 443088
+	title = "DODFFP45.T"
+	desc = "DODFFP45.D"
+	picture = "Assassination"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+		has_country_flag = trans_parlrep
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = trans_switcher }
+	}
+	
+	mean_time_to_happen = {
+		days = 48
+    }
+
+	option = {
+		name = "DODFFP45.A"
+		prestige = 5
+		set_country_flag = trans_switcher
+        any_pop = { militancy = 1 }	
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = -9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = -8
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = -8
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = 2
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = 6
+			}
+		}
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 0.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 1.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 0.5
+				    has_country_flag = depression_effects
+			    }	
+			    modifier = {
+				    factor = 0.75
+				    plurality = 80
+			    }	
+			    modifier = {
+				    factor = 0.75
+				    plurality = 90
+			    }
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP45.B"
+		prestige = -5
+		set_country_flag = trans_switcher
+		clr_country_flag = trans_presrep
+		set_country_flag = trans_parlrep
+        any_pop = { militancy = -2 }
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = 9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = 5
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = -4
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = -8
+			}
+		}		
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 1.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 0.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 1.5
+			        socialist = 25
+			    }
+			    modifier = {
+				    factor = 2
+				    anarcho_liberal = 25
+			    }
+			    modifier = {
+				    factor = 1.5
+				    has_country_flag = depression_effects
+			    }	
+			    modifier = {
+				    factor = 1.25
+				    plurality = 80
+			    }	
+			    modifier = {
+				    factor = 1.25
+				    plurality = 90
+			    }
+        }
+	}
+}
+
+### The Failures of the Constitutional Order - Strengthen the President? ####
+
+### Weighted on factors similar to the monarchy abolition event under greatwars ###
+
+country_event = {
+	id = 443088
+	title = "DODFFP46.T"
+	desc = "DODFFP46.D"
+	picture = "banquet"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+		has_country_flag = trans_presrep
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = trans_switcher }
+	}
+	
+	mean_time_to_happen = {
+		days = 48
+    }
+
+	option = {
+		name = "DODFFP46.A"
+		prestige = -5
+		set_country_flag = trans_switcher
+		set_country_flag = trans_presrep
+		clr_country_flag = trans_parlrep
+        any_pop = { militancy = 1 }	
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = -9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = -8
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = -8
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = 2
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = 6
+			}
+		}
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 1.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 0.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 1.5
+				    has_country_flag = depression_effects
+			    }	
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP46.B"
+		prestige = 5
+		set_country_flag = trans_switcher
+        any_pop = { militancy = -2 }
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = 9
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = 5
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = 4
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = -4
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = -8
+			}
+		}		
+        ai_chance = {
+              factor = 50
+			    modifier = {
+				   factor = 0.5
+				   recently_lost_war = yes
+			    }
+			    modifier = {
+				   factor = 1.5
+				   is_greater_power = yes
+			    }
+			    modifier = {
+				    factor = 0.75
+				    has_country_flag = depression_effects
+			    }	
+        }
+	}
+}
+
+### Establish the Secret Police ####
+
+### I DETECT A LITTLE COMMUNISM JUST IN THE WAY THE THINGS YOU DO.
+
+country_event = {
+	id = 443089
+	title = "DODFFP47.T"
+	desc = "DODFFP47.D"
+	picture = "Fascist"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    government = bourgeois_dictatorship
+		has_global_flag = revolution_n_counter_researched
+		NOT = { has_country_flag = trans_secret }
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+    }
+
+	option = {
+		name = "DODFFP47.A"
+		set_country_flag = trans_secret
+		set_country_flag = directorate_takeover_two
+		social_reform = secret_police
+        any_pop = { militancy = -1 consciousness = 1 }	
+		set_country_flag = trans_secret
+        ai_chance = {
+              factor = 70
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP47.B"
+		set_country_flag = trans_secret
+		prestige = 1
+        any_pop = { militancy = 1 consciousness = -1 }		
+        ai_chance = {
+              factor = 25
+        }
+	}
+}
+
+### Establishment of Permanent Constitutional Measures  ####
+
+### Antiradical Constitution - Does a large long term debuff to Fascists and Communists but reduces research and social reform support.
+
+country_event = {
+	id = 443090
+	title = "DODFFP48.T"
+	desc = "DODFFP48.D"
+	picture = "communist_crowd"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    government = bourgeois_dictatorship
+        is_ideology_enabled = communist
+		OR = {
+		   has_country_flag = directorate_takeover_one
+		   has_country_flag = directorate_takeover_two
+		}
+		NOT = { has_country_flag = show_trials_ongoing }
+		NOT = { has_country_flag = trans_constitution }
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+    }
+
+	option = {
+		name = "DODFFP48.A"
+		set_country_flag = trans_constitution
+		random_owned = {
+			limit = { owner = { AND = { has_country_flag = directorate_takeover_one has_country_flag = directorate_takeover_two } } }
+			owner = { clr_country_flag = directorate_takeover_one clr_country_flag = directorate_takeover_two set_country_flag = directorate_takeover_three }
+		}
+	    set_country_flag = antiradical_constitution
+	    add_country_modifier = { 
+	       name = constitutional_antiradical
+	       duration = 10950
+	    }
+		set_country_flag = trans_constitution
+		country_event = { id = 443091 days = 3 }
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = 6
+			}
+			scaled_militancy = {
+				   ideology = conservative
+				   factor = -6
+		    }
+			scaled_militancy = {
+				  ideology = market_liberal
+				  factor = -6
+			}
+			scaled_militancy = {
+				  ideology = liberal
+				  factor = -2
+			}
+
+			scaled_militancy = {
+				  ideology = social_liberal
+				  factor = -2
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = 6
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = 6
+			}
+		}
+        ai_chance = {
+              factor = 80
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP48.B"
+		set_country_flag = trans_constitution
+		prestige = 3
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = paternal
+				  factor = -9
+			}
+			scaled_militancy = {
+				  ideology = anarcho_liberal
+				  factor = -9
+			}
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = -9
+			}
+		}
+        ai_chance = {
+              factor = 20
+        }
+	}
+}
+
+### Banning Conscription - I guess this is a compromise for the Socialists ####
+
+country_event = {
+	id = 443091
+	title = "DODFFP49.T"
+	desc = "DODFFP49.D"
+	picture = "conscription_marching"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "DODFFP49.A"
+		any_pop = { militancy = -2 consciousness = -2 }
+	    any_pop = { 
+			scaled_militancy = {
+				  ideology = socialist
+				  factor = -4
+			}
+		}
+	    political_reform = no_draft
+        ai_chance = {
+              factor = 80
+        }			  
+	}		
+	
+	option = {
+		name = "DODFFP49.B"
+	    any_pop = { militancy = 1 }
+        ai_chance = {
+              factor = 20
+        }
+	}
+}
+
+### The Directorate is too powerful - Potencial Takeover ####
+
+country_event = {
+	id = 443092
+	title = "DODFFP50.T"
+	desc = "DODFFP50.D"
+	picture = "fascist_march"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = show_trials_ongoing }
+		has_country_flag = directorate_takeover_three
+		has_country_flag = trans_constitution
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+    } 
+	
+	### We will purge the traitors who even considered this idea.
+
+	option = {
+		name = "DODFFP50.A"
+		any_pop = {
+			limit = {
+				OR = {
+					type = soldiers
+					type = bureaucrats
+					type = officers
+				}
+			}
+			militancy = 4
+			reduce_pop = 0.80
+		}
+		any_pop = {
+			limit = {
+				NOT = { 
+					type = soldiers
+					type = bureaucrats
+					type = officers
+				}
+			}
+			militancy = -4
+		}
+        clr_country_flag = directorate_takeover_three
+        ai_chance = {
+              factor = 90
+        }	
+	}
+	
+	### Long Live the Directory!
+
+	option = {
+		name = "DODFFP50.B"
+		any_pop = {
+			limit = {
+				OR = {
+					type = soldiers
+					type = bureaucrats
+					type = officers
+				}
+			}
+			militancy = -9
+			ideology = { value = market_liberal factor = 0.10 }
+		}
+		any_pop = {
+			limit = {
+				NOT = { 
+					type = soldiers
+					type = bureaucrats
+					type = officers
+				}
+			}
+			militancy = 1
+		}
+		prestige = -5
+		clr_country_flag = trans_hms
+		clr_country_flag = trans_parlrep
+		clr_country_flag = trans_presrep
+		clr_country_flag = trans_gov
+		clr_country_flag = trans_constitution
+		clr_country_flag = trans_secret
+		clr_country_flag = trans_provisions
+		clr_country_flag = trans_switcher
+		clr_country_flag = directorate_takeover_one
+		clr_country_flag = directorate_takeover_two
+		clr_country_flag = directorate_takeover_three	
+        ai_chance = {
+              factor = 10
+        }		
+	}	
+}
+
+### The End of the Transitional Government - This event triggers after the last event if Democracy has not been destroyed  ####
+
+country_event = {
+	id = 443093
+	title = "DODFFP51.T"
+	desc = "DODFFP51.D"
+	picture = "administration"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    government = bourgeois_dictatorship
+		NOT = { has_country_flag = show_trials_ongoing }	   
+		NOT = { has_country_flag = directorate_takeover_three }
+		OR = {
+		   has_country_flag = trans_constitution
+		   NOT = { is_ideology_enabled = communist }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+    }
+
+	option = {
+		name = "DODFFP51.A"
+		clr_country_flag = trans_gov
+		clr_country_flag = trans_constitution
+		clr_country_flag = trans_secret
+		clr_country_flag = trans_provisions
+		clr_country_flag = trans_switcher
+		clr_country_flag = directorate_takeover_one
+		clr_country_flag = directorate_takeover_two
+		clr_country_flag = directorate_takeover_three
+        random_owned = { limit = { owner = { has_country_flag = trans_parlrep } }
+           owner = {
+             clr_country_flag = trans_parlrep		   
+		     government = parliamentary_republic
+		     political_reform = universal_voting
+		     political_reform = population_equal_weight
+		     political_reform = yes_meeting
+		     political_reform = free_press
+		     political_reform = all_trade_unions
+		     political_reform = no_slavery
+		     political_reform = proportional_representation
+		     political_reform = all_voting_pops
+		     political_reform = open_borders
+		     political_reform = secret_ballots
+		     clr_country_flag = theocratic_government
+		     clr_country_flag = merchantrepublic_gov
+		     set_country_flag = parliamentary_republic_gov
+		     clr_country_flag = communist_gov
+		     clr_country_flag = absolute_monarchy_gov
+		     clr_country_flag = semi_constitutional_monarchy_gov
+		     clr_country_flag = constitutional_monarchy_gov
+		     clr_country_flag = democracy_gov
+		     clr_country_flag = presidential_dictatorship_gov
+		     clr_country_flag = fascist_gov
+	         clr_country_flag = anarcho_liberal_gov
+	         clr_country_flag = socialist_republic_gov
+	         clr_country_flag = fascist_monarchy_gov
+           }
+        }		   
+        random_owned = { limit = { owner = { has_country_flag = trans_presrep } }
+           owner = {
+		     clr_country_flag = trans_presrep
+		     government = democracy
+		     political_reform = universal_voting
+		     political_reform = state_equal_weight
+		     political_reform = yes_meeting
+		     political_reform = free_press
+		     political_reform = all_trade_unions
+		     political_reform = no_slavery
+		     political_reform = jefferson_method
+		     political_reform = all_voting_pops
+		     political_reform = open_borders
+		     political_reform = non_secret_ballots
+		     clr_country_flag = theocratic_government
+		     clr_country_flag = merchantrepublic_gov
+		     clr_country_flag = parliamentary_republic_gov
+		     clr_country_flag = communist_gov
+		     clr_country_flag = absolute_monarchy_gov
+		     clr_country_flag = semi_constitutional_monarchy_gov
+		     clr_country_flag = constitutional_monarchy_gov
+		     set_country_flag = democracy_gov
+		     clr_country_flag = presidential_dictatorship_gov
+		     clr_country_flag = fascist_gov
+	         clr_country_flag = anarcho_liberal_gov
+	         clr_country_flag = socialist_republic_gov
+	         clr_country_flag = fascist_monarchy_gov
+           }			 
+        }
+        random_owned = { limit = { owner = { has_country_flag = trans_hms } }
+           owner = {
+		     clr_country_flag = trans_hms
+		     government = hms_government
+		     political_reform = universal_voting
+		     political_reform = state_equal_weight
+		     political_reform = yes_meeting
+		     political_reform = free_press
+		     political_reform = all_trade_unions
+		     political_reform = no_slavery
+		     political_reform = first_past_the_post
+		     political_reform = all_voting_pops
+		     political_reform = open_borders
+		     political_reform = gerrymandering
+		     clr_country_flag = theocratic_government
+		     clr_country_flag = merchantrepublic_gov
+		     clr_country_flag = parliamentary_republic_gov
+		     clr_country_flag = communist_gov
+		     clr_country_flag = absolute_monarchy_gov
+		     clr_country_flag = semi_constitutional_monarchy_gov
+		     clr_country_flag = constitutional_monarchy_gov
+		     set_country_flag = democracy_gov
+		     clr_country_flag = presidential_dictatorship_gov
+		     clr_country_flag = fascist_gov
+	         clr_country_flag = anarcho_liberal_gov
+	         clr_country_flag = socialist_republic_gov
+	         clr_country_flag = fascist_monarchy_gov
+           }			 
+        }
+		election = yes
+	}		
+}
+
+### The Transitional Government has failed by virtue of being overthrown by rebels or the AI/Player Reforming into a Democracy ####
+
+country_event = {
+	id = 443094
+	title = "DODFFP52.T"
+	desc = "DODFFP52.D"
+	picture = "storming_palace_communists"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = trans_gov
+	    NOT = { government = bourgeois_dictatorship }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+    }
+
+	option = {
+		name = "DODFFP52.A"
+		clr_country_flag = trans_hms
+		clr_country_flag = trans_parlrep
+		clr_country_flag = trans_presrep
+		clr_country_flag = trans_gov
+		clr_country_flag = trans_constitution
+		clr_country_flag = trans_secret
+		clr_country_flag = trans_provisions
+		clr_country_flag = trans_switcher
+		clr_country_flag = directorate_takeover_one
+		clr_country_flag = directorate_takeover_two
+		clr_country_flag = directorate_takeover_three	
+	    clr_country_flag = antiradical_constitution
+		remove_country_modifier = constitutional_antiradical
+	}		
+}
+
+### The Anti-Radical Constitution has failed by virtue of a Radical Party finding its way into power somehow ####
+
+country_event = {
+	id = 443095
+	title = "DODFFP53.T"
+	desc = "DODFFP53.D"
+	picture = "fascist_hq"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = antiradical_constitution
+		OR = { 
+		   ruling_party_ideology = communist
+		   ruling_party_ideology = fascist
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+    }
+
+	option = {
+		name = "DODFFP53.A"
+		clr_country_flag = antiradical_constitution
+		remove_country_modifier = antiradical_constitution
+	}		
+}
+
+### The Anti-Radical Constitution has expired ####
+
+country_event = {
+	id = 443096
+	title = "DODFFP54.T"
+	desc = "DODFFP54.D"
+	picture = "administration"
+
+	trigger = {	
+	    exists = yes
+		has_country_flag = antiradical_constitution
+		NOT = { has_country_modifier = antiradical_constitution }
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+    }
+
+	option = {
+		name = "DODFFP54.A"
+		any_pop = { consciousness = 1 }
+		clr_country_flag = antiradical_constitution
 	}		
 }
 
@@ -4440,15 +5517,3 @@ country_event = { #The Maelstrom Returns
 		}
 	}
 }
-
-#Events that can trigger during Maelstrom:
-
-# 555013 - Charismatic Leader (anarcho_liberal) 10%
-# 555015 - Charismatic Leader (communist) 30%
-# 555016 - Charismatic Leader (fascist) 30%
-# 555018 - Charismatic Leader (separatist) 30%
-
-# 555040 - Party Splinter (conservative) 30%
-# 555041 - Party Splinter (liberal) 30%
-# 555044 - Party Splinter (socialist) 30%
-# 555047 - Party Splinter (social_liberal) 10%

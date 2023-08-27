@@ -2019,17 +2019,19 @@ political_decisions = {
 			OR = {
  			  tag = CAE
 			  tag = GCF
+			  tag = SGF
 			  tag = NGF
 			  tag = GER
 			}
-			exists = BRE
-			NOT = { BRE = { vassal_of = SCA } }
+			exists = BRE			
 			NOT = { has_country_flag = annexation_of_bremen }
 		}
 		
 		allow = { 
+		   owns = 531
 		   war = no
 		   is_disarmed = no
+		   NOT = { BRE = { vassal_of = SCA } }
 		}
 		
 		effect = { 
@@ -2049,29 +2051,29 @@ political_decisions = {
 			OR = {
  			  tag = CAE
 			  tag = GCF
+			  tag = SGF
 			  tag = NGF
 			  tag = GER
-			}
+			}		
 			exists = OLD
-			NOT = {
-			   OLD = { 
-			       OR = {
-  				      vassal_of = SCA 
-				      in_sphere = BRG 
-					  alliance_with = BRG 
-					  alliance_with = PBG 
-					  in_sphere = PBG
-					  has_country_flag = OLD_to_annex
-				   } 
-				} 
-		    }
+
 			NOT = { has_country_flag = annexation_of_oldenburg }
 		}
 		
 		allow = { 
-		   war = no
-		   is_disarmed = no
-		   owns = 539
+		    war = no
+		    is_disarmed = no
+		    owns = 535
+		    OLD = { 
+			    NOT = {
+  				    vassal_of = SCA 				    
+					alliance_with = BRG 
+					alliance_with = PBG 
+					in_sphere = BRG 
+					in_sphere = PBG
+				    has_country_flag = OLD_to_annex
+				} 
+		    }
 		}
 		
 		effect = { 
@@ -2100,7 +2102,7 @@ political_decisions = {
 		   war = no
 		   is_disarmed = no
 		   alliance_with = SCA
-		   is_our_vassal = CFR
+		   CFR = { vassal_of = THIS }
 		}
 		
 		effect = { 
@@ -2710,21 +2712,21 @@ political_decisions = {
 		
 	potential = { 
 	   has_country_flag = protector_of_poland  
-       exists = CPL   
-	   NOT = { is_our_vassal = CPL }
+       exists = MAZ 
+	   NOT = { is_our_vassal = MAZ }
 	}
 	
 	allow = { 
 		war = no
-        NOT = { truce_with = CPL }		
+        NOT = { truce_with = MAZ }		
 	}
 	
 	effect = { 
-	    leave_alliance = CPL
-	    relation = { who = CPL value = -400 }
-	    diplomatic_influence = { who = CPL value = -400 }	
+	    leave_alliance = MAZ
+	    relation = { who = MAZ value = -400 }
+	    diplomatic_influence = { who = MAZ value = -400 }	
 	    war = {
-		    target = CPL
+		    target = MAZ
 			    attacker_goal = {
 				    casus_belli = conquest_any
 			    }
@@ -2739,7 +2741,7 @@ political_decisions = {
 	   factor = 1
 	      modifier = {
 	         factor = 0
-			 CPL = { in_sphere = SCA }
+			 MAZ = { in_sphere = SCA }
 		  }  	
 	      modifier = {
 	         factor = 0
@@ -2770,7 +2772,7 @@ political_decisions = {
 			    }
 			}
 	   }
-       CPL = {
+       MAZ = {
 		    OR = {
 			    in_sphere = THIS
 			    vassal_of = THIS
@@ -2792,12 +2794,12 @@ political_decisions = {
 	
 	effect = { 
 	    clr_country_flag = protector_of_poland 
-	    inherit = CPL
+	    inherit = MAZ
 		inherit = KRA
         prestige = 20
 	    any_owned = {
 		   limit = {
-		        is_core = CPL
+		        is_core = MAZ
 		   }
 		   secede_province = PZN
 	    }
@@ -2961,6 +2963,46 @@ political_decisions = {
 		}
 		POL = { all_core = { add_core = CZE } }
 		change_tag = CZE 
+    }
+
+	ai_will_do = { 
+	   factor = 1	 
+	}
+	}
+	
+	## Clam VOL for CZE at Mass Politics
+	
+	the_greater_galician_claim = { 
+    picture = claim_galicia
+		
+	potential = { 
+	   tag = CZE
+	   NOT = { has_country_flag = claiming_VOL }  
+	}
+	
+	allow = { 
+		war = no
+		is_greater_power = yes
+		mass_politics = 1
+		all_core = { owned_by = THIS }
+	}
+	
+	effect = { 
+		prestige = 15
+		add_accepted_culture = galician
+		VOL = { all_core = { add_core = THIS } }
+		any_country = {
+		   limit = {
+		      primary_culture = galician
+			  OR = {
+			     in_sphere = CZE
+				 vassal_of = CZE
+			  }
+			  exists = yes
+		   }
+		   annex_to = CZE
+		}
+		set_country_flag = claiming_VOL
     }
 
 	ai_will_do = { 

@@ -5761,8 +5761,12 @@ country_event = {
 		   ruling_party_ideology = fascist
 		   government = proletarian_dictatorship
 		}
-		NOT = { is_our_vassal = SWA }
-		NOT = { badboy = 12 }
+		NOT = {
+		   is_our_vassal = SWA
+		   truce_with = SWA
+		   badboy = 12
+		   war_exhaustion = 10	   
+		}	
 		has_country_flag = SWA_enforce_order
 	}
 	
@@ -5796,8 +5800,12 @@ country_event = {
 		   ruling_party_ideology = fascist
 		   government = proletarian_dictatorship
 		}
-		NOT = { is_our_vassal = CFR }
-		NOT = { badboy = 12 }
+		NOT = {
+		   truce_with = CFR 
+		   is_our_vassal = CFR
+		   badboy = 12
+		   war_exhaustion = 10 
+		}	
 		has_country_flag = CFR_enforce_order
 	}
 	
@@ -5998,6 +6006,33 @@ country_event = {
 	option = { 
 	    name = "MGER98.C"
 		clr_country_flag = OLDen_Futures
+		BRG = {
+		   relation = { who = THIS value = -400 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}
+		SCA = {
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		   create_vassal = THIS
+		}			
+		country_event = 2701190
+	    ai_chance = {
+	       factor = 50
+	    }
+	}
+}
+
+country_event = {
+	id = 2701190
+	title = "MGER98.T"
+	desc = "MGER98.D"
+	#picture = "german_rhine"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	    name = "MGER98.C"
+		clr_country_flag = OLDen_Futures
 	    government = autonomous_dependency
 	    political_reform = none_voting
 	    political_reform = party_appointed
@@ -6008,18 +6043,6 @@ country_event = {
 	    political_reform = closed_borders
 	    political_reform = mandatory_service
 	    political_reform = primary_culture_only
-		BRG = {
-		   relation = { who = THIS value = -400 }
-	       diplomatic_influence = { who = THIS value = -400 }	
-		}
-		SCA = {
-		   relation = { who = THIS value = 400 }
-	       diplomatic_influence = { who = THIS value = 400 }	
-		   create_vassal = THIS
-		}			
-	    ai_chance = {
-	       factor = 50
-	    }
 	}
 }
 
@@ -6141,7 +6164,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 		tag = OLD
-		CFR = { vassal_of = BRG }
+		CFR = { OR = { vassal_of = BRG vassal_of = PBG } }
 		has_country_flag = OLD_to_annex
     }
 	

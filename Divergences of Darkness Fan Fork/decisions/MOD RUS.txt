@@ -2583,7 +2583,18 @@ political_decisions = {
 				   is_greater_power = yes
 			       is_secondary_power = yes
 				}
-			    all_core = { owned_by = THIS }
+			    all_core = { 
+				   OR = { 
+				      owned_by = THIS
+					  province_id = 339
+					  province_id = 3253
+					  province_id = 342
+					  province_id = 984
+					  province_id = 337
+					  province_id = 983
+					  province_id = 2587					  
+				   } 
+				}
 			}
 		
 			effect = {
@@ -3026,9 +3037,10 @@ political_decisions = {
 			   prestige = 20
 	           relation = { who = PLC value = -400 }
 	           diplomatic_influence = { who = PLC value = -400 }
-			   BLR = { all_core = { add_core = RUG } }
+			   BLR = { all_core = { limit = { NOT = { is_core = RUS } } add_core = RUG } }
                RUS_955 = { add_core = RUG }
-               RUS_958 = { add_core = RUG }
+               RUS_958 = { add_core = RUG }		
+               957 = { add_core = RUG }			   
                961 = {
                   limit = {
                      is_core = THIS
@@ -3975,7 +3987,11 @@ political_decisions = {
 		    potential = {
 		       tag = RUS
 			   has_country_flag = tier_three_western_active
-               NOT = { has_country_flag = RUSkllingprussia }			   
+               NOT = { has_country_flag = RUSkllingprussia }	
+               OR = {
+                  has_global_flag = balters_are_gone
+                  has_country_flag = local_purge_balters
+               }			
 		    }
 		
 			allow = {
@@ -3999,6 +4015,7 @@ political_decisions = {
 		
 			effect = {
                PRU_695 = { add_core = RUS }
+			   remove_accepted_culture = prussian
 		       set_country_flag = RUSkllingprussia   
 			}
 			
@@ -5811,6 +5828,41 @@ political_decisions = {
 			ai_will_do = {
 				factor = 1
 			}
+	}
+	
+	treaty_of_warsaw = {
+		picture = treaty_signing
+		potential = {
+	        tag = RUS
+			has_global_flag = third_partition_attempt
+			war_with = POL
+		}
+		
+		allow = {			
+			POL = { national_provinces_occupied = 0.99 }
+			706 = { controlled_by = THIS }
+		}
+		
+		effect = {
+		    prestige = 5
+		    any_country = {
+			   limit = {
+			        OR = {
+			           alliance_with = POL
+					   is_sphere_leader_of = POL
+				    }
+				} 
+				end_war = THIS
+				leave_alliance = POL
+				diplomatic_influence = { who = POL value = -400 }
+		    }
+			end_war = POL
+			create_vassal = POL
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
 	}
 	
    ########### Governorates ################

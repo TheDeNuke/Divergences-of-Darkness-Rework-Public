@@ -718,6 +718,7 @@ political_decisions = {
 		}
 		
 		allow = { 
+		    is_greater_power = yes
 			revolution_n_counterrevolution = 1 
 			owns = 729 
 		}
@@ -727,6 +728,60 @@ political_decisions = {
 			set_country_flag = claimed_trentino
 		}
 	
+	}
+	
+	end_the_trent_question = { 
+		
+		potential = { 
+			OR = { tag = ITA tag = ARI tag = FRT } 
+			has_country_flag = claimed_trentino
+			NOT = { has_country_flag = ended_trentino } 
+		}
+		
+		allow = {
+		    is_greater_power = yes
+		    OR = {
+			   mass_politics = 1
+			   SGF = { exists = yes NOT = { is_greater_power = yes truce_with = THIS } }
+			   GER = { exists = yes NOT = { is_greater_power = yes truce_with = THIS } }
+			   GCF = { exists = yes NOT = { is_greater_power = yes truce_with = THIS } }
+			   HLR = { exists = yes NOT = { is_greater_power = yes truce_with = THIS } }
+			}
+			TRE = { all_core = { owned_by = THIS } }		
+		}
+		
+		effect = { 
+			TRE = { all_core = { remove_core = TIR remove_core = GER remove_core = SGF } } 
+			set_country_flag = ended_trentino
+			any_owned = {
+			    limit = {
+			       province_id = 612
+				}
+				add_core = TIR
+		    }
+			any_owned = {
+			    limit = {
+			       province_id = 613
+				}
+				add_core = TIR
+		    }
+			any_owned = {
+			    limit = {
+			       province_id = 615
+				}
+				add_core = TIR
+		    }
+			random_owned = {
+			    limit = {
+				    owner = {
+				       owns = 612
+					   owns = 613
+					   owns = 615
+				    }
+			    }
+				owner = { release_vassal = TIR }
+		    }
+		}	
 	}
 	
 	### Isolationist German Bohemia exists and that's not good for our geopolitical situation. Pretty awful actually. Bohemia might be small but they are a industrial powerhouse with Silesia
