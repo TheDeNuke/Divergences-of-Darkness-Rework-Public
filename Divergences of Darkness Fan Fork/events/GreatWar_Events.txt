@@ -12587,12 +12587,17 @@ country_event = {
 		
 #### UNIQUE PART ####	
 
+        all_core = { remove_core = THIS }
+
 		random_owned = {
 			limit = {
 				owner = { has_country_flag = PLA_ARCADIA }
 			}
 			owner = {
 			    clr_country_flag = PLA_ARCADIA
+				clr_global_flag = NBG_NEW_ARCADIAN
+				clr_global_flag = NBG_OLD_ARCADIAN
+				clr_global_flag = NBG_BURGUNDIAN
 				set_global_flag = NBG_LIONS
 				change_tag = PLA
 			}
@@ -12604,15 +12609,10 @@ country_event = {
 			}
 			owner = {
 			    clr_country_flag = NBG_ARCADIA
-				change_tag = NBG
-			}
-		}
-		
-		random_owned = {
-			limit = {
-				owner = { has_country_flag = NBG_ARCADIA }
-			}
-			owner = {
+				clr_global_flag = NBG_NEW_ARCADIAN
+				clr_global_flag = NBG_OLD_ARCADIAN
+				clr_global_flag = NBG_BURGUNDIAN
+				set_global_flag = NBG_LIONS
 				change_tag = NBG
 			}
 		}
@@ -12622,11 +12622,104 @@ country_event = {
 				owner = { has_country_flag = in_varietate_concordia }
 			}
 			owner = {
+				clr_global_flag = NBG_NEW_ARCADIAN
+				clr_global_flag = NBG_OLD_ARCADIAN
+				clr_global_flag = NBG_BURGUNDIAN
+				set_global_flag = NBG_LIONS
 				change_tag = VIN
 			}
 		}
+		
+		NA_115 = { add_core = DNG }
+		NA_106 = { add_core = DNG }
+		NA_109 = { add_core = DNG }
+		
+		### Release ALL the Minor Arcadian Tags ###
+		
+        any_owned = {
+            limit = {
+                is_core = LOU
+            }
+			remove_core = PLA
+			remove_core = NBG
+			remove_core = THIS
+            secede_province = LOU
+        }		
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = SKR
+            }
+			remove_core = THIS
+            secede_province = SKR
+        }
+        any_owned = {
+            limit = {
+                is_core = IRO
+            }
+			remove_core = THIS
+            secede_province = IRO
+        }
+        any_owned = {
+            limit = {
+                is_core = HHR
+            }
+			remove_core = THIS
+            secede_province = HHR
+        }
+        any_owned = {
+            limit = {
+                is_core = ANI
+            }
+			remove_core = THIS
+            secede_province = ANI
+        }
+        any_owned = {
+            limit = {
+                is_core = DNG
+            }
+			remove_core = THIS
+            secede_province = DNG
+        }
+        any_owned = {
+            limit = {
+                is_core = OUM
+            }
+			remove_core = THIS
+            secede_province = OUM
+        }
+        any_owned = {
+            limit = {
+                is_core = PLA
+				NOT = { is_core = THIS }
+            }
+			remove_core = THIS
+            secede_province = PLA
+        }
+        any_owned = {
+            limit = {
+                is_core = VIN
+				NOT = { is_core = THIS }
+            }
+			remove_core = THIS
+            secede_province = VIN
+        }
+        any_owned = {
+            limit = {
+                is_core = NBG
+				NOT = { is_core = THIS }
+            }
+			remove_core = THIS
+            secede_province = NBG
+        }
 
-#### UNIQUE PART ENDS HERE #####
+        #### UNIQUE PART ENDS HERE #####
 
 		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
 		random_owned = {
@@ -13338,6 +13431,18 @@ country_event = {
 		
 		SIL_684 = { add_core = TES }
 		
+		# Release FRE if it is a vassal
+		
+        random_country = {
+            limit = {
+                tag = FRE
+                vassal_of = THIS
+            }
+            THIS = {
+                release_vassal = FRE
+            }
+        }		
+		
         #If any burgundian tag has a truce then give them Swabia and Confederation as puppets
 		
         random_country = {
@@ -13652,7 +13757,7 @@ country_event = {
 			country_event = 96015
 		}		
 		
-		#release fiume and treste just to make sure
+		#release fiume, slovenia and treste just to make sure
         any_country = {
             limit = {
                 tag = FIU
@@ -13677,6 +13782,20 @@ country_event = {
                     limit = { is_core = TRE }
 					remove_core = THIS
                     secede_province = TRE
+                }
+            }
+        }
+
+        any_country = {
+            limit = {
+                tag = SLO
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SLO }
+					remove_core = THIS
+                    secede_province = SLO
                 }
             }
         }

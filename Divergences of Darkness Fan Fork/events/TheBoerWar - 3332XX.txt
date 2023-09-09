@@ -515,9 +515,9 @@ country_event = {
 	option = { 
 	name = "SAFN12.A"
 	prestige = -10
-    NFL = { prestige = -10 }
+    NFL = { set_country_flag = NFL_status_quo prestige = -10 }
+	clr_global_flag = NFL_TRN_War
 	set_country_flag = TRN_status_quo
-	NFL = { set_country_flag = NFL_status_quo }
 	}
 }
 
@@ -2293,6 +2293,7 @@ country_event = {
     }
 	has_global_flag = SAFFGWEnd
 	has_global_flag = SAFFGWWhitePeace
+	NOT = { has_global_flag = SAFNHCWar }
 	NOT = { has_global_flag = SAFNHConcluded }
 	}
 	
@@ -2406,7 +2407,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = { 
-	   days = 7
+	   days = 3
 	}
 	
 	option = { 
@@ -2466,7 +2467,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = { 
-	   days = 7
+	   days = 3
 	}
 	
 	option = { 
@@ -2580,7 +2581,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = { 
-	   days = 7
+	   days = 2
 	}
 	
 	option = { 
@@ -2605,6 +2606,58 @@ country_event = {
 	   remove_country_modifier = geus_status_quo
 	   remove_country_modifier = war_justification_blocked	
 	}
+	}
+}
+
+### NHC - AI is braindead and did a white peace resulting in the above event being impossible to trigger - Autoannex all other tags into one of the random survivors.
+
+country_event = {
+	id = 3332430
+	title = "This is for the dumb AI"
+	desc = "Please form Batavia for me daddy"
+	picture = "boer_war_camps"
+	
+	trigger = {
+	has_global_flag = SAFNHCWar
+	NOT = { has_global_flag = SAFNHConcluded }
+	primary_culture = boer
+	war = no
+    NOT = { tag = SAF }	
+	}
+	
+	mean_time_to_happen = { 
+	   days = 40
+	}
+	
+	option = { 
+	name = "free BTV"
+	prestige = -5
+	clr_global_flag = SAFNHCWar
+	set_global_flag = SAFNHConcluded
+	remove_country_modifier = small_country_draft
+	remove_country_modifier = CLM_fight
+	remove_country_modifier = geus_status_quo
+	remove_country_modifier = war_justification_blocked	
+	any_country = {
+	   limit = {
+	   OR = {
+	      primary_culture = boer
+	      primary_culture = afro_south_african
+	   }
+	   NOT = { tag = SAF }
+	   }
+	   end_war = LWE
+	   end_war = NFL
+	   end_war = BTV
+	   end_war = TRN
+	   end_war = ORA
+	   remove_country_modifier = small_country_draft
+	   remove_country_modifier = CLM_fight
+	   remove_country_modifier = geus_status_quo
+	   remove_country_modifier = war_justification_blocked
+	   annex_to = THIS
+	}
+	change_tag = BTV
 	}
 }
 
@@ -3799,7 +3852,7 @@ country_event = {
 		tag = GRQ
 		vassal_of = THIS 
 		}
-		country_event = { id = 333257 days = 2 }
+		country_event = { id = 333258 days = 2 }
 		}
 		SAF = { primary_culture = burgundian add_accepted_culture = boer }
 
@@ -3953,7 +4006,7 @@ country_event = {
 		tag = GRQ
 		vassal_of = THIS 
 		}
-		country_event = { id = 333257 days = 2 }
+		country_event = { id = 333258 days = 2 }
 		}
 		SAF = { primary_culture = burgundian add_accepted_culture = boer }
 

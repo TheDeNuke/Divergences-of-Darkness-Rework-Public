@@ -121,7 +121,7 @@ political_decisions = {
 			treasury = -500000
 			social_reform = good_health_care		
 			any_pop = {
-			   consciousness = -3
+			   consciousness = -5
 			   militancy = -5
 			}           	    
 		}
@@ -161,7 +161,7 @@ political_decisions = {
 			treasury = -300000
 			social_reform = good_schools
 			any_pop = {
-			   consciousness = -3
+			   consciousness = -5
 			   militancy = -5
 			}              
 		}
@@ -200,8 +200,8 @@ political_decisions = {
 			treasury = -300000
 			political_reform = bankruptcy
 			any_pop = {
-			   consciousness = -2
-			   militancy = -2
+			   consciousness = -4
+			   militancy = -4
 			}               
 		}
 		
@@ -1994,45 +1994,6 @@ political_decisions = {
 		
 		ai_will_do = { factor = 1 }
 	}
-	
-
-	reconquer_rhineland = {
-		picture = embrace_the_boer
-		potential = {
-		    ai = yes
-			OR = {
-			   AND = {
-			      tag = BRG
-				  NOT = { exists = PBG }
-			   }
-			   AND = {
-			      tag = PBG
-				  NOT = { exists = BRG }
-			   }
-			}
-			has_country_flag = reconquer_rhineland
-		}
-		
-		allow = {
-		    war = no
-	        NOT = { war_exhaustion = 10 }
-		}
-		
-		effect = {
-		   clr_country_flag = reconquer_rhineland
-		   war = {
-			   target = RHI
-			   attacker_goal = {
-				   casus_belli = conquest_any
-			   }
-			   defender_goal = {
-				   casus_belli = cut_down_to_size
-			   }
-		    }
-		}
-		
-		ai_will_do = { factor = 1 }
-	}	
 
 	reconquer_lorraine  = {
 		picture = embrace_the_boer
@@ -2048,7 +2009,7 @@ political_decisions = {
 				  NOT = { exists = BRG }
 			   }
 			}
-			NOT = { exists = RHI }
+			NOT = { truce_with = LRR }
 			has_country_flag = reconquer_lorraine
 		}
 		
@@ -2059,17 +2020,29 @@ political_decisions = {
 		
 		effect = {
 		   clr_country_flag = reconquer_lorraine
-		   war = {
-			   target = LRR
-			   attacker_goal = {
-				   casus_belli = conquest_any
-			   }
-			   defender_goal = {
-				   casus_belli = cut_down_to_size
-			   }
+		   any_country = { 
+		        limit = { 
+			       tag = LRR
+				   ai = yes
+			    }
+				annex_to = THIS
+		   }
+		   any_country = {
+		        limit = { 
+			       tag = LRR
+				   ai = no
+			    }
+		        war = {
+			          target = THIS
+			          attacker_goal = {
+				         casus_belli = cut_down_to_size
+			          }
+			          defender_goal = {
+				         casus_belli = conquest_any
+			          }
+				}
 		    }
-		}
-		
+		}		
 		ai_will_do = { factor = 1 }
 	}	
 	
