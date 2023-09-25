@@ -2964,7 +2964,7 @@ political_decisions = {
 
 	organize_chiri = {
 		potential = {
-			OR = { tag = SCA tag = SPA } 
+			tag = SPA 
 		    NOT = { has_country_flag = post_colonial_era }
 			NOT = {
 				exists = AYM
@@ -2976,6 +2976,7 @@ political_decisions = {
 		allow = {
 			war = no
 			owns = 2325
+			state_n_government = 1 
 		}
 		
 		effect = {
@@ -2988,6 +2989,43 @@ political_decisions = {
 			random_owned = { limit = { owner = { primary_culture = scandinavian } } AYM = { primary_culture = scandinavian } }
 			any_owned = {
 				limit = { is_core = AYM }
+				add_province_modifier = {
+					name = colonial_recruitment
+					duration = 720
+				}
+			}			
+		}
+	}
+	
+	reorganize_ARU = {
+		potential = {
+			tag = SCA 
+		    NOT = { has_country_flag = post_colonial_era }
+			AND = { has_country_flag = decided_NMC has_country_flag = rejected_new_mercia }
+			NOT = {
+				exists = ARU
+				has_global_flag = chiri_organized
+			}
+			owns = 2325
+		}
+		
+		allow = {
+			war = no
+			owns = 2325
+			state_n_government = 1 
+		}
+		
+		effect = {
+			set_global_flag = chiri_organized
+			any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } add_core = ARU } 
+			prestige = 3
+			ARU = { 
+				religion = protestant
+				primary_culture	= scandinavian 
+				add_accepted_culture = mapuche
+				}
+			any_owned = {
+				limit = { is_core = ARU }
 				add_province_modifier = {
 					name = colonial_recruitment
 					duration = 720

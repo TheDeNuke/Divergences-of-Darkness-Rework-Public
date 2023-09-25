@@ -12,7 +12,7 @@ country_event = {
 	
 	option = { 
 	name = "36720.A"
-	
+	set_country_flag = this_is_tuscany
 	define_general = {
 		name = "Pietro Testi"
 		personality = cool_minded 
@@ -3506,6 +3506,14 @@ country_event = {
 		remove_country_modifier = the_compromesso
 		political_reform = federalism
 		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+		    owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+		}	
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+		    owner = { clr_country_flag = this_is_tuscany }
+		}
+		random_owned = {
 			limit = {
 			   owner = { NOT = { tag = PIE } NOT = { has_global_flag = AVIGNON_CRISIS } OR = { government = theocracy government = absolute_monarchy government = prussian_constitutionalism government = hms_government government = fascist_monarchy }  }
 			}
@@ -3722,6 +3730,14 @@ country_event = {
 	    add_accepted_culture = central_italian
 	    add_accepted_culture = north_italian
         political_reform = federalism
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+			owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+		}	
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+		    owner = { clr_country_flag = this_is_tuscany }
+		}
 		any_country = {
 		   limit = {
 		      owns = 470
@@ -4124,6 +4140,14 @@ country_event = {
 
 	option = {
 		name = "SAR21.A"
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+			owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+		}	
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+		    owner = { clr_country_flag = this_is_tuscany }
+		}
 		clr_country_flag = savoyard_blocker
 		prestige = 10
 		all_core = { remove_core = ITC }
@@ -4248,6 +4272,14 @@ country_event = {
 		name = "SAR24.A"
 		prestige = 20
 		inherit = PAP
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+			owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+		}	
+		random_owned = {
+			limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+		    owner = { clr_country_flag = this_is_tuscany }
+		}
 		clr_country_flag = savoyard_blocker
 		clr_global_flag = the_liberation_war_ITC	
 		all_core = { remove_core = ITC }
@@ -6967,5 +6999,203 @@ province_event = {
 			name = ARI_papal_autonomy
 			duration = -1
 		}
+	}
+}
+
+### The Italo-German Revolutionary War ###
+
+### MAJOR - Italy has declared war on us with the intent to overthrow our government ###
+
+country_event = {
+	id = 124371
+	title = "IREV1.T" 
+	desc = "IREV1.D" 
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "IREV1.A"
+        any_pop = { militancy = -5 }  
+	}
+}
+
+### Our government has been toppled - Italy has risen ###
+
+country_event = {
+	id = 124372
+	title = "IREV2.T" 
+	desc = "IREV2.D" 
+	
+	trigger = {
+	    tag = SGF
+		has_global_flag = ITA_revolutionary_war
+		NOT = { war_with = ITA }
+		has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}	
+	
+	option = {
+		name = "IREV2.A"
+		clr_global_flag = ITA_revolutionary_war
+		clr_country_flag = custom_treaty_loser
+		TRE = { all_core = { add_core = ITA remove_core = THIS } } 
+		any_owned = {
+		   limit = {
+		      is_core = ITA
+		   }
+		   remove_core = THIS
+		   secede_province = ITA
+		}
+		ITA = { set_country_flag = claimed_trentino country_event = 124373 }
+        prestige_factor = -0.5
+	    government = democracy 
+	    ruling_party_ideology = liberal
+	    political_reform = universal_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = all_trade_unions
+	    political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    set_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    set_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    set_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power	
+        any_country = {
+            limit = {
+               NOT = { tag = THIS }
+			   alliance_with = THIS
+            }		
+            relation = { who = THIS value = -200 }	
+            leave_alliance = THIS 
+        }			
+	}
+}
+
+### The Italian Mission has now been legitimized ###
+
+country_event = {
+	id = 124373
+	title = "IREV3.T" 
+	desc = "IREV3.D" 
+	
+	is_triggered_only = yes	
+	
+	option = {
+		name = "IREV3.A"
+		prestige = 40
+	    relation = { who = FROM value = 400 }
+	    create_alliance = FROM 
+	    diplomatic_influence = { who = FROM value = 400 }	
+        set_country_flag = successful_revolutionary_war		
+	}
+}
+
+### We have defeated the Italian Menace by either enforcing a war goal or a white peace over them ###
+
+country_event = {
+	id = 124374
+	title = "IREV4.T" 
+	desc = "IREV4.D" 
+	
+	trigger = {
+	    tag = SGF
+		has_global_flag = ITA_revolutionary_war
+		NOT = { war_with = ITA }
+        NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}	
+	
+	option = {
+		name = "IREV4.A"
+		clr_global_flag = ITA_revolutionary_war
+		clr_country_flag = custom_treaty_loser
+		ITA = { country_event = 124375 }
+        prestige = 40			
+	}
+}
+
+### We have failed to enforce our will over a bunch of mountain germans - The Republic Collapses ##
+
+country_event = {
+	id = 124375
+	title = "IREV5.T" 
+	desc = "IREV5.D" 
+	
+	major = yes
+	is_triggered_only = yes	
+	
+	option = {
+		name = "IREV3.A"
+		clr_country_flag = tuscany_revolutionary
+        government = presidential_dictatorship 
+        political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = no_trade_unions
+	    political_reform = first_past_the_post
+	    political_reform = underground_parties 	
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = conservative_party_in_power
+		clr_global_flag = ITA_revolutionary_war
+		clr_country_flag = custom_treaty_loser
+		TRE = { all_core = { add_core = SGF remove_core = THIS } } 
+		any_owned = {
+		   limit = {
+		      is_core = SGF
+		   }
+		   remove_core = THIS
+		   secede_province = SGF
+		}
+		set_country_flag = claimed_trentino
+        prestige_factor = -0.5
 	}
 }

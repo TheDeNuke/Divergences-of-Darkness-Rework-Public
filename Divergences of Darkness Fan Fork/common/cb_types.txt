@@ -428,6 +428,12 @@ acquire_core_state = {
 		NOT = { is_our_vassal = THIS }
 		number_of_states = 2 # annex if you want their last state
 		any_owned_province = { is_core = THIS }
+		OR = {
+		    any_owned_province = {
+			   NOT = { is_core = THIS }
+		    }
+			THIS = { ai = no }
+	    }
 		NOT = { has_country_modifier = neutrality }
 		THIS = { NOT = { has_country_modifier = neutrality } }
 		OR = {
@@ -481,24 +487,33 @@ acquire_all_cores = {
 
 	badboy_factor = 0
 	prestige_factor = 2
-	peace_cost_factor = 0.5
+	peace_cost_factor = 0.7
 	penalty_factor = 1
+	always = yes
 
 	break_truce_prestige_factor = 5
 	break_truce_infamy_factor = 2
 	break_truce_militancy_factor = 2
 	truce_months = 48
-	
+
 	good_relation_prestige_factor = 1
 	good_relation_infamy_factor = 1
 	good_relation_militancy_factor = 1
 
 	can_use = {
-		always = no
-		NOT = { is_our_vassal = THIS }
-		number_of_states = 2 # annex if you want their last state		
 		any_owned_province = { is_core = THIS }
 		any_owned_province = { NOT = { is_core = THIS } }
+		civilized = yes
+		number_of_states = 2 # annex if you want their last state
+		OR = {
+			war_with = THIS
+			THIS = { NOT = { has_country_modifier = punitive_effects } }
+		}
+		OR = {
+			NOT = { has_country_flag = dismantle_declared }
+			THIS = { NOT = { has_country_flag = in_great_war } }
+			THIS = { ai = no }
+		}
 		NOT = { has_country_modifier = neutrality }
 		THIS = {
 			NOT = {
@@ -509,39 +524,38 @@ acquire_all_cores = {
 				}
 			}
 		}
-		OR = {
-			war_with = THIS
-			THIS = { NOT = { has_country_modifier = punitive_effects } }
-		}
-		OR = {
-			NOT = { has_country_flag = dismantle_declared }
-			THIS = { NOT = { has_country_flag = in_great_war } }
-			THIS = { ai = no }
-		}
 	}
-	
+
 	allowed_countries = {
 		FROM = { tag = THIS }
 	}
-	
+
 	allowed_states = {
 		any_owned_province = { is_core = THIS }
 		#NOT = { any_owned_province = { is_capital = yes } }
+		OR = {
+			THIS = { ai = no }
+			AND = {
+				THIS = { any_owned_province = { port = yes } }
+				any_owned_province = { port = yes }
+			}
+			any_owned_province = { any_neighbor_province = { owned_by = THIS } }
+		}
 	}
 
 	all_allowed_states = yes
 	po_transfer_provinces = yes
-	
+
 	war_name = WAR_ALL_CORES_NAME
-	
+
 	on_add = {
-		move_issue_percentage = { 
-			from = jingoism 
+		move_issue_percentage = {
+			from = jingoism
 			to = pro_military
 			value = 0.25
 		}
 	}
-	
+
 	on_po_accepted = {
 		country_event =	2650	# Territorial Loss event
 	}

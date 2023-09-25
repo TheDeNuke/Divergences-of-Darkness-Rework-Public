@@ -2,6 +2,7 @@ country_event = {
 	id = 66900 
 	title = "AND1.T" #Empire of the Sun -intro event 
 	desc = "AND1.D" 
+	picture = "inca_raymi"
 	
 	trigger = { 
 	tag = INC 
@@ -30,12 +31,13 @@ country_event = {
 	id = 66901
 	title = "AND2.T" #End of the Mapuche Revolt
 	desc = "AND2.D" 
+	picture = "Mapuche_war"
 	
 	trigger = { 
-	tag = INC 
-	war = no 
-	ARU = { is_vassal = yes } 
-	NOT = { has_country_flag = Mapuche_revolt_end }
+		tag = INC 
+		war = no 
+		OR = { ARU = { is_vassal = yes } owns = 2328 AND = { ai = yes year = 1837 } }
+		NOT = { has_country_flag = Mapuche_revolt_end }
 	}
 	
 	fire_only_once = yes 
@@ -45,9 +47,9 @@ country_event = {
 	}
 	
 	option = { 
-	name = "AND2.A"
-	set_country_flag = Mapuche_revolt_end
-	kill_leader = 253
+		name = "AND2.A"
+		set_country_flag = Mapuche_revolt_end
+		kill_leader = 261
 	}
 }
 
@@ -55,6 +57,7 @@ country_event = {
 	id = 66902
 	title = "AND3.T" #The Death of the Sapa Inca is known in Cuzco
 	desc = "AND3.D" 
+	picture = "inca_raymi"
 	
 	trigger = { 
 	NOT = { has_country_flag = death_INCA } 
@@ -74,6 +77,13 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+		ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0 
+				has_global_flag = Llapa_global
+			}
+		}
 	}
 	
 	option = { 
@@ -85,6 +95,13 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+		ai_chance = { 
+			factor = 60 
+			modifier = { 
+				factor = 0 
+				has_global_flag = Washkar_global
+			}
+		}
 	}
 }
 
@@ -93,6 +110,7 @@ country_event = {
 	id = 66903
 	title = "AND4.T" #Washkar and the Inti High priest
 	desc = "AND4.D" 
+	picture = "inti_religion"
 	
 	is_triggered_only = yes 
 	
@@ -103,11 +121,21 @@ country_event = {
 		   value = 1
 	    }
 	country_event = 66904 
+		ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND4.B" #Bad option : idk what it is
 	country_event = 66904 
+	ai_chance = { 
+			factor = 40
+			modifier = { 
+				factor = 0 
+				has_global_flag = Washkar_global
+			}
+		}
 	}
 }
 
@@ -115,6 +143,7 @@ country_event = {
 	id = 66904
 	title = "AND5.T" #Washkar and the Altiplano nobility
 	desc = "AND5.D" 
+	picture = "inca_village"
 	
 	is_triggered_only = yes 
 	
@@ -125,11 +154,21 @@ country_event = {
 		   value = 1
 	    }
 	country_event = 66905
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND5.B" #Bad option : idk what it is
 	country_event = 66905
+	ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0 
+				has_global_flag = Washkar_global
+			}
+		}
 	}
 }
 
@@ -137,12 +176,20 @@ country_event = {
 	id = 66905
 	title = "AND6.T" #The time for battle
 	desc = "AND6.D" 
+	picture = "inca_cuirassier" 
 	
 	is_triggered_only = yes 
 	
 	option = { 
 	name = "AND6.A" #Bad option : we wait!
 	country_event = { id = 66906 days = 60 } 
+	ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0 
+				has_global_flag = Washkar_global
+			}
+		}
 	}
 	
 	option = { 
@@ -152,6 +199,9 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 }
 
@@ -159,6 +209,7 @@ country_event = {
 	id = 66906
 	title = "AND7.T" #Cavalry in battle
 	desc = "AND7.D" 
+	picture = "inca_cuirassier" 
 	
 	is_triggered_only = yes 
 	
@@ -169,11 +220,21 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+		ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND7.B" #bad option : Washkar doesn't lead
 	set_country_flag = end_INC_CW
+	ai_chance = { 
+			factor = 40
+			modifier = { 
+				factor = 0 
+				has_global_flag = Washkar_global
+			}
+		}
 	}
 }
 country_event = {
@@ -186,6 +247,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = INC
+		NOT = { year = 1840 }
 		has_country_flag = end_INC_CW
 		has_country_flag = Washkar_CW
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
@@ -249,6 +311,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = INC
+		NOT = { year = 1840 }
 		has_country_flag = end_INC_CW
 		has_country_flag = Washkar_CW
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
@@ -316,6 +379,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = INC
+		NOT = { year = 1840 }
 		has_country_flag = end_INC_CW
 		has_country_flag = Washkar_CW
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
@@ -381,6 +445,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = INC
+		NOT = { year = 1840 }
 		has_country_flag = end_INC_CW
 		has_country_flag = Washkar_CW
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
@@ -434,6 +499,7 @@ country_event = {
 	id = 66911
 	title = "AND12.T" #Llapa and the artillery logistics
 	desc = "AND12.D" 
+	picture = "inca_cavalry_cannon" 
 	
 	is_triggered_only = yes 
 	
@@ -444,11 +510,21 @@ country_event = {
 		   value = 1
 	    }
 	country_event = { id = 66912 days = 60 }
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND12.B" #Bad option : rush towards Cuzco!
 	country_event = { id = 66912 days = 35 }
+	ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0
+				has_global_flag = Llapa_global
+			}
+		}
 	}
 }
 
@@ -456,6 +532,7 @@ country_event = {
 	id = 66912
 	title = "AND13.T" #Contacting the Altiplano communities
 	desc = "AND13.D" 
+	picture = "inca_village"
 	
 	is_triggered_only = yes 
 	
@@ -466,11 +543,21 @@ country_event = {
 		   value = 1
 	    }
 	country_event = { id = 66913 days = 25 }
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND13.B" #Bad option : idk what it is
 	country_event = { id = 66913 days = 25 }
+	ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0
+				has_global_flag = Llapa_global
+			}
+		}
 	}
 }
 
@@ -478,12 +565,20 @@ country_event = {
 	id = 66913
 	title = "AND14.T" #Securing the Lupaca
 	desc = "AND14.D" 
+	picture = "inca_fight"
 	
 	is_triggered_only = yes 
 	
 	option = { 
 	name = "AND14.A" #Bad option : idk
 	country_event = { id = 66914 days = 5 } 
+	ai_chance = { 
+			factor = 40
+			modifier = { 
+				factor = 0
+				has_global_flag = Llapa_global
+			}
+		}
 	}
 	
 	option = { 
@@ -493,6 +588,9 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 }
 
@@ -500,6 +598,7 @@ country_event = {
 	id = 66914
 	title = "AND15.T" #The Square formation
 	desc = "AND15.D" 
+	picture = "battle_andes" 
 	
 	is_triggered_only = yes 
 	
@@ -515,11 +614,21 @@ country_event = {
 		   which = INC_CW
 		   value = 1
 	    }
+	ai_chance = { 
+			factor = 60 
+		}
 	}
 	
 	option = { 
 	name = "AND15.B" #bad option : don't redeem the disgraced general for the fight
 	set_country_flag = end_INC_CW
+	ai_chance = { 
+			factor = 40 
+			modifier = { 
+				factor = 0
+				has_global_flag = Llapa_global
+			}
+		}
 	}
 }
 
@@ -535,6 +644,7 @@ country_event = {
 	    tag = INC
 		has_country_flag = end_INC_CW
 		has_country_flag = Llapa_CW
+		NOT = { year = 1840 }
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
 	    NOT = {
 	       check_variable = {
@@ -594,6 +704,7 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = INC
+		NOT = { year = 1840 }
 		has_country_flag = end_INC_CW
 		has_country_flag = Llapa_CW
 		NOT = { OR = { has_country_flag = Llapa_INC has_country_flag = Washkar_INC } }
@@ -658,6 +769,7 @@ country_event = {
 
 	trigger = {	
 	    exists = yes
+		NOT = { year = 1840 }
 	    tag = INC
 		has_country_flag = end_INC_CW
 		has_country_flag = Llapa_CW
@@ -725,6 +837,7 @@ country_event = {
 
 	trigger = {	
 	    exists = yes
+		NOT = { year = 1840 }
 	    tag = INC
 		has_country_flag = end_INC_CW
 		has_country_flag = Llapa_CW
@@ -781,6 +894,7 @@ country_event = {
 	id = 66919 #Both Get it : Cuzco, the Navel of the World
 	title = "AND20.T"
 	desc = "AND20.D"
+	picture = "inca_raymi"
 	
 	trigger = { 
 	tag = INC 
@@ -817,6 +931,7 @@ country_event = {
 	id = 66920 #Both Get it : Trains
 	title = "AND21.T"
 	desc = "AND21.D"
+	picture = "iron_qhapaq_nan" 
 	
 	trigger = { 
 	tag = INC 
@@ -844,6 +959,8 @@ country_event = {
 	id = 66921 #Both Get it : Foreigners in the Empire
 	title = "AND22.T"
 	desc = "AND22.D"
+	picture = "european_experts"
+	
 	
 	trigger = { 
 	tag = INC 
@@ -868,6 +985,7 @@ country_event = {
 	id = 66922 #Both Get it : Tensions in the West
 	title = "AND23.T"
 	desc = "AND23.D"
+	picture = "andine_fort"
 	
 	trigger = { 
 	tag = INC 
@@ -893,6 +1011,7 @@ country_event = {
 	id = 66923 #Both Get it : Tensions in the East
 	title = "AND24.T"
 	desc = "AND24.D" 
+	picture = "andine_fort"
 	
 	is_triggered_only = yes 
 	
@@ -906,6 +1025,7 @@ country_event = {
 	id = 66924 #400 year of the Empire
 	title = "AND25.T"
 	desc = "AND25.D"
+	picture = "inca_raymi"
 	
 	trigger = { 
 	tag = INC 
@@ -925,9 +1045,9 @@ country_event = {
 	name = "AND25.A"
 	set_country_flag = 400year
 	any_country = { 
-	limit = { rank = 8 } 
-	relation = { who = THIS value = 50 } 
-		}
+	limit = { is_greater_power = yes } 
+	   relation = { who = THIS value = 50 } 
+	}
 	prestige = 5 
 	} 
 }
@@ -936,6 +1056,7 @@ country_event = {
 	id = 66925 #Llapa and the Mapuche
 	title = "AND26.T"
 	desc = "AND26.D"
+	picture = "Mapuche_war"
 	
 	trigger = { 
 	tag = INC
@@ -997,6 +1118,7 @@ country_event = {
 	id = 66926 #Washkar and the Mapuche
 	title = "AND27.T"
 	desc = "AND27.D"
+	picture = "Mapuche_war"
 	
 	trigger = { 
 	tag = INC 
@@ -1058,6 +1180,7 @@ country_event = {
 	id = 66927 #Military reforms of Washkar
 	title = "AND28.T"
 	desc = "AND28.D"
+	picture = "inca_army_streets"
 	
 	trigger = { 
 	tag = INC 
@@ -1090,21 +1213,22 @@ country_event = {
 	id = 66928 #Oh no raiders continue to be active on the border
 	title = "AND29.T"
 	desc = "AND29.D"
+	picture = "native_killed_by_soldier"
 	
 	trigger = { 
-	tag = NAN 
-	NOT = { has_global_flag = beginning_INCNAN_war } 
-	year = 1840
+		tag = NAN 
+		NOT = { has_global_flag = beginning_INCNAN_war } 
+		year = 1840
 	}
 	
 	mean_time_to_happen = { 
-	days = 20 
+		days = 20 
 	} 
 	
 	option = { 
-	name = "AND29.A" 
-	badboy = 3 
-	set_global_flag = beginning_INCNAN_war 
+		name = "AND29.A" 
+		badboy = 3 
+		set_global_flag = beginning_INCNAN_war 
 	}
 }
 
@@ -1112,6 +1236,7 @@ country_event = {
 	id = 66929 #Oh no raiders continue to be active on the border
 	title = "AND30.T"
 	desc = "AND30.D"
+	picture = "native_killed_by_soldier"
 	
 	trigger = { 
 	tag = INC 
@@ -1128,6 +1253,8 @@ country_event = {
 	NAN_4 = { add_core = THIS } 
 	NAN_2 = { add_core = THIS } 
 	NAN_1 = { add_core = THIS } 
+	2355 = { add_core = THIS } 
+	2395 = { add_core = THIS } 
 	}
 	
 	option = { 
@@ -1155,29 +1282,13 @@ country_event = {
 	NAN = { country_event = 66934 }
 	}
 	
-	option = { 
-	name = "AND30.C" #Neuter the menace
-	badboy = 19
-	random_owned = { limit = { owner = { ai = no } } NAN = { add_country_modifier = { name = taiping_draft duration = 300 } } }
-	
-	set_country_flag = choosing_NAN_WAR 
-	war = { 
-		target = NAN
-		attacker_goal =  { 
-				casus_belli = custom_treaty_cb
-			}
-			defender_goal = {
-				casus_belli = custom_treaty_cb
-			}	
-		} 
-	NAN = { country_event = 66935 }
-	}
 }
 
 country_event = {
 	id = 66930 #Oh no raiders continue to be active on the border
 	title = "AND31.T"
 	desc = "AND31.D"
+	picture = "battle_andes" 
 	
 	trigger = { 
 	tag = INC 
@@ -1194,26 +1305,6 @@ country_event = {
 	NAN_4 = { add_core = THIS } 
 	NAN_2 = { add_core = THIS } 
 	NAN_1 = { add_core = THIS } 
-	}
-	
-	option = { 
-	name = "AND31.A" #Secure the Border
-	badboy = 10
-	set_country_flag = choosing_NAN_WAR 
-	
-	NAN_4 = { add_core = THIS } 
-	NAN_2 = { add_core = THIS } 
-	NAN_1 = { add_core = THIS } 
-	war = { 
-		target = NAN
-		attacker_goal =  { 
-				casus_belli = acquire_all_cores
-				country = INC
-			}
-			defender_goal = {
-				casus_belli = custom_treaty_cb
-			}	
-		} 
 	}
 	
 	option = { 
@@ -1237,6 +1328,7 @@ country_event = {
 	name = "AND31.C" #Eliminate the Menace
 	badboy = 24
 	set_country_flag = choosing_NAN_WAR 
+	set_country_flag = conquest_war
 	random_owned = { limit = { owner = { ai = no } } NAN = { add_country_modifier = { name = small_country_draft duration = 300 } } }
 	
 	NAN = { country_event = 66936 }
@@ -1261,6 +1353,7 @@ country_event = {
 	id = 66931 #Llapa Inca proposes a peace offer
 	title = "AND32.T"
 	desc = "AND32.D"
+	picture = "inca_fight" 
 	
 	is_triggered_only = yes 
 	
@@ -1295,6 +1388,7 @@ country_event = {
 	id = 66932 #Peace accepted!
 	title = "AND33.T"
 	desc = "AND33.D"
+	picture = "inca_fight" 
 	
 	is_triggered_only = yes 
 	
@@ -1304,9 +1398,7 @@ country_event = {
 	name = "AND33.A" 
 	prestige = 1 
 	set_global_flag = NAN_OVER
-	NAN_4 = { remove_core = THIS } 
-	NAN_2 = { remove_core = THIS } 
-	NAN_1 = { remove_core = THIS } 
+	NAN = { all_core = { remove_core = THIS } } 
 	}
 }
 
@@ -1314,6 +1406,7 @@ country_event = {
 	id = 66933 #Peace refused
 	title = "AND34.T"
 	desc = "AND34.D"
+	picture = "inca_fight" 
 	
 	is_triggered_only = yes 
 	
@@ -1420,7 +1513,7 @@ country_event = {
 	release_vassal = ARU 
 	prestige = -40
 	any_pop = { 
-	militancy = 4 
+		militancy = 4 
     }	
 	any_owned = {
 			limit = {
@@ -1430,14 +1523,33 @@ country_event = {
 				region = INC_2389
 				}
 			}
-			secede_province = NAN
+			secede_province = RAP 
 			add_core = NAN 
 			remove_core = INC
 		}
-	NAN = { clr_country_flag = WAR_INC all_core = { remove_core = INC } country_event = 66938 }
+	RAP = { country_event = 669370 } 
 	clr_country_flag = custom_treaty_loser
 	set_global_flag = NAN_OVER
 	set_country_flag = INC_defeat_NAN
+	}
+}
+
+country_event = {
+	id = 669370 #Inca defeat
+	title = "AND380.T"
+	desc = "AND380.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND380.A"
+		any_owned = {
+				limit = {
+					is_core = NAN
+				}
+			secede_province = NAN 
+		}
+	NAN = { clr_country_flag = WAR_INC all_core = { remove_core = INC } country_event = 66938 }
 	}
 }
 
@@ -1445,7 +1557,7 @@ country_event = {
 	id = 66938 #Inca defeat - Beornian Atrocities event
 	title = "AND39.T"
 	desc = "AND39.D"
-	picture = "crimean_war_defeat"
+	picture = "native_killed_by_soldier"
 	
 	is_triggered_only = yes
 	
@@ -1796,7 +1908,7 @@ country_event = {
 	set_global_flag = NAN_OVER
 	any_owned = { 
 	    remove_core = INC 
-    }
+		}
 	}
 }
 
@@ -1804,6 +1916,7 @@ country_event = {
 	id = 66940 #Inca win - Uruguay beornia
 	title = "AND41.T"
 	desc = "AND41.D"
+	picture = "inca_cavalry_cannon" 
 	
 	trigger = {	
 	    exists = yes
@@ -1819,16 +1932,21 @@ country_event = {
 	days = 1 
 	}
 	
+	immediate = {
+	   civilized = no 
+	}
+	
 	option = { 
 	name = "AND41.A"
 	clr_country_flag = WAR_INC
 	clr_country_flag = custom_treaty_loser
 	set_global_flag = NAN_OVER
-	set_global_flag = NAN_URUGUAY
+	set_global_flag = NAN_URUGUAY 
 	any_owned = { 
 	limit = { NOT = { region = NAN_3 } } 
-	secede_province = INC 
+	secede_province = INC  
 		}
+	civilized = yes
 	prestige = -20 
 	any_pop = { militancy = 9 }
 	INC = { country_event = 66941 }
@@ -1841,6 +1959,7 @@ country_event = {
 	id = 66941 #Inca win - Uruguay beornia
 	title = "AND42.T"
 	desc = "AND42.D"
+	picture = "inca_cavalry_cannon" 
 	
 	is_triggered_only = yes
 	
@@ -1863,6 +1982,7 @@ country_event = {
 	id = 66942 #Inca win - Border war
 	title = "AND43.T"
 	desc = "AND43.D"
+	picture = "inca_cavalry_cannon" 
 	
 	trigger = {	
 	    exists = yes
@@ -1882,7 +2002,20 @@ country_event = {
 	name = "AND43.A"
 	NAN = { clr_country_flag = WAR_INC }
 	set_global_flag = NAN_OVER
+	2362 = { secede_province = LOT } 
+	2364 = { secede_province = LOT }
+	LOT = { country_event = 67020 }
 	prestige = 5 
+	any_owned = { 
+	limit = { is_core = NAN }
+	secede_province = RAP  
+	}
+	RAP = {
+		any_owned = { 
+			limit = { is_core = NAN }
+			secede_province = INC  
+		}
+	}
 	any_owned = { 
 	limit = { is_core = NAN }
 	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
@@ -1917,9 +2050,17 @@ country_event = {
 	option = { 
 	name = "AND44.A"
 	NAN = { clr_country_flag = WAR_INC }
+	clr_country_flag = custom_treaty_loser
 	set_global_flag = NAN_OVER
 	set_global_flag = Washkar_WILDRIDE
 	prestige = 25
+	any_owned = {
+        limit = { is_core = NAN }
+        secede_province = NAN
+	}
+	NAN = { civilized = no } 
+	inherit = NAN 
+	NAN = { civilized = yes } 
 	2348 = { 
 		poor_strata = { 
 			random_list = {
@@ -1961,7 +2102,7 @@ country_event = {
 	id = 66944 #Over the River
 	title = "AND45.T"
 	desc = "AND45.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	trigger = { 
 	tag = LOT 
@@ -1997,7 +2138,7 @@ country_event = {
 	id = 66945 #Restoring the Viceroyalty
 	title = "AND46.T"
 	desc = "AND46.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	trigger = { 
 	tag = LOT 
@@ -2038,7 +2179,7 @@ country_event = {
 	id = 66946 #Inca reacting to De Aigle's claims
 	title = "AND47.T"
 	desc = "AND47.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	is_triggered_only = yes
 
@@ -2065,7 +2206,7 @@ country_event = {
 	id = 66947 #De Aigle's Triumph -Lotharingia with ATL version
 	title = "AND48.T"
 	desc = "AND48.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	trigger = { 
 	tag = LOT 
@@ -2082,21 +2223,24 @@ country_event = {
 	}
 	
 	option = { 
-	name = "AND48.A" #The Republican Federation is proclaimed
-	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
-	set_global_flag = LOT_RESOLVED
-	government = democracy
-	election = yes
-	ruling_party_ideology = liberal
-	political_reform = federalism
-	political_reform = no_slavery
-	political_reform = universal_voting
-	political_reform = population_equal_weight
-	political_reform = yes_meeting
-	political_reform = free_press
-	political_reform = non_socialist
-	political_reform = gerrymandering
-	political_reform = non_secret_ballots
+		name = "AND48.A" #The Republican Federation is proclaimed
+		any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
+		set_global_flag = LOT_RESOLVED
+		government = democracy
+		election = yes
+		ruling_party_ideology = liberal
+		political_reform = federalism
+		political_reform = no_slavery
+		political_reform = universal_voting
+		political_reform = population_equal_weight
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = non_socialist
+		political_reform = gerrymandering
+		political_reform = non_secret_ballots
+		ai_chance = { 
+			factor = 40
+		}
 	}
 	
 	option = { 
@@ -2115,6 +2259,9 @@ country_event = {
 	political_reform = non_socialist
 	political_reform = gerrymandering
 	political_reform = non_secret_ballots
+	ai_chance = { 
+		factor = 30
+	}
 	}
 	
 	option = { 
@@ -2122,6 +2269,9 @@ country_event = {
 	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	government = presidential_dictatorship
 	set_global_flag = LOT_RESOLVED
+	ai_chance = { 
+		factor = 30
+	}
 	}
 	
 }
@@ -2131,7 +2281,7 @@ country_event = {
 	id = 66948 #De Aigle's Triumph -NAN joining LOT ?
 	title = "AND49.T"
 	desc = "AND49.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	is_triggered_only = yes 
 	
@@ -2145,6 +2295,9 @@ country_event = {
 	
 	option = { 
 	name = "AND49.B"
+	ai_chance = { 
+	factor = 0 
+		}
 	} 
 }
 	
@@ -2171,22 +2324,21 @@ country_event = {
 	picture = ""
 	
 	trigger = { 
-	tag = LOT 
-	war = no 
-	OR = { has_global_flag = WAR_INC_LOT has_global_flag = assemble_Knights } 
-	has_global_flag = WAR_INC_LOT
-	AND = { ATL = { exists = no } owns = 2447 } 
-	owns = 2379 
-	owns = 2384 
+		tag = LOT 
+		war = no 
+		OR = { has_global_flag = WAR_INC_LOT has_global_flag = assemble_Knights }
+		OR = { ATL = { exists = yes } NOT = { owns = 2447 } }
+		owns = 2379 
+		owns = 2384 
 	}
 	
 	mean_time_to_happen = { 
-	days = 1 
+		days = 1 
 	}
 	
 	option = { 
 	name = "ATL47.A" 
-	NAN = { country_event = 66948 }
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	set_global_flag = LOT_RESOLVED
 	government = prussian_constitutionalism
 	nationalvalue = nv_equality
@@ -2224,7 +2376,7 @@ country_event = {
 	option = { 
 	name = "ATL47.B"
 	set_global_flag = LOT_RESOLVED
-	NAN = { country_event = 66948 }
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
 	any_pop = { 
 		scaled_militancy = {
 			ideology = reactionary
@@ -2248,26 +2400,26 @@ country_event = {
 		}
 	}
 	
-    option = { 
-    name = "ATL47.C"
-    NAN = { country_event = 66948 }
-    set_global_flag = LOT_RESOLVED
-    government = democracy
-    election = yes
-    ruling_party_ideology = liberal
-    political_reform = federalism
-    political_reform = no_slavery
-    political_reform = universal_voting
-    political_reform = population_equal_weight
-    political_reform = yes_meeting
-    political_reform = free_press
-    political_reform = non_socialist
-    political_reform = gerrymandering
-    political_reform = non_secret_ballots
-    ai_chance = { 
-    factor = 20 
-        }
-    } 
+	option = { 
+	name = "ATL47.C"
+	any_country = { limit = { tag = NAN exists = yes } country_event = 66948 }
+	set_global_flag = LOT_RESOLVED
+	government = democracy
+	election = yes
+	ruling_party_ideology = liberal
+	political_reform = federalism
+	political_reform = no_slavery
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = non_secret_ballots
+	ai_chance = { 
+	factor = 20 
+		}
+	}
 	
 }
 
@@ -2276,7 +2428,7 @@ country_event = {
 	id = 66951 #White Peace
 	title = "AND52.T"
 	desc = "AND52.D"
-	picture = ""
+	picture = "conquest_of_the_desert"
 	
 	trigger = { 
 	tag = LOT 
@@ -2375,6 +2527,7 @@ country_event = {
 	id = 66954 #Forgot the Westernization event for INC
 	title = "AND55.T"
 	desc = "AND55.D"
+	picture = "sapa_inca" 
 	
 	trigger = { 
 	tag = INC 
@@ -2401,13 +2554,15 @@ country_event = {
 	id = 66955 
 	title = "AND56.T"
 	desc = "AND56.D"
+	picture = "battle_andes" 
 	
 	trigger = { 
-	tag = QUI 
-	exists = INC
-	has_country_flag = QUI_DICTATORSHIP	
-	has_global_flag = WAR_ANDES
-	NOT = { has_country_flag = WAR_ANDES_started } 
+		tag = QUI 
+		exists = INC
+		NOT = { INC = { has_country_flag = conquest_war war_with = NAN } }
+		has_country_flag = QUI_DICTATORSHIP	
+		has_global_flag = WAR_ANDES
+		NOT = { has_country_flag = WAR_ANDES_started } 
 	}
 	
 	mean_time_to_happen = { 
@@ -2416,10 +2571,16 @@ country_event = {
 	
 	option = { 
 	name = "AND56.A"
+	any_country = { 
+		 limit = {
+		    is_greater_power = yes
+		 }
+		 diplomatic_influence = { who = INC value = -200 }
+	     leave_alliance = INC	
+	   }
+	all_core = { add_core = INC } 
 	2299 = { add_core = THIS } 
-	2301 = { add_core = THIS } 
-	2321 = { add_core = THIS } 
-	2549 = { add_core = THIS } 
+	PEU_2303 = { add_core = THIS } 
 	set_country_flag = WAR_ANDES_started
 	war = { 
 		target = INC
@@ -2438,11 +2599,12 @@ country_event = {
 	id = 669550 
 	title = "AND560.T"
 	desc = "AND560.D"
+	picture = "battle_andes" 
 	
 	trigger = { 
-	tag = INC
-	has_global_flag = WAR_ANDES
-	NOT = { has_global_flag = NAN_OVER } 
+		tag = INC
+		has_global_flag = WAR_ANDES
+		NOT = { has_global_flag = NAN_OVER } 
 	}
 	
 	mean_time_to_happen = { 
@@ -2450,24 +2612,24 @@ country_event = {
 	}
 	
 	option = { 
-	name = "AND560.A"
-	prestige = -10 
-	end_war = NAN
-	set_global_flag = NAN_OVER
-	war_exhaustion = -25 
+		name = "AND560.A"
+		prestige = -10 
+		end_war = NAN
+		set_global_flag = NAN_OVER
+		war_exhaustion = -25 
 	ai_chance = {
 	factor = 99
 		}
 	}
 	
 	option = { 
-	name = "AND560.B"
-	prestige = 1 
-	ai_chance = {
-	factor = 1 
-	modifier = { 
-		factor = 100 
-		NAN = { ai = no } 
+		name = "AND560.B"
+		prestige = 1 
+		ai_chance = {
+		factor = 1 
+			modifier = { 
+				factor = 100 
+				NAN = { ai = no } 
 			}
 	    }
 	}
@@ -2478,13 +2640,15 @@ country_event = {
 	id = 66956
 	title = "AND57.T"
 	desc = "AND57.D"
+	picture = "battle_andes" 
 	
 	trigger = { 
-	tag = QUI 
-	exists = INC
-	OR = { has_country_flag = QUI_WIDE_COALTION has_country_flag = QUI_COUNTER_COUP has_country_flag = QUI_ROMANTIC }
-	has_global_flag = WAR_ANDES
-	NOT = { has_country_flag = WAR_ANDES_started } 
+		tag = QUI 
+		exists = INC
+		NOT = { INC = { has_country_flag = conquest_war war_with = NAN } }
+		OR = { has_country_flag = QUI_WIDE_COALTION has_country_flag = QUI_COUNTER_COUP has_country_flag = QUI_ROMANTIC }
+		has_global_flag = WAR_ANDES
+		NOT = { has_country_flag = WAR_ANDES_started } 
 	}
 	
 	mean_time_to_happen = { 
@@ -2493,10 +2657,9 @@ country_event = {
 	
 	option = { 
 	name = "AND57.A"
+	all_core = { add_core = INC } 
 	2299 = { add_core = THIS } 
-	2301 = { add_core = THIS } 
-	2321 = { add_core = THIS } 
-	2549 = { add_core = THIS } 
+	PEU_2303 = { add_core = THIS } 
 	set_country_flag = WAR_ANDES_started
 	nationalvalue = nv_liberty
 	war = { 
@@ -2517,6 +2680,7 @@ country_event = {
 	id = 66957 #Ballivian has won - Dismantlement of the INC
 	title = "AND58.T"
 	desc = "AND58.D"
+	picture = "battle_andes" 
 	
 	trigger = {	
 	    exists = yes
@@ -2533,9 +2697,12 @@ country_event = {
 	
 	option = { 
 	name = "AND58.A"
+	clr_country_flag = Llapa_INC
+	clr_country_flag = Washkar_INC 
 	civilized = no 
 	any_owned = { 
-	limit = { OR = { 
+	limit = { 
+		OR = { 
 				is_core = QUI 
 				region = PEU_2303 
 				region = INC_2308
@@ -2561,12 +2728,24 @@ country_event = {
 	id = 66958 #Ballivian has won - Dismantlement of the INC
 	title = "AND59.T"
 	desc = "AND59.D"
+	picture = "battle_andes" 
 	
 	is_triggered_only = yes 
 	
 	option = { 
 	name = "AND59.A" 
-	create_vassal = INC
+		inherit = INC
+		any_owned = { 
+			limit = { 
+				is_core = INC 
+		    }
+			add_core = THIS
+		}
+		INC = { civilized = yes } 
+		any_pop = { 
+			limit = { OR = { type = farmers type = labourers } OR = { has_pop_culture = quechua has_pop_culture = aimara has_pop_culture = diaguita } } 
+			pop_type = serfs
+		}
 	}
 	
 }
@@ -2575,12 +2754,14 @@ country_event = {
 	id = 66959 #QUI will start the War in the Andes 
 	title = "AND60.T"
 	desc = "AND60.D"
+	picture = "battle_andes" 
 	
 	trigger = { 
 	tag = QUI 
 	exists = INC
 	OR = { has_country_flag = QUI_WIDE_COALTION has_country_flag = QUI_COUNTER_COUP has_country_flag = QUI_ROMANTIC }
 	NOT = { has_global_flag = WAR_ANDES } 
+	NOT = { has_global_flag = Washkar_WILDRIDE } 
 	war = no 
 	NOT = { truce_with = INC } 
 	year = 1843
@@ -2592,10 +2773,9 @@ country_event = {
 	
 	option = { 
 	name = "AND60.A"
+	all_core = { add_core = INC } 
 	2299 = { add_core = THIS } 
-	2301 = { add_core = THIS } 
-	2321 = { add_core = THIS } 
-	2549 = { add_core = THIS } 
+	PEU_2303 = { add_core = THIS } 
 	set_country_flag = WAR_ANDES_started
 	set_global_flag = WAR_ANDES
 	nationalvalue = nv_liberty
@@ -2718,6 +2898,7 @@ country_event = {
 	name = "AND63.A"
 	random_owned = { limit = { owner = { has_country_modifier = taiping_draft } } owner = { remove_country_modifier = taiping_draft } }
 	add_country_modifier = { name = small_country_draft duration = 100 }	
+	set_country_flag = took_part_in_washkar_war
     relation = { who = FROM value = 50 }
 	set_country_flag = Join_ANDWAR
 	ai_chance = { factor = 100 } 
@@ -2798,7 +2979,7 @@ country_event = {
 	is_triggered_only = yes 
 	
 	option = { 
-	name = "AND63.A"
+	name = "AND67.A"
 	}
 }
 
@@ -2842,6 +3023,10 @@ country_event = {
 	QUI = { all_core = { add_core = THIS } }
 	add_country_modifier = { name = incan_supernova duration = -1 }
 	set_global_flag = Amerigan_GW
+	2299 = { add_core = QUI } 
+	2301 = { add_core = QUI } 
+	2321 = { add_core = QUI } 
+	2549 = { add_core = QUI } 
 	war = { 
 		target = FROM
 		attacker_goal =  { 
@@ -2851,7 +3036,17 @@ country_event = {
 				casus_belli = custom_treaty_cb
 			}	
 		} 
+	war = { 
+		target = QUI
+		attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+		defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
 	}
+
 }
 
 country_event = { #sack of Cuzco
@@ -2905,10 +3100,11 @@ country_event = { #Victory of the Alliance
 	desc = "AND72.D"
 	
 	trigger = { 
-	tag = INC 
-	has_global_flag = Washkar_WILDRIDE
-	has_global_flag = assemble_Knights 
-	has_country_flag = custom_treaty_loser
+		tag = INC 
+		has_global_flag = Washkar_WILDRIDE
+		has_global_flag = assemble_Knights 
+		truce_with = LOT
+		has_country_flag = custom_treaty_loser
 	}
 	
 	major = yes 
@@ -2918,12 +3114,14 @@ country_event = { #Victory of the Alliance
 	}
 	
 	option = { 
+	name = "AND72.A" 
+	clr_country_flag = custom_treaty_loser
+	clr_country_flag = Washkar_INC 
 	remove_country_modifier = incan_supernova
 	any_country = { 
 	   limit = { has_country_modifier = the_salvation_war }
 	   remove_country_modifier = the_salvation_war
 	}
-	name = "AND72.A" 
 	prestige_factor = -0.9
 	civilized = no
 	end_war = GRA 
@@ -2943,24 +3141,32 @@ country_event = { #Victory of the Alliance
 	SA_3 = { secede_province = AMA } 
 	SA_5 = { secede_province = LOT } 
 	QUI = { all_core = { remove_core = INC } }
+	ARU = { all_core = { remove_core = INC } } 
+	QOL = { all_core = { remove_core = INC } } 
+	LOT = { all_core = { remove_core = INC } set_country_flag = victory_LOT } 
+	NAN = { all_core = { remove_core = INC } } 
 	any_owned = { limit = { is_core = LOT } secede_province = LOT }
 	#Give Chile to whoever landed 
 	random_country = {
-		limit = { OR = { has_country_flag = landed_Ameriga_SCA has_country_flag = landed_Ameriga_SPA } }
-		country_event = 67000 
-		} 
+		limit = { owns = 2330 has_country_flag = landed_Ameriga_SCA }
+		country_event = { id = 67000 days = 1 }
+		THIS = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SCA } } 
+	} 
+	random_country = {
+		limit = { has_country_flag = landed_Ameriga_SPA }
+		country_event = { id = 67000 days = 1 } 
+		THIS = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SPA } } 
+	} 
+	### What is this meant to do? I rigged it so it gives the provinces to Scandinavia as it says but that may not be the intent - DeNuke
+	random_country = {
+		limit = { owns = 2330 NOT = { tag = SPA } NOT = { tag = SCA } }
+		SCA = { country_event = { id = 67000 days = 1 } }
+		THIS = { any_owned = { limit = { OR = { region = CHL_2322 region = INC_2308 region = SA_6 } } secede_province = SCA } } 
+	} 
+	any_owned = { limit = { is_core = QOL NOT = { OR = { region = CHL_2322 region = INC_2308 } } } secede_province = QOL } 
+	QOL = { capital = 2370 civilized = yes }
 	#Granada took Quito
 	random_country = { limit = { tag = GRA owns = 2279 } country_event = 67001 } 
-	#Quito exists
-	any_country = {
-	   limit = {
-	      tag = QUI
-		  exists = yes
-		  NOT = { is_vassal = yes }
-		  NOT = { has_country_flag = QUI_DICTATORSHIP } 
-			}
-	   inherit = THIS
-		}
 	#Beornia exists 
 	any_country = { 
 		limit = {
@@ -2974,8 +3180,23 @@ country_event = { #Victory of the Alliance
 	      tag = QUI
 		  exists = yes
 		  has_country_flag = QUI_DICTATORSHIP
-			}
+	   }
 	   country_event = 66958
+	}
+	any_country = { 
+		limit = { 
+			has_country_flag = took_part_in_washkar_war
+		}
+		clr_country_flag = took_part_in_washkar_war 
+	}
+	#Quito exists
+	any_country = {
+	   limit = {
+	      tag = QUI
+		  exists = yes
+		  NOT = { has_country_flag = QUI_DICTATORSHIP } 
+		}
+	   inherit = THIS
 		}
 	}
 }
@@ -2990,8 +3211,17 @@ country_event = { #White Peace
 	has_global_flag = Washkar_WILDRIDE
 	has_global_flag = Amerigan_GW 
 	war = no 
-	NOT = { has_country_flag = custom_treaty_loser }
-	NOT = { has_global_flag = sacked_Lothere }
+	OR = { 
+		NOT = { 
+			has_global_flag = sacked_Lothere
+			has_country_flag = custom_treaty_loser
+			LOT = { has_country_flag = custom_treaty_loser } 
+			} 
+		AND = { 
+			has_country_flag = custom_treaty_loser 
+			has_global_flag = sacked_Lothere 
+			}
+		}
 	}
 	
 	mean_time_to_happen = { 
@@ -3000,6 +3230,7 @@ country_event = { #White Peace
 	
 	option = { 
 	name = "AND73.A" 
+	clr_country_flag = custom_treaty_loser
 	remove_country_modifier = incan_supernova
 	any_country = { 
 	   limit = { has_country_modifier = the_salvation_war }
@@ -3018,11 +3249,12 @@ country_event = { #WASHKAR HAS DONE IT
 	desc = "AND74.D"
 	
 	trigger = { 
-	tag = LOT 
-	has_global_flag = Washkar_WILDRIDE
-	has_global_flag = Amerigan_GW 
-	war = no 
-	OR = { has_country_flag = custom_treaty_loser has_global_flag = sacked_Lothere }
+		tag = LOT 
+		has_global_flag = Washkar_WILDRIDE
+		has_global_flag = Amerigan_GW 
+		war = no 
+		OR = { has_country_flag = custom_treaty_loser has_global_flag = sacked_Lothere }
+		NOT = { INC = { has_country_flag = custom_treaty_loser } } 
 	}
 	
 	mean_time_to_happen = { 
@@ -3031,6 +3263,7 @@ country_event = { #WASHKAR HAS DONE IT
 	
 	option = { 
 	name = "AND74.A" 
+	clr_country_flag = custom_treaty_loser
 	remove_country_modifier = the_salvation_war
 	any_country = { 
 	   limit = { has_country_modifier = the_salvation_war }
@@ -3040,6 +3273,7 @@ country_event = { #WASHKAR HAS DONE IT
 	clr_global_flag = Washkar_WILDRIDE
 	clr_global_flag = WAR_INC_LOT
 	set_global_flag = END_LOT 
+	set_global_flag = LOT_RESOLVED
 	any_owned = { 
 	    limit = { 
 	    OR = { 
@@ -3053,16 +3287,16 @@ country_event = { #WASHKAR HAS DONE IT
 	}
 	NAN = { all_core = { remove_core = LOT } }
 	any_owned = { 
-	limit = { is_core = NAL } remove_core = LOT secede_province = NAL 
+		limit = { is_core = NAL } remove_core = LOT secede_province = NAL 
 	}
 	any_owned = { 
-	limit = { is_core = ATL } remove_core = LOT secede_province = ATL 
+		limit = { is_core = ATL } remove_core = LOT secede_province = ATL 
 	}
 	any_owned = { 
-	limit = { is_core = ODO } remove_core = LOT secede_province = ODO 
+		limit = { is_core = ODO } remove_core = LOT secede_province = ODO 
 	}
-	prestige = -50 
-	AMA = { country_event = 66974 } 
+		prestige = -50 
+		any_country = { limit = { tag = AMA has_country_flag = took_part_in_washkar_war } country_event = 66974 } 
 	}
 }
 
@@ -3099,33 +3333,47 @@ country_event = {
 	title = "AND76.T"
 	desc = "AND76.D"
 	
+	major = yes
 	is_triggered_only = yes
 	
 	option = { 
-	name = "AND76.A"
-	prestige = 50
-	remove_country_modifier = incan_supernova
-	SA_2403 = { secede_province = THIS }
-	SA_2 = { secede_province = THIS }
-	SA_3 = { secede_province = THIS } 
-	SA_5 = { secede_province = THIS } 
-	any_owned = { 
-	limit = { is_core = AVA }
-	add_province_modifier = { name = population_resettlement duration = 15000 }
+		name = "AND76.A"
+	    badboy = -1000
+	    badboy = 24
+		prestige = 100
+		remove_country_modifier = incan_supernova
+			any_country = { 
+			limit = { war_with = INC NOT = { tag = NAN } } 
+			end_war = INC 
 		}
-	any_owned = { 
-	limit = { is_core = ODO }
-	add_province_modifier = { name = nationalist_agitation duration = 3600 } 
-	add_province_modifier = { name = population_resettlement duration = 15000 }
+		SA_2403 = { secede_province = THIS }
+		SA_2 = { secede_province = THIS }
+		SA_3 = { secede_province = THIS } 
+		SA_5 = { secede_province = THIS } 
+		2367 = { secede_province = THIS } 
+		2366 = { secede_province = THIS } 
+		any_owned = { 
+			limit = { OR = { is_core = AVA is_core = ODO } }
+			secede_province = AVA 
 		}
-	any_pop = { 
-	limit = { has_pop_culture = lotharian } 
-	militancy = 4 
-		}
-	create_vassal = LOT 
-	create_vassal = ODO
-	create_vassal = NAL
-	create_vassal = EQN
+		inherit = AVA
+		any_owned = { 
+		limit = { is_core = AVA }
+		add_province_modifier = { name = population_resettlement duration = 15000 }
+			}
+		any_owned = { 
+		limit = { is_core = ODO }
+		add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+		add_province_modifier = { name = population_resettlement duration = 15000 }
+			}
+		any_pop = { 
+		limit = { has_pop_culture = lotharian } 
+		militancy = 4 
+			}
+		create_vassal = LOT 
+		create_vassal = ODO
+		create_vassal = NAL
+		create_vassal = EQN
 	}
 }
 
@@ -3133,6 +3381,7 @@ country_event = {
 	id = 66976 #Inca conquest of Caladero : purge time
 	title = "AND77.T"
 	desc = "AND77.D"
+	picture = "inca_village"
 	
 	trigger = { 
 	tag = INC 
@@ -3169,6 +3418,7 @@ province_event = {
 	id = 669760 #Potosi stripped 
 	title = "AND770.T"
 	desc = "AND770.D"
+	picture = "Peasants_INC" 
 	
 	trigger = { 
 	province_id = 2314
@@ -3189,6 +3439,7 @@ country_event = {
 	id = 66977 #The new writing system
 	title = "AND78.T"
 	desc = "AND78.D"
+	picture = "sapa_inca"
 	
 	trigger = { 
 	tag = INC 
@@ -3219,6 +3470,7 @@ country_event = {
 	id = 66978 #The Second Industrialization Plan
 	title = "AND79.T"
 	desc = "AND79.D"
+	picture = "neo_inca_architecture"
 	
 	trigger = { 
 	tag = INC 
@@ -3251,6 +3503,7 @@ country_event = {
 	id = 66979 #Emperor of the Socialists
 	title = "AND80.T"
 	desc = "AND80.D"
+	picture = "sapa_inca" 
 	
 	trigger = { 
 	tag = INC 
@@ -3323,6 +3576,7 @@ country_event = {
 	id = 66980 #Federalization 
 	title = "AND81.T"
 	desc = "AND81.D"
+	picture = "neo_inca_architecture"
 	
 	trigger = { 
 	tag = INC 
@@ -3353,6 +3607,7 @@ country_event = {
 	id = 66981 #Llapa's choosing an Heir 
 	title = "AND82.T"
 	desc = "AND82.D"
+	picture = "inca_raymi" 
 	
 	trigger = { 
 	tag = INC 
@@ -3388,6 +3643,7 @@ country_event = {
 	id = 66982 #Good heir is around, time for travelling !
 	title = "AND83.T"
 	desc = "AND83.D"
+	picture = "inca_raymi" 
 	
 	trigger = { 
 	tag = INC 
@@ -3411,6 +3667,7 @@ country_event = {
 	id = 66983 #General Europe travel
 	title = "AND84.T"
 	desc = "AND84.D"
+	picture = "parisworldsfair" 
 	
 	is_triggered_only = yes 
 	
@@ -3419,14 +3676,14 @@ country_event = {
 	any_country = { limit = { capital_scope = { continent = europe } } relation = { who = THIS value = 25 } }
 	any_country = { limit = { capital_scope = { continent = europe } OR = { government = absolute_monarchy government = prussian_constitutionalism } } relation = { who = THIS value = 25 } }
 	country_event = { id = 66989 days = 60 } #travel back to the Pacific and Qingqiu
-	any_country = {
+	random_country = {
 		limit = { tag = JAP government = absolute_monarchy }
-		country_event = { id = 669880 days = 45 } #HELLISH JAPAN IS AROUND
-		}
-	any_country = {
+		THIS = { country_event = { id = 669880 days = 45 } } #HELLISH JAPAN IS AROUND
+	}
+	random_country = {
 		limit = { tag = JAP OR = { government = prussian_constitutionalism government = hms_government } }
-		country_event = { id = 66988 days = 45 } #Normal Japan is around
-		}
+		THIS = { country_event = { id = 66988 days = 45 } } #Normal Japan is around
+	}
 	}
 }
 
@@ -3434,6 +3691,7 @@ country_event = {
 	id = 66984 #Llapa meets Jean
 	title = "AND85.T"
 	desc = "AND85.D"
+	picture = "Burgundian_port"
 	
 	is_triggered_only = yes 
 	
@@ -3448,6 +3706,7 @@ country_event = {
 	id = 66985 #Jean meets Llapa
 	title = "AND86.T"
 	desc = "AND86.D"
+	picture = "Burgundian_port"
 	
 	is_triggered_only = yes 
 	
@@ -3463,6 +3722,7 @@ country_event = {
 	id = 66986 #Llapa is a weeb -Kyowa and other bad ending : he LOVES IT
 	title = "AND87.T"
 	desc = "AND87.D"
+	picture = "japanese_fireworks" 
 	
 	is_triggered_only = yes 
 	
@@ -3477,6 +3737,7 @@ country_event = {
 	id = 66987 #Llapa is a weeb -normal Japan : could be better
 	title = "AND88.T"
 	desc = "AND88.D"
+	picture = "japanese_fireworks" 
 	
 	is_triggered_only = yes 
 	
@@ -3491,6 +3752,7 @@ country_event = {
 	id = 66988 #Japan is graced by Llapa
 	title = "AND89.T"
 	desc = "AND89.D"
+	picture = "japanese_fireworks" 
 	
 	is_triggered_only = yes 
 	
@@ -3506,6 +3768,7 @@ country_event = {
 	id = 669880 #Japan is graced by Llapa -Kyowa
 	title = "AND89.T"
 	desc = "AND89.D"
+	picture = "japanese_fireworks" 
 	
 	is_triggered_only = yes 
 	
@@ -3521,6 +3784,7 @@ country_event = {
 	id = 66989 #Pacific tour in Qingqiu 
 	title = "AND90.T"
 	desc = "AND90.D"
+	picture = "japanese_fireworks" 
 	
 	is_triggered_only = yes 
 	
@@ -3536,6 +3800,7 @@ country_event = {
 	id = 66990 #WORLD TOUR ENDS
 	title = "AND91.T"
 	desc = "AND91.D"
+	picture = "inca_raymi" 
 	
 	is_triggered_only = yes 
 	
@@ -3559,6 +3824,7 @@ country_event = {
 	id = 66991 #Lastahallpa -Snowland = Antarctica
 	title = "AND92.T"
 	desc = "AND92.D"
+	picture = "Southpole3" 
 	
 	trigger = { 
 	tag = INC 
@@ -3839,24 +4105,23 @@ country_event = {
 	option = {
 		name = "AND101.A"
 		FROM = { 
-			    any_owned = { limit = { OR = { region = PEU_2303 region = PEU_2297 region = SA_2549  is_core = QUI } } 
+				civilized = no 
+				clr_country_flag = Washkar_INC 
+				clr_country_flag = Llapa_INC 
+			    any_owned = { limit = { OR = { region = PEU_2303 region = PEU_2297 region = SA_2549 is_core = QUI } } 
 				secede_province = THIS
 				remove_core = INC
 				add_core = THIS 
-				add_province_modifier = {
-					name = war_torn
-					duration = 1825
 					} 
-				}
-				any_owned = { limit = { region = PEU_2297 } 
-				secede_province = THIS 
-				add_core = THIS 
-				add_province_modifier = {
-					name = war_torn
-					duration = 1825
-					} 
-				}
 			}
+		inherit = INC  
+		any_owned = { 
+			limit = { is_core = INC } 
+			add_province_modifier = { 
+				name = war_torn duration = 3650 
+			}
+		}
+		INC = { civilized = yes } 
 	}
 }
 
@@ -3908,11 +4173,9 @@ country_event = {
     trigger = {
         tag = INC
         has_global_flag = WAR_ANDES
-        OR = {
-            NOT = { 2302 = { owned_by = THIS } }
-            #NOT = { 2369 = { owned_by = THIS } }
-            2305 = { owned_by = SPA }
-            2305 = { owned_by = SCA }
+        NOT = {
+            2302 = { owned_by = THIS }
+            2369 = { owned_by = THIS }
         }
         war = no 
         NOT = { has_country_flag = no_amazon_4u }
@@ -3926,19 +4189,19 @@ country_event = {
         name = "AND104.A"
         prestige = -50
         set_country_flag = no_amazon_4u
-        any_owned_province = {
+        any_owned = {
             limit = {
                 is_core = QUI
             }
             secede_province = QUI
         }
-        any_owned_province = {
+        any_owned = {
             limit = {
                 is_core = CAS
             }
             secede_province = CAS
         }
-        any_owned_province = {
+        any_owned = {
             limit = {
                 is_core = EQN
             }
@@ -3963,3 +4226,7249 @@ country_event = {
     }
 }
 	
+country_event = {
+	id = 67005 #INC declares on Vassal QUI
+	title = "AND105.T"
+	desc = "AND105.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "AND105.A" 
+	SPA = { set_country_flag = andine_war country_event = 67194 } 
+	set_global_flag = last_andine_war
+	QUI = { all_core = { add_core = INC } } 
+	clr_global_flag = WAR_ANDES_SPA
+	2299 = { add_core = QUI } 
+	2301 = { add_core = QUI } 
+	2321 = { add_core = QUI } 
+	2549 = { add_core = QUI } 
+	war = { 
+		target = QUI
+		attacker_goal =  { 
+				casus_belli = conquest_any 
+			}
+		defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	}
+}
+
+
+#New Washkar events 
+
+country_event = { 
+	
+	id = 67006 #Nikolaj Kosciuszko
+	title = "AND106.T"
+	desc = "AND106.D"
+	picture = "polish_cavalryman"
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		NOT = { has_country_flag = Kosciuszko } 
+	}
+	
+	option = { 
+	name = "AND105.A" 
+	set_country_flag = Kosciuszko
+	any_pop = { 
+		limit = { 
+			culture = quechua 
+			OR = { type = officers type = aristocrats }
+		}
+		consciousness = 1
+	}
+	define_general = { 
+		name = "Mikolaj Kosciuszko" 
+		personality = inspiring  
+		background = cavalry_school 
+		} 
+	}
+}
+
+country_event = { 
+	
+	id = 67007 #Washkar marches north 
+	title = "AND107.T"
+	desc = "AND107.D"
+	picture = "llaneros"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND107.A" 
+		add_country_modifier = { 
+			name = taiping_draft 
+			duration = 365
+		}
+		INC = { country_event = 67008 }
+	}
+} 
+
+
+country_event = { 
+	
+	id = 67008 #The Northern Expedition
+	title = "AND108.T"
+	desc = "AND108.D"
+	picture = "llaneros"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND108.A"
+		FROM = { set_country_flag = north_expedition_INC } 
+		war = { 
+		target = GRA
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+		}
+	}
+}
+
+country_event = { 
+	
+	id = 67009 #The Northern Expedition -Washkar has won
+	title = "AND109.T"
+	desc = "AND109.D"
+	picture = "llaneros"
+	
+	trigger = { 
+		tag = GRA 
+		has_country_flag = north_expedition_INC 
+		has_country_flag = custom_treaty_loser 
+	}
+	
+	mean_time_to_happen = { 
+		days = 3 
+	}
+	
+	option = { 
+		name = "AND109.A"
+		clr_country_flag = custom_treaty_loser
+		any_owned = { 
+			limit = { is_core = INC } 
+			secede_province = INC
+		}
+		capital = 2264 
+		change_tag = CAS 
+		INC = { country_event = 67010 }
+	}
+}
+
+country_event = { 
+	
+	id = 67010 #The Northern Expedition -Washkar has won
+	title = "AND110.T"
+	desc = "AND110.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+		name = "AND110.A"	
+		create_vassal = FROM
+		SAN = { civilized = no } 
+		any_owned = { 
+			limit = { is_core = SAN } 
+			secede_province = SAN 
+		}
+		inherit = SAN 
+		set_country_flag = SAN_conquered_GRA
+		SAN = { civilized = yes } 
+		any_owned = { 
+			limit = { is_core = SAN }
+			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+			add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	}
+}
+
+country_event = { 
+	
+	id = 67011 #The Northern Expedition -Washkar has been defeated
+	title = "AND111.T"
+	desc = "AND111.D"
+	picture = "llaneros"
+	
+	trigger = { 
+		tag = GRA 
+		has_country_flag = north_expedition_INC 
+		NOT = { has_country_flag = custom_treaty_loser }
+		war = no 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 3 
+	}
+	
+	option = { 
+		name = "AND111.A"
+		clr_country_flag = north_expedition_INC 
+		any_owned = { 
+			remove_core = INC
+		} 
+	}
+}
+
+country_event = { 
+	
+	id = 67012 #The Northern Expedition -Washkar has taken SAN through a normal war
+	title = "AND112.T"
+	desc = "AND112.D"
+	picture = "llaneros"
+	
+	trigger = { 
+		tag = INC  
+		has_country_flag = northern_expedition 
+		SAN = { exists = no } 
+		owns = 2254
+		NOT = { has_country_flag = SAN_conquered_GRA }
+	}
+	
+	mean_time_to_happen = { 
+		months = 2
+	}
+	
+	option = { 
+		name = "AND112.A"	
+		SAN = { civilized = no } 
+		any_owned = { 
+			limit = { is_core = SAN } 
+			secede_province = SAN 
+		}
+		inherit = SAN 
+		set_country_flag = SAN_conquered_GRA
+		SAN = { civilized = yes } 
+		any_owned = { 
+			limit = { is_core = SAN }
+			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
+			add_province_modifier = { name = population_resettlement duration = 5000 }
+		}
+	}
+}
+	
+country_event = { 
+	
+	id = 67013 #Augusto Cabral
+	title = "AND113.T"
+	desc = "AND113.D"
+	picture = "palenque"
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		NOT = { has_country_flag = Cabral_meeting } 
+		owns = 2288
+		NOT = { year = 1860 } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.1 
+			year = 1853
+		}
+	} 
+	
+	option = { 
+	name = "AND113.A" 
+	set_country_flag = Cabral_meeting
+	any_pop = { 
+		limit = { 
+			culture = quechua 
+			OR = { type = officers type = aristocrats }
+		}
+		consciousness = 1
+		}
+	any_pop = { 
+		limit = { 
+			culture = afro_latino 
+		}
+		consciousness = -2
+		}
+	}
+}
+	
+country_event = { 
+	
+	id = 67014 #The Amazon expedition
+	title = "AND114.T"
+	desc = "AND114.D"
+	picture = "gouren"
+	
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		NOT = { has_country_flag = Amazon_expedition } 
+		owns = 2402
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		months = 20 
+		modifier = { 
+			factor = 0.1
+			year = 1850 
+		}
+	}
+	
+	option = { 
+	name = "AND114.A" 
+	set_country_flag = Amazon_expedition
+	SA_2 = { add_core = THIS } 
+	SA_3 = { add_core = THIS } 
+	SA_2403 = { add_core = THIS } 
+	any_pop = { 
+		limit = { 
+			culture = breton 
+		}
+			militancy = 5 
+		}
+	prestige = 2
+	}
+}
+
+country_event = { 
+	
+	id = 67015 #The Expedition to the End of the Earth
+	title = "AND115.T"
+	desc = "AND115.D"
+	picture = "selknam"
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		NOT = { has_country_flag = Patagonia_expedition } 
+		owns = 2330
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		months = 50
+		modifier = { 
+			factor = 0.1
+			year = 1855 
+		}
+		modifier = { 
+			factor = 0.01
+			year = 1858
+		}
+	}
+	
+	option = { 
+	name = "AND115.A" 
+		set_country_flag = Patagonia_expedition
+		2335 = { secede_province = THIS }
+		2400 = { secede_province = THIS } 
+		prestige = 4
+	}
+}
+
+country_event = { 
+	
+	id = 67016 #The Tupac Yupanki
+	title = "AND116.T"
+	desc = "AND116.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND116.A"
+		activate_technology = clipper_design
+		activate_technology = naval_design_bureaus  
+		activate_technology = alphabetic_flag_signaling
+		2371 = { sub_unit = { type = manowar value = current } }
+		set_country_flag = tupac_man_o_war
+	}
+}
+
+country_event = { 
+	
+	id = 67017 #The Tupac Yupanki -Washkar wants an adventure
+	title = "AND117.T"
+	desc = "AND117.D"
+	picture = "giant_tortoises"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = Washkar_INC
+		has_country_flag = tupac_man_o_war 
+		war = no 
+		NOT = { has_country_flag = tortoises } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "AND117.A"
+		prestige = 3 
+		set_country_flag = tortoises
+		any_country = { 
+			limit = { owns = 2285 } 
+			relation = { who = THIS value = -100 } 
+			country_event = 67018 
+		}
+	}
+}
+	
+
+country_event = { 
+	
+	id = 67018 #The Emperor of INC has trespassed in the Galapagos and BROUGHT BACK TORTOISES TO Cuzco
+	title = "AND118.T"
+	desc = "AND118.D"
+	picture = "giant_tortoises"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND118.A"
+		add_casus_belli = {
+			target = FROM 
+			type = humiliate
+			months = 24
+		}
+	}
+}
+
+country_event = { 
+	id = 67019 
+	title = "AND119.T" 
+	desc = "AND119.D" 
+	
+	trigger = { 
+		tag = INC 
+		OR = { has_country_flag = Washkar_INC has_country_flag = Llapa_INC } 
+		owns = 2371 
+		NOT = { has_country_flag = development_qillqa } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 5 
+		modifier = { 
+			factor = 0.1 
+			year = 1838 
+		}
+	}
+	
+	option = { 
+		name = "AND119.A"
+		set_country_flag = development_qillqa
+		2371 = { naval_base = 1 } 
+		relation = { who = BRG value = -5 } 
+		relation = { who = SCA value = -5 } 
+	}
+} 
+
+country_event = { 
+	id = 67020 
+	title = "AND120.T" 
+	desc = "AND120.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND120.A"
+		any_owned = { remove_core = INC } 
+		2366 = { secede_province = THIS add_core = THIS }
+		2377 = { secede_province = THIS add_core = THIS }
+		INC = { country_event = { id = 67021 days = 15 } }
+	}
+}
+
+country_event = { 
+	id = 67021
+	title = "AND121.T" #Llapa ponders whether to organize a negotiation or not
+	desc = "AND121.D" 
+	picture = "beornian_parana"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND121.A" #We do not need another front in the Chaco, send ambassadors
+		FROM = { country_event = { id = 67022 days = 15 } }
+	}
+	
+	option = { 
+		name = "AND122.B" #The Silver River shall be our border
+		NAN_1 = { add_core = THIS } 
+		SA_5 = { add_core = THIS } 
+		FROM = { country_event = 67025 } 
+	}
+	
+}
+
+country_event = { 
+	id = 67022
+	title = "AND122.T" #The Confluence Meeting
+	desc = "AND122.D" 
+	picture = "beornian_parana"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND122.A" #Accept the terms
+		any_owned = { remove_core = INC }
+		any_owned = { limit = { OR = { region = NAN_1 region = SA_5 } } add_core = THIS }
+		FROM = { country_event = 67023 }
+	}
+	
+	option = { 
+		name = "AND122.B" #The whole Chaco is Lotharingian!
+		NAN_1 = { add_core = THIS } 
+		SA_5 = { add_core = THIS } 
+		FROM = { country_event = 67024 }
+	}
+}
+
+country_event = { 
+	id = 67023
+	title = "AND123.T" #The Confluence Meeting - success!
+	desc = "AND123.D" 
+	picture = "beornian_parana"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND123.A"
+		2367 = { secede_province = THIS } 
+		2337 = { secede_province = THIS } 
+		2338 = { secede_province = THIS } 
+		2318 = { secede_province = THIS } 
+		any_owned = { limit = { OR = { region = NAN_1 region = SA_5 } } add_core = THIS }
+		any_owned = { remove_core = LOT } 
+		relation = { who = LOT value = 100 } 
+	}
+}
+
+country_event = { 
+	id = 67024
+	title = "AND124.T" #The Confluence Meeting - failure!
+	desc = "AND124.D" 
+	picture = "beornian_parana"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND124.A"
+		NAN_1 = { add_core = THIS } 
+		SA_5 = { add_core = THIS } 
+		relation = { who = LOT value = -100 } 
+	} 
+}
+
+country_event = { 
+	id = 67025
+	title = "AND125.T" #The Inca claim the whole Chaco!
+	desc = "AND125.D" 
+	picture = "beornian_parana"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND125.A"
+		NAN_1 = { add_core = THIS } 
+		SA_5 = { add_core = THIS } 
+		relation = { who = FROM value = -100 } 
+	}
+}
+
+country_event = { 
+	id = 67026
+	title = "AND126.T" #The Qolla rise
+	desc = "AND126.D" 
+	
+	major = yes
+	
+	trigger = { 
+		tag = INC 
+		war_with = QUI 
+		NOT = { has_global_flag = Washkar_WILDRIDE } 
+		NOT = { 2302 = { controlled_by = INC } }
+		NOT = { OR = { 2303 = { controlled_by = INC } 2304 = { controlled_by = INC } } }
+		NOT = { OR = { 2310 = { controlled_by = INC } 2371 = { controlled_by = INC } } }
+		NOT = { has_country_flag = qolla_rise } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "AND126.A"
+		random_owned = { limit = { owner = { war_with = SCA } } owner = { any_owned = { limit = { region = CHL_2322 } secede_province = ARU } } }
+		ARU = { any_owned = { limit = { region = CHL_2322 } secede_province = SCA } }
+		any_owned = { limit = { is_core = QOL } secede_province = QOL }
+		any_owned = { limit = { is_core = NAN } remove_core = INC secede_province = NAN }
+		any_owned = { limit = { is_core = ARU } remove_core = INC secede_province = ARU }
+		ARU = { all_core = { remove_core = INC } } 
+		any_owned = { limit = { is_core = AVA } secede_province = AVA }
+		set_country_flag = qolla_rise
+	}
+}
+
+country_event = { 
+	id = 67027
+	title = "AND127.T" #Burgundian merchants in Arica propose a deal
+	desc = "AND127.D" 
+	picture = "uraycusta_bay"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND127.A"
+		BRG = { country_event = 67028 } 
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+
+}
+
+country_event = { 
+	id = 67028
+	title = "AND128.T" #Burgundian merchants in Arica propose a deal -QOL agreed
+	desc = "AND128.D" 
+	picture = "uraycusta_bay"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND128.A"
+		diplomatic_influence = { who = FROM value = 400 }
+		2240 = { secede_province = FROM } 
+	}
+	
+}
+
+country_event = { 
+	id = 67029
+	title = "AND129.T" #Retrocession of Ragga
+	desc = "AND129.D" 
+	picture = "uraycusta_bay"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND129.A"
+		2330 = { secede_province = FROM } 
+		diplomatic_influence = { who = FROM value = 50 } 
+	}
+	
+}
+
+country_event = { 
+	id = 67030
+	title = "AND130.T" #Retrocession of Baie Salée
+	desc = "AND130.D" 
+	picture = "uraycusta_bay"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND129.A"
+		2240 = { secede_province = FROM } 
+		diplomatic_influence = { who = FROM value = 50 } 
+	}
+	
+}
+
+
+###############
+#	Mapuche  #
+###############
+
+country_event = { 
+
+	id = 67031
+	title = "INC61.T" #Lars Heyerdhal enters Mapuche 
+	desc = "INC61.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "INC61.A"
+		set_country_flag = ARU_heyerdhal
+		SCA = { diplomatic_influence = { who = THIS value = 400 } }
+		create_alliance = SCA
+		government = absolute_monarchy
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		clr_country_flag = market_liberal_party_in_power
+		INC = { country_event = 67032 }
+	}
+}
+
+country_event = { 
+
+	id = 67032
+	title = "INC62.T" #Lars Heyerdhal enters Mapuche -INC is informed
+	desc = "INC62.D"
+	picture = "Mapuche"
+	
+	fire_only_once = yes
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC62.A" 
+		prestige = -1 
+		release_vassal = ARU 
+		country_event = { id = 67034 days = 15 }
+	}
+}
+
+country_event = { 
+
+	id = 67033
+	title = "INC63.T" #Lars Heyerdhal enters Mapuche -Llapa had integrated the Mapuche
+	desc = "INC63.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC62.A" 
+		prestige = -1 
+		any_owned = { 
+			limit = { is_core = ARU }
+			secede_province = ARU
+			}
+		SCA = { diplomatic_influence = { who = ARU value = 400 } }
+		country_event = { id = 67034 days = 15 }
+	}
+}
+
+country_event = { 
+	id = 67034
+	title = "INC66.T" #SCA supports ARU - what does INC do ?
+	desc = "INC66.D"
+	picture = "Mapuche_war"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC66.A"
+		prestige = 5 
+		2329 = { add_core = THIS }
+		2328 = { add_core = THIS }
+		2331 = { add_core = THIS }
+		war = { 
+			target = ARU
+			   attacker_goal = {
+					casus_belli = annex_core_country
+			   }
+			   defender_goal = {
+					casus_belli = status_quo
+		    }
+		}			   
+		set_global_flag = mapuche_war
+		SCA = { country_event = 67035 }
+		ai_chance = { 
+		factor = 80 
+		}
+	}
+	
+	option = { 
+		name = "INC66.B" 
+		ARU = { country_event = 67048 }
+		prestige_factor = -0.4
+		any_pop = { 
+		militancy = 2 	
+			}
+		ai_chance = { 
+		factor = 20 
+			}
+	}
+}
+
+country_event = { 
+	id = 67035
+	title = "INC67.T" #INC invades ARU -SCA notif
+	desc = "INC67.D"
+	picture = "Mapuche_war"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC67.A"
+	}
+}
+
+country_event = { 
+	id = 67036
+	title = "INC68.T" #Treaty of Uraycusta
+	desc = "INC68.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	
+	option = {
+		name = "INC68.A"
+		prestige = -10
+	    clr_global_flag = mapuche_war
+		any_owned = { limit = { is_core = INC } secede_province = INC } 
+		random_country = {
+			limit = {
+				war_with = THIS
+				controls = 2331
+			}
+			end_war = THIS
+			country_event = 67037
+		}
+	}
+}
+
+country_event = { 
+	id = 67037
+	title = "INC69.T" #INC ends ARU
+	desc = "INC69.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC69.A"
+		end_war = ARU 
+		inherit = ARU 
+		prestige = 10
+		clr_global_flag = mapuche_war
+	}
+}
+
+country_event = { 
+	id = 67038
+	title = "INC70.T" #INC lost - clearing flags
+	desc = "INC70.D"
+	picture = "mapuche_war"
+	
+	
+	trigger = { 
+		tag = ARU 
+		war = no 
+		in_sphere = SCA 
+		has_global_flag = mapuche_war 
+	}
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	option = { 
+		name = "INC70.A" 
+		ARU = { any_owned = { limit = { region = CHL_2322 } secede_province = SCA } }
+		clr_global_flag = mapuche_war
+		prestige = 5
+		SCA = { country_event = 67039 }
+	}
+
+}
+
+country_event = { 
+	id = 670380
+	title = "INC70.T" #INC lost - clearing flags
+	desc = "INC70.D"
+	picture = "mapuche_war"
+	
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC70.A" 
+		ARU = { any_owned = { limit = { region = CHL_2322 } secede_province = SCA } }
+		clr_global_flag = mapuche_war
+		prestige = 5
+		SCA = { country_event = 67039 }
+	}
+
+}
+
+country_event = { 
+	id = 67039
+	title = "INC72.T" #INC lost - SCA after Beornia
+	desc = "INC72.D"
+	picture = "treaty"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC72.A" 
+	any_country = { limit = { tag = NAN owns = 2395 } country_event = 67040 } 
+	any_country = { limit = { tag = NAN NOT = { owns = 2395 } } country_event = 67041 } #Dummy event
+	}
+}
+
+country_event = { 
+	id = 67040
+	title = "INC73.T" #Scandinavia asks Beornia to recognize the claims of ARU
+	desc = "INC73.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC73.A" 
+	any_owned = { 
+		limit = { is_core = ARU } 
+		secede_province = ARU 
+	}
+	prestige_factor = -0.4
+	ARU = { country_event = 67042 }
+	ai_chance = { 
+	factor = 80 	
+		}
+	}
+	
+	option = { 
+	name = "INC73.B" #Refuse
+	prestige = 3 
+	SCA = { country_event = 67052 } 
+	ai_chance = { 
+	factor = 20 	
+		}
+	}
+}
+
+country_event = { 
+	id = 67041
+	title = "INC730.T" #Beornia is informed of Scandinavian plans in new Cornwall but without New London they cannot act
+	desc = "INC730.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC730.A" 
+		ARU = { country_event = 67042 } 
+	}
+}
+
+country_event = { 
+	id = 67042
+	title = "INC74.T" #Beornia dropped claims 
+	desc = "INC74.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC72.A" 
+	random_owned = {
+			limit = {
+				2332 = { empty = yes }
+			}
+			2332 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2399 = { empty = yes }
+			}
+			2399 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2398 = { empty = yes }
+			}
+			2398 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2397 = { empty = yes }
+			}
+			2397 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2396 = { empty = yes }
+			}
+			2396 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2392 = { empty = yes }
+			}
+			2392 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2391 = { empty = yes }
+			}
+			2391 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2394 = { empty = yes }
+			}
+			2394 = { secede_province = ARU }
+		}
+	SCA = { country_event = 67043 } 
+	prestige = 1 
+	any_pop = { 
+	militancy = -5 
+		}
+	}
+}
+
+country_event = { 
+	id = 67043
+	title = "INC75.T" #Beornia dropped claims -SCA
+	desc = "INC75.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC75.A" 
+	prestige = 10 
+	2400 = { secede_province = FROM }
+	2335 = { secede_province = FROM }
+	2334 = { secede_province = FROM }
+	2333 = { secede_province = FROM }
+	relation = { who = ARU value = 100 } 
+	}
+}
+
+country_event = { 
+	id = 67044
+	title = "INC76.T" #NAN at peace with SCA 
+	desc = "INC76.D"
+	
+	trigger = { 
+	tag = NAN 
+	has_global_flag = NAN_SCA_war
+	war = no 
+	NOT = { has_country_flag = custom_treaty_loser } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 3 
+	}
+	
+	option = { 
+	name = "INC76.A" 
+	prestige = 10
+	clr_global_flag = NAN_SCA_war
+	}
+}
+
+country_event = { 
+	id = 67045
+	title = "INC77.T" #NAN Treaty 
+	desc = "INC77.D"
+	
+	trigger = { 
+	tag = NAN 
+	has_global_flag = NAN_SCA_war
+	war = no 
+	has_country_flag = custom_treaty_loser
+	}
+	
+	major = yes 
+		
+	option = { 
+		name = "INC77.A" 
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = NAN_SCA_war
+		end_war = SCA
+		any_owned = { 
+			limit = { is_core = ARU } 
+			secede_province = ARU 
+		}
+		prestige_factor = -0.6
+		ARU = { country_event = 67046 } 
+		SCA = { country_event = 67053 } 
+	}
+	
+	
+}
+
+country_event = { 
+	id = 67046
+	title = "INC78.T" #Beornia dropped claims 
+	desc = "INC78.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC78.A" 
+	random_owned = {
+			limit = {
+				2332 = { empty = yes }
+			}
+			2332 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2399 = { empty = yes }
+			}
+			2399 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2398 = { empty = yes }
+			}
+			2398 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2397 = { empty = yes }
+			}
+			2397 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2396 = { empty = yes }
+			}
+			2396 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2392 = { empty = yes }
+			}
+			2392 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2391 = { empty = yes }
+			}
+			2391 = { secede_province = ARU }
+		}
+		random_owned = {
+			limit = {
+				2394 = { empty = yes }
+			}
+			2394 = { secede_province = ARU }
+		}
+	SCA = { country_event = 67047 }
+	prestige = 1 
+	any_pop = { 
+	militancy = -5 
+		}
+	}
+}
+
+country_event = { 
+	id = 67047
+	title = "INC79.T" #Beornia dropped claims -SCA
+	desc = "INC79.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "INC79.A" 
+	prestige = 10 
+	2400 = { secede_province = FROM }
+	2335 = { secede_province = FROM }
+	2334 = { secede_province = FROM }
+	2333 = { secede_province = FROM }
+	relation = { who = ARU value = 100 } 
+	}
+}
+
+country_event = { 
+	id = 67048
+	title = "INC80.T" #INC didn't march south
+	desc = "INC80.D"
+	picture = "mapuche_war"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "INC80.A" 
+	clr_global_flag = mapuche_war
+	prestige = 5
+	SCA = { country_event = 66971 }
+	}
+
+}
+
+
+country_event = { 
+	id = 67049
+	title = "INC82.T" #
+	desc = "INC82.D"
+	picture = "Mapuche"
+	
+	
+	trigger = { 
+	tag = ARU 
+	government = absolute_monarchy 
+	year = 1862
+	in_sphere = SCA 
+	}
+	
+	mean_time_to_happen = { 
+	months = 10 
+	}
+	
+	option = { 
+	name = "INC82.A"
+	government = democracy
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = democracy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov	
+	clr_country_flag = tory_election_win
+	clr_country_flag = socialist_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win
+	clr_country_flag = conservative_party_in_power
+    clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+    clr_country_flag = market_liberal_party_in_power
+	SCA = { country_event = 67050 }
+	}
+}
+
+country_event = { 
+	id = 67050
+	title = "INC83.T" 
+	desc = "INC83.D"
+	picture = "Mapuche"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "INC83.A" 
+		badboy = 2 
+		ARU = { country_event = 67051 } 
+		ai_chance = { 
+			factor = 80 
+		}
+	}
+	
+	option = { 
+		name = "INC83.B" 
+		relation = { who = FROM value = 100 } 
+		ai_chance = { 
+			factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 67051
+	title = "INC84.T" #INC lost - clearing flags
+	desc = "INC84.D"
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = "INC84.A"
+		FROM = { inherit = THIS }
+	}
+}
+
+
+country_event = { 
+	id = 67052
+	title = "AND152.T" #SCA declaration 
+	desc = "AND152.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND152.A"
+		set_global_flag = NAN_SCA_war
+		war = { 
+			target = NAN
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67053
+	title = "AND153.T" #puppet Beornia and remove their claim to Falklands
+	desc = "AND153.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND153.A"
+		create_vassal = FROM 
+		diplomatic_influence = { who = FROM value = 200 } 
+		any_owned = { 
+			remove_core = NAN
+		}
+	}
+}
+
+country_event = { 
+	id = 67054
+	title = "AND154.T" #Treaty of Ragga
+	desc = "AND154.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND154.A"
+		end_war = ARU 
+		end_war = SCA
+		any_owned = { limit = { OR = { region = CHL_2322 is_core = ARU } } secede_province = ARU } 
+		ARU = { country_event = 670380 }
+	}
+}
+
+
+country_event = { 
+	id = 67055
+	title = "AND155.T" #New Mercia - Reactionary
+	desc = "AND155.D"
+	
+	picture = "Beornian exodus"
+	
+	trigger = { 
+		tag = SCA 
+		NOT = { has_global_flag = chiri_organized } 
+		owns = 2325
+		NAN = { exists = no } 
+		NOT = { has_country_flag = decided_NMC }
+	}
+	
+	option = { 
+		name = "AND155.A" #We can establish New Mercia 
+		set_country_flag = decided_NMC 
+		any_country = { 
+			limit = { owns = 2382 } 
+				country_event = 67056
+			} 
+		ai_chance = { 
+			factor = 50 
+		}
+	}
+	
+	option = {
+		name = "AND155.B" #We cannot trust Beornians
+		set_country_flag = decided_NMC 
+		set_country_flag = rejected_new_mercia
+		ai_chance = { 
+			factor = 50 
+		}
+	}
+}
+
+country_event = { 
+	id = 67056
+	title = "AND156.T" #The Anglican exodus
+	desc = "AND156.D"
+	
+	picture = "Beornian exodus"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND156.A"
+		SCA = { country_event = 67057 } 
+		NAN_3 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2325
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2325
+			}
+		
+		}
+		NAN_1 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2325
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2327
+			}
+		
+		}
+		NAN_2 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2326
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2326
+			}
+		
+		}
+		NAN_4 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2323
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2323
+			}
+		
+		}
+		NAN_2355 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2324
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2324
+			}
+		
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67057
+	title = "AND157.T" #The Anglican exodus -they have arrived in New Mercia
+	desc = "AND157.D"
+	
+	is_triggered_only = yes 
+	
+	picture = "Beornian exodus"
+	
+	option = { 
+		name = "AND157.A" 
+		set_country_flag = NMC_organized
+		set_country_flag = NMC_Theocrats
+		INC_2308 = { add_core = NMC }
+		CHL_2322 = { add_core = NMC }
+		NMC = { add_accepted_culture = scandinavian } 
+		any_pop = { 
+			limit = { 
+				location = { region = CHL_2322 } 
+				has_pop_culture = beornian
+			}
+			ideology = {
+				value = reactionary
+				factor = 0.10
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67058
+	title = "AND158.T" #Home-Rule in NMC ?
+	desc = "AND158.D"
+
+	trigger = { 
+	tag = SCA 
+	has_country_flag = NMC_organized 
+	NOT = { has_country_flag = New_Mercia_established } 
+	owns = 2325
+	}
+	
+	mean_time_to_happen = { 
+		months = 120 
+		modifier = { 
+			factor = 0.1 
+			year = 1855
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1860
+		}
+	}
+
+	option = { 
+		name = "AND158.A"
+		any_owned = {
+		   limit = {
+		   is_core = NMC
+		   }
+		   secede_province = NMC 
+		}
+		create_vassal = NMC
+		NMC = { 
+		capital = 2325
+		government = democracy 
+		nationalvalue = nv_liberty
+		add_country_modifier = { 
+			name = New_Mercia_immigration
+			duration = 7200
+			}
+		}
+		set_country_flag = New_Mercia_established
+	} 
+	
+	option = { 
+		name = "AND158.B"
+		set_country_flag = New_Mercia_established
+		prestige = 5 
+	}
+}
+	
+country_event = { 
+	id = 67059
+	title = "AND159.T" #New Mercia - Liberal
+	desc = "AND159.D"
+	
+	picture = "Beornian exodus"
+	
+	trigger = { 
+		tag = SCA 
+		NOT = { has_global_flag = chiri_organized } 
+		owns = 2325
+		NAN = { exists = yes government = theocracy } 
+		NOT = { has_country_flag = decided_NMC } 
+	}
+	
+	option = { 
+		name = "AND159.A" #We can establish New Mercia 
+		set_country_flag = decided_NMC 
+		any_country = { 
+			limit = { owns = 2382 } 
+				country_event = 67060
+			} 
+		ai_chance = { 
+			factor = 90 
+		}
+	}
+	
+	option = {
+		name = "AND159.B" #We cannot trust Beornians
+		set_country_flag = decided_NMC 
+		set_country_flag = rejected_new_mercia
+	}
+}
+
+
+country_event = { 
+	id = 67060
+	title = "AND160.T" #The Beornian Liberals exodus
+	desc = "AND160.D"
+	picture = "Beornian exodus"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND156.A"
+		SCA = { country_event = 67061 } 
+		NAN_3 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2325
+			}
+		}
+		NAN_1 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2325
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2327
+			}
+		
+		}
+		NAN_2 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2326
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2326
+			}
+		
+		}
+		NAN_4 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2323
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2323
+			}
+		
+		}
+		NAN_2355 = { 
+			middle_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2324
+			}
+			rich_strata = { 
+				limit = {
+					has_pop_culture = beornian
+				}
+				reduce_pop = 0.95
+				move_pop = 2324
+			}
+		
+		}
+		any_pop = { 
+			ideology = {
+				value = reactionary 
+				factor = 0.20
+				}
+		}
+	}
+}
+
+country_event = { 
+	id = 67061
+	title = "AND161.T" #The Beornian exodus to West Coast -they have arrived in New Mercia
+	desc = "AND161.D"
+	picture = "Beornian exodus"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND161.A" 
+		set_country_flag = NMC_organized
+		INC_2308 = { add_core = NMC }
+		CHL_2322 = { add_core = NMC }
+		NMC = { add_accepted_culture = scandinavian } 
+		any_pop = { 
+			limit = { 
+				location = { region = CHL_2322 } 
+				has_pop_culture = beornian
+			}
+			ideology = {
+				value = liberal
+				factor = 0.20
+				}
+		}
+	}
+}
+
+country_event = { 
+	id = 67062
+	title = "AND162.T" #Spain compensates us for Ragga
+	desc = "AND162.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND162.A"
+		2330 = { secede_province = FROM } 
+		money = 50000
+	}
+}
+
+#Washkar succession 
+
+country_event = { 
+	id = 67063
+	title = "AND163.T" #Washkar is unwell
+	desc = "AND163.D"
+	picture = "Inca"
+
+	trigger = { 
+		tag = INC 
+		has_country_flag = Washkar_INC
+		year = 1860
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+		months = 6 
+		modifier = { 
+			factor = 0.1 
+			year = 1861 
+		}
+	}
+	
+	option = { 
+		name = "AND163.A"  
+		country_event = { id = 67064 days = 30 } 
+	}
+}
+
+country_event = { 
+	id = 67064
+	title = "AND164.T" #Fujimori takes control of Kutamasuyu 
+	desc = "AND164.D"
+	picture = "inca_village" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND164.A" 
+		country_event = { id = 67065 days = 15 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = TAP 
+					is_core = ARU 
+					AND = { region = PEU_2303 NOT = { province_id = 3356 } }
+					region = INC_2308
+					province_id = 2297 
+					province_id = 2295
+					region = CHL_2322
+					region = SA_9
+				}
+			}
+			remove_core = INC
+			secede_province = TAP 
+		}
+		create_vassal = TAP
+		TAP = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			political_reform = normal_recruitment 
+			government = feudal_monarchy
+			capital = 2371 
+			set_country_flag = diadochi
+			set_country_flag = fujimori
+			define_general = { 
+				name = "Fujimori Nonaka" 
+				personality = stalwart     
+				background = diplomat   
+			}
+		}
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "AND164.B" 
+		country_event = { id = 67065 days = 15 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = TAP 
+					is_core = ARU 
+					AND = { region = PEU_2303 NOT = { province_id = 3356 } }
+					region = INC_2308
+					province_id = 2297 
+					province_id = 2295
+					region = CHL_2322
+					region = SA_9
+				}
+			}
+			remove_core = INC
+			secede_province = TAP 
+		}
+		create_vassal = TAP
+		TAP = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			political_reform = normal_recruitment 
+			government = feudal_monarchy
+			capital = 2371 
+			set_country_flag = diadochi
+			set_country_flag = fujimori
+			define_general = { 
+				name = "Fujimori Nonaka" 
+				personality = stalwart     
+				background = diplomat   
+			}
+		}
+		change_tag_no_core_switch = TAP 
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 67065
+	title = "AND165.T" #Samiri rallies Qullasuyu
+	desc = "AND165.D"
+	picture = "inca_nobleman" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND165.A" 
+		country_event = { id = 67066 days = 15 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = QOL 
+					is_core = NAN
+					is_core = ODO
+				}
+			}
+			remove_core = INC
+			secede_province = QOL 
+		}
+		create_vassal = QOL
+		QOL = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			political_reform = normal_recruitment 
+			government = feudal_monarchy
+			capital = 2370 
+			set_country_flag = diadochi
+			set_country_flag = samiri
+			define_general = { 
+				name = "Allqamari Samiri" 
+				personality = careful    
+				background = professor  
+			}
+		}
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "AND165.B" 
+		country_event = { id = 67066 days = 15 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = QOL 
+					is_core = NAN 
+					is_core = ODO
+				}
+			}
+			remove_core = INC
+			secede_province = QOL 
+		}
+		create_vassal = QOL
+		QOL = { 
+			political_reform = normal_recruitment 
+			government = feudal_monarchy
+			capital = 2370 
+			set_country_flag = samiri 
+			set_country_flag = diadochi
+			define_general = { 
+				name = "Allqamari Samiri" 
+				personality = careful    
+				background = professor  
+			}
+		}
+		change_tag_no_core_switch = QOL 
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 67066
+	title = "AND166.T" #Cabral takes over QUI and Cartagena
+	desc = "AND166.D"
+	picture = "cabral" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND166.A"
+		country_event = { id = 67067 days = 10 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					region = ECU_2279
+					region = ECU_2280
+					AND = { is_core = SAN NOT = { is_core = EQN } }
+					AND = { is_core = CAS NOT = { is_core = EQN } }
+				}
+			}
+			remove_core = INC
+			secede_province = ARE 
+		}
+		create_vassal = ARE
+		ARE = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			political_reform = normal_recruitment 
+			primary_culture = afro_latino
+			government = feudal_monarchy
+			capital = 2279 
+			set_country_flag = cabral 
+			set_country_flag = diadochi
+			define_general = { 
+				name = "Augusto 'Yana' Cabral" 
+				personality = energetic   
+				background = rags_to_riches 
+			} 
+		}
+		ai_chance = { 
+			factor = 100 
+		}
+		
+	}
+	
+	option = { 
+		name = "AND166.B"
+		country_event = { id = 67067 days = 10 } 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					region = ECU_2279
+					region = ECU_2280
+					AND = { is_core = SAN NOT = { is_core = EQN } }
+					AND = { is_core = CAS NOT = { is_core = EQN } }
+				}
+			}
+			remove_core = INC
+			secede_province = ARE 
+		}
+		create_vassal = ARE
+		ARE = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			primary_culture = afro_latino
+			political_reform = normal_recruitment 
+			government = feudal_monarchy
+			capital = 2279 
+			set_country_flag = cabral 
+			set_country_flag = diadochi
+			define_general = { 
+				name = "Augusto 'Yana' Cabral" 
+				personality = energetic   
+				background = rags_to_riches 
+			}
+		}
+		change_tag_no_core_switch = ARE 
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+country_event = { 
+	id = 67067
+	title = "AND167.T" #Kuará Tiarayú and the Antisuyu do not respond
+	desc = "AND167.D"
+	picture = "inca_village" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND167.A"
+		set_country_flag = Waiting_for_death
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = AVA 
+					region = PEU_2289
+					region = SA_2549
+					region = SA_2 
+					region = SA_3 
+					region = SA_2403 
+				}
+			}
+			remove_core = INC
+			secede_province = AVA 
+		}
+		create_vassal = AVA
+		AVA = { 
+			any_owned = { 
+				add_core = INC 
+			}
+			government = feudal_monarchy
+			capital = 2279 
+			set_country_flag = diadochi
+		}
+	}
+}
+
+country_event = { 
+	id = 67068
+	title = "AND168.T" #The death of Washkar
+	desc = "AND168.D"
+	
+	trigger = { 
+		tag = INC 
+		year = 1861 
+		has_country_flag = Waiting_for_death 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		months = 5 
+		modifier = { 
+		factor = 0.1 
+		year = 1862 
+		}
+	}
+	
+	
+	option = { 
+		name = "AND168.A"
+		country_event = { id = 67069 days = 2 } 
+		clr_country_flag = Waiting_for_death 
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67069
+	title = "AND169.T" #Roq’a Waqaq Inca makes his move
+	desc = "AND169.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND169.A" #Roq'a Waqaq takes power
+		country_event = 67070
+		ai_chance = { 
+			factor = 50 
+			modifier = { 
+				factor = 2 
+				OR = { 
+					ARE = { ai = no } 
+					TAP = { ai = no } 
+					QOL = { ai = no } 
+				}
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND169.B" #Kosciuszko protects the son of Washkar
+		country_event = 67096
+		ai_chance = { 
+			factor = 50 
+			modifier = { 
+				factor = 0 
+				OR = { 
+					ARE = { ai = no } 
+					TAP = { ai = no } 
+					QOL = { ai = no } 
+				}
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67070
+	title = "AND170.T" #Roq’a Waqaq Inca has killed the heir and word get sent throughout the Empire
+	desc = "AND170.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND170.A"
+		set_country_flag = roqawaqaq
+		ARE = { country_event = { id = 67071 days = 5 } }
+		define_general = { 
+				name = "Roq'a Waka Inka" 
+				personality = fanatic      
+				background = aristocrat    
+			}
+	}
+}
+
+country_event = { 
+	id = 67071
+	title = "AND171.T" #Cabral swears to avenge the dead Emperor and demands the submission of the other governors
+	desc = "AND171.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND171.A"
+		prestige = 2 
+		TAP = { country_event = 67072 } 
+		add_country_modifier = { 
+			name = small_country_draft 
+			duration = 1460
+		}
+	}
+}
+
+country_event = { 
+	id = 67072
+	title = "AND172.T" #Fujimori swears revenge as well but refuse to work with Cabral
+	desc = "AND172.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND172.A"
+		prestige = 2 
+		QOL = { country_event = 67073 } 
+		add_country_modifier = { 
+			name = small_country_draft 
+			duration = 1460
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67073
+	title = "AND173.T" #Samiri refuses to bow down to foreigners
+	desc = "AND173.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND173.A"
+		prestige = 2 
+		INC = { 
+			country_event = { id = 67074 days = 20 } 
+			country_event = { id = 67076 days = 5 } 
+		}
+		add_country_modifier = { 
+			name = small_country_draft 
+			duration = 1460
+		}
+	}
+}
+
+### Holy fuck. I hope you've tested this since typing in that cursed command that many times in a single event is likely to break - DeNuke
+
+country_event = { 
+	id = 67074
+	title = "AND174.T" #Euro-Ameriga ousts the Imperial governors
+	desc = "AND174.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND174.A" 
+		any_country = { 
+			limit = { vassal_of = THIS NOT = { OR = { tag = ARE tag = AVA tag = TAP tag = QOL tag = CAS } } }
+			country_event = 67075
+		}
+		release_vassal = LOT 
+		release_vassal = EQN 
+		release_vassal = CAS 
+		release_vassal = GUY 
+		release_vassal = ODO 
+		release_vassal = NAL 
+		release_vassal = ANT 
+		release_vassal = ATL 
+	}
+}
+
+country_event = { 
+	id = 67075
+	title = "AND175.T" #I Love democracy
+	desc = "AND175.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND175.A" 
+		government = parliamentary_republic
+		political_reform = unitary
+		political_reform = universal_voting
+		political_reform = state_equal_weight
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = non_socialist
+		political_reform = secret_ballots
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		clr_country_flag = market_liberal_party_in_power
+	}
+
+}
+
+country_event = { 
+	id = 67076
+	title = "AND176.T" #Roq’a Waqaq Inca declares war on the rebellious
+	desc = "AND176.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	major = yes 
+	
+	option = { 
+		name = "AND176.A"
+		set_global_flag = succession_INC
+		add_country_modifier = { 
+			name = small_country_draft 
+			duration = 1460 
+		}
+		release_vassal = TAP 
+		release_vassal = ARE 
+		release_vassal = QOL 
+		ARE = {	country_event = 67077 } 
+		TAP = {	country_event = 67078 } 
+		QOL = {	country_event = 67079 } 
+		war = { 
+				target = TAP
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}	
+			} 
+		war = { 
+				target = ARE
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}	
+			} 
+		war = { 
+				target = QOL
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}	
+			} 
+	}
+}
+
+country_event = { 
+	id = 67077
+	title = "AND177.T" #Roq’a Waqaq Inca has declared us rebels! -Cabral
+	desc = "AND177.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND177.A"
+			war = { 
+			target = TAP
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}	
+			} 
+			war = { 
+				target = QOL
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+				}	
+			} 
+	}	
+}
+
+
+country_event = { 
+	id = 67078
+	title = "AND178.T" #Roq’a Waqaq Inca has declared us rebels! -Fujimori
+	desc = "AND178.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND177.A"
+			war = { 
+				target = QOL
+				attacker_goal =  { 
+					casus_belli = civil_war 
+				}
+				defender_goal = {
+					casus_belli = civil_war
+			}	
+		} 
+	}	
+}
+
+country_event = { 
+	id = 67079
+	title = "AND179.T" #Roq’a Waqaq Inca has declared us rebels! -Samiri
+	desc = "AND179.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND179.A"
+
+	}	
+}
+
+country_event = { 
+	id = 67080
+	title = "AND180.T" #Roq'a won barely
+	desc = "AND180.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = roqawaqaq
+		war = no 
+		OR = { ARE = { exists = yes } TAP = { exists = yes } QOL = { exists = yes } } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND180.A" 
+		remove_country_modifier = small_country_draft 
+		clr_global_flag = succession_INC
+		government = absolute_monarchy 
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = -10 
+		war_exhaustion = 80 
+		any_country = { 
+			limit = { tag = TAP exists = yes } 
+			country_event = 67081
+		}
+		any_country = { 
+			limit = { tag = QOL exists = yes } 
+			country_event = 67082
+		}
+		any_country = { 
+			limit = { tag = ARE exists = yes } 
+			country_event = 67083
+		}
+	}
+}
+
+country_event = { 
+	id = 67081
+	title = "AND181.T" #Roq'a won barely -Fujimori territories carved up and Chimor rebirth
+	desc = "AND181.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND181.A"
+		remove_country_modifier = small_country_draft 
+		any_owned = { 
+			limit = { 
+				is_core = ARU
+			}
+			secede_province = ARU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = INC NOT = { is_core = TAP } 
+			}
+			secede_province = INC 
+		}
+		capital = 2411
+		end_war = ARE 
+		end_war = QOL
+		government = absolute_monarchy 
+	}
+}
+
+
+country_event = { 
+	id = 67082
+	title = "AND182.T" #Samiri clings to power as king of the Qullaw
+	desc = "AND182.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND182.A"
+		remove_country_modifier = small_country_draft 
+		government = absolute_monarchy 
+	}
+}
+
+country_event = { 
+	id = 67083
+	title = "AND183.T" #Roq'a won barely -Cabral ousted by Radicals in Quito
+	desc = "AND183.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes 
+
+	option = { 
+		name = "AND183.A"
+		remove_country_modifier = small_country_draft 
+		any_owned = { 
+			limit = { OR = { is_core = SAN is_core = CAS } }
+			secede_province = CAS
+		}
+		change_tag = QUI 
+		government = parliamentary_republic
+		political_reform = unitary
+		political_reform = universal_voting
+		political_reform = state_equal_weight
+		political_reform = yes_meeting
+		political_reform = free_press
+		political_reform = non_socialist
+		political_reform = secret_ballots
+	}
+}
+
+
+
+country_event = { 
+	id = 67084
+	title = "AND184.T" #Triumph of Roq'a
+	desc = "AND184.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = roqawaqaq
+		war = no 
+		NOT = { OR = { ARE = { exists = yes } TAP = { exists = yes } QOL = { exists = yes } } } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND184.A" 
+		remove_country_modifier = small_country_draft 
+		clr_global_flag = succession_INC
+		government = absolute_monarchy 
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = 25 
+		war_exhaustion = -50 
+		any_pop = { 
+			militancy = -3 
+		}
+	}
+}
+
+country_event = { 
+	id = 67085
+	title = "AND185.T" #Fujimori won but did not triumph
+	desc = "AND185.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = fujimori
+		war = no 
+		OR = { ARE = { exists = yes } QOL = { exists = yes } } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND185.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = chimu  
+		clr_global_flag = succession_INC
+		government = absolute_monarchy 
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = -10 
+		war_exhaustion = 80 
+		any_country = { 
+			limit = { tag = QOL exists = yes } 
+			country_event = 67082
+		}
+		any_country = { 
+			limit = { tag = ARE exists = yes } 
+			country_event = 67083
+		}
+	}
+}
+
+country_event = { 
+	id = 67086
+	title = "AND186.T" #Fujimori triumphed
+	desc = "AND186.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = fujimori
+		war = no 
+		NOT = { OR = { ARE = { exists = yes } QOL = { exists = yes } } }
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND186.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		clr_global_flag = succession_INC
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = chimu  
+		add_accepted_culture = diaguita
+		government = absolute_monarchy 
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = 25 
+		war_exhaustion = -50 
+		any_pop = { 
+			militancy = -3 
+		}
+	}
+}
+
+country_event = { 
+	id = 67087
+	title = "AND187.T" #Cabral won but did not triumph
+	desc = "AND187.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = cabral
+		war = no 
+		OR = { TAP = { exists = yes } QOL = { exists = yes } } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND187.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		clr_global_flag = succession_INC
+		set_global_flag = INC_reunified
+		government = absolute_monarchy 
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = afro_latino 
+		inherit = AVA 
+		prestige = -10 
+		war_exhaustion = 80 
+		any_country = { 
+			limit = { tag = TAP exists = yes } 
+			country_event = 67081
+		}
+		any_country = { 
+			limit = { tag = QOL exists = yes } 
+			country_event = 67082
+		}
+	}
+}
+
+country_event = { 
+	id = 67088
+	title = "AND188.T" #Cabral triumph 
+	desc = "AND188.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = cabral
+		war = no 
+		NOT = { OR = { TAP = { exists = yes } QOL = { exists = yes } } }
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND188.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		clr_global_flag = succession_INC
+		government = absolute_monarchy 
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = afro_latino 
+		add_accepted_culture = diaguita
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = 25 
+		war_exhaustion = -50 
+		any_pop = { 
+			militancy = -3 
+		}
+	}
+}
+
+country_event = { 
+	id = 67089
+	title = "AND189.T" #Samiri won but did not triumph
+	desc = "AND189.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = samiri
+		war = no 
+		OR = { ARE = { exists = yes } TAP = { exists = yes } } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND189.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = diaguita
+		clr_global_flag = succession_INC
+		government = absolute_monarchy 
+		set_global_flag = INC_reunified
+		inherit = AVA 
+		prestige = -10 
+		war_exhaustion = 80 
+		any_country = { 
+			limit = { tag = TAP exists = yes } 
+			country_event = 67081
+		}
+		any_country = { 
+			limit = { tag = ARE exists = yes } 
+			country_event = 67083
+		}
+	}
+}
+
+country_event = { 
+	id = 67090
+	title = "AND190.T" #Samiri triumph 
+	desc = "AND190.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = succession_INC
+		has_country_flag = samiri
+		war = no 
+		NOT = { OR = { TAP = { exists = yes } ARE = { exists = yes } } }
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND190.A" 
+		set_country_flag = Washkar_INC 
+		remove_country_modifier = small_country_draft 
+		primary_culture = quechua 
+		add_accepted_culture = aimara 
+		add_accepted_culture = picunche 
+		add_accepted_culture = diaguita
+		clr_global_flag = succession_INC
+		set_global_flag = INC_reunified
+		government = absolute_monarchy 
+		inherit = AVA 
+		prestige = 25 
+		war_exhaustion = -50 
+		any_pop = { 
+			militancy = -3 
+		}
+	}
+}
+
+country_event = { 
+	id = 67091
+	title = "AND191.T" #Beornians rise up against Samiri
+	desc = "AND191.D"
+	
+	trigger = { 
+		tag = QOL 
+		has_global_flag = succession_INC
+		war = yes 
+		NOT = { NAN = { exists = yes } has_global_flag = End_NAN_variable }
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+	}
+	
+	option = { 
+		name = "AND191.A"
+		any_owned = { 
+			limit = { 
+				is_core = NAN 
+				NOT = { 
+				OR = { 
+					region = NAN_4
+					region = NAN_2
+					region = NAN_1 
+					}
+				}
+			}
+			secede_province = NAN
+		}
+		set_global_flag = End_NAN_variable 
+		NAN = { 
+		    set_country_flag = end_NAN
+			capital = 2348
+			civilized = yes
+			government = presidential_dictatorship 
+			set_country_flag = national_revival_comitte
+		}
+		war = { 
+			target = NAN 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			attacker_goal =  { 
+				casus_belli = status_quo
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67092
+	title = "AND192.T" #Independence won
+	desc = "AND192.D"
+	
+	trigger = { 
+		tag = NAN 
+		war = yes 
+		has_country_flag = national_revival_comitte 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "AND192.A"
+		clr_country_flag = national_revival_comitte 
+		government = parliamentary_republic
+		political_reform = population_equal_weight
+		political_reform = universal_weighted_voting
+		political_reform = yes_meeting
+		political_reform = no_trade_unions
+		political_reform = first_past_the_post
+		political_reform = gerrymandering
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		set_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = democracy_gov
+	}
+	
+	option = { 
+		name = "AND192.B"
+		government = hms_government 
+		clr_country_flag = national_revival_comitte 
+		political_reform = population_equal_weight
+		political_reform = universal_weighted_voting
+		political_reform = yes_meeting
+		political_reform = no_trade_unions
+		political_reform = first_past_the_post
+		political_reform = gerrymandering
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		set_country_flag = constitutional_monarchy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = democracy_gov
+	}
+	
+}
+
+country_event = { 
+	id = 67093
+	title = "AND193.T" #Aureliana decides whether or not to liberate Herreria
+	desc = "AND193.D"
+	picture = "llaneros"
+	
+	trigger = { 
+		tag = CAS 
+		NOT = { is_vassal = yes } 
+		ARE = { owns = 2254 } 
+		has_global_flag = succession_INC 
+		NOT = { has_country_flag = choice_gra } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 1
+	}
+	
+	option = { 
+		name = "AND193.A"
+		ARE = { country_event = 67094 }
+		set_country_flag = choice_gra
+		war = { 
+			target = ARE 
+			attacker_goal = { 
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = { 
+				casus_belli = conquest_any
+			}
+		}
+		ai_chance = { 
+			factor = 70
+		}
+	}
+	
+	option = { 
+		name = "AND193.B"
+		set_country_flag = choice_gra
+		any_pop = { 
+			militancy = 5
+		}
+		ai_chance = { 
+			factor = 30
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 67094
+	title = "AND194.T" #Aureliana has attacked us!
+	desc = "AND194.D"
+	picture = "llaneros"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND194.A"
+	}
+}
+
+country_event = { 
+	id = 67095
+	title = "AND195.T" #The North is Lost ...
+	desc = "AND195.D"
+	picture = "llaneros"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND195.A"
+		any_owned = { 
+			limit = { 
+				is_core = SAN 
+			}
+			secede_province = FROM 
+		}
+		end_war = FROM 
+		war_exhaustion = 20
+	}
+}
+
+country_event = { 
+	id = 67096
+	title = "AND196.T" #Kosciuszko kills Roq’a and announcement of Musuq Pacha
+	desc = "AND196.D"
+	picture = "inca_army_streets"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND196.A"
+		relation = { who = ARE value = 50 }
+		relation = { who = QOL value = 50 }
+		relation = { who = TAP value = 50 }
+		relation = { who = AVA value = 50 }
+		country_event = { id = 67074 days = 5 } 
+		country_event = { id = 67097 days = 30 }
+	}
+}
+
+country_event = { 
+	id = 67097
+	title = "AND197.T" #Choose a backer to work with
+	desc = "AND197.D"
+	picture = "sapa_inca" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND197.A"
+		relation = { who = ARE value = 50 } 
+		set_global_flag = kosciuszko_in_control 
+		set_country_flag = support_of_cabral
+		add_country_modifier = { 
+			name = Musuq_Pacha
+			duration = 4380
+		}
+	}
+	
+	option = { 
+		name = "AND197.B"
+		relation = { who = TAP value = 50 } 
+		set_global_flag = kosciuszko_in_control 
+		set_country_flag = support_of_fujimori
+		add_country_modifier = { 
+			name = Musuq_Pacha
+			duration = 4380
+		}
+	}
+	
+	option = { 
+		name = "AND197.C"
+		relation = { who = QOL value = 50 } 
+		set_global_flag = kosciuszko_in_control 
+		set_country_flag = support_of_samiri
+		add_country_modifier = { 
+			name = Musuq_Pacha
+			duration = 4380
+		}
+	}
+	
+	option = { 
+		name = "AND197.E"
+		relation = { who = AVA value = 50 } 
+		set_global_flag = kosciuszko_in_control 
+		set_country_flag = support_of_tiarayu
+		add_country_modifier = { 
+			name = Musuq_Pacha
+			duration = 4380
+		}
+	}	
+}
+
+country_event = { 
+	id = 67098
+	title = "AND198.T" #Best ending
+	desc = "AND198.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+		name = "AND198.A"
+		inherit = AVA 
+		inherit = TAP 
+		inherit = QOL 
+		inherit = ARE 
+		set_country_flag = successful_musuq_pacha
+		set_country_flag = best_ending_INC 
+		set_global_flag = INC_reunified
+		remove_country_modifier = Musuq_Pacha
+		prestige = 25
+		any_pop = { 
+			militancy = -5 
+		}
+		political_reform = landed_voting		
+	}
+}
+
+country_event = { 
+	id = 67099
+	title = "AND199.T" #Good ending
+	desc = "AND199.D"
+	
+	is_triggered_only = yes 
+	major = yes 
+	
+	option = { 
+		name = "AND198.A"
+		inherit = AVA 
+		inherit = TAP 
+		inherit = QOL 
+		inherit = ARE 
+		set_country_flag = successful_musuq_pacha
+		set_global_flag = INC_reunified
+		remove_country_modifier = Musuq_Pacha
+		prestige = 15
+		any_pop = { 
+			militancy = -5 
+		}
+		political_reform = landed_voting
+	}
+}
+
+country_event = { 
+	id = 67100
+	title = "AND200.T" #End_of_Musuq_Pacha : salvageable as only one governor is still opposed to Kosciuszko
+	desc = "AND200.D"
+	picture = "sapa_inca" 
+	
+	trigger = { 
+		tag = INC 
+		NOT = { has_country_flag = successful_musuq_pacha } 
+		has_global_flag = kosciuszko_in_control
+		NOT = { has_country_modifier = Musuq_Pacha } 
+		NOT = { has_country_flag = fight_for_the_emperor } 
+		OR = { 
+			AND = { 
+				has_country_flag = support_of_samiri
+				has_country_flag = support_of_cabral
+			}
+			AND = { 
+				has_country_flag = support_of_fujimori
+				has_country_flag = support_of_cabral
+			}
+			AND = { 
+				has_country_flag = support_of_samiri
+				has_country_flag = support_of_fujimori
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "AND200.A"
+		set_country_flag = fight_for_the_emperor 
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_cabral } } } owner = { country_event = 67101 } }
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_fujimori } } } owner = { country_event = 67102 } }
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_samiri } } } owner = { country_event = 67103 } }
+	}
+
+}
+
+country_event = { 
+	id = 67101
+	title = "AND201.T" #Rebellion of Cabral 
+	desc = "AND201.D"
+	picture = "inca_cavalry_cannon" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND201.A"
+		release_vassal = ARE 
+		leave_alliance = ARE 
+		war = { 
+			target = ARE 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67102
+	title = "AND202.T" #Rebellion of Fujimori 
+	desc = "AND202.D"
+	picture = "inca_cavalry_cannon" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND202.A"
+		release_vassal = TAP 
+		leave_alliance = TAP 
+		war = { 
+			target = TAP 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67103
+	title = "AND203.T" #Rebellion of Samiri
+	desc = "AND203.D"
+	picture = "inca_cavalry_cannon" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND202.A"
+		release_vassal = QOL 
+		leave_alliance = QOL 
+		war = { 
+			target = QOL 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67104
+	title = "AND204.T" #Cabral was stabilized but rebels anyway because you are losing the war
+	desc = "AND204.D"
+	picture = "inca_cavalry_cannon" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = yes 
+		OR = {
+		   national_provinces_occupied = 0.25 
+		   war_exhaustion = 199
+		}
+		has_country_flag = support_of_cabral 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "AND204.A"
+		release_vassal = ARE 
+		leave_alliance = ARE 
+		clr_country_flag = support_of_cabral
+		war = { 
+			target = ARE 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	} 
+}
+
+country_event = { 
+	id = 67105
+	title = "AND205.T" #Fujimori was stabilized but rebels anyway because you are losing the war
+	desc = "AND205.D"
+	picture = "inca_cavalry_cannon" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = yes 
+		OR = {
+		   national_provinces_occupied = 0.25 
+		   war_exhaustion = 99
+		}
+		has_country_flag = support_of_fujimori 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "AND205.A"
+		release_vassal = TAP 
+		leave_alliance = TAP 
+		clr_country_flag = support_of_fujimori
+		war = { 
+			target = TAP 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	} 
+}
+
+country_event = { 
+	id = 67106
+	title = "AND206.T" #Samiri was stabilized but rebels anyway because you are losing the war
+	desc = "AND206.D"
+	picture = "inca_cavalry_cannon" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = yes 
+		OR = {
+		   national_provinces_occupied = 0.25 
+		   war_exhaustion = 99
+		}
+		has_country_flag = support_of_samiri 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "AND205.A"
+		release_vassal = QOL 
+		leave_alliance = QOL 
+		clr_country_flag = support_of_samiri
+		war = { 
+			target = QOL 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	} 
+}
+
+country_event = { 
+	id = 67107
+	title = "AND206.T" #free for all war -no need for lengthy loc as AI only
+	desc = "AND206.D"
+	picture = "inca_cavalry_cannon" 
+	
+	trigger = { 
+		tag = ARE 
+		INC = { has_country_flag = fight_for_the_emperor } 
+		war = yes 
+		TAP = { war_with = INC } 
+		QOL = { war_with = INC } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 5 
+	}
+	
+	option = { 
+		name = "AND206.A"
+		TAP = { country_event = 67108 } 
+		war = { 
+			target = QOL 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+		war = { 
+			target = TAP 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67108
+	title = "AND207.T" #free for all war -no need for lengthy loc as AI only
+	desc = "AND207.D"
+	picture = "inca_cavalry_cannon" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND207.A"
+		war = { 
+			target = QOL 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+	
+}
+
+country_event = { 
+	id = 67109
+	title = "AND209.T" #End_of_Musuq_Pacha : this is bad
+	desc = "AND209.D"
+	picture = "inca_cavalry_cannon" 
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = kosciuszko_in_control
+		NOT = { has_country_modifier = Musuq_Pacha } 
+		NOT = { has_country_flag = fight_for_the_emperor } 
+		OR = { 
+			AND = { 
+				has_country_flag = support_of_cabral
+				NOT = { 
+					has_country_flag = support_of_samiri
+					has_country_flag = support_of_fujimori 
+				} 
+			}
+			AND = { 
+				has_country_flag = support_of_fujimori
+				NOT = { 
+					has_country_flag = support_of_cabral 
+					has_country_flag = support_of_samiri 
+				} 
+			}
+			AND = { 
+				has_country_flag = support_of_samiri
+				NOT = { 
+					has_country_flag = support_of_cabral 
+					has_country_flag = support_of_fujimori 
+				} 
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "AND209.A"
+		set_country_flag = fight_for_the_emperor 
+		any_pop = { militancy = 2 }
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_cabral } } } owner = { country_event = 67101 } } 
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_fujimori } } } owner = { country_event = 67102 } }
+		random_owned = { limit = { owner = { NOT = { has_country_flag = support_of_samiri } } } owner = { country_event = 67103 } } 
+	}
+
+}
+	
+country_event = { 
+	id = 67110
+	title = "AND210.T" #End_of_Musuq_Pacha : this is REALLY bad
+	desc = "AND210.D"
+	picture = "sapa_inca"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = kosciuszko_in_control
+		NOT = { has_country_modifier = Musuq_Pacha } 
+		NOT = { has_country_flag = fight_for_the_emperor } 
+		NOT = { has_country_flag = support_of_cabral has_country_flag = support_of_fujimori has_country_flag = support_of_samiri }
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "AND210.A"
+		set_country_flag = fight_for_the_emperor 
+		any_pop = { militancy = 5 } 
+		release_vassal = TAP 
+		leave_alliance = TAP 
+		war = { 
+			target = TAP 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+		release_vassal = ARE 
+		leave_alliance = ARE 
+		war = { 
+			target = ARE 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+		release_vassal = QOL 
+		leave_alliance = QOL 
+		war = { 
+			target = QOL 
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = conquest_any
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67111
+	title = "AND211.T" #Unruly governor killed : time to implement the Reforms of Kosciuszko anyway
+	desc = "AND211.D"
+	picture = "sapa_inca" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = no 
+		OR = { 
+			AND = { 
+				owns = 2279 
+				TAP = { is_vassal = yes } 
+				QOL = { is_vassal = yes } 
+			}
+			AND = { 
+				owns = 2371 
+				ARE = { is_vassal = yes } 
+				QOL = { is_vassal = yes } 
+			}
+			AND = { 
+				owns = 2374 
+				TAP = { is_vassal = yes } 
+				ARE = { is_vassal = yes } 
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 15
+	}
+	
+	option = { 
+		name = "AND211.A"
+		inherit = AVA 
+		inherit = ARE 
+		inherit = QOL 
+		inherit = TAP 
+		set_global_flag = INC_reunified
+		political_reform = landed_voting 
+		set_country_flag = successful_musuq_pacha 
+	}
+	
+}
+
+country_event = { 
+	id = 67112
+	title = "AND212.T" #Two unruly governors killed : Kosciuszko remains Regent but no reforms and the Empire is doomed according to a lot of observers
+	desc = "AND212.D"
+	picture = "sapa_inca" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = no 
+		OR = { 
+			AND = { 
+				owns = 2279 
+				owns = 2371 
+				QOL = { is_vassal = yes } 
+			}
+			AND = { 
+				owns = 2374 
+				owns = 2371 
+				ARE = { is_vassal = yes } 
+			}
+			AND = { 
+				owns = 2374 
+				owns = 2279 
+				TAP = { is_vassal = yes } 
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "AND212.A" 
+		inherit = AVA 
+		inherit = ARE 
+		inherit = QOL 
+		inherit = TAP 
+		set_global_flag = INC_reunified
+		clr_country_flag = fight_for_the_emperor
+		any_pop = { 
+			militancy = 4
+		}
+	}
+}
+
+country_event = { 
+	id = 67113
+	title = "AND213.T" #No support from the warlords, Kosciuszko is ousted and everyone wonders how long the Empire will last
+	desc = "AND213.D"
+	picture = "sapa_inca" 
+	
+	major = yes 
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fight_for_the_emperor
+		war = no 
+		NOT = { has_country_flag = support_of_cabral has_country_flag = support_of_fujimori has_country_flag = support_of_samiri }
+	}
+	
+	mean_time_to_happen = { 
+		days = 15 
+	}
+	
+	option = { 
+		name = "AND213.A" 
+		inherit = AVA 
+		inherit = ARE 
+		inherit = QOL 
+		inherit = TAP 
+		set_global_flag = INC_reunified
+		clr_country_flag = fight_for_the_emperor
+		prestige = -50 
+		any_pop = { 
+			militancy = 8
+		}
+		any_owned = { 
+			limit = { OR = { is_core = QOL is_core = TAP is_core = NAN is_core = GRA is_core = QUI } }
+			add_province_modifier = { 
+				name = nationalist_agitation
+				duration = 365 
+			}
+		}
+		add_country_modifier = {
+			name = fight_the_power
+			duration = 1000
+		}
+	}
+}
+
+
+
+country_event = { 
+	id = 67114
+	title = "AND214.T" #the Amachaq 
+	desc = "AND214.D"
+	picture = "sapa_inca"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = Cabral
+		NOT = { has_country_flag = amachaq } 
+		year = 1855 
+		NOT = { year = 1860 } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 15
+		modifier = { 
+			factor = 0.1 
+			year = 1856
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1858
+		}
+	}
+	
+	option = { 
+		name = "AND214.A" 
+		set_country_flag = amachaq 
+		any_pop = { 
+			limit = { culture = quechua type = aristocrats }
+			militancy = 1 
+			consciousness = 2 
+		}
+	}
+}
+
+
+#Post Washkar events 
+
+country_event = { 
+	id = 67115
+	title = "AND215.T" #Alt Pasteur Institutes
+	desc = "AND215.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_modifier = light_of_progress_INC
+		invention = vaccination
+		NOT = { has_country_flag = vaccination_INC } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 120
+		modifier = { 
+			factor = 0.1 
+			year = 1880
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1890
+		}
+	}
+	
+	option = { 
+		name = "AND215.A" 
+		set_country_flag = vaccination_INC
+		research_points = 5000
+		random_owned = {
+			limit = { 
+				owner = { 
+					tag = INC 
+					OR = { health_care = no_health_care health_care = trinket_health_care }
+				} 
+			}
+			owner = { social_reform = low_health_care }
+		}
+		random_owned = {
+			limit = { 
+				owner = { 
+					tag = INC 
+					health_care = low_health_care
+				} 
+			}
+			owner = { social_reform = acceptable_health_care }
+		}
+	}
+}
+
+
+country_event = { 
+	id = 671150
+	title = "AND2150.T" #The Baby Boom of $YEAR$ 
+	desc = "AND2150.D"
+	picture = "inca_village" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_modifier = light_of_progress_INC
+		has_country_flag = vaccination_INC
+		NOT = { has_country_flag = baby_boom_INC } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1 
+			year = 1900 
+		}
+	}
+	
+	option = { 
+		name = "AND2150.A"
+		set_country_flag = baby_boom_INC 
+		add_country_modifier = { 
+			name = global_baby_boom
+			duration = 2190
+		}
+	}
+}
+
+country_event = { 
+	id = 67116
+	title = "AND216.T" #INC embassy : one of our own
+	desc = "AND216.D"
+	
+	picture = "cabral" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND216.A" #Accept the alliance
+		INC = { country_event = 67117 }
+		create_alliance = FROM 
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "AND216.B" #Refuse the alliance
+		relation = { who = FROM value = -50 } 
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+country_event = { 
+	id = 67117
+	title = "AND217.T" #INC embassy : one of our own
+	desc = "AND217.D"
+	
+	picture = "cabral" 
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND217.A"
+		prestige = 10 
+		relation = { who = LIB value = 150 } 
+		diplomatic_influence = { who = LIB value = 200 } 
+		create_alliance = FROM 
+	}
+}
+
+
+country_event = { 
+	id = 67118
+	title = "AND218.T" #Tiwanaku excavations : Samiri seizes land for the new amauta department and expels the few locals
+	desc = "AND218.D"
+	
+	picture = "tiwanaku"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = inca_excavations 
+		NOT = { has_country_flag = tiwanaku } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 120 
+		modifier = { 
+			factor = 0.1 
+			year = 1875 
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1880 
+		}
+	}
+	
+	option = { 
+		name = "AND218.A"
+		prestige = 15 
+		set_country_flag = tiwanaku 
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2370 }
+			}
+			militancy = 1 
+			consciousness = 4 
+		}
+	}
+}
+
+country_event = { 
+	id = 67119
+	title = "AND219.T" #Wari excavations
+	desc = "AND219.D"
+	
+	picture = "wari"
+	
+	trigger = { 
+		tag = INC 
+		invention = modern_archaeology 
+		has_country_flag = inca_excavations 
+		NOT = { has_country_flag = wari } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 120 
+		modifier = { 
+			factor = 0.1 
+			year = 1895 
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1900 
+		}
+	}
+	
+	option = { 
+		name = "AND218.A"
+		prestige = 25
+		set_country_flag = wari
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2299 }
+			}
+			consciousness = 2
+		}
+	}
+}
+
+country_event = { 
+	id = 67120
+	title = "AND220.T" #Muisca excavations
+	desc = "AND220.D"
+	picture = "muisca"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = samiri
+		invention = modern_archaeology 
+		has_country_flag = inca_excavations 
+		owns = 2247
+		NOT = { has_country_flag = muisca } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 120 
+		modifier = { 
+			factor = 0.1 
+			year = 1905 
+		}
+		modifier = { 
+			factor = 0.1 
+			year = 1915 
+		}
+	}
+	
+	option = { 
+		name = "AND220.A"
+		prestige = 20 
+		any_pop = { 
+			limit = { 
+				has_pop_culture = granadan 
+			}
+			militancy = 1 
+		}
+	}
+}
+
+country_event = { 
+	id = 67121
+	title = "AND221.T" #Inca Empire has taken the Galapagos !
+	desc = "AND221.D"
+	
+	picture = "giant_tortoises" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND221.A" #This will not do and we will stop them!
+		2285 = { secede_province = FROM } 
+		FROM = { country_event = 67122 }
+		war = { 
+			target = INC 
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		call_ally = yes			
+		}
+		ai_chance = { 
+			factor = 90
+			modifier = { 
+				factor = 1.5 
+				tag = CLM 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND221.B" #Back down
+		2285 = { secede_province = FROM } 
+		FROM = { country_event = 67123 }
+		ai_chance = { 
+			factor = 10 
+			modifier = { 
+				factor = 1.5 
+				tag = UCA 
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67122
+	title = "AND222.T" #$FROM$ has declared war following our occupation of the Galapagos - all according to plan
+	desc = "AND222.D"
+	
+	picture = "giant_tortoises" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND222.A"
+		badboy = 3
+	}
+}
+
+country_event = { 
+	id = 67123
+	title = "AND223.T" #$FROM$ has backed down so that's good
+	desc = "AND223.D"
+	
+	picture = "giant_tortoises" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND223.A"
+		badboy = 3
+	}
+}
+
+country_event = { 
+	id = 67124
+	title = "AND224.T" #Inca lost to CLM
+	desc = "AND224.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = custom_treaty_loser 
+		truce_with = CLM 
+		has_country_flag = galapagos 
+	}
+	
+	mean_time_to_happen = { 
+		days = 10
+	}
+	
+	option = { 
+		name = "AND224.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.5 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = CLM 
+					is_core = GRA 
+					is_core = QUI 
+				}
+			}
+			secede_province = CLM 
+		}
+		CLM = { country_event = 67125 } 
+		any_pop = { 
+			militancy = 4
+		}
+	}
+}
+
+country_event = { 
+	id = 67125
+	title = "AND225.T" #WE WON
+	desc = "AND225.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND225.A" #Annex directly the liberated territories
+		prestige_factor = 0.2 
+		
+	}
+	
+	option = { 
+		name = "AND225.B" #Liberate the locals
+		prestige_factor = 0.2 
+		any_owned = { 
+			limit = { is_core = GRA }
+			secede_province = GRA 
+		}
+		create_vassal = GRA
+		any_owned = { 
+			limit = { is_core = QUI }
+			secede_province = QUI 
+		}
+		create_vassal = QUI
+	}
+}
+
+country_event = { 
+	id = 67126
+	title = "AND226.T" #Inca lost to UCA
+	desc = "AND226.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = custom_treaty_loser 
+		truce_with = UCA 
+		has_country_flag = galapagos 
+	}
+	
+	mean_time_to_happen = { 
+		days = 15
+	}
+	
+	option = { 
+		name = "AND226.A"
+		prestige_factor = -0.5 
+		clr_country_flag = custom_treaty_loser
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = UCA 
+					is_core = GRA 
+					is_core = QUI 
+				}
+			}
+			secede_province = UCA 
+		}
+		UCA = { country_event = 67127 } 
+		any_pop = { 
+			militancy = 4
+		}
+	}
+}
+
+country_event = { 
+	id = 67127
+	title = "AND227.T" #WE WON
+	desc = "AND227.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND227.A" #Liberate the locals
+		prestige_factor = 0.2 
+		any_owned = { 
+			limit = { is_core = GRA }
+			secede_province = GRA 
+		}
+		create_vassal = GRA
+		any_owned = { 
+			limit = { is_core = QUI }
+			secede_province = QUI 
+		}
+		create_vassal = QUI
+	}
+}	
+
+country_event = { 
+	id = 67128
+	title = "AND228.T" #UCA lost to INC
+	desc = "AND228.D"
+	
+	trigger = { 
+		tag = UCA 
+		has_country_flag = custom_treaty_loser 
+		truce_with = INC 
+		INC = { has_country_flag = galapagos } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 10
+	}
+	
+	option = { 
+		name = "AND228.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.5 
+		change_tag = ELS	
+		any_owned = { 
+			limit = { 
+				is_core = YUC		 
+			}
+			secede_province = YUC		 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = PNM 
+			}
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = NIC		 
+			}
+			secede_province = NIC		 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = PNM 
+			}
+			secede_province = INC 
+		}
+		INC = { country_event = 67129 } 
+		any_pop = { 
+			militancy = 4
+		}
+	}
+}
+
+country_event = { 
+	id = 67129
+	title = "AND229.T" #UCA lost to INC-INC event
+	desc = "AND229.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND229.A"
+		diplomatic_influence = { who = NIC value = 200 }
+		diplomatic_influence = { who = YUC value = 200 }
+		diplomatic_influence = { who = ELS value = 200 }
+		prestige = 20 
+	}
+}
+
+country_event = { 
+	id = 67130
+	title = "AND230.T" #CLM lost to INC
+	desc = "AND230.D"
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = custom_treaty_loser 
+		truce_with = INC 
+		INC = { has_country_flag = galapagos } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 10
+	}
+	
+	option = { 
+		name = "AND226.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.5 
+		any_owned = { 
+			limit = { 
+				is_core = YUC		 
+			}
+			secede_province = YUC		 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = ELS 
+			}
+			secede_province = ELS 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = NIC		 
+			}
+			secede_province = NIC		 
+		}
+		any_owned = { 
+			limit = { 
+					is_core = PNM 
+			}
+			secede_province = INC 
+		}
+		INC = { country_event = 67129 } 
+		any_pop = { 
+			militancy = 4
+		}
+	}
+}
+
+country_event = { 
+	id = 67131
+	title = "AND231.T" #Japanese monarchy decides on the Inca proposal
+	desc = "AND231.D"
+	picture = "shimonoseki"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND231.A" #Accept the Alliance
+		any_owned = { 
+			limit = { 
+				OR = { 
+					region = FRA_1097
+					region = BRZ_2540
+					region = AST_2543 
+					region = AST_2454
+				}
+			}
+			secede_province = FROM 
+		}
+		relation = { who = FROM value = 200 } 
+		create_alliance = FROM
+		FROM = { country_event = 67132 }
+		badboy = -3 
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.5 
+				rank = 4 
+			}
+			modifier = { 
+				factor = 0.4
+				government = absolute_monarchy 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND231.B" #Refuse
+		relation = { who = FROM value = -50 } 
+		create_alliance = FROM
+		FROM = { country_event = 67133 }
+		ai_chance = { 
+			factor = 10 
+			modifier = { 
+				factor = 3
+				rank = 4 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND231.C" #Counter claim
+		FRA_1097 = { add_core = THIS }
+		BRZ_2540 = { add_core = THIS }
+		AST_2543 = { add_core = THIS }
+		AST_2454 = { add_core = THIS }
+		relation = { who = FROM value = -200 } 
+		FROM = { country_event = 67134 }
+		badboy = 4 
+		ai_chance = { 
+			factor = 10
+			modifier = { 
+				factor = 2
+				rank = 4 
+			}
+			modifier = { 
+				factor = 10
+				government = absolute_monarchy 
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67132
+	title = "AND232.T" #Japanese monarchy has accepted!
+	desc = "AND232.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND232.A"
+		prestige = 5 
+		relation = { who = FROM value = 200 } 
+		create_alliance = JAP 
+	}
+}
+
+country_event = { 
+	id = 67133
+	title = "AND233.T" #Japanese monarchy has refused!
+	desc = "AND233.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND233.A"
+		prestige = -5 
+	}
+}
+	
+
+country_event = { 
+	id = 67134
+	title = "AND234.T" #Japanese monarchy has refused and COUNTER CLAIMED OUR CLAIMS !
+	desc = "AND234.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND233.A"
+		prestige = -5 
+	}
+}
+
+country_event = { 
+	id = 67135
+	title = "AND235.T" #Japanese non monarchy decides on the Inca proposal
+	desc = "AND235.D"
+	picture = "shimonoseki"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "AND235.A" #Accept the Alliance
+		any_owned = { 
+			limit = { 
+				OR = { 
+					region = FRA_1097
+					region = BRZ_2540
+					region = AST_2543 
+					region = AST_2454
+				}
+			}
+			secede_province = FROM 
+		}
+		relation = { who = FROM value = 400 } 
+		create_alliance = FROM
+		FROM = { country_event = 67136 }
+		badboy = -3 
+		ai_chance = { 
+			factor = 80 
+			modifier = { 
+				factor = 0.5 
+				rank = 4 
+			}
+			modifier = { 
+				factor = 0.2
+				government = fascist_dictatorship  
+			}
+			modifier = { 
+				factor = 0.2
+				government = proletarian_dictatorship   
+			}
+			modifier = { 
+				factor = 0.3
+				government = socialist_republic   
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND235.B" #Refuse
+		relation = { who = FROM value = -50 } 
+		create_alliance = FROM
+		FROM = { country_event = 67137 }
+		ai_chance = { 
+			factor = 10 
+			modifier = { 
+				factor = 3
+				rank = 4 
+			}
+			modifier = { 
+				factor = 3
+				government = proletarian_dictatorship   
+			}
+			modifier = { 
+				factor = 2
+				government = socialist_republic   
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND235.C" #Counter claim
+		FRA_1097 = { add_core = THIS }
+		BRZ_2540 = { add_core = THIS }
+		AST_2543 = { add_core = THIS }
+		AST_2454 = { add_core = THIS }
+		relation = { who = FROM value = -200 } 
+		FROM = { country_event = 67138 }
+		badboy = 4 
+		ai_chance = { 
+			factor = 10
+			modifier = { 
+				factor = 2
+				rank = 4 
+			}
+			modifier = { 
+				factor = 10
+				government = fascist_dictatorship 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67136
+	title = "AND236.T" #Japanese non monarchy has accepted!
+	desc = "AND236.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND236.A"
+		prestige = 5 
+		relation = { who = FROM value = 200 } 
+		create_alliance = JAP 
+	}
+}
+
+country_event = { 
+	id = 67137
+	title = "AND237.T" #Japanese non monarchy has refused!
+	desc = "AND237.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND237.A"
+		prestige = -5 
+	}
+}
+	
+
+country_event = { 
+	id = 67138
+	title = "AND238.T" #Japanese non monarchy has refused and COUNTER CLAIMED OUR CLAIMS !
+	desc = "AND238.D"
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = { 
+		name = "AND238.A"
+		prestige = -5 
+	}
+}
+
+
+country_event = { 
+	id = 67139
+	title = "AND239.T" #D'Anton rises in Lotharingia
+	desc = "AND239.D"
+	
+	trigger = { 
+		tag = LOT 
+		war = no 
+		OR = { NAL = { war = no exists = yes } NOT = { exists = NAL }  }
+		OR = { ODO = { war = no exists = yes } NOT = { exists = ODO }  }
+		has_global_flag = INC_reunified
+		NOT = { has_country_flag = d_anton_appeared } 
+		NOT = { year = 1877 } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		months = 40 
+		modifier = { 
+			factor = 0.1 
+			year = 1870 
+		}
+	}
+	
+	option = { 
+		name = "AND239.A"
+		government = democracy 
+		set_country_flag = d_anton_appeared
+		set_global_flag = LOT_RESOLVED
+		inherit = NAL 
+		inherit = ODO 
+		set_country_flag = d_anton
+		INC = { country_event = 67140 } 
+		ODO = { all_core = { add_core = THIS } } 
+		NAL = { all_core = { add_core = THIS } }
+		any_pop = { 
+			limit = { has_pop_culture = lotharian } 
+			dominant_issue = {
+				factor = 0.1
+				value = jingoism
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67140
+	title = "AND240.T" #D'Anton rises in Lotharingia -Inc informed
+	desc = "AND240.D"
+	picture = "d_anton" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND240.A"
+		set_country_flag = do_not_declare_on_the_east 
+		release_vassal =  LOT
+	}
+}
+
+country_event = { 
+	id = 67141
+	title = "AND241.T" #D'Anton rises in Lotharingia -Pukallaqta conference or not ? 
+	desc = "AND241.D"
+	picture = "d_anton" 
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = intipmarka_doctrine 
+		has_country_flag = do_not_declare_on_the_east 
+		NOT = { has_country_flag = INC_decided_LOT } 
+		year = 1871 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+	}
+	
+	option = { 
+		name = "AND241.A" #Pursue a detente
+		set_country_flag = INC_decided_LOT
+		LOT = { country_event = 67142 }
+		country_event = { id = 67143 days = 60 } 
+	}
+	
+	option = { 
+		name = "AND241.B" #A jingoistic Ameriga will allow us easier domination
+		set_country_flag = INC_decided_LOT
+		LOT = { set_country_flag = INC_jingo } 
+	}
+}
+
+country_event = { 
+	id = 67142
+	title = "AND242.T" #Pukallaqta conference ? 
+	desc = "AND242.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND242.A" #We will go only to reaffirm our manifest destiny
+		
+	}
+} 
+
+country_event = { 
+	id = 67143
+	title = "AND243.T" #Pukallaqta Conference : building new bridges!
+	desc = "AND243.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND243.A"
+		badboy = -1 
+		LOT = { country_event = { id = 67144 days = 150 } }
+		any_country = { 
+			limit = { 
+				OR = { 
+					primary_culture = atlantian 
+					primary_culture = lotharian 
+					primary_culture = amazonian
+				}
+			}
+			relation = { who = THIS value = 25 } 
+		}
+	}
+}
+	
+country_event = { 
+	id = 67144
+	title = "AND244.T" #D'Anton remove from power : pacifists bribed by Inca + general suspicion toward the president 
+	desc = "AND244.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND244.A"
+		government = democracy 
+		clr_country_flag = d_anton
+	}
+}
+
+### Another mass spam of Create Vassal. This is not going to go well.... - DeNuke
+
+country_event = { 
+	id = 67145
+	title = "AND245.T" #the Varennes conference 
+	desc = "AND245.D"
+	
+	major = yes
+	
+	trigger = { 
+		tag = LOT 
+		war = no 
+		OR = { ATL = { war = no exists = yes } NOT = { exists = ATL } }  
+		OR = { EQN = { war = no exists = yes } NOT = { exists = EQN } } 
+		OR = { ANT = { war = no exists = yes } NOT = { exists = ANT } }
+		OR = { AMA = { war = no exists = yes } NOT = { exists = AMA } }
+		has_country_flag = d_anton
+		NOT = { has_country_flag = varennes } 
+		year = 1880 
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+		modifier = { 
+			factor = 0.1 
+			year = 1885
+		}
+	}
+	
+	option = { 
+		name = "AND245.A"
+		set_country_flag = varennes
+		create_vassal = ATL 
+		create_vassal = EQN 
+		create_vassal = ANT 
+		create_vassal = AMA
+		create_vassal = GOU
+		prestige = 20 
+	}
+}
+
+country_event = { 
+	id = 67146
+	title = "AND246.T" #Instant unification of Ameriga because you just decided it was a good idea to take territories there
+	desc = "AND246.D"
+	
+	major = yes
+	
+	trigger = { 
+		tag = LOT 
+		war = no 
+		INC = { has_country_flag = do_not_declare_on_the_east } 
+		has_country_flag = d_anton
+		OR = { 
+			EQN = { exists = yes vassal_of = INC } 
+			LOT = { exists = yes vassal_of = INC } 
+			ATL = { exists = yes vassal_of = INC } 
+			INC = { 
+				any_owned_province = { 
+					OR = { 
+						AND = { is_core = LOT NOT = { is_core = INC } } 
+						AND = { is_core = EQN NOT = { is_core = INC } }
+						AND = { is_core = AMA NOT = { is_core = INC } }
+						is_core = ATL 
+					} 
+				} 
+			}
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "AND246.A"
+		INC = { release_vassal = LOT clr_country_flag = do_not_declare_on_the_east } 
+		inherit = ATL 
+		inherit = ODO 
+		inherit = NAL 
+		inherit = GOU 
+		inherit = ANT 
+		inherit = AMA
+		change_tag = AZL 
+		add_country_modifier = { 
+			name = new_born_AZL
+			duration = 3650
+		}
+	}
+}
+	
+country_event = { 
+	id = 67147
+	title = "AND247.T" #Ascencion of Aymeric Thenardier in Ameriga
+	desc = "AND247.D"
+	picture = "golden_league"
+	
+	trigger = { 
+		tag = AZL 
+		war = no 
+		is_ideology_enabled = fascist 
+		has_country_flag = d_anton
+		great_wars_enabled = yes
+		NOT = { has_country_flag = Aymeric } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 30 
+	}
+	
+	option = { 
+		name = "AND247.A"
+		set_country_flag = Aymeric
+		any_pop = { 
+			ideology = {
+				factor = 0.05
+				value = paternal 
+			}
+			ideology = {
+				factor = 0.05
+				value = fascist 
+			}
+			dominant_issue = { 
+				factor = 0.1 
+				value = jingoism
+			}
+		}
+		any_country = { 
+			limit = { tag = INC government = absolute_monarchy }
+			country_event = 67148 
+		}
+	}
+}
+	
+country_event = { 
+	id = 67148
+	title = "AND248.T" #Ascencion of Aymeric Thenardier in Ameriga -rely on the Intipa Churin ? 
+	desc = "AND248.D"
+	picture = "golden_league"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND248.A" #MOBILIZE THE WHOLE EMPIRE
+		any_pop = { 
+			ideology = {
+				factor = 0.1
+				value = fascist 
+			}
+		}
+		ruling_party_ideology = fascist
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	set_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+		clr_country_flag = proletarian_dictatorship_gov
+		government = fascist_monarchy 
+	}
+	
+	option = { 
+		name = "AND248.B" #Nah don't need that 
+	}
+}
+
+### Someone REALLY REALLY REALLY needs to test these following events as these commands have a high chance of fault - DeNuke
+
+country_event = { 
+	id = 67149
+	title = "AND249.T" #Aymeric Thenardier declares war on INC : FINAL BATTLE 
+	desc = "AND249.D"
+	
+	trigger = { 
+		tag = AZL 
+		has_country_flag = Aymeric 
+		NOT = { truce_with = INC } 
+		NOT = { has_global_flag = Great_Amerigan_War_2 } 
+	}
+	
+	major = yes
+	
+	mean_time_to_happen = { 
+		months = 40 
+		modifier = { 
+			factor = 0.1 
+			year = 1910 
+		}
+		modifier = { 
+			factor = 2 
+			is_greater_power = no 
+		}
+	}
+	
+	option = {
+		name = "AND249.A" 
+		set_global_flag = Great_Amerigan_War_2
+		NAN = { all_core = { add_core = THIS } } 
+		ARU = { all_core = { add_core = THIS } } 
+		SA_2 = { add_core = THIS } 
+		SA_3 = { add_core = THIS } 
+		SA_9 = { add_core = THIS } 
+		INC_2389 = { add_core = THIS } 
+		SA_2403 = { add_core = THIS } 
+		PEU_2289 = { add_core = THIS } 
+		SA_2549 = { add_core = THIS } 
+		INC = { country_event = 67150 } 
+		war = { 
+			target = INC 
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		call_ally = yes			
+		}
+	}
+}
+
+country_event = { 
+	id = 67150
+	title = "AND250.T" #Aymeric Thenardier declares war on INC : FINAL BATTLE 
+	desc = "AND250.D"
+	picture = "golden_league"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND250.A" 
+		any_pop = { 
+			dominant_issue = { 
+				factor = 0.1 
+				value = jingoism
+			}
+		}
+	}
+}
+
+### Especially this one - DeNuke
+
+country_event = { 
+	id = 67151
+	title = "AND251.T" #AZL won over INC
+	desc = "AND251.D"
+	picture = "golden_league"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = Great_Amerigan_War_2 
+		has_country_flag = custom_treaty_loser
+		truce_with = AZL 
+		AZL = { has_country_flag = Aymeric } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "AND251.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.9
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = AZL 
+					province_id = 2336
+					region = SA_6 
+					region = SA_9
+					region = NAN_5 
+				}
+			}
+			remove_core = THIS
+			secede_province = AZL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = QUI 
+			}
+			remove_core = THIS
+			secede_province = QUI 
+		}
+		QUI = { capital = 2279 } 
+		any_owned = { 
+			limit = { 
+				is_core = TAP 
+			}
+			remove_core = THIS
+			secede_province = TAP 
+		}
+		TAP = { capital = 2411 } 
+		any_owned = { 
+			limit = { 
+				is_core = QOL 
+			}
+			remove_core = THIS
+			secede_province = QOL  
+		}
+		QOL = { capital = 2370 } 
+		any_owned = { 
+			limit = { 
+				is_core = SAN 
+			}
+			remove_core = THIS
+			secede_province = SAN  
+		}
+		SAN = { capital = 2254 } 
+		any_owned = { 
+			limit = { 
+				is_core = CAS 
+			}
+			remove_core = THIS
+			secede_province = CAS  
+		}
+		CAS = { capital = 2264 } 
+		any_owned = { 
+			limit = { 
+				is_core = PNM 
+			}
+			remove_core = THIS
+			secede_province = PNM  
+		}
+		PNM = { capital = 2204 } 
+		any_country = {
+			limit = {
+				OR = {
+					civilized = yes
+					tag = JAP
+					tag = KOR
+					tag = SIA
+					tag = MOR
+					tag = ALD
+					tag = TUN
+					tag = EGY
+				}
+				any_core = { owned_by = THIS }
+				exists = no
+				OR = {
+					is_cultural_union = no
+					tag = ROM
+				}
+				NOT = {
+					AND = {
+						is_primary_culture = THIS
+						culture_has_union_tag = yes
+					}
+				}
+				NOT = { has_country_flag = post_colonial_country }
+				NOT = { has_country_flag = unreleasable_country }
+			}
+			all_core = {
+				limit = {
+					is_core = THIS
+					state_scope = {
+						NOT = { any_owned_province = { is_capital = yes } }
+					}
+				}
+				remove_core = THIS
+			}
+			country_event = 96012
+		}
+		AZL = { country_event = 67153 } 
+	}
+} 
+
+### AAAAAAAAAAAAAAAAAAAAAA - DeNuke
+
+country_event = { 
+	id = 67153
+	title = "AND253.T" #AZL won over INC
+	desc = "AND253.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND253.A"
+		create_vassal = INC 
+		create_vassal = QUI 
+		create_vassal = SAN 
+		create_vassal = CAS 
+		create_vassal = QOL 
+		create_vassal = TAP 
+		INC = { 
+			government = presidential_dictatorship 
+			}
+		QUI = { 
+			government = presidential_dictatorship 
+			}
+		QOL = { 
+			government = presidential_dictatorship 
+			}
+		TAP = { 
+			government = presidential_dictatorship 
+		}
+	prestige = 50 
+	country_event = { id = 67154 days = 150 } 
+	}
+}
+
+country_event = { 
+	id = 67154
+	title = "AND254.T" #Change of gov and installation into Amerigopolis
+	desc = "AND254.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND254.A" #No change
+		capital = 2453 
+		2453 = { 
+			add_province_modifier = { 
+				name = colonial_recruitment
+				duration = 1825
+				}
+			life_rating = 5 
+			change_province_name = "Amerigopolis"
+			}
+		ai_chance = { 
+			factor = 33
+		}
+	}
+	
+	option = { 
+		name = "AND254.B" #Amerigo I of Ameriga
+		capital = 2453 
+		2453 = { 
+			add_province_modifier = { 
+				name = colonial_recruitment
+				duration = 1825
+				}
+			life_rating = 5 
+			change_province_name = "Amerigopolis"
+			}
+		government = fascist_monarchy
+		ruling_party_ideology = fascist 
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		clr_country_flag = market_liberal_party_in_power
+		ai_chance = { 
+			factor = 34 
+		}
+	}
+	
+	option = { 
+		name = "AND254.C" #Aymeric has proven to be the true CHEF of AMERIGA
+		capital = 2453 
+		2453 = { 
+			add_province_modifier = { 
+				name = colonial_recruitment
+				duration = 1825
+				}
+			life_rating = 5 
+			change_province_name = "Amerigopolis"
+			}
+		government = fascist_dictatorship 
+		ruling_party_ideology = fascist 
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = democracy_gov
+		clr_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+		clr_country_flag = socialist_republic_gov
+		clr_country_flag = fascist_monarchy_gov	
+		clr_country_flag = tory_election_win
+		clr_country_flag = socialist_election_win
+		clr_country_flag = liberal_election_win
+		clr_country_flag = communist_election_win
+		clr_country_flag = fascist_election_win
+		clr_country_flag = reactionary_election_win
+		clr_country_flag = anarcho_liberal_election_win
+		clr_country_flag = social_liberal_election_win
+		clr_country_flag = market_liberal_election_win
+		clr_country_flag = conservative_party_in_power
+		clr_country_flag = liberal_party_in_power
+		clr_country_flag = reactionary_party_in_power
+		clr_country_flag = socialist_party_in_power
+		clr_country_flag = communist_party_in_power
+		clr_country_flag = fascist_party_in_power
+		clr_country_flag = anarcho_liberal_party_in_power
+		clr_country_flag = market_liberal_party_in_power
+		ai_chance = { 
+			factor = 33 
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67155
+	title = "AND255.T" #INC won over AZL
+	desc = "AND255.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = Great_Amerigan_War_2 
+		NOT = { has_country_flag = custom_treaty_loser } 
+		truce_with = AZL 
+		AZL = { has_country_flag = custom_treaty_loser } 
+		OR = { has_country_flag = fujimori has_country_flag = samiri has_country_flag = roqawaqaq } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "AND255.A" #Neuter Ameriga
+		AZL = { country_event = 67156 }
+		ai_chance = { 
+			factor = 90 
+			modifier = { 
+				factor = 0.5 
+				government = fascist_monarchy 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND255.B" #One Continent under the Sun
+		inherit = AZL
+		badboy = 50 
+		country_event = 67157 
+		ai_chance = { 
+			factor = 10 
+			modifier = { 
+				factor = 5 
+				government = fascist_monarchy 
+			}
+		}
+	}
+}
+
+### Another create vassal spam... - DeNuke
+
+country_event = { 
+	id = 67156
+	title = "AND256.T" #Treaty of New Amsterdam
+	desc = "AND256.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND256.A"
+		change_tag = ATL 
+		any_owned = { 
+			limit = { 
+				is_core = ODO 
+			}
+			remove_core = THIS 
+			add_core = INC
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NAL 
+			}
+			remove_core = THIS 
+			secede_province = NAL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = EQN 
+			}
+			remove_core = THIS 
+			secede_province = EQN 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = GOU 
+			}
+			remove_core = THIS 
+			secede_province = GOU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ANT 
+			}
+			remove_core = THIS 
+			secede_province = ANT 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = LOT 
+			}
+			remove_core = THIS 
+			secede_province = LOT 
+		}
+		INC = { 
+			create_vassal = NAL 
+			create_vassal = LOT 
+			create_vassal = ANT 
+			create_vassal = GOU 
+			create_vassal = ATL
+			create_vassal = EQN  
+		}
+		ANT = { capital = 2436 government = presidential_dictatorship } 
+		EQN = { capital = 2424 government = presidential_dictatorship } 
+		LOT = { capital = 2463 government = presidential_dictatorship } 
+		GOU = { capital = 2467 government = presidential_dictatorship } 
+		NAL = { capital = 2450 government = presidential_dictatorship } 
+	}
+}
+	
+country_event = { 
+	id = 67157
+	title = "AND257.T" #The Conquest of the East
+	desc = "AND257.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND257.A"
+		war_exhaustion = 40 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = ATL 
+					is_core = LOT 
+					is_core = AMA
+				}
+			}
+		add_province_modifier = { 
+			name = nationalist_agitation
+			duration = 7300
+			}
+		}
+		add_country_modifier = { 
+			name = growing_unrest duration = 1095
+		}
+	}
+}
+
+country_event = { 
+	id = 67159
+	title = "AND259.T" #INC won over AZL -Cabral version
+	desc = "AND259.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = Great_Amerigan_War_2 
+		NOT = { has_country_flag = custom_treaty_loser } 
+		truce_with = AZL 
+		AZL = { has_country_flag = custom_treaty_loser } 
+		has_country_flag = cabral
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "AND259.A" #Neuter Ameriga
+		add_accepted_culture = afro_amerigan
+		AZL = { country_event = 67160 }
+		ai_chance = { 
+			factor = 90 
+			modifier = { 
+				factor = 0.5 
+				government = fascist_monarchy 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND259.B" #One Continent under the Sun
+		inherit = AZL
+		add_accepted_culture = afro_amerigan
+		badboy = 50 
+		country_event = 67157 
+		ai_chance = { 
+			factor = 10 
+			modifier = { 
+				factor = 5 
+				government = fascist_monarchy 
+			}
+		}
+   }
+}	
+
+## And another...
+
+country_event = { 
+	id = 67160
+	title = "AND260.T" #Treaty of New Amsterdam -Cabral version
+	desc = "AND260.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND256.A"
+		change_tag = ATL 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = ODO 
+					is_core = EQN 
+					region = AMA_2
+				}
+			}
+			remove_core = THIS 
+			add_core = INC
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NAL 
+			}
+			remove_core = THIS 
+			secede_province = NAL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = GOU 
+			}
+			remove_core = THIS 
+			secede_province = GOU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ANT 
+			}
+			remove_core = THIS 
+			secede_province = ANT 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = LOT 
+			}
+			remove_core = THIS 
+			secede_province = LOT 
+		}
+		INC = { 
+			create_vassal = NAL 
+			create_vassal = LOT 
+			create_vassal = ANT 
+			create_vassal = GOU 
+			create_vassal = ATL
+			create_vassal = EQN  
+		}
+		ANT = { capital = 2436 government = presidential_dictatorship } 
+		LOT = { capital = 2463 government = presidential_dictatorship } 
+		GOU = { capital = 2467 government = presidential_dictatorship } 
+		NAL = { capital = 2450 government = presidential_dictatorship } 
+	}
+}
+
+country_event = { 
+	id = 67161
+	title = "AND261.T" #INC declares war on AZL : FINAL BATTLE 
+	desc = "AND261.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = {
+		name = "AND261.A" 
+		AZL = { country_event = 67162 } 
+		war = { 
+			target = AZL 
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		call_ally = yes			
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67162
+	title = "AND262.T" #INC declares war on AZL : FINAL BATTLE 
+	desc = "AND262.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND262.A"
+		any_pop = { 
+			dominant_issue = {
+				factor = 0.1
+				value = jingoism
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67163
+	title = "AND263.T" #AZL declares war on INC : FINAL BATTLE 
+	desc = "AND263.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = {
+		name = "AND263.A" 
+		INC = { country_event = 67164 } 
+		war = { 
+			target = INC 
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		call_ally = yes			
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67164
+	title = "AND264.T" #AZL declares war on INC : FINAL BATTLE 
+	desc = "AND264.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND264.A"
+		any_pop = { 
+			dominant_issue = {
+				factor = 0.1
+				value = jingoism
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 67165
+	title = "AND265.T" #Treaty of New Amsterdam
+	desc = "AND265.D"
+	
+	trigger = { 
+		tag = AZL 
+		has_global_flag = Great_Amerigan_War_2 
+		has_country_flag = custom_treaty_loser
+		truce_with = INC 
+		NOT = { has_country_flag = Aymeric } 
+	}
+	
+	option = { 
+		name = "AND265.A"
+		clr_country_flag = custom_treaty_loser
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2447 } 
+				type = clerks
+			}
+			reduce_pop = 0.8
+			move_pop = 2330
+		}
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2448 } 
+				type = clerks
+			}
+			reduce_pop = 0.8
+			move_pop = 2295
+		}
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2449 } 
+				type = clerks
+			}
+			reduce_pop = 0.8
+			move_pop = 2374
+		}
+		any_pop = { 
+			limit = { 
+				location = { province_id = 2441 } 
+				type = clerks
+			}
+			reduce_pop = 0.8
+			move_pop = 2290
+		}
+		any_pop = { 
+			limit = { 
+				location = { province_id = 3249 } 
+				type = clerks
+			}
+			reduce_pop = 0.8
+			move_pop = 2293
+		}
+		any_owned = {
+			limit = {
+				OR = { 
+					is_core = ATL
+					is_core = GOU 
+					is_core = NAL 
+				}
+				OR = {
+					trade_goods = cattle
+					trade_goods = horses
+					trade_goods = coffee
+					trade_goods = cotton
+					trade_goods = dye
+					trade_goods = fish
+					trade_goods = grain
+					trade_goods = opium
+					trade_goods = fruit
+					trade_goods = wool
+					trade_goods = silk
+					trade_goods = spices
+					trade_goods = sugar
+					trade_goods = tea
+					trade_goods = tobacco
+				}
+			}
+			any_pop = {
+				limit = { 
+					OR = {
+						type = craftsmen
+						type = clerks
+					}
+				}
+				pop_type = farmers
+			}				
+		}
+		any_owned = {
+			limit = {
+				OR = { 
+					is_core = ATL
+					is_core = GOU 
+					is_core = NAL 
+				}
+				OR = {
+					trade_goods = coal
+					trade_goods = copper
+					trade_goods = iron
+					trade_goods = lead
+					trade_goods = oil
+					trade_goods = precious_metal
+					trade_goods = precious_goods
+					trade_goods = rubber
+					trade_goods = sulphur
+					trade_goods = timber
+					trade_goods = tropical_wood
+				}
+			}
+			any_pop = {
+				limit = { 
+					type = craftsmen
+				}
+				pop_type = labourers
+			}
+		}
+		change_tag_no_core_switch = ATL 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					region = SA_2 
+					region = SA_3 
+					region = SA_2403 
+				}
+			}
+			remove_core = THIS 
+			add_core = INC
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = INC
+			}
+			remove_core = THIS 
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ODO 
+			}
+			remove_core = THIS 
+			add_core = INC
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = AVA 
+			}
+			remove_core = THIS 
+			secede_province = AVA
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NAL 
+			}
+			remove_core = THIS 
+			secede_province = NAL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = EQN 
+			}
+			remove_core = THIS 
+			secede_province = EQN 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = GOU 
+			}
+			remove_core = THIS 
+			secede_province = GOU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ANT 
+			}
+			remove_core = THIS 
+			secede_province = ANT 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = LOT 
+			}
+			remove_core = THIS 
+			secede_province = LOT 
+		}
+		INC = { 
+			create_vassal = NAL 
+			create_vassal = LOT 
+			create_vassal = ANT 
+			create_vassal = GOU 
+			create_vassal = ATL
+			create_vassal = EQN  
+		}
+		ANT = { capital = 2436 } 
+		EQN = { capital = 2424 } 
+		LOT = { capital = 2463 } 
+		GOU = { capital = 2467 } 
+		NAL = { capital = 2450 } 
+		INC = { country_event = 67166 } 
+	}
+}
+
+country_event = { 
+	id = 67166
+	title = "AND266.T" #The Great Reorganization
+	desc = "AND266.D"
+	picture = "inca_army_streets" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND266.A" 
+		EQN = { 
+			government = autonomous_dependency 
+			primary_culture = afro_amerigan 
+			remove_accepted_culture = amazonian 
+		} 
+		GOU = { 
+			government = democracy
+			ruling_party_ideology = liberal
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+			} 
+		ANT = { 
+			government = fascist_dictatorship 
+			ruling_party_ideology = fascist
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+			} 
+		ATL = { 
+			government = proletarian_dictatorship 
+			ruling_party_ideology = communist
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+			} 
+		LOT = { 
+			government = presidential_dictatorship 
+			ruling_party_ideology = conservative
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+			} 
+		NAL = { 
+			government = fascist_monarchy
+			ruling_party_ideology = fascist
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+		} 
+	}
+}
+
+	
+country_event = { 
+	id = 67167
+	title = "AND267.T" #AZL won over INC : Condor operation or benevolent formation of Republics ? 
+	desc = "AND267.D"
+	picture = "treaty_of_versailles"
+	
+	trigger = { 
+		tag = AZL 
+		has_global_flag = Great_Amerigan_War_2 
+		INC = { has_country_flag = custom_treaty_loser }
+		truce_with = INC 
+		NOT = { has_country_flag = Aymeric } 
+	}
+	
+	mean_time_to_happen = { 
+		days = 10
+	}
+	
+	option = { 
+		name = "AND267.A" 
+		badboy = 8
+		NAN = { all_core = { add_core = THIS } } 
+		ARU = { all_core = { add_core = THIS } } 
+		SA_2 = { add_core = THIS } 
+		SA_3 = { add_core = THIS } 
+		SA_2403 = { add_core = THIS } 
+		PEU_2289 = { add_core = THIS } 
+		SA_2549 = { add_core = THIS } 
+		INC = { country_event = 67168 } 
+	}
+	
+	option = { 
+		name = "AND267.B"
+		badboy = -4
+		NAN = { all_core = { add_core = THIS } } 
+		SA_2 = { add_core = THIS } 
+		SA_3 = { add_core = THIS } 
+		SA_2403 = { add_core = THIS } 
+		PEU_2289 = { add_core = THIS } 
+		SA_2549 = { add_core = THIS } 
+		INC = { country_event = 67169 } 
+	}
+}
+	
+country_event = { 
+	id = 67168
+	title = "AND268.T" #The Conquest of the Andes : Condor operation version
+	desc = "AND268.D"
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = { 
+		name = "AND268.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.9
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = AZL 
+					province_id = 2336
+					region = SA_6 
+					region = SA_9
+					region = NAN_5 
+				}
+			}
+			remove_core = THIS
+			secede_province = AZL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = QUI 
+			}
+			remove_core = THIS
+			secede_province = QUI 
+		}
+		QUI = { 
+			capital = 2279
+			} 
+		any_owned = { 
+			limit = { 
+				is_core = TAP 
+			}
+			remove_core = THIS
+			secede_province = TAP 
+		}
+		TAP = { 
+			capital = 2411
+			} 
+		any_owned = { 
+			limit = { 
+				is_core = QOL 
+			}
+			remove_core = THIS
+			secede_province = QOL  
+		}
+		QOL = { 
+			capital = 2370
+			} 
+		any_owned = { 
+			limit = { 
+				is_core = SAN 
+			}
+			remove_core = THIS
+			secede_province = SAN  
+		}
+		SAN = { capital = 2254 } 
+		any_owned = { 
+			limit = { 
+				is_core = CAS 
+			}
+			remove_core = THIS
+			secede_province = CAS  
+		}
+		CAS = { capital = 2264 } 
+		any_owned = { 
+			limit = { 
+				is_core = PNM 
+			}
+			remove_core = THIS
+			secede_province = PNM  
+		}
+		PNM = { capital = 2204 } 
+		FROM = { 
+			create_vassal = INC 
+			create_vassal = TAP 
+			create_vassal = QOL 
+			create_vassal = QUI 
+			diplomatic_influence = { who = INC value = 400 } 
+			diplomatic_influence = { who = TAP value = 400 } 
+			diplomatic_influence = { who = QOL value = 400 } 
+			diplomatic_influence = { who = QUI value = 400 } 
+			diplomatic_influence = { who = SAN value = 400 } 
+			diplomatic_influence = { who = CAS value = 400 } 
+		}
+		INC = { 
+			government = presidential_dictatorship
+			ruling_party_ideology = conservative
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+		} 
+		QOL = { 
+			government = presidential_dictatorship
+			ruling_party_ideology = conservative
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+		} 
+		TAP = { 
+			government = presidential_dictatorship
+			ruling_party_ideology = conservative
+			political_reform = none_voting
+			political_reform = no_meeting
+			political_reform = censored_press
+			political_reform = no_trade_unions
+			political_reform = underground_parties
+			political_reform = closed_borders
+			political_reform = appointed
+		} 
+	}
+}
+
+country_event = { 
+	id = 67169
+	title = "AND269.T" #The Conquest of the Andes : Benevolent AZL
+	desc = "AND269.D"
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = { 
+		name = "AND268.A"
+		clr_country_flag = custom_treaty_loser
+		prestige_factor = -0.9
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = AZL 
+					province_id = 2336
+					region = SA_6 
+					region = SA_9
+					region = NAN_5 
+				}
+			}
+			remove_core = THIS
+			secede_province = AZL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ARU 
+			}
+			remove_core = THIS
+			secede_province = ARU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = QUI 
+			}
+			remove_core = THIS
+			secede_province = QUI 
+		}
+		QUI = { 
+			capital = 2279
+			government = democracy
+			ruling_party_ideology = liberal
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+			} 
+		any_owned = { 
+			limit = { 
+				is_core = TAP 
+			}
+			remove_core = THIS
+			secede_province = TAP 
+		}
+		TAP = { 
+			capital = 2411
+			government = democracy
+			ruling_party_ideology = liberal
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+			} 
+		QOL = { 
+			capital = 2370 
+			government = democracy
+			ruling_party_ideology = liberal
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+			} 
+		any_owned = { 
+			limit = { 
+				is_core = SAN 
+			}
+			remove_core = THIS
+			secede_province = SAN  
+		}
+		SAN = { capital = 2254 } 
+		any_owned = { 
+			limit = { 
+				is_core = CAS 
+			}
+			remove_core = THIS
+			secede_province = CAS  
+		}
+		CAS = { capital = 2264 } 
+		any_owned = { 
+			limit = { 
+				is_core = PNM 
+			}
+			remove_core = THIS
+			secede_province = PNM  
+		}
+		PNM = { capital = 2204 } 
+		FROM = { 
+			diplomatic_influence = { who = INC value = 400 } 
+			diplomatic_influence = { who = TAP value = 400 } 
+			diplomatic_influence = { who = QOL value = 400 } 
+			diplomatic_influence = { who = QUI value = 400 } 
+			diplomatic_influence = { who = SAN value = 400 } 
+			diplomatic_influence = { who = CAS value = 400 } 
+			diplomatic_influence = { who = ARU value = 400 } 
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67170
+	title = "AND270.T" #Sayri Rimaq Inka - flavor event
+	desc = "AND270.D"
+	picture = "inca_nobleman" 
+	
+	trigger = { 
+		tag = INC 
+		year = 1857
+		NOT = { has_country_flag = sayri } 
+		NOT = { year = 1860 } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 15
+		modifier = { 
+			factor = 0.1 
+			year = 1859 
+		}
+	}
+	
+	option = { 
+		name = "AND270.A"
+		set_country_flag = sayri
+		any_pop = { 
+			limit = { 
+				pop_type = aristocrats
+				location = { province_id = 2302 } 
+			}
+			ideology = {
+				value = liberal 
+				factor = 0.01
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 67171
+	title = "AND271.T" #Sayri sent to New Amsterdam
+	desc = "AND271.D"
+	picture = "inca_nobleman" 
+	
+	trigger = { 
+		tag = INC 
+		year = 1864
+		NOT = { war = yes }
+		has_country_flag = sayri
+		NOT = { has_global_flag = kosciuszko_in_control } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 15
+		modifier = { 
+			factor = 0.1 
+			year = 1866
+		}
+	}
+	
+	option = { 
+		name = "AND270.A"
+		clr_country_flag = sayri
+		any_country = { 
+			limit = { 
+				owns = 2447
+			}
+			country_event = { id = 67172 days = 21 } 
+		}
+	}
+}
+	
+country_event = { 
+	id = 67172
+	title = "AND272.T" #Weird stuff as the new ambassador demands asylum 
+	desc = "AND272.D"
+	picture = "inca_nobleman" 
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = "AND272.A"
+		prestige = 5 
+		FROM = { relation = { who = THIS value = -25 } country_event = 67173 }
+		set_country_flag = sayri_in_AZL
+	}
+}
+		
+country_event = { 
+	id = 67173
+	title = "AND273.T" #SAYRI HAS BETRAYED US
+	desc = "AND273.D"
+	picture = "inca_nobleman" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND273.A"
+		relation = { who = FROM value = -25 }
+	}
+}
+
+	
+country_event = { 
+	id = 67174
+	title = "AND274.T" #Serge-Cicéron develops his organisation and beliefs
+	desc = "AND274.D"
+	picture = "inca_nobleman" 
+	
+	trigger = { 
+		OR = { 
+			tag = AZL 
+			tag = ATL 
+			tag = LOT 
+			tag = AMA 
+		}
+		owns = 2447
+		OR = { 
+			government = democracy 
+			government = parliamentary_republic 
+			government = hms_government
+		}
+		has_country_flag = sayri_in_AZL
+		year = 1880
+	}
+	
+	mean_time_to_happen = { 
+		months = 50 
+	}
+	
+	option = { 
+		name = "AND274.A" 
+		clr_country_flag = sayri_in_AZL 
+		relation = { who = INC value = -10 } 
+	}
+}
+
+#Flavor events for the deaths of each diadochi/Inca 
+
+country_event = { 
+	id = 67175
+	title = "AND275.T" #Death of Kuntiqocha Umayuq
+	desc = "AND275.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = fujimori 
+		NOT = { has_country_flag = fujimori_death } 
+		year = 1880
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.1 
+			year = 1885 
+		}
+	}
+	
+	option = { 
+		name = "AND275.A"
+		set_country_flag = fujimori_death
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+	id = 67176
+	title = "AND276.T" #Death of Yana Uturunkunta
+	desc = "AND276.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = cabral 
+		NOT = { has_country_flag = cabral_death } 
+		year = 1880
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.1 
+			year = 1885 
+		}
+	}
+	
+	option = { 
+		name = "AND276.A"
+		set_country_flag = cabral_death
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+	id = 67177
+	title = "AND277.T" #Death of Pachayachachic Inca
+	desc = "AND277.D"
+	
+	trigger = { 
+		tag = INC 
+		has_country_flag = samiri 
+		NOT = { has_country_flag = samiri_death } 
+		year = 1890
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.1 
+			year = 1895 
+		}
+	}
+	
+	option = { 
+		name = "AND277.A"
+		set_country_flag = samiri_death
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+
+country_event = { 
+	id = 67178
+	title = "AND278.T" #Kosciuszko on his deathbed
+	desc = "AND278.D"
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = kosciuszko_in_control 
+		has_country_flag = successful_musuq_pacha
+		NOT = { has_country_flag = kosciuszko_death } 
+		year = 1890
+	}
+	
+	
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.1 
+			year = 1895 
+		}
+	}
+	
+	option = { 
+		name = "AND278.A" #Tupaq Wallpa agrees to Kosciuszko choice for next PM
+		set_country_flag = kosciuszko_death
+		country_event = { id = 67179 days = 5 } 
+	}
+	
+	option = { 
+		name = "AND278.B" #Tupaq Wallpa pledges to support Sayri
+		set_country_flag = kosciuszko_death
+		country_event = { id = 67180 days = 5 } 
+	}
+}
+
+
+country_event = { 
+	id = 67179
+	title = "AND279.T" #Kosciuszko funeral : eulogy pronunced by new PM chosen by him 
+	desc = "AND279.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND279.A"
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+	id = 67180
+	title = "AND280.T" #Kosciuszko funeral : eulogy pronunced by Sayri who announces new far reaching reforms
+	desc = "AND280.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+		name = "AND280.A"
+		government = hms_government 
+		political_reform = universal_voting 
+		any_pop = { 
+			consciousness = 1 
+		}
+	}
+}
+
+country_event = { 
+	id = 67181
+	title = "AND281.T" #End of Inca rule
+	desc = "AND281.D"
+	picture = "Peasants_INC" 
+	
+	trigger = { 
+		tag = INC 
+		has_country_modifier = INC_rule 
+		NOT = { is_vassal = yes } 
+		NOT = { has_country_flag = successful_musuq_pacha }
+		NOT = { government = absolute_monarchy government = fascist_monarchy } 
+	}
+	
+	major = yes 
+	
+	option = { 
+		name = "AND281.A"
+		prestige_factor = -0.25
+		remove_country_modifier = INC_rule
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = ARU 
+					is_core = QOL 
+					is_core = QUI 
+					is_core = TAP 
+					is_core = GRA 
+					is_core = NAN 
+					is_core = AVA 
+					is_core = AMA
+				}
+			}
+			add_province_modifier = { 
+				name = nationalist_agitation
+				duration = 3650
+			}
+		}
+		add_country_modifier = { 
+			name = fight_the_power
+			duration = 3650
+		}
+	}
+}
+
+country_event = {
+    id = 67182
+    title = "AND282.T" #Llapa's Autonomous Guarani Suyu
+    desc = "AND282.D"
+    
+    trigger = {
+        tag = INC
+        has_country_flag = Llapa_INC
+        owns = 2340
+        owns = 2343
+        owns = 2356
+        owns = 2359
+    }
+    
+    fire_only_once = yes
+    
+    option = {
+            name = "AND282.A" 
+            SA_4 = { secede_province = AVA }
+            LOT_3 = { secede_province = AVA }
+            LOT_2358 = { secede_province = AVA }
+            create_vassal = AVA
+            create_alliance = AVA
+        AVA = {
+            civilized = yes        
+            government = autonomous_dependency 
+            primary_culture = quechua
+            add_accepted_culture = guarani
+            religion = inti
+            capital = 2340
+        }
+    2340 = { add_province_modifier = { name = baby_boom duration = 2000 } }
+    }
+}
+
+country_event = {
+    id = 67183
+    title = "AND283.T" #First track of the Iron Qhapaq
+    desc = "AND283.D"
+	picture = "iron_qhapaq_nan" 
+    
+    is_triggered_only = yes 
+    
+    fire_only_once = yes
+	
+	option = { 
+		name = "AND283.A"
+		2295 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2308 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2299 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2302 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2303 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2371 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2307 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2370 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2312 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2314 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		country_event = { id = 67184 days = 200 } 
+	}
+}
+
+country_event = {
+    id = 67184
+    title = "AND284.T" #Second track of the Iron Qhapaq
+    desc = "AND284.D"
+	picture = "neo_inca_architecture"
+    
+    is_triggered_only = yes 
+    
+    fire_only_once = yes
+	
+	option = { 
+		name = "AND284.A"
+		2298 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2293 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2290 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2292 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2291 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2287 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2280 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		country_event = { id = 67185 days = 200 } 
+		
+	}
+}
+
+country_event = {
+    id = 67185
+    title = "AND285.T" #Third track of the Iron Qhapaq
+    desc = "AND285.D"
+	picture = "iron_qhapaq_nan" 
+    
+    is_triggered_only = yes 
+    
+    fire_only_once = yes
+	
+	option = { 
+		name = "AND285.A"
+		2369 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2368 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2374 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2385 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2387 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2389 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2324 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2325 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2326 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2327 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2331 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2330 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		country_event = { id = 67186 days = 200 } 
+		
+	}
+}
+
+country_event = {
+    id = 67186
+    title = "AND286.T" #Fourth track of the Iron Qhapaq
+    desc = "AND286.D"
+	picture = "neo_inca_architecture"
+    
+    is_triggered_only = yes 
+    
+    fire_only_once = yes
+	
+	option = { 
+		name = "AND286.A"
+		2279 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2257 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2248 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2247 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2252 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2254 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		country_event = { id = 67187 days = 200 } 
+		
+	}
+}
+
+country_event = {
+    id = 67187
+    title = "AND287.T" #Last tracks of the Iron Qhapaq
+    desc = "AND287.D"
+    
+    is_triggered_only = yes 
+    
+    fire_only_once = yes
+	
+	major = yes 
+	
+	option = { 
+		name = "AND286.A"
+		2383 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2381 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2379 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2380 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2361 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2363 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2349 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2348 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		3358 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2395 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		2355 = { 
+			infrastructure = 1 
+			add_province_modifier = { 
+				name = new_qhapaq_nan 
+				duration = -1 
+				}
+			}
+		set_country_flag = qhapaq_nan_finished
+		prestige = 40 
+	}
+}
+
+country_event = {
+    id = 67188
+    title = "AND288.T" #Revolts in INC
+    desc = "AND288.D"
+    
+    trigger = { 
+		OR = { tag = QUI tag = GRA } 
+		owns = 2302 
+		year = 1860 
+		NOT = { is_vassal = yes } 
+		NOT = { INC = { exists = yes } }
+		NOT = { has_country_flag = sayri_revolt }
+	}
+	
+	mean_time_to_happen = { 
+		months = 25 
+		modifier = { 
+			factor = 0.1 
+			government = presidential_dictatorship 
+		}
+	}
+	
+	major = yes
+	
+	option = { 
+		name = "AND288.A"
+		set_country_flag = sayri_revolt 
+		any_owned = { 
+			limit = { is_core = INC } 
+			secede_province = INC
+		}
+		INC = { 
+			capital = 2302 
+			civilized = yes 
+			government = democracy 
+			ruling_party_ideology = anarcho_liberal
+			political_reform = peonage 
+			political_reform = federalism
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+			add_country_modifier = { name = small_country_draft duration = 365 } 
+			define_general = { 
+				name = "Sayri Rhimaq Inka" 
+				personality = inspiring  
+				background = politician 
+				} 
+		}
+		country_event = { id = 67189 days = 45 } 
+	}
+}
+  
+country_event = {
+    id = 67189
+    title = "AND289.T" #Revolts in INC
+    desc = "AND289.D"
+	picture = "battle_andes"
+    
+    is_triggered_only = yes 
+	
+	option = { 
+		name = "AND289.A"
+		war = { 
+			target = INC
+			attacker_goal =  { 
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo 
+			}	
+		}
+	}
+}
+
+country_event = {
+    id = 67190
+    title = "AND290.T" #Communists in the highlands
+    desc = "AND290.D"
+	picture = "communist_rally"
+    
+    trigger = { 
+		OR = { 
+			tag = QUI 
+			tag = GRA
+			AND = { tag = ARE has_country_flag = ARE_Willka NOT = { has_country_flag = prosperity_ARE } }
+			tag = SPC
+		} 
+		NOT = { is_vassal = yes } 
+		owns = 2302 
+		NOT = { INC = { exists = yes } }
+		NOT = { has_country_flag = communists_revolt_INC }
+		year = 1900 
+	}
+	
+	mean_time_to_happen = { 
+		months = 200 
+		modifier = { 
+			factor = 0.1 
+			year = 1910 
+		}
+		modifier = { 
+			factor = 0.1 
+			AND = { year = 1916 war = yes } 
+		}
+	}
+	
+	option = { 
+		name = "AND290.A"
+		any_owned = { 
+			limit = { is_core = INC } 
+			secede_province = INC
+		}
+		INC = { 
+			capital = 2302 
+			civilized = yes 
+			government = proletarian_dictatorship
+			ruling_party_ideology = communist
+			political_reform = unitary
+			political_reform = none_voting
+			political_reform = party_appointed
+			political_reform = no_meeting
+			political_reform = state_press
+			political_reform = mandatory_service
+			political_reform = first_past_the_post
+			political_reform = underground_parties 
+			clr_country_flag = tory_election_win
+			clr_country_flag = socialist_election_win
+			clr_country_flag = liberal_election_win
+			clr_country_flag = communist_election_win
+			clr_country_flag = fascist_election_win
+			clr_country_flag = reactionary_election_win
+			clr_country_flag = anarcho_liberal_election_win
+			clr_country_flag = social_liberal_election_win
+			clr_country_flag = market_liberal_election_win		
+			add_country_modifier = { name = small_country_draft duration = 365 } 
+			define_general = { 
+				name = "Umalliq Sumac" 
+				personality = charismatic   
+				background = professor  
+			} 
+		}
+		country_event = { 
+			id = 67191 days = 45 
+		}
+	}
+}
+
+
+country_event = {
+    id = 67191
+    title = "AND291.T" #Put down Chairman Sumac and his Popular War
+    desc = "AND291.D"
+    
+    is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND291.A"
+		war = { 
+			target = INC
+			attacker_goal =  { 
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = status_quo 
+			}	
+		}
+	}
+}
+
+country_event = { 
+	id = 67192
+	title = "AND255.T" #INC won over AZL
+	desc = "AND255.D"
+	picture = "inca_raymi" 
+	
+	trigger = { 
+		tag = INC 
+		has_global_flag = Great_Amerigan_War_2 
+		NOT = { has_country_flag = custom_treaty_loser } 
+		truce_with = AZL 
+		AZL = { has_country_flag = custom_treaty_loser } 
+		has_country_flag = kosciuszko_in_control 
+	}
+	
+	mean_time_to_happen = { 
+		days = 12 
+	}
+	
+	option = { 
+		name = "AND255.A" #Neuter Ameriga by force
+		AZL = { country_event = 67156 }
+		ai_chance = { 
+			factor = 40 
+		}
+	}
+	
+	option = { 
+		name = "AND255.B" #Build bridges
+		AZL = { country_event = 67193 }
+		ai_chance = { 
+			factor = 60 
+		}
+	}
+}
+
+country_event = { 
+	id = 67193
+	title = "AND293.T" #Treaty of New Amsterdam
+	desc = "AND293.D"
+	
+	is_triggered_only = yes 
+	
+	major = yes
+	
+	option = { 
+		name = "AND256.A"
+		clr_country_flag = custom_treaty_loser
+		change_tag = ATL 
+		any_owned = { 
+			limit = { 
+				is_core = ODO 
+			}
+			remove_core = THIS 
+			add_core = INC
+			secede_province = INC 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NAL 
+			}
+			remove_core = THIS 
+			secede_province = NAL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = EQN 
+			}
+			remove_core = THIS 
+			secede_province = EQN 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = GOU 
+			}
+			remove_core = THIS 
+			secede_province = GOU 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ANT 
+			}
+			remove_core = THIS 
+			secede_province = ANT 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = LOT 
+			}
+			remove_core = THIS 
+			secede_province = LOT 
+		}
+		INC = { 
+			create_vassal = NAL 
+			create_vassal = LOT 
+			create_vassal = ANT 
+			create_vassal = GOU 
+			create_vassal = ATL
+			create_vassal = EQN 
+			diplomatic_influence = { who = NAL value = 300 } 
+			diplomatic_influence = { who = LOT value = 300 } 
+			diplomatic_influence = { who = ANT value = 300 } 
+			diplomatic_influence = { who = GOU value = 300 } 
+			diplomatic_influence = { who = ATL value = 300 } 
+			diplomatic_influence = { who = EQN value = 300 } 
+			diplomatic_influence = { who = CAS value = 300 } 
+		}
+		ANT = { capital = 2436 government = parliamentary_republic } 
+		EQN = { capital = 2424 government = parliamentary_republic } 
+		LOT = { capital = 2463 government = parliamentary_republic } 
+		GOU = { capital = 2467 government = parliamentary_republic } 
+		NAL = { capital = 2450 government = parliamentary_republic } 
+	}
+}
+
+
+country_event = { 
+	id = 67194
+	title = "AND294.T" #Inca has declared on Cisandina!
+	desc = "AND294.D"
+	picture = "inca_cuirassier"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "AND294.A"
+	}
+}

@@ -1,88 +1,153 @@
 anarchic_bomb_throwers = {
-	pop_consciousness_modifier = 0.1
-	pop_militancy_modifier = 0.05
-	icon = 1	
-	
-	trigger = {
-	}	
+    pop_consciousness_modifier = 0.05
+    icon = 2
+
+    trigger = {
+    }
 }
 
 citizen_guard = {
-	pop_militancy_modifier = 0.05
-	icon = 2	
-	
-	trigger = {
-	}		
+    life_rating = -0.02
+    local_rgo_output = -0.1
+    local_factory_throughput = -0.05
+    local_artisan_throughput = -0.1
+    icon = 3
+
+    trigger = { owner = { has_crime = citizen_guard } }
 }
 
 immoral_business = {
 
-	active = yes
-	
-	local_rgo_throughput = -0.33
-	icon = 3	
-	
-	trigger = {
-	}		
+    active = yes
+
+    local_rgo_output = -0.2
+    local_artisan_output = -0.1
+    icon = 4
+
+    trigger = {
+    }
 }
 
 machine_politics = {
-	active = yes
+    active = yes
 
-	random_party_votes = 0.5
-	pop_militancy_modifier = 0.02
-	icon = 4
-	
-	trigger = {
-	}		
+    boost_strongest_party = 5.0
+    icon = 5
+
+    trigger = {
+        NOT = { owner = { vote_franschise = none_voting } }
+        is_colonial = no
+        OR = {
+            owner = { citizens_rights = all_voting_pops }
+            AND = { any_pop = { is_primary_culture = yes } owner = { citizens_rights = primary_culture_only } }
+            AND = {
+                OR = {
+                    any_pop = { is_primary_culture = yes }
+                    any_pop = { is_accepted_culture = yes }
+                }
+                owner = { citizens_rights = culture_voting_only }
+            }
+        }
+    }
 }
 
 mafia = {
-	active = yes
+    active = yes
 
-	local_factory_output = -0.33
-	icon = 5	
-	
-	trigger = {
-	}		
+    local_factory_output = -0.05
+    local_rgo_output = -0.05
+    local_artisan_output = -0.05
+    icon = 6
+
+    trigger = {
+    }
 }
 
 rotten_boroughs = {
 
-	active = yes
-	local_ruling_party_support = 2.0
-	icon = 6	
-	
-	trigger = {
-	}		
+    active = yes
+
+    number_of_voters = 1.0    #double voters.
+    icon = 7
+
+    trigger = {
+        NOT = { owner = { vote_franschise = none_voting } }
+        is_colonial = no
+        OR = {
+            owner = { citizens_rights = all_voting_pops }
+            AND = { any_pop = { is_primary_culture = yes } owner = { citizens_rights = primary_culture_only } }
+            AND = {
+                OR = {
+                    any_pop = { is_primary_culture = yes }
+                    any_pop = { is_accepted_culture = yes }
+                }
+                owner = { citizens_rights = culture_voting_only }
+            }
+        }
+    }
 }
 
 spoil_system = {
-	active = yes
 
+    active = yes
+    local_ruling_party_support = 2.0
+    pop_consciousness_modifier = 0.01
+    icon = 8
 
-	number_of_voters = 2.0	#double voters.
-	icon = 7	
-	
-	trigger = {
-	}	
+    trigger = {
+        NOT = { owner = { vote_franschise = none_voting } }
+        is_colonial = no
+    }
 }
 
 terrorist_cells = {
 
-	pop_militancy_modifier = 0.1
-	pop_consciousness_modifier = 0.05
-	icon = 8	
+    local_factory_throughput = -0.15
+    local_artisan_throughput = -0.1
+    icon = 9
 
-	trigger = {
-	}	
+    trigger = {
+        average_militancy = 3
+    }
 }
 
-#colonial_independence_movement = {
-#	pop_militancy_modifier = 0.25
-#	icon = 8	
-#
-#	trigger = {
-#		is_colonial = yes
-#	}	
-#}
+trusts = {
+    active = yes
+
+    pop_consciousness_modifier = 0.1
+	farm_rgo_eff = -0.1
+	mine_rgo_eff = -0.1
+    icon = 10
+
+    trigger = {
+    }
+}
+
+instigators = {
+    active = yes
+
+    local_ruling_party_support = -0.05
+    pop_consciousness_modifier = 0.01
+    icon = 11
+
+    trigger = {
+        owner = { vote_franschise = none_voting }
+        civilized = yes
+        is_colonial = no
+    }
+}
+
+kleptocrats = {
+    active = yes
+
+    local_rgo_output = -0.1
+	local_factory_output = -0.2
+	local_artisan_output = -0.05
+    icon = 12
+
+    trigger = {
+        owner = { vote_franschise = none_voting }
+        is_colonial = no
+        has_pop_type  = bureaucrats
+    }
+}

@@ -66,7 +66,7 @@ political_decisions = {
 				is_greater_power = yes
 				state_n_government = 1
 				year = 1870
-				2332 = { empty = no }
+				3361 = { empty = no }
 			}
 		}
 		effect = {
@@ -178,6 +178,12 @@ political_decisions = {
 			prestige = 5
 			random_owned = {
 				limit = {
+					3361 = { empty = yes }
+				}
+				3361 = { secede_province = THIS }
+			}
+			random_owned = {
+				limit = {
 					2333 = { empty = yes }
 					2334 = { empty = no }
 				}
@@ -256,31 +262,6 @@ political_decisions = {
 		2328 = { add_core = THIS }
 		2331 = { add_core = THIS }
 		}
-	
-	}
-	
-	Mapuche_war = { 
-	potential = { 
-	tag = INC 
-	AND = { 
-	war_with = ARU 
-	war_with = SCA 
-		}
-	has_global_flag = mapuche_war
-	}
-	
-	allow = { 
-	2329 = { controlled_by = THIS 
-			province_control_days = 730 }
-	2328 = { controlled_by = THIS 
-			province_control_days = 730 }
-	2331 = { controlled_by = THIS 
-			province_control_days = 730 }
-	}
-	
-	effect = { 
-	SCA = { country_event = 66967 }
-	}
 	
 	}
 	
@@ -365,12 +346,13 @@ political_decisions = {
 		
 		allow = { 
 		is_greater_power = yes 
-		AMA = { all_core = { owned_by = THIS } }
-		ATL = { all_core = { owned_by = THIS } }
+		AMA = { all_core = { OR = { empty = yes owned_by = THIS } } }
+		ATL = { all_core = { OR = { empty = yes owned_by = THIS } } }
 		LOT = {
 				all_core = {
 						OR = {
 						owned_by = THIS
+						empty = yes
 						owner = {
 							in_sphere = THIS
 						}
@@ -484,12 +466,12 @@ political_decisions = {
 		allow = { 
 		is_greater_power = yes 
 		OR = { 
-		NOT = { AMA = { exists = yes } }
-		AMA = { 
-			in_sphere = THIS
-			}
+		   NOT = { AMA = { exists = yes } }
+		   AMA = { 
+			   in_sphere = THIS
+		   }
 		}
-		all_core = { OR = { owned_by = THIS province_id = 2131 } }
+		LOT = { all_core = { OR = { empty = yes owned_by = THIS } } }
 		}
 
 		
@@ -527,6 +509,77 @@ political_decisions = {
 		}
 	}
 	
+	Ameriga_LOT_danton = { 
+	
+	    picture = switch_to_freedom
+	
+		potential = { 
+			tag = LOT 
+			NOT = { has_country_flag = BIG_LOTHARINGIA } 
+			has_country_flag = d_anton
+		}
+		
+		allow = { 
+			OR = { 
+				is_our_vassal = AMA 
+				AND = { 
+					is_our_vassal = ANT
+					is_our_vassal = EQN  
+					} 
+				} 
+			revolution_n_counterrevolution = 1 
+			war = no 
+		}
+
+		effect = { 
+		prestige = 20
+		inherit = ATL 
+		inherit = ANT 
+		inherit = EQN
+		inherit = AMA
+		inherit = GOU
+		change_tag = AZL
+		capital = 2447
+		# Add cores to LOT and LOT break offs
+		AVA = { all_core = { add_core = AZL } } 
+		LOT = { all_core = { add_core = AZL } }
+		ODO = { all_core = { add_core = AZL } } 
+		AVA = { all_core = { add_core = AZL } } 
+		NAL = { all_core = { add_core = AZL } }
+		# Add cores to AMA and AMA break offs		
+		AMA = { all_core = { add_core = AZL } }
+		ANT = { all_core = { add_core = AZL } }	
+		GOU = { all_core = { add_core = AZL } }	
+		EQN = { all_core = { add_core = AZL } }
+		LOT_6 = { add_core = AZL } 
+		SA_2403 = { add_core = AZL }
+		SA_2 = { add_core = AZL }
+		SA_3 = { add_core = AZL } 
+		SA_5 = { add_core = AZL } 
+		add_accepted_culture = amazonian 
+		add_accepted_culture = atlantian
+		add_country_modifier = { 
+			name = new_born_AZL
+			duration = 7300
+			}
+		any_country = {
+		   limit = {
+		      in_sphere = THIS
+		      OR = {
+			     primary_culture = amazonian
+				 primary_culture = atlantian
+				 primary_culture = lotharian
+			  }
+			}
+			country_event = { id = 11101 days = 0 }
+			}
+		}
+	
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+	
 	Ameriga_ATL = { 
 		
 	    picture = switch_to_freedom		
@@ -539,11 +592,12 @@ political_decisions = {
 		owns = 2416 
 		owns = 2450 
 		is_greater_power = yes 
-		ATL = { all_core = { owned_by = THIS } }
+		ATL = { all_core = { OR = { empty = yes owned_by = THIS } } }
 		ANT = {
 				all_core = {
 						OR = {
 						owned_by = THIS
+						empty = yes
 						owner = {
 							in_sphere = THIS
 						}
@@ -553,7 +607,9 @@ political_decisions = {
 		LOT = {
 				all_core = {
 						OR = {
+						is_core = AVA
 						owned_by = THIS
+						empty = yes
 						owner = {
 							in_sphere = THIS
 						}
@@ -731,23 +787,23 @@ political_decisions = {
 	}
 	
 	GRA_congress = { 
-	picture = Congress_AMA
+		picture = Congress_AMA
 	
-	potential = { 
-	tag = AZL 
-	is_greater_power = yes 
-	owns = 2254 
-	NOT = { accepted_culture = granadan }
-	}
+		potential = { 
+			tag = AZL 
+			is_greater_power = yes 
+			owns = 2254 
+			NOT = { accepted_culture = granadan }
+		}
 	
-	allow = { 
-	NOT = { GRA = { exists = yes } }
-	}
+		allow = { 
+			NOT = { GRA = { exists = yes } }
+		}
 	
-	effect = { 
-	AZL = { country_event = 775415 }
-	set_country_flag = congress_GRA
-	}
+		effect = { 
+			AZL = { country_event = 775415 }
+			set_country_flag = congress_GRA
+		}
 	
 	}
 	
@@ -1522,60 +1578,39 @@ political_decisions = {
 		}
 	}	
 	
-	unequal_treaty_NAN = { 
-		picture = "NAN_Andes" 
-		
+	saint_godwin_tunnel = { 
 		potential = { 
-		tag = SCA 
-		has_global_flag = NAN_SCA_war
+			tag = NAN 
+			has_country_flag = New_Mercia_established
+			NOT = { has_country_flag = saint_godwin } 
 		}
 		
 		allow = { 
-		NAN = {
-				OR = {
-					war_exhaustion = 50
-					any_owned_province = { controlled_by = THIS }
-				}
-				OR = {
-					blockade = 0.8
-					war_exhaustion = 20
-				}
-				
-			}
+			money = 500000
+			invention = dynamite 
+			steel_railroad = 1 
+			drilling_and_blasting = 1 
+			all_core = { owned_by = THIS } 
+			owns = 2254 
+			owns = 2279 
+			owns = 2348 
+			owns = 2355
 		}
-		
 		
 		effect = { 
-		NAN = { country_event = 66976 }
+			2390 = {
+				infrastructure = 4
+			}
+			2324 = {
+				infrastructure = 4
+			}
+			money = -500000
+			prestige = 15
+			set_country_flag = saint_godwin 
+			
 		}
-		
-	}
 	
-	SCA_rename_Landend = {
-		picture = "NAN_Andes"
-		potential = {
-			tag = SCA 
-			AND = { owns = 2334 NOT = { has_global_flag = SCA_rename_landsend } }
-		}
-		
-		allow = {
-			war = no
-		}
-		
-		effect = {
-			prestige = 1 
-				2334  = { 
-					change_province_name = "St. Ansgar"
-					state_scope = { change_region_name = "Ildmark"  }
-				}
-				2400 = { change_province_name = "Ildmark" }
-				2335 = { change_province_name = "Selknamssund" }
-				set_global_flag = SCA_rename_landsend clr_global_flag = NAN_rename_landsend 
-		}
-
-		ai_will_do = { factor = 1 }
 	}
-	
 	
 	AMA_become_ANT = { 
 	
@@ -1976,74 +2011,17 @@ political_decisions = {
 	
 	}
 	
-	INC_rename_frontier = {
-		picture = "gtfo"
-		potential = {
-			OR = { tag = INC tag = ARE } 
-			OR = {
-				AND = { owns = 2376 NOT = { has_global_flag = INC_rename_Wessex } }
-				AND = { owns = 2390 NOT = { has_global_flag = INC_rename_Godwinson } }
-				AND = { owns = 2377 NOT = { has_global_flag = INC_rename_Northumbria } }
-			}
-		}
-		
-		allow = {
-			war = no
-		}
-		
-		effect = {
-			random_owned = {
-				limit = { province_id = 2376 }
-				2376 = { 
-					change_province_name = "Liwitaka"
-					state_scope = { change_region_name = "Chinchakuyun"  }
-				}
-				2378 = { change_province_name = "Mayu Sumaj" }
-				2379 = { change_province_name = "Sampacha" }
-				2380 = { change_province_name = "Cachicoya" }
-				2381 = { change_province_name = "Awanqay" }
-				2386  = { change_province_name = "Shancash" }
-				owner = { set_global_flag = INC_rename_Wessex }
-			}
-			
-			random_owned = {
-				limit = { province_id = 2390 }
-				2390 = { 
-					change_province_name = "Tupuncato "
-					state_scope = { change_region_name = "Qullakuyun"  }
-				}
-				2383 = { change_province_name = "Tilisarao" }
-				2382 = { change_province_name = "Vayumanka" }
-				2384 = { change_province_name = "Huanacache" }
-				owner = { set_global_flag = INC_rename_Godwinson }
-			}
-			
-			random_owned = {
-				limit = { province_id = 2377 }
-				2377  = { 
-					change_province_name = "Tinti"
-					state_scope = { change_region_name = "Chaco"  }
-				}
-				2365 = { change_province_name = "Pumahuasi" }
-				2364 = { change_province_name = "Pukyu" }
-				
-				owner = { set_global_flag = INC_rename_Northumbria }
-			}
-			
-		}
-		ai_will_do = { 
-		factor = 1 
-		}
-	}
-	
 	NAN_rename_frontier = {
 		picture = "gtfo"
 		potential = {
 			OR = { tag = NAN tag = AZL tag = LOT } 
 			OR = {
-				AND = { owns = 2376 has_global_flag = INC_rename_Wessex }
-				AND = { owns = 2390 has_global_flag = INC_rename_Godwinson }
-				AND = { owns = 2377 has_global_flag = INC_rename_Northumbria }
+				AND = { owns = 2376 has_global_flag = INC_rename_NorthCuyo has_global_flag = QUI_rename_NorthCuyo  }
+				AND = { owns = 2390 has_global_flag = INC_rename_SouthCuyo has_global_flag = QUI_rename_SouthCuyo }
+				AND = { owns = 2377 has_global_flag = INC_rename_NorthChaco has_global_flag = QUI_rename_NorthChaco }
+				AND = { owns = 2353 has_global_flag = INC_rename_camelot has_global_flag = QUI_rename_camelot }
+				AND = { owns = 2350 has_global_flag = INC_rename_sion has_global_flag = QUI_rename_sion }
+				AND = { owns = 2363 has_global_flag = INC_rename_nlondon has_global_flag = QUI_rename_nlondon }
 			}
 		}
 		
@@ -2058,12 +2036,10 @@ political_decisions = {
 					change_province_name = "Hincaster"
 					state_scope = { change_region_name = "Wessex"  }
 				}
-				2378 = { change_province_name = "Mayu Sumaj" }
+				2378 = { change_province_name = "Furness" }
 				2379 = { change_province_name = "Furness" }
-				2380 = { change_province_name = "Sharrow" }
-				2381 = { change_province_name = "Hemingbrough" }
 				2386  = { change_province_name = "Ebberston" }
-				owner = { clr_global_flag = INC_rename_Wessex }
+				owner = { clr_global_flag = INC_rename_NorthCuyo clr_global_flag = QUI_rename_NorthCuyo }
 			}
 			
 			random_owned = {
@@ -2073,21 +2049,61 @@ political_decisions = {
 					state_scope = { change_region_name = "Godwinson"  }
 				}
 				2383 = { change_province_name = "Osmotherley" }
-				2382 = { change_province_name = "Kettlewell" }
+				2381 = { change_province_name = "Ripslith" }
 				2384 = { change_province_name = "Ryedale" }
-				owner = { clr_global_flag = INC_rename_Godwinson }
+				3358 = { change_province_name = "Grahamburgh" }
+				owner = { clr_global_flag = INC_rename_SouthCuyo clr_global_flag = QUI_rename_SouthCuyo }
 			}
 			
 			random_owned = {
-				limit = { province_id = 2377 }
-				2377  = { 
-					change_province_name = "Cartmel"
+				limit = { province_id = 2353 }
+				2353 = { 
+					change_province_name = "Æthelwulf"
+					state_scope = { change_region_name = "South East Avalon"  }
+				}
+				2354 = { change_province_name = "Cuthred" }
+				2355 = { change_province_name = "New London" }
+				2395 = { change_province_name = "Staithes" }
+				2393 = { change_province_name = "Beorhtric" }
+				owner = { clr_global_flag = INC_rename_nlondon clr_global_flag = QUI_rename_nlondon }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2350 }
+				2350 = { 
+					change_province_name = "Edwardia "
+					state_scope = { change_region_name = "Avalon"  }
+				}
+				2352 = { change_province_name = "Seaxburh" }
+				2351 = { change_province_name = "Ceolwulf" }
+				2349 = { change_province_name = "New Kent" }
+				2348 = { change_province_name = "Camelot" }
+				owner = { clr_global_flag = INC_rename_camelot clr_global_flag = QUI_rename_camelot }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2363 }
+				2363 = { 
+					change_province_name = "Birtswith "
+					state_scope = { change_region_name = "Zion"  }
+				}
+				2382 = { change_province_name = "Kettlewell" }
+				2380 = { change_province_name = "Hemingbrough" }
+				2361 = { change_province_name = "New Jerusalem" }
+				owner = { clr_global_flag = INC_rename_sion clr_global_flag = QUI_rename_sion }
+			}
+			
+			random_owned = {
+				limit = { province_id = 2366 }
+				2366  = { 
+					change_province_name = "Port Auburn"
 					state_scope = { change_region_name = "Northumbia"  }
 				}
+				2362 = { change_province_name = "Eoferwic" }
 				2365 = { change_province_name = "Penrith" }
 				2364 = { change_province_name = "Bewcastle" }
-				
-				owner = { clr_global_flag = INC_rename_Northumbria }
+				2367 = { change_province_name = "Wealdburgh" }
+				owner = { clr_global_flag = INC_rename_SouthChaco clr_global_flag = QUI_rename_SouthChaco }
 			}
 			
 		}
@@ -2598,4 +2614,30 @@ political_decisions = {
         DUA = { country_event = 7754401 }
         } 
     }
+	
+	denis_war_decision = { 
+	
+		picture = Atlantia
+		
+		potential = { 
+			tag = LOT 
+			has_global_flag = LOT_RESOLVED
+			all_core = { owned_by = THIS } 
+			NOT = { is_vassal = yes } 
+			NOT = { year = 1860 } 
+			NOT = { has_country_flag = denis_war }
+		}
+		
+		allow = { 
+			war_exhaustion = 0 
+			NOT = { OR = { ODO = { exists = yes } NAL = { exists = yes } } }
+			war = no 
+		}
+		
+		effect = { 
+			set_country_flag = denis_war 
+			any_country = { limit = { tag = ATL exists = yes } country_event = 7755159 }
+			ATL = { all_core = { add_core = LOT } } 
+		}
+	}
 }

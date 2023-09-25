@@ -200,9 +200,9 @@ country_event = {
 	
 	option = { 
 	name = "ATL7.A"
-	consciousness = 4
 	any_pop = { 
-	ideology = {
+	    consciousness = 4
+	    ideology = {
 				value = liberal
 				factor = 0.3
 			}
@@ -1734,6 +1734,11 @@ country_event = {
 	tag = LOT 
 	owns = 2447
 	war = no 
+	year = 1845 
+	NOT = { 
+		owns = 2379 
+		owns = 2384 
+		}
 	has_global_flag = ATL_RESOLVED
 	NOT = { has_global_flag = LOT_RESOLVED } 
 	NOT = { has_country_flag = starting_ATL_DA }
@@ -1945,10 +1950,10 @@ country_event = {
 	picture = ""
 	
 	trigger = { 
-	NOT = { exists = ATL }
-	tag = LOT 
-	has_country_flag = DA_DICTATOR
-	NOT = { has_global_flag = LOT_RESOLVED } 
+		NOT = { exists = ATL }
+		tag = LOT 
+		has_country_flag = DA_DICTATOR
+		NOT = { has_global_flag = LOT_RESOLVED } 
 	}
 	
 	fire_only_once = yes
@@ -2059,10 +2064,10 @@ country_event = {
 	picture = ""
 	
 	trigger = { 
-	NOT = { exists = ATL }
-	tag = LOT 
-	NAL = { exists = yes } 
-	has_global_flag = LOT_CW_waiting
+		NOT = { exists = ATL }
+		tag = LOT 
+		NAL = { exists = yes } 
+		has_global_flag = LOT_CW_waiting
 	}
 	
 	fire_only_once = yes
@@ -2235,7 +2240,12 @@ country_event = {
 	NOT = { owns = 2447 } 
 	has_global_flag = ATL_RESOLVED
 	has_global_flag = NAN_OVER
+	year = 1846
 	NOT = { OR = { has_global_flag = Washkar_WILDRIDE has_global_flag = NAN_URUGUAY } }
+	NOT = { 
+		owns = 2379 
+		owns = 2384 
+		}
 	NOT = { has_global_flag = LOT_RESOLVED } 
 	NOT = { has_global_flag = LOT_CW_beginning }
 	}
@@ -4540,6 +4550,205 @@ country_event = {
 	diplomatic_influence = { who = FROM value = 200 } 
 	}
 }
+
+country_event = { 
+	id = 7755159
+	title = "ATL119.T" #Ultimatum from BIG LOT
+	desc = "ATL119.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "ATL119.A" #Accept the Ultimatum 
+		FROM = { country_event = 7755160 }
+		ai_chance = { 
+			factor = 50 
+			modifier = { 
+				factor = 1.8
+				LOT = { OR = { government = parliamentary_republic government = democracy } } 
+			}
+			modifier = { 
+				factor = 1.5
+				LOT = { government = hms_government } 
+			} 
+		}
+	}
+	
+	option = { 
+		name = "ATL119.B"
+		FROM = { country_event = 7755161 }
+		ai_chance = { 
+			factor = 50 
+			modifier = { 
+				factor = 0.1 
+				NOT = { LOT = { OR = { government = parliamentary_republic government = hms_government government = democracy } } } 
+			}
+		}
+	}
+}
+
+country_event = { 
+	id = 7755160
+	title = "ATL120.T" #ATL accepted!
+	desc = "ATL120.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ATL120.A"
+		set_country_flag = LOT_ATLANTIAN
+		inherit = FROM 
+		ATL = { all_core = { add_core = LOT } }
+	}
+}
+	
+
+country_event = { 
+	id = 7755161
+	title = "ATL121.T" #ATL refused!
+	desc = "ATL121.D" 
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "ATL121.A"
+		war = { 
+			target = FROM 
+			attacker_goal = {
+				casus_belli = annex_core_country
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+		}
+	}
+}
+
+
+country_event = { 
+	id = 7755162
+	title = "ATL122.T" #LOT lost the Dyionisyian war
+	desc = "ATL122.D" 
+	
+	trigger = { 
+		tag = LOT 
+		has_country_flag = custom_treaty_loser
+		has_country_flag = denis_war
+		truce_with = ATL 
+	}
+	
+	mean_time_to_happen = { 
+		days = 10 
+	}
+	
+	option = { 
+		name = "ATL122.A"
+		NAL = { all_core = { add_core = ATL } } 
+		any_owned = { 
+			limit = { is_core = NAL } 
+			remove_core = LOT 
+			secede_province = ATL 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = NAN 
+			}
+			remove_core = LOT 
+			secede_province = NAN 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ODO 
+			}
+			remove_core = LOT 
+			secede_province = ODO
+		}
+		ATL = { 
+			country_event = 7755163
+		}
+	}
+}
+
+country_event = { 
+	id = 7755163
+	title = "ATL123.T" #LOT lost the Dyionisyian war -ATL 
+	desc = "ATL123.D" 
+	
+	is_triggered_only = yes 
+	
+	major = yes 
+	
+	option = { 
+		name = "ATL123.A"
+		create_vassal = LOT 
+		create_vassal = ODO 
+		create_vassal = NAN 
+		prestige = 25
+		LOT = { 
+			government = parliamentary_republic 
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+		}
+		ODO = { 
+			capital = 2344
+			government = parliamentary_republic 
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+		}
+		NAN = { 
+			capital = 2348
+			government = parliamentary_republic 
+			political_reform = no_slavery
+			political_reform = universal_voting
+			political_reform = population_equal_weight
+			political_reform = yes_meeting
+			political_reform = free_press
+			political_reform = non_socialist
+			political_reform = gerrymandering
+			political_reform = non_secret_ballots
+		}
+	}
+}
+
+
+country_event = { 
+	id = 7755164
+	title = "ATL124.T" #LOT didn't win
+	desc = "ATL124.D" 
+	
+	trigger = { 
+		tag = LOT 
+		NOT = { has_country_flag = custom_treaty_loser }
+		has_country_flag = denis_war
+		truce_with = ATL 
+		ATL = { exists = yes } 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 10 
+	}
+	
+	option = { 
+		name = "ATL124.A"
+		ATL = { all_core = { remove_core = THIS } }
+	}
+}
+
+	
 
 # Extra Flavor
 

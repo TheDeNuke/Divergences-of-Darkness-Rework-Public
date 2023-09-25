@@ -23,6 +23,8 @@ country_event = {
 	}
 }
 
+#### COMPROMISE HOLY ROMAN EMPIRE EVENTS #####
+
 country_event = { 
 
 	id = 410002 		#The expended Reichstag
@@ -296,13 +298,14 @@ country_event = {
 			has_country_flag = New_Reichsarmee_HRE
 			has_country_flag = Cultural_Reform_HRE
 			has_country_flag = First_Eco_reform_HRE
-			}
+		}
+		year = 1854
 		NOT = { has_country_flag = ended_local_hollowing } 
 		NOT = { has_country_flag = Republicanism_3 } 
 	}
 	
 	mean_time_to_happen = { 
-		days = 6 
+		days = 31 
 	}
 	
 	option = { 
@@ -486,7 +489,7 @@ country_event = {
 
 	option = { 
 		name = "HRE13.A" #Constitution will be implemented after peace
-		government = presidential_dictatorship 
+		government = bourgeois_dictatorship	
 		primary_culture = rheinish 
 		add_accepted_culture = czech
 		political_reform = none_voting
@@ -715,7 +718,7 @@ country_event = {
 	name = "HRE22.A"
 	add_country_modifier = { 
 		name = REVOLUTIONARY_FERVOUR_HRE #mobilization modifier 
-		duration = 1825 
+		duration = -1
 		}
 	}
 }
@@ -752,21 +755,17 @@ country_event = {
 		set_global_flag = COALITION_WAR
 		any_country = { 
 		limit = { OR = { tag = BRG tag = PBG } exists = yes } 
-			country_event = 410025  
+			leave_alliance = SCA leave_alliance = DUA country_event = 410025  
 		}
-		SCA = { country_event = 410025 } 
+		SCA = { leave_alliance = DUA leave_alliance = PBG leave_alliance = BRG country_event = 410025 } 
 		HLR = { 
 		   release_vassal = THIS 
-	       add_country_modifier = {
-				name = taiping_draft
-				duration = 1000
-	       }
 		   country_event = { id = 410026 days = 2 } 
 		}
 		war = {
 			target = HLR
 			attacker_goal = {
-				casus_belli = conquest_any
+				casus_belli = custom_treaty_cb
 			}
 			defender_goal = {
 				casus_belli = conquest_any
@@ -785,10 +784,12 @@ country_event = {
 	
 	option = { 
 		name = "HRE25.A"
-	    add_country_modifier = {
-		   name = taiping_draft
-		   duration = 1000
-	    }
+		great_wars_enabled = yes
+		set_global_flag = great_wars_enabled
+	    any_pop = {
+	       militancy = -8
+	    }  
+	    add_country_modifier = { name = the_final_war duration = -1 }
 		war = {
 			target = HLR
 			attacker_goal = {
@@ -797,6 +798,7 @@ country_event = {
 			defender_goal = {
 				casus_belli = custom_treaty_cb
 			}
+			call_ally = yes
 		}
 	}
 }
@@ -962,10 +964,13 @@ country_event = {
 	title = "HRE31.T"
 	desc = "HRE31.D"
 	
+	major = yes
+	
 	is_triggered_only = yes 
 	
 	option = { 
 		name = "HRE31.A"
+		add_country_modifier = { name = the_final_war duration = -1 }
 		war = {
 			target = HLR
 			attacker_goal = {
@@ -974,7 +979,10 @@ country_event = {
 			defender_goal = {
 				casus_belli = custom_treaty_cb
 			}
+			call_ally = yes
 		}
+		relation = { who = BRG value = 400 }
+		create_alliance = BRG
 		military_access = BRG
 		HLR = { country_event = 410032 }
 	}
@@ -990,6 +998,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE32.A" #The tree of liberty must be refreshed with the blood of tyrants!
+        prestige = 1
 	}
 }
 
@@ -1015,6 +1024,14 @@ country_event = {
 	
 	option = { 
 		name = "HRE33.A" #Just annex the Rhineland and prop the Parliamentarians
+		any_country = {
+		   limit = { 
+		      tag = BOH
+			  war_with = THIS
+		   }
+		   end_war = HLR
+		   annex_to = HLR
+		}
 		set_country_flag = victory_over_BRG
 		create_alliance = BRG
 		RHI = { all_core = { add_core = HLR } } 
@@ -1033,6 +1050,14 @@ country_event = {
 	
 	option = { 
 		name = "HRE33.B" #Annex the Rhineland and Dutch
+		any_country = {
+		   limit = { 
+		      tag = BOH
+			  war_with = THIS
+		   }
+		   end_war = HLR
+		   annex_to = HLR
+		}
 		set_country_flag = victory_over_BRG
 		create_alliance = BRG
 		RHI = { all_core = { add_core = HLR } } 
@@ -1069,6 +1094,14 @@ country_event = {
 	
 	option = { 
 		name = "HRE33.C" #Establish sister-republics
+		any_country = {
+		   limit = { 
+		      tag = BOH
+			  war_with = THIS
+		   }
+		   end_war = HLR
+		   annex_to = HLR
+		}
 		set_country_flag = victory_over_BRG
 		RHI = { all_core = { add_core = HLR } } 
 		NET = { all_core = { add_core = HLR } } 
@@ -1110,7 +1143,7 @@ country_event = {
 		any_owned = { limit = { province_id = 1651 } secede_province = JAP } 
 		any_owned = { limit = { is_core = LWE } secede_province = LWE } 
 		any_owned = { limit = { OR = { province_id = 1318 province_id = 3273 } } secede_province = DUA } 
-		any_owned = { limit = { NOT = { OR = { is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
+		any_owned = { limit = { NOT = { OR = { is_colonial = no is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
 		random_country = {
 			limit = {
 				NOT = { has_country_modifier = neutrality }
@@ -1134,6 +1167,14 @@ country_event = {
 	
 	option = { 
 		name = "HRE33.E" #Integrate all Germanics and release a big FLA/LRR puppet
+		any_country = {
+		   limit = { 
+		      tag = BOH
+			  war_with = THIS
+		   }
+		   end_war = HLR
+		   annex_to = HLR
+		}
 		set_country_flag = victory_over_BRG
 		inherit = BRG
 		inherit = PBG
@@ -1159,7 +1200,7 @@ country_event = {
 		any_owned = { limit = { province_id = 1651 } secede_province = JAP } 
 		any_owned = { limit = { is_core = LWE } secede_province = LWE } 
 		any_owned = { limit = { OR = { province_id = 1318 province_id = 3273 } } secede_province = DUA } 
-		any_owned = { limit = { NOT = { OR = { is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
+		any_owned = { limit = { NOT = { OR = { is_colonial = no is_core = BRG is_core = HLR is_core = SLO } } } secede_province = DUA } 
 		random_country = {
 			limit = {
 				NOT = { has_country_modifier = neutrality }
@@ -1195,6 +1236,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE34.A"
+		remove_country_modifier = the_final_war
 		any_owned = { 
 			limit = { 
 				is_core = RHI 
@@ -1284,6 +1326,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE35.A"
+		remove_country_modifier = the_final_war
 		any_owned = { 
 			limit = { 
 				is_core = RHI 
@@ -1382,6 +1425,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE36.A"
+		SCA = { remove_country_modifier = the_final_war }
 		end_war = FROM 
 		prestige = -5 
 		ai_chance = { 
@@ -1391,6 +1435,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE36.B"
+		SCA = { remove_country_modifier = the_final_war }
 		ai_chance = { 
 			factor = 0 
 		}
@@ -1416,36 +1461,505 @@ country_event = {
 	
 	option = { 
 		name = "HRE36.A"
-		clr_global_flag = COALITION8WAR
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		any_country = { 
 			limit = { war_with = HLR } 
 			end_war = HLR 
-			}
-		prestige_factor = -0.90 
-		#Cede all Burgundian territories to Burgundy 
-		any_owned = { 
-			limit = { OR = { is_core = BRG is_core = PBG } }
-			secede_province = CFR 
 		}
-		any_country = { 
-			limit = { OR = { tag = PBG tag = BRG } exists = yes }
-			inherit = CFR
-		}
-		any_owned = { 
-		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
-			remove_core = THIS 
-			secede_province = SCA
-			}
 		any_country = { 
 			limit = { tag = BOH exists = yes } 
 			inherit = THIS
-			}
+		}
+		prestige_factor = -0.90 
+		inherit = BOH #in case of Vendée situation
 		government = absolute_monarchy
 		capital = 625
-		ai_chance = { 
-			factor = 100 
+		clr_country_flag = dismantle_declared
+		clr_country_flag = in_great_war
+		clr_country_flag = calling_all_allies
+		clr_country_flag = enemy_of_my_enemy
+		clr_country_flag = total_collapse
+		clr_country_flag = ultimatum_accepted
+		clr_country_flag = will_not_surrender
+		clr_country_flag = dismantling_treaty
+        remove_country_modifier = ready_for_rot
+		remove_country_modifier = great_war
+		remove_country_modifier = great_war2
+		remove_country_modifier = great_war3
+		war_exhaustion = 40
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		remove_country_modifier = BOH_anti_war_ruling_class
+		clr_country_flag = second_great_german_war_possible		
+		remove_country_modifier = BOH_unshakable_autocracy
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		545 = { remove_core = THIS }
+		any_owned = { 
+	        limit = { 
+	           is_core = POM
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HOL
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }		
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = SCA
+        }
+		release_vassal = MSZ
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HAN
+		    }
+			remove_core = BOH
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = BRA
+		    }
+			remove_core = BOH
+			add_core = HAN
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = THU
+		    }
+			remove_core = BOH
+	        secede_province = THU
+        }	
+
+		SCA = { 
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  	
+		   relation = { who = THU value = 400 } 
+		   diplomatic_influence = { who = THU value = 400 } 
+		   relation = { who = HAN value = 400 } 
+		   diplomatic_influence = { who = HAN value = 400 } 	   	   
+		}			
+		
+		# Remove Primary Cores for Non-BOH
+		
+		random_owned = {
+		    limit = {
+		       owner = { tag = HLR }
+			}
+		    owner = { all_core = { remove_core = HLR } }
 		}
+
+		random_owned = {
+		    limit = {
+		       owner = { tag = GCF }
+			}
+		    owner = { all_core = { remove_core = GCF } }
+		}
+
+		random_owned = {
+		    limit = {
+		       owner = { tag = CAE }
+			}
+		    owner = { all_core = { remove_core = CAE } }
+		}
+		
+		# Make sure that this tag does not have cores on Germany
+		
+		GER = { all_core = { remove_core = THIS } }
+		
+		# Istria will be liberated
+		
+		AUS_736 = { remove_core = THIS }
+		
+		# Add Swabian and Confederation Cores to allow for Dismantlement
+		
+        566 = { add_core = CFR }
+	    564 = { add_core = CFR }
+	    540 = { add_core = CFR }
+        MNR_581 = { add_core = CFR }
+        MNR_585 = { add_core = CFR }	
+        HSK_583 = { add_core = CFR }	
+        PRU_575 = { add_core = CFR }
+        HES_564 = { add_core = CFR }
+		
+		589 = { add_core = SWA }
+		590 = { add_core = SWA }
+		591 = { add_core = SWA }
+		594 = { add_core = SWA }
+		593 = { add_core = SWA }			
+		BAD_586 = { add_core = SWA }
+		SWI_603 = { add_core = SWA }
+	    SWI_605 = { add_core = SWA }
+		
+		# Add Back Bohemian Cores as a Failsafe
+		
+		BOH_629 = { add_core = BOH }
+		AUS_625 = { add_core = BOH }
+		AUS_626 = { add_core = BOH }
+		PRU_682 = { add_core = BOH }
+		
+		# Add Teschen Cores to Lower Silesia
+		
+		SIL_684 = { add_core = TES }
+		
+		# Release FRE if it is a vassal
+		
+        random_country = {
+            limit = {
+                tag = FRE
+                vassal_of = THIS
+            }
+            THIS = {
+                release_vassal = FRE
+            }
+        }		
+		
+        #If any burgundian tag has a truce then give them Swabia and Confederation as puppets
+		
+        random_country = {
+            limit = {
+                tag = PBG
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+                    secede_province = PBG
+                }
+            }
+            release_vassal = CFR
+            diplomatic_influence = {
+                who = CFR
+                value = 200
+            }
+            THIS = {
+                diplomatic_influence = {
+                    who = CFR
+                    value = -200
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = BRG
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+                    secede_province = BRG
+                }
+            }
+            release_vassal = CFR
+            diplomatic_influence = {
+                who = CFR
+                value = 200
+            }
+            THIS = {
+                diplomatic_influence = {
+                    who = CFR
+                    value = -200
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = PBG
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+                    secede_province = PBG
+                }
+                diplomatic_influence = {
+                    who = SWA
+                    value = -200
+                }
+            }
+			set_country_flag = BRG_form_swabia
+        }
+		
+        random_country = {
+            limit = {
+                tag = BRG
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+                    secede_province = BRG
+                }
+                diplomatic_influence = {
+                    who = SWA
+                    value = -200
+                }
+            }
+			set_country_flag = BRG_form_swabia
+        }
+		
+        random_country = {
+            limit = {
+                tag = FRK
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+		    set_country_flag = swabian_forests 
+			set_country_flag = AI_can_break_neutrality
+			589 = { add_core = FRK }
+			590 = { add_core = FRK }
+			591 = { add_core = FRK }
+			594 = { add_core = FRK }
+			593 = { add_core = FRK }			
+			BAD_586 = { add_core = FRK }
+			SWI_603 = { add_core = FRK }
+			SWI_605 = { add_core = FRK }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+					add_core = FRK
+                    secede_province = FRK
+                }
+                any_owned = {
+                    limit = { is_core = FRK }
+                    secede_province = FRK
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = FRK
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+			set_country_flag = our_rhineland
+            566 = { add_core = FRK }
+			564 = { add_core = FRK }
+			540 = { add_core = FRK }
+            MNR_581 = { add_core = FRK }
+            MNR_585 = { add_core = FRK }	
+            HSK_583 = { add_core = FRK }	
+            PRU_575 = { add_core = FRK }
+            HES_564 = { add_core = FRK }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+					add_core = FRK
+                    secede_province = FRK
+                }
+                any_owned = {
+                    limit = { is_core = FRK }
+                    secede_province = FRK
+                }
+            }
+        }
+		
+		any_country = {
+		    limit = {
+			   tag = TES
+			   exists = no
+			}
+			government = democracy
+	    }
+		
+		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
+		random_owned = {
+			limit = {
+				owner = { NOT = { badboy = 1 } }
+			}
+			owner = {
+				badboy = -10
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { badboy = 1 }
+			}
+			owner = { badboy = -1000 }
+			owner = { badboy = 24.99 }
+		}
+
+		#remove the ultimatum_refused global, if this is an Infamy war
+		random_owned = {
+			limit = { owner = { has_country_modifier = international_pariah } }
+			owner = { clr_global_flag = ultimatum_refused }
+		}
+
+		#remove cores on overseas provinces
+		any_owned = {
+			limit = {
+				is_overseas = yes
+				is_core = THIS
+			}
+			remove_core = THIS
+		}
+
+		#normalize relations with treaty members
+		any_country = {
+			limit = {
+				exists = yes
+				OR = {
+					truce_with = THIS
+					AND = {
+						THIS = { has_country_modifier = international_pariah }
+						has_country_flag = coalition_member
+					}
+				}
+			}
+			relation = { who = THIS value = 200 }
+		}
+		
+		#release all cores to anyone with a truce
+		any_country = {
+			limit = {
+				exists = yes
+				any_core = { owned_by = THIS }
+				NOT = { this_culture_union = THIS }
+				OR = {
+					truce_with = THIS
+					AND = {
+						THIS = { has_country_modifier = international_pariah }
+						has_country_flag = coalition_member
+					}
+				}
+			}
+			all_core = {
+				limit = {
+					is_core = THIS
+					state_scope = {
+						NOT = { any_owned_province = { is_capital = yes } }
+					}
+				}
+				remove_core = THIS
+			}
+			country_event = 96014
+		}
+
+		#release all vassals
+		any_country = {
+			limit = { vassal_of = THIS }
+			leave_alliance = THIS
+			country_event = 96015
+		}		
+		
+		#release fiume, slovenia and treste just to make sure
+        any_country = {
+            limit = {
+                tag = FIU
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = FIU }
+					remove_core = THIS
+                    secede_province = FIU
+                }
+            }
+        }	
+        any_country = {
+            limit = {
+                tag = TRE
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = TRE }
+					remove_core = THIS
+                    secede_province = TRE
+                }
+            }
+        }
+        any_country = {
+            limit = {
+                tag = SLO
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SLO }
+					remove_core = THIS
+                    secede_province = SLO
+                }
+            }
+        }
+		#give cores back to neighboring, non-allied countries
+		any_neighbor_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				NOT = { alliance_with = THIS }
+				NOT = { truce_with = THIS }
+				NOT = { this_culture_union = THIS }
+			}
+			country_event = 96013
+		}
+		clr_country_flag = no_maelstrom_for_now
+		add_country_modifier = {
+			name = the_eye_of_the_storm
+			duration = 365
+		}
+		add_country_modifier = {
+			name = punitive_effects
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = no_more_war
+			duration = 3650
+		}
+		# Holy Roman Pane of Glass
+		country_event = 4100400
 	}
 }
 
@@ -1468,34 +1982,637 @@ country_event = {
 	
 	option = { 
 		name = "HRE36.A"
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		any_country = { 
 			limit = { war_with = HLR } 
 			end_war = HLR 
-			}
-		prestige_factor = -0.90 
-		#Cede all Burgundian territories to Burgundy 
-		any_owned = { 
-			limit = { OR = { is_core = BRG is_core = PBG } }
-			secede_province = CFR 
 		}
 		any_country = { 
-			limit = { OR = { tag = PBG tag = BRG } exists = yes }
-			inherit = CFR
+			limit = { tag = BOH exists = yes } 
+			inherit = THIS
 		}
-		any_owned = { 
-		limit = { OR = { is_core = POM is_core = OLD is_core = BRE is_core = HAN is_core = BRA is_core = MSZ } }
-			remove_core = THIS 
-			secede_province = SCA
-			}
+		prestige_factor = -0.90 
 		inherit = BOH #in case of Vendée situation
 		government = absolute_monarchy
 		capital = 625
-		ai_chance = { 
-			factor = 100 
+		clr_country_flag = dismantle_declared
+		clr_country_flag = in_great_war
+		clr_country_flag = calling_all_allies
+		clr_country_flag = enemy_of_my_enemy
+		clr_country_flag = total_collapse
+		clr_country_flag = ultimatum_accepted
+		clr_country_flag = will_not_surrender
+		clr_country_flag = dismantling_treaty
+        remove_country_modifier = ready_for_rot
+		remove_country_modifier = great_war
+		remove_country_modifier = great_war2
+		remove_country_modifier = great_war3
+		war_exhaustion = 40
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		remove_country_modifier = BOH_anti_war_ruling_class
+		clr_country_flag = second_great_german_war_possible		
+		remove_country_modifier = BOH_unshakable_autocracy
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		545 = { remove_core = THIS }
+
+		any_owned = { 
+	        limit = { 
+	           is_core = POM
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HOL
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }		
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = SCA
+        }
+		release_vassal = MSZ
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HAN
+		    }
+			remove_core = BOH
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = BRA
+		    }
+			remove_core = BOH
+			add_core = HAN
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = THU
+		    }
+			remove_core = BOH
+	        secede_province = THU
+        }	
+
+		SCA = { 
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  	
+		   relation = { who = THU value = 400 } 
+		   diplomatic_influence = { who = THU value = 400 } 
+		   relation = { who = HAN value = 400 } 
+		   diplomatic_influence = { who = HAN value = 400 } 	   	   
+		}		
+		
+		# Remove Primary Cores for Non-BOH
+		
+		all_core = { remove_core = HLR }		
+		GER = { all_core = { remove_core = THIS } }
+		
+		# Istria will be liberated
+		
+		AUS_736 = { remove_core = THIS }
+		
+		# Add Swabian and Confederation Cores to allow for Dismantlement
+		
+        566 = { add_core = CFR }
+	    564 = { add_core = CFR }
+	    540 = { add_core = CFR }
+        MNR_581 = { add_core = CFR }
+        MNR_585 = { add_core = CFR }	
+        HSK_583 = { add_core = CFR }	
+        PRU_575 = { add_core = CFR }
+        HES_564 = { add_core = CFR }
+		
+		589 = { add_core = SWA }
+		590 = { add_core = SWA }
+		591 = { add_core = SWA }
+		594 = { add_core = SWA }
+		593 = { add_core = SWA }			
+		BAD_586 = { add_core = SWA }
+		SWI_603 = { add_core = SWA }
+	    SWI_605 = { add_core = SWA }
+		
+		# Add Back Bohemian Cores as a Failsafe
+		
+		BOH_629 = { add_core = BOH }
+		AUS_625 = { add_core = BOH }
+		AUS_626 = { add_core = BOH }
+		PRU_682 = { add_core = BOH }
+		
+		# Add Teschen Cores to Lower Silesia
+		
+		SIL_684 = { add_core = TES }
+		
+		# Release FRE if it is a vassal
+		
+        random_country = {
+            limit = {
+                tag = FRE
+                vassal_of = THIS
+            }
+            THIS = {
+                release_vassal = FRE
+            }
+        }		
+		
+        #If any burgundian tag has a truce then give them Swabia and Confederation as puppets
+		
+        random_country = {
+            limit = {
+                tag = PBG
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+                    secede_province = PBG
+                }
+            }
+            release_vassal = CFR
+            diplomatic_influence = {
+                who = CFR
+                value = 200
+            }
+            THIS = {
+                diplomatic_influence = {
+                    who = CFR
+                    value = -200
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = BRG
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+                    secede_province = BRG
+                }
+            }
+            release_vassal = CFR
+            diplomatic_influence = {
+                who = CFR
+                value = 200
+            }
+            THIS = {
+                diplomatic_influence = {
+                    who = CFR
+                    value = -200
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = PBG
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+                    secede_province = PBG
+                }
+                diplomatic_influence = {
+                    who = SWA
+                    value = -200
+                }
+            }
+			set_country_flag = BRG_form_swabia
+        }
+		
+        random_country = {
+            limit = {
+                tag = BRG
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+                    secede_province = BRG
+                }
+                diplomatic_influence = {
+                    who = SWA
+                    value = -200
+                }
+            }
+			set_country_flag = BRG_form_swabia
+        }
+		
+        random_country = {
+            limit = {
+                tag = FRK
+                truce_with = THIS
+				# Stuttgart
+                THIS = { owns = 589 }
+            }
+		    set_country_flag = swabian_forests 
+			set_country_flag = AI_can_break_neutrality
+			589 = { add_core = FRK }
+			590 = { add_core = FRK }
+			591 = { add_core = FRK }
+			594 = { add_core = FRK }
+			593 = { add_core = FRK }			
+			BAD_586 = { add_core = FRK }
+			SWI_603 = { add_core = FRK }
+			SWI_605 = { add_core = FRK }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SWA }
+					add_core = FRK
+                    secede_province = FRK
+                }
+                any_owned = {
+                    limit = { is_core = FRK }
+                    secede_province = FRK
+                }
+            }
+        }
+		
+        random_country = {
+            limit = {
+                tag = FRK
+                truce_with = THIS
+				# Frankfurt
+                THIS = { owns = 564 }
+            }
+			set_country_flag = our_rhineland
+            566 = { add_core = FRK }
+			564 = { add_core = FRK }
+			540 = { add_core = FRK }
+            MNR_581 = { add_core = FRK }
+            MNR_585 = { add_core = FRK }	
+            HSK_583 = { add_core = FRK }	
+            PRU_575 = { add_core = FRK }
+            HES_564 = { add_core = FRK }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = CFR }
+					add_core = FRK
+                    secede_province = FRK
+                }
+                any_owned = {
+                    limit = { is_core = FRK }
+                    secede_province = FRK
+                }
+            }
+        }
+		
+		any_country = {
+		    limit = {
+			   tag = TES
+			   exists = no
+			}
+			government = democracy
+	    }
+		
+		#if over the badboy limit, reduce infamy to 24.99, otherwise reduce infamy by 10
+		random_owned = {
+			limit = {
+				owner = { NOT = { badboy = 1 } }
+			}
+			owner = {
+				badboy = -10
+			}
 		}
+		random_owned = {
+			limit = {
+				owner = { badboy = 1 }
+			}
+			owner = { badboy = -1000 }
+			owner = { badboy = 24.99 }
+		}
+
+		#remove the ultimatum_refused global, if this is an Infamy war
+		random_owned = {
+			limit = { owner = { has_country_modifier = international_pariah } }
+			owner = { clr_global_flag = ultimatum_refused }
+		}
+
+		#remove cores on overseas provinces
+		any_owned = {
+			limit = {
+				is_overseas = yes
+				is_core = THIS
+			}
+			remove_core = THIS
+		}
+
+		#normalize relations with treaty members
+		any_country = {
+			limit = {
+				exists = yes
+				OR = {
+					truce_with = THIS
+					AND = {
+						THIS = { has_country_modifier = international_pariah }
+						has_country_flag = coalition_member
+					}
+				}
+			}
+			relation = { who = THIS value = 200 }
+		}
+		
+		#release all cores to anyone with a truce
+		any_country = {
+			limit = {
+				exists = yes
+				any_core = { owned_by = THIS }
+				NOT = { this_culture_union = THIS }
+				OR = {
+					truce_with = THIS
+					AND = {
+						THIS = { has_country_modifier = international_pariah }
+						has_country_flag = coalition_member
+					}
+				}
+			}
+			all_core = {
+				limit = {
+					is_core = THIS
+					state_scope = {
+						NOT = { any_owned_province = { is_capital = yes } }
+					}
+				}
+				remove_core = THIS
+			}
+			country_event = 96014
+		}
+
+		#release all vassals
+		any_country = {
+			limit = { vassal_of = THIS }
+			leave_alliance = THIS
+			country_event = 96015
+		}		
+		
+		#release fiume, slovenia and treste just to make sure
+        any_country = {
+            limit = {
+                tag = FIU
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = FIU }
+					remove_core = THIS
+                    secede_province = FIU
+                }
+            }
+        }	
+        any_country = {
+            limit = {
+                tag = TRE
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = TRE }
+					remove_core = THIS
+                    secede_province = TRE
+                }
+            }
+        }
+        any_country = {
+            limit = {
+                tag = SLO
+                exists = no
+            }
+            THIS = {
+                any_owned = {
+                    limit = { is_core = SLO }
+					remove_core = THIS
+                    secede_province = SLO
+                }
+            }
+        }
+		#give cores back to neighboring, non-allied countries
+		any_neighbor_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				NOT = { alliance_with = THIS }
+				NOT = { truce_with = THIS }
+				NOT = { this_culture_union = THIS }
+			}
+			country_event = 96013
+		}
+		clr_country_flag = no_maelstrom_for_now
+		add_country_modifier = {
+			name = the_eye_of_the_storm
+			duration = 365
+		}
+		add_country_modifier = {
+			name = punitive_effects
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = no_more_war
+			duration = 3650
+		}
+	    # Holy Roman Pane of Glass
+	    country_event = 4100400	
 	}
 
+}
+
+#### The Final Collapse of the Bohemian Order or the holy roman pane of glass ####
+
+#### A Czech Revolution and the German Anarchy rolled into one. Oh My. ####
+
+country_event = {
+	id = 4100400	
+	title = "HREDEATH.T"
+	desc = "HREDEATH.D"
+	picture = "czech_indie"
+     
+	major = yes
+	
+	fire_only_once = yes
+	 
+    is_triggered_only = yes
+	
+	option = { 
+	    name = "CZE13.A"
+		change_tag = BOH
+        clr_country_flag = elbian_divorce	
+		545 = { remove_core = THIS }
+		release_vassal = FRE		
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = MSZ
+        }
+		release_vassal = MSZ
+        set_country_flag = die_katastrophe	
+		clr_country_flag = CAE_bohemian_compromise
+		prestige_factor = -0.50   
+		625 = { change_province_name = "Praha" }
+		set_global_flag = BOH_is_czech
+		remove_country_modifier = BOH_prague
+		clr_country_flag = core_removal_disabled
+		primary_culture = old_czech
+		add_accepted_culture = czech
+		nationalvalue = nv_fraternity
+	    government = parliamentary_republic
+	    ruling_party_ideology = anarcho_liberal
+        political_reform = population_equal_weight
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = proportional_representation
+        political_reform = secret_ballots
+        political_reform = unitary
+        political_reform = mandatory_service
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    country_event = 800053
+		remove_country_modifier = regency_government
+		remove_country_modifier = BOH_time_of_troubles
+        remove_country_modifier = BOH_subpar_new_army
+		remove_country_modifier = BOH_grand_new_army
+        remove_country_modifier = BOH_powerful_new_army
+		remove_country_modifier = BOH_diplomatic_collapse
+		remove_country_modifier = war_justification_blocked
+	    #add_country_modifier = { 
+		#   name = BOH_new_czech_era
+		#   duration = 7300
+	    #}		
+		GER = { all_core = { remove_core = BOH } }
+		### The last hope of Germany Goes to NGF I guess. As for the rest of Germany its completely doomed.
+		any_country = {
+		    limit = {
+		      OR = {
+			    primary_culture = south_german
+			    primary_culture = north_german
+			  }
+			  exists = no
+		    }
+			government = presidential_dictatorship
+	    }
+		#RELEASE LITERALLY EVERY SINGLE TAG		
+		any_country = {
+			limit = {
+				OR = {
+					civilized = yes
+					tag = JAP
+					tag = KOR
+					tag = SIA
+					tag = MOR
+					tag = ALD
+					tag = TUN
+					tag = EGY
+				}
+				any_core = { owned_by = THIS }
+				exists = no
+				OR = {
+					is_cultural_union = no
+					tag = ROM
+				}
+				NOT = {
+					AND = {
+						is_primary_culture = THIS
+						culture_has_union_tag = yes
+					}
+				}
+				NOT = { has_country_flag = post_colonial_country }
+				NOT = { has_country_flag = unreleasable_country }
+			}
+			all_core = {
+				limit = {
+					is_core = THIS
+					state_scope = {
+						NOT = { any_owned_province = { is_capital = yes } }
+					}
+				}
+				remove_core = THIS
+			}
+			country_event = 96012
+		}
+		any_country = {
+			limit = {
+				any_core = { owned_by = THIS }
+				exists = no
+				is_cultural_union = no
+				is_primary_culture = THIS
+				culture_has_union_tag = yes
+				NOT = { has_country_flag = unreleasable_country }
+			}
+			country_event = 96018
+		}
+	}
 }
 
 country_event = { 
@@ -1560,6 +2677,7 @@ country_event = {
 	
 	option = { 
 		name = "HRE41.A" 
+		remove_country_modifier = the_final_war
 		HLR = { country_event = 410042 }
 		any_owned = { 
 			limit = { 
@@ -2063,6 +3181,12 @@ country_event = {
 	option = { 
 		name = "HRE46.A"
 		prestige = 75 
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		clr_global_flag = COALITION_WAR 
 		set_country_flag = aftermath_Coalition
@@ -2091,6 +3215,12 @@ country_event = {
 	option = { 
 		name = "HRE47.A"
 		prestige = 25
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		clr_global_flag = COALITION_WAR 
 		set_country_flag = aftermath_Coalition
@@ -2117,6 +3247,12 @@ country_event = {
 	
 	option = { 
 		name = "HRE48.A"
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		clr_global_flag = COALITION_WAR 
 		set_country_flag = aftermath_Coalition
@@ -2141,6 +3277,12 @@ country_event = {
 	
 	option = { 
 		name = "HRE49.A"
+		any_country = {
+		    limit = { 
+		      has_country_modifier = the_final_war
+		    }
+			remove_country_modifier = the_final_war
+	    }
 		prestige = -25 
 		remove_country_modifier = REVOLUTIONARY_FERVOUR_HRE
 		clr_global_flag = COALITION_WAR 
@@ -2302,6 +3444,9 @@ country_event = {
 		}
 	}
 }
+
+#### ABSOLUTE HOLY ROMAN EMPIRE EVENTS #####
+
 #Events
 
 country_event = { 
@@ -2373,18 +3518,27 @@ country_event = {
 		   which = GERMAN_REVOLUTION
 		   value = 1
 	    }
+		ai_chance = { 
+			factor = 40
+		}
     }
 	
 	option = { 
 	name = "HRE53.B" #Nuremberg
 	3341 = { secede_province = THIS } 
 	capital = 3341
+		ai_chance = { 
+			factor = 30
+		}
     }
 	
 	option = { 
 	name = "HRE53.C" #Regensburg
 	602 = { secede_province = THIS } 
 	capital = 602
+		ai_chance = { 
+			factor = 30
+		}
     }
 
 }
@@ -2415,6 +3569,9 @@ country_event = {
 			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = HEK is_core = HSK } }
 			add_province_modifier = { name = Wasted_North duration = -1 } 
 		}
+		ai_chance = { 
+			factor = 80
+		}
 	}
 	
 	option = { 
@@ -2424,6 +3581,9 @@ country_event = {
 		change_variable = {
 			which = GERMAN_REVOLUTION
 			value = 2
+		}
+		ai_chance = { 
+			factor = 20
 		}
 	}
 }
@@ -2446,6 +3606,9 @@ country_event = {
 			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = HEK is_core = HSK } }
 			add_province_modifier = { name = Wasted_North duration = -1 } 
 		}
+		ai_chance = { 
+			factor = 60
+		}
 	}
 	
 	option = { 
@@ -2455,6 +3618,9 @@ country_event = {
 		change_variable = {
 			which = GERMAN_REVOLUTION
 			value = 2
+		}
+		ai_chance = { 
+			factor = 40
 		}
 	}
 }
@@ -2481,6 +3647,9 @@ country_event = {
 			limit = { is_core = ULM }
 			add_province_modifier = { name = Old_Liberties duration = -1 } 
 			}
+		ai_chance = { 
+			factor = 60
+		}
 	}
 	
 	option = { 
@@ -2490,6 +3659,9 @@ country_event = {
 		change_variable = {
 			which = GERMAN_REVOLUTION
 			value = 2
+		}
+		ai_chance = { 
+			factor = 40
 		}
 	}
 }
@@ -2516,6 +3688,9 @@ country_event = {
 			limit = { OR = { is_core = ULM is_core = SWI is_core = GRB is_core = FIO } }
 				add_province_modifier = { name = Old_Liberties duration = -1 } 
 			}
+		ai_chance = { 
+			factor = 60
+		}
 	}
 	
 	option = { 
@@ -2525,6 +3700,9 @@ country_event = {
 		change_variable = {
 			which = GERMAN_REVOLUTION
 			value = 2
+		}
+		ai_chance = { 
+			factor = 40
 		}
 	}
 }
@@ -2734,8 +3912,43 @@ country_event = {
 		}
 		GER = { 
 			capital = 564
-			government = democracy 
-			ruling_party_ideology = anarcho_liberal 
+	        government = democracy
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        clr_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        set_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -2794,8 +4007,43 @@ country_event = {
 		}
 		GER = { 
 			capital = 599
-			government = democracy 
-			ruling_party_ideology = anarcho_liberal 
+	        government = democracy
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        clr_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        set_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -2852,8 +4100,43 @@ country_event = {
 		}
 		GER = { 
 			capital = 564
-			government = democracy 
-			ruling_party_ideology = anarcho_liberal 
+	        government = democracy
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        clr_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        set_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -2910,8 +4193,43 @@ country_event = {
 		}
 		GER = { 
 			capital = 599
-			government = democracy 
-			ruling_party_ideology = anarcho_liberal 
+	        government = democracy
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        clr_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        set_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -2968,8 +4286,43 @@ country_event = {
 		}
 		GER = { 
 			capital = 564
-			government = democracy 
-			ruling_party_ideology = anarcho_liberal 
+	        government = democracy
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        clr_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        set_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        clr_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        set_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -2986,8 +4339,7 @@ country_event = {
 			}
 		}
 		
-	}
-	
+	}	
 }
 
 country_event = { 
@@ -3196,9 +4548,44 @@ country_event = {
 		set_country_flag = German_revolution
 		capital = 625 	
 		GER = { 
-		capital = 564
-			government = socialist_republic  
-			ruling_party_ideology = socialist 
+			capital = 564
+	        government = socialist_republic
+	        ruling_party_ideology = anarcho_liberal 
+	        political_reform = universal_voting
+	        political_reform = state_equal_weight
+	        political_reform = yes_meeting
+	        political_reform = free_press
+	        political_reform = non_socialist
+	        political_reform = secret_ballots
+	        clr_country_flag = theocratic_government
+	        clr_country_flag = merchantrepublic_gov
+	        clr_country_flag = parliamentary_republic_gov
+	        clr_country_flag = communist_gov
+	        clr_country_flag = absolute_monarchy_gov
+	        clr_country_flag = semi_constitutional_monarchy_gov
+	        clr_country_flag = constitutional_monarchy_gov
+	        clr_country_flag = presidential_dictatorship_gov
+	        clr_country_flag = fascist_gov
+	        clr_country_flag = anarcho_liberal_gov
+	        set_country_flag = socialist_republic_gov
+	        clr_country_flag = fascist_monarchy_gov
+	        clr_country_flag = democracy_gov
+	        clr_country_flag = election_started
+	        clr_country_flag = conservative_party_in_power
+	        clr_country_flag = liberal_party_in_power
+	        clr_country_flag = reactionary_party_in_power
+	        set_country_flag = socialist_party_in_power
+	        clr_country_flag = communist_party_in_power
+	        clr_country_flag = fascist_party_in_power
+	        clr_country_flag = paternal_party_in_power
+	        clr_country_flag = anarcho_liberal_party_in_power
+	        clr_country_flag = market_liberal_party_in_power
+	        treasury = 10000
+	        ammunition = 100
+	        small_arms = 100
+	        artillery = 100
+	        canned_food = 100
+	        regular_clothes = 100	
 			add_country_modifier = { 
 				name = taiping_draft 
 				duration = 720 
@@ -3243,60 +4630,267 @@ country_event = {
 		name = "HRE700.A"
 		capital = 625
 		set_country_flag = German_revolution 
+		clr_country_flag = dismantle_declared
+		clr_country_flag = in_great_war
+		clr_country_flag = calling_all_allies
+		clr_country_flag = enemy_of_my_enemy
+		clr_country_flag = total_collapse
+		clr_country_flag = ultimatum_accepted
+		clr_country_flag = will_not_surrender
+		clr_country_flag = dismantling_treaty
+        remove_country_modifier = ready_for_rot
+		remove_country_modifier = great_war
+		remove_country_modifier = great_war2
+		remove_country_modifier = great_war3
+		war_exhaustion = 40
+		clr_country_flag = THU_protected
+		clr_global_flag = GREAT_GERMAN_WAR_ACTIVE
+		clr_country_flag = custom_treaty_loser
+		set_global_flag = HOLY_ROMAN_EMPIRE_COLLAPSE
+		remove_country_modifier = HOLY_ROMAN_EMPEROR
+		remove_country_modifier = BOH_anti_war_ruling_class
+		clr_country_flag = second_great_german_war_possible		
+		remove_country_modifier = BOH_unshakable_autocracy
+		remove_country_modifier = BOH_powerful_reichsarmee 
+		remove_country_modifier = BOH_subpar_reichsarmee  
+        remove_country_modifier = BOH_grand_reichsarmee
+        remove_country_modifier = BOH_incapable_army
+		
+		# Make sure that this tag does not have cores on Germany
+		
+		GER = { all_core = { remove_core = THIS } }
+		all_core = { remove_core = HLR }	
+		
+		# Istria will be liberated
+		
+		AUS_736 = { remove_core = THIS }
+		
+		# Add Swabian and Confederation Cores to allow for Dismantlement
+		
+        566 = { add_core = CFR }
+	    564 = { add_core = CFR }
+	    540 = { add_core = CFR }
+        MNR_581 = { add_core = CFR }
+        MNR_585 = { add_core = CFR }	
+        HSK_583 = { add_core = CFR }	
+        PRU_575 = { add_core = CFR }
+        HES_564 = { add_core = CFR }
+		
+		589 = { add_core = SWA }
+		590 = { add_core = SWA }
+		591 = { add_core = SWA }
+		594 = { add_core = SWA }
+		593 = { add_core = SWA }			
+		BAD_586 = { add_core = SWA }
+		SWI_603 = { add_core = SWA }
+	    SWI_605 = { add_core = SWA }
+		
+		# Add Back Bohemian Cores as a Failsafe
+		
+		BOH_629 = { add_core = BOH }
+		AUS_625 = { add_core = BOH }
+		AUS_626 = { add_core = BOH }
+		PRU_682 = { add_core = BOH }
+		
+		# Add Teschen Cores to Lower Silesia
+		
+		SIL_684 = { add_core = TES }		
+				
 		any_owned = { 
-			limit = { OR = { is_core = BEG is_core = RHI is_core = HES is_core = HEK is_core = HSK is_core = NET } } 
-			add_core = CFR 
+	        limit = { 
+	           is_core = POM
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HOL
+		    }
+			remove_core = BOH
+			add_core = SCA
+	        secede_province = SCA
+        }		
+		any_owned = { 
+	        limit = { 
+	           is_core = MSZ
+		    }
+			remove_core = BOH
+	        secede_province = SCA
+        }
+		release_vassal = MSZ
+		any_owned = { 
+	        limit = { 
+	           is_core = ELX
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = ELX
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = BRN
+			   NOT = { region = SAX_558 }
+		    }
+			remove_core = BOH
+	        secede_province = BRN
+        }
+		any_owned = { 
+	        limit = { 
+	           is_core = HAN
+		    }
+			remove_core = BOH
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = BRA
+		    }
+			remove_core = BOH
+			add_core = HAN
+	        secede_province = HAN
+        }	
+		any_owned = { 
+	        limit = { 
+	           is_core = THU
+		    }
+			remove_core = BOH
+	        secede_province = THU
+        }	
+
+		SCA = { 
+		   relation = { who = BRN value = 400 } 
+		   diplomatic_influence = { who = BRN value = 400 }  
+		   relation = { who = ELX value = 400 } 
+		   diplomatic_influence = { who = ELX value = 400 }  	
+		   relation = { who = THU value = 400 } 
+		   diplomatic_influence = { who = THU value = 400 } 
+		   relation = { who = HAN value = 400 } 
+		   diplomatic_influence = { who = HAN value = 400 } 	   	   
+		}	
+		
+		any_owned = { 
+			limit = { is_core = CFR } 
 			remove_core = THIS 
 			remove_core = BOH 
 			secede_province = CFR
 		}
-		CFR = { add_accepted_culture = dutch add_accepted_culture = frisian } 
+		
 		any_owned = { 
-			limit = { OR = { is_core = POM is_core = MSZ is_core = HAN is_core = BRN is_core = HOL is_core = OLD is_core = BRA is_core = THU is_core = OSN is_core = BRE is_core = ELX } }
-			add_core = NGF 
+			limit = { is_core = NET } 
 			remove_core = THIS 
-			remove_core = BOH
-			secede_province = NGF 
+			remove_core = BOH 
+			secede_province = NET
 		}
+
 		any_owned = { 
-			limit = { OR = { is_core = BAD is_core = WUR is_core = ULM is_core = SWI is_core = GRB is_core = FIO is_core = ELS  } }
-			add_core = SWA 
+			limit = { is_core = SWA } 
 			remove_core = THIS 
-			remove_core = BOH
-			secede_province = SWA 
+			remove_core = BOH 
+			secede_province = SWA
 		}
-		any_owned = { 
-			limit = { OR = { is_core = FRW is_core = SAL is_core = AUS is_core = ASB is_core = FRE is_core = BAV } }
-			add_core = SGF 
-			remove_core = THIS 
-			remove_core = BOH
-			secede_province = SGF 
-		}
+		
 		any_owned = { 
 			limit = { is_core = PRU }
-			add_core = PRU 
 			remove_core = THIS 
 			remove_core = BOH
 			secede_province = PRU 
 		}
-		any_owned = { 
-			limit = { is_core = SIL }
-			add_core = SIL 
-			remove_core = THIS 
-			remove_core = BOH
-			secede_province = SIL 
-		}
-		any_owned = { 
-			limit = { is_core = LST }
-			add_core = LST 
-			remove_core = THIS 
-			remove_core = BOH
-			secede_province = LST  
-		}
-		change_tag = BOH 
-		primary_culture = czech 
-	}
-	
+		
+		BAV_599 = { add_core = BAV }
+		AUS_619 = { add_core = AUS }
+		AUS_616 = { add_core = AUS }
+        AUS_768 = { add_core = CRN }		   
+		AUS_612 = { add_core = TIR }
+		734 = { remove_core = TIR }	
+
+	    any_country = {
+	      limit = {
+	         primary_culture = south_german
+			 exists = no
+	      }
+	      government = presidential_dictatorship
+	    }
+		
+	    any_owned = {
+	      limit = {
+	         is_core = BAV
+			 NOT = { is_core = TIR }
+	      }
+	      secede_province = BAV
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = SAL
+	      }
+	      secede_province = SAL
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = CRN
+	      }
+	      secede_province = CRN
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = AUS
+	      }
+	      secede_province = AUS
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = SWI
+	      }
+	      secede_province = SWI
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = AUS
+	      }
+	      secede_province = AUS
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = WUR
+	      }
+	      secede_province = WUR
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = ULM
+	      }
+		  add_core = WUR
+	      secede_province = WUR
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = FRE
+	      }
+	      secede_province = FRE
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = ASB
+	      }
+	      secede_province = ASB
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = FRW
+	      }
+	      secede_province = FRW
+	    }
+	    any_owned = {
+	      limit = {
+	         is_core = TIR	
+	      }
+	      secede_province = TIR
+	    }
+		
+		primary_culture = czech
+        country_event = 1520890		
+	}	
 }
 	
 country_event = { 

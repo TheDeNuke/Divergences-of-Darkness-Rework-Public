@@ -3479,7 +3479,7 @@ country_event = {
 	trigger = { 
 	tag = PLC
 	has_country_flag = we_fucking_refuse_RAD
-	PRU = { substate_of = THIS }
+	PRU = { OR = { vassal_of = THIS substate_of = THIS } }
 	NOT = { has_country_flag = PRU_out_RAD }
 	NOT = { has_global_flag = PLC_RAD_War }
 	NOT = { has_country_flag = PLC_RAD_War_end }
@@ -7903,6 +7903,18 @@ country_event = {
 	   remove_country_modifier = PLC_golden_liberty
 	   clr_country_flag = elective_monarchy_PLC
 	   set_global_flag = NOBILITY_ARE_GONE	
+	   693 = { remove_core = PML }
+	   any_country = {
+	      limit = {
+		      tag = PML
+			  OR = {
+			     vassal_of = THIS
+				 substate_of = THIS
+		      }
+		  }
+		  clr_country_flag = army_reform_banned
+	      annex_to = PLC	     
+	   }
 	   any_country = {
 	      limit = {
 		      tag = LIT
@@ -8861,7 +8873,7 @@ country_event = {
 	any_country = {
 		limit = { 
 		   tag = PRU 
-		   exists = PRU
+		   exists = yes
 		}	
 	    country_event = { id = 222414 days = 2 }
 	}
@@ -8936,7 +8948,7 @@ country_event = {
 	any_country = {
 		limit = { 
 		   tag = PRU 
-		   exists = PRU
+		   exists = yes
 		}	
 	    country_event = { id = 222414 days = 2 }
 	}
@@ -8954,7 +8966,7 @@ country_event = {
 	any_country = {
 		limit = { 
 		   tag = PRU 
-		   exists = PRU
+		   exists = yes
 		}	
 	    country_event = { id = 222416 days = 2 }
 	}
@@ -10174,13 +10186,7 @@ country_event = {
 	prestige = 5
 	inherit = DZG
 	SCA = { country_event = { id = 222310 days = 2 } }	
-	any_country = {
-		limit = { 
-		   tag = PRU 
-		   exists = PRU
-		}	
-	    country_event = { id = 222415 days = 2 }
-	}
+	country_event = { id = 222415 days = 2 }
 	}
 }
 
@@ -10421,17 +10427,17 @@ country_event = {
 	name = "LITPRU17.A"
     random_list = {
 	    50 = { 
-		prestige = 5
-	    country_event = { id = 222309 days = 1 }		
+		   prestige = 5
+	       country_event = { id = 222309 days = 1 }		
 		}
 		50 = { 
-		prestige = -5
-	    any_country = {
-	    limit = {
-	    owns = 691
-	    }
-	    country_event = { id = 222308 days = 1 }
-	    }
+		   prestige = -5
+	       any_country = {
+	       limit = {
+	          owns = 691
+	       }
+	       country_event = { id = 222308 days = 1 }
+	       }
 		}
 	}
 	}
@@ -11079,11 +11085,11 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = { 
-	RUS = { 
-	   create_alliance = LIT
-	   relation = { who = LIT value = 400 }
-	   diplomatic_influence = { who = LIT value = 400 }
-	}
+	   RUS = { 
+	      create_alliance = LIT
+	      relation = { who = LIT value = 400 }
+	      diplomatic_influence = { who = LIT value = 400 }
+	   }
     }
 
 	option = {	
@@ -11165,8 +11171,8 @@ country_event = {
 	   name = "LITPRU31.A"
 	   prestige = 20
        RUS_718 = { add_core = RUG }
-       RUS_360 = { add_core = RUG }
-	   936 = { add_core = RUG }
+       RUS_360 = { remove_core = RUG }
+	   936 = { remove_core = RUG }
 	   937 = { add_core = RUG }
        961 = {
            limit = {
@@ -12439,6 +12445,12 @@ country_event = {
 	option = { 
 	name = "PLCN78.A" 
 	    any_country = {
+		   limit = {
+		      war_with = THIS 
+		   }
+		   end_war = THIS
+		}
+	    any_country = {
 	       limit = {
 		      is_greater_power = yes
 			  government = proletarian_dictatorship  
@@ -12568,41 +12580,10 @@ country_event = {
 	   CSK = {
 	       remove_country_modifier = small_country_draft
 		   all_core = { add_core = PLC }
-		   all_core = { remove_core = CSK }
 	   }
 	   MOS = {
 	       remove_country_modifier = small_country_draft
-	   }
-	   ### This sets province names for the entire region.
-	   969 = { change_province_name = "Bohnin" }
-	   968 = { change_province_name = "Stanislawów" }
-	   970 = { change_province_name = "Daszów" }
-	   971 = { change_province_name = "Krzywy Róg" }
-	   972 = { change_province_name = "Zaporoze" }
-	   973 = { change_province_name = "Sokolów Azowski" }
-	   965 = { change_province_name = "Nowy Chadzybej" }
-	   964 = { change_province_name = "Tasmnicz" }
-	   967 = { change_province_name = "Nowa Przystan" }
-	   966 = { change_province_name = "Kerza" }
-	   962 = { change_province_name = "Czernihów" }
-	   978 = { change_province_name = "Charków" }
-	   1018 = { change_province_name = "Bielgorod" }
-	   1017 = { change_province_name = "Orzel" }
-	   1019 = { change_province_name = "Woronez" }
-	   974 = { change_province_name = "Torec" }
-	   975 = { change_province_name = "Donieck" }
-	   980 = { change_province_name = "Kozaczek" }
-	   976 = { change_province_name = "Kubaniec" }
-	   979 = { change_province_name = "Królewiec nad Donem" }
-	   1047 = { change_province_name = "Zofianów" }
-	   1048 = { change_province_name = "Ochrzan" }
-	   1050 = { change_province_name = "Madziar" }
-	   1041 = { change_province_name = "Kaspijskie Pole" }
-	   1036 = { change_province_name = "Benedyktyn" }
-	   1040 = { change_province_name = "Zaslawek" }
-	   1046 = { change_province_name = "Bialostaw" }
-	   1045 = { change_province_name = "Wokulec" }  
-       1039 = { change_province_name = "Saraj nad Idelem" } 	   
+	   }	   
 	}
 }
 

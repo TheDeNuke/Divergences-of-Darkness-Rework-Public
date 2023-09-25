@@ -458,6 +458,8 @@ country_event = {
 				tag = GER
 				tag = ITA
 				tag = SCA
+				tag = ENL
+				tag = AEN
 			}
 		}
 		OR = {
@@ -4869,7 +4871,7 @@ country_event = {
 	}
 }
 
-#Dismantling British Commonwealth
+#Dismantling British Commonwealth or England or Britannie
 country_event = {
 
 	id = 96038
@@ -4897,7 +4899,11 @@ country_event = {
 			is_secondary_power = yes
 			colonial_nation = yes
 		}
-		tag = ENG
+		OR = {
+		  tag = ENL
+		  tag = AEN
+		  tag = ENG
+		}
 		OR = {
 			has_country_flag = ultimatum_accepted
 			has_country_flag = dismantling_treaty
@@ -4923,13 +4929,14 @@ country_event = {
 		war_exhaustion = 40
 
         ###### UNIQUE PART ######
-		
+						
+        all_core = { remove_core = AEN }
+		all_core = { remove_core = ENL }
 		all_core = { remove_core = ENG }
 
 		remove_accepted_culture = irish
 		remove_accepted_culture = welsh 
 		remove_accepted_culture = scottish 
-		remove_accepted_culture = anglois
 
 		any_owned = {
 		   limit = {
@@ -4937,22 +4944,17 @@ country_event = {
 			  is_capital = no
 		   }
 		   remove_core = ENL
+		   remove_core = AEN
 		   secede_province = WLS
 		}
-		
-		any_owned = {
-		   limit = {
-		      is_core = SCO
-			  is_capital = no
-		   }
-		   secede_province = SCO
-		}
-		
+
 		any_owned = {
 		   limit = {
 		      is_core = IRE
 			  is_capital = no
 		   }
+		   remove_core = ENL
+		   remove_core = AEN
 		   secede_province = IRE
 		}
 
@@ -4961,8 +4963,69 @@ country_event = {
 		      is_core = SCO
 			  is_capital = no
 		   }
+		   remove_core = ENL
+		   remove_core = AEN
 		   secede_province = SCO
 	    }
+								
+		random_owned = { limit = { owner = { capital = 300 NOT = { primary_culture = anglois } tag = ENG } } owner = { change_tag = ENL } }
+		random_owned = { limit = { owner = { capital = 273 tag = ENG } } owner = { inherit = WLS change_tag = WLS } }
+		random_owned = { limit = { owner = { capital = 263 tag = ENG } } owner = { inherit = IRE change_tag = IRE } }
+		random_owned = { limit = { owner = { capital = 269 tag = ENG } } owner = { inherit = SCO change_tag = SCO } }
+		
+		random_owned = { limit = { owner = { primary_culture = anglois } } owner = { capital = 300 } }
+		random_owned = { limit = { owner = { primary_culture = english } } owner = { capital = 277 } }
+
+		#### Lets reconstruct England according to Cultural Makeup ####
+		
+	    ENG_296 = { add_core = AEN }
+	    ENG_291 = { add_core = AEN }
+	    ENG_300 = { add_core = AEN }
+	    ENG_280 = { add_core = ENL }
+	    ENG_277 = { add_core = ENL }
+	    ENG_284 = { add_core = ENL }	
+		
+		AEN = { remove_accepted_culture = english remove_accepted_culture = welsh remove_accepted_culture = irish }
+		ENL = { remove_accepted_culture = anglois remove_accepted_culture = welsh remove_accepted_culture = irish }
+		
+		any_owned = {
+		   limit = {
+		      is_core = AEN
+			  is_capital = no
+		   }
+		   remove_core = ENL
+		   secede_province = AEN
+		}
+
+		any_owned = {
+		   limit = {
+		      is_core = ENL
+			  is_capital = no
+		   }
+		   remove_core = AEN
+		   secede_province = ENL
+	    }
+		
+		random_owned = { limit = { owner = { capital = 300 } } owner = { inherit = AEN } }
+		random_owned = { limit = { owner = { capital = 277 } } owner = { inherit = ENL } }
+		
+	    any_country = {
+		   limit = {
+		      OR = {
+			     primary_culture = english
+				 primary_culture = anglois
+			  }
+			  NOT = { tag = DUA }
+			  NOT = { tag = DUC }
+			  NOT = { tag = FRA }
+			  NOT = { tag = ANF }
+			  NOT = { tag = OCC }
+		   }
+	       set_country_flag = ENL_LOCKED
+	    }
+	    set_global_flag = AEN_ENDING
+		
+		### Peace in Our Time ####
 
         ##### UNIQUE PART ENDS HERE #######
 
@@ -5612,15 +5675,6 @@ country_event = {
 			name = no_more_war
 			duration = 3650
 		}
-				
-		random_owned = { 
-		limit = { owner = { capital = 300 } } owner = { inherit = ENL change_tag = ENL } }
-		random_owned = { 
-		limit = { owner = { capital = 273 } } owner = { inherit = WLS change_tag = WLS } }
-		random_owned = { 
-		limit = { owner = { capital = 263 } } owner = { inherit = IRE change_tag = IRE } }
-		random_owned = { 
-		limit = { owner = { capital = 269 } } owner = { inherit = SCO change_tag = SCO } }
 	}
 }
 
@@ -12632,9 +12686,10 @@ country_event = {
 
 		random_owned = {
 			limit = {
-				owner = { has_country_flag = PLA_ARCADIA }
+				owner = { primary_culture = plantagenian }
 			}
 			owner = {
+			    remove_accepted_culture = septiman
 			    clr_country_flag = PLA_ARCADIA
 				clr_global_flag = NBG_NEW_ARCADIAN
 				clr_global_flag = NBG_OLD_ARCADIAN
@@ -12646,9 +12701,10 @@ country_event = {
 		
 		random_owned = {
 			limit = {
-				owner = { has_country_flag = NBG_ARCADIA }
+				owner = { primary_culture = septiman }
 			}
 			owner = {
+				remove_accepted_culture = plantagenian
 			    clr_country_flag = NBG_ARCADIA
 				clr_global_flag = NBG_NEW_ARCADIAN
 				clr_global_flag = NBG_OLD_ARCADIAN
@@ -12660,9 +12716,11 @@ country_event = {
 		
 		random_owned = {
 			limit = {
-				owner = { has_country_flag = in_varietate_concordia }
+				owner = { primary_culture = vinlander }
 			}
 			owner = {
+			    remove_accepted_culture = septiman
+				remove_accepted_culture = plantagenian
 				clr_global_flag = NBG_NEW_ARCADIAN
 				clr_global_flag = NBG_OLD_ARCADIAN
 				clr_global_flag = NBG_BURGUNDIAN
@@ -12674,6 +12732,7 @@ country_event = {
 		NA_115 = { add_core = DNG }
 		NA_106 = { add_core = DNG }
 		NA_109 = { add_core = DNG }
+		
 		
 		### Release ALL the Minor Arcadian Tags ###
 		
@@ -16775,6 +16834,15 @@ country_event = {
 		SWE_318 = { add_core = SWE }
 		
 		set_country_flag = scandinavian_federal_strong
+		
+		remove_accepted_culture = finnish
+		remove_accepted_culture = karelian
+		remove_accepted_culture = north_german
+		remove_accepted_culture = latvian
+		remove_accepted_culture = lithuanian
+		remove_accepted_culture = prussian
+		remove_accepted_culture = estonian
+		remove_accepted_culture = scottish
 		
 		random_owned = {
 		    limit = {

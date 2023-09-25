@@ -3043,250 +3043,6 @@ pan_nationalist_rebels = {
 		}
 	}
 }
-###################################
-# Indian Nationalists
-###################################
-indian_nationalists = {
-	icon = 6
-	
-	area = nation
-	
-	# <this is the governement in the country> = <this is what the rebels want>
-	government = {
-		proletarian_dictatorship = proletarian_dictatorship
-		presidential_dictatorship = presidential_dictatorship
-		parliamentary_republic = parliamentary_republic
-		bourgeois_dictatorship = bourgeois_dictatorship
-		fascist_dictatorship = fascist_dictatorship
-		feudal_monarchy = feudal_monarchy
-		khanate = khanate
-		absolute_monarchy = absolute_monarchy
-		prussian_constitutionalism = prussian_constitutionalism
-		hms_government = hms_government
-		democracy = democracy
-		socialist_republic = socialist_republic
-		fascist_monarchy = fascist_monarchy
-		theocracy = theocracy
-		merchant_republic = merchant_republic
-		autonomous_dependency = autonomous_dependency
-	}
-
-
-	defection = none		# If the country seeks independence, defection specifies what type of provinces it wants.
-	independence = none
-	defect_delay = 12			# Can spontaneously declare independence after 12 months (earliest)
-	
-	ideology = liberal
-	
-	allow_all_cultures = yes
-	allow_all_culture_groups = no
-	allow_all_religions = yes
-	allow_all_ideologies = yes
-	
-	resilient = yes					# Disbands on retreat
-	reinforcing = yes				# Does not receive reinforcements
-	general = yes					# Does not use generals
-	smart = yes					# Does not assault forts, tactically withdraw from battle, etc.
-	unit_transfer = no				# Units remain after enforcing demands.
-	
-	occupation_mult = 3.0			# The amount of strength this rebel gains from taking provinces	
-
-	# triggers a general rising, modifier will be multiplied with the countrys army strength and compared to the factions strenght
-	will_rise = 
-	{
-		factor = 0.5
-		
-		modifier = {
-			war = yes
-			factor = 0.8
-		}
-		modifier = {
-			war_exhaustion = 4
-			factor = 0.95
-		}
-		modifier = {
-			war_exhaustion = 6
-			factor = 0.95
-		}
-		modifier = {
-			war_exhaustion = 8
-			factor = 0.95
-		}
-
-		modifier = {
-			factor = 0.5
-			any_neighbor_country = {
-                OR = { 
-			    is_culture_group = south_asian
-			    is_culture_group = dravidian
-                }
-				is_vassal = no
-			}
-		}
-		modifier = {
-			factor = 0.5
-			year = 1910
-		}
-	}
-	
-	# The rebel type with the highest modifier for this pop gets picked
-	spawn_chance = {
-		factor = 1.1
-		modifier = {
-			factor = 2
-			country = { has_global_flag = post_colonial_era_fired }
-		}
-		modifier = {
-			factor = 0
-			type = slaves
-		}
-		modifier = {
-			factor = 0
-			OR = {
-				location = { NOT = { is_core = HND } }
-				location = { NOT = { is_core = DRA } }
-				NOT = { is_culture_group = south_asian }
-				NOT = { is_culture_group = dravidian }
-			}
-		}
-		modifier = {
-			factor = 1.5
-            OR = {
-			is_culture_group = south_asian
-			is_culture_group = dravidian
-            }
-		}
-		modifier = {
-			factor = 1.2
-			country = { is_culture_group = south_asian }
-			HND = { exists = yes }
-		}
-		modifier = {
-			factor = 1.2
-			country = { is_culture_group = dravidian }
-			DRA = { exists = yes }
-		}
-		modifier = {
-			factor = 0
-			country = {
-				has_country_flag = wants_to_unify
-			}
-		}
-		modifier = {
-			factor = 0
-			country = {
-				NOT = { has_global_flag = indian_call_to_union }
-			}
-		}
-		modifier = {
-			factor = 1.2
-			OR = {
-				pop_majority_ideology = liberal
-				pop_majority_ideology = anarcho_liberal
-			}
-		}
-		modifier = {
-			factor = 1.1
-			OR = {
-				pop_majority_ideology = conservative	
-				pop_majority_ideology = market_liberal
-			}
-		}
-		modifier = {
-			factor = 1.015
-			political_reform_want = 0.05
-		}
-		modifier = {
-			factor = 1.015
-			political_reform_want = 0.1
-		}
-		modifier = {
-			factor = 1.015
-			political_reform_want = 0.15
-		}
-	}
- 
- 	#This is checked for EACH province in the Area of Operations
-	movement_evaluation = {
-		factor = 1
-		modifier = {
-			factor = 0.1
-			units_in_province = 1
-			NOT = { is_capital = yes }
-		}
-		modifier = {
-			factor = 0.001
-			controlled_by = REB
-		}
-		modifier = {
-			factor = 1.5
-			average_militancy = 4
-		}
-		modifier = {
-			factor = 1.5
-			average_militancy = 6
-		}
-		modifier = {
-			factor = 1.5
-			average_militancy = 8
-		}
-		modifier = {
-			factor = 0
-			OR = {
-			NOT = { is_core = HND }
-			NOT = { is_core = DRA }
-			}
-		}
-	}
-	
- 	# Province Scope
- 	siege_won_trigger = {
-		NOT = { has_province_modifier = war_torn }
- 	}
-	
-	siege_won_effect = {
-		add_province_modifier = {
-			name = war_torn
-			duration = 365
-		}
-	}
-	
-
-	# Country scope
-	demands_enforced_trigger = {
-		HND = {
-			all_core = {
-				OR = {
-					controlled_by = REB
-					NOT = { owned_by = THIS }
-				}
-				province_control_days = 90
-			}
-		}		
-	}
-	
-	demands_enforced_effect = {
-		any_pop = { militancy = -3 }
-		random_owned = {
-			limit = {
-				owner = { NOT = { is_culture_group = south_asian } }
-			}
-			owner = { country_event = 96215 }
-		}
-		random_owned = {
-			limit = {
-				owner = { is_culture_group = south_asian }
-			}
-			owner = { country_event = 96216 }
-		}
-		random_owned = {
-			limit = {
-				owner = { is_culture_group = dravidian }
-			}
-			owner = { country_event = 96216 }
-		}
-	}
-}
 
 ###################################
 # Liberal ("Jacobins") - "the assholes"
@@ -4367,8 +4123,8 @@ separatist_rebels = {
 				any_core = {
 					exists = yes
 					NOT = { is_primary_culture = THIS }
-					NOT = { has_province_modifier = patriot_uprising }
 				}
+				NOT = { has_province_modifier = patriot_uprising }
 			}
 			add_province_modifier = {
 				name = patriot_uprising
@@ -5706,7 +5462,7 @@ sioux_nation = {
 		modifier = {
 			factor = 0
 			NOT = {
-				has_pop_culture = dakota 
+				has_pop_culture = sioux
 			}
 		}
 		modifier = {
@@ -5754,7 +5510,10 @@ sioux_nation = {
 		any_pop = {
 			limit = {
 				NOT = {
-					is_culture_group = native_american
+				    OR = {
+					    is_culture_group = native_south_american
+						is_culture_group = native_north_american
+				    }
 				}
 			}
 			reduce_pop = 0.90
@@ -5831,7 +5590,10 @@ apache = {
 		modifier = {
 			factor = 0
 			NOT = {
-				has_pop_culture = native_american_minor
+				OR = {
+					is_culture_group = native_south_american
+				    is_culture_group = native_north_american
+				}
 			}
 		}
 		modifier = {
@@ -5883,15 +5645,21 @@ apache = {
 	siege_won_effect = {
 		any_pop = {
 			limit = {
-				not = {
-					is_culture_group = native_american
+			    NOT = {
+				    OR = {
+					    is_culture_group = native_south_american
+						is_culture_group = native_north_american
+				    }
 				}
 			}
 			reduce_pop = 0.50
 		}
 		any_pop = {
 			limit = {
-				culture = native_american_minor
+				OR = {
+					is_culture_group = native_south_american
+				    is_culture_group = native_north_american
+				}
 			}
 			militancy = 10
 		}

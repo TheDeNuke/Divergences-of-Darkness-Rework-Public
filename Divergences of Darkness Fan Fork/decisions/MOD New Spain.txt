@@ -396,7 +396,7 @@ political_decisions = {
 		
 	allow = { 
 	   OR = { 
-	      NAV = { in_sphere = THIS NOT = { vassal_of = ARA } }
+	      NAV = { war = no in_sphere = THIS NOT = { vassal_of = ARA } }
 	      owns = 492
 	   }   
 	}
@@ -407,6 +407,13 @@ political_decisions = {
 	   relation = { who = NAV value = -400 }
 	   ESK_1 = { add_core = THIS }
 	   ESK_1 = { add_core = SPA }
+	   any_country = {
+	        limit = {
+		       tag = NAV
+			   owns = 496
+		    }
+			all_core = { add_core = THIS }
+	   }		
 	   any_country = { 
 	      limit = {
 	         tag = NAV
@@ -415,7 +422,7 @@ political_decisions = {
 				in_sphere = THIS
 	         }	         
 	      }
-		  country_event = 11101
+		  annex_to = THIS 
 	   }	
 	}
 	
@@ -874,8 +881,8 @@ SPC_integrate_salvadore = {
   					vassal_of = THIS
   				}		
   				}
+			}
 		}
-	}
 	}
 	
 	effect = {
@@ -938,6 +945,67 @@ Un_Gran_Mancomunidad  = {
        remove_country_modifier = SPA_EMPOWERED_CLERGY
 	   country_event = { id = 470110 days = 20 }
 	}
+}
+
+
+integrate_quito = { 
+	picture = "hispania_2"
+
+	potential = { 
+	   tag = SPC
+	   NOT = { has_country_flag = SPC_QUIannex }
+	}
+	
+	allow = {
+		mass_politics = 1
+		is_greater_power = yes 
+		war = no 
+		QUI = {
+			all_core = {
+				OR = {
+					owned_by = THIS
+					owner = {
+						in_sphere = THIS
+					}
+					owner = {
+						vassal_of = THIS
+					}		
+  				}
+			}
+		}
+	}
+	
+	effect = {
+	   set_country_flag = SPC_QUIannex
+		add_accepted_culture = caladeran
+		inherit = QUI
+		QUI = { all_core = { add_core = THIS } }
+	}
+
+}
+
+end_the_andine_wars = { 
+
+	potential = { 
+	   OR = { tag = SPA tag = SPC }   
+	   NOT = { has_country_flag = andine_war }
+	   is_our_vassal = QUI
+	   INC = { exists = yes } 
+	}
+	
+	allow = {
+		is_greater_power = yes 
+		state_n_government = 1
+		war = no 
+		NOT = { truce_with = INC }
+	}
+	
+	effect = {
+		badboy = 6 
+		set_country_flag = andine_war
+		country_event = 4701130
+	}
+
 }
 
 }

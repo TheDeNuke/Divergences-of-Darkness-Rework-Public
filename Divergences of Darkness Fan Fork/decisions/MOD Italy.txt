@@ -88,6 +88,14 @@ political_decisions = {
 			add_accepted_culture = central_italian
 			add_accepted_culture = south_italian
 			ITC = { remove_country_modifier = the_compromesso all_core = { remove_core = ITC } }
+			random_owned = {
+			    limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+				owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+			}	
+			random_owned = {
+			    limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+				owner = { clr_country_flag = this_is_tuscany }
+			}
 			any_country = {
 				limit = {
 					is_culture_group = italian
@@ -194,6 +202,14 @@ political_decisions = {
 			   }
 			   owner =  { country_event = { id = 124353 days = 0 } }
 			}
+		    random_owned = {
+			    limit = { owner = { has_country_flag = this_is_tuscany government = democracy } }
+			    owner = { clr_country_flag = this_is_tuscany set_country_flag = tuscany_revolutionary }
+		    }	
+		    random_owned = {
+			    limit = { owner = { has_country_flag = this_is_tuscany NOT = { government = democracy } } }
+		        owner = { clr_country_flag = this_is_tuscany }
+		    }
 			change_tag = ITA
 			all_core = { remove_core = ITC }
 			remove_country_modifier = the_compromesso
@@ -1446,11 +1462,10 @@ political_decisions = {
 		potential = { 
 			OR = { 
 				tag = ITA
-				AND = { 
-					has_country_flag = italian_integration
-					tag = ARI 
-				}
-			}
+			    has_country_flag = ARI_boring
+			    has_country_flag = ARI_boring_catholic
+				has_country_flag = ergo_occitania
+			}	
 			NOT = { primary_culture = venetian }
 			NOT = { accepted_culture = venetian }
 		}
@@ -1458,6 +1473,10 @@ political_decisions = {
 		allow = { 
 			is_greater_power = yes 
 			owns = 729
+		    OR = {
+		      citizens_rights = all_voting_pops
+              citizens_rights = culture_voting_only	
+            }
 		}
 
 		effect = { 
@@ -1593,12 +1612,20 @@ political_decisions = {
 			is_greater_power = yes
 			NOT = { has_global_flag = italians_banned }
 			all_core = {
-				owned_by = THIS
+			    OR = {
+				   owned_by = THIS
+			       province_id = 465
+				   province_id = 466
+				   province_id = 721
+				   province_id = 609
+				   province_id = 3265
+				}
 			}
 		}
 
 		effect = {
 			set_country_flag = italia_ulterior
+			add_accepted_culture = sardinian
 			762 = { add_core = ITA }
 			763 = { add_core = ITA }
 			764 = { add_core = ITA }
@@ -1632,6 +1659,105 @@ political_decisions = {
 					}
 					annex_to = THIS
 			}
+		}
+	}
+	
+	### Revolutionary Italy attacking Danubia ###
+	
+	TUS_the_revolutionary_war = {
+		potential = {
+			tag = ITA
+			has_country_flag = tuscany_revolutionary
+			SGF = {
+			   NOT = {
+			      OR = {
+				     government = democracy
+					 government = parliamentary_republic
+				  }
+			   }
+			}
+			NOT = { has_country_flag = resolved_tuscany_danubians }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+			war = no
+			has_country_flag = italia_ulterior	
+            NOT = { war_exhaustion = 10 }			
+		    NOT = { exists = VEN }				
+		}
+		
+		effect = {
+			prestige = 10
+			set_country_flag = resolved_tuscany_danubians
+	        war = {
+	           target = SGF
+		       attacker_goal =  { 
+			      casus_belli = custom_treaty_cb
+		       }
+		       defender_goal = {
+			      casus_belli = cut_down_to_size
+		       }	
+	        }
+			SGF = { country_event = { id = 124371 days = 0 } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+            modifier = {
+                factor = 0
+                NOT = {
+                   SGF = {
+				      OR = {
+                         brigades_compare = 1
+						 war_with = BRG 
+						 war_with = PBG
+						 war_with = CAE
+					  }
+                   }
+				}
+            }
+            modifier = {
+                factor = 0
+				is_disarmed = yes
+            }
+		}
+	}
+	
+	TUS_the_eternal_alliance = {
+		potential = {
+			tag = ITA
+			has_country_flag = tuscany_revolutionary
+			SGF = {
+			    OR = {
+				    government = democracy
+					government = parliamentary_republic
+				}
+			}
+			NOT = { has_country_flag = resolved_tuscany_danubians }
+		}
+		
+		allow = {
+		    is_greater_power = yes
+			has_country_flag = italia_ulterior			
+		    NOT = { exists = VEN }		
+		}
+		
+		effect = {
+			prestige = 10
+			set_country_flag = resolved_tuscany_danubians
+			set_country_flag = successful_revolutionary_war	
+            relation = { who = SGF value = 400 }
+	        create_alliance = SGF 
+			any_greater_power = {
+			    limit = { NOT = { tag = THIS } }
+			    leave_alliance = SGF 
+			    relation = { who = SGF value = -200 }
+		    }
+		}
+		
+		ai_will_do = {
+			factor = 1
 		}
 	}
 }

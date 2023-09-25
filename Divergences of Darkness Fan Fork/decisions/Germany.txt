@@ -196,6 +196,7 @@ political_decisions = {
 		potential = {
 		    tag = BOH
 			has_country_modifier = BOH_effectively_occupied 
+			NOT = { has_global_flag = BOH_is_czech }
 		}
 		
 		allow = {
@@ -225,6 +226,7 @@ political_decisions = {
 		    tag = BOH
             NOT = { has_country_modifier = HOLY_ROMAN_EMPEROR }
 			NOT = { has_country_flag = BOH_grand_reformation }
+			NOT = { has_global_flag = BOH_is_czech }
 		}
 		
 		allow = {
@@ -383,8 +385,9 @@ political_decisions = {
 		   }
 		   NGF = {
              NOT = { 
-                alliance_with = BOH
-                in_sphere = BOH
+                 alliance_with = BOH
+                 in_sphere = BOH
+				 has_country_flag = dummy_NGF_annex_into_BOH
              }
            }	
 		   NOT = { any_greater_power = { alliance_with = NGF } }		   
@@ -397,7 +400,6 @@ political_decisions = {
 			      limit = { NOT = { owned_by = SCA } } 
 				  add_core = BOH 
 			   } 
-			   NOT = { has_country_flag = dummy_NGF_annex_into_BOH }
 		    }
 		    badboy = 5
 	        war = {
@@ -1860,10 +1862,19 @@ political_decisions = {
             NOT = { exists = HLR }
             NOT = { exists = GER }			
 		}
-		
+
 		allow = {
 		   war = no
-		   all_core = { owned_by = THIS }
+		   all_core = { 
+		       OR = {
+			       owned_by = THIS
+			       province_id = 465
+				   province_id = 466
+				   province_id = 721
+				   province_id = 609
+				   province_id = 3265
+			   }	    
+		   }
 		   OR = {
 		      has_country_flag = burgundian_rhine
 			  NOT = { exists = CFR }
@@ -1918,7 +1929,16 @@ political_decisions = {
 		allow = {
             NOT = { war_exhaustion = 10 }
 			OR = {
-                all_core = { owned_by = THIS }	
+		        all_core = { 
+		            OR = {
+			           owned_by = THIS
+			           province_id = 465
+				       province_id = 466
+				       province_id = 721
+				       province_id = 609
+				       province_id = 3265
+			        }
+                }					
                 AND = {
                    ai = yes
                    exists = LRR
@@ -3045,6 +3065,39 @@ political_decisions = {
 		}
 		
 		ai_will_do = { factor = 1 }
+	}
+
+	repudiate_scandinavian_claims = {
+		picture = form_scandinavia
+		potential = {
+			OR = {
+			  tag = GCF
+			  tag = GER
+			  tag = HLR
+			}
+			369 = { is_core = SCA }
+		}
+		
+		allow = {
+            is_greater_power = yes
+			revolution_n_counterrevolution = 1
+			369 = { owned_by = THIS }
+            546 = { owned_by = THIS }
+			OR = {
+		       SCA = { NOT = { rank = 16 } }
+			   NOT = { exists = SCA }
+			}
+		}
+		
+		effect = {
+		    prestige = 10
+		    HOL = { all_core = { remove_core = SCA } }
+			POM = { all_core = { remove_core = SCA } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
 	}	
 }
 

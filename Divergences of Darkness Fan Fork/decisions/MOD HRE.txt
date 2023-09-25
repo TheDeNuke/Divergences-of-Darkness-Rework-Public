@@ -1,4 +1,25 @@
 political_decisions = {
+
+	sigismunds_choice = { 
+	    picture = coronation
+		potential = { 
+		   tag = HLR
+		   exists = yes
+		   has_country_flag = HLR_cleanup
+		}
+		
+		allow = { 
+		    state_n_government = 1
+			NOT = { war_exhaustion = 25 }
+		}
+		
+		effect = { 
+		   clr_country_flag = HLR_cleanup
+		   war_exhaustion = -20
+		   country_event = 410001
+		}	
+	}
+
 	#Compromise decisions 
 	End_the_Hollowing_HLR_1 = { 
 		potential = { 
@@ -50,7 +71,13 @@ political_decisions = {
 		   money = -2000000
 		   any_owned = { limit = { has_province_modifier = Wasted_North } remove_province_modifier = Wasted_North add_province_modifier = { name = repopulating_countryside duration = 3650 } } 
 		}
-	
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}	
 	}
 	
 	Resolve_Clergy_Problem_HRE = { 
@@ -71,7 +98,14 @@ political_decisions = {
 		effect = { 
 		   any_owned = { limit = { has_province_modifier = Strong_Clergy } remove_province_modifier = Strong_Clergy } 
 		}
-	
+
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}	
 	}
 	
 	Resolve_Strong_Princes_HRE = { 
@@ -91,6 +125,14 @@ political_decisions = {
 		   money = -2000000
 		   any_owned = { limit = { has_province_modifier = Strong_Princes } remove_province_modifier = Strong_Princes } 
 		}
+
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}	
 	
 	}
 	
@@ -112,6 +154,14 @@ political_decisions = {
 		effect = { 
 		any_owned = { limit = { has_province_modifier = Old_Liberties } remove_province_modifier = Old_Liberties } 
 		}
+
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}	
 	
 	}
 	
@@ -138,6 +188,14 @@ political_decisions = {
 			}
 		add_country_modifier = { name = rhenish_paternalism_HRE duration = 1825 } 
 		}
+
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}	
 	
 	}
 	
@@ -189,6 +247,15 @@ political_decisions = {
 		remove_country_modifier = Reichsarmee_HRE
 		set_country_flag = New_Reichsarmee_HRE
 		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}
+		
 	}
 	
 	Reform_Culture_HRE = { 
@@ -210,6 +277,15 @@ political_decisions = {
 		remove_country_modifier = Not_Roman_nor_German_HRE
 		set_country_flag = Cultural_Reform_HRE
 		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}
+		
 	}
 	
 	Reform_Economy_HRE_1 = { 
@@ -235,6 +311,15 @@ political_decisions = {
 			}
 		set_country_flag = First_Eco_reform_HRE
 		}
+
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}
+		
 	}
 	
 	Reform_Economy_HRE_2 = { 
@@ -266,6 +351,15 @@ political_decisions = {
 			}
 		set_country_flag = Second_Eco_Reform_HRE
 		}
+		
+		ai_will_do = {
+			factor = 1
+	           modifier = {
+	              factor = 0
+	              NOT = { has_country_flag = ended_local_hollowing }
+			   }
+		}		
+		
 	}
 	
 		
@@ -924,7 +1018,13 @@ political_decisions = {
 	
 	revolutionary_wave = { 
 		potential = { 
-		tag = HLR
+		OR = {
+		   tag = HLR
+		   AND = {
+		      tag = ITA
+			  has_country_flag = successful_revolutionary_war
+		   }
+	    }
 		is_greater_power = yes 
 		OR = { government = democracy government = parliamentary_republic } 
 		NOT = { has_country_flag = revolutionary_war } 

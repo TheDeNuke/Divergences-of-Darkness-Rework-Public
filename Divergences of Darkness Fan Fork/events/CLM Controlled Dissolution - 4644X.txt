@@ -1,1 +1,533 @@
-# Redundant due to CLM Overhaul
+#### This file is used for non-MEX CLM minors - If any content is created for UCA, LST or natives it should be done here.
+
+country_event = { #The De Marquez State
+	id = 46550
+	title = "UCA1.T"
+	desc = "UCA1.D"
+	
+	trigger = { 
+	   tag = UCA 
+	   exists = yes
+	   war = no
+	   NOT = { year = 1868 }
+	   NOT = { vassal_of = CLM }
+	   NOT = { has_country_flag = activate_de_marquez }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "UCA1.A" 
+   	   government = presidential_dictatorship
+	   nationalvalue = nv_order
+	   political_reform = federalism
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = no_trade_unions
+	   political_reform = first_past_the_post
+	   political_reform = underground_parties
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   set_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov
+       set_country_flag = activate_de_marquez
+	   country_event = { id = 46552 days = 14 }
+	}
+}
+
+### This is just effectively a UCA cleanup event
+
+country_event = { #The country collapses into anarchy on the spot because of a massive power vacuum as a result of De Marquez being dead
+	id = 46551
+	title = "UCA2.T"
+	desc = "UCA2.D"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = UCA 
+	   exists = yes
+	   war = no
+	   year = 1868
+	   NOT = { vassal_of = CLM }
+	   NOT = { has_country_flag = activate_de_marquez }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "UCA2.A" 
+       set_country_flag = activate_de_marquez
+	   all_core = { add_core = ELS }
+	   any_owned = { 
+			limit = { OR = { province_id = 2183 province_id = 2184 province_id = 2185 province_id = 2189 province_id = 2190 } }
+			secede_province = YUC
+	   }
+	   any_owned = { 
+			limit = { is_core = GUA }
+			secede_province = GUA
+	   }	   
+	   any_owned = { 
+			limit = { is_core = NIC }
+			secede_province = NIC
+	   }
+	   any_owned = { 
+			limit = { is_core = PNM }
+			secede_province = PNM
+	   }
+	   change_tag = ELS
+	   all_core = { add_core = UCA }
+	   all_core = { limit = { NOT = { region = UCA_2191 } } remove_core = ELS }
+        any_country = {
+		   limit = { 
+		      tag = SPA
+			  OR = {
+			    owns = 2253
+			    is_our_vassal = GRA
+			  }
+		   }
+		   country_event = 46560
+		}
+	}
+}
+
+country_event = { #A Game of Governors - De Marquez is having trouble maintaining control over a Federation of differing interests which don't have pan-columbanism to bind them together
+	id = 46552
+	title = "UCA3.T"
+	desc = "UCA3.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "UCA3.A" 
+	    prestige = -10
+        any_pop = {
+	       limit = {
+		       NOT = { location = { region = UCA_2191 } }
+			   strata = rich
+		   }
+		   militancy = 3
+		   consciousness = 3
+		   ideology = {
+			   value = liberal
+			   factor = 0.15
+		   }
+		}
+		country_event = { id = 46553 days = 31 }
+	}
+}
+
+country_event = { #The Mayan Insurrection - Its clear that this country is practically dysfunctional
+	id = 46553
+	title = "UCA4.T"
+	desc = "UCA4.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "UCA4.A" 
+	    prestige = -20
+        any_pop = {
+	       limit = {
+		       culture = mayan
+		   }
+		    militancy = 4
+		    consciousness = 4
+		    ideology = {
+			    value = separatist
+				factor = 0.25
+			}
+		}
+		country_event = { id = 46554 days = 31 }
+	}
+}
+
+country_event = { #The Marquez Gambit Begins - De Marquez dissolves the United Provinces and goes for Direct Rule under Salvador. Hopefully the problems will be solved...
+	id = 46554
+	title = "UCA5.T"
+	desc = "UCA5.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "UCA5.A" 
+	    political_reform = unitary
+	    set_country_flag = the_marquez_gambit
+	    prestige = -10
+	    all_core = { add_core = ELS }
+	    change_tag = ELS
+	    all_core = { add_core = UCA }
+	    all_core = { limit = { NOT = { region = UCA_2191 } } remove_core = ELS }
+	}
+}
+
+### THE GAMBIT IS SUCCESSFUL ### 
+### UCA was formed again via decision ###
+
+### Centralization Decision is called save_UCA
+
+### The Legacy of De Marquez - Successful
+
+country_event = { 
+	id = 46555
+	title = "UCA6.T"
+	desc = "UCA6.D"
+	
+	trigger = { 
+	   tag = UCA 
+	   exists = yes
+	   year = 1873
+	   NOT = { year = 1875 }
+	   government = presidential_dictatorship
+	   has_country_flag = successful_marquez_gambit
+	}
+	
+	mean_time_to_happen = { 
+	   days = 60
+	}
+	
+	option = { 
+	name = "UCA6.A" 
+        any_pop = {
+		   militancy = 1
+		   consciousness = 1
+		   ideology = {
+			   value = anarcho_liberal
+			   factor = 0.1
+		   }
+		   ideology = {
+			   value = paternal
+			   factor = 0.1
+		   }
+		}
+		country_event = { id = 46556 days = 31 }
+	    clr_country_flag = successful_marquez_gambit
+	}
+}
+
+#### Jeanist-Style Paternals and Dalkist-Republicans are fighting each other in San Salvador. Who will win!
+
+#### Normal Central American Insanity...
+
+country_event = { 
+	id = 46556
+	title = "UCA7.T"
+	desc = "UCA7.D"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "UCA7.A" 
+		government = parliamentary_republic
+		plurality = 50
+        nationalvalue = nv_freedom
+		political_reform = federalism
+	    ruling_party_ideology = anarcho_liberal
+		political_reform = population_equal_weight
+		political_reform = proportional_representation
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+		political_reform = all_voting_pops
+        political_reform = secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    set_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+		any_country = {
+		    limit = {
+		      primary_culture = central_american
+			  exists = no
+			}
+			government = parliamentary_republic
+	    }
+	    ai_chance = {
+	       factor = 50		   
+	    }        
+	}
+	
+	option = { 
+	name = "UCA7.B"
+	    government = absolute_monarchy 
+	    ruling_party_ideology = paternal
+		nationalvalue = nv_order
+	    political_reform = confederalism
+	    political_reform = none_voting
+        political_reform = no_meeting
+	    political_reform = censored_press
+	    political_reform = no_trade_unions
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = appointed
+	    political_reform = mandatory_service
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    set_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov	
+		any_country = {
+		    limit = {
+		      primary_culture = central_american
+			  exists = no
+			}
+			government = absolute_monarchy
+	    }
+	    ai_chance = {
+	       factor = 50	   
+	    }        
+	}
+}
+
+### THE GAMBIT HAS COMPLETELY FAILED ### 
+
+### Little player only secret is that you can actually create Mayapan as a vassal and not collapse, but its a secret that's only implied in previous events ###
+
+### Any of the republics or Mayapan got Free ###
+
+country_event = { 
+	id = 46557
+	title = "UCA70.T"
+	desc = "UCA70.D"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = ELS
+	   has_country_flag = the_marquez_gambit
+	   OR = { 
+	      exists = YUC
+		  exists = GUA
+		  exists = PNM 
+		  exists = NIC
+	   }
+	   NOT = { YUC = { vassal_of = THIS } }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 60
+	}
+	
+	option = { 
+	name = "UCA70.A" 
+        random_country = {
+		    limit = { 
+		      tag = YUC
+			  vassal_of = THIS
+		    }
+			THIS = { release_vassal = YUC }
+	    }
+	    any_owned = { 
+			limit = { OR = { province_id = 2183 province_id = 2184 province_id = 2185 province_id = 2189 province_id = 2190 } }
+			secede_province = YUC
+	    }
+	    any_owned = { 
+			limit = { is_core = GUA }
+			secede_province = GUA
+	    }	   
+	    any_owned = { 
+			limit = { is_core = NIC }
+			secede_province = NIC
+	    }
+	    any_owned = { 
+			limit = { is_core = PNM }
+			secede_province = PNM
+	    }	
+		clr_country_flag = the_marquez_gambit
+        any_country = {
+		   limit = { 
+		      tag = SPA
+			  OR = {
+			    owns = 2253
+			    is_our_vassal = GRA
+			  }
+		   }
+		   country_event = 46560
+		}
+	}
+}
+
+### This country became a democracy and the gambit completely failed ###
+
+country_event = { 
+	id = 46558
+	title = "UCA8.T"
+	desc = "UCA8.D"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = ELS
+	   has_country_flag = the_marquez_gambit
+	   NOT = { government = presidential_dictatorship }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 60
+	}
+	
+	option = { 
+	name = "UCA8.A" 
+        random_country = {
+		    limit = { 
+		      tag = YUC
+			  vassal_of = THIS
+		    }
+			THIS = { release_vassal = YUC }
+	    }
+	    any_owned = { 
+			limit = { OR = { province_id = 2183 province_id = 2184 province_id = 2185 province_id = 2189 province_id = 2190 } }
+			secede_province = YUC
+	    }
+	    any_owned = { 
+			limit = { is_core = GUA }
+			secede_province = GUA
+	    }	   
+	    any_owned = { 
+			limit = { is_core = NIC }
+			secede_province = NIC
+	    }
+	    any_owned = { 
+			limit = { is_core = PNM }
+			secede_province = PNM
+	    }	
+		clr_country_flag = the_marquez_gambit
+        any_country = {
+		   limit = { 
+		      tag = SPA
+			  OR = {
+			    owns = 2253
+			    is_our_vassal = GRA
+			  }
+		   }
+		   country_event = 46560
+		}
+	}
+}
+
+### De Marquez died which means the gambit automatically failed ###
+
+country_event = { 
+	id = 46559
+	title = "UCA9.T"
+	desc = "UCA9.D"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = ELS
+	   year = 1873
+	   has_country_flag = the_marquez_gambit
+	}
+	
+	mean_time_to_happen = { 
+	   days = 60
+	}
+	
+	option = { 
+	name = "UCA9.A" 
+        random_country = {
+		    limit = { 
+		      tag = YUC
+			  vassal_of = THIS
+		    }
+			THIS = { release_vassal = YUC }
+	    }
+	    any_owned = { 
+			limit = { OR = { province_id = 2183 province_id = 2184 province_id = 2185 province_id = 2189 province_id = 2190 } }
+			secede_province = YUC
+	    }
+	    any_owned = { 
+			limit = { is_core = GUA }
+			secede_province = GUA
+	    }	   
+	    any_owned = { 
+			limit = { is_core = NIC }
+			secede_province = NIC
+	    }
+	    any_owned = { 
+			limit = { is_core = PNM }
+			secede_province = PNM
+	    }	
+		clr_country_flag = the_marquez_gambit
+        any_country = {
+		   limit = { 
+		      tag = SPA
+			  OR = {
+			    owns = 2253
+			    is_our_vassal = GRA
+			  }
+		   }
+		   country_event = 46560
+		}
+	}
+}
+
+### Spain's event to get one free Not-Panama.
+
+country_event = { 
+	id = 46560
+	title = "UCA10.T"
+	desc = "UCA10.D"
+
+	is_triggered_only = yes
+	
+	## Execute the Operation
+	
+	option = { 
+	name = "UCA10.A" 
+	    prestige = 5
+	    ### Puppet Event
+        PNM = { country_event = 19370 }
+	    ai_chance = {
+	       factor = 100	   
+	    } 
+	}
+	
+	option = { 
+	name = "UCA10.B" 
+	    ai_chance = {
+	       factor = 0	   
+	    } 
+	}
+}

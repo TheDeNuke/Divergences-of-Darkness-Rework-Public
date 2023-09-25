@@ -2517,6 +2517,7 @@ country_event = {
 			name = conservative_reaction
 			duration = 365
 		}
+		remove_country_modifier = SPA_FUEROS_ARE_PROBLEM
 	    add_country_modifier = {
 			name = SPA_killed_fueros
 			duration = -1
@@ -5267,7 +5268,8 @@ country_event = {
 		prestige = 10
 		clr_country_flag = CST_SOLUTION
 		set_global_flag = SPA_DECENTER
-		political_reform = federalism
+        set_country_flag = spc_commonwealth
+  		political_reform = federalism
 		add_accepted_culture = castilian
         add_accepted_culture = old_portuguese
 	    any_pop = { 
@@ -6476,7 +6478,6 @@ country_event = {
        add_accepted_culture = lusitanian
        add_accepted_culture = mexican 
        set_global_flag = SPA_DECENTER
-	   set_country_flag = spc_commonwealth
        political_reform = federalism
        VNS = { all_core = { add_core = SPC } }
        all_core = { add_core = SPC }
@@ -6736,6 +6737,99 @@ country_event = {
 		ai_chance = {
 			factor = 0
 		}
+	}
+}
+
+country_event = {
+    id = 4701130
+    title = "SPAN127.T"
+    desc = "SPAN127.D"
+    #picture = "ambush_army"
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { 
+    name = "SPAN127.A"
+		set_global_flag = last_andine_war
+		INC = { 
+			country_event = 4701140
+		}
+		war = { 
+		target = INC
+		attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+    }
+}
+
+country_event = {
+    id = 4701140
+    title = "SPAN128.T"
+    desc = "SPAN128.D"
+    #picture = "ambush_army"
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { 
+    name = "SPAN128.A"
+    }
+}
+
+country_event = {
+    id = 4701150
+    title = "SPAN129.T"
+    desc = "SPAN129.D"
+    #picture = "ambush_army"
+
+    trigger = { 
+		OR = { tag = SPA tag = SPC }  
+		has_global_flag = last_andine_war
+		INC = { has_country_flag = custom_treaty_loser } 
+		war = no 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 20 
+	}
+	
+	option = { 
+		name = "SPAN129.A"
+		clr_global_flag = last_andine_war
+		INC = { clr_country_flag = custom_treaty_loser } 
+		QUI = { inherit = INC } 
+	}
+}
+
+country_event = {
+    id = 4701160
+    title = "SPAN130.T"
+    desc = "SPAN130.D"
+    #picture = "ambush_army"
+
+    trigger = { 
+		tag = INC
+		has_global_flag = last_andine_war
+		NOT = { has_country_flag = custom_treaty_loser } 
+		war = no 
+	}
+	
+	major = yes 
+	
+	mean_time_to_happen = { 
+		days = 20 
+	}
+	
+	option = { 
+		name = "SPAN129.A"
+		prestige = 25 
+		clr_global_flag = last_andine_war
+		INC = { clr_country_flag = custom_treaty_loser } 
+		QUI = { inherit = INC } 
 	}
 }
 
