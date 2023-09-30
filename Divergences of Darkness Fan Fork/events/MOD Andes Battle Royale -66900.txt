@@ -2606,7 +2606,11 @@ country_event = {
 		tag = INC
 		has_global_flag = WAR_ANDES
 		NOT = { has_global_flag = NAN_OVER } 
+		war_with = NAN 
+		NOT = { AND = { NAN = { national_provinces_occupied = 0.05 } national_provinces_occupied = 0.1 } } 
 	}
+	
+	fire_only_once = yes 
 	
 	mean_time_to_happen = { 
 	days = 1 
@@ -2618,8 +2622,60 @@ country_event = {
 		end_war = NAN
 		set_global_flag = NAN_OVER
 		war_exhaustion = -25 
-	ai_chance = {
-	factor = 99
+		ai_chance = {
+		factor = 100 
+			modifier = { 
+				factor = 0
+				NAN = { ai = no } 
+			}
+		}
+	}
+	
+	option = { 
+		name = "AND560.B"
+		prestige = 1 
+		ai_chance = {
+		factor = 1 
+			modifier = { 
+				factor = 100 
+				NAN = { ai = no } 
+			}
+	    }
+	}
+
+}
+
+country_event = { 
+	id = 669551
+	title = "AND560.T"
+	desc = "AND560.D"
+	picture = "battle_andes" 
+	
+	trigger = { 
+		tag = INC
+		has_global_flag = WAR_ANDES
+		AND = { NAN = { national_provinces_occupied = 0.05 } national_provinces_occupied = 0.1 } 
+		NOT = { has_global_flag = NAN_OVER } 
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+		name = "AND560.A"
+		prestige = -10 
+		end_war = NAN
+		set_country_flag = custom_treaty_loser
+		war_exhaustion = -25 
+		ai_chance = {
+		factor = 100 
+			modifier = { 
+				factor = 0
+				NAN = { ai = no } 
+			}
 		}
 	}
 	
@@ -6812,7 +6868,7 @@ country_event = {
 	
 	option = { 
 		name = "AND185.A" 
-		change_tag = INC 
+		random_owned = { limit = { owner = { tag = TAP } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		primary_culture = quechua 
@@ -6853,7 +6909,7 @@ country_event = {
 	
 	option = { 
 		name = "AND186.A" 
-		change_tag = INC
+		random_owned = { limit = { owner = { tag = TAP } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		clr_global_flag = succession_INC
@@ -6890,7 +6946,7 @@ country_event = {
 	
 	option = { 
 		name = "AND187.A" 
-		change_tag = INC
+		random_owned = { limit = { owner = { tag = ARE } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		clr_global_flag = succession_INC
@@ -6931,7 +6987,7 @@ country_event = {
 	
 	option = { 
 		name = "AND188.A" 
-		change_tag = INC 
+		random_owned = { limit = { owner = { tag = ARE } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		clr_global_flag = succession_INC
@@ -6968,7 +7024,7 @@ country_event = {
 	
 	option = { 
 		name = "AND189.A" 
-		change_tag = INC
+		random_owned = { limit = { owner = { tag = QOL } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		primary_culture = quechua 
@@ -7009,7 +7065,7 @@ country_event = {
 	
 	option = { 
 		name = "AND190.A" 
-		change_tag = INC
+		random_owned = { limit = { owner = { tag = QOL } } owner = { change_tag = INC } }
 		set_country_flag = Washkar_INC 
 		remove_country_modifier = small_country_draft 
 		primary_culture = quechua 
@@ -11488,5 +11544,81 @@ country_event = {
 	
 	option = { 
 		name = "AND294.A"
+	}
+}
+
+country_event = { 
+	
+	id = 670950 #The Amazon expedition
+	title = "AND295.T"
+	desc = "AND295.D"
+	picture = "inca_nobleman"
+	
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		NOT = { has_country_flag = smilodon } 
+		year = 1850 
+		war = no 
+		NOT = { year = 1860 }
+	}
+	
+	mean_time_to_happen = { 
+		months = 20 
+		modifier = { 
+			factor = 0.1
+			year = 1854 
+		}
+	}
+	
+	option = { 
+	name = "AND295.A" 
+	set_country_flag = smilodon
+	prestige = 2
+	}
+}
+
+country_event = { 
+	
+	id = 670960 #The Matter of succession
+	title = "AND296.T"
+	desc = "AND296.D"
+	picture = "inca_nobleman"
+	
+	
+	trigger = { 
+		tag = INC
+		has_country_flag = Washkar_INC 
+		has_country_flag = amachaq 
+		NOT = { has_country_flag = matters_succession } 
+		year = 1850 
+		war = no 
+		NOT = { year = 1860 }
+	}
+	
+	mean_time_to_happen = { 
+		months = 20 
+		modifier = { 
+			factor = 0.1
+			year = 1859 
+		}
+	}
+	
+	option = { 
+	name = "AND296.A" 
+	set_country_flag = matters_succession
+	any_pop = { 
+		limit = { 
+			pop_type = aristocrats 
+			has_pop_culture = quechua
+			}
+			militancy = 2 
+			consciousness = 4 
+			ideology = { 
+				value = reactionary
+				factor = 0.10
+			}
+		}
 	}
 }
