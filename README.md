@@ -14,9 +14,10 @@ The current and former mod team:
 -  Attalus - The Co-Project Manager/Consul of Divergences
 -  Zerzura - Localization Lead and Coder
 
--  Theodorex - Victoria 3 Project Lead and Assistance
+-  Theodorex - Former Victoria 3 Project Lead and Assistance
 -  Periares - FLAGS, Concept Designer, Coder and Localization
--  NPMister - Concept Designer and Localization
+-  Ddima - Concept Designer, Coder and Localization
+-  NPMister - FLAGS, Concept Designer and Localization
 -  Zeeloat - Concept Designer and Localization (Hopefully still alive)
 -  Arleck - Concept Designer and Localization
 -  J Master - Concept Designer and Localization
@@ -34,7 +35,6 @@ The current and former mod team:
 -  Mr. Parrot - Concept Designer (here and Vic3)
 -  Majulah Melaka - Concept Designer
 -  Conquest - Coder/Scripter and the developer of the Popularizer tool.
--  Ddima - Localization
 -  Tecumseh - Localization
 -  Ataru - Localization
 -  Ania - Localization

@@ -483,6 +483,7 @@ political_decisions = {
 			tag = CAS
 			tag = ARE
 			tag = AZL
+			AND = { tag = INC has_country_flag = Washkar_INC } 
 		}
 		NOT = { has_country_flag = ARE_Willka }
 		NOT = { has_country_flag = coal_SAN }
@@ -885,6 +886,7 @@ political_decisions = {
 			tag = CAS
 			tag = ARE
 			tag = TAP
+			tag = INC
 		}
 		NOT = { has_country_flag = ARE_Willka }
 		NOT = { has_country_flag = ChimuMines }
@@ -914,6 +916,7 @@ political_decisions = {
 		}
 		ai_will_do = { factor = 1 }
 	}
+	
 	
 	# Note - I've moved this up slightly to not cause serious problems.
 	
@@ -955,7 +958,7 @@ political_decisions = {
 		
 		allow = { 
 			war = no 
-			NOT = { war_exhaustion = 1 }
+			NOT = { any_neighbor_country = { truce_with = THIS } }
 			all_core = {
 						OR = {
 							owned_by = THIS
@@ -976,8 +979,34 @@ political_decisions = {
 				}
 				country_event = 67007
 			}
+			any_country = { 
+				limit = { 
+					tag = SPA 
+					exists = yes 
+					owns = 2254
+				}
+				country_event = 67101
+			}
 		}
 	
+	}
+	
+	expel_SPA_from_GRA = { 
+		potential = { 
+			tag = INC 
+			has_global_flag = north_expedition_INC_SPA
+			war_with = SPA
+		}
+		
+		allow = { 
+			GRA = { all_core = { controlled_by = THIS } } 
+			NOT = { national_provinces_occupied = 0.20 } 
+		}
+		
+		effect = { 
+			SPA = { set_country_flag = custom_treaty_loser } 
+			end_war = SPA 
+		}
 	}
 	
 	stratocratic_reform = { 
@@ -3096,6 +3125,9 @@ political_decisions = {
 	}
 	
 	inca_of_the_antilles = { 
+		
+		picture = "get_cabral_to_cooperate" 
+		
 		potential = { 
 			tag = INC 
 			has_country_flag = cabral 
@@ -3607,6 +3639,8 @@ political_decisions = {
 	}
 		
 	force_peace_amerigan_war = { 
+	
+		picture = "inc_soldier"
 		
 		potential = { 
 			tag = INC 
@@ -3619,7 +3653,7 @@ political_decisions = {
 			2302 = { controlled_by = INC province_control_days = 200 }
 			LOT = { national_provinces_occupied = 0.6 } 
 			QUI = { exists = no } 
-			NOT = { national_provinces_occupied = 0.01 } 
+			OR = { NOT = { national_provinces_occupied = 0.01 } year = 1847 } 
 		}
 		
 		effect = { 
@@ -3673,6 +3707,43 @@ political_decisions = {
 			badboy = 5
 			inherit = NAN 
 		}
+	}
+	
+	buy_galapagos = { 
+		
+		potential = { 
+			OR = { tag = INC tag = ARE } 
+			NOT = { 2285 = { owned_by = THIS } } 
+			NOT = { OR = { has_country_flag = fujimori has_country_flag = support_of_fujimori } }
+			NOT = { has_country_flag = galapagos_buy } 
+		}
+		
+		allow = { 
+			OR = { 
+				UCA = { owns = 2285 } 
+				NIC = { owns = 2285 } 
+			}
+			OR = { 
+				is_greater_power = yes 
+				AND = { 
+					is_secondary_power = yes
+					OR = { 
+						UCA = { relation = { who = THIS = 150 } } 
+						NIC = { relation = { who = THIS = 150 } }
+					}
+				} 
+			}
+			money = 200000
+		}
+		
+		effect = { 
+			any_country = { 
+				limit = { owns = 2285 } 
+				country_event = 67098
+			}
+			2285 = { add_core = THIS } 
+		}
+		
 	}
 	
 }
