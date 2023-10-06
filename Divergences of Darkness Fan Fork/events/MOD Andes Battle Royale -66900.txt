@@ -2622,10 +2622,12 @@ country_event = {
 		end_war = NAN
 		set_global_flag = NAN_OVER
 		war_exhaustion = -25 
-	ai_chance = {
-	factor = 99
-		factor = 0 
-		NAN = { ai = no } 
+		ai_chance = {
+		factor = 100 
+			modifier = { 
+				factor = 0
+				NAN = { ai = no } 
+			}
 		}
 	}
 	
@@ -2668,10 +2670,12 @@ country_event = {
 		end_war = NAN
 		set_country_flag = custom_treaty_loser
 		war_exhaustion = -25 
-	ai_chance = {
-	factor = 99
-		factor = 0 
-		NAN = { ai = no } 
+		ai_chance = {
+		factor = 100 
+			modifier = { 
+				factor = 0
+				NAN = { ai = no } 
+			}
 		}
 	}
 	
@@ -4415,12 +4419,6 @@ country_event = {
 			limit = { is_core = INC } 
 			secede_province = INC
 		}
-		any_owned = { 
-			limit = { 
-				is_core = GUY 
-			}
-			secede_province = INC
-		}
 		capital = 2264 
 		change_tag = CAS 
 		INC = { country_event = 67010 }
@@ -4441,27 +4439,15 @@ country_event = {
 		name = "AND110.A"	
 		create_vassal = FROM
 		SAN = { civilized = no } 
-		SAN = { civilized = no } 
 		any_owned = { 
 			limit = { is_core = SAN } 
 			secede_province = SAN 
 		}
 		inherit = SAN 
+		set_country_flag = SAN_conquered_GRA
 		SAN = { civilized = yes } 
-		GUY = { civilized = no } 
-		any_owned = { 
-			limit = { is_core = GUY } 
-			secede_province = GUY 
-		}
-		inherit = GUY 
-		GUY = { civilized = yes } 
 		any_owned = { 
 			limit = { is_core = SAN }
-			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
-			add_province_modifier = { name = population_resettlement duration = 5000 }
-		}
-		any_owned = { 
-			limit = { is_core = GUY }
 			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
 			add_province_modifier = { name = population_resettlement duration = 5000 }
 		}
@@ -6342,7 +6328,6 @@ country_event = {
 			limit = { 
 				OR = { 
 					is_core = AVA 
-					is_core = GUY
 					region = PEU_2289
 					region = SA_2549
 					region = SA_2 
@@ -11435,8 +11420,8 @@ country_event = {
 
 country_event = { 
 	id = 67192
-	title = "AND292.T" #INC won over AZL
-	desc = "AND292.D"
+	title = "AND255.T" #INC won over AZL
+	desc = "AND255.D"
 	picture = "inca_raymi" 
 	
 	trigger = { 
@@ -11453,7 +11438,7 @@ country_event = {
 	}
 	
 	option = { 
-		name = "AND292.A" #Neuter Ameriga by force
+		name = "AND255.A" #Neuter Ameriga by force
 		AZL = { country_event = 67156 }
 		ai_chance = { 
 			factor = 40 
@@ -11461,7 +11446,7 @@ country_event = {
 	}
 	
 	option = { 
-		name = "AND292.B" #Build bridges
+		name = "AND255.B" #Build bridges
 		AZL = { country_event = 67193 }
 		ai_chance = { 
 			factor = 60 
@@ -11564,7 +11549,7 @@ country_event = {
 
 country_event = { 
 	
-	id = 67095 #The Smilodon
+	id = 670950 #The Amazon expedition
 	title = "AND295.T"
 	desc = "AND295.D"
 	picture = "inca_nobleman"
@@ -11596,10 +11581,10 @@ country_event = {
 
 country_event = { 
 	
-	id = 67096 #The Matter of succession
+	id = 670960 #The Matter of succession
 	title = "AND296.T"
 	desc = "AND296.D"
-	picture = "sapa_inca"
+	picture = "inca_nobleman"
 	
 	
 	trigger = { 
@@ -11637,270 +11622,3 @@ country_event = {
 		}
 	}
 }
-
-country_event = { 
-	
-	id = 67097 #The Clémenceau affair
-	title = "AND297.T"
-	desc = "AND297.D"
-	picture = "sapa_inca"
-	
-	
-	trigger = { 
-		tag = INC
-		has_country_flag = Washkar_INC 
-		NOT = { has_country_flag = bad_choice_advisor } 
-		year = 1850 
-		war = no 
-		NOT = { year = 1860 }
-	}
-	
-	mean_time_to_happen = { 
-		months = 30 
-		modifier = { 
-			factor = 0.1
-			year = 1854
-		}
-	}
-	
-	option = { 
-	name = "AND297.A" 
-	prestige = -2
-	set_country_flag = bad_choice_advisor
-	any_pop = { 
-		limit = { 
-			has_pop_culture = beornian
-			location = { region = NAN_2362 }
-			}
-		militancy = 3 
-		consciousness = 4 
-		}
-	money = -10000
-	}
-}
-
-
-country_event = { 
-	
-	id = 67098 #$FROM proposes to buy the Galapagos
-	title = "AND298.T"
-	desc = "AND298.D"
-	picture = "tortoises"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-		name = "AND298.A"
-		money = 200000
-		2285 = { remove_core = NIC remove_core = UCA secede_province = FROM } 
-		FROM = { country_event = 67099 }
-		ai_chance = { 
-			factor = 75 
-			modifier = { 
-				factor = 1.5 
-				FROM = { is_greater_power = yes } 
-			}
-			modifier = { 
-				factor = 2
-				alliance_with = FROM 
-			}
-			modifier = { 
-				factor = 0.5 
-				rank = 16 
-			}
-		}
-	}
-	
-	option = { 
-		name = "AND298.B"
-		FROM = { country_event = 67100 }
-		ai_chance = { 
-			factor = 25 
-			modifier = { 
-				factor = 1.5 
-				NOT = { FROM = { is_greater_power = yes } }
-			}
-			modifier = { 
-				factor = 4
-				AND = { in_sphere = yes NOT = { sphere_owner = FROM } 
-			}
-		}
-	}
-}
-
-
-country_event = { 
-	
-	id = 67099 #We got the islands!
-	title = "AND299.T"
-	desc = "AND299.D"
-	picture = "tortoises"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-		prestige = 2 
-		money = -200000
-		relation = { who = FROM value = 50 } 
-	}
-}
-
-
-country_event = { 
-	
-	id = 67100 #$FROM has refused!
-	title = "AND300.T"
-	desc = "AND300.D"
-	picture = "tortoises"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-		name = "AND300.A" 
-		badboy = 1 
-		relation = { who = FROM value = -200 } 
-	}
-}
-
-country_event = { 
-	
-	id = 67101 #Washkar marches north 
-	title = "AND301.T"
-	desc = "AND301.D"
-	picture = "llaneros"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-		name = "AND301.A" 
-		set_global_flag = north_expedition_INC_SPA
-		SPA = { country_event = 67102 } 
-		war = { 
-		target = SPA
-			attacker_goal =  { 
-				casus_belli = custom_treaty_cb
-			}
-			defender_goal = {
-				casus_belli = status_quo
-			}	
-		}
-	}
-} 
-
-
-country_event = { 
-	
-	id = 67102 #The Northern Expedition
-	title = "AND302.T"
-	desc = "AND302.D"
-	picture = "llaneros"
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = "AND302.A"
-		
-	}
-}
-
-country_event = { 
-	
-	id = 67103 #The Northern Expedition -Washkar has won
-	title = "AND303.T"
-	desc = "AND303.D"
-	picture = "llaneros"
-	
-	trigger = { 
-		tag = SPA 
-		has_global_flag = north_expedition_INC_SPA 
-		war = no 
-		has_country_flag = custom_treaty_loser 
-	}
-	
-	mean_time_to_happen = { 
-		days = 3 
-	}
-	
-	option = { 
-		name = "AND303.A"
-		clr_country_flag = custom_treaty_loser
-		clr_global_flag = north_expedition_INC_SPA
-		any_owned = { 
-			limit = { OR = { is_core = INC is_core = GUY } } 
-			secede_province = INC
-		}
-		any_owned = { limit = { is_core = CAS } secede_province = CAS }
-		CAS = { capital = 2264 } 
-		INC = { country_event = 67104 }
-	}
-}
-
-country_event = { 
-	
-	id = 67104 #The Northern Expedition -Washkar has won
-	title = "AND304.T"
-	desc = "AND304.D"
-	
-	is_triggered_only = yes 
-	
-	major = yes 
-	
-	option = { 
-		name = "AND304.A"	
-		create_vassal = CAS
-		SAN = { civilized = no } 
-		any_owned = { 
-			limit = { is_core = SAN } 
-			secede_province = SAN 
-		}
-		inherit = SAN 
-		SAN = { civilized = yes } 
-		GUY = { civilized = no } 
-		any_owned = { 
-			limit = { is_core = GUY } 
-			secede_province = GUY 
-		}
-		inherit = GUY 
-		GUY = { civilized = yes } 
-		any_owned = { 
-			limit = { is_core = SAN }
-			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
-			add_province_modifier = { name = population_resettlement duration = 5000 }
-		}
-		any_owned = { 
-			limit = { is_core = GUY }
-			add_province_modifier = { name = nationalist_agitation duration = 3600 } 
-			add_province_modifier = { name = population_resettlement duration = 5000 }
-		}
-	}
-}
-
-country_event = { 
-	
-	id = 67105 #The Northern Expedition -Washkar has been defeated
-	title = "AND305.T"
-	desc = "AND305.D"
-	picture = "llaneros"
-	
-	trigger = { 
-		tag = SPA 
-		has_country_flag = north_expedition_INC_SPA 
-		NOT = { has_country_flag = custom_treaty_loser }
-		war = no 
-	}
-	
-	major = yes 
-	
-	mean_time_to_happen = { 
-		days = 3 
-	}
-	
-	option = { 
-		name = "AND305.A"
-		clr_global_flag = north_expedition_INC_SPA 
-		any_owned = { 
-			remove_core = INC
-		} 
-	}
-}
-	
