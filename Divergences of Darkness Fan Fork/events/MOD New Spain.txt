@@ -5783,6 +5783,13 @@ country_event = {
 		   which = SPA_centralization
 		   value = -20
 	    }
+		### Cuba will always break free if owned ####
+  		any_owned = {
+			limit = {
+			   is_core = CUB
+			}
+			secede_province = CUB
+		} 	
         any_country = {
 		   limit = {
 		      tag = DUA
@@ -6758,9 +6765,12 @@ country_event = {
 		}
 		war = { 
 		target = INC
-		attacker_goal =  { 
+		    attacker_goal =  { 
 				casus_belli = custom_treaty_cb
 			}	
+		    attacker_goal =  { 
+				casus_belli = status_quo
+			}
 		} 
     }
 }
@@ -6788,8 +6798,10 @@ country_event = {
     trigger = { 
 		OR = { tag = SPA tag = SPC }  
 		has_global_flag = last_andine_war
-		INC = { has_country_flag = custom_treaty_loser } 
-		war = no 
+		INC = { 
+		   NOT = { war_with = THIS } 
+		   has_country_flag = custom_treaty_loser 
+		} 
 	}
 	
 	major = yes 
@@ -6816,7 +6828,7 @@ country_event = {
 		tag = INC
 		has_global_flag = last_andine_war
 		NOT = { has_country_flag = custom_treaty_loser } 
-		war = no 
+		NOT = { war_with = SPA war_with = SPC }
 	}
 	
 	major = yes 
