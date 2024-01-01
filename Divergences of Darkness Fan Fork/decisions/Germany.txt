@@ -2046,15 +2046,18 @@ political_decisions = {
 	
 	annex_the_free_state = { 
 	
-		picture = reichstag
+		#picture = reichstag
 		
 		potential = { 
 			OR = {
  			  tag = CAE
 			  tag = GCF
-			  tag = SGF
 			  tag = NGF
 			  tag = GER
+			  AND = {
+			     tag = SGF
+				 owns = 549
+			  }
 			}
 			exists = BRE			
 			NOT = { has_country_flag = annexation_of_bremen }
@@ -2078,18 +2081,20 @@ political_decisions = {
 	
 	annex_oldenburg = { 
 	
-		picture = reichstag
+		#picture = reichstag
 		
 		potential = { 
 			OR = {
  			  tag = CAE
 			  tag = GCF
-			  tag = SGF
 			  tag = NGF
 			  tag = GER
+			  AND = {
+			     tag = SGF
+				 owns = 549
+			  }
 			}		
 			exists = OLD
-
 			NOT = { has_country_flag = annexation_of_oldenburg }
 		}
 		
@@ -2700,6 +2705,7 @@ political_decisions = {
 	   has_country_flag = protector_of_poland  
        exists = KRA	   
 	   NOT = { is_our_vassal = KRA }
+	   NOT = { has_country_flag = protector_KRA }
 	}
 	
 	allow = { 
@@ -2708,6 +2714,7 @@ political_decisions = {
 	}
 	
 	effect = { 
+	    set_country_flag = protector_KRA
 	    leave_alliance = KRA
 	    relation = { who = KRA value = -400 }
 	    diplomatic_influence = { who = KRA value = -400 }	
@@ -2747,6 +2754,7 @@ political_decisions = {
 	   has_country_flag = protector_of_poland  
        exists = MAZ 
 	   NOT = { is_our_vassal = MAZ }
+	   NOT = { has_country_flag = protector_MAZ }
 	}
 	
 	allow = { 
@@ -2755,6 +2763,7 @@ political_decisions = {
 	}
 	
 	effect = { 
+	    set_country_flag = protector_MAZ
 	    leave_alliance = MAZ
 	    relation = { who = MAZ value = -400 }
 	    diplomatic_influence = { who = MAZ value = -400 }	
@@ -2994,7 +3003,18 @@ political_decisions = {
 		   }
 		   all_core = { add_core = CZE }
 		}
-		POL = { all_core = { add_core = CZE } }
+		any_country = {
+		   limit = {
+		      OR = {
+		          primary_culture = polish
+				  primary_culture = slovak
+				  primary_culture = sorb
+			  }
+			  exists = no
+		   }
+		   all_core = { add_core = CZE }
+		}
+		PML = { all_core = { add_core = CZE } }
 		change_tag = CZE 
     }
 

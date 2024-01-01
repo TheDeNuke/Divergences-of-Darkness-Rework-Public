@@ -2046,6 +2046,84 @@ political_decisions = {
 	
 	# Burgundian Decisions in relation to Germany
 	
+	# Force Switzerland - Needed to construct Swabia
+	
+	force_switzerland = {
+		picture = declare_neutrality
+		potential = {		   
+		    OR = {
+			   tag = PBG
+			   tag = BRG
+			}
+			has_country_flag = BRG_form_swabia
+			NOT = { has_country_flag = forced_switzerland }
+			NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
+			NOT = { exists = SWA }
+			OR = { 
+			  exists = FIO
+			  exists = BAE
+			  exists = GRB
+			}
+		}
+		
+		allow = {
+		   SWI = {
+		      exists = yes
+		      in_sphere = THIS
+		   }
+		   FIO = {
+		      OR = {
+		         exists = no
+		         in_sphere = THIS
+		      }
+		   } 
+		   BAE = {
+		      OR = {
+		         exists = no
+		         in_sphere = THIS
+		      }
+		   }
+		   GRB = {
+		      OR = {
+		         exists = no
+		         in_sphere = THIS
+		      }
+		   }
+		}
+		
+		effect = {
+		    set_country_flag = forced_switzerland
+		    any_country = {
+			   limit = {
+			      OR = {
+				    tag = FIO
+					tag = BAE
+					tag = GRB
+			      }
+				  exists = yes
+			   }
+			   all_core = { add_core = SWI }
+			   annex_to = SWI
+			}
+		    any_country = {
+			   limit = {
+			      tag = SWI
+			   }
+			   inherit = FIO
+			   inherit = BAE
+			   inherit = GRB
+			}
+            any_owned = {
+                limit = { is_core = SWI }
+                secede_province = SWI
+            }	
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+	
 	force_swabia = {
 		#picture = Triglav
 		potential = {		   

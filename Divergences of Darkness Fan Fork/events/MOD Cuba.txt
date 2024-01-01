@@ -1,0 +1,1654 @@
+############# Cuban Interactions ################
+
+#### Fear not the vicious Iberians,
+#### They are cowards like every tyrant.
+#### They cannot oppose the spirited Cuban;
+#### Their empire has forever fallen.
+
+#### The Cuban Viceroyality - Triggers a day after Spain's Initial Event aka event 470020 #####
+
+country_event = {
+	id = 470150
+	title = "CUB1.T"
+	desc = "CUB1.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB1.A"
+        any_pop = { limit = { culture = caribeno } consciousness = 1 militancy = 2 }				
+	}
+}
+
+#### Congrats on overthrowing the King and not being mowed down by the Dual Monarchy - The Caribenos still hate you and the local nobility still exists. ####
+
+country_event = {
+	id = 470151
+	title = "CUB2.T"
+	desc = "CUB2.D"
+	#picture = "sunset"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB2.A"
+	    any_pop = { limit = { culture = caribeno } consciousness = 1 militancy = 1 }		
+	}
+}
+
+#### Castro is the president of Colombia - Oh No ####
+
+#### This will break most of the Cuban Events below until he dies ####
+
+country_event = {
+	id = 470152
+	title = "CUB3.T"
+	desc = "CUB3.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		NOT = { has_country_flag = CASTO_UPDATE }
+		CLM = { has_country_flag = CASTO_CLM }	
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "CUB3.A"
+	    set_country_flag = CASTO_UPDATE
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 2 
+		   ideology = {
+			    value = separatist
+				factor = 0.1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			add_province_modifier = {
+				name = nationalist_agitation
+				duration = 1095
+			}
+		}
+	}
+}
+
+#### Rumors of Castro's Return to Cuba ####
+
+country_event = {
+	id = 470153
+	title = "CUB30.T"
+	desc = "CUB30.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1845
+		NOT = { has_country_flag = CASTO_IS_DEAD }
+		NOT = { has_country_flag = CASTO_UPDATE }
+		CLM = { OR = { exists = no has_country_flag = VICINTE_CLM has_country_flag = SANTANDER_CLM } }	
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB30.A"
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		   ideology = {
+			    value = separatist
+				factor = 0.05
+			}
+		}
+	    set_country_flag = CASTO_UPDATE
+		set_country_flag = CASTO_RETURN
+	}
+}
+
+#### Governor of Cuba is investing heavily into Tobacco. Far too much. ####
+
+country_event = {
+	id = 470154
+	title = "CUB4.T"
+	desc = "CUB4.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1848
+		owns = 2210
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    # Its well inside his rights.
+
+	option = {
+		name = "CUB4.A"
+		2210 = { trade_goods = tobacco }
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		   ideology = {
+			    value = separatist
+				factor = 0.05
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+	    ai_chance = { 
+	        factor = 10
+		}	
+	}
+	
+	# At least save the sugar planations
+	
+	option = {
+		name = "CUB4.B"
+        rich_strata = {
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		}
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		   ideology = {
+			    value = separatist
+				factor = 0.05
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+	    ai_chance = { 
+	        factor = 10
+		}	
+	}
+	
+	# Tell him to actually diversify the plantations. Plant some coffee in the East.
+	
+	option = {
+		name = "CUB4.C"
+		2212 = { trade_goods = coffee }
+        rich_strata = {
+		   limit = { culture = caribeno } 
+		   consciousness = 2 militancy = 2
+		}
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		   ideology = {
+			    value = separatist
+				factor = 0.05
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+	    ai_chance = { 
+	        factor = 80
+		}	
+	}
+}
+
+#### The Castro Insurgency ####
+
+#### I guess the Cubans have had enough of being treated like trash... ####
+
+country_event = {
+	id = 470155
+	title = "CUB5.T"
+	desc = "CUB5.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1850
+		has_country_flag = CASTO_RETURN
+		owns = 2210
+		NOT = { has_country_flag = CASTO_IS_DEAD }
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB4.A"
+		clr_country_flag = CASTO_RETURN
+		set_country_flag = CASTO_INFIGHTING
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 2 
+		   ideology = {
+			    value = separatist
+				factor = 0.1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			add_province_modifier = {
+				name = nationalist_agitation
+				duration = 1095
+			}
+		}
+	}
+}
+
+#### Castro and Republicans are infighting ####
+
+#### Could this be the end? ####
+
+country_event = {
+	id = 470156
+	title = "CUB6.T"
+	desc = "CUB6.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1860
+		owns = 2210
+		has_country_flag = CASTO_INFIGHTING
+		NOT = { has_country_flag = CASTO_IS_DEAD }
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB6.A"
+		clr_country_flag = CASTO_INFIGHTING
+		set_country_flag = KILL_CASTO
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = -1 militancy = -2 
+		   ideology = {
+			    value = conservative
+				factor = 0.1
+			}
+		}
+	}
+}
+
+#### Castro is dead - His replacement is a Dalkist Inspired Revolutionary that has yet revealed himself ####
+
+country_event = {
+	id = 470157
+	title = "CUB7.T"
+	desc = "CUB7.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		year = 1864
+		owns = 2210
+		has_country_flag = KILL_CASTO
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "CUB7.A"
+		set_country_flag = CASTO_IS_DEAD
+		CUB = { set_country_flag = CASTO_IS_DEAD }
+		clr_country_flag = KILL_CASTO
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = -1 militancy = -2 
+		   ideology = {
+			    value = conservative
+				factor = 0.1
+			}
+		}
+	}
+}
+
+
+#### President Castro is dead - His replacement is a Dalkist Inspired Revolutionary that has yet revealed himself ####
+
+#### No date because its determined by Castro and his actions in Colombia #####
+
+country_event = {
+	id = 470158
+	title = "CUB8.T"
+	desc = "CUB8.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		has_country_flag = CASTO_DEATH_INFOMATION
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+	option = {
+		name = "CUB8.A"
+		set_country_flag = CASTO_IS_DEAD
+		CUB = { set_country_flag = CASTO_IS_DEAD }
+		clr_country_flag = CASTO_DEATH_INFOMATION
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = -1 militancy = -2 
+		   ideology = {
+			    value = conservative
+				factor = 0.1
+			}
+		}
+	}
+}
+
+#### Cuban Governor in his own ego after the defeat of Castro decides to implement cash crop monocultures. ####
+
+#### wow gee thanks for destroying cuban agriculture you idiot ###
+
+country_event = {
+	id = 470159
+	title = "CUB9.T"
+	desc = "CUB9.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1865
+		has_country_flag = CASTO_IS_DEAD
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB9.A"
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 1 militancy = 1 
+		   ideology = {
+			    value = separatist
+				factor = 0.05
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_monoculture
+			add_province_modifier = {
+				name = cuban_monoculture
+				duration = -1
+			}
+		}
+	}
+}
+
+#### The Remedios Speech - Our revolutionary has revealed himself ####
+
+country_event = {
+	id = 470160
+	title = "CUB10.T"
+	desc = "CUB10.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1866
+		has_country_flag = CASTO_IS_DEAD
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CU10.A"
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 2 militancy = 1 
+		   ideology = {
+			    value = anarcho_liberal
+				factor = 0.1
+			}
+		}
+	}
+}
+
+#### The Cuban Guerra Grande - OH FUC... ####
+
+country_event = {
+	id = 470161
+	title = "CUB11.T"
+	desc = "CUB11.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1868
+		has_country_flag = CASTO_IS_DEAD
+		NOT = { has_country_flag = GURREA_GRANDE }
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB11.A"
+		set_country_flag = GURREA_GRANDE 
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 2 militancy = 4 
+		   ideology = {
+			    value = anarcho_liberal
+				factor = 0.1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			add_province_modifier = {
+				name = cuban_revolutionary_insurgency
+				duration = 14600
+			}
+		}
+	}
+}
+
+#### Defeat of the Planters ####
+
+country_event = {
+	id = 470162
+	title = "CUB110.T"
+	desc = "CUB110.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1907
+		has_country_flag = GURREA_GRANDE
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB110.A"
+		set_country_flag = ITS_NOT_OVER_CUB
+		add_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = -4
+		   ideology = {
+			    value = conservative
+				factor = 0.1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_revolutionary_insurgency
+		}
+	}
+}
+
+#### The Rise of the Cuban Revolutionary Communist Organization - OCRC ####
+
+#### They are going to cause a full scale revolution and you can't stop it ####
+
+country_event = {
+	id = 470163
+	title = "CUB111.T"
+	desc = "CUB111.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1910
+		has_country_flag = ITS_NOT_OVER_CUB
+		NOT = { has_country_flag = CUBAN_SHATTERED }
+		NOT = { has_country_flag = THE_REVOLUTION_COMRADE }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB11.A"
+		clr_country_flag = ITS_NOT_OVER_CUB
+		set_country_flag = THE_REVOLUTION_COMRADE
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = -4
+		   ideology = {
+			    value = communist
+				factor = 0.25
+			}
+		}
+	}
+}
+
+#### The Rise of the Cuban Revolutionary Communist Organization - OCRC - Previous Revolution Defeated ####
+
+#### They are going to cause a full scale revolution and you can't stop it ####
+
+country_event = {
+	id = 470164
+	title = "CUB12.T"
+	desc = "CUB12.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		year = 1910
+		has_country_flag = CUBAN_SHATTERED
+		NOT = { has_country_flag = FINAL_REVOLUTION_CUB }
+		NOT = { has_country_flag = THE_REVOLUTION_COMRADE_TWO }
+		NOT = { has_country_flag = ACTIVE_CUBAN_REVOLUTION }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CUB12.A"
+		set_country_flag = FINAL_REVOLUTION_CUB
+		set_country_flag = THE_REVOLUTION_COMRADE_TWO
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = -4
+		   ideology = {
+			    value = communist
+				factor = 0.25
+			}
+		}
+	}
+}
+
+
+#####################################
+#### THE CUBAN REVOLUTION EVENTS ####
+#####################################
+
+### Trigger Events - These will all trigger for Spain. Trigger Nations are listed above the event - Apart from the Communist Iteration if the Revolution is crushed once then it cannot happen again ###
+
+### President Castro - The Colombian Navy has appeared near Cuba. Rumors of supply missions. ###
+
+country_event = {
+	id = 470165
+	title = "CUB13.T"
+	desc = "CUB13.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB13.A"
+		set_country_flag = THE_REVOLUTION_COMRADE
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = 8
+		   ideology = {
+			    value = separatist
+				factor = 0.25
+			}
+		}
+	}
+}
+
+### Fillibuster -  The Plantagenian Navy has appeared near Cuba. Rumors of supply missions. ###
+
+country_event = {
+	id = 470166
+	title = "CUB14.T"
+	desc = "CUB14.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB14.A"
+		set_country_flag = THE_REVOLUTION_COMRADE
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = 8
+		   ideology = {
+			    value = separatist
+				factor = 0.25
+			}
+		}
+	}
+}
+
+### Arcadian GP with Hegemony -  The Arcadian Navy has appeared near Cuba. Rumors of supply missions. ###
+
+country_event = {
+	id = 470167
+	title = "CUB15.T"
+	desc = "CUB15.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB15.A"
+		set_country_flag = THE_REVOLUTION_COMRADE
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   limit = { culture = caribeno } 
+		   consciousness = 8 militancy = 8
+		   ideology = {
+			    value = separatist
+				factor = 0.25
+			}
+		}
+	}
+}
+
+############ The Cuban Revolution - Castro CASTRO CASTRO
+
+country_event = {
+	id = 470168
+	title = "CUB16.T"
+	desc = "CUB16.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_country_flag = THE_REVOLUTION_COMRADE
+		NOT = { has_country_flag = CASTO_IS_DEAD }
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "CUB16.A"
+		clr_country_flag = THE_REVOLUTION_COMRADE
+		set_country_flag = ACTIVE_CUBAN_REVOLUTION
+	    any_owned = { 
+	       limit = { is_core = CUB NOT = { province_id = 2212 } }
+	       secede_province = CUB  
+		}
+		CUB = {
+		   add_country_modifier = { name = small_country_draft duration = 1440 }	 
+		}
+		CLM = { country_event = 470169 }
+		country_event = { id = 470170 days = 3 }
+	}
+}
+
+############ Colombia turns Cuba into a puppet - The Spanish shall be here soon. Prepare yourself ##############
+
+country_event = {
+	id = 470169
+	title = "CUB17.T"
+	desc = "CUB17.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB17.A"
+		relation = { who = CUB value = 400 }
+		diplomatic_influence = { who = CUB value = 400 }
+		create_alliance = CUB
+	}
+}
+
+############ Castro Cuban War of Independence ##############
+
+### Off to fight Colombia yet again... ###
+
+country_event = {
+	id = 470170
+	title = "CUB18.T"
+	desc = "CUB18.D"
+	#picture = "sunset"
+	
+	major = yes
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB18.A"
+		set_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+		war = {
+			target = CUB
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	}
+}
+
+############ Spanish Victory - Castro has completely botched it and Santander will be couping him now ##############
+
+country_event = {
+	id = 470171
+	title = "CUB19.T"
+	desc = "CUB19.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+		war = no
+		NOT = { exists = CUB }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB19.A"
+		prestige = -50
+		clr_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+		SPA = { country_event = 470172 }
+		remove_country_modifier = the_castro_reforms
+	}
+}
+
+############ The Restoration of Order in Cuba ##############
+
+country_event = {
+	id = 470172
+	title = "CUB20.T"
+	desc = "CUB20.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB20.A"
+		prestige = 30
+		clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		set_country_flag = CUBAN_SHATTERED
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+	}
+}
+
+############ Cuban Victory - We have completely fucked up ##############
+
+country_event = {
+	id = 470173
+	title = "CUB21.T"
+	desc = "CUB21.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+		war = no
+		exists = CUB
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB21.A"
+		prestige = -50
+		any_owned = {
+		    limit = {
+		       is_core = CUB
+		    }
+			secede_province = CUB
+	    }
+		clr_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+        clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		CLM = { country_event = { id = 470174 days = 1 } }
+	}
+}
+
+############ Castro has done the unthinkable and liberated Cuba ##############
+
+country_event = {
+	id = 470174
+	title = "CUB22.T"
+	desc = "CUB22.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB22.A"
+		prestige = 40		
+		inherit = CUB
+	}
+}
+
+#################################################################################################################################################################
+#### The next two iterations are not as state supported and thus do not create a puppet - However, PLA will get a event to backstab Cuba after the revolution ###
+#################################################################################################################################################################
+
+### Republican Cuba - This is actually a democracy unlike Castro Cuba ###
+
+country_event = {
+	id = 470175
+	title = "CUB220.T"
+	desc = "CUB220.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_country_flag = THE_REVOLUTION_COMRADE
+		has_country_flag = CASTO_IS_DEAD
+		NOT = { year = 1910 }
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "CUB220.A"
+		clr_country_flag = THE_REVOLUTION_COMRADE
+		set_country_flag = ACTIVE_CUBAN_REVOLUTION
+	    any_owned = { 
+	       limit = { is_core = CUB NOT = { province_id = 2212 } }
+	       secede_province = CUB  
+		}
+		CUB = {
+	        government = democracy
+	        ruling_party_ideology = liberal
+	        political_reform = wealth_voting
+	        political_reform = yes_meeting
+	        political_reform = censored_press
+	        political_reform = gerrymandering
+			political_reform = population_equal_weight
+			political_reform = mandatory_service
+		    add_country_modifier = { name = small_country_draft duration = 1440 }	 
+		}
+		any_country = {
+		   limit = { has_country_flag = cuban_supporter }
+		   country_event = 470176
+		}
+		country_event = { id = 470177 days = 3 }
+	}
+}
+
+############ Supporter creates a Alliance with Cuba and this also sets a flag  ##############
+
+country_event = {
+	id = 470176
+	title = "CUB221.T"
+	desc = "CUB221.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB221.A"
+		relation = { who = CUB value = 400 }
+		diplomatic_influence = { who = CUB value = 400 }
+		create_alliance = CUB
+	}
+}
+
+############ Republican Cuban War of Independence ##############
+
+### I hope you don't just sell this republic off to the highest bidder at the end ###
+
+country_event = {
+	id = 470177
+	title = "CUB23.T"
+	desc = "CUB23.D"
+	#picture = "sunset"
+	
+	major = yes
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB23.A"
+		set_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+		war = {
+			target = CUB
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	}
+}
+
+
+############ Spanish Victory - Bwahahahahahahahaha ##############
+
+country_event = {
+	id = 470178
+	title = "CUB24.T"
+	desc = "CUB24.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+		war = no
+		NOT = { exists = CUB }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB24.A"
+		prestige = 30
+		clr_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+		clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		set_country_flag = CUBAN_SHATTERED
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_monoculture
+			add_province_modifier = {
+				name = cuban_monoculture
+				duration = -1
+			}
+		}		
+		any_country = {
+		   limit = { has_country_flag = cuban_supporter }
+		   country_event = 470179
+		}
+	}
+}
+
+############ We have failed to protect Cuba ##############
+
+country_event = {
+	id = 470179
+	title = "CUB25.T"
+	desc = "CUB25.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB25.A"
+		prestige = 30
+	}
+}
+
+############ Spanish Defeat - We have completely fucked up ##############
+
+country_event = {
+	id = 470180
+	title = "CUB26.T"
+	desc = "CUB26.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+		war = no
+		exists = CUB
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB26.A"
+		prestige = -50
+		any_owned = {
+		    limit = {
+		       is_core = CUB
+		    }
+			secede_province = CUB
+	    }
+		clr_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+        clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		CUB = { remove_country_modifier = small_country_draft }
+		any_country = {
+		   limit = { has_country_flag = cuban_supporter NOT = { tag = PLA } }
+		   country_event = 470181
+		}
+		any_country = {
+		   limit = { has_country_flag = cuban_supporter tag = PLA }
+		   country_event = 470182
+		}
+	}
+}
+
+############ We have successfully liberated Cuba ##############
+
+country_event = {
+	id = 470181
+	title = "CUB27.T"
+	desc = "CUB27.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB27.A"
+		prestige = 40		
+	}
+}
+
+############ PLA - We have successfully liberated Cuba - Should we put it under new management? ##############
+
+country_event = {
+	id = 470182
+	title = "CUB270.T"
+	desc = "CUB270.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	is_triggered_only = yes
+
+	option = {
+		name = "CUB270.A"
+		relation = { who = CUB value = -400 }
+		diplomatic_influence = { who = CUB value = -400 }
+		leave_alliance = CUB
+		badboy = 5
+		prestige = 20
+		war = {
+			target = CUB
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = {
+			factor = 100
+        }		
+	}
+	
+	option = {
+		name = "CUB270.B"
+		prestige = 40	
+		ai_chance = {
+			factor = 0
+        }			
+	}
+}
+
+### Communist Cuba - This is the very late version of the revolution and is also completely inevitable unlike the other ones. ###
+
+#### This iteration is if the revolution has never triggered before by anyone externally or otherwise
+
+country_event = {
+	id = 4701820
+	title = "CUB28.T"
+	desc = "CUB28.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_country_flag = THE_REVOLUTION_COMRADE
+		has_country_flag = CASTO_IS_DEAD
+		year = 1910
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "CUB28.A"
+		clr_country_flag = THE_REVOLUTION_COMRADE
+		set_country_flag = ACTIVE_CUBAN_REVOLUTION
+	    any_owned = { 
+	       limit = { is_core = CUB NOT = { province_id = 2212 } }
+	       secede_province = CUB  
+		}
+		CUB = {
+	        government = proletarian_dictatorship
+			ruling_party_ideology = communist
+	        political_reform = none_voting
+	        political_reform = party_appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = state_controlled
+	        political_reform = underground_parties
+	        political_reform = closed_borders
+	        political_reform = mandatory_service
+	        political_reform = all_voting_pops
+		    add_country_modifier = { name = small_country_draft duration = 1440 }	 
+		}
+		#any_country = {
+		#   limit = { has_country_flag = cuban_supporter }
+		#   country_event = 470176
+		#}
+		country_event = { id = 470184 days = 3 }
+	}
+}
+
+#### This iteration is if a revolution had happened previously - This is the Second and Final Cuban Revolution
+
+country_event = {
+	id = 470183
+	title = "CUB29.T"
+	desc = "CUB29.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_country_flag = THE_REVOLUTION_COMRADE_TWO
+		has_country_flag = CASTO_IS_DEAD
+		year = 1910
+	}
+	
+	mean_time_to_happen = {
+		days = 14
+	}
+
+	option = {
+		name = "CUB29.A"
+		clr_country_flag = THE_REVOLUTION_COMRADE_TWO
+		set_country_flag = ACTIVE_CUBAN_REVOLUTION
+	    any_owned = { 
+	       limit = { is_core = CUB NOT = { province_id = 2212 } }
+	       secede_province = CUB  
+		}
+		CUB = {
+	        government = proletarian_dictatorship
+			ruling_party_ideology = communist
+	        political_reform = none_voting
+	        political_reform = party_appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = state_controlled
+	        political_reform = underground_parties
+	        political_reform = closed_borders
+	        political_reform = mandatory_service
+	        political_reform = all_voting_pops
+		    add_country_modifier = { name = small_country_draft duration = 1440 }	 
+		}
+		#any_country = {
+		#   limit = { has_country_flag = cuban_supporter }
+		#   country_event = 470176
+		#}
+		country_event = { id = 470185 days = 3 }
+	}
+}
+
+############ Communist Cuban War of Independence ##############
+
+### VIVA LA REVOLUTION! ###
+
+country_event = {
+	id = 470184
+	title = "CUB30.T"
+	desc = "CUB30.D"
+	#picture = "sunset"
+	
+	major = yes
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB30.A"
+		set_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		war = {
+			target = CUB
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	}
+}
+
+############ Second Cuban War of Independence ##############
+
+### VIVA LA REVOLUTION! ###
+
+country_event = {
+	id = 470185
+	title = "CUB31.T"
+	desc = "CUB31.D"
+	#picture = "sunset"
+	
+	major = yes
+    fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = {
+		name = "CUB31.A"
+		set_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		war = {
+			target = CUB
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}
+		}
+	}
+}
+
+
+############ Spanish Victory - The Final Revolution ##############
+
+country_event = {
+	id = 470186
+	title = "CUB32.T"
+	desc = "CUB32.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		war = no
+		NOT = { exists = CUB }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB32.A"
+		prestige = 20
+		clr_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		set_country_flag = CUBAN_SHATTERED
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_plantations
+			add_province_modifier = {
+				name = cuban_plantations
+				duration = -1
+			}
+		}
+		any_owned = {
+			limit = {
+				is_core = CUB
+			}
+			remove_province_modifier = cuban_monoculture
+			add_province_modifier = {
+				name = cuban_monoculture
+				duration = -1
+			}
+		}		
+		#any_country = {
+		#   limit = { has_country_flag = cuban_supporter }
+		#   country_event = 470179
+		#}
+	}
+}
+
+############ Spanish Defeat - The Revolution Prevails! ##############
+
+country_event = {
+	id = 470187
+	title = "CUB33.T"
+	desc = "CUB33.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		has_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		war = no
+		exists = CUB
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CUB33.A"
+		prestige = -25
+		any_owned = {
+		    limit = {
+		       is_core = CUB
+		    }
+			secede_province = CUB
+	    }
+		clr_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+        clr_country_flag = ACTIVE_CUBAN_REVOLUTION
+		CUB = { remove_country_modifier = small_country_draft }
+		remove_accepted_culture = caribeno
+		any_pop = { 
+		   consciousness = 5
+		   militancy = 5
+		   ideology = {
+			    value = communist
+				factor = 0.2
+			}
+		}
+	}
+}
+
+############ Spain is Communist - Leave Cuba ##############
+
+country_event = {
+	id = 470188
+	title = "CUB34.T"
+	desc = "CUB34.D"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		owns = 2210
+		OR = {
+		   government = proletarian_dictatorship
+		   government = socialist_republic		  
+		}
+		NOT = { 
+		   exists = CUB
+		   has_global_flag = CUBAN_WAR_ACTIVE_CASTRO
+		   has_global_flag = CUBAN_WAR_ACTIVE_REPUBLICAN
+		   has_global_flag = CUBAN_WAR_ACTIVE_COMMUNIST
+		   war_with = CUB
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	immediate = {
+		any_owned = {
+		    limit = {
+		       is_core = CUB
+		    }
+			secede_province = CUB
+	    }
+    }
+
+	option = {
+		name = "CUB34.A"
+		any_owned = {
+		    limit = {
+		       is_core = CUB
+		    }
+			secede_province = CUB
+	    }
+		CUB = {
+	        government = proletarian_dictatorship
+			ruling_party_ideology = communist
+	        political_reform = none_voting
+	        political_reform = party_appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = state_controlled
+	        political_reform = underground_parties
+	        political_reform = closed_borders
+	        political_reform = mandatory_service
+	        political_reform = all_voting_pops
+	    }
+		create_vassal = CUB
+	}
+}
+
+############ Cuban Government Event ##############
+
+country_event = {
+	id = 470189
+	title = "Our government is being set"
+	desc = "The cuban revolution waits for nobody"
+	#picture = "sunset"
+	
+    fire_only_once = yes 
+	
+	trigger = {	
+	    exists = yes
+	    tag = CUB
+		NOT = { war_with = SPA }
+		NOT = { has_country_flag = CUB_GOV_SET }
+	}
+	
+	mean_time_to_happen = {
+		days = 80
+	}
+
+	option = {
+		name = "Our very own government"
+		set_country_flag = CUB_GOV_SET
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      NOT = { has_country_flag = CASTO_IS_DEAD }
+			   }
+			}
+			owner = {
+	        government = presidential_dictatorship
+			ruling_party_ideology = conservative
+	        political_reform = none_voting
+	        political_reform = party_appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = state_controlled
+	        political_reform = underground_parties
+	        political_reform = closed_borders
+	        political_reform = mandatory_service
+	        political_reform = primary_culture_only		
+			}
+
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      has_country_flag = CASTO_IS_DEAD
+				  NOT = { year = 1907 }
+			   }
+			}
+			owner = {
+	        government = democracy
+	        ruling_party_ideology = liberal
+	        political_reform = wealth_voting
+	        political_reform = yes_meeting
+	        political_reform = censored_press
+	        political_reform = gerrymandering
+			political_reform = population_equal_weight
+			political_reform = mandatory_service			
+			}
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      year = 1907
+			   }
+			}
+			owner = {
+	        government = proletarian_dictatorship
+			ruling_party_ideology = communist
+	        political_reform = none_voting
+	        political_reform = party_appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = state_controlled
+	        political_reform = underground_parties
+	        political_reform = closed_borders
+	        political_reform = mandatory_service
+	        political_reform = all_voting_pops			
+			}
+	    }
+	}
+}

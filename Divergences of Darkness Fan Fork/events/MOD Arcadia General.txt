@@ -11,6 +11,8 @@
 ### And crown thy good with brotherhood
 ### From sea to shining sea!
 
+### Added 791310, 791311, 791312, 791313, 791314, 791390, 791391, 791392, 791440, 791441, 791442, 791443, 791444
+
 ############################
 ##### The Sioux Claims #####
 ############################
@@ -1221,6 +1223,7 @@ country_event = {
 	option = {
 		name = "ARCGEN31.A"
 		clr_global_flag = THE_GREAT_NATIVE_REVOLT
+		set_global_flag = SUPER_SKR
 		VIN = { all_core = { remove_core = VIN } }
         any_owned = {
             limit = {
@@ -1288,6 +1291,159 @@ country_event = {
 		SKR = { all_core = { remove_core = SKR } }
     }
 }
+
+### Caiden intervention in the Great Native Revolt - SKR intervention was possible
+
+country_event = {
+	id = 791310
+	title = "ARCGEN320.T"
+	desc = "ARCGEN320.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   owns = 151
+	   NOT = { owns = 160 }
+	   NOT = { NUN = { owns = 160 } }
+	   has_global_flag = THE_GREAT_NATIVE_REVOLT
+	   OR = { 
+	      AND = {
+	         tag = PLA 
+			 has_country_flag = PLA_SKR_intervene
+		  }
+	      PLA = { has_country_flag = PLA_SKR_intervene }
+	   }
+	   NOT = { war_with = NBG }
+	}
+
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+    # This is the easiest intervention we will ever do.
+
+	option = {
+		name = "ARCGEN320.A"
+		174 = { remove_core = NUN }
+		NUN = { all_core = { remove_core = VIN remove_core = SKR } }
+		OCE = { all_core = { remove_core = VIN remove_core = SKR } }
+		SKR = { country_event = 791311 }
+    }
+}
+
+### You know the Jesuits are not so happy at this whole theocracy thing and they just hijacked a good portion of your nation to the Cadiens
+
+country_event = {
+	id = 791311
+	title = "ARCGEN321.T"
+	desc = "ARCGEN321.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN321.A"
+		VIN = { country_event = 791314 }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = NUN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = OUM
+			add_core = FROM
+            secede_province = FROM
+        }
+		174 = { add_core = NUN }
+	    any_country = {
+	    limit = {
+	       tag = PLA
+		   NOT = { is_our_vassal = NUN }
+		   NOT = { owns = 163 }
+	    }
+	    clr_country_flag = SKR_GET_TROLLED
+	    country_event = { id = 79139 days = 0 }
+	    }		
+    }
+}
+
+### Caiden intervention in the Great Native Revolt - There are no Jesuits here, but you can annex the pre-1836 borders as a extra prize.
+
+country_event = {
+	id = 791312
+	title = "ARCGEN322.T"
+	desc = "ARCGEN322.D"
+	#picture = "war_ended"
+	
+	trigger = { 
+	   owns = 151
+	   NOT = { owns = 155 }
+	   has_global_flag = THE_GREAT_NATIVE_REVOLT
+	   OR = { 
+	      AND = {
+	         tag = PLA 
+			 NOT = { has_country_flag = PLA_SKR_intervene }
+		  }
+	      NOT = { PLA = { has_country_flag = PLA_SKR_intervene } }
+	   }
+	   NOT = { war_with = NBG }
+	}
+
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+    # This is the easiest intervention we will ever do.
+
+	option = {
+		name = "ARCGEN322.A"
+		OCE = { all_core = { remove_core = VIN remove_core = SKR } }
+		SKR = { country_event = 791313 }
+    }
+}
+
+country_event = {
+	id = 791313
+	title = "ARCGEN323.T"
+	desc = "ARCGEN323.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN323.A"
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = OUM
+			add_core = FROM
+            secede_province = FROM
+        }		
+    }
+}
+
+### Cadiens stole our legal territory due to this Native Revolt.
+
+country_event = {
+	id = 791314
+	title = "ARCGEN324.T"
+	desc = "ARCGEN324.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN324.A"
+		prestige = -5
+        set_country_flag = VIN_NUN_stolen		
+		PLA = { set_country_flag = PLA_NUN_conclusion }	
+    }
+}
+
 
 ### SKR WPs VIN - Trigger Indipendent Theocracy Path or FAIL_CHECK_THREE ###
 
@@ -1507,6 +1663,8 @@ country_event = {
             limit = {
                 is_core = NUN
 				NOT = { province_id = 174 }
+				NOT = { province_id = 177 }
+				NOT = { province_id = 160 }
             }
 			remove_core = SKR
             secede_province = NUN
@@ -1646,7 +1804,6 @@ country_event = {
             limit = {
                 is_core = OCE
             }
-			add_core = VIN
             secede_province = OCE
         }
         any_owned = {
@@ -1680,13 +1837,28 @@ country_event = {
         NBG = { set_country_flag = VIN_TREATY set_country_flag = SKR_lakeshore_drive }
 	    any_country = {
 	    limit = {
-	      tag = PLA
-		  has_country_flag = PLA_SKR_intervene
-		  NOT = { NUN = { vassal_of = PLA } }
-		  NOT = { owns = 163 }
+	       tag = PLA
+		   has_country_flag = PLA_SKR_intervene
+		   NOT = { is_our_vassal = NUN }
+		   NOT = { owns = 163 }
 	    }
 	    clr_country_flag = SKR_GET_TROLLED
 	    country_event = { id = 79139 days = 0 }
+	    }
+	    any_country = {
+	    limit = {
+	      tag = PLA
+		  owns = 163
+	    }
+	    clr_country_flag = SKR_GET_TROLLED
+	    country_event = { id = 791392 days = 0 }
+	    }
+	    any_country = {
+	       limit = {
+	          tag = OCE 
+			  exists = yes
+	       }
+	       country_event = { id = 791390 days = 0 }
 	    }
 	    any_country = {
 	    limit = {
@@ -1717,6 +1889,60 @@ country_event = {
 		VIN = { set_country_flag = VIN_NUN_stolen }
         create_vassal = NUN
 		set_country_flag = PLA_NUN_conclusion
+    }		
+}
+
+### Since Sioux exists it will annex itself into a Cadien State - No Localization since a player will never see this ###
+
+country_event = {
+	id = 791390
+	title = "We are a meme state"
+	desc = "Time to get annexed into some Cadien shithole"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "Time to die"	
+	    any_country = {
+	       limit = {
+	          owns = 151
+	       }
+	       country_event = { id = 791391 days = 0 }
+	    }
+    }		
+}
+
+### Its free real estate - This is the event that the Cadien state will see caused by one of the various SKR collapse scenarios ###
+
+country_event = {
+	id = 791391
+	title = "ARCGEN380.T"
+	desc = "ARCGEN380.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN380.A"	
+        OCE = { all_core = { add_core = OUM add_core = THIS } }
+		inherit = OCE
+    }		
+}
+
+### IF PLA already owns 163 then they annex NUN ###
+
+country_event = {
+	id = 791392
+	title = "ARCGEN381.T"
+	desc = "ARCGEN381.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "ARCGEN381.A"	
+		inherit = NUN
     }		
 }
 
@@ -1851,19 +2077,19 @@ country_event = {
 	## Threaten NBG to stop immediatly ###
 	
 	option = {
-		name = "ARCGEN41.A"	
+		name = "ARCGEN44.A"	
 		prestige = 10
 		any_pop = { militancy = -1 }
 		NBG = { country_event = { id = 79144 days = 1 } }
 	    ai_chance = { 
-	        factor = 40
+	        factor = 50
 		}
     }
 	
 	## Ask NBG for a treaty ###
 	
 	option = {
-		name = "ARCGEN42.B"	
+		name = "ARCGEN44.B"	
 		prestige = 5
 		NBG = { country_event = { id = 79145 days = 1 } }
 	    ai_chance = { 
@@ -1878,10 +2104,10 @@ country_event = {
 	## Do nothing ###
 	
 	option = {
-		name = "ARCGEN42.C"	
+		name = "ARCGEN44.C"	
 		prestige = -1
 	    ai_chance = { 
-	        factor = 10
+	        factor = 0
 			  modifier = {
 			    factor = 0
 			    has_country_flag = RADICAL_VIN		
@@ -1915,6 +2141,21 @@ country_event = {
 			}	
 	    }
 		}
+		any_country = {
+		    limit = {
+			   tag = PLA
+			   has_country_flag = PLA_SKR_intervene
+			}
+			country_event = 791440
+	    }
+		any_country = {
+		    limit = {
+			   tag = PLA
+			   NOT = { has_country_flag = PLA_SKR_intervene }
+			   NOT = { owns = 155 }
+			}
+			country_event = 791441
+	    }
 	    ai_chance = { 
 	        factor = 80
 		}
@@ -1927,6 +2168,155 @@ country_event = {
 	    ai_chance = { 
 	        factor = 20
 		}
+    }
+}
+
+################ PLA acts like a vulture when it realizes that Belgium and Vinland have started a war with each other - NUN Claim #################
+
+country_event = {
+	id = 791440
+	title = "ARCGEN450.T"
+	desc = "ARCGEN450.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	#### LMAO - March into our claimed territories
+	
+	option = {
+		name = "ARCGEN450.A"	
+		prestige = 10
+		174 = { remove_core = NUN }
+		NUN = { all_core = { remove_core = VIN remove_core = SKR } }
+		OCE = { all_core = { remove_core = VIN remove_core = SKR } }
+        SKR = { country_event = 791442 }
+	    ai_chance = { 
+	        factor = 80
+		}
+    }
+	
+	# Lets not piss off the nation that's so ready to defend SKR...
+
+	option = {
+		name = "ARCGEN450.B"
+        prestige = -10		
+	    ai_chance = { 
+	        factor = 10
+		}
+    }
+}
+
+################ PLA acts like a vulture when it realizes that Belgium and Vinland have started a war with each other - No NUN Claim #################
+
+country_event = {
+	id = 791441
+	title = "ARCGEN451.T"
+	desc = "ARCGEN451.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes
+	
+	#### LMAO - March into our claimed territories
+	
+	option = {
+		name = "ARCGEN451.A"	
+		OCE = { all_core = { remove_core = VIN remove_core = SKR } }
+		SKR = { country_event = 791443 }
+		prestige = 10
+	    ai_chance = { 
+	        factor = 90
+		}
+    }
+	
+	# Lets not piss off the nation that's so ready to defend SKR...
+
+	option = {
+		name = "ARCGEN451.B"
+        prestige = -10		
+	    ai_chance = { 
+	        factor = 10
+		}
+    }
+}
+
+### The Cadiens are being vultures as expected.
+
+country_event = {
+	id = 791442
+	title = "ARCGEN452.T"
+	desc = "ARCGEN452.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN452.A"
+		VIN = { country_event = 791314 }
+        any_owned = {
+            limit = {
+                is_core = NUN
+            }
+            secede_province = NUN
+        }
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = OUM
+			add_core = FROM
+            secede_province = FROM
+        }
+		174 = { add_core = NUN }
+	    any_country = {
+	    limit = {
+	       tag = PLA
+		   NOT = { is_our_vassal = NUN }
+		   NOT = { owns = 163 }
+	    }
+	    clr_country_flag = SKR_GET_TROLLED
+	    country_event = { id = 79139 days = 0 }
+	    }		
+    }
+}
+
+### The Cadiens are being vultures as expected - OCE Only
+
+country_event = {
+	id = 791443
+	title = "ARCGEN453.T"
+	desc = "ARCGEN453.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN453.A"
+        any_owned = {
+            limit = {
+                is_core = OCE
+            }
+			add_core = OUM
+			add_core = FROM
+            secede_province = FROM
+        }		
+    }
+}
+
+### Cadiens stole our legal territory due to our war with NBG
+
+country_event = {
+	id = 791444
+	title = "ARCGEN454.T"
+	desc = "ARCGEN454.D"
+	#picture = "war_ended"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "ARCGEN454.A"
+		prestige = -5
+        set_country_flag = VIN_NUN_stolen
+        PLA = { set_country_flag = PLA_NUN_conclusion }	
     }
 }
 
@@ -1987,18 +2377,18 @@ country_event = {
         }
         any_owned = {
             limit = {
+                is_core = NUN
+				NOT = { province_id = 174 }
+            }
+            secede_province = NUN
+        }
+        any_owned = {
+            limit = {
                 is_core = ANI
 				NOT = { province_id = 176 }
             }
 			add_core = VIN
             secede_province = VIN
-        }
-        any_owned = {
-            limit = {
-                is_core = NUN
-				NOT = { province_id = 174 }
-            }
-            secede_province = NUN
         }
         any_owned = {
             limit = {
@@ -2010,18 +2400,32 @@ country_event = {
             limit = {
                 is_core = OCE
             }
-			add_core = VIN
-            secede_province = VIN
+            secede_province = OCE
         }
 	    any_country = {
 	       limit = {
 	          tag = PLA
 		      has_country_flag = PLA_SKR_intervene
-		      NOT = { NUN = { vassal_of = PLA } }
+		      NOT = { is_our_vassal = NUN }
 		      NOT = { owns = 163 }
 	       }
 	       clr_country_flag = SKR_GET_TROLLED
 	       country_event = { id = 79139 days = 0 }
+	    }
+	    any_country = {
+	       limit = {
+	         tag = PLA
+		     owns = 163
+	       }
+	       clr_country_flag = SKR_GET_TROLLED
+	       country_event = { id = 791392 days = 0 }
+	    }
+	    any_country = {
+	       limit = {
+	          tag = OCE 
+			  exists = yes
+	       }
+	       country_event = { id = 791390 days = 0 }
 	    }
     }
 }
@@ -3028,6 +3432,17 @@ country_event = {
 			  duration = -1
 		   }
 		}
+		# NBG is a greater power and cannot be held as a vassal due to game rules.
+        random_country = {
+            limit = {
+                tag = NBG
+				is_greater_power = yes
+            }
+			remove_country_modifier = ARC_MILITARY_OCCUPATION
+            THIS = {
+                inherit = NBG
+            }
+        }
     }	
 }
 
@@ -3207,6 +3622,17 @@ country_event = {
 	       limit = { is_core = PLA }
 	       secede_province = PLA
 	    }
+		# PLA is a greater power and cannot be held as a vassal due to game rules.
+        random_country = {
+            limit = {
+                tag = PLA
+				is_greater_power = yes
+            }
+			remove_country_modifier = ARC_MILITARY_OCCUPATION
+            THIS = {
+                inherit = PLA
+            }
+        }
     }	
 }
 
@@ -6018,4 +6444,910 @@ country_event = {
 			}
 		}
 	}
+}
+
+##################################################################################
+####################### SECOND ARCADIAN WAR EXTRA ################################
+##################################################################################
+
+#### This leads back around to the Second Arcadian War events above if the war is triggered #####
+
+### The fate of Tsalagihi Ayeli - You still exist?
+
+### Don't bother localizing this - There is no point since nobody is going to see this
+
+country_event = {
+	id = 792021
+	title = "The Fate of Tsalagihi Ayeli"
+	desc = "You still exist. This is the point where you choose between getting annexed by Belgium or Plantagenia."
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+
+	option = {
+		name = "Belgium"
+		all_core = { remove_core = PLA }
+		annex_to = NBG
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+	            has_global_flag = NBG_OLD_ARCADIAN
+		    }
+	        modifier = { 
+	            factor = 0
+	            in_sphere = PLA
+			}
+		}	
+    }
+	
+	option = {
+		name = "Plantagenia"
+		all_core = { remove_core = NBG }
+	    annex_to = PLA
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+	            PLA = { government = absolute_monarchy }
+		    }
+	        modifier = { 
+	            factor = 0
+	            in_sphere = NBG
+			}
+	        modifier = { 
+	            factor = 0
+	            NOT = { exists = PLA }
+			}
+		}	
+    }
+	
+	option = {
+		name = "Nobody lol"
+
+	    ai_chance = { 
+	        factor = 0
+		}	
+    }
+}
+
+#### BELGIAN TRIGGERED ARCADIAN WAR EVENTS #####
+
+### PLA - The Inevitable Conflict - Belgium is calling and they want your head ###
+
+#### I think you might need to state in red text that if they refuse this conference then war is inevitable and nearly immediate.
+
+country_event = {
+	id = 792022
+	title = "ARCGENEXT1.T"
+	desc = "ARCGENEXT1.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+
+    ### Trigger the War now 
+    
+	option = {
+		name = "ARCGENEXT1.A"
+		any_pop = { militancy = -9 }
+        any_country = {
+            limit = {
+                tag = NBG
+                OR = {
+                  has_global_flag = NBG_BURGUNDIAN
+                  has_global_flag = NBG_LIONS	 
+                }
+            }
+            country_event = { id = 79160 days = 7 }		   
+        }	
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_OLD_ARCADIAN 
+            }
+            country_event = { id = 79157 days = 7 }				   
+        }
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_NEW_ARCADIAN
+            }
+            country_event = { id = 79158 days = 7 }				   
+        }
+        any_country = {
+            limit = {
+               OR = {
+			      tag = BRG
+				  tag = PBG
+				  tag = DUA
+			   }
+			   exists = yes
+			   OR = {
+			      is_sphere_leader_of = PLA
+				  alliance_with = PLA
+			   }
+            }
+            country_event = { id = 792035 days = 4 }				   
+        }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+	            has_country_flag = radical_PLA_possible
+		    }
+		}	
+    }
+	
+	### Delay the war at all costs
+	
+	option = {
+		name = "ARCGENEXT1.B"
+		any_pop = { militancy = 1 }
+	    NBG = { country_event = { id = 792023 days = 7 } }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 1.9
+	            has_country_flag = radical_PLA_possible
+		    }
+		}	
+    }
+}
+
+### NBG  - The Inevitable Conflict - PLA wants to open Diplomatic Conference about six months from now ###
+
+country_event = {
+	id = 792023
+	title = "ARCGENEXT2.T"
+	desc = "ARCGENEXT2.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	### The Unification of Arcadia is inevitable    
+    
+	option = {
+		name = "ARCGENEXT2.A"
+		prestige = 5
+		any_pop = { militancy = -9 }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      OR = {
+				    has_global_flag = NBG_BURGUNDIAN
+					has_global_flag = NBG_LIONS
+				  }
+			   }
+			}
+			owner = { country_event = { id =  79160 days = 7 }	}
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      has_global_flag = NBG_OLD_ARCADIAN 
+			   }
+			}
+			owner = { country_event = { id = 79157 days = 7 } }
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      has_global_flag = NBG_NEW_ARCADIAN
+			   }
+			}
+			owner = { country_event = { id = 79158 days = 7 } }
+	    }
+        any_country = {
+            limit = {
+               OR = {
+			      tag = BRG
+				  tag = PBG
+				  tag = DUA
+			   }
+			   exists = yes
+			   OR = {
+			      is_sphere_leader_of = PLA
+				  alliance_with = PLA
+			   }
+            }
+            country_event = { id = 792035 days = 4 }				   
+        }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+				OR = {
+	                has_global_flag = NBG_NEW_ARCADIAN
+					has_global_flag = NBG_LIONS
+			    }
+		    }
+	        modifier = { 
+	            factor = 2
+	            has_global_flag = NBG_OLD_ARCADIAN
+		    }
+		}	
+    }
+	
+	### We are diplomatic people. So we shall look to prevent war
+
+	option = {
+		name = "ARCGENEXT2.B"
+		relation = { who = PLA value = 100 }
+		any_pop = { militancy = 1 }
+	    PLA = { country_event = { id = 792026 days = 180 } }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 1.9
+				OR = {
+	                has_global_flag = NBG_NEW_ARCADIAN
+					has_global_flag = NBG_LIONS
+			    }
+		    }
+	        modifier = { 
+	            factor = 0
+	            has_global_flag = NBG_OLD_ARCADIAN
+		    }
+		}	
+    }
+}
+
+#### PLANTAGENIAN TRIGGERED ARCADIAN WAR EVENTS #####
+
+### NBG - The Inevitable Conflict - Plantagenia is calling and they want your head ###
+
+#### I think you might need to state in red text that if they refuse this conference then war is inevitable and nearly immediate.
+
+country_event = {
+	id = 792024
+	title = "ARCGENEXT3.T"
+	desc = "ARCGENEXT3.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+
+    ### Trigger the War now 
+    
+	option = {
+		name = "ARCGENEXT3.A"
+		any_pop = { militancy = -9 }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      OR = {
+				    has_global_flag = NBG_BURGUNDIAN
+					has_global_flag = NBG_LIONS
+				  }
+			   }
+			}
+			owner = { country_event = { id = 79160 days = 7 } }
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      has_global_flag = NBG_OLD_ARCADIAN 
+			   }
+			}
+			owner = { country_event = { id = 79157 days = 7 } }
+	    }
+		random_owned = {
+		    limit = {
+			   owner = { 
+			      has_global_flag = NBG_NEW_ARCADIAN
+			   }
+			}
+			owner = { country_event = { id = 79158 days = 7 } }
+	    }
+        any_country = {
+            limit = {
+               OR = {
+			      tag = BRG
+				  tag = PBG
+				  tag = DUA
+			   }
+			   exists = yes
+			   OR = {
+			      is_sphere_leader_of = PLA
+				  alliance_with = PLA
+			   }
+            }
+            country_event = { id = 792035 days = 4 }				   
+        }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+				OR = {
+	                has_global_flag = NBG_NEW_ARCADIAN
+					has_global_flag = NBG_LIONS
+			    }
+		    }
+	        modifier = { 
+	            factor = 2
+	            has_global_flag = NBG_OLD_ARCADIAN
+		    }
+		}	
+    }
+	
+	### Delay the war at all costs
+	
+	option = {
+		name = "ARCGENEXT3.B"
+		any_pop = { militancy = 1 }
+	    PLA = { country_event = { id = 792025 days = 7 } }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 1.9
+				OR = {
+	                has_global_flag = NBG_NEW_ARCADIAN
+					has_global_flag = NBG_LIONS
+			    }
+		    }
+	        modifier = { 
+	            factor = 0
+	            has_global_flag = NBG_OLD_ARCADIAN
+		    }
+		}		
+    }
+}
+
+### PLA  - The Inevitable Conflict - NBG wants to open Diplomatic Conference about six months from now ###
+
+country_event = {
+	id = 792025
+	title = "ARCGENEXT4.T"
+	desc = "ARCGENEXT4.D"
+	#picture = "war_ended"
+	
+    is_triggered_only = yes 
+	
+	### The Unification of Arcadia is inevitable    
+    
+	option = {
+		name = "ARCGENEXT4.A"
+		prestige = 5
+		any_pop = { militancy = -9 }
+        any_country = {
+            limit = {
+                tag = NBG
+                OR = {
+                  has_global_flag = NBG_BURGUNDIAN
+                  has_global_flag = NBG_LIONS	 
+                }
+            }
+            country_event = { id = 79160 days = 7 }				   
+        }	
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_OLD_ARCADIAN 
+            }
+            country_event = { id = 79157 days = 7 }				   
+        }
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_NEW_ARCADIAN
+            }
+            country_event = { id = 79158 days = 7 }				   
+        }
+        any_country = {
+            limit = {
+               OR = {
+			      tag = BRG
+				  tag = PBG
+				  tag = DUA
+			   }
+			   exists = yes
+			   OR = {
+			      is_sphere_leader_of = PLA
+				  alliance_with = PLA
+			   }
+            }
+            country_event = { id = 792035 days = 4 }				   
+        }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 0.1
+	            has_country_flag = radical_PLA_possible
+		    }
+		}	
+    }
+	
+	### We are diplomatic people. So we shall look to prevent war
+
+	option = {
+		name = "ARCGENEXT4.B"
+		relation = { who = NBG value = 100 }
+		any_pop = { militancy = 1 }
+	    country_event = { id = 792026 days = 180 }
+	    ai_chance = { 
+	        factor = 50
+	        modifier = { 
+	            factor = 1.9
+	            has_country_flag = radical_PLA_possible
+		    }
+		}	
+    }
+}
+
+############################################
+########## The Doomed Conference ###########
+############################################
+
+## The Conference of Port Royale ##
+
+country_event = {
+	id = 792026
+	title = "ARCGENEXT5.T"
+	desc = "ARCGENEXT5.D"
+	#picture = "war_ended"
+	
+	major = yes
+    is_triggered_only = yes 
+ 
+    ### Seems promising. I'm sure this will end well. 
+	
+	option = {
+		name = "ARCGENEXT5.B"
+		relation = { who = NBG value = 100 }
+		any_pop = { militancy = 1 }
+		any_country = {
+		    limit = {
+			   tag = NBG
+			   NOT = { has_country_flag = NBG_peaceful_unify }
+			}
+            country_event = { id = 792027 days = 7 }
+	    }
+		any_country = {
+		    limit = {
+			   tag = NBG
+			   has_country_flag = NBG_peaceful_unify
+			}
+            country_event = { id = 792028 days = 7 }
+	    }
+    }
+}
+
+## The Conference of Port Royale  - Agenda - Non NewArc ##
+
+country_event = {
+	id = 792027
+	title = "ARCGENEXT6.T"
+	desc = "ARCGENEXT6.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+ 
+    ### We must resolve the matter of Sanacomie once and for all.
+	
+	option = {
+		name = "ARCGENEXT6.A"
+		relation = { who = PLA value = -50 }
+		prestige = 1
+		any_pop = { militancy = -1 }
+		PLA = { country_event = { id = 792031 days = 14 } }
+    }
+}
+
+## The Conference of Port Royale  - Agenda - NewArc ##
+
+country_event = {
+	id = 792028
+	title = "ARCGENEXT7.T"
+	desc = "ARCGENEXT7.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+ 
+    ### We must resolve the matter of Sanacomie once and for all.
+	
+	option = {
+		name = "ARCGENEXT7.A"
+		relation = { who = PLA value = -50 }
+		prestige = 1
+		any_pop = { militancy = -1 }
+		PLA = { country_event = { id = 792031 days = 14 } }
+	    ai_chance = { 
+	        factor = 5
+		}
+    }
+	
+	 ### Only with the Diplomatic Unification of the Arcadian Peoples can we truely achieve peace.
+	
+	option = {
+		name = "ARCGENEXT7.B"
+		relation = { who = PLA value = 50 }
+		prestige = -1
+		any_pop = { militancy = 1 }
+		any_country = {
+		    limit = {
+			   tag = PLA
+			   NOT = { has_country_flag = radical_PLA_possible }
+			}
+            country_event = { id = 792029 days = 14 }
+	    }
+		any_country = {
+		    limit = {
+			   tag = PLA
+			   has_country_flag = radical_PLA_possible
+			}
+            country_event = { id = 792030 days = 14 }
+	    }
+	    ai_chance = { 
+	        factor = 95
+		}
+    }
+}
+
+## The Conference of Port Royale  - PLA Responce - Non-Radical ##
+
+### Laughing Noises
+
+country_event = {
+	id = 792029
+	title = "ARCGENEXT8.T"
+	desc = "ARCGENEXT8.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+ 
+    ### Are you kidding? Be reasonable. We must solve the Sanacomie Issue once and for all.
+	
+	option = {
+		name = "ARCGENEXT8.A"
+		relation = { who = PLA value = -50 }
+		prestige = 1
+		any_pop = { militancy = -1 }
+		country_event = { id = 792031 days = 14 }
+	    ai_chance = { 
+	        factor = 5
+		}
+    }
+}
+
+## The Conference of Port Royale  - PLA Responce - Radical ##
+
+country_event = {
+	id = 792030
+	title = "ARCGENEXT9.T"
+	desc = "ARCGENEXT9.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+ 
+    ### That proposition is insanity. Sanacomie on the other hand...
+	
+	option = {
+		name = "ARCGENEXT9.A"
+		relation = { who = NBG value = -50 }
+		prestige = 10
+		any_pop = { militancy = -1 }
+		country_event = { id = 792031 days = 14 }
+	    ai_chance = { 
+	        factor = 5
+		}
+    }
+	
+	 ### Only with the Diplomatic Unification of the Arcadian Peoples can we truely achieve peace.
+	
+	option = {
+		name = "ARCGENEXT9.B"
+		relation = { who = NBG value = 200 }
+		prestige = -10
+		any_pop = { militancy = 3 }
+		country_event = { id = 792032 days = 14 }
+	    ai_chance = { 
+	        factor = 95
+	        modifier = { 
+	            factor = 0
+	            OR = {
+				   VIN = { ai = no }
+				   DNG = { ai = no }
+				}
+		    }
+		}
+    }
+}
+
+### PLA - The Conference of Port Royale  - The Conference ends with the Port Royale city hall burning down due to mentioning Sanacomie. 2AW is inevitable. ##
+
+country_event = {
+	id = 792031
+	title = "ARCGENEXT10.T"
+	desc = "ARCGENEXT10.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+ 
+	option = {
+		name = "ARCGENEXT10.A"
+		relation = { who = NBG value = -400 }
+		any_pop = { militancy = -5 consciousness = 3 }
+        any_country = {
+            limit = {
+                tag = NBG
+                OR = {
+                  has_global_flag = NBG_BURGUNDIAN
+                  has_global_flag = NBG_LIONS	 
+                }
+            }
+            country_event = 79160			   
+        }	
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_OLD_ARCADIAN 
+            }
+            country_event = 79157			   
+        }
+        any_country = {
+            limit = {
+               tag = NBG
+               has_global_flag = NBG_NEW_ARCADIAN
+            }
+            country_event = 79158			   
+        }	
+    }
+}
+
+### NBG - Who should lead unification? - AI will practially always choose PLA unless a player is on NBG ##
+
+country_event = {
+	id = 792032
+	title = "ARCGENEXT11.T"
+	desc = "ARCGENEXT11.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+	
+	option = {
+		name = "ARCGENEXT11.A"
+        country_event = { id = 792033 days = 14 } 
+	    ai_chance = { 
+	        factor = 1
+		}
+    }
+	
+	option = {
+		name = "ARCGENEXT11.B"
+		PLA = { country_event = { id = 792034 days = 14 } }
+	    ai_chance = { 
+	        factor = 99
+	        modifier = { 
+	            factor = 0
+	            NBG = { ai = no }
+		    }
+		}
+    }
+}
+
+### NBG - The Diplomatic Unification of Arcadia
+
+country_event = {
+	id = 792033
+	title = "ARCGENEXT12.T"
+	desc = "ARCGENEXT12.D"
+	#picture = "war_ended"
+
+    major = yes
+    is_triggered_only = yes 
+	
+	## The Impossible. Made possible...
+
+	option = {
+		name = "ARCGENEXT12.A"
+		prestige = 20
+        inherit = PLA
+		any_pop = { militancy = -5 }
+		set_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
+    }
+}
+
+### PLA - The Diplomatic Unification of Arcadia
+
+country_event = {
+	id = 792034
+	title = "ARCGENEXT13.T"
+	desc = "ARCGENEXT13.D"
+	#picture = "war_ended"
+
+    major = yes
+    is_triggered_only = yes 
+	
+	## The Impossible. Made possible...
+
+	option = {
+		name = "ARCGENEXT13.A"
+		prestige = 20
+        inherit = NBG
+		any_pop = { militancy = -5 }
+		set_country_flag = ARCADIAN_UNIFICATION_POSSIBLE
+    }
+}
+
+### The Arcadian Investment - BRG or DUA is informed that PLA is going to get invaded. Direct intervention is impossible but alternative investment may be possible.
+
+### Note: If PLA is a GP then they won't get this
+
+country_event = {
+	id = 792035
+	title = "ARCGENEXT14.T"
+	desc = "ARCGENEXT14.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+	
+	immediate = {
+		leave_alliance = PLA
+		relation = { who = PLA value = -400 }
+		diplomatic_influence = { who = PLA value = -400 }
+	}
+
+	option = {
+		name = "ARCGENEXT14.A"
+		prestige = 10
+		leave_alliance = PLA
+		relation = { who = PLA value = -300 }
+		diplomatic_influence = { who = PLA value = -300 }
+		leave_alliance = NBG
+		relation = { who = NBG value = -300 }
+		diplomatic_influence = { who = NBG value = -300 }
+        random_owned = {
+            limit = {
+                owner = {
+                    NOT = { money = 1000000 }
+                    check_variable = { which = owed_cash_money value = 9 }
+                }
+            }
+            owner = { change_variable = { which = owed_cash_money value = 1000 } }
+        }
+        random_owned = {
+            limit = {
+                owner = {
+                    NOT = { money = 1000000 }
+                    NOT = { check_variable = { which = owed_cash_money value = 1 } }
+                }
+            }
+            owner = { set_variable = { which = owed_cash_money value = 1000 } }
+        }
+        random_owned = {
+            limit = { owner = { money = 1000000 } }
+            owner = { treasury = -1000000 }
+        }
+		set_country_flag = arcadian_investor
+	    PLA = { country_event = 792036 }
+	    ai_chance = { 
+	        factor = 100
+		}
+    }
+	
+	option = {
+		name = "ARCGENEXT14.B"
+		leave_alliance = PLA
+		relation = { who = PLA value = -400 }
+		diplomatic_influence = { who = PLA value = -400 }
+		PLA = { remove_country_modifier = PLA_special_relationship }
+	    ai_chance = { 
+	        factor = 0
+		}
+    }
+}
+
+### The Arcadian Investment - Former Ally or Overlord has sent Advisors and a lot of guns.
+
+country_event = {
+	id = 792036
+	title = "ARCGENEXT15.T"
+	desc = "ARCGENEXT15.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes 
+	
+	option = {
+		name = "ARCGENEXT14.A"
+		prestige = 5
+	    treasury = 1000000
+	    add_country_modifier = { 
+		   name = PLA_foreign_support
+		   duration = -1
+	    }
+    }
+}
+
+### The Arcadian Investment - Failure
+
+country_event = {
+	id = 792037
+	title = "ARCGENEXT16.T"
+	desc = "ARCGENEXT16.D"
+	#picture = "war_ended"
+
+	trigger = { 
+	   has_country_flag = arcadian_investor
+	   NOT = { exists = PLA }
+	   NOT = { ARC = { has_country_flag = PLA_ARCADIA } }
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	option = {
+		name = "ARCGENEXT16.A"
+		prestige = -5
+		clr_country_flag = arcadian_investor
+		PLA = { remove_country_modifier = PLA_foreign_support }
+    }
+}
+
+### The Arcadian Investment - Success
+
+country_event = {
+	id = 792038
+	title = "ARCGENEXT17.T"
+	desc = "ARCGENEXT17.D"
+	#picture = "war_ended"
+
+	trigger = { 
+	   has_country_flag = arcadian_investor
+	   OR = {
+	      AND = {
+	         exists = PLA
+		     PLA = { war = no }
+		  }
+	      AND = {
+	         exists = ARC
+		     ARC = { has_country_flag = PLA_ARCADIA }
+		   }
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 100
+	}
+	
+	option = {
+		name = "ARCGENEXT17.A"
+		prestige = 5
+		clr_country_flag = arcadian_investor
+		diplomatic_influence = { who = ARC value = 400 }
+		diplomatic_influence = { who = PLA value = 400 }
+		any_country = {
+		    limit = {
+			   has_country_modifier = PLA_foreign_support 
+			}
+		    create_alliance = THIS
+		    relation = { who = THIS value = 400 }
+			remove_country_modifier = PLA_foreign_support
+		}
+    }
+}
+
+#### The Special Relationship - If you've not gotten this flag from the diplomatic events then you can also get it if Burgundy deletes the Dual Monarchy later on.
+
+country_event = {
+	id = 792039
+	title = "ARCGENEXT18.T"
+	desc = "ARCGENEXT18.D"
+	#picture = "war_ended"
+
+	trigger = { 
+	   tag = ARC
+	   has_country_flag = the_special_relationship
+	   NOT = { exists = DUA }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	option = {
+		name = "ARCGENEXT18.A"
+		prestige = 20
+		clr_country_flag = the_special_relationship
+		set_country_flag = the_super_special_relationship
+    }
 }

@@ -18,6 +18,7 @@ country_event = {
 	
 	option = { 
 	name = "PLA1.A" 
+	set_country_flag = regency_blocker
 	set_global_flag = CHE_VASSAL_ACTIVE
 	set_country_flag = PLA_institutionalized_slavery
 	add_country_modifier = { 
@@ -559,7 +560,7 @@ country_event = {
 	is_triggered_only = yes 
 
 	option = { 
-	name = "PLA17.A" 
+	name = "PLA18.A" 
 	government = parliamentary_republic
 	any_pop = { 
 	   militancy = -2
@@ -576,11 +577,13 @@ country_event = {
 	desc = "PLA19.D" 
 	picture = "cavalry_plains"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	tag = PLA 
 	has_country_flag = abolition_monarchy 
 	NOT = { OR = { has_country_flag = COWBOY_KING has_country_flag = Louis_exile } } 
-	OR = { owns = 133 is_our_vassal = NUN }
+	OR = { owns = 133 has_country_flag = PLA_SKR_intervene is_our_vassal = NUN }
 	}
 	
 	mean_time_to_happen = { 
@@ -589,9 +592,18 @@ country_event = {
 	
 	option = { 
 	name = "PLA19.A" #Play based King
-	set_country_flag = COWBOY_KING
-    release_vassal = CHE	
 	country_event = { id = 78419 days = 5 }
+	PLA_186 = { add_core = CHE }
+	PLA_198 = { add_core = LOU }
+	set_country_flag = COWBOY_KING
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
+    release_vassal = CHE		
 	any_owned = { 
 	limit = { is_core = OUM } 
 	secede_province = OUM 
@@ -616,14 +628,13 @@ country_event = {
 	capital = 148 
 	set_country_flag = COWBOY_KING
 	government = hms_government 
-	political_reform = no_slavery
+	political_reform = freedom_of_womb
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 	}
 	change_tag_no_core_switch = OUM
@@ -634,7 +645,17 @@ country_event = {
 	
 	option = { 
 	name = "PLA19.B"
+    country_event = { id = 78419 days = 5 }
+	PLA_186 = { add_core = CHE }
+	PLA_198 = { add_core = LOU }
 	set_country_flag = COWBOY_KING 
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
     release_vassal = CHE	
 	any_owned = { 
 	limit = { is_core = OUM } 
@@ -659,14 +680,13 @@ country_event = {
 	capital = 148 
 	set_country_flag = COWBOY_KING
 	government = hms_government 
-	political_reform = no_slavery
+	political_reform = freedom_of_womb
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 	}
 	ai_chance = { 
@@ -688,6 +708,7 @@ country_event = {
 	set_country_flag = LOU_IS_HERE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
+	any_owned = { limit = { is_core = CHE } secede_province = CHE remove_core = PLA }
 	any_owned = { limit = { is_core = LOU } secede_province = LOU remove_core = PLA }
 	LOU = { 
 	treasury = 100000
@@ -707,21 +728,26 @@ country_event = {
 	}
 	government = democracy 
 	political_reform = universal_voting
-	political_reform = no_slavery
+	political_reform = yes_slavery
 	political_reform = population_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
-		}
+	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	country_event = { id = 78420 days = 10 }
 	}
 	
 }
-
 
 country_event = { 
 	id = 78420	#CIVIL WAR
@@ -735,6 +761,7 @@ country_event = {
 	option = { 
 	name = "PLA21.A"
 	set_global_flag = A_SHITSHOW_PLA
+	PLA_186 = { add_core = PLA }
 	LOU = { all_core = { add_core = PLA } }
 	OUM = { all_core = { add_core = PLA } }
 	war = { 
@@ -789,6 +816,8 @@ country_event = {
 	desc = "PLA23.D" 
 	picture = "victory_PLA"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	tag = OUM 
 	has_global_flag = A_SHITSHOW_PLA
@@ -805,11 +834,16 @@ country_event = {
 	clr_global_flag = A_SHITSHOW_PLA
 	change_tag = PLA
 	prestige = 15 
-	clr_country_flag = PLA_institutionalized_slavery
-	remove_country_modifier = institutionalized_slavery
-	add_accepted_culture = afro_frankish
 	clr_country_flag = PLA_ARCADIAN_BLOCKED
 	set_country_flag = COWBOY_KING
+	set_country_flag = YEE_HAW
+	any_country = {
+	    limit = {
+	       tag = LOU 
+		   exists = yes
+	    }
+		annex_to = THIS
+    }
 	add_country_modifier = { 
 		name = PLA_the_arcadian_dream
 		duration = -1
@@ -818,11 +852,15 @@ country_event = {
 
 }
 
+### Note: LOU does not get Arcadian Dream until after the end of the reconstruction chain since they see that as a priority over ambitions. This is a semi-pragmatic republic after all.
+
 country_event = { 
 	id = 784220	#END CIVIL WAR - LOU won
 	title = "PLA230.T"
 	desc = "PLA230.D" 
 	picture = "victory_PLA"
+	
+	fire_only_once = yes
 	
 	trigger = { 
 	tag = LOU
@@ -837,20 +875,33 @@ country_event = {
 	
 	option = { 
 	name = "PLA231.A"
+	PLA_198 = { remove_core = LOU }
 	clr_global_flag = A_SHITSHOW_PLA
 	change_tag = PLA
 	prestige = 15 
 	clr_country_flag = PLA_institutionalized_slavery
 	remove_country_modifier = institutionalized_slavery
-	set_country_flag = PLA_ARCADIAN_BLOCKED
+	set_country_flag = LOUIS_RECONSTRUCTION
+    clr_country_flag = PLA_ARCADIAN_BLOCKED
+	any_country = {
+	    limit = {
+	       tag = OUM
+		   exists = yes
+	    }
+		annex_to = THIS
+    }
 	}
 }
+
+### Need to modify - Change to Merchant Republic and give hyper-crippling modifier until 1900 ###
 
 country_event = { 
 	id = 784221	#END CIVIL WAR - PLA won
 	title = "PLA231.T"
 	desc = "PLA231.D" 
 	picture = "victory_PLA"
+	
+	fire_only_once = yes
 	
 	trigger = { 
 	tag = PLA
@@ -866,10 +917,23 @@ country_event = {
 	
 	option = { 
 	name = "PLA231.A"
+	PLA_198 = { remove_core = LOU }
 	prestige = 15 
+	nationalvalue = nv_productivity
 	clr_global_flag = A_SHITSHOW_PLA
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
+	government = merchant_republic
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
 	random_owned = { 
 	   limit = { owner = { NOT = { slavery = yes_slavery } } }
 	   owner = { political_reform = yes_slavery }
@@ -880,14 +944,59 @@ country_event = {
             }
             is_slave = yes
     }
-	any_owned_province = {
+	any_owned = {
             limit = {
                 is_overseas = no
             }
             any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
     }
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	set_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	set_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
 	}
 }
+
+### CRTICIAL - Need to Modify - Reform Act Path Entry Point
 
 country_event = { 
 	id = 78423	#Reform Act
@@ -901,10 +1010,14 @@ country_event = {
 	
 	option = { 
 	name = "PLA24.A" 
+	set_country_flag = REFORM_RECONSTRUCTION
 	set_country_flag = Unified_monarchy
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+    political_reform = appointed
+	political_reform = gerrymandering
 	political_reform = yes_meeting
+	political_reform = unitary
+	political_reform = jefferson_method
 	any_owned = { remove_province_modifier = nationalist_agitation } 
 	any_pop = { 
 	limit = { location = { is_core = LOU } } militancy = -3 }
@@ -922,6 +1035,8 @@ country_event = {
 			}
 	}
 }
+
+###
 
 country_event = { 
 	id = 78424	#Common sense pamphlet
@@ -949,11 +1064,13 @@ country_event = {
 	desc = "PLA26.D"
 	picture = "choice_cowboy" 
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	tag = PLA 
 	has_country_flag = abolition_monarchy 
 	NOT = { OR = { has_country_flag = COWBOY_KING has_country_flag = Louis_exile } } 
-	NOT = { OR = { owns = 133 is_our_vassal = NUN } } 
+	NOT = { OR = { owns = 133 has_country_flag = PLA_SKR_intervene is_our_vassal = NUN } } 
 	}
 	
 	mean_time_to_happen = { 
@@ -968,6 +1085,8 @@ country_event = {
 		}
 	}
 } 
+
+### Need to Modify - Increase the Size of the Plains Republic
 
 country_event = { 
 	id = 78426	#The Declaration of La Galette
@@ -1002,14 +1121,20 @@ country_event = {
 	}
 	government = democracy 
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	country_event = { 
 	id = 78427 days = 10
@@ -1045,14 +1170,20 @@ country_event = {
 	}
 	government = democracy 
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	country_event = { 
 	id = 78427 days = 10
@@ -1077,10 +1208,8 @@ country_event = {
 	scaled_consciousness = { 
 		issue = yes_slavery
 		factor = 5
-		}
-	country_event = { 
-	id = 78428 days = 2
-		}
+	}
+	country_event = { id = 78428 days = 1 }
 	}
 } 
 
@@ -1098,12 +1227,15 @@ country_event = {
 	OUM = { country_event = 78429 } 
 	prestige = -10 
 	badboy = -5 
+	ai_chance = { 
+	    factor = 100
+        }
 	}
 	
 	option = { 
 	name = "PLA29.B"
 	badboy = 10 
-	OUM = { country_event = 78430 } 
+	OUM = { add_country_modifier = { name = small_country_draft duration = 720 }  country_event = 78430 } 
 	war = { 
 		target = OUM
 			attacker_goal = {
@@ -1114,6 +1246,9 @@ country_event = {
 				casus_belli = status_quo
 			}
 		}
+	ai_chance = { 
+	    factor = 0
+        }
 	}
 }
 
@@ -1239,8 +1374,7 @@ country_event = {
 		}
 	}
 	
-	}
-	
+	}	
 }
 
 country_event = { 
@@ -1248,6 +1382,8 @@ country_event = {
 	title = "PLA36.T"
 	desc = "PLA36.D" 
 	picture = "liberie"
+	
+	fire_only_once = yes
 	
 	trigger = { 
 	tag = PLA 
@@ -1261,6 +1397,13 @@ country_event = {
 
 	option = { 
 	name = "PLA36.A" 
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	set_country_flag = LIB_IS_HERE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
@@ -1329,6 +1472,13 @@ country_event = {
 	
 	option = { 
 	name = "PLA36.B" 
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	set_country_flag = LIB_IS_HERE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
@@ -1584,15 +1734,15 @@ country_event = {
 	desc = "PLA42.A"
 	picture = "storming_palace"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	tag = LIB 
 	war = yes 
 	NOT = { has_country_flag = now_building_nation } 
 	war_exhaustion = 80 
 	}
-	
-	fire_only_once = yes
-	
+
 	mean_time_to_happen = { 
 	days = 4 
 	}
@@ -1617,15 +1767,15 @@ country_event = {
 	id = 78442 #Swamp freedmen join Libérie
 	title = "PLA43.T" 
 	desc = "PLA43.A"
-	picture = "maroon" 
+	picture = "maroon"
+
+    fire_only_once = yes	
 	
 	trigger = { 
 	tag = LIB 
 	war = no
 	200 = { empty = yes } 
 	}
-	
-	fire_only_once = yes
 	
 	mean_time_to_happen = { 
 	months = 3 
@@ -1743,6 +1893,7 @@ country_event = {
 	desc = "PLA48.D" 
 	
 	major = yes 
+	fire_only_once = yes
 	
 	trigger = { 
 	tag = LIB
@@ -1769,6 +1920,8 @@ country_event = {
 	}
 }
 
+### Need to Modify - This will backfire and cause the entire regime to collapse the moment OUM declares war ####
+
 country_event = { 
 	id = 78448	#Libérie won : end slavery
 	title = "PLA49.T"
@@ -1778,7 +1931,22 @@ country_event = {
 	
 	option = { 
 	name = "PLA49.A"
+	any_country = {
+	   limit = { alliance_with = THIS }
+	   diplomatic_influence = { who = THIS value = -400 }
+	   relation = { who = THIS value = -400 }
+	   leave_alliance = THIS
+	}
+	add_country_modifier = { 
+		   name = PLA_economic_meltdown
+		   duration = 1440
+	} 
+	add_country_modifier = { 
+		   name = PLA_SUPER_KKK
+		   duration = 1440
+	} 
 	any_pop = { limit = { culture = plantagenian } militancy = 5 }
+	set_country_flag = doomed_tag_PLA
 	political_reform = no_slavery
 	remove_country_modifier = institutionalized_slavery
 	clr_country_flag = PLA_institutionalized_slavery
@@ -1793,6 +1961,8 @@ country_event = {
 	title = "PLA490.T"
 	desc = "PLA490.D" 
 	picture = "choice_cowboy"
+	
+	fire_only_once = yes
 	
 	trigger = { 
 	   tag = OUM
@@ -1837,7 +2007,7 @@ country_event = {
 		set_country_flag = the_crown_can_return
 	    clr_country_flag = the_king_can_return
 	    ai_chance = { 
-	         factor = 90
+	         factor = 100
         }
 	}
 	
@@ -1845,7 +2015,7 @@ country_event = {
 	name = "PLA490.B" #A crusade to save New Orleans? Behind a former king? BAH
 	    clr_country_flag = the_king_can_return
 	    ai_chance = { 
-	         factor = 10
+	         factor = 0
         }
 	}
 }
@@ -1855,6 +2025,8 @@ country_event = {
 	title = "PLA491.T"
 	desc = "PLA491.D" 
 	picture = "choice_cowboy" 
+	
+	fire_only_once = yes
 	
 	trigger = { 
 	   tag = OUM
@@ -1875,18 +2047,16 @@ country_event = {
 	    clr_country_flag = the_crown_can_return
 	    change_tag = PLA
 	    government = hms_government
+		set_country_flag = YEE_HAW
 	    clr_country_flag = PLA_ARCADIAN_BLOCKED
 	    add_country_modifier = { 
 		    name = PLA_the_arcadian_dream
 		    duration = -1
 	    }
 	    prestige = 15 
-	    clr_country_flag = PLA_institutionalized_slavery
-	    remove_country_modifier = institutionalized_slavery
-	    add_accepted_culture = afro_frankish
 		set_country_flag = stain_remover
 	    ai_chance = { 
-	         factor = 90
+	         factor = 70
         }
 	}
 	
@@ -1894,15 +2064,18 @@ country_event = {
 	name = "PLA491.B" #We liberated New Orleans. Not to return to Slavery!
 	    clr_country_flag = the_crown_can_return
 	    change_tag = PLA
+		set_country_flag = LOUIS_RECONSTRUCTION
 	    prestige = 15 
 	    clr_country_flag = PLA_institutionalized_slavery
 	    remove_country_modifier = institutionalized_slavery
-	    add_accepted_culture = afro_frankish
+		set_country_flag = stain_remover
 	    ai_chance = { 
-	         factor = 10
+	         factor = 30
         }
 	}
 }
+
+### Need to Modify - This will cause the entire regime to collapse. ####
 
 country_event = { 
 	id = 78449	#White Peace
@@ -1925,13 +2098,51 @@ country_event = {
 	
 	option = { 
 	name = "PLA50.A"
-	any_owned = { 
-	remove_core = PLA
-	}
 	prestige = 10 
+	any_owned = { 
+	    remove_core = PLA
+	}	
+	any_country = {
+	   limit = { alliance_with = PLA }
+	   diplomatic_influence = { who = PLA value = -400 }
+	   relation = { who = PLA value = -400 }
+	   leave_alliance = PLA
+	}
+    PLA = { set_country_flag = doomed_tag_PLA }
 	clr_global_flag = Liberian_war 
 	set_country_flag = now_building_nation 
 	OUM = { set_country_flag = the_king_can_return }
+	}
+}
+
+### This will need localization
+### Needless to say LIB still existing utterly compromises Plantagenia and as such Louis is able to just walk into New Orleans in whatever state that it currently is in.
+
+
+country_event = { 
+	id = 784490	#The March on New Orleans
+	title = "PLA501.T"
+	desc = "PLA501.D" 
+	
+	major = yes 
+	
+	trigger = { 
+	   tag = PLA
+	   war_with = OUM
+	   has_country_flag = doomed_tag_PLA
+	   OUM = { has_country_flag = the_crown_can_return }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3 
+	}
+	
+	option = { 
+	name = "PLA501.A"
+	   remove_country_modifier = PLA_economic_meltdown
+	   remove_country_modifier = PLA_SUPER_KKK
+	   clr_country_flag = doomed_tag_PLA
+	   annex_to = OUM
 	}
 }
 
@@ -1958,6 +2169,47 @@ country_event = {
 	prestige = 10
 	clr_global_flag = Liberian_war
 	set_country_flag = jour_de_colere
+	nationalvalue = nv_productivity
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	government = merchant_republic
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+    }
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
 	any_pop = { 
 	   limit = { has_pop_culture = afro_frankish location = { is_core = LIB } }
 	   reduce_pop = 0.7 
@@ -1968,7 +2220,6 @@ country_event = {
 	}
 	any_state = {
             limit = {
-			   is_overseas = no
                is_slave = no
             }
             is_slave = yes
@@ -1978,9 +2229,43 @@ country_event = {
                 is_overseas = no
             }
             any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
-        }
+    }
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	set_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	set_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
 	}
 }
+
+### This is the LIB Chain and for all intents and purposes seems unrelated to above.
 
 country_event = { 
 	id = 78451	#A day as Leader of a free Libérie
@@ -2228,7 +2513,7 @@ country_event = {
 
 	trigger = { 
 	tag = LIB 
-	has_country_flag = black_university
+	has_country_flag = can_never_trigger
 	NOT = { has_country_flag = egyptology } 
 	}
 	
@@ -2257,7 +2542,7 @@ country_event = {
 
 	trigger = { 
 	tag = LIB 
-	has_country_flag = black_university
+	has_country_flag = can_never_trigger
 	has_country_modifier = egyptian_excavations
 	}
 	
@@ -2286,7 +2571,7 @@ country_event = {
 
 	trigger = { 
 	tag = LIB 
-	has_country_flag = egyptology
+	has_country_flag = can_never_trigger
 	}
 	
 	fire_only_once = yes 
@@ -2313,6 +2598,7 @@ country_event = {
 	trigger = { 
 	tag = LIB 
 	is_ideology_enabled = fascist
+	has_country_flag = can_never_trigger
 	}
 	
 	fire_only_once = yes 
@@ -2612,6 +2898,11 @@ country_event = {
 	}
 }
 
+################## This is the end of the LIB Content ###############
+
+## Need to Modify - This is one of the Entry points of the Plantagenian Civil War. More land will be ceded to OUM and LOU in the next event before CW starts.
+## I will also need to modify the event in where LOU cedes from Belgium in MOD Belgium
+
 #Plantagenian Despair : the war was lost completely and LOU was eaten by NBG : OUM leaves
 
 country_event = { 
@@ -2634,32 +2925,48 @@ country_event = {
 	
 	option = { 
 	name = "PLA71.A"
+	PLA_186 = { add_core = CHE }
+	PLA_198 = { add_core = LOU }
+	set_global_flag = DEFEATED_PLA
+	set_country_flag = HOLD_UNTIL_LOU
+	set_country_flag = PLA_COUP_INEVITABLE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
 	set_country_flag = fate_PLA 
 	any_owned = { 
-	limit = { is_core = OUM } 
-	secede_province = OUM 
+	    limit = { is_core = OUM } 
+	    secede_province = OUM 
+	}
+	any_owned = { 
+	    limit = { is_core = CHE }
+        remove_core = PLA		
+	    secede_province = CHE
 	}
 	LOU = { all_core = { remove_core = PLA } }
 	OUM = { 
-	all_core = { remove_core = PLA }
-	treasury = 100000
-	iron = 10
-	wool = 10
-	timber = 25
-	small_arms = 10
-	leadership = 20
-	government = democracy 
-	political_reform = no_slavery
-	political_reform = universal_voting
-	political_reform = population_equal_weight
-	political_reform = yes_meeting
-	political_reform = free_press
-	political_reform = non_socialist
-	political_reform = gerrymandering
-	political_reform = non_secret_ballots
-	political_reform = mandatory_service
+	    all_core = { remove_core = PLA }
+	    treasury = 100000
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    leadership = 20
+	    government = democracy 
+	    political_reform = freedom_of_womb
+	    political_reform = universal_voting
+	    political_reform = state_equal_weight
+	    political_reform = yes_meeting
+	    political_reform = free_press
+	    political_reform = non_socialist
+	    political_reform = gerrymandering
+	    political_reform = mandatory_service
+    }
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
     }
     release_vassal = CHE
 	any_country = {
@@ -2667,7 +2974,7 @@ country_event = {
 	      tag = NUN
 		  vassal_of = THIS
 	   }
-	   annex_to = THIS
+	   annex_to = OUM
 	}
 	}
 }
@@ -2697,11 +3004,14 @@ country_event = {
 	}
 	
 	option = { 
-	name = "PLA70.A"
+	name = "PLA72.A"
+	set_global_flag = DEFEATED_PLA
 	set_country_flag = fate_PLA 
 	country_event = { id = 78472 days = 45 }
 	}
 }
+
+## Need to Modify - This is one of the Entry Points of the Alternative Plantagenian Civil War - This will result in the Monarchy getting abolished and ubergrob OUM or LOU
 
 country_event = { 
 	id = 78472	#Slavery is the root of our problems -debate ends
@@ -2711,18 +3021,34 @@ country_event = {
 	is_triggered_only = yes 
 	
 	option = { 
-	name = "PLA73.A" #abolish_slavery and lose LOU
+	name = "PLA73.A" #Work on abolishing slavery and lose LOU
+	PLA_186 = { add_core = CHE }
+	PLA_187 = { add_core = LOU }
+	PLA_198 = { add_core = LOU }
+	set_country_flag = PLA_COUP_INEVITABLE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
+	any_owned = { 
+	limit = { is_core = CHE } 	 
+	remove_core = PLA
+	secede_province = CHE
+	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
-	political_reform = no_slavery
+	political_reform = freedom_of_womb
 	remove_country_modifier = institutionalized_slavery
 	clr_country_flag = PLA_institutionalized_slavery
 	any_owned = { 
 	limit = { is_core = LOU } 
-	secede_province = LOU 
 	remove_core = PLA
-		}
+	secede_province = LOU 
+	}
 	LOU = { 
 	treasury = 100000
 	capital = 205 
@@ -2739,21 +3065,30 @@ country_event = {
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 		}
 	}
 	
 	option = { 
-	name = "PLA73.A" #keep slavery and lose OUM
+	name = "PLA73.B" #keep slavery and lose OUM
+	PLA_186 = { add_core = CHE }
+	PLA_187 = { add_core = OUM }
+	set_country_flag = PLA_COUP_INEVITABLE
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
-	release_vassal = CHE
 	any_owned = { 
-	limit = { is_core = OUM } 
-	secede_province = OUM 
+	limit = { is_core = CHE } 	 
 	remove_core = PLA
-		}
+	secede_province = CHE
+	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
+	release_vassal = CHE
 	OUM = { 
 	treasury = 100000
 	iron = 10
@@ -2762,18 +3097,19 @@ country_event = {
 	small_arms = 10
 	leadership = 20
 	government = democracy 
-	political_reform = no_slavery
+	political_reform = freedom_of_womb
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 		}
 	}
 }
+
+## Need to Modify - This is one of the Entry Points of the Alternative Plantagenian Civil War - This will result in OUM AND LOU getting more land in the next event
 
 country_event = { 
 	id = 78473	#The end of Plantagenia
@@ -2798,14 +3134,19 @@ country_event = {
 	
 	option = { 
 	name = "PLA74.A"
+	set_global_flag = DEFEATED_PLA
+	add_country_modifier = { name = regency_government duration = -1 }
+	PLA_187 = { add_core = OUM }
+	PLA_186 = { add_core = CHE }
+	PLA_198 = { add_core = LOU }
 	set_country_flag = PLA_ARCADIAN_BLOCKED
 	remove_country_modifier = PLA_the_arcadian_dream
 	set_country_flag = fate_PLA 
 	any_owned = { 
 	limit = { is_core = OUM } 
-	secede_province = OUM 
-	remove_core = PLA
-		}
+	   remove_core = PLA
+	   secede_province = OUM 
+	}
 	OUM = { 
 	capital = 148
 	treasury = 100000
@@ -2814,22 +3155,21 @@ country_event = {
 	timber = 25
 	small_arms = 10
 	leadership = 20
-	government = hms_government #Louis flees to La Galette
-	political_reform = no_slavery
+	government = democracy 
+	political_reform = freedom_of_womb
 	political_reform = universal_voting
-	political_reform = population_equal_weight
+	political_reform = state_equal_weight
 	political_reform = yes_meeting
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
-		}
+	}
 	any_owned = { 
 	limit = { is_core = LOU } 
-	secede_province = LOU 
-	remove_core = PLA
-		}
+	   remove_core = PLA
+	   secede_province = LOU 	
+	}
 	LOU = { 
 	capital = 205 
 	treasury = 100000
@@ -2846,20 +3186,21 @@ country_event = {
 	political_reform = free_press
 	political_reform = non_socialist
 	political_reform = gerrymandering
-	political_reform = non_secret_ballots
 	political_reform = mandatory_service
 	}
-	government = presidential_dictatorship 
-    political_reform = none_voting
-    political_reform = party_appointed
-    political_reform = no_meeting
-    political_reform = state_press
-	political_reform = state_controlled
-	political_reform = underground_parties
-	political_reform = closed_borders
-	political_reform = mandatory_service
-	political_reform = primary_culture_only	
-    release_vassal = CHE
+	any_owned = { 
+	limit = { is_core = CHE } 	 
+	   remove_core = PLA
+	   secede_province = CHE
+	}
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
+	release_vassal = CHE
 	any_country = {
 	   limit = { 
 	      tag = NUN
@@ -2896,6 +3237,7 @@ country_event = {
 	
 	option = { 
 	name = "PLA75.A"
+	set_global_flag = DEFEATED_PLA
 	war_exhaustion = -25
 	any_pop = { 
 	   militancy = -3 
@@ -2951,6 +3293,8 @@ country_event = {
 	desc = "PLA77.D" 
 	picture = "dixie" 
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	  tag = PLA
 	  has_global_flag = CHE_VASSAL_ACTIVE
@@ -2965,6 +3309,13 @@ country_event = {
 	name = "PLA77.A" # We will get them back when we are done with this!
 	prestige = -2
 	clr_global_flag = CHE_VASSAL_ACTIVE
+	any_country = {
+	    limit = {
+		   tag = NUN
+		   vassal_of = PLA
+		}		
+		country_event = 78556
+    }
 	release_vassal = CHE
 	CHE = {
 	   all_core = { remove_core = PLA }
@@ -2976,7 +3327,6 @@ country_event = {
 	   political_reform = yes_meeting
 	   political_reform = free_press
 	   political_reform = non_socialist
-	   political_reform = gerrymandering
 	   political_reform = non_secret_ballots
 	   political_reform = mandatory_service
 	}
@@ -2997,7 +3347,7 @@ country_event = {
 	}
 }
 
-### PLA is not a monarchy - Arcadianism has been terminated ###
+### PLA is not a monarchy and is not LOU-PLA - Arcadianism has been terminated ###
 
 country_event = { 
 	id = 78478
@@ -3005,10 +3355,13 @@ country_event = {
 	desc = "PLA78.D" 
 	picture = "dixie" 
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	    tag = PLA
 		NOT = {
-		   OR = { 		       
+		   OR = { 		
+              has_country_flag = LOU_PLA_OVERRIDE		   
 		      government = absolute_monarchy
 		      government = prussian_constitutionalism
 		      government = hms_government
@@ -3038,6 +3391,8 @@ country_event = {
 	title = "PLA79.T"
 	desc = "PLA79.D"
 	picture = "dixie" 
+	
+	fire_only_once = yes
 
 	trigger = { 
 	   tag = PLA 
@@ -3059,6 +3414,8 @@ country_event = {
 	capital = 148 
 	}
 }
+
+#### PLA Flavor Events ####
 
 country_event = { 
 	id = 78480	#Bureau des Nations Autochtones : Tsalagi in Plantagenia
@@ -3324,6 +3681,7 @@ country_event = {
 	id = 78490 #Charles I : the First immigrant 
 	title = "PLA90.T"
 	desc = "PLA90.D"
+	picture = "charles_1_PLA"
 
 	trigger = { 
 		has_country_flag = PLA_ARCADIA
@@ -3347,16 +3705,3661 @@ country_event = {
 	}
 }
 
+############################################
+########## NEW PLANTAGENIA CONTENT #########
+############################################
+
+#### Regional Consolidation Chain - This is to stop the region from just being a absolute mess of break-off states
+
+#### Leclerc marches on New Orleans to overthrow whatever is left of the Monarchy (either the king directly or just a regency acting like its a monarchy still) and repeal any reforms made.
+#### I guess we can just assume in any scenario by now Louis has gone missing. Either in OUM or mysterious absent after a previous catastropic failure that resulted in this event. 
+
+country_event = { 
+	id = 78500
+	title = "PLANEW1.T"
+	desc = "PLANEW1.D" 
+	picture = "leclerc" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	  tag = PLA
+	  has_country_flag = PLA_COUP_INEVITABLE
+	  OR = {
+	     NOT = { has_country_flag = HOLD_UNTIL_LOU }
+		 exists = LOU
+	  }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 60
+	}
+	
+	option = { 
+	name = "PLANEW1.A"
+	    clr_country_flag = HOLD_UNTIL_LOU
+	    clr_country_flag = PLA_COUP_INEVITABLE
+	    remove_country_modifier = regency_government
+        government = presidential_dictatorship
+        ruling_party_ideology = conservative
+		political_reform = yes_slavery
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+        political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+		political_reform = unitary
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+        clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		set_country_flag = the_house_divided
+	}
+}
+
+#### If Plantagenia owns Louisanie then they leave as a reaction to this absolute nonsense ####
+
+country_event = { 
+	id = 78501
+	title = "PLANEW2.T"
+	desc = "PLANEW2.D" 
+	picture = "fils_liberte" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	  tag = PLA
+	  owns = 210
+	  has_country_flag = the_house_divided
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	option = { 
+	name = "PLANEW2.A"
+	PLA_198 = { add_core = LOU }
+	any_owned = { 
+	limit = { is_core = LOU } 
+	   remove_core = PLA
+	   secede_province = LOU 	
+	}
+	LOU = { 
+	capital = 205 
+	treasury = 100000
+	iron = 10
+	wool = 10
+	timber = 25
+	small_arms = 10
+	leadership = 20
+	government = democracy 
+	political_reform = yes_slavery
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = mandatory_service
+	}
+	}
+}
+
+#### If Plantagenia owns OUM then they leave as a reaction to this absolute nonsense ####
+
+country_event = { 
+	id = 78502
+	title = "PLANEW3.T"
+	desc = "PLANEW3.D" 
+	picture = "fils_liberte" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	  tag = PLA
+	  owns = 126
+	  has_country_flag = the_house_divided
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	option = { 
+	name = "PLANEW3.A"
+	any_owned = { 
+	limit = { is_core = OUM } 
+	   remove_core = PLA
+	   secede_province = OUM	
+	}
+	OUM = { 
+	treasury = 100000
+	iron = 10
+	wool = 10
+	timber = 25
+	small_arms = 10
+	leadership = 20
+	government = democracy 
+	political_reform = freedom_of_womb
+	political_reform = universal_voting
+	political_reform = population_equal_weight
+	political_reform = yes_meeting
+	political_reform = free_press
+	political_reform = non_socialist
+	political_reform = gerrymandering
+	political_reform = mandatory_service
+		}
+	}
+}
+
+#### The House Divided Speech ####
+
+#### This event will allow you to change tag and sets up the Plantagenian Civil War ####
+
+country_event = { 
+	id = 78503
+	title = "PLANEW4.T"
+	desc = "PLANEW4.D" 
+	picture = "leclerc" 
+	
+	trigger = { 
+	  tag = PLA
+	  has_country_flag = the_house_divided
+	}
+	
+	mean_time_to_happen = { 
+	   days = 30
+	}
+	
+	option = { 
+	name = "PLANEW4.A"
+	   PLA_198 = { add_core = LOU }
+	   any_owned = { 
+	      limit = { is_core = LOU } 
+	      remove_core = PLA
+	      secede_province = LOU 	
+	   }
+	   set_global_flag = king_returns_OUM
+	   clr_country_flag = the_house_divided
+       set_country_flag = alternative_PLACW
+	   ai_chance = { 
+	        factor = 100
+       }
+	}
+	
+	option = { 
+	name = "PLANEW4.B"
+	   PLA_198 = { add_core = LOU }
+	   any_owned = { 
+	      limit = { is_core = LOU } 
+	      remove_core = PLA
+	      secede_province = LOU 	
+	   }
+	   set_global_flag = king_returns_OUM
+	   clr_country_flag = the_house_divided
+	   set_country_flag = alternative_PLACW
+	   change_tag_no_core_switch = LOU
+ 	   ai_chance = { 
+	        factor = 0
+       }
+	}
+	
+	option = { 
+	name = "PLANEW4.C"
+	   PLA_198 = { add_core = LOU }
+	   any_owned = { 
+	      limit = { is_core = LOU } 
+	      remove_core = PLA
+	      secede_province = LOU 	
+	   }
+	   set_global_flag = king_returns_OUM
+	   clr_country_flag = the_house_divided
+	   set_country_flag = alternative_PLACW
+	   change_tag_no_core_switch = OUM
+ 	   ai_chance = { 
+	        factor = 0
+       }
+	}
+}
+
+# The King appears in OUM after the Leclerc Coup - Do you support him or the Lousianie Republic
+
+country_event = { 
+	id = 78504
+	title = "PLANEW5.T"
+	desc = "PLANEW5.D" 
+	picture = "choice_cowboy"
+	
+	trigger = { 
+	   tag = OUM
+	   exists = yes
+	   war = no
+	   has_global_flag = king_returns_OUM
+	   LOU = { NOT = { has_country_flag = radical_PLA_possible } }
+	}
+	
+	mean_time_to_happen = { 
+	    days = 1 
+	}
+	
+	option = { 
+	name = "PLANEW5.A"
+	    clr_global_flag = king_returns_OUM
+	    government = hms_government
+	    treasury = 100000
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    leadership = 20
+	    define_general = {
+		    name = "Louis I"
+		    personality = skilled
+		    background = natural_born_leader
+	    }
+	    add_country_modifier = {
+		    name = small_country_draft
+	 	    duration = 1460
+	    }
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+	
+	option = { 
+	name = "PLANEW5.B"
+	    clr_global_flag = king_returns_OUM
+	    treasury = 100000
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    LOU = { set_country_flag = alliance_OUM_possible }
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+}
+
+# The King appears in OUM after the Leclerc Coup - LOU is controlled by Radicals so the king is always supported
+
+country_event = { 
+	id = 785040
+	title = "PLANEW500.T"
+	desc = "PLANEW500.D" 
+	picture = "choice_cowboy"
+	
+	trigger = { 
+	   tag = OUM
+	   exists = yes
+	   war = no
+	   has_global_flag = king_returns_OUM
+	   LOU = { has_country_flag = radical_PLA_possible }
+	}
+	
+	mean_time_to_happen = { 
+	    days = 1 
+	}
+	
+	option = { 
+	name = "PLANEW50.A"
+	    clr_global_flag = king_returns_OUM
+	    government = hms_government
+	    treasury = 100000
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 10
+	    leadership = 20
+	    define_general = {
+		    name = "Louis I"
+		    personality = skilled
+		    background = natural_born_leader
+	    }
+	    add_country_modifier = {
+		    name = small_country_draft
+	 	    duration = 1460
+	    }
+	}
+}
+
+# The Plantagenian Civil War 
+
+country_event = { 
+	id = 78505
+	title = "PLANEW501.T"
+	desc = "PLANEW501.D" 
+	picture = "choice_cowboy"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA
+	   exists = yes
+	   has_country_flag = alternative_PLACW
+	}
+	
+	mean_time_to_happen = { 
+	    days = 14 
+	}
+	
+	option = { 
+	name = "PLANEW51.A"
+	clr_country_flag = alternative_PLACW
+	set_global_flag = the_bigger_shitshow_PLA
+	add_country_modifier = {
+		name = taiping_draft
+	 	duration = 1460
+	}
+	PLA_186 = { add_core = PLA }
+	LOU = { 
+	    all_core = { add_core = PLA } 
+	    add_country_modifier = {
+		   name = taiping_draft
+	 	   duration = 1460
+	    }
+    }		
+	OUM = { all_core = { add_core = PLA } }
+	war = { 
+		target = OUM
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			
+			defender_goal = {
+				casus_belli = civil_war
+		}
+	}
+	war = { 
+		target = LOU
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			
+			defender_goal = {
+				casus_belli = civil_war
+		}
+	}
+    any_country = {
+	    limit = {
+		   tag = OUM
+		   NOT = { has_country_flag = OUM_LOU_ALIGNED }
+		}
+		country_event = 78506
+    }
+	}
+}
+
+country_event = { 
+	id = 78506
+	title = "PLANEW6.T"
+	desc = "PLANEW6.D"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "PLANEW6.A"
+	war = { 
+		target = LOU
+			attacker_goal = {
+				casus_belli = civil_war
+			}
+			
+			defender_goal = {
+				casus_belli = civil_war
+			}
+			call_ally = yes
+		}
+	}
+}
+
+#########
+### Just to note that because you had lost to NBG this will ensure a initial variable that's lower in the reconstruction chain. So I advise not losing to Belgium if you want to play OUM or LOU unless you want the worst possible outcomes ###
+#########
+
+country_event = { 
+	id = 78507 # OUM Victory
+	title = "PLANEW600.T"
+	desc = "PLANEW600.D" 
+	picture = "victory_PLA"
+	
+	trigger = { 
+	tag = OUM 
+	has_global_flag = the_bigger_shitshow_PLA
+	NOT = { has_country_flag = OUM_LOU_ALIGNED }
+	owns = 139 
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLANEW600.A"
+	any_country = {
+	    limit = {
+	       tag = LOU 
+		   exists = yes
+	    }
+		annex_to = THIS
+    }
+	clr_global_flag = the_bigger_shitshow_PLA
+	change_tag = PLA
+	prestige = 15 
+	clr_country_flag = PLA_ARCADIAN_BLOCKED
+	set_country_flag = COWBOY_KING
+	set_country_flag = YEE_HAW
+	set_country_flag = punishment_for_NBG
+	add_country_modifier = { 
+		name = PLA_the_arcadian_dream
+		duration = -1
+	}
+	}
+}
+
+### Note: LOU does not get Arcadian Dream until after the end of the reconstruction chain since they see that as a priority over ambitions. This is a semi-pragmatic republic after all.
+
+country_event = { 
+	id = 78508 # LOU Victory
+	title = "PLANEW700.T"
+	desc = "PLANEW700.D" 
+	picture = "victory_PLA"
+	
+	trigger = { 
+	tag = LOU
+	has_global_flag = the_bigger_shitshow_PLA
+	OR = {
+	   owns = 139 
+	   AND = {
+	      OUM = { owns = 139 }
+	      has_country_flag = OUM_LOU_ALIGNED
+	   }
+	}
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLANEW700.A"
+	any_country = {
+	    limit = {
+	       tag = OUM
+		   exists = yes
+	    }
+		clr_country_flag = OUM_LOU_ALIGNED
+		annex_to = THIS
+    }
+	PLA_187 = { remove_core = LOU remove_core = OUM }
+	PLA_198 = { remove_core = LOU }
+	clr_global_flag = the_bigger_shitshow_PLA
+	change_tag = PLA
+	prestige = 15 
+	clr_country_flag = PLA_institutionalized_slavery
+	remove_country_modifier = institutionalized_slavery
+	set_country_flag = LOUIS_RECONSTRUCTION
+	set_country_flag = punishment_for_NBG
+    clr_country_flag = PLA_ARCADIAN_BLOCKED
+	}
+}
+
+### After losing the first arcadian war, collapsing and then having Dixieland win the Civil War that resulted from that. This is the worst possible ending to all of this.
+
+country_event = { 
+	id = 78509	#END CIVIL WAR - PLA won
+	title = "PLANEW7.T"
+	desc = "PLANEW7.D" 
+	picture = "victory_PLA"
+	
+	trigger = { 
+	tag = PLA
+	has_global_flag = the_bigger_shitshow_PLA
+	NOT = { exists = LOU }
+    NOT = { exists = OUM }	
+	war = no 
+	}
+	
+	mean_time_to_happen = { 
+	days = 7
+	}
+	
+	option = { 
+	name = "PLANEW7.A"
+	PLA_187 = { remove_core = LOU remove_core = OUM }
+	PLA_198 = { remove_core = LOU }
+	OUM = { clr_country_flag = OUM_LOU_ALIGNED }
+	prestige = 15 
+	nationalvalue = nv_productivity
+	clr_global_flag = the_bigger_shitshow_PLA
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	government = merchant_republic
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+    }
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	set_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	set_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### LOU Warm Up - This is the chain that triggers if LOU is indipendent - Both events here have a short MTTH to avoid problems ####
+
+### These events will trigger regardless of what version of LOU it is.
+
+country_event = { 
+	id = 78510 # LOU - The Interim President
+	title = "PLANEW8.T"
+	desc = "PLANEW8.D" 
+	picture = "fils_liberte"
+
+    fire_only_once = yes	
+	
+	trigger = { 
+	   tag = LOU
+	   exists = yes
+	   NOT = { has_country_flag = fate_LOU }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+	
+	# Edouard Marrast - A radical that will cause problems in the Reconstruction Chain but has the ability to promote the Northern Pacifists in Aggressive Variations of NBG	
+	# The below flag will put anarcho liberals in charge when the Reconstruction Chain starts and give you extra points in the Reconstruction Chain. Be careful.
+	
+	option = { 
+	name = "PLANEW8.A"
+	   set_country_flag = radical_PLA_possible
+	   set_country_flag = fate_LOU
+	   relation = { who = NBG value = -50 }
+ 	   ai_chance = { 
+	       factor = 50
+       }
+	}
+	
+	# Louis de Beauharnais - A moderate, but will not cause problems in the Reconstruction Chain and can also ally with OUM
+	
+	option = { 
+	name = "PLANEW8.B"
+	  set_country_flag = fate_LOU
+      relation = { who = NBG value = 50 }
+ 	  ai_chance = { 
+	       factor = 50
+      }
+	}
+}
+
+### Choosing a Moderate has resulted in OUM being willing to ally you. Good Work.
+
+country_event = { 
+	id = 78511 # LOU - OUM Alliance
+	title = "PLANEW9.T"
+	desc = "PLANEW9.D" 
+	picture = "cowboys"
+
+    fire_only_once = yes	
+	
+	trigger = { 
+	   tag = LOU
+	   has_country_flag = alliance_OUM_possible
+	}
+	
+	mean_time_to_happen = { 
+	   days = 1
+	}
+
+	option = { 
+	name = "PLANEW9.A"
+	   clr_country_flag = alliance_OUM_possible
+	   OUM = { set_country_flag = OUM_LOU_ALIGNED }
+	   relation = { who = OUM value = 400 }
+	   create_alliance = OUM
+ 	   ai_chance = { 
+	        factor = 100
+       }
+	}
+	
+	option = { 
+	name = "PLANEW9.B"
+	  clr_country_flag = alliance_OUM_possible
+      relation = { who = OUM value = -400 }
+ 	  ai_chance = { 
+	        factor = 0
+      }
+	}
+}
+
+#####################################
+#### Plantagenian Reconstruction ####
+#####################################
+
+### Note: LOU does not get Arcadian Dream until after the end of the reconstruction chain since they see that as a priority over ambitions. This is a semi-pragmatic republic after all.
+
+### The Cowboy King pushes through a Emancipation Proclamation
+
+country_event = { 
+	id = 785110 # YEE HAW
+	title = "PLANEWCOWBOY.T"
+	desc = "PLANEWCOWBOY.D" 
+	picture = "victory_PLA"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = YEE_HAW
+	}
+	
+	mean_time_to_happen = { 
+	days = 1
+	}
+	
+	option = { 
+	name = "PLANEWCOWBOY.A"
+    clr_country_flag = YEE_HAW
+	set_country_flag = COWBOY_RECONSTRUCTION
+	political_reform = no_slavery
+	clr_country_flag = PLA_institutionalized_slavery
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_economic_meltdown
+	    duration = 2880
+	} 
+	any_pop = { 
+	    limit = { pop_type = aristocrats culture = plantagenian }
+	    ideology = { value = reactionary factor = 0.2 }
+    }
+	scaled_militancy = { 
+	    factor = 6
+		ideology = reactionary
+	}
+	scaled_militancy = { 
+		factor = 3
+		ideology = conservative
+  	}
+	scaled_militancy = { 
+		factor = -6
+		ideology = liberal
+  	}
+	scaled_militancy = { 
+		factor = -8
+		ideology = anarcho_liberal
+  	}	
+	
+	}
+}
 
 
+### Triggered by decision after researching state and government or 1860 is reached ###
 
+### Introduction - Reform Act - Chartist Convention ###
+### This is the one version where its not called reconstruction as much as the banner above says it is
 
+country_event = { 
+	id = 78512
+	title = "PLANEW10.T"
+	desc = "PLANEW10.D" 
+	picture = "dred_scott_v_sandford"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW10.A"
+	set_variable = { which = PLA_REACTION value = 10 }
+	any_pop = {
+	   limit = {
+	      OR = {
+	         strata = rich
+			 pop_majority_ideology = reactionary
+	      }
+	   }
+	   militancy = 2
+	}
+	scaled_militancy = { 
+			factor = 1
+			ideology = reactionary
+	}
+	scaled_militancy = { 
+		   factor = -1
+		   ideology = liberal
+	}	
+	country_event = { id = 78514 days = 30 }
+	set_country_flag = REFORM_ACT_CONSTRUCTION
+	}
+}
 
+### Introduction - Cowboy King - Reconstruction Constitutional Convention ###
+### This is the one version where its not called reconstruction as much as the banner above says it is
 
+### Losing to NBG results in a initially higher variable
+### Cowboy King always starts with a higher value due to abolishing slavery and trashing the system.
 
+country_event = { 
+	id = 78513
+	title = "PLANEW11.T"
+	desc = "PLANEW11.D" 
+	picture = "dred_scott_v_sandford"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW11.A"
+	random_owned = {
+	    limit = {
+		   owner = { NOT = { has_global_flag = DEFEATED_PLA } }
+		}
+		owner = { set_variable = { which = PLA_REACTION value = 11 } }
+    }
+	random_owned = {
+	    limit = {
+		   owner = { has_global_flag = DEFEATED_PLA }
+		}
+		owner = { clr_global_flag = DEFEATED_PLA set_variable = { which = PLA_REACTION value = 13 } }
+    }	
+	any_pop = {
+	   limit = {
+	      OR = {
+	         strata = rich
+			 pop_majority_ideology = reactionary
+	      }
+	   }
+	   militancy = 2
+	}
+	scaled_militancy = { 
+			factor = 1
+			ideology = reactionary
+	}
+	scaled_militancy = { 
+		   factor = -1
+		   ideology = liberal
+	}	
+	country_event = { id = 78515 days = 30 }
+	set_country_flag = COWBOY_KING_CONSTRUCTION
+	}
+}
 
+### Due to shared events the sequence order of this event is reform act followed by non-reform act events.
 
+### REFORM - Pairs Act
 
+country_event = { 
+	id = 78514
+	title = "PLANEW12.T"
+	desc = "PLANEW12.D" 
+	picture = "pairs"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW12.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.05 }
+		}
+	    political_reform = population_equal_weight
+	    political_reform = non_secret_ballots
+	    scaled_militancy = { 
+			factor = 2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78516 days = 30 }
+ 	    ai_chance = { 
+	        factor = 25
+        }
+	}
+	
+	option = { 
+	name = "PLANEW12.B"
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78516 days = 30 }
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
 
+### Cowboy - The New Assembly
 
+country_event = { 
+	id = 78515
+	title = "PLANEW13.T"
+	desc = "PLANEW13.D" 
+	picture = "pairs"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW13.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.05 }
+		}
+		political_reform = proportional_representation
+	    political_reform = population_equal_weight
+	    political_reform = secret_ballots
+	    scaled_militancy = { 
+			factor = 2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78516 days = 30 }
+ 	    ai_chance = { 
+	        factor = 25
+        }
+	}
+	
+	option = { 
+	name = "PLANEW13.B"
+	    change_variable = { which = PLA_REACTION value = -1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = conservative factor = 0.05 }
+		}
+		political_reform = appointed
+		political_reform = universal_weighted_voting
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78516 days = 30 }
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
 
+### Cowboy/Reform - Immigration and Nativism
+
+country_event = { 
+	id = 78516
+	title = "PLANEW14.T"
+	desc = "PLANEW14.D" 
+	picture = "emigration"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW14.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    set_country_flag = PLA_extra_immigration
+		random_owned = {
+		    limit = { owner = { NOT = { citizens_rights = all_voting_pops } } }
+		    owner = { political_reform = culture_voting_only }
+	    }
+		political_reform = open_borders
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.05 }
+		}
+	    scaled_militancy = { 
+			factor = 2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = anarcho_liberal
+  	    }
+		random_owned = {
+		    limit = { 
+			   owner = { has_country_flag = REFORM_ACT_CONSTRUCTION }
+			}
+	        owner = { country_event = { id = 78518 days = 30 } }
+		}
+		random_owned = {
+		    limit = { 
+			   owner = { has_country_flag = COWBOY_KING_CONSTRUCTION }
+			}
+	        owner = { country_event = { id = 78517 days = 30 } }
+		}		
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+	
+	option = { 
+	name = "PLANEW14.B"
+	    change_variable = { which = PLA_REACTION value = -1 }
+		political_reform = primary_culture_only
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		random_owned = {
+		    limit = { 
+			   owner = { has_country_flag = REFORM_ACT_CONSTRUCTION }
+			}
+	        owner = { country_event = { id = 78518 days = 30 } }
+		}
+		random_owned = {
+		    limit = { 
+			   owner = { has_country_flag = COWBOY_KING_CONSTRUCTION }
+			}
+	        owner = { country_event = { id = 78517 days = 30 } }
+		}
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+}
+
+### Cowboy - Freedman in our State
+
+country_event = { 
+	id = 78517
+	title = "PLANEW15.T"
+	desc = "PLANEW15.D" 
+	picture = "emancipation"
+	
+	is_triggered_only = yes
+	
+	## Guarantee their political rights and enforce them - This one is a awful idea since its giving non-slaves rights...
+	## Its also unique to the cowboy king. Since even LOU would not consider this level of inevitable reaction.
+	
+	option = { 
+	name = "PLANEW15.A"
+	    change_variable = { which = PLA_REACTION value = 2 }
+	    add_accepted_culture = afro_frankish
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.15 }
+		}
+	    scaled_militancy = { 
+			factor = 5
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -3
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -5
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78519 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 25
+        }		
+	}
+	
+	option = { 
+	name = "PLANEW15.B"
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78519 days = 30 } 		
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
+
+### Reform - Land Reform
+
+country_event = { 
+	id = 78518
+	title = "PLANEW16.T"
+	desc = "PLANEW16.D" 
+	picture = "cotton_fields"
+	
+	is_triggered_only = yes
+	
+	## This is more dangerous if done under the reform act instead of the Cowboy King as you have not already crippled the Nobility via a Civil War
+	
+	option = { 
+	name = "PLANEW16.A"
+	    change_variable = { which = PLA_REACTION value = 2 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.15 }
+		}
+	    scaled_militancy = { 
+			factor = 5
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -3
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -5
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = PLA_railroad_construction
+		country_event = { id = 78520 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 25
+        }		
+	}
+	
+	option = { 
+	name = "PLANEW16.B"
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78520 days = 30 } 
+ 	    ai_chance = { 
+	        factor = 75
+        }		
+	}
+}
+
+### Cowboy - Land Reform
+
+### You get a railroad boost and a industralization boost here unlike in the above CENTRIST version that only gives you the railroads and pisses off the nobility more.
+
+country_event = { 
+	id = 78519
+	title = "PLANEW20.T"
+	desc = "PLANEW20.D" 
+	picture = "cotton_fields"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW20.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.2 }
+		}
+	    scaled_militancy = { 
+			factor = 6
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -3
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -6
+		    ideology = anarcho_liberal
+  	    }
+	    add_country_modifier = { 
+		   name = PLA_industrialization_boost
+		   duration = 7300
+	    }
+		set_country_flag = PLA_railroad_construction
+		country_event = { id = 78521 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+	
+	option = { 
+	name = "PLANEW20.B"
+	    change_variable = { which = PLA_REACTION value = -1 }
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = PLA_railroad_construction
+		country_event = { id = 78521 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+}
+
+### Reform - Fort Toulouse Reforms
+### Its West Point all over again...
+
+### Refusing with this one will reduce reaction score but really fuck you over on some big benefits such as the 30 year long 10 percent research bonus to Military Tech
+
+country_event = { 
+	id = 78520
+	title = "PLANEW21.T"
+	desc = "PLANEW21.D" 
+	picture = "fort_toulouse"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW21.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    define_general = {
+		   name = "Guillaume Guilbert"
+		   personality = mediocre
+		   background = powerful_friends
+	    }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = toulouse_renovation_possible
+		country_event = { id = 78522 days = 30 } 		
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+	
+	# Only a noble can be Maréchal de Plantagénie!
+	
+	# Your reward is the worst possible general.
+	
+	option = { 
+	name = "PLANEW21.B"
+	    define_general = {
+		   name = "Maurice Jacques"
+		   personality = inept
+		   background = yesman
+	    }
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78522 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+}
+
+### Cowboy - Fort Toulouse Reforms
+### Its West Point all over again...
+
+### Attalus may have said on the document that you get this bonus regardless, but due to Fort Toulouse ending up in LOU hands most of the time in this scenario there is a justification to actually invest here.
+### As before, refusing with this one will reduce reaction score but really fuck you over on some big benefits such as the 30 year long 10 percent research bonus to Military Tech
+### This also gives you a extra modifier for leadership and org if you take it. So why the hell would you refuse to get Fort Toulouse Reformed?
+
+country_event = { 
+	id = 78521
+	title = "PLANEW22.T"
+	desc = "PLANEW22.D" 
+	picture = "fort_toulouse"
+	
+	is_triggered_only = yes
+	
+	# Reinstate former Superintendent and other rebels to their posts.
+	# This is a stalin-tier purge by putting rebels in these positions. In the long run this causes enormous improvements to PLAs military but for now the general staff is garbage.
+	
+	option = { 
+	name = "PLANEW21.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    define_general = {
+		   name = "Guillaume Guilbert"
+		   personality = mediocre
+		   background = powerful_friends
+	    }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+	    add_country_modifier = { 
+		   name = PLA_prestige_army
+		   duration = 10950
+	    }
+		set_country_flag = toulouse_renovation_possible
+		country_event = { id = 78522 days = 30 } 		
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+	
+	# Remove former slavers from the classes and allow the Louisanie Superintendent to retain his post.
+	# You get a good general but literally nothing else
+	
+	option = { 
+	name = "PLANEW21.B"
+	    define_general = {
+		   name = "George Lafitte"
+		   personality = skilled
+		   background = rising_star
+	    }
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78522 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+}
+
+#### The next couple of events are shared since they are obviously similar in both iterations but the last one is determined by the status of Slavery ####
+
+### Cowboy/Reform - Status of the Natives
+
+country_event = { 
+	id = 78522
+	title = "PLANEW23.T"
+	desc = "PLANEW23.D" 
+	picture = "cavalry_plains"
+	
+	is_triggered_only = yes
+	
+	# Open up these lands for settlement!
+	
+	option = { 
+	name = "PLANEW23.A"
+	    political_reform = settlement
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = PLA_annex_CHE_quick
+		any_country = {
+		    limit = {
+			   tag = NUN
+			   vassal_of = THIS
+			}
+			annex_to = THIS
+	    }
+		country_event = { id = 78523 days = 30 } 
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+	
+	# We must respect the legacy of Charles !
+	
+	option = { 
+	name = "PLANEW23.B"
+	    set_country_flag = PLA_accepting_cultures
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78523 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+}
+
+### Cowboy/Reform - Business and Tariffs
+
+### This uses the base economic modifiers from the HPM stuff to prevent doubling up and getting a country with really strange tariff settings.
+
+### On aside the nobility actually does not want tariffs. How strange....
+
+country_event = { 
+	id = 78523
+	title = "PLANEW24.T"
+	desc = "PLANEW24.D" 
+	picture = "stocks"
+	
+	is_triggered_only = yes
+	
+	# Tariffs will help our nascent industry!
+	
+	option = { 
+	name = "PLANEW24.A"
+	    remove_country_modifier = non_interventionism_trade_policy
+		remove_country_modifier = french_liberal_school
+		remove_country_modifier = smithian_school
+		remove_country_modifier = no_trade_policy_set
+		remove_country_modifier = russian_protectionism 
+		remove_country_modifier = mercantilism
+	    add_country_modifier = { 
+		    name = economic_nationalism
+		    duration = 14600
+	    }
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+		any_pop = {
+			dominant_issue = {
+				factor = 0.4
+				value = protectionism
+			}
+		}
+		any_pop = {
+			scaled_militancy = {
+				issue = free_trade
+				factor = 3
+			}
+		}
+		country_event = { id = 78530 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 25
+        }		
+	}
+	
+	# Free trade has always benefited us!
+	
+	option = { 
+	name = "PLANEW24.B"
+	    remove_country_modifier = non_interventionism_trade_policy
+		remove_country_modifier = economic_nationalism
+		remove_country_modifier = smithian_school
+		remove_country_modifier = no_trade_policy_set
+		remove_country_modifier = russian_protectionism 
+		remove_country_modifier = mercantilism
+	    add_country_modifier = { 
+		    name = french_liberal_school
+		    duration = 14600
+	    }
+		any_pop = {
+			dominant_issue = {
+				factor = 0.4
+				value = free_trade
+			}
+		}
+		any_pop = {
+			scaled_militancy = {
+				issue = protectionism
+				factor = 3
+			}
+		}
+		country_event = { id = 78530 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
+
+##################################
+### Republican Reconstruction ####
+##################################
+
+### Republic - Constitutional Convention in Port-Royal
+
+### Losing to NBG results in a initially higher variable
+
+country_event = { 
+	id = 785230
+	title = "PLANEW240.T"
+	desc = "PLANEW240.D" 
+	picture = "dred_scott_v_sandford"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW240.A"
+	random_owned = {
+	    limit = {
+		   owner = { NOT = { has_global_flag = DEFEATED_PLA } }
+		}
+		owner = { set_variable = { which = PLA_REACTION value = 10 } }
+    }
+	random_owned = {
+	    limit = {
+		   owner = { has_global_flag = DEFEATED_PLA }
+		}
+		owner = { clr_global_flag = DEFEATED_PLA set_variable = { which = PLA_REACTION value = 12 } }
+    }	
+	any_pop = {
+	   limit = {
+	      OR = {
+	         strata = rich
+			 pop_majority_ideology = reactionary
+	      }
+	   }
+	   militancy = 2
+	}
+	scaled_militancy = { 
+			factor = 1
+			ideology = reactionary
+	}
+	scaled_militancy = { 
+		   factor = -1
+		   ideology = liberal
+	}	
+	country_event = { id = 78524 days = 30 }
+	set_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	}
+}
+
+### Republic - Fate of the King
+
+country_event = { 
+	id = 78524
+	title = "PLANEW25.T"
+	desc = "PLANEW25.D" 
+	picture = "choice_cowboy"
+	
+	is_triggered_only = yes
+	
+	### Exile Him
+	
+	option = { 
+	name = "PLANEW25.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+		prestige = 20
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.05 }
+		}
+	    scaled_militancy = { 
+			factor = 2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78525 days = 30 }
+ 	    ai_chance = { 
+	        factor = 25
+        }
+	}
+	
+    ### Refuse to Exile Him
+ 	
+	option = { 
+	name = "PLANEW25.B"
+	    change_variable = { which = PLA_REACTION value = -1 }
+		prestige = -20
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = conservative factor = 0.05 }
+		}
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		# Shared Event - Immigration and Nativism
+		country_event = { id = 78525 days = 30 }
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
+
+### REPUBLIC - Immigration and Nativism
+
+country_event = { 
+	id = 78525
+	title = "PLANEW26.T"
+	desc = "PLANEW26.D" 
+	picture = "emigration"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW26.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    set_country_flag = PLA_extra_immigration
+		random_owned = {
+		    limit = { owner = { NOT = { citizens_rights = all_voting_pops } } }
+		    owner = { political_reform = culture_voting_only }
+	    }
+		political_reform = open_borders
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.05 }
+		}
+	    scaled_militancy = { 
+			factor = 2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78526 days = 30 }	
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+	
+	option = { 
+	name = "PLANEW26.B"
+	    change_variable = { which = PLA_REACTION value = -1 }
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78526 days = 30 }
+ 	    ai_chance = { 
+	        factor = 50
+        }
+	}
+}
+
+### REPUBLIC - Breaking the rule of the Planteurs
+
+country_event = { 
+	id = 78526
+	title = "PLANEW27.T"
+	desc = "PLANEW27.D" 
+	picture = "cotton_fields"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW27.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = PLA_railroad_construction
+		country_event = { id = 78527 days = 30 } 		
+ 	    ai_chance = { 
+	        factor = 40
+        }
+	}
+	
+	option = { 
+	name = "PLANEW27.B"
+	    change_variable = { which = PLA_REACTION value = 2 }
+	    political_reform = freedom_of_womb
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.15 }
+		}
+	    scaled_militancy = { 
+			factor = 5
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -3
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -5
+		    ideology = anarcho_liberal
+  	    }
+	    add_country_modifier = { 
+		   name = PLA_industrialization_boost
+		   duration = 7300
+	    }
+		set_country_flag = PLA_railroad_construction
+		country_event = { id = 78527 days = 30 } 		
+ 	    ai_chance = { 
+	        factor = 20
+        }
+	}
+	
+	option = { 
+	name = "PLANEW27.C"
+	    change_variable = { which = PLA_REACTION value = -1 }
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78527 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 40
+        }		
+	}
+}
+
+### Republican - Fort Toulouse Reforms
+### Its West Point all over again...
+
+### Refusing with this one will reduce reaction score but really fuck you over on some big benefits such as the 30 year long 10 percent research bonus to Military Tech
+
+country_event = { 
+	id = 78527
+	title = "PLANEW28.T"
+	desc = "PLANEW28.D" 
+	picture = "fort_toulouse"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW28.A"
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    define_general = {
+		   name = "Guillaume Guilbert"
+		   personality = mediocre
+		   background = powerful_friends
+	    }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = toulouse_renovation_possible
+		country_event = { id = 78528 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+	
+	# We don't need a reactionary institution!
+	# Why would you torture yourself like this?
+	
+	option = { 
+	name = "PLANEW28.B"
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78528 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }				
+	}
+}
+
+### Republican - Status of the Natives
+
+country_event = { 
+	id = 78528
+	title = "PLANEW29.T"
+	desc = "PLANEW29.D" 
+	picture = "cavalry_plains"
+	
+	is_triggered_only = yes
+	
+	# Open up these lands for settlement!
+	
+	option = { 
+	name = "PLANEW29.A"
+	    political_reform = settlement
+	    scaled_militancy = { 
+			factor = -2
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -1
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = 1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+		set_country_flag = PLA_annex_CHE_quick
+		any_country = {
+		    limit = {
+			   tag = NUN
+			   vassal_of = THIS
+			}
+			annex_to = THIS
+	    }
+		country_event = { id = 78529 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }				
+	}
+	
+	# We can guarantee reserves elsewhere but not for the Tsalagi
+	
+	option = { 
+	name = "PLANEW29.B"
+	    set_country_flag = PLA_accepting_cultures_LOU
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+	    scaled_militancy = { 
+			factor = 4
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 2
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -2
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -4
+		    ideology = anarcho_liberal
+  	    }
+		country_event = { id = 78529 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 50
+        }		
+	}
+}
+
+### Republican - Business and Tariffs
+
+### This uses the base economic modifiers from the HPM stuff to prevent doubling up and getting a country with really strange tariff settings.
+
+country_event = { 
+	id = 78529
+	title = "PLANEW30.T"
+	desc = "PLANEW30.D" 
+	picture = "stocks"
+	
+	is_triggered_only = yes
+	
+	# Tariffs will help our nascent industry!
+	
+	option = { 
+	name = "PLANEW30.A"
+	    remove_country_modifier = non_interventionism_trade_policy
+		remove_country_modifier = french_liberal_school
+		remove_country_modifier = smithian_school
+		remove_country_modifier = no_trade_policy_set
+		remove_country_modifier = russian_protectionism 
+		remove_country_modifier = mercantilism
+	    add_country_modifier = { 
+		    name = economic_nationalism
+		    duration = 14600
+	    }
+	    change_variable = { which = PLA_REACTION value = 1 }
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.1 }
+		}
+		any_pop = {
+			dominant_issue = {
+				factor = 0.4
+				value = protectionism
+			}
+		}
+		any_pop = {
+			scaled_militancy = {
+				issue = free_trade
+				factor = 3
+			}
+		}
+		country_event = { id = 78530 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 25
+        }		
+	}
+	
+	# Free trade has always benefited us!
+	
+	option = { 
+	name = "PLANEW30.B"
+	    remove_country_modifier = non_interventionism_trade_policy
+		remove_country_modifier = economic_nationalism
+		remove_country_modifier = smithian_school
+		remove_country_modifier = no_trade_policy_set
+		remove_country_modifier = russian_protectionism 
+		remove_country_modifier = mercantilism
+	    add_country_modifier = { 
+		    name = french_liberal_school
+		    duration = 14600
+	    }
+		any_pop = {
+			dominant_issue = {
+				factor = 0.4
+				value = free_trade
+			}
+		}
+		any_pop = {
+			scaled_militancy = {
+				issue = protectionism
+				factor = 3
+			}
+		}
+		country_event = { id = 78530 days = 30 } 	
+ 	    ai_chance = { 
+	        factor = 75
+        }
+	}
+}
+
+#####################################
+#### The Foreign Affairs Problem ####
+#####################################
+
+#### The Foreign Affairs Problem - The reason why the ending of this chain cannot occur yet ####
+
+country_event = { 
+	id = 78530
+	title = "PLANEW31.T"
+	desc = "PLANEW31.D" 
+	picture = "slave_power"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW31.A"
+	   prestige = -10
+	   any_greater_power = {
+	      relation = { who = THIS value = -50 }
+	   }   
+       set_country_flag = PLA_trigger_diplomatic_decision
+	}
+}
+
+#### The Most Difficult Decision - Infomation regarding choices on Diplomatic Outcomes ####
+
+#### Anglois, Burgundy or Rogue Great Power
+#### This is triggered by N and I or 1865 and if Burgundy is not in a Civil War
+
+### If both the Dual Monarchy and Burgundy are dead for some reason you get a decision to just go straight into isolationism.
+
+country_event = { 
+	id = 78531
+	title = "PLANEW32.T"
+	desc = "PLANEW32.D" 
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW32.A"
+	   any_greater_power = {
+	      relation = { who = THIS value = 10 }
+	   } 
+       set_country_flag = verify_diplomatic_outcomes_PLA
+	}
+}
+
+#### The Cross and the Eternal Foe - Burgundy and the Dual Monarchy both exist
+
+country_event = { 
+	id = 78532
+	title = "PLANEW33.T"
+	desc = "PLANEW33.D" 
+	picture = "deliberation"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = verify_diplomatic_outcomes_PLA
+	   exists = DUA
+	   OR = { 
+		  exists = BRG
+		  exists = PBG
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	### Burgundy has always been our equal partner
+	
+	option = { 
+	name = "PLANEW33.A"
+	    prestige = -5
+        any_country = {
+	      limit = {
+		     OR = {
+			    tag = BRG
+			    tag = PBG
+			 }
+			 exists = yes
+		  }
+		  country_event = { id = 78536 days = 14 } 
+		}  	 
+ 	    ai_chance = { 
+	        factor = 35
+        }
+	}
+	
+	### It is time to mend our relations with Paris 
+	
+	option = { 
+	name = "PLANEW33.B"
+	   set_country_flag = the_special_relationship
+	   prestige = -5
+	   DUA = { country_event = { id = 78536 days = 14 } }
+ 	   ai_chance = { 
+	        factor = 30
+       }
+	}
+	
+	### We don't need no Europeans getting involved here
+	
+	option = { 
+	name = "PLANEW33.C"
+	    set_country_flag = PLA_endchain_clearance
+	    clr_global_flag = PLA_loves_slavery
+	    prestige = 10
+        set_country_flag = filibuster_decisions
+	    any_greater_power = {
+	       relation = { who = THIS value = -100 }
+		   diplomatic_influence = { who = THIS value = -100 }
+	    } 
+	    any_country = {
+	        limit = {
+		       OR = {
+			      tag = DUA
+			      tag = BRG
+			      tag = PBG
+			   }
+			   exists = yes
+			}
+			diplomatic_influence = { who = THIS value = -150 }
+			relation = { who = THIS value = -150 }
+	    }
+ 	    ai_chance = { 
+	        factor = 35
+        }
+	}
+}
+
+#### The Eternal Foe - Burgundy is dead and the Dual Monarchy is not dead
+
+country_event = { 
+	id = 78533
+	title = "PLANEW34.T"
+	desc = "PLANEW34.D" 
+	picture = "deliberation"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = verify_diplomatic_outcomes_PLA
+	   exists = DUA
+	   NOT = { exists = PBG }
+	   NOT = { exists = BRG }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	### It is time to mend our relations with Paris 
+	
+	option = { 
+	name = "PLANEW34.A"
+	   set_country_flag = the_special_relationship
+	   prestige = -5
+	   DUA = { country_event = { id = 78536 days = 14 } }
+ 	   ai_chance = { 
+	       factor = 20
+       }
+	}
+	
+	### We don't need no Europeans getting involved here
+	
+	option = { 
+	name = "PLANEW34.B"
+	    set_country_flag = PLA_endchain_clearance
+	    clr_global_flag = PLA_loves_slavery
+	    prestige = 10
+        set_country_flag = filibuster_decisions
+	    any_greater_power = {
+	       relation = { who = THIS value = -100 }
+		   diplomatic_influence = { who = THIS value = -100 }
+	    } 
+	    any_country = {
+	        limit = {
+		       OR = {
+			      tag = DUA
+			      tag = BRG
+			      tag = PBG
+			   }
+			   exists = yes
+			}
+			diplomatic_influence = { who = THIS value = -150 }
+			relation = { who = THIS value = -150 }
+	    }
+ 	    ai_chance = { 
+	        factor = 80
+        }
+	}
+}
+
+#### The Collapse of our Eternal Foe - The Dual Monarchy is dead
+
+country_event = { 
+	id = 78534
+	title = "PLANEW35.T"
+	desc = "PLANEW35.D" 
+	picture = "deliberation"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = verify_diplomatic_outcomes_PLA
+	   NOT = { exists = DUA }
+	   OR = { 
+		  exists = BRG
+		  exists = PBG
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	### Burgundy has always been our equal partner
+	### This is the only one where the chances are not balanced because Burgundy has shown its true face.
+	
+	option = { 
+	name = "PLANEW35.A"
+	    prestige = -5
+        any_country = {
+	      limit = {
+		     OR = {
+			    tag = BRG
+			    tag = PBG
+			 }
+			 exists = yes
+		  }
+		  country_event = { id = 78535 days = 14 } 
+		} 
+ 	    ai_chance = { 
+	        factor = 20
+        }		
+	}
+	
+	### Steps forth to the rescue and the liberation of the old....
+	
+	option = { 
+	name = "PLANEW35.B"
+	   prestige = 20
+	   set_country_flag = the_super_special_relationship
+	   set_country_flag = PLA_endchain_clearance
+ 	   ai_chance = { 
+	       factor = 60
+       }
+	}
+	
+	### We don't need no Europeans getting involved here
+	
+	option = { 
+	name = "PLANEW35.C"
+	    set_country_flag = PLA_endchain_clearance
+	    clr_global_flag = PLA_loves_slavery
+	    prestige = 10
+        set_country_flag = filibuster_decisions
+	    any_greater_power = {
+	       relation = { who = THIS value = -100 }
+		   diplomatic_influence = { who = THIS value = -100 }
+	    } 
+	    any_country = {
+	        limit = {
+		       OR = {
+			      tag = DUA
+			      tag = BRG
+			      tag = PBG
+			   }
+			   exists = yes
+			}
+			diplomatic_influence = { who = THIS value = -150 }
+			relation = { who = THIS value = -150 }
+	    }
+ 	    ai_chance = { 
+	        factor = 20
+        }
+	}
+}
+
+### How this works is there is initially a flavor event based on the country that gets the alliance offer and then a more generic event in regards to Slavery 
+
+### Burgundy - The Alliance with the Cadiens 
+
+country_event = { 
+	id = 78535
+	title = "PLANEW36.T"
+	desc = "PLANEW36.D" 
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW36.A" 
+        random_country = {
+            limit = {
+			    tag = PLA
+				exists = yes
+                slavery = yes_slavery 
+            }
+			THIS = { country_event = 78537 }
+	    }
+        random_country = {
+            limit = {
+			    tag = PLA
+				exists = yes
+                NOT = { slavery = yes_slavery }
+            }
+			THIS = { country_event = 78538 }
+	    }
+	}
+}
+
+### Dual Monarchy - The Colonial Traitors want a alliance with us
+
+country_event = { 
+	id = 78536
+	title = "PLANEW37.T"
+	desc = "PLANEW37.D" 
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW37.A" 
+        random_country = {
+            limit = {
+			    tag = PLA
+				exists = yes
+                slavery = yes_slavery 
+            }
+			THIS = { country_event = 78537 }
+	    }
+        random_country = {
+            limit = {
+			    tag = PLA
+				exists = yes
+                NOT = { slavery = yes_slavery }
+            }
+			THIS = { country_event = 78538 }
+	    }
+	}
+}
+
+### The Slavery Problem - PLA still has full on slavery
+
+country_event = { 
+	id = 78537
+	title = "PLANEW38.T"
+	desc = "PLANEW38.D" 
+	picture = "cotton_fields"
+	
+	is_triggered_only = yes
+	
+    # We won't bother asking that question...	
+	
+	option = { 
+	name = "PLANEW38.A" 
+	    prestige = -5
+ 	    diplomatic_influence = { who = PLA value = 400 }
+	    relation = { who = PLA value = 400 }      
+        PLA = { country_event = { id = 78542 days = 14 } }	
+ 	    ai_chance = { 
+	        factor = 30
+        }		
+	}
+	
+	# Ew. Deny relations with this slaver state - AI WILL NOT DO - NO FOLLOW UP EVENT
+	
+	option = { 
+	name = "PLANEW38.B" 
+	    PLA = { clr_country_flag = the_special_relationship set_country_flag = filibuster_decisions set_country_flag = PLA_endchain_clearance }
+ 	    diplomatic_influence = { who = PLA value = -400 }
+	    relation = { who = PLA value = -400 }     
+ 	    ai_chance = { 
+	        factor = 0
+        }		
+	}
+	
+	# They must change this peculiar instiution!
+	
+	option = { 
+	name = "PLANEW38.C" 
+       PLA = { country_event = { id = 78539 days = 14 } } 
+ 	   ai_chance = { 
+	        factor = 70
+       }	
+	}
+}
+ 
+### Our answer regarding the relationship - PLA does not have slavery
+
+country_event = { 
+	id = 78538
+	title = "PLANEW39.T"
+	desc = "PLANEW39.D" 
+	picture = "deliberation"
+	
+	is_triggered_only = yes
+	
+    # Sure
+	
+	option = { 
+	name = "PLANEW39.A" 
+ 	    diplomatic_influence = { who = PLA value = 400 }
+	    relation = { who = PLA value = 400 }    
+        PLA = { country_event = { id = 78542 days = 14 } }	
+ 	    ai_chance = { 
+	        factor = 100
+        }	
+	}
+	
+	# Ew. - AI WILL NOT DO - NO FOLLOW UP EVENT
+	
+	option = { 
+	name = "PLANEW39.B" 
+	    PLA = { clr_country_flag = the_special_relationship set_country_flag = filibuster_decisions set_country_flag = PLA_endchain_clearance }
+ 	    diplomatic_influence = { who = PLA value = -400 }
+	    relation = { who = PLA value = -400 }    
+ 	    ai_chance = { 
+	        factor = 0
+        }			
+	}
+}
+
+### Our relationship requires the immediate abolition of Slavery
+
+country_event = { 
+	id = 78539
+	title = "PLANEW40.T"
+	desc = "PLANEW40.D" 
+	picture = "emancipation"
+	
+	is_triggered_only = yes
+	
+    # Absolutely Not. That will cause chaos
+	
+	option = { 
+	name = "PLANEW39.A" 
+	    clr_country_flag = the_special_relationship 
+	    set_country_flag = filibuster_decisions
+		set_country_flag = PLA_endchain_clearance
+ 	    diplomatic_influence = { who = FROM value = -400 }
+	    relation = { who = FROM value = -400 }   
+ 	    ai_chance = { 
+	        factor = 50
+        }	
+	}
+	
+	# We will do anything for a functional trading relationship
+	# THIS IS A MONUMENTALLY BAD IDEA - DARK RED TEXT
+		
+	option = { 
+	name = "PLANEW39.B" 
+		set_country_flag = PLA_endchain_clearance
+	    change_variable = { which = PLA_REACTION value = 3 }
+	    political_reform = no_slavery
+	    clr_country_flag = PLA_institutionalized_slavery
+	    remove_country_modifier = institutionalized_slavery
+	    any_pop = { 
+	       limit = { pop_type = aristocrats culture = plantagenian }
+	       ideology = { value = reactionary factor = 0.2 }
+		}
+	    scaled_militancy = { 
+			factor = 8
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = 3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -3
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = -5
+		    ideology = anarcho_liberal
+  	    }
+	    add_country_modifier = { 
+		   name = PLA_special_relationship
+		   duration = 7300
+	    } 
+	    add_country_modifier = { 
+		   name = PLA_economic_meltdown
+		   duration = 3650
+	    } 
+        FROM = { country_event = 78540 }
+ 	    ai_chance = { 
+	        factor = 50
+        }	
+	}
+}
+
+### The End of the Slave Trade - MAJOR
+
+### It really does not matter what variation of Plantagenia it is. The Cadiens just basically destroyed their economy at the will of our nation.
+
+country_event = { 
+	id = 78540
+	title = "PLANEW41.T"
+	desc = "PLANEW41.D" 
+	picture = "emancipation"
+	
+	major = yes
+	is_triggered_only = yes
+
+	option = { 
+	name = "PLANEW39.A" 
+	    prestige = 20
+	    random_owned = {
+		   limit = { owner = { NOT = { slavery = no_slavery } } } 
+	       owner = { political_reform = no_slavery }
+		}
+		any_country = { 
+		   limit = { tag = NBG exists = yes NOT = { slavery = no_slavery } }
+		   country_event = 78541
+		}
+ 	    diplomatic_influence = { who = PLA value = 400 }
+	    relation = { who = PLA value = 400 }   
+	}
+}
+
+### The Cadiens were forced to end Slavery - Holy FUCK
+
+### Need to add weights here for Dictatorship
+
+country_event = { 
+	id = 78541
+	title = "PLANEW42.T"
+	desc = "PLANEW42.D" 
+	picture = "slave_power"
+
+	is_triggered_only = yes
+
+    ### We have no choice but to abolish it.
+
+	option = { 
+	name = "PLANEW42.A" 
+	    prestige = 10
+	    political_reform = no_slavery
+	    relation = { who = PLA value = -400 }
+ 	    ai_chance = { 
+	        factor = 80
+        }	
+	}
+	
+	### No. God No.
+	
+	option = { 
+	name = "PLANEW42.B" 
+	    prestige = -10
+		relation = { who = PLA value = -400 }
+ 	    ai_chance = { 
+	        factor = 20
+        }	
+	}
+}
+
+### The GP decided to create a economic relationship with us without destroying our economy
+
+country_event = { 
+	id = 78542
+	title = "PLANEW43.T"
+	desc = "PLANEW43.D" 
+	picture = "slave_power"
+
+	is_triggered_only = yes
+
+    ### This could have gone worse...
+
+	option = { 
+	name = "PLANEW42.A" 
+	    set_country_flag = PLA_endchain_clearance
+	    scaled_militancy = { 
+			factor = -3
+			ideology = reactionary
+	    }
+	    scaled_militancy = { 
+			factor = -3
+			ideology = conservative
+	    }
+	    scaled_militancy = { 
+		    factor = -1
+		    ideology = liberal
+  	    }
+	    scaled_militancy = { 
+		    factor = 2
+		    ideology = anarcho_liberal
+  	    }
+	    add_country_modifier = { 
+		   name = PLA_special_relationship
+		   duration = 7300
+	    } 
+	}
+}
+
+################################################
+############### CHAIN ENDINGS ##################
+################################################
+
+#### Outcome A-1 - Reform Act Chartist Convention Monarchist Oligarchy - 11 and Below
+
+#### Your reward for doing nothing is for the status quo to just slip back into existance as they successfully pass a Anti-Reform Act
+
+country_event = { 
+	id = 78543
+	title = "PLANEW44.T"
+	desc = "PLANEW44.D" 
+	picture = "victory_PLA"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = REFORM_ACT_CONSTRUCTION
+	   has_country_flag = PLA_endchain_clearance
+	   NOT = {	
+		check_variable = {
+		   which = PLA_REACTION
+		   value = 1
+		}
+	}	   
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLANEW44.A"
+	clr_country_flag = regency_blocker
+    prestige_factor = -0.25
+	nationalvalue = nv_productivity
+	clr_country_flag = REFORM_ACT_CONSTRUCTION
+	clr_country_flag = PLA_endchain_clearance
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
+	political_reform = exploitation
+	political_reform = primary_culture_only
+	clr_country_flag = PLA_extra_immigration	
+	clr_country_flag = PLA_accepting_cultures
+	clr_country_flag = PLA_railroad_construction
+	clr_country_flag = toulouse_renovation_possible
+	remove_accepted_culture = afro_frankish
+	remove_accepted_culture = sioux
+	remove_accepted_culture = cherokee
+	remove_accepted_culture = southern_algonquin
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+    }
+	remove_country_modifier = PLA_economic_meltdown
+	remove_country_modifier = PLA_special_relationship
+    remove_country_modifier = PLA_prestige_army
+	remove_country_modifier = PLA_industrialization_boost
+	remove_country_modifier = PLA_major_immigration
+	remove_country_modifier = PLA_minor_immigration
+	remove_country_modifier = PLA_military_reforms
+	clr_country_flag = filibuster_decisions
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
+	}
+}
+
+#### Outcome A-2 - Reform Act Chartist Convention Success - 11 to 16 - This does not actually do much apart from set a negative modifier in the south
+
+country_event = { 
+	id = 78544
+	title = "PLANEW45.T"
+	desc = "PLANEW45.D" 
+	picture = "abraham_speech"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = PLA_endchain_clearance
+	   has_country_flag = REFORM_ACT_CONSTRUCTION
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 11
+	  }
+	  NOT = {	
+		check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+		}
+	}	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "PLANEW45.A"
+	    clr_country_flag = regency_blocker
+	    clr_country_flag = REFORM_ACT_CONSTRUCTION
+	    clr_country_flag = PLA_endchain_clearance
+	    prestige = 10
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 11 } NOT = { check_variable = { which = PLA_REACTION value = 13 } } } }
+		   owner = { add_country_modifier = { name = PLA_KKK duration = 7300 } }
+		}
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 13 } } }
+		   owner = { add_country_modifier = { name = PLA_SUPER_KKK duration = 7300 } }
+		}
+	}
+}
+
+#### Outcome A-3 - Reform Act Chartist Convention Republican Oligarchy Collapse  - 16 and Above
+
+### This is basically the same as A-1 except here they just overthrow the King instead of turning him into a puppet.
+
+country_event = { 
+	id = 78545
+	title = "PLANEW46.T"
+	desc = "PLANEW46.D" 
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = REFORM_ACT_CONSTRUCTION
+	   has_country_flag = PLA_endchain_clearance
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+	    }	   
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLANEW46.A"
+	prestige_factor = -0.5
+	nationalvalue = nv_productivity
+	clr_country_flag = REFORM_ACT_CONSTRUCTION
+	clr_country_flag = PLA_endchain_clearance
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	government = merchant_republic
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
+	political_reform = exploitation
+	political_reform = primary_culture_only
+	clr_country_flag = PLA_extra_immigration	
+	clr_country_flag = PLA_accepting_cultures
+	clr_country_flag = PLA_railroad_construction
+	clr_country_flag = toulouse_renovation_possible
+	remove_accepted_culture = afro_frankish
+	remove_accepted_culture = sioux
+	remove_accepted_culture = cherokee
+	remove_accepted_culture = southern_algonquin
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+    }
+	remove_country_modifier = PLA_economic_meltdown
+	remove_country_modifier = PLA_special_relationship
+    remove_country_modifier = PLA_prestige_army
+	remove_country_modifier = PLA_industrialization_boost
+	remove_country_modifier = PLA_major_immigration
+	remove_country_modifier = PLA_minor_immigration
+	remove_country_modifier = PLA_military_reforms
+	clr_country_flag = filibuster_decisions
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	set_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	set_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### Outcome B-1 - Cowboy King Constitutional Convention Republican Oligarchy Collapse - 11 and Below
+
+country_event = { 
+	id = 78546
+	title = "PLANEW47.T"
+	desc = "PLANEW47.D" 
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = PLA_endchain_clearance
+	   has_country_flag = COWBOY_KING_CONSTRUCTION
+	   NOT = {
+	       check_variable = {
+		      which = PLA_REACTION
+		      value = 11
+	       }	   
+		}
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLANEW47.A"
+	prestige_factor = -0.5
+	nationalvalue = nv_productivity
+	clr_country_flag = regency_blocker
+	clr_country_flag = COWBOY_KING_CONSTRUCTION
+	clr_country_flag = PLA_endchain_clearance
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	remove_country_modifier = charismatic_leader_reactionary
+	remove_country_modifier = popular_figurehead_reactionary
+	country_event = 555012
+	ruling_party_ideology = reactionary
+	government = merchant_republic
+	political_reform = landed_voting
+	political_reform = appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = no_trade_unions
+    political_reform = gerrymandering
+	political_reform = exploitation
+	political_reform = primary_culture_only
+	clr_country_flag = PLA_extra_immigration	
+	clr_country_flag = PLA_accepting_cultures
+	clr_country_flag = PLA_railroad_construction
+	clr_country_flag = toulouse_renovation_possible
+	remove_accepted_culture = afro_frankish
+	remove_accepted_culture = sioux
+	remove_accepted_culture = cherokee
+	remove_accepted_culture = southern_algonquin
+	random_owned = { 
+	   limit = { owner = { NOT = { slavery = yes_slavery } } }
+	   owner = { political_reform = yes_slavery }
+	}
+	any_state = {
+            limit = {
+               is_slave = no
+            }
+            is_slave = yes
+    }
+	any_owned = {
+            limit = {
+                is_overseas = no
+            }
+            any_pop = { limit = { has_pop_culture  = afro_frankish } militancy = 9 consciousness = 9 pop_type = slaves }     
+    }
+	remove_country_modifier = PLA_economic_meltdown
+	remove_country_modifier = PLA_special_relationship
+    remove_country_modifier = PLA_prestige_army
+	remove_country_modifier = PLA_industrialization_boost
+	remove_country_modifier = PLA_major_immigration
+	remove_country_modifier = PLA_minor_immigration
+	remove_country_modifier = PLA_military_reforms
+	clr_country_flag = filibuster_decisions
+	### This is one of the worst modifiers in the game
+	remove_country_modifier = institutionalized_slavery
+	add_country_modifier = { 
+		name = institutionalized_slavery
+		duration = -1
+	}
+	set_country_flag = PLA_institutionalized_slavery
+	add_country_modifier = { 
+		name = PLA_dixieland
+		duration = 18250
+	}
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	set_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	clr_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	set_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### Outcome B-2 - Cowboy King Constitutional Convention Success - 11 to 16 
+
+country_event = { 
+	id = 78547
+	title = "PLANEW48.T"
+	desc = "PLANEW48.D" 
+	picture = "choice_cowboy"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = PLA_endchain_clearance
+	   has_country_flag = COWBOY_KING_CONSTRUCTION
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 11
+	  }
+	  NOT = {	
+		check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+		}
+	}	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "PLANEW48.A"
+	    clr_country_flag = regency_blocker
+	    clr_country_flag = COWBOY_KING_CONSTRUCTION
+	    clr_country_flag = PLA_endchain_clearance
+	    prestige = 10
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 11 } NOT = { check_variable = { which = PLA_REACTION value = 13 } } } }
+		   owner = { add_country_modifier = { name = PLA_KKK duration = 7300 } }
+		}
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 13 } } }
+		   owner = { add_country_modifier = { name = PLA_SUPER_KKK duration = 7300 } }
+		}
+	}
+}
+
+#### Outcome B-3 - Cowboy King Constitutional Convention Absolute Monarchy  - 16 and Above
+
+#### The Legacy of Charles II returns
+#### Or alternatively THE COWBOY KING GETS ON HIS HORSE AND GUNS DOWN SOME RACISTS
+
+#### Gets the usually limited to Isolationism Fillibuster decisions so its not all bad.
+
+country_event = { 
+	id = 78548
+	title = "PLANEW49.T"
+	desc = "PLANEW49.D" 
+	picture = "victory_PLA"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = COWBOY_KING_CONSTRUCTION
+	   has_country_flag = PLA_endchain_clearance
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+	    }	   
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLANEW49.A"
+	clr_country_flag = regency_blocker
+	nationalvalue = nv_glory
+	set_country_flag = filibuster_decisions
+	clr_country_flag = COWBOY_KING_CONSTRUCTION
+	clr_country_flag = PLA_endchain_clearance
+	clr_country_flag = PLA_extra_immigration
+	remove_country_modifier = PLA_major_immigration
+	remove_country_modifier = PLA_minor_immigration
+	remove_country_modifier = charismatic_leader_paternal
+	remove_country_modifier = popular_figurehead_paternal
+	country_event = 5550101
+	government = absolute_monarchy
+	ruling_party_ideology = paternal
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = mandatory_service
+    political_reform = primary_culture_only
+    political_reform = no_slavery
+	clr_country_flag = PLA_institutionalized_slavery
+	remove_country_modifier = institutionalized_slavery
+	remove_country_modifier = PLA_economic_meltdown
+	add_country_modifier = { 
+		   name = PLA_SUPER_KKK
+		   duration = 3650
+	} 
+	add_country_modifier = { 
+		   name = PLA_economic_meltdown
+		   duration = 3650
+	} 
+	clr_country_flag = theocratic_government
+	set_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	set_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	clr_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	set_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### Outcome C-1 - Republican Constitutional Convention Safe Status Quo - 10 and Below
+
+### I guess Edouard Marrast gets rolled out the door here if he is in charge. Radicals are completely defeated here.
+
+country_event = { 
+	id = 78549
+	title = "PLANEW50.T"
+	desc = "PLANEW50.D" 
+	picture = "slave_power"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = PLA_endchain_clearance
+	   has_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	   NOT = {
+	      check_variable = {
+		      which = PLA_REACTION
+		      value = 11
+	      } 
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "PLANEW50.A"
+	    prestige = -10
+	    any_pop = { 
+	       limit = { culture = plantagenian }
+		   ideology = { value = market_liberal factor = 0.05 }
+		}
+	    clr_country_flag = radical_PLA_possible
+	    clr_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	    clr_country_flag = PLA_endchain_clearance	    
+	}
+}
+
+#### Outcome C-2 - Republican Constitutional Convention Success - NEEDED FOR ARCADIAN DREAM - 11 to 16 
+
+#### You've done a prometheus and stolen the Arcadian Republican Movement from Belgium you madman.
+
+#### If you still have the Radicals Flag then you would be capable of doing diplomatic unification with NBG if they a valid ruling party so basically just the New Arcadians...
+
+country_event = { 
+	id = 78550
+	title = "PLANEW51.T"
+	desc = "PLANEW51.D" 
+	picture = "fils_liberte"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = PLA_endchain_clearance
+	   has_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 11
+	  }
+	  NOT = {	
+		check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+		}
+	}	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 14
+	}
+	
+	option = { 
+	name = "PLANEW51.A"
+	    set_country_flag = LOU_PLA_OVERRIDE
+	    clr_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	    clr_country_flag = PLA_endchain_clearance
+		clr_country_flag = PLA_ARCADIAN_BLOCKED
+	    add_country_modifier = { 
+		   name = PLA_the_arcadian_dream
+		   duration = -1
+	    }
+	    prestige = 20
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 11 } NOT = { check_variable = { which = PLA_REACTION value = 13 } } } }
+		   owner = { add_country_modifier = { name = PLA_KKK duration = 7300 } }
+		}
+		random_owned = { limit = { owner = { check_variable = { which = PLA_REACTION value = 13 } } }
+		   owner = { add_country_modifier = { name = PLA_SUPER_KKK duration = 7300 } }
+		}
+	}
+}
+
+#### Outcome C-3 - Republican Constitutional Convention Military Dictatorship  - 16 and Above
+
+#### Metal pipe falling sound effect. Good Job. You sent the Planteurs so batshit insane that the Military had to intervene and crack down on everything.
+
+#### At least they abolished slavery. Shame that everything else completely broke in the process. Basically the Absolute Monarchy except without Pan-Arcadianism or anything that resembles native or afro-arcadian rights.
+#### They also get the Fillibuster Expansion decisions, but their relations with the other GPs are down the drain. 
+
+country_event = { 
+	id = 78551
+	title = "PLANEW52.T"
+	desc = "PLANEW52.D" 
+	picture = "victory_PLA"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA 
+	   has_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	   has_country_flag = PLA_endchain_clearance
+	   check_variable = {
+		   which = PLA_REACTION
+		   value = 16
+	   }   
+	}
+	
+	mean_time_to_happen = { 
+	days = 14
+	}
+	
+	option = { 
+	name = "PLANEW52.A"
+	prestige_factor = -0.5
+	set_country_flag = filibuster_decisions
+	nationalvalue = nv_productivity
+	clr_country_flag = radical_PLA_possible
+	clr_country_flag = LOU_REPUBLICAN_CONSTRUCTION
+	clr_country_flag = PLA_endchain_clearance
+	set_country_flag = PLA_ARCADIAN_BLOCKED
+	remove_country_modifier = PLA_the_arcadian_dream
+	government = presidential_dictatorship
+	ruling_party_ideology = paternal
+	political_reform = none_voting
+	political_reform = party_appointed
+	political_reform = no_meeting
+	political_reform = state_press
+	political_reform = state_controlled
+	political_reform = underground_parties
+	political_reform = mandatory_service
+    political_reform = primary_culture_only
+    political_reform = no_slavery
+	clr_country_flag = PLA_extra_immigration	
+	clr_country_flag = PLA_accepting_cultures
+	clr_country_flag = PLA_institutionalized_slavery
+	remove_country_modifier = institutionalized_slavery
+	remove_accepted_culture = afro_frankish
+	remove_accepted_culture = sioux
+	remove_accepted_culture = cherokee
+	remove_accepted_culture = southern_algonquin
+	remove_country_modifier = PLA_special_relationship	
+	remove_country_modifier = PLA_economic_meltdown
+	remove_country_modifier = PLA_major_immigration
+	remove_country_modifier = PLA_minor_immigration
+	add_country_modifier = { 
+		   name = PLA_SUPER_KKK
+		   duration = 3650
+	} 
+	add_country_modifier = { 
+		   name = PLA_economic_meltdown
+		   duration = 3650
+	} 
+	any_country = {
+	    limit = {
+		    OR = {
+			      tag = DUA
+			      tag = BRG
+			      tag = PBG
+			}
+			diplomatic_influence = { who = THIS value = -250 }
+			relation = { who = THIS value = -250 }
+	    }
+	}
+	clr_country_flag = theocratic_government
+	clr_country_flag = merchantrepublic_gov
+	clr_country_flag = parliamentary_republic_gov
+	clr_country_flag = communist_gov
+	clr_country_flag = absolute_monarchy_gov
+	clr_country_flag = semi_constitutional_monarchy_gov
+	clr_country_flag = constitutional_monarchy_gov
+	set_country_flag = presidential_dictatorship_gov
+	clr_country_flag = fascist_gov
+	clr_country_flag = anarcho_liberal_gov
+	clr_country_flag = socialist_republic_gov
+	clr_country_flag = fascist_monarchy_gov
+	clr_country_flag = democracy_gov
+	clr_country_flag = election_started
+	clr_country_flag = conservative_party_in_power
+	clr_country_flag = liberal_party_in_power
+	clr_country_flag = reactionary_party_in_power
+	clr_country_flag = socialist_party_in_power
+	clr_country_flag = communist_party_in_power
+	clr_country_flag = fascist_party_in_power
+	set_country_flag = paternal_party_in_power
+	clr_country_flag = anarcho_liberal_party_in_power
+	clr_country_flag = tory_election_win
+	clr_country_flag = liberal_election_win
+	clr_country_flag = communist_election_win
+	clr_country_flag = fascist_election_win
+	clr_country_flag = reactionary_election_win
+	clr_country_flag = anarcho_liberal_election_win
+	clr_country_flag = social_liberal_election_win
+	clr_country_flag = market_liberal_election_win		
+	clr_country_flag = paternal_election_win
+	clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### Treaty of Athesia ####
+
+#### Venice Defeat - You've been booted out of Athesia by Arcadian GP by failling to hold on ####
+
+country_event = { 
+	id = 78552
+	title = "PLANEW53.T"
+	desc = "PLANEW53.D" 
+	#picture = "victory_PLA"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	    tag = VEN
+		exists = yes
+	    has_global_flag = fighting_athesia_war
+        has_country_flag = custom_treaty_loser	
+        war = no	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	option = { 
+	name = "PLANEW53.A"
+	    prestige = -10
+	    clr_country_flag = custom_treaty_loser
+		clr_global_flag = fighting_athesia_war
+		any_country = { limit = { owns = 200 } set_country_flag = athesia_arcadia_3 set_country_flag = athesia_arcadia set_country_flag = athesia_claim country_event = { id = 78553 days = 1 } }
+		any_owned = { limit = { is_core = ATS } remove_core = THIS secede_province = ATS }
+
+	}
+}
+
+country_event = { 
+	id = 78553
+	title = "PLANEW54.T"
+	desc = "PLANEW54.D" 
+	#picture = "victory_PLA"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+	name = "PLANEW54.A"
+	    ATS = { all_core = { add_core = THIS } }
+	    inherit = ATS
+	}
+}
+
+#### Venice Victory - How the actual fuck is this even possible ####
+
+country_event = { 
+	id = 78554
+	title = "PLANEW55.T"
+	desc = "PLANEW55.D" 
+	#picture = "victory_PLA"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	    tag = VEN
+		exists = yes
+	    has_global_flag = fighting_athesia_war
+        NOT = { has_country_flag = custom_treaty_loser }
+        war = no	   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	option = { 
+	name = "PLANEW55.A"
+	    prestige = 50
+		PLA = { clr_country_flag = custom_treaty_loser }
+	    clr_country_flag = custom_treaty_loser
+		clr_global_flag = fighting_athesia_war
+	}
+}
+
+#### Venice Annexed Failsafe - Venice has been annexed while we were at war with them. Annex ATS I guess... ####
+
+country_event = { 
+	id = 78555
+	title = "PLANEW56.T"
+	desc = "PLANEW56.D" 
+	#picture = "victory_PLA"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+	    tag = PLA
+	    has_global_flag = fighting_athesia_war
+        NOT = { exists = VEN }   
+	}
+	
+	mean_time_to_happen = { 
+	   days = 2
+	}
+	
+	option = { 
+	name = "PLANEW56.A"
+	    clr_global_flag = fighting_athesia_war
+	    ATS = { all_core = { add_core = THIS } }
+	    inherit = ATS	
+	}
+}
+
+#NUN gets a event to switch to theocracy after being released due to PLA CW
+
+country_event = { 
+	id = 78556
+	title = "Jesuit Land"
+	desc = "Its time for Jesus" 
+	#picture = "victory_PLA"
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "hallauhahahaha"
+	   PLA = { release_vassal = THIS }
+	   any_country = { 
+	       limit = { primary_culture = plantagenian }
+		   set_country_flag = kill_NUN
+	   }
+	   government = theocracy
+	   ruling_party_ideology = conservative
+	   political_reform = none_voting
+	   political_reform = party_appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   political_reform = closed_borders
+	   political_reform = mandatory_service
+	   political_reform = primary_culture_only
+	   clr_country_flag = tory_election_win
+       clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win		
+	   clr_country_flag = paternal_election_win
+	   set_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = parliamentary_republic_gov
+	   clr_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov		
+	}
+}

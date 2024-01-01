@@ -335,8 +335,9 @@ rename_apacheria = {
 		       tag = PLA
 			   has_country_flag = PLA_ARCADIA
 			}         
-			NOT = { has_country_flag = COWBOY_KING }
-            NOT = { capital = 139 }
+			NOT = { has_country_flag = COWBOY_KING }          
+			NOT = { has_country_flag = new_capital }
+			NOT = { capital = 139 }
         }
         
         allow = { 
@@ -356,13 +357,11 @@ rename_apacheria = {
         }
         
         allow = { 
-		   OR = {
-		      AND = {
-                 state_n_government = 1
-			     year = 1860
-		      }
-			  year = 1865
-			}
+		   OR = { 
+		      has_country_flag = PLA_annex_CHE_quick
+              nationalism_n_imperialism = 1
+			  year = 1870
+		   }
         } 
         
         effect = { 
@@ -370,6 +369,7 @@ rename_apacheria = {
 	          all_core = { add_core = PLA }
 	          all_core = { add_core = LOU }
 		   }
+		   clr_country_flag = PLA_annex_CHE_quick
 		   clr_global_flag = CHE_VASSAL_ACTIVE
            inherit = CHE 
         } 
@@ -388,16 +388,15 @@ rename_apacheria = {
         }
         
         allow = { 
-		   OR = {
-		      AND = {
-                 state_n_government = 1
-			     year = 1860
-		      }
-			  year = 1865
-			}
+		   OR = { 
+		      has_country_flag = PLA_annex_CHE_quick
+              nationalism_n_imperialism = 1
+			  year = 1870
+		   }
         } 
         
         effect = { 
+		   clr_country_flag = PLA_annex_CHE_quick
 		   set_country_flag = CHE_is_dead
 		   CHE = {
 	          all_core = { add_core = PLA }
@@ -409,7 +408,7 @@ rename_apacheria = {
 			        casus_belli = conquest_any
 		         }
 		         defender_goal = {
-			        casus_belli = custom_treaty_cb
+			        casus_belli = cut_down_to_size
 		        }	
 	        }
         } 
@@ -439,14 +438,12 @@ rename_apacheria = {
 	abolish_slavery_PLA = {
 		picture = enslave_the_serfs_image
 		potential = {
-		    OR = {
-		       tag = PLA
-			   has_country_flag = PLA_ARCADIA
-			}
+		    has_country_flag = PLA_tags
 		    OR = { 
 			   has_country_modifier = institutionalized_slavery	
 			   has_country_flag = PLA_institutionalized_slavery
 			   slavery = yes_slavery
+			   slavery = freedom_of_womb 
 			}			
 			OR = {
 				government = hms_government
@@ -455,11 +452,18 @@ rename_apacheria = {
 				government = merchant_republic
 				government = socialist_republic
 			}
+			NOT = { has_country_modifier = PLA_dixieland }
 		}
 	
 		allow = {
 			war = no
-			year = 1900
+			OR = {
+			   AND = { 
+			      slavery = freedom_of_womb
+			      year = 1870
+			   }
+			   year = 1900
+			}
 			invention = mission_to_civilize
 			NOT = { citizenship_policy = residency }
 			NOT = { ruling_party_ideology = reactionary }
@@ -514,4 +518,477 @@ rename_apacheria = {
 		
 		ai_will_do = { factor = 1 }
 	}
+	
+	### New Plantagenia Content ###
+	
+    PLA_LOUIS_RECONSTRUCTION = { 
+	    
+	    picture = the_dawn_of_an_era_dec
+        potential = { 
+		     tag = PLA
+             has_country_flag = LOUIS_RECONSTRUCTION
+        }
+        
+        allow = { 
+		    ideological_thought = 1
+			year = 1850	
+            war = no				
+        } 
+        
+        effect = { 
+		   clr_country_flag = LOUIS_RECONSTRUCTION
+		   prestige = 5
+		   country_event = { id = 785230 days = 7 }	
+        } 
+    }
+	
+    PLA_REFORM_ACT_REFORMS = { 
+	    picture = the_dawn_of_an_era_dec
+        potential = { 
+		     tag = PLA
+             has_country_flag = REFORM_RECONSTRUCTION
+        }
+        
+        allow = { 
+		    ideological_thought = 1
+			year = 1850	
+            war = no				
+        } 
+        
+        effect = { 
+		   clr_country_flag = REFORM_RECONSTRUCTION
+		   prestige = 5
+		   country_event = { id = 78512 days = 7 }	
+        } 
+    }
+	
+    PLA_COWBOY_RECONSTRUCTION = { 
+	   
+	    picture = the_dawn_of_an_era_dec
+        potential = { 
+		     tag = PLA
+             has_country_flag = COWBOY_RECONSTRUCTION
+        }
+        
+        allow = { 
+		    ideological_thought = 1
+			year = 1850
+            war = no				
+        } 
+        
+        effect = { 
+		   clr_country_flag = COWBOY_RECONSTRUCTION
+		   prestige = 5
+		   country_event = { id = 78513 days = 7 }	
+        } 
+    }
+	
+	### Note that this can only be triggered after the conclusion of the Burgundian Civil War for obvious reasons.
+	
+    PLA_DIPLOMACY_REFORM = { 
+	    picture = return_cores_img
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_trigger_diplomatic_decision
+        }
+        
+        allow = { 
+		    state_n_government = 1
+		    year = 1863
+			NOT = { AND = { exists = PBG exists = BRG } }
+		    NOT = { BRG = { war_with = PBG } }
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_trigger_diplomatic_decision
+		   prestige = 5
+		   country_event = { id = 78531 days = 7 }	
+        } 
+    }
+	
+	### If Dual Monarchy and Burgundy don't exist then use this
+	
+    PLA_DIPLOMACY_REFORM_IMMEDIATE = { 
+	    #picture = SevenRep
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_trigger_diplomatic_decision
+        }
+        
+        allow = { 
+		    state_n_government = 1
+		    year = 1863
+			NOT = { 
+			   exists = DUA
+			   exists = BRG
+			   exists = PBG
+			   exists = FRK
+			}
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_trigger_diplomatic_decision
+	       set_country_flag = PLA_endchain_clearance
+	       clr_global_flag = PLA_loves_slavery
+	       prestige = 15
+           set_country_flag = filibuster_decisions
+	       any_greater_power = {
+	          relation = { who = THIS value = -100 }
+		      diplomatic_influence = { who = THIS value = -100 }
+	       } 
+        } 
+    }
+	
+    PLA_extra_immigration_minor = { 
+	    picture = immigrants_arriving
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_extra_immigration
+		     OR = {
+			    has_global_flag = NBG_LIONS
+			    has_global_flag = NBG_NEW_ARCADIAN
+				NBG = { government = presidential_dictatorship }
+			 }
+        }
+        
+        allow = { 
+		    nationalism_n_imperialism = 1
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_extra_immigration
+		   prestige = 5
+		   add_country_modifier = {
+			   name = PLA_minor_immigration
+			   duration = 18250
+		   }	
+        } 
+    }
+	
+    PLA_extra_immigration_major = { 
+	    picture = immigrants_arriving
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_extra_immigration
+		    OR = {
+			   has_global_flag = NBG_BURGUNDIAN
+			   has_global_flag = NBG_OLD_ARCADIAN
+			}
+			NBG = { NOT = { government = presidential_dictatorship } }
+        }
+        
+        allow = { 
+		    nationalism_n_imperialism = 1
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_extra_immigration
+		   prestige = 5
+		   add_country_modifier = {
+			   name = PLA_major_immigration
+			   duration = 18250
+		   }	
+        } 
+    }
+	
+	# This needs all 1850s bracket army techs to prove that you are cutting edge.
+	
+    PLA_fort_renovation = { 
+	    picture = louis_briere
+        potential = { 
+		     tag = PLA
+             has_country_flag = toulouse_renovation_possible
+        }
+        
+        allow = { 
+		    point_defense_system = 1
+			breech_loaded_rifles = 1
+			iron_breech_loaded_artillery = 1
+			military_statistics = 1
+			army_decision_making = 1
+        } 
+        
+        effect = { 
+		   clr_country_flag = toulouse_renovation_possible
+		   prestige = 5
+		   add_country_modifier = {
+			   name = PLA_military_reforms
+			   duration = 25550
+		   }	
+        } 
+    }
+	
+	## This railroad is one level higher then Iron Railroad. Think of a overdesigned trunk route ex SEC in the US
+	## This goes between New Orleans and OTL St Louis to maximise Missipile Economic Integration
+	
+    PLA_great_trunk_railroad = { 
+	    picture = westernize_nation
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_railroad_construction
+        }
+        
+        allow = { 
+		   iron_railroad = 1
+		   money = 500000
+		   owns = 148
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_railroad_construction
+		   set_country_flag = PLA_railroad_construction_more
+		   set_country_flag = PLA_railroad_construction_more_north
+		   money = -500000
+		   prestige = 15
+		   139 = { infrastructure = 4 }
+		   140 = { infrastructure = 4 }
+		   192 = { infrastructure = 4 }
+		   193 = { infrastructure = 4 }
+		   148 = { infrastructure = 4 }
+		   145 = { infrastructure = 4 }
+        } 
+    }
+	
+    PLA_eastern_route = { 
+	    picture = westernize_nation
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_railroad_construction_more
+        }
+        
+        allow = { 
+		   owns = 191
+		   iron_railroad = 1
+		   money = 500000
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_railroad_construction_more
+		   money = -500000
+		   prestige = 5
+		   139 = { life_rating = 5 }
+		   189 = { infrastructure = 4 }
+		   188 = { infrastructure = 4 }
+		   191 = { infrastructure = 4 }
+           206 = { infrastructure = 4 } 
+           205 = { life_rating = 5 infrastructure = 4 } 		   
+        } 
+    }
+	
+	### This expands it up to OTL Chicago if you own it
+	
+    PLA_great_trunk_lakes = { 
+	    picture = westernize_nation
+        potential = { 
+		     tag = PLA
+             has_country_flag = PLA_railroad_construction_more_north
+			 owns = 163
+			 owns = 167
+        }
+        
+        allow = { 
+		   iron_railroad = 1
+		   money = 250000
+        } 
+        
+        effect = { 
+		   clr_country_flag = PLA_railroad_construction_more_north
+		   money = -250000
+		   prestige = 5
+		   139 = { life_rating = 6 }
+		   167 = { infrastructure = 4 }
+		   164 = { infrastructure = 4 }
+		   163 = { 
+		      life_rating = 5
+		      remove_province_modifier = baby_boom
+			  add_province_modifier = { 
+				 name = baby_boom
+				 duration = 5475
+              }					
+		      infrastructure = 4 
+		   }
+        } 
+    }
+	
+    PLA_native_cultures_act_NONLOU = { 
+	    #picture = SevenRep
+        potential = { 
+		     OR = {
+		        tag = PLA
+				AND = {
+				   tag = ARC
+				   has_country_flag = PLA_ARCADIA
+				}
+		     }
+             has_country_flag = PLA_accepting_cultures
+        }
+        
+        allow = { 
+		   revolution_n_counterrevolution = 1
+		   vote_franschise = universal_voting
+		   citizens_rights = all_voting_pops 
+		   slavery = no_slavery		   
+        } 
+        
+        effect = { 
+		   prestige = 5
+		   clr_country_flag = PLA_accepting_cultures
+		   add_accepted_culture = cherokee
+		   add_accepted_culture = southern_algonquin
+		   add_accepted_culture = sioux
+		   add_accepted_culture = apache
+        } 
+    }
+	
+	## The Cherokee are not real in LOUPLA
+	
+    PLA_native_cultures_act_LOU = { 
+	    #picture = SevenRep
+        potential = { 
+		     OR = {
+		        tag = PLA
+				AND = {
+				   tag = ARC
+				   has_country_flag = PLA_ARCADIA
+				}
+		     }
+             has_country_flag = PLA_accepting_cultures_LOU
+        }
+        
+        allow = { 
+		   revolution_n_counterrevolution = 1
+		   vote_franschise = universal_voting
+		   citizens_rights = all_voting_pops 
+		   slavery = no_slavery		   
+        } 
+        
+        effect = { 
+		   prestige = 5
+		   clr_country_flag = PLA_accepting_cultures_LOU
+		   add_accepted_culture = southern_algonquin
+		   add_accepted_culture = sioux
+		   add_accepted_culture = apache
+        } 
+    }
+	
+	### Fillibuster Expansion
+	
+	### The Athesia War - If Venice is isolated and not allied to any of the problem GPs then you can invade ATS to force them out.
+	### Any GP can do this but PLA is especially expedited 
+	
+	athesia_war = {
+		picture = athesia
+		potential = {
+	        owns = 200
+			VEN = { owns = 199 }
+			NOT = { has_country_flag = athesia_war }
+		}
+		
+		allow = { 
+		    OR = {
+			  has_country_flag = filibuster_decisions
+			  AND = {
+			     revolution_n_counterrevolution = 1
+			     is_greater_power = yes
+			  }
+			}
+			VEN = {
+			    NOT = {
+			       alliance_with = BRG
+				   alliance_with = NBG
+				   alliance_with = DUA
+				   alliance_with = SPA
+				   alliance_with = SCA
+				   alliance_with = HLR
+				   alliance_with = PBG
+				   alliance_with = FRK
+				   alliance_with = CAE
+				   alliance_with = GCF
+				}
+		    }
+		}
+		
+		effect = {
+		    set_country_flag = athesia_war
+			set_global_flag = fighting_athesia_war
+		    prestige = 10
+			war = {
+				target = VEN
+				attacker_goal = {
+					casus_belli = custom_treaty_cb
+				}
+				defender_goal = {
+					casus_belli = cut_down_to_size
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+	
+	treaty_of_athesia = {
+		picture = treaty_signing
+		potential = {
+			has_country_flag = athesia_war
+			has_global_flag = fighting_athesia_war
+			war_with = VEN
+		}
+		
+		allow = {
+			war = yes
+			199 = { controlled_by = THIS province_control_days = 365 }
+		}
+		
+		effect = {
+		    end_war = VEN
+			clr_country_flag = custom_treaty_loser
+		    VEN = { clr_country_flag = custom_treaty_loser country_event = { id = 78552 days = 0 } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### The Athesia War - If ATS exists then you can just core them if you are PLA or any Arcadia.
+	
+	athesia_claim = {
+		picture = athesia
+		potential = {
+		    OR = {
+		       tag = PLA
+			   tag = ARC
+			}
+			owns = 200
+            exists = ATS		
+            NOT = { ATS = { in_sphere = THIS } }			
+            NOT = { has_country_flag = athesia_claim }	
+            NOT = { has_country_flag = athesia_arcadia }				
+		}
+		
+		allow = { 
+		    OR = {
+			   has_country_flag = filibuster_decisions
+			   AND = {
+			      revolution_n_counterrevolution = 1
+			      is_greater_power = yes
+			   }
+			}
+		}
+		
+		effect = {
+		    set_country_flag = athesia_claim
+			set_country_flag = athesia_arcadia
+		    prestige = 10
+			ATS = { all_core = { add_core = THIS } }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	### Todo: Radical PLA-LOU Interactions
 }

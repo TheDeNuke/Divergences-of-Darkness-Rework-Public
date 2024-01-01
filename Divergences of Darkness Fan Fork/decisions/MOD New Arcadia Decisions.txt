@@ -67,6 +67,48 @@ political_decisions = {
 		}
 	}
 	
+	PLA_annex_NUN_kill = {
+		picture = Manifest_Destiny_ARC
+		potential = {
+		    OR = {
+	           tag = PLA
+			   tag = ARC
+			}
+			NUN = { exists = yes NOT = { vassal_of = THIS } }
+			has_country_flag = kill_NUN
+		}
+		
+		allow = {
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+			war = no
+			NOT = { exists = LIB }
+		    NOT = { exists = OUM }	
+			NOT = { exists = LOU }	
+            NOT = { war_exhaustion = 1 }		
+		}
+		
+		effect = {
+		    prestige = 10
+			clr_country_flag = kill_NUN
+	        war = {
+		        target = NUN
+			    attacker_goal = {
+				    casus_belli = conquest_any
+			    }
+			    defender_goal = {
+				    casus_belli = cut_down_to_size
+			    }
+		    }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	PLA_fix_LIB_mistake = {
 		picture = treaty_signing
 		potential = {
@@ -115,6 +157,7 @@ political_decisions = {
 		    }
 			NOT = { has_country_flag = NBG_goes_for_SKR }
 			NOT = { has_country_flag = SKR_lakeshore_drive }
+			NOT = { has_global_flag = SUPER_SKR }
 		}
 		
 		allow = {
@@ -349,6 +392,7 @@ political_decisions = {
 			owns = 178
 			has_country_flag = SKR_lakeshore_drive
 			NOT = { has_country_flag = SKR_lakeshore_drive_two }
+			NOT = { has_global_flag = SUPER_SKR }
 		}
 		
 		allow = {
@@ -404,7 +448,7 @@ political_decisions = {
 			   is_greater_power = yes
 			   year = 1865
 			}
-			NOT = { disarmed = yes }
+			is_disarmed = no
 		}
 		
 		effect = {
@@ -447,7 +491,7 @@ political_decisions = {
 			   is_greater_power = yes
 			   year = 1865
 			}
-			NOT = { disarmed = yes }
+			is_disarmed = no
 		}
 		
 		effect = {
@@ -469,12 +513,14 @@ political_decisions = {
 		potential = {
 	        owns = 3267
 			200 = { empty = yes }
+			NOT = { ATS = { vassal_of = THIS } }
 		}
 		
 		allow = { 
-		    steel_railroad = 1
-			invention = mission_to_civilize
-			invention = prophylaxis_against_malaria		    
+		    inorganic_chemistry = 1
+		    iron_railroad = 1
+			invention = prophylaxis_against_malaria	
+            year = 1855			
 		}
 		
 		effect = {
@@ -504,6 +550,7 @@ political_decisions = {
 			   tag = NBG
 			}
 			NOT = { 200 = { is_core = THIS } }
+			NOT = { ATS = { vassal_of = THIS } }
 		}
 		
 		allow = { 
@@ -520,280 +567,9 @@ political_decisions = {
 		}
 	}
 
-	
-	# THE BELGIAN CONFEDERATION GOES SOUTH
-	
-	# Burgundian - Invade and Annex LOU and then destroy PLA if LIB does not exist 
-	
-	
-	NBG_DESTROY_LOU_BURGUNDIAN = {
-		picture = louisania
-		potential = {
-	        tag = NBG
-			exists = LOU
-			has_global_flag = NBG_BURGUNDIAN
-			NOT = { has_country_flag = DESTROY_LOU }
-		}
-		
-		allow = {
-		    nationalism_n_imperialism = 1  		    
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}
-            NOT = { exists = CHE }
-		}
-		
-		effect = {
-		    set_country_flag = DESTROY_LOU
-		    prestige = 10
-		    leave_alliance = LOU
-		    relation = { who = LOU value = -400 }
-		    diplomatic_influence = { who = LOU value = -400 }
-		    LOU = { all_core = { add_core = NBG } }    
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	NBG_DESTROY_PLA_BURGUNDIAN = {
-		picture = Plantagenia
-		potential = {
-	        tag = NBG
-			exists = PLA
-			has_global_flag = NBG_BURGUNDIAN  
-			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }	
-            NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }			
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}
-		    NOT = { exists = LOU }
-            NOT = { exists = CHE }
-			PLA = { 
-			   NOT = {
-			      OR = {
-					 vassal_of = THIS
-					 in_sphere = THIS
-					 alliance_with = THIS
-					 truce_with = THIS
-			      }
-			   }
-			}
-		}
-		
-		effect = {
-		    prestige = 10
-			set_country_flag = SECOND_ARCADIAN_TRIGGER
-			PLA = { remove_country_modifier = PLA_the_arcadian_dream }
-			country_event = { id = 79160 days = 3 }	
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	# Lions - Dismantle PLA if LIB, OUM and LOU don't exist .
-	
-	NBG_DESTROY_PLA_LIONS = {
-		picture = Plantagenia
-		potential = {
-	        tag = NBG
-			has_global_flag = NBG_LIONS 
-            exists = PLA			
-			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
-			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}		
-		    NOT = { exists = LOU }
-			NOT = { exists = LIB }
-			NOT = { exists = CHE }
-			NOT = { truce_with = PLA }
-			PLA = { 
-			   NOT = {
-			      OR = {
-					 vassal_of = THIS
-					 in_sphere = THIS
-					 alliance_with = THIS
-					 truce_with = THIS
-			      }
-			   }
-			}
-		}
-		
-		effect = {
-		    prestige = 10
-			set_country_flag = SECOND_ARCADIAN_TRIGGER
-			PLA = { remove_country_modifier = PLA_the_arcadian_dream }
-		    country_event = { id = 79160 days = 3 }	    
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	# Old Arcadian = Burn it all down
-	
-	NBG_DESTROY_LOU_OLD_ARCADIAN = {
-		picture = louisania
-		potential = {
-	        tag = NBG
-            exists = LOU
-			has_global_flag = NBG_OLD_ARCADIAN
-			NOT = { has_country_flag = DESTROY_LOU }
-		}
-		
-		allow = {
-		    nationalism_n_imperialism = 1  		    
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}
-            NOT = { exists = CHE }
-		}
-		
-		effect = {
-		    prestige = 10
-			set_country_flag = DESTROY_LOU
-		    leave_alliance = LOU
-		    relation = { who = LOU value = -400 }
-		    diplomatic_influence = { who = LOU value = -400 }
-		    LOU = { all_core = { add_core = NBG } }    
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
 
-	NBG_DESTROY_PLA_OLD_ARCADIAN = {
-		picture = Plantagenia
-		potential = {
-	        tag = NBG
-			has_global_flag = NBG_OLD_ARCADIAN     
-			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
-			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
-			PLA = { 
-			   exists = yes
-			   NOT = {
-			      vassal_of = THIS
-			      in_sphere = THIS
-			   }
-			}
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}		
-		    NOT = { exists = LOU }
-		    NOT = { exists = CHE }
-			NOT = { truce_with = PLA }
-		}
-		
-		effect = {
-		    prestige = 10
-		    country_event = { id = 79157 days = 3 }
-			PLA = { remove_country_modifier = PLA_the_arcadian_dream }
-            set_country_flag = SECOND_ARCADIAN_TRIGGER			
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	# New Arcadian - Attempt Peaceful Annexation. Aggressively Annex LIB if its a monarchy.
-	
-	
-	NBG_LIBERATE_LOU_NEW_ARCADIAN = {
-		picture = louisania
-		potential = {
-	        tag = NBG
-            exists = LOU
-			has_global_flag = NBG_NEW_ARCADIAN
-			NOT = { has_country_flag = DESTROY_LOU }
-		}
-		
-		allow = {
-		    nationalism_n_imperialism = 1  		    
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}
-            NOT = { exists = CHE }
-		}
-		
-		effect = {
-		    set_country_flag = DESTROY_LOU
-		    prestige = 10
-		    leave_alliance = LOU
-		    relation = { who = LOU value = -400 }
-		    diplomatic_influence = { who = LOU value = -400 }
-		    LOU = { country_event = 79155 } 
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	NBG_DESTROY_PLA_NEW_ARCADIAN = {
-		picture = Plantagenia
-		potential = {
-	        tag = NBG
-			has_global_flag = NBG_NEW_ARCADIAN     
-			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
-			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
-			PLA = { 
-			   exists = yes
-			   NOT = {
-			      vassal_of = THIS
-				  in_sphere = THIS
-			   }
-			}
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}		
-		    NOT = { exists = LOU }
-			NOT = { exists = CHE }
-			NOT = { truce_with = PLA }
-		}
-		
-		effect = {
-		    prestige = 10
-		    country_event = { id = 79158 days = 3 }
-			PLA = { remove_country_modifier = PLA_the_arcadian_dream }
-            set_country_flag = SECOND_ARCADIAN_TRIGGER			
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
+    ################ SECOND ARCADIAN WAR LEADUP DECISIONS ##########################
+
 	NBG_ANNEX_LOU_SPHERE = {
 		picture = louisania
 		potential = {
@@ -852,8 +628,406 @@ political_decisions = {
 			factor = 1
 		}
 	}
+		
 	
-	# ALL POSSIBLE TAGS WILL DO THIS IF PLA DOES NOT EXIST REGARDLESS OF IDEOLOGY
+	NBG_LIBERATE_LOU_NEW_ARCADIAN = {
+		picture = louisania
+		potential = {
+	        tag = NBG
+            exists = LOU
+			has_global_flag = NBG_NEW_ARCADIAN
+			NOT = { has_country_flag = DESTROY_LOU }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1  		    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+            NOT = { exists = CHE }
+		}
+		
+		effect = {
+		    set_country_flag = DESTROY_LOU
+		    prestige = 10
+		    leave_alliance = LOU
+		    relation = { who = LOU value = -400 }
+		    diplomatic_influence = { who = LOU value = -400 }
+		    LOU = { country_event = 79155 } 
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	
+	# Old Arcadian = Burn it all down
+	
+	NBG_DESTROY_LOU_OLD_ARCADIAN = {
+		picture = louisania
+		potential = {
+	        tag = NBG
+            exists = LOU
+			has_global_flag = NBG_OLD_ARCADIAN
+			NOT = { has_country_flag = DESTROY_LOU }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1  		    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+            NOT = { exists = CHE }
+		}
+		
+		effect = {
+		    prestige = 10
+			set_country_flag = DESTROY_LOU
+		    leave_alliance = LOU
+		    relation = { who = LOU value = -400 }
+		    diplomatic_influence = { who = LOU value = -400 }
+		    LOU = { all_core = { add_core = NBG } }    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Burgundian - Invade and Annex LOU and then destroy PLA if LIB does not exist 
+	
+	
+	NBG_DESTROY_LOU_BURGUNDIAN = {
+		picture = louisania
+		potential = {
+	        tag = NBG
+			exists = LOU
+			has_global_flag = NBG_BURGUNDIAN
+			NOT = { has_country_flag = DESTROY_LOU }
+		}
+		
+		allow = {
+		    nationalism_n_imperialism = 1  		    
+		    OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+            NOT = { exists = CHE }
+		}
+		
+		effect = {
+		    set_country_flag = DESTROY_LOU
+		    prestige = 10
+		    leave_alliance = LOU
+		    relation = { who = LOU value = -400 }
+		    diplomatic_influence = { who = LOU value = -400 }
+		    LOU = { all_core = { add_core = NBG } }    
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+	
+    ################################################################
+	############## SECOND ARCADIAN WAR TRIGGER DECISIONS ###########
+	################################################################
+	
+	# THE BELGIAN CONFEDERATION GOES SOUTH
+	
+    NBG_DESTROY_PLA_BURGUNDIAN = {
+		picture = Plantagenia
+		potential = {
+	        tag = NBG
+			exists = PLA
+			has_global_flag = NBG_BURGUNDIAN  
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }	
+            NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }			
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    is_greater_power = yes
+		    NOT = { exists = LOU }
+			PLA = { 
+			   NOT = {
+			      OR = {
+					 vassal_of = THIS
+					 in_sphere = THIS
+					 alliance_with = THIS
+					 truce_with = THIS
+			      }
+			   }
+			}
+		}
+		
+		effect = {
+		    prestige = 10
+			set_country_flag = SECOND_ARCADIAN_TRIGGER
+			PLA = { set_country_flag = STARTED_ARCADIAN_UNIFICATION remove_country_modifier = PLA_the_arcadian_dream }
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+		    any_country = {
+		       limit = {
+			      tag = PLA
+			      exists = yes
+		   	   }
+               country_event = { id = 792022 days = 7 }
+	        }		
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# Lions - Dismantle PLA if LIB, OUM and LOU don't exist .
+	
+	NBG_DESTROY_PLA_LIONS = {
+		picture = Plantagenia
+		potential = {
+	        tag = NBG
+			has_global_flag = NBG_LIONS 
+            exists = PLA			
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    is_greater_power = yes		
+		    NOT = { exists = LOU }
+			NOT = { exists = LIB }
+			NOT = { truce_with = PLA }
+			PLA = { 
+			   NOT = {
+			      OR = {
+					 vassal_of = THIS
+					 in_sphere = THIS
+					 alliance_with = THIS
+					 truce_with = THIS
+			      }
+			   }
+			}
+		}
+		
+		effect = {
+		    prestige = 10
+			set_country_flag = SECOND_ARCADIAN_TRIGGER
+			PLA = { set_country_flag = STARTED_ARCADIAN_UNIFICATION remove_country_modifier = PLA_the_arcadian_dream }
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+		    any_country = {
+		       limit = {
+			      tag = PLA
+			      exists = yes
+		   	   }
+               country_event = { id = 792022 days = 7 }
+	        }	   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	NBG_DESTROY_PLA_OLD_ARCADIAN = {
+		picture = Plantagenia
+		potential = {
+	        tag = NBG
+			has_global_flag = NBG_OLD_ARCADIAN     
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+			PLA = { 
+			   exists = yes
+			   NOT = {
+			      vassal_of = THIS
+			      in_sphere = THIS
+			   }
+			}
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    is_greater_power = yes	
+		    NOT = { exists = LOU }
+			NOT = { truce_with = PLA }
+		}
+		
+		effect = {
+		    prestige = 10
+			PLA = { set_country_flag = STARTED_ARCADIAN_UNIFICATION remove_country_modifier = PLA_the_arcadian_dream }
+            set_country_flag = SECOND_ARCADIAN_TRIGGER	
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+		    any_country = {
+		       limit = {
+			      tag = PLA
+			      exists = yes
+		   	   }
+               country_event = { id = 792022 days = 7 }
+	        }			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	NBG_DESTROY_PLA_NEW_ARCADIAN = {
+		picture = Plantagenia
+		potential = {
+	        tag = NBG
+			has_global_flag = NBG_NEW_ARCADIAN     
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+			PLA = { 
+			   exists = yes
+			   NOT = {
+			      vassal_of = THIS
+				  in_sphere = THIS
+			   }
+			}
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    is_greater_power = yes	
+		    NOT = { exists = LOU }
+			NOT = { truce_with = PLA }
+		}
+		
+		effect = {
+		    prestige = 10
+			PLA = { set_country_flag = STARTED_ARCADIAN_UNIFICATION remove_country_modifier = PLA_the_arcadian_dream }
+            set_country_flag = SECOND_ARCADIAN_TRIGGER	
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+		    any_country = {
+		       limit = {
+			      tag = PLA
+			      exists = yes
+		   	   }
+               country_event = { id = 792022 days = 7 }
+	        }			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	# This is to inform the PLA player when they can actually kill off NBG
+	
+	#PLA_MURDER_NBG_DECISION_VISIBILITY = {
+	#	picture = SevenRep
+	#	potential = {
+    #    ai = no
+	#       tag = PLA 
+	#		exists = NBG
+	#		year = 1848
+	#		NBG = { 
+	#		   OR = {
+	#		      is_secondary_power = yes
+	#		      is_greater_power = yes
+	#		      has_country_flag = SECOND_ARCADIAN_TRIGGER
+	#			  vassal_of = THIS
+	#			  in_sphere = THIS
+	#		   }
+	#		}
+	#	}
+	#	
+	#	allow = {
+	#	    revolution_n_counterrevolution = 1
+	#		NBG = { 
+	#		   NOT = {
+	#		      is_secondary_power = yes
+	#		      is_greater_power = yes
+	#		      has_country_flag = SECOND_ARCADIAN_TRIGGER
+	#			  vassal_of = THIS
+	#			  in_sphere = THIS
+	#		   }
+	#		}
+	#	}
+	#	
+	#	effect = {
+	#   
+	#	}
+	#	
+	#	ai_will_do = {
+	#		factor = 0
+	#	}
+	#}
+	
+	PLA_MURDER_NBG_FAILSAFE = {
+		picture = SevenRep
+		potential = {
+	        tag = PLA 
+			exists = yes
+			exists = NBG
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+			NOT = { has_country_flag = STARTED_ARCADIAN_UNIFICATION }
+		}
+		
+		allow = {
+		    revolution_n_counterrevolution = 1
+		    is_greater_power = yes
+		    NOT = { exists = LOU }
+			NOT = { exists = LIB }
+			NOT = { truce_with = NBG }
+		}
+		
+		effect = {
+		    prestige = 10
+		    # Second Arcadian War Trigger
+			set_country_flag = STARTED_ARCADIAN_UNIFICATION 
+			remove_country_modifier = PLA_the_arcadian_dream
+            NBG = { set_country_flag = SECOND_ARCADIAN_TRIGGER }	
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+		    any_country = {
+		       limit = {
+			      tag = NBG
+			      exists = yes
+		   	   }
+               country_event = { id = 792024 days = 7 }
+	        }			
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+		
+	# Unlike the above decisions these iterations do not have a lead up. However the checking event for CHE will trigger regardless.
 	
 	NBG_DESTROY_LIB = {
 		picture = acceptation_afro
@@ -861,10 +1035,7 @@ political_decisions = {
 	        tag = NBG
 			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }	
             NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }	
-			exists = LIB
-		    NOT = { exists = LOU }
-            NOT = { exists = CHE }
-			NOT = { exists = PLA }			
+			exists = LIB		
 		}
 		
 		allow = {
@@ -873,16 +1044,40 @@ political_decisions = {
 			   is_secondary_power = yes
 			   is_greater_power = yes
 			}
+		    NOT = { exists = LOU }
+            NOT = { exists = CHE }
+			NOT = { exists = PLA }	
+			NOT = { truce_with = LIB }
 		}
 		
 		effect = {
 		    prestige = 10
+			LIB = { set_country_flag = STARTED_ARCADIAN_UNIFICATION  }
 			set_country_flag = SECOND_ARCADIAN_TRIGGER
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
 			country_event = { id = 791600 days = 3 }	
 		}
 		
 		ai_will_do = {
 			factor = 1
+	           modifier = {
+	              factor = 0
+			      is_disarmed = yes
+		       } 
+	           modifier = {
+	              factor = 0
+			      has_recently_lost_war = yes
+		       } 
+	           modifier = {
+	              factor = 0			  
+			      LIB = { brigades_compare = 1.5 }
+		       }
 		}
 	}
 	
@@ -891,17 +1086,11 @@ political_decisions = {
 		potential = {
 	        tag = LIB		
 			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+			NOT = { has_country_flag = STARTED_ARCADIAN_UNIFICATION }
 		}
 		
 		allow = {
 		    revolution_n_counterrevolution = 1
-			NBG = { 
-			   NOT = {
-			      is_secondary_power = yes
-			      is_greater_power = yes
-			      has_country_flag = SECOND_ARCADIAN_TRIGGER
-			   }
-			}
 		    OR = {
 			   is_secondary_power = yes
 			   is_greater_power = yes
@@ -913,122 +1102,32 @@ political_decisions = {
 		}
 		
 		effect = {
+		    set_country_flag = STARTED_ARCADIAN_UNIFICATION 
 		    prestige = 10
-            NBG = { set_country_flag = SECOND_ARCADIAN_TRIGGER country_event = 791600 }				
+		    any_country = {
+		       limit = {
+			      tag = CHE
+			      exists = yes
+		   	   }
+               country_event = { id = 792021 days = 0 }
+	        }
+            NBG = { set_country_flag = SECOND_ARCADIAN_TRIGGER country_event = { id = 791600 days = 3 } }				
 		}
 		
 		ai_will_do = {
 			factor = 1
-		}
-	}
-	
-	# This is to inform the PLA player when they can actually kill off NBG
-	
-	PLA_MURDER_NBG_DECISION_VISIBILITY = {
-		picture = SevenRep
-		potential = {
-		    ai = no
-	        tag = PLA 
-			exists = NBG
-			year = 1848
-			NBG = { 
-			   OR = {
-			      is_secondary_power = yes
-			      is_greater_power = yes
-			      has_country_flag = SECOND_ARCADIAN_TRIGGER
-				  vassal_of = THIS
-				  in_sphere = THIS
-			   }
-			}
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-			NBG = { 
-			   NOT = {
-			      is_secondary_power = yes
-			      is_greater_power = yes
-			      has_country_flag = SECOND_ARCADIAN_TRIGGER
-				  vassal_of = THIS
-				  in_sphere = THIS
-			   }
-			}
-		}
-		
-		effect = {
-	    
-		}
-		
-		ai_will_do = {
-			factor = 0
-		}
-	}
-	
-	# Incite NBG to attack you effectively
-	
-	PLA_MURDER_NBG_FAILSAFE = {
-		picture = SevenRep
-		potential = {
-	        tag = PLA 
-			exists = yes
-			exists = NBG
-			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
-		}
-		
-		allow = {
-		    revolution_n_counterrevolution = 1
-			NBG = { 
-			   NOT = {
-			      is_secondary_power = yes
-			      is_greater_power = yes
-			      has_country_flag = SECOND_ARCADIAN_TRIGGER
-			      vassal_of = THIS
-				  in_sphere = THIS
-			   }
-			}
-		    OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}		
-		    NOT = { exists = LOU }
-			NOT = { exists = LIB }
-			NOT = { exists = CHE }
-			NOT = { truce_with = NBG }
-		}
-		
-		effect = {
-		    prestige = 10
-		    # Second Arcadian War Trigger
-			remove_country_modifier = PLA_the_arcadian_dream
-            NBG = { set_country_flag = SECOND_ARCADIAN_TRIGGER }	
-            any_country = {
-               limit = {
-                  tag = NBG
-                  OR = {
-                     has_global_flag = NBG_BURGUNDIAN
-                     has_global_flag = NBG_LIONS	 
-                  }
-               }
-               country_event = 79160			   
-            }	
-            any_country = {
-               limit = {
-                  tag = NBG
-                  has_global_flag = NBG_OLD_ARCADIAN 
-               }
-               country_event = 79157			   
-            }
-            any_country = {
-               limit = {
-                  tag = NBG
-                  has_global_flag = NBG_NEW_ARCADIAN
-               }
-               country_event = 79158			   
-            }			
-		}
-		
-		ai_will_do = {
-			factor = 1
+	           modifier = {
+	              factor = 0
+			      is_disarmed = yes
+		       } 
+	           modifier = {
+	              factor = 0
+			      has_recently_lost_war = yes
+		       } 
+	           modifier = {
+	              factor = 0			  
+			      NBG = { brigades_compare = 1.5 }
+		       }
 		}
 	}
 	
@@ -1043,6 +1142,7 @@ political_decisions = {
 	           tag = PLA
 			   tag = NBG
 			}
+			NOT = { has_country_flag = PLAN_B_ENACTED }
 			NOT = { has_country_flag = ARCADIAN_UNIFICATION_POSSIBLE }
 			NOT = { revolution_n_counterrevolution = 1 }
 		}
@@ -1159,8 +1259,10 @@ political_decisions = {
 			factor = 1
 		}
 	}
-	
+
+####################################################################################################################################################################################################################################
 # PLAN B DECISIONS - If the Second Arcadian War ended in a stalemate or the Third Arcadian War ended in a loss then these are possible. Additionally there is a way for PLA to form Arcadia if the Second Arcadian War is Impossible
+####################################################################################################################################################################################################################################
 	
 	NBG_SECOND_ARCADIAN_WAR_NOPLA_FAILSAFE = {
 		picture = Plantagenia
@@ -1796,6 +1898,8 @@ political_decisions = {
             }
 	        }
 		    228 = {
+			add_core = PLA
+			add_core = THIS
             add_province_modifier = { name = colonial_recruitment duration = 1460 }				
 			change_province_name = "Douvres"
 	        }
@@ -3181,13 +3285,15 @@ political_decisions = {
         }
         
         allow = { 
-		   OR = {
+		   OR = { 
+		      has_country_flag = PLA_annex_CHE_quick
               nationalism_n_imperialism = 1
 			  year = 1870
 		   }
         } 
         
         effect = { 
+		   clr_country_flag = PLA_annex_CHE_quick
 		   set_country_flag = CHE_is_dead
 		   CHE = {
 	          all_core = { add_core = PLA }
@@ -3229,6 +3335,7 @@ political_decisions = {
 				  has_global_flag = NBG_OLD_ARCADIAN
 				}
 			}
+			NOT = { has_global_flag = SUPER_SKR }
         }
         
         allow = { 
@@ -3359,43 +3466,180 @@ political_decisions = {
         } 
     }
 	
-    #### Extra ATS Decisions ####
+	### Cuban Decisions to trigger the Cuban Revolution - If this happens once then it cannot happen again - This is a one-time gambit.
 	
-    ATS_claim = { 		
+	CUB_rev_castro = { 	
 		potential = { 
-			tag = ARC 
-			NOT = { ATS = { exists = yes } } 
-			NOT = { OR = { has_country_flag = athesia_arcadia  has_country_flag = athesia_arcadia_2 } }
+			tag = CLM
+			has_country_flag = CASTO_CLM
+			NOT = { has_global_flag = CUBAN_REVOLUTION_TRIGGERED }
 		}
 		
 		allow = { 
-			OR = { 
-				AND = { 
-					machine_guns = 1 
-					steel_steamers = 1 
-				}
-				mass_politics = 1 
+			OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
 			}
+			war = no
+			has_recently_lost_war = no
+			is_disarmed = no
+			total_amount_of_ships = 20
+			NOT = { war_exhaustion = 5 }
+			NOT = { truce_with = SPA }
 		}
 		
 		effect = { 
-			set_country_flag = athesia_arcadia
-			badboy = 3
-			ATS = { all_core = { add_core = THIS } } 
-			any_country = { limit = { owns = 199 } relation = { who = THIS value = -100 } }
-		}		
+			prestige = 5
+			set_global_flag = CUBAN_REVOLUTION_TRIGGERED
+			SPA = { country_event = { id = 470165 days = 14 } }
+		}	
 	}
 	
-	ATS_puppet = { 		
+	CUB_rev_PLA = { 	
+		potential = { 
+			tag = PLA
+			has_country_flag = filibuster_decisions
+			NOT = { year = 1910 }
+			NOT = { has_global_flag = CUBAN_REVOLUTION_TRIGGERED }
+			SPA = { has_country_flag = CASTO_IS_DEAD }
+
+		}
+		
+		allow = { 
+			is_greater_power = yes
+			war = no
+			has_recently_lost_war = no
+			is_disarmed = no
+			total_amount_of_ships = 20
+			NOT = { war_exhaustion = 5 }
+			NOT = { truce_with = SPA }
+			NOT = { year = 1910 }
+		}
+		
+		effect = { 
+			prestige = 5
+			set_country_flag = cuban_supporter
+			set_global_flag = CUBAN_REVOLUTION_TRIGGERED
+			SPA = { country_event = { id = 470166 days = 14 } }
+		}	
+	}	
+	
+	CUB_rev_ARC = { 	
+		potential = { 
+			tag = ARC
+			NOT = { has_global_flag = CUBAN_REVOLUTION_TRIGGERED }
+			NOT = { year = 1910 }
+			SPA = { has_country_flag = CASTO_IS_DEAD }
+		}
+		
+		allow = { 
+			is_greater_power = yes
+			war = no
+			has_recently_lost_war = no
+			is_disarmed = no
+			total_amount_of_ships = 20
+			NOT = { war_exhaustion = 5 }
+			NOT = { truce_with = SPA }
+		    NOT = { year = 1910 }
+		}
+		
+		effect = { 
+			prestige = 5
+			set_country_flag = cuban_supporter
+			set_global_flag = CUBAN_REVOLUTION_TRIGGERED
+			SPA = { country_event = { id = 470167 days = 14 } }
+		}	
+	}		
+	
+	### Cuba needs to hold the whole island for three years to win the war
+	
+	CUB_treaty_of_liberation = { 	
+		potential = { 
+			tag = CUB
+			exists = yes
+			war_with = SPA
+			NOT = { owns = 2212 }
+		}
+		
+		allow = { 
+			war = yes
+			2212 = { 
+			    OR = { 
+				   controlled_by = THIS 
+				   controlled_by = ARC
+				   controlled_by = PLA
+				   controlled_by = CLM
+				}
+				province_control_days = 900 
+		    }	
+			CUB = {
+				all_core = {
+					OR = {
+						controlled_by = THIS
+						empty = yes
+					}
+				}
+			}					
+		}
+		
+		effect = { 
+			prestige = 5
+			any_country = {
+			   limit = {
+			      has_country_flag = cuban_supporter
+				  war_with = SPA
+			   }
+			   end_war = SPA
+			}
+			end_war = SPA
+		}	
+	}
+	
+    #### Extra ATS Decisions ####
+	
+    #ATS_claim = { 		
+	#	potential = { 
+	#		tag = ARC 
+	#		NOT = { ATS = { OR = { exists = yes vassal_of = THIS } } } 
+	#		NOT = { OR = { has_country_flag = athesia_arcadia  has_country_flag = athesia_arcadia_2 } }
+	#	}
+	#	
+	#	allow = { 
+	#		OR = { 
+	#			AND = { 
+	#				machine_guns = 1 
+	#				steel_steamers = 1 
+	#			}
+	#			has_country_flag = filibuster_decisions
+	#			mass_politics = 1 
+	#		}
+	#	}
+	#	
+	#	effect = { 
+	#		set_country_flag = athesia_arcadia
+	#		badboy = 3
+	#		ATS = { all_core = { add_core = THIS } } 
+	#		any_country = { limit = { owns = 199 } relation = { who = THIS value = -100 } }
+	#	}		
+	#}
+	
+	# You can do this only if you don't own 200 - Otherwise you will need to use the decision in MOD Plantagenia
+	
+	ATS_puppet = { 	
+        picture = athesia	
 		potential = { 
 			tag = ARC 
-			ATS = { exists = yes } 
-			NOT = { OR = { has_country_flag = athesia_arcadia has_country_flag = athesia_arcadia_2 } }
+			ATS = { exists = yes }
+            NOT = { owns = 200 }			
+			NOT = { has_country_flag = athesia_arcadia }		
 		}
 		
 		allow = { 
 			ATS = { in_sphere = THIS } 
-			steel_steamers = 1 
+		    OR = {
+			   has_country_flag = filibuster_decisions
+			   revolution_n_counterrevolution = 1
+			}
 		}
 		
 		effect = { 
@@ -3405,25 +3649,32 @@ political_decisions = {
 	}
 	
 	ATS_annexation = { 	
+	    picture = athesia
 		potential = { 
 			tag = ARC 
-			ATS = { exists = yes } 
-			has_country_flag = athesia_arcadia_2
-			NOT = { OR = { has_country_flag = athesia_arcadia has_country_flag = athesia_arcadia_3 } }
-			OR = { government = proletarian_dictatorship government = fascist_dictatorship government = absolute_monarchy government = fascist_monarchy government = presidential_dictatorship }
+			ATS = { vassal_of = THIS exists = yes } 
+			has_country_flag = athesia_arcadia
+			NOT = { has_country_flag = athesia_arcadia_3 }
+			OR = { has_country_flag = filibuster_decisions government = proletarian_dictatorship government = fascist_dictatorship government = absolute_monarchy government = fascist_monarchy government = presidential_dictatorship }
 		}
 		
 		allow = { 
-			mass_politics = 1 
+		    OR = {
+			   AND = {
+			      has_country_flag = filibuster_decisions
+				  revolution_n_counterrevolution = 1
+			   }
+			   AND = {
+			      mass_politics = 1
+			      is_greater_power = yes
+			   }
+			}
 		}
 		
 		effect = { 
 			set_country_flag = athesia_arcadia_3
 			ATS = { all_core = { add_core = THIS } } 
-			any_country = { 
-				limit = { tag = ATS vassal_of = THIS }
-				annex_to = THIS
-			}
+			inherit = ATS
 		}	
 	}
 }

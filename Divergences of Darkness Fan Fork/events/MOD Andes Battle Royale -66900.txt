@@ -8307,6 +8307,8 @@ country_event = {
 	}
 }
 
+## AI UCA will always choose to stand down since they have no chance in hell of defeating Inca.
+
 country_event = { 
 	id = 67121
 	title = "AND221.T" #Inca Empire has taken the Galapagos !
@@ -8320,6 +8322,7 @@ country_event = {
 		name = "AND221.A" #This will not do and we will stop them!
 		2285 = { secede_province = FROM } 
 		FROM = { country_event = 67122 }
+		set_global_flag = galapag_war
 		war = { 
 			target = INC 
 			attacker_goal =  { 
@@ -8328,13 +8331,13 @@ country_event = {
 			defender_goal = {
 				casus_belli = custom_treaty_cb
 			}
-		call_ally = yes			
+		    call_ally = yes			
 		}
 		ai_chance = { 
 			factor = 90
 			modifier = { 
-				factor = 1.5 
-				tag = CLM 
+				factor = 0.5
+				tag = UCA
 			}
 		}
 	}
@@ -8346,8 +8349,8 @@ country_event = {
 		ai_chance = { 
 			factor = 10 
 			modifier = { 
-				factor = 1.5 
-				tag = UCA 
+				factor = 4
+				tag = UCA
 			}
 		}
 	}
@@ -8392,16 +8395,17 @@ country_event = {
 	trigger = { 
 		tag = INC 
 		has_country_flag = custom_treaty_loser 
-		truce_with = CLM 
-		has_country_flag = galapagos 
+		NOT = { war_with = CLM }
+		has_global_flag = galapag_war
 	}
 	
 	mean_time_to_happen = { 
-		days = 10
+		days = 3
 	}
 	
 	option = { 
 		name = "AND224.A"
+		clr_global_flag = galapag_war
 		clr_country_flag = custom_treaty_loser
 		prestige_factor = -0.5 
 		any_owned = { 
@@ -8430,8 +8434,7 @@ country_event = {
 	
 	option = { 
 		name = "AND225.A" #Annex directly the liberated territories
-		prestige_factor = 0.2 
-		
+		prestige_factor = 0.2 		
 	}
 	
 	option = { 
@@ -8458,16 +8461,17 @@ country_event = {
 	trigger = { 
 		tag = INC 
 		has_country_flag = custom_treaty_loser 
-		truce_with = UCA 
-		has_country_flag = galapagos 
+		NOT = { war_with = UCA }
+		has_global_flag = galapag_war
 	}
 	
 	mean_time_to_happen = { 
-		days = 15
+		days = 3
 	}
 	
 	option = { 
 		name = "AND226.A"
+		clr_global_flag = galapag_war
 		prestige_factor = -0.5 
 		clr_country_flag = custom_treaty_loser
 		any_owned = { 
@@ -8518,45 +8522,46 @@ country_event = {
 	trigger = { 
 		tag = UCA 
 		has_country_flag = custom_treaty_loser 
-		truce_with = INC 
-		INC = { has_country_flag = galapagos } 
+		NOT = { war_with = INC }
+		has_global_flag = galapag_war
 	}
 	
 	major = yes 
 	
 	mean_time_to_happen = { 
-		days = 10
+		days = 3
 	}
 	
 	option = { 
 		name = "AND228.A"
+		clr_global_flag = galapag_war
 		clr_country_flag = custom_treaty_loser
-		prestige_factor = -0.5 
-		change_tag = ELS	
+		prestige_factor = -0.5 		
+	    any_owned = { 
+			limit = { OR = { province_id = 2183 province_id = 2184 province_id = 2185 province_id = 2189 province_id = 2190 } }
+			remove_core = THIS
+			secede_province = YUC
+	    }
+	    any_owned = { 
+			limit = { is_core = GUA }
+			remove_core = THIS
+			secede_province = GUA
+	    }	
 		any_owned = { 
 			limit = { 
-				is_core = YUC		 
+				is_core = NIC		 
 			}
-			secede_province = YUC		 
-		}
-		any_owned = { 
-			limit = { 
-					is_core = PNM 
-			}
-			secede_province = INC 
-		}
-		any_owned = { 
-			limit = { 
-					is_core = NIC		 
-			}
+			remove_core = THIS
 			secede_province = NIC		 
 		}
 		any_owned = { 
 			limit = { 
-					is_core = PNM 
+				is_core = PNM 
 			}
+			remove_core = THIS
 			secede_province = INC 
 		}
+		change_tag = ELS
 		INC = { country_event = 67129 } 
 		any_pop = { 
 			militancy = 4
@@ -8573,6 +8578,7 @@ country_event = {
 	
 	option = { 
 		name = "AND229.A"
+		diplomatic_influence = { who = GUA value = 200 }
 		diplomatic_influence = { who = NIC value = 200 }
 		diplomatic_influence = { who = YUC value = 200 }
 		diplomatic_influence = { who = ELS value = 200 }
@@ -8582,14 +8588,14 @@ country_event = {
 
 country_event = { 
 	id = 67130
-	title = "AND230.T" #CLM lost to INC
+	title = "AND230.T" #CLM lost to INC - As this is a illegal annexation cores are not removed.
 	desc = "AND230.D"
 	
 	trigger = { 
 		tag = CLM 
 		has_country_flag = custom_treaty_loser 
-		truce_with = INC 
-		INC = { has_country_flag = galapagos } 
+		NOT = { war_with = INC }
+		has_global_flag = galapag_war
 	}
 	
 	major = yes 
@@ -8600,36 +8606,74 @@ country_event = {
 	
 	option = { 
 		name = "AND226.A"
+		clr_global_flag = galapag_war
 		clr_country_flag = custom_treaty_loser
 		prestige_factor = -0.5 
 		any_owned = { 
 			limit = { 
-				is_core = YUC		 
+				is_core = GUA 
 			}
-			secede_province = YUC		 
+			secede_province = GUA	 
+		}	
+		any_owned = { 
+			limit = { 
+				is_core = ELS	 
+			}
+			secede_province = ELS		 
 		}
 		any_owned = { 
 			limit = { 
-					is_core = ELS 
-			}
-			secede_province = ELS 
-		}
-		any_owned = { 
-			limit = { 
-					is_core = NIC		 
+				is_core = NIC		 
 			}
 			secede_province = NIC		 
 		}
 		any_owned = { 
 			limit = { 
-					is_core = PNM 
+				is_core = PNM 
 			}
 			secede_province = INC 
 		}
-		INC = { country_event = 67129 } 
-		any_pop = { 
-			militancy = 4
+		random_owned = {
+			limit = {
+				owner = {
+					is_ideology_enabled = fascist
+					NOT = { government = fascist_dictatorship }
+					NOT = { government = fascist_monarchy }
+				}
+			}
+			owner = {
+				soldiers = {
+					limit = { is_primary_culture = yes }
+					ideology = {
+						value = fascist
+						factor = 0.2
+					}
+				}
+				officers = {
+					limit = { is_primary_culture = yes }
+					ideology = {
+						value = fascist
+						factor = 0.4
+					}
+				}
+				any_pop = {
+					limit = {
+						is_primary_culture = yes
+						NOT = {
+							OR = {
+								type = soldiers
+								type = officers
+							}
+						}
+					}
+					ideology = {
+						value = fascist
+						factor = 0.1
+					}
+				}
+			}
 		}
+		INC = { country_event = 67129 } 
 	}
 }
 

@@ -22,6 +22,10 @@ country_event = {
 		name = "NCLM1.A"
         prestige = 1
 		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}	
+		add_country_modifier = {
 			name = the_glorious_alliance
 			duration = -1
 		}			
@@ -321,6 +325,7 @@ country_event = {
 	option = {
 		name = "NCLM8.A"
 		prestige = 10
+		remove_country_modifier = GREAT_CLM_WAR
 		end_war = SPA
 		end_war = QUI
 	}
@@ -459,6 +464,11 @@ country_event = {
 			name = GREAT_CLM_WAR
 			duration = 720
 		}
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = DE_BLANCO_HERE
 	    government = presidential_dictatorship
 	    ruling_party_ideology = liberal
@@ -584,6 +594,11 @@ country_event = {
 			name = GREAT_CLM_WAR
 			duration = 720
 		}
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = DE_BLANCO_HERE
 	    government = presidential_dictatorship
 	    ruling_party_ideology = liberal
@@ -689,6 +704,11 @@ country_event = {
 		   name = "Martin Ballivian" 
 		   personality = charismatic
 		   background = renowned_adventurer
+		}
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
 		}
 	    random_owned = {
 			limit = {
@@ -1055,6 +1075,11 @@ country_event = {
 			personality = brilliant
 			background = sycophant
 		} 
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = DE_BLANCO_HERE
 	    government = presidential_dictatorship
 	    ruling_party_ideology = liberal
@@ -1151,6 +1176,11 @@ country_event = {
 			personality = brilliant
 			background = sycophant
 		} 
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = DE_BLANCO_HERE
 	    government = presidential_dictatorship
 	    ruling_party_ideology = liberal
@@ -1299,10 +1329,15 @@ country_event = {
 			owner = { 
 				prestige = 1
 				define_general = { 
-				name = "Martin Ballivián" 
-				personality = charismatic
-				background = renowned_adventurer
+				   name = "Martin Ballivián" 
+				   personality = charismatic
+				   background = renowned_adventurer
 				}
+	            set_country_flag = caudillo_state
+		        add_country_modifier = {
+			        name = caudillo_state_modifier
+			        duration = -1
+		        }
 			}
 		}
 		random_owned = { 
@@ -1578,6 +1613,11 @@ country_event = {
 			}
 			owner = { remove_country_modifier = regency_government }
 	    }
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 	    clr_country_flag = theocratic_government
 	    clr_country_flag = merchantrepublic_gov
 	    clr_country_flag = parliamentary_republic_gov
@@ -1745,6 +1785,12 @@ country_event = {
 			}
 			owner = { remove_country_modifier = regency_government }
 	    }
+	    set_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 	    clr_country_flag = theocratic_government
 	    clr_country_flag = merchantrepublic_gov
 	    clr_country_flag = parliamentary_republic_gov
@@ -1803,6 +1849,12 @@ country_event = {
 			}
 			owner = { remove_country_modifier = regency_government }
 	    }
+	    set_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 	    clr_country_flag = theocratic_government
 	    clr_country_flag = merchantrepublic_gov
 	    clr_country_flag = parliamentary_republic_gov
@@ -1954,6 +2006,11 @@ country_event = {
 			}
 			owner = { remove_country_modifier = regency_government }
 	    }
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 	    clr_country_flag = theocratic_government
 	    clr_country_flag = merchantrepublic_gov
 	    clr_country_flag = parliamentary_republic_gov
@@ -2035,6 +2092,16 @@ country_event = {
         set_global_flag = SAN_WAR_OVER		
 		set_country_flag = SPA_HALF_FAILURE		
 		end_war = CLM
+		any_country = {
+		   limit = {
+		      primary_culture = granadan
+			  exists = no 
+		   }
+		   government = absolute_monarchy
+		   clr_country_flag = caudillo_state
+		   remove_country_modifier = caudillo_state_modifier
+		}		   
+		GUY = { government = absolute_monarchy clr_country_flag = caudillo_state remove_country_modifier = caudillo_state_modifier }
 		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46429 days = 14 } }
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
@@ -2116,8 +2183,23 @@ country_event = {
 		set_global_flag = CLM_VICTORY
         set_global_flag = SAN_WAR_OVER		
 		set_country_flag = SPA_TOTAL_VICTORY
+		any_country = {
+		   limit = {		
+              OR = {
+                 primary_culture = lusitanian			  
+		         primary_culture = granadan
+				 primary_culture = mexican
+				 primary_culture = central_american
+		      }
+			  exists = no 
+			  NOT = { tag = CLM }
+		   }
+		   government = absolute_monarchy
+		   clr_country_flag = caudillo_state
+		   remove_country_modifier = caudillo_state_modifier
+		}
 		QUI = { remove_country_modifier = neutrality }
-		CLM = { remove_country_modifier = the_glorious_alliance remove_country_modifier = GREAT_CLM_WAR }
+		CLM = { clr_country_flag = caudillo_state remove_country_modifier = caudillo_state_modifier remove_country_modifier = the_glorious_alliance remove_country_modifier = GREAT_CLM_WAR }
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
 		ideology = {
@@ -2560,7 +2642,7 @@ country_event = {
 	       clr_country_flag = anarcho_liberal_election_win
 	       clr_country_flag = social_liberal_election_win
 	       clr_country_flag = market_liberal_election_win		
-		clr_country_flag = paternal_election_win
+		   clr_country_flag = paternal_election_win
 	       clr_country_flag = theocratic_government
 	       clr_country_flag = merchantrepublic_gov
 	       clr_country_flag = communist_gov
@@ -2593,6 +2675,8 @@ country_event = {
 			    secede_province = LST
 		}		
         change_tag = MEX
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 		government = presidential_dictatorship
 		set_country_flag = presidential_dictatorship_gov
 		clr_country_flag = anarcho_liberal_gov
@@ -2839,6 +2923,7 @@ country_event = {
 	    tag = CLM
 		has_country_flag = CASTO_CLM
 		NOT = { government = presidential_dictatorship }
+		NOT = { government = bourgeois_dictatorship }
 		NOT = { government = absolute_monarchy }
 		NOT = { has_country_flag = CLM_GRANADA_ENABLED }
 	}
@@ -2851,6 +2936,12 @@ country_event = {
 
 	option = {
 		name = "NCLM38.A"
+		set_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		remove_country_modifier = the_castro_reforms
 		clr_country_flag = CASTO_CLM
 		set_country_flag = SANTANDER_CLM
@@ -2976,6 +3067,8 @@ country_event = {
 
 	option = {
 		name = "NCLM40.A"
+		remove_country_modifier = caudillo_state_modifier
+		clr_country_flag = caudillo_state
 		set_country_flag = CLM_GRANADA_ENABLED
 		prestige = 30
 	    government = hms_government
@@ -3469,6 +3562,8 @@ country_event = {
 
 	option = {
 		name = "NCLM48.A"
+		remove_country_modifier = caudillo_state_modifier
+		clr_country_flag = caudillo_state
 		clr_country_flag = VC_conference_concluded
 		set_country_flag = VC_conference_ending
 		set_country_flag = VC_conference_successful
@@ -3702,6 +3797,8 @@ country_event = {
 	
 	option = {
 		name = "NCLM51.A"
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 		prestige = -10
 		set_global_flag = VERACRUZ_ACTIVE
 	    any_owned = {
@@ -3799,6 +3896,8 @@ country_event = {
 	
 	option = {
 		name = "NCLM520.A"
+		remove_country_modifier = caudillo_state_modifier
+		clr_country_flag = caudillo_state
 		prestige_factor = -0.25
         UCA = { remove_country_modifier = father_of_colombia }
 		LST = { remove_country_modifier = father_of_colombia }
@@ -3891,6 +3990,12 @@ country_event = {
 	
 	option = {
 		name = "NCLM54.A"
+		set_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = SANT_FINALE
 		clr_country_flag = VICINTE_CLM
 		set_country_flag = SANTANDER_CLM
@@ -4019,6 +4124,12 @@ country_event = {
 	
 	option = {
 		name = "NCLM55.A"
+		set_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
 		set_country_flag = SANT_FINALE
 		clr_country_flag = VICINTE_CLM
 		set_country_flag = SANTANDER_CLM
@@ -4120,6 +4231,11 @@ country_event = {
 		}
 		JLS = {
 		   capital = 2166
+		   set_country_flag = caudillo_state
+	   	   add_country_modifier = {
+			    name = caudillo_state_modifier
+			    duration = -1
+		   }
 	       government = presidential_dictatorship
 	       ruling_party_ideology = conservative
 	       political_reform = none_voting
@@ -4357,7 +4473,7 @@ country_event = {
 	option = {
 		name = "NCLM59.A"
 		prestige = -1
-		plurality = -1
+		plurality = -25
 		any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 2 }
 		set_country_flag = SANTANDER_BEGINS
         set_country_flag = WACKY_TIME_CLM
@@ -5121,6 +5237,8 @@ country_event = {
 		prestige = -30
 		end_war = JLS
 		inherit = JLS
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 		remove_country_modifier = taiping_draft
 	    government = democracy
 	    ruling_party_ideology = liberal
@@ -5499,6 +5617,8 @@ country_event = {
 		LST = { all_core = { remove_core = MEX } }
         clr_global_flag = MEX_SANT_LST	
 		prestige = -30
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 	    government = democracy
 	    ruling_party_ideology = liberal
 	    political_reform = wealth_voting
@@ -5630,6 +5750,8 @@ country_event = {
 	option = {
 		name = "NCLM80.A"	
 		prestige = -30
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 	    government = democracy
 	    ruling_party_ideology = liberal
 	    political_reform = wealth_voting
@@ -5684,6 +5806,8 @@ country_event = {
 	option = {
 		name = "NCLM81.A"	
 		prestige = -30
+		clr_country_flag = caudillo_state
+		remove_country_modifier = caudillo_state_modifier
 	    government = democracy
 	    ruling_party_ideology = liberal
 	    political_reform = wealth_voting
