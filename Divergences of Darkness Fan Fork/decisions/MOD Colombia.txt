@@ -10,6 +10,7 @@ political_decisions = {
 		potential = { 
 		tag = CLM 
 		NOT = { has_country_flag = gendarmerie_CLM }
+		has_country_flag = VICINTE_CLM
 		}
 		
 		allow = { 
@@ -22,9 +23,10 @@ political_decisions = {
 		}
 		
 		effect = {  
-		add_country_modifier = { name = federales_CLM duration = -1 }
-		remove_country_modifier = divided_society
-		set_country_flag = gendarmerie_CLM
+			add_country_modifier = { name = federales_CLM duration = -1 }
+			social_reform = national_police
+			remove_country_modifier = divided_society
+			set_country_flag = gendarmerie_CLM
 		}
 	}
 	
@@ -151,6 +153,412 @@ political_decisions = {
 			}
 	}
 	
+	nominate_Mirabal = { 
+		potential = { 
+			tag = CLM 
+			has_country_flag = CASTO_CLM
+			NOT = { has_country_flag = Mirabal } 
+		}
+		
+		allow = { 
+			ideological_thought = 1 
+			OR = { 
+				military_score = 25 
+				army_professionalism = 1 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = Mirabal
+			social_reform = national_police
+			political_reform = unitary 
+			any_pop = { 
+				limit = { 
+					NOT = { has_pop_culture = mexican } 
+				}
+				consciousness = 4
+				militancy = 3 
+			}
+		} 
+	
+	}
+	
+	Codigo_Civil = { 
+	
+		potential = {
+				tag = CLM
+		   		OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM } 
+				NOT = { has_country_flag = Codigo_Civil }
+			}
+			
+		allow = {
+			state_n_government = 1 
+			has_country_flag = la_reforma
+			}
+		
+		effect = { 
+			set_country_flag = Codigo_Civil 
+			add_country_modifier = { 
+				name = Codigo_Civil_Castro
+				duration = -1
+			}
+		}
+	
+	}
+	
+	Marquess_Oaxaca = { 
+		
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM } 
+			NOT = { has_country_flag = Marquess_came_back } 
+		}
+		
+		allow = { 
+			money = 100000
+			rank = 16 
+		}
+		
+		effect = { 
+			set_country_flag = Marquess_came_back 
+			add_country_modifier = { 
+				name = Diplomacy_Marquess
+				duration = -1
+			}
+			money = -100000
+			any_pop = { 
+				limit = { has_pop_culture = zapotec } 
+				militancy = 4 
+			}
+			any_pop = { 
+				scaled_consciousness = { 
+					ideology = liberal 
+					factor = 2 
+				}
+				scaled_militancy = { 
+					ideology = anarcho_liberal 
+					factor = 1 
+				}
+			}
+			any_country = { 
+				limit = { 
+					is_greater_power = yes 
+					NOT = { tag = SPA } 
+				}
+				relation = { who = THIS value = 100 } 
+			}
+			relation = { who = PLA value = 50 } 
+		}
+	}
+	
+	Concordate_with_Rome = { 
+		
+		potential = { 
+			tag = CLM 
+			has_country_flag = IMPERIAL_CLM
+			NOT = { has_country_flag = Concordate_CLM } 
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			OR = { NOT = { moralism = 5 } religious_policy = moralism } 
+			NOT = { badboy = 10 } 
+			OR = { 
+				PAP = { exists = yes relation = { who = THIS value = 150 } } 
+				AND = { 
+					PAP = { exists = no }
+					ITC = { exists = yes owns = 749 relation = { who = THIS value = 150 } }
+				}
+				nationalism_n_imperialism = 1 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = Concordate_CLM 
+			any_pop = { 
+				scaled_militancy = { 
+					issue = moralism 
+					factor = -4
+				}
+				scaled_consciousness = { 
+					issue = moralism 
+					factor = -6 
+				}
+				scaled_consciousness = { 
+					issue = pluralism 
+					factor = -3 
+				}
+				scaled_consciousness = { 
+					issue = secularized 
+					factor = 1 
+				}
+			}
+		}
+	
+	}
+	
+	liceos_CLM = { 
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = IMPERIAL_CLM has_country_flag = CASTO_CLM } 
+			NOT = { has_country_flag = liceos } 
+			school_reforms = no_schools
+		}
+		
+		allow = { 
+			positivism = 1 
+			money = 200000
+		}
+		
+		effect = { 
+			money = -200000
+			set_country_flag = liceos 
+			social_reform = low_schools 
+		}
+	}
+	
+	Ferrocarril_Imperial_Colombiano = { 
+	
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = IMPERIAL_CLM has_country_flag = CASTO_CLM } 
+			NOT = { has_country_flag = FIC_CLM } 
+		}
+		
+		allow = { 
+			iron_railroad = 1 
+			money = 1000000
+		}
+		
+		effect = { 
+			2162 = { infrastructure = 4 } 
+			#3413 = { infrastructure = 4 } 
+			#3399 = { infrastructure = 4 } 
+			2172 = { infrastructure = 4 } 
+			2174 = { infrastructure = 4 } 
+			#3416 = { infrastructure = 4 } 
+			2170 = { infrastructure = 4 } 
+			2166 = { infrastructure = 4 } 
+			2161  = { infrastructure = 4 } 
+			money = -1000000
+			set_country_flag = FIC_CLM 
+		}
+	}
+	
+	Ferrocarril_Imperial_Colombiano_Nova_Lisboa = { 
+	
+		potential = { 
+			tag = CLM 
+			has_country_flag = FIC_CLM
+			NOT = { has_country_flag = FIC_CLM_NE } 
+		}
+		
+		allow = { 
+			steel_railroad = 1 
+			money = 750000
+		}
+		
+		effect = { 
+			2173 = { infrastructure = 4 } 
+			2159 = { infrastructure = 4 } 
+			2158 = { infrastructure = 4 } 
+			2151 = { infrastructure = 4 } 
+			2146 = { infrastructure = 4 } 
+			#3418 = { infrastructure = 4 } 
+			147 = { infrastructure = 4 } 
+			money = -750000
+			prestige = 3
+			set_country_flag = FIC_CLM_NE 
+		}
+	}
+	
+	Ferrocarril_Imperial_Colombiano_California = { 
+	
+		potential = { 
+			tag = CLM 
+			has_country_flag = FIC_CLM
+			NOT = { has_country_flag = FIC_CLM_NW } 
+		}
+		
+		allow = { 
+			steel_railroad = 1 
+			inorganic_chemistry = 1
+			money = 750000
+		}
+		
+		effect = { 
+			2156 = { infrastructure = 4 } 
+			2157 = { infrastructure = 4 } 
+			2141 = { infrastructure = 4 } 
+			#3397 = { infrastructure = 4 } 
+			2140 = { infrastructure = 4 } 
+			#3384 = { infrastructure = 4 } 
+			90 = { infrastructure = 4 } 
+			#any_owned = {
+			#	limit = { province_id = 3374 }
+			#	infrastructure = 4 
+			#}
+			money = -750000
+			prestige = 3
+			set_country_flag = FIC_CLM_NW 
+		}
+	}
+	
+	Ferrocarril_Imperial_Colombiano_San_Salvador = { 
+	
+		potential = { 
+			tag = CLM 
+			has_country_flag = FIC_CLM_NW 
+			has_country_flag = FIC_CLM_NE
+			NOT = { has_country_flag = FIC_CLM_SE } 
+		}
+		
+		allow = { 
+			integral_rail_system = 1 
+			money = 1500000
+		}
+		
+		effect = { 
+			2164 = { infrastructure = 4 } 
+			#3407 = { infrastructure = 4 }
+			2178 = { infrastructure = 4 }
+			#3408 = { infrastructure = 4 }
+			2182 = { infrastructure = 4 }
+			#3400 = { infrastructure = 4 }
+			2186 = { infrastructure = 4 }
+			2191 = { infrastructure = 4 }
+			2192 = { infrastructure = 4 }
+			#3412 = { infrastructure = 4 }
+			money = -1500000
+			prestige = 3
+			set_country_flag = FIC_CLM_SE 
+		}
+	}
+	
+	Mexico_caput_novi_mondi = { 
+	
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM }
+			NOT = { has_country_flag = renovation_mexico } 
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			romanticism = 1 
+			business_banks = 1 
+			high_pressure_steam_engine = 1 
+			OR = { 
+				money = 500000
+				AND = { money = 100000 penal_system = colonial_transportation  }
+			}
+		}
+		
+		effect = { 
+			prestige = 20 
+			set_country_flag = renovation_mexico 
+			2162 = { 
+				add_province_modifier = { name = colonial_recruitment duration = 1825 }
+			}
+		}
+	
+	}
+	
+	ciudad_victoria = { 
+		
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM }
+			NOT = { has_country_flag = renovation_veracruz } 
+			owns = 2162
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			raider_group_doctrine = 1 
+			romanticism = 1 
+			business_banks = 1 
+			iron_railroad = 1 
+			money = 200000
+		}
+		
+		effect = { 
+			money = -200000
+			set_country_flag = renovation_veracruz 
+			prestige = 10 
+			2162 = { 
+				change_province_name = "Ciudad Victoria"
+				add_province_modifier = { name = colonial_recruitment duration = 1825 }
+			}
+		}
+	}
+	
+	puertoriental = { 
+		picture = guantanamo_bay
+		
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM }
+			has_country_flag = renovation_mexico 
+			has_country_flag = renovation_veracruz
+			NOT = { has_country_flag = renovation_puertoriental } 
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			blue_and_brown_water_schools = 1 
+			electricity = 1 
+			money = 200000
+		}
+		
+		effect = { 
+			money = -200000
+			set_country_flag = renovation_puertoriental 
+			prestige = 10 
+			2162 = { 
+				change_province_name = "Puertoriental"
+				add_province_modifier = { name = colonial_recruitment duration = 1825 }
+			}
+		}
+	}
+	
+	confiscations_castro = { 
+		
+		potential = { 
+			tag = CLM 
+			OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM }
+			NOT = { has_country_flag = reforma } 
+		}
+		
+		allow = { 
+			MEX = { all_core = { owned_by = THIS } } 
+			UCA = { all_core = { owned_by = THIS } } 
+			ideological_thought = 1 
+		}
+		
+		effect = { 
+			set_country_flag = reforma 
+			any_pop = { 
+				limit = { 
+					OR = { 
+						has_pop_culture = zapotec
+						has_pop_culture = mayan 
+						has_pop_culture = tarascan 
+						has_pop_culture = nahua 
+					}
+				}
+				dominant_issue = {
+					value = moralism
+					factor = 0.3
+				} 
+			}
+			add_country_modifier = { 
+				name = agrarian_reform_CCLM 
+				duration = 7300 
+			}
+		}
+	}
+	
 	#### VICINTE - The New Federation - A player has somehow been successful to the point of GP status as Veracruz without collapse ####
 	
 	   colombian_republic_veracruz = {
@@ -215,6 +623,294 @@ political_decisions = {
 			ai_will_do = {
 				factor = 1
 			}
+	}
+	
+	escuela_normal = { 
+		
+		potential = { 
+			NOT = { OR = { school_reforms = acceptable_schools school_reforms = good_schools } } 
+			tag = CLM 
+			has_country_flag = VICINTE_CLM
+			NOT = { has_country_flag = normal_school } 
+		}
+		
+		allow = { 
+			money = 250000
+			idealism = 1 
+			functionalism = 1 
+			NOT = { religious_policy = moralism } 
+		}
+		
+		effect = { 
+			set_country_flag = normal_school 
+			social_reform = acceptable_schools
+			money = -250000
+			years_of_research = 1
+		}
+		
+	}
+	
+	la_reforma = { 
+		
+		potential = { 
+			tag = CLM 
+			has_country_flag = VICINTE_CLM
+			NOT = { has_country_flag = reforma } 
+		}
+		
+		allow = { 
+			OR = { 
+				ruling_party_ideology = liberal 
+				ruling_party_ideology = anarcho_liberal 
+			}
+			MEX = { all_core = { owned_by = THIS } } 
+			UCA = { all_core = { owned_by = THIS } } 
+			state_n_government = 1 
+		}
+		
+		effect = { 
+			set_country_flag = reforma 
+			relation = { who = PAP value = -150 } 
+			any_pop = { 
+				limit = { 
+					OR = { 
+						has_pop_culture = zapotec
+						has_pop_culture = mayan 
+						has_pop_culture = tarascan 
+						has_pop_culture = nahua 
+					}
+				}
+				dominant_issue = {
+					value = moralism
+					factor = 0.3
+				} 
+			}
+			any_pop = { 
+				scaled_militancy = { 
+					issue = moralism 
+					factor = 5
+				}
+			}
+			add_country_modifier = { 
+				name = agrarian_reform_VCLM 
+				duration = -1 
+			}
+		}
+	}
+	
+	nova_lisboa_renovation = { 
+		
+		potential = { 
+			tag = CLM 
+			has_country_flag = VICINTE_CLM 
+			owns = 137
+			NOT = { has_country_flag = renovation_nova_lisboa } 
+		}
+		
+		allow = { 
+			steamers = 1 
+			iron_railroad = 1 
+			business_banks = 1 
+			money = 150000
+		}
+		
+		effect = { 
+			set_country_flag = renovation_nova_lisboa 
+			137 = { 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 1825 
+				}
+			}
+			money = -150000
+		}
+		
+	}
+	
+	Porto_Novo = { 
+		
+		potential = { 
+			tag = CLM 
+			has_country_flag = VICINTE_CLM 
+			owns = 90
+			has_country_flag = renovation_nova_lisboa
+			NOT = { has_country_flag = renovation_porto_novo } 
+		}
+		
+		allow = { 
+			high_sea_battle_fleet = 1 
+			iron_steamers = 1 
+			steel_railroad = 1 
+			electricity = 1 
+			money = 150000
+		}
+		
+		effect = { 
+			set_country_flag = renovation_nova_lisboa 
+			prestige = 3 
+			90 = { 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 1825 
+				}
+			}
+			money = -150000
+		}
+		
+	}
+	
+	Codigo_Civil_Vicente = {
+	
+		potential = { 
+			tag = CLM 
+			has_country_flag = VICINTE_CLM 
+			NOT = { has_country_flag = Codigo_Civil_enacted } 
+		}
+		
+		allow = { 
+			nationalism_n_imperialism = 1 
+			has_country_flag = reforma 
+			NOT = { religious_policy = moralism } 
+		}
+		
+		effect = { 
+			set_country_flag = Codigo_Civil_enacted
+			add_country_modifier = { 
+				name = Codigo_Civil_Castro
+				duration = -1
+			}
+			any_pop = { 
+				ideology = { 
+					value = anarcho_liberal 
+					factor = 0.05 
+				}
+			}
+		}
+	}
+	
+	#Ciudad_Vicente = { 
+	#	
+	#	potential = { 
+	#		tag = CLM 
+	#		has_country_flag = VICINTE_CLM 
+	#		owns = 2162
+	#		NOT = { has_country_flag = capital_veracruz } 
+	#	}
+	#	
+	#	allow = { 
+	#		realism = 1 
+	#		business_banks = 1 
+	#		regenerative_furnaces = 1 
+	#		money = 200000
+	#	}
+	#	
+	#	effect = { 
+	#		set_country_flag = capital_veracruz 
+	#		money = -200000
+	#		capital = 2162
+	#		any_pop = { 
+	#			limit = { 
+	#				OR = { 
+	#					has_pop_culture = lusitanian 
+	#					has_pop_culture = central_american 
+	#					province_id = 2162
+	#				}
+	#			}
+	#			militancy = -2 
+	#			consciousness = -1 
+	#			ideology = { 
+	#				value = liberal
+	#				factor = 0.05
+	#			}
+	#		}
+	#		any_pop = { 
+	#			limit = { 
+	#					has_pop_culture = mexican 
+	#					province_id = 2172
+	#			}
+	#			militancy = 2 
+	#			consciousness = 3
+	#			ideology = { 
+	#				value = reactionary
+	#				factor = 0.05
+	#			}
+	#		}
+	#		prestige = 10
+	#		2162 = { 
+	#			change_province_name = "Ciudad Vicente" 
+	#			add_province_modifier = { 
+	#				name = colonial_recruitment 
+	#				duration = 3650 
+	#			}
+	#		}
+	#	}
+	#}
+	
+	#Mexico_no_capital = { 
+	#
+	#	potential = { 
+	#		tag = CLM 
+	#		has_country_flag = capital_veracruz
+	#		NOT = { has_country_flag = renovated_MEX } 
+	#		owns = 2172
+	#	}
+	#	
+	#	allow = { 
+	#		electricity = 1 
+	#		impressionism = 1 
+	#		has_country_flag = universityMEX
+	#		phenomenology_n_hermeneutic = 1 
+	#		drilling_and_blasting = 1 
+	#		money = 250000
+	#	}
+	#	
+	#	effect = { 
+	#		prestige = 30
+	#		money = -250000
+	#		2172 = { 
+	#			add_province_modifier = { 
+	#				name = colonial_recruitment 
+	#				duration = 1825 
+	#			}
+	#		}
+	#	}
+	#}
+	
+	develop_the_salvadorian_rivals = { 
+		
+		potential = { 
+			tag = CLM 
+			has_country_flag = capital_veracruz 
+			NOT = { has_country_flag = developed_salvador } 
+			owns = 2186
+			owns = 2191 
+		}
+		
+		allow = { 
+			has_country_flag = fonseca_project
+			integral_rail_system = 1 
+			electricity = 1 
+			money = 300000
+		}
+		
+		effect = { 
+			set_country_flag = developed_salvador
+			money = -300000
+			2186 = { 
+				life_rating = 5 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 1825 
+				}
+			}
+			2191 = { 
+				life_rating = 5 
+				add_province_modifier = { 
+					name = colonial_recruitment 
+					duration = 1825 
+				}
+			}
+		}
 	}
 	
 	#### SANTANDER - The Wild Ride ####
@@ -855,20 +1551,68 @@ political_decisions = {
         }
     }    
 	
+	# Attalus - 3391 does not exist in the public version
+	
+	Cordillera_Arcadiana = { 
+		
+		potential = { 
+			tag = CLM 
+			owns = 94
+			#owns = 3391
+			owns = 98 
+			NOT = { has_country_flag = settle_utah } 
+		}
+		
+		allow = { 
+			steel_railroad = 1 
+			mechanized_mining = 1 
+			inorganic_chemistry = 1 
+			money = 100000
+		}
+		
+		effect = { 
+			set_country_flag = settle_utah 
+			money = -100000
+			any_owned = { 
+				limit = { 
+					OR = { 
+						AND = { 
+							region = NA_111
+							NOT = { province_id = 3391 } 
+						}
+						region = NA_109
+					}
+				}
+				add_province_modifier = { 
+					name = colonial_recruitment  
+					duration = 1095 
+				}
+			}
+			#3391 = { 
+			#	life_rating = 5 
+			#	add_province_modifier = { 
+			#		name = colonial_recruitment  
+			#		duration = 1825 
+			#	}
+			#}
+		}	
+	}
+	
 	universityMEX = { 
 		picture = universidad_mexico 
 		
 		potential = { 
 		tag = CLM 
+		NOT = { OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM } }
 		OR = { is_secondary_power = yes is_greater_power = yes }
 		NOT = { school_reforms = good_schools }
 		NOT = { has_country_flag = university_MEX }
 		}
 		
 		allow = { 
-		nationalism_n_imperialism = 1 
-		biologism = 1 
-		NOT = { religious_policy = moralism }
+			revolution_n_counterrevolution = 1 
+			biologism = 1 
+			NOT = { religious_policy = moralism }
 		}
 		
 		effect = { 
@@ -889,6 +1633,28 @@ political_decisions = {
 			issue = moralism
 			factor = 5
 			}
+		}
+	}
+	
+	universityMEX_CASTRO = { 
+		picture = universidad_mexico 
+		
+		potential = { 
+		tag = CLM 
+		OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM }
+		OR = { is_secondary_power = yes is_greater_power = yes }
+		NOT = { school_reforms = good_schools }
+		NOT = { has_country_flag = university_MEX }
+		}
+		
+		allow = { 
+			revolution_n_counterrevolution = 1 
+			biologism = 1 
+		}
+		
+		effect = { 
+		set_country_flag = university_MEX 
+		social_reform = good_schools 
 		}
 	}
 	
@@ -943,6 +1709,142 @@ political_decisions = {
 		effect = { 
 		set_country_flag = accepted_caribeno 
 		add_accepted_culture = caribeno
+		CUB = { all_core = { add_core = THIS } }
 		}
+	}
+	
+	# Attalus - This province does not exist in the Public Version
+	
+	#fonseca_bay_development = { 
+	#	potential = { 
+	#		tag = CLM 
+	#		year = 1870
+	#		owns = 3412 
+	#		NOT = { has_country_flag = fonseca_project } 
+	#	}
+	#	
+	#	allow = { 
+	#		blue_and_brown_water_schools = 1 
+	#		organic_chemistry = 1 
+	#		steel_railroad = 1 
+	#		money = 400000
+	#	}
+	#	
+	#	effect = { 
+	#		set_country_flag = fonseca_project
+	#		money = -400000
+	#		3412 = { 
+	#			add_province_modifier = {
+	#				life_rating  = 10 
+	#				name = colonial_recruitment 
+	#				duration = 3650 
+	#			}
+	#		}
+	#	}
+	#}
+	
+	### If these two crash the game then its the fault of Attalus
+	
+	galapagos_national_park = { 
+	
+		picture = galapagos_tortoise 
+		
+		potential = { 
+			tag = CLM 
+			NOT = { has_country_flag = galapagos_settlement } 
+			owns = 2285 
+			is_canal_enabled = 3
+		}
+		
+		allow = { 
+			mass_politics = 1 
+			mass_culture_n_the_avant_garde = 1 
+			OR = { war_policy = pacifism war_policy = anti_military } 
+		}
+		
+		effect = { 
+			set_country_flag = galapagos_settlement 
+			2285 = { naval_base = -7 } 
+			2203 = { naval_base = 3 } 
+			2201 = { naval_base = -7 } 
+			2202 = { naval_base = -7 } 
+			prestige = 45 
+		}
+	}
+	
+	galapagos_naval_base = { 
+	
+		picture = galapagos 
+		
+		potential = { 
+			tag = CLM 
+			NOT = { has_country_flag = galapagos_settlement } 
+			owns = 2285 
+			is_canal_enabled = 3
+		}
+		
+		allow = { 
+			high_sea_battle_fleet = 1 
+			naval_directionism = 1 
+			NOT = { OR = { war_policy = pacifism war_policy = anti_military } }
+		}
+		
+		effect = { 
+			set_country_flag = galapagos_settlement 
+			2285 = { naval_base = 6 } 
+			2203 = { naval_base = -7 } 
+			2201 = { naval_base = -7 } 
+			2202 = { naval_base = -7 } 
+			prestige = 15 
+		}
+	}
+	
+	stabilize_the_peso = { 
+		
+		potential = { 
+			tag = CLM 
+			NOT = { has_country_flag = stabilized_peso } 
+		}
+		
+		allow = { 
+			money = 1000000
+			invention = double_standard
+		}
+		
+		effect = { 
+			money = -750000
+			add_country_modifier = { 
+				name = peso_stabilizing
+				duration = 3650
+			}
+		}
+	
+	}
+	
+	banca_de_colombia = { 
+	
+		picture = institute_central_bank
+		
+		potential = { 
+			tag = CLM 
+			NOT = { has_country_flag = bank_colombia } 
+		}
+		
+		allow = { 
+			has_country_flag = stabilized_peso
+			NOT = { has_country_modifier = peso_stabilizing } 
+			central_bank_money_bill_printing = 1 
+			business_banks = 1 
+		}
+		
+		effect = { 
+			prestige = 2 
+			set_country_flag = bank_colombia
+			add_country_modifier = { 
+				name = bank_of_colombia 
+				duration = -1
+			}
+		}
+	
 	}
 }

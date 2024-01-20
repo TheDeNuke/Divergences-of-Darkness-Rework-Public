@@ -2313,16 +2313,26 @@ country_event = {
 
 	option = {
 		name = "NCLM28.A"
+		# Its futile and lets avoid bugs while we are at it
+		QUI = { 
+		   clr_country_flag = QUI_ROMANTIC
+		   set_country_flag = QUI_VICEROYALITY
+		}
+		release_vassal = QUI
+		leave_alliance = QUI
+		relation = { who = QUI value = -400 }
+		diplomatic_influence = { who = QUI value = -400 } 
 	    war = {
 			target = QUI
 			attacker_goal =  { 
-				casus_belli = conquest_any
+				casus_belli = make_puppet
 			}
 			defender_goal = {
 				casus_belli = status_quo
 			}	
 			call_ally = yes
 	    }
+		badboy = -8
 	}
 }
 
@@ -5863,4 +5873,322 @@ country_event = {
 		clr_country_flag = NEW_MEXICO_FORMED
 	    set_country_flag = NEW_MEXICO_ENABLED
 	}    	
+}
+
+#New FLavour events for Castro and Vicente
+
+country_event = { 
+	id = 46483 
+	title = "NCLM83.T" #Prefects nominated by Castro to administrate the Provincias 
+	desc = "NCLM83.D" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = Mirabal
+		NOT = { has_country_flag = prefectos } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+	}
+	
+	option = { 
+		name = "NCLM83.A"
+		set_country_flag = prefectos
+		any_owned = { 
+			limit = { is_core = CLM } 
+			add_province_modifier = { 
+				name = support_the_government
+				duration = 365
+			}
+		}
+	}	
+
+}
+
+country_event = { 
+	id = 46484
+	title = "NCLM84.T" #Penal colonies : Veracruz for the Arsenal and Îles Tres Marías in the Pacific Ocean
+	desc = "NCLM84.D" 
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = Mirabal
+		NOT = { has_country_flag = penal_colonies } 
+		owns = 2161 
+	}
+	
+	mean_time_to_happen = { 
+		months = 36
+	}
+	
+	option = { 
+		name = "NCLM84.A"
+		set_country_flag = penal_colonies
+		social_reform = colonial_transportation 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					province_id = 2161 
+					province_id = 2162
+					}
+				} 
+			add_province_modifier = { 
+				name = penal_colonies
+				duration = -1
+			}
+		}
+	}	
+}
+
+
+country_event = { 
+	id = 46485
+	title = "NCLM85.T" #Natives revolt against the Confiscations
+	desc = "NCLM85.D" 
+	
+	major = yes 
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = reforma
+		OR = { has_country_flag = CASTO_CLM has_country_flag = IMPERIAL_CLM } 
+		NOT = { has_country_flag = reforma_war } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 36 
+		modifier = { 
+			factor = 0.1 
+			war = yes
+		}
+	}
+	
+	option = { 
+		name = "NCLM85.A"
+		set_country_flag = reforma_war 
+		any_owned = { 
+			limit = { 
+				is_core = YUC		 
+			}
+			secede_province = YUC
+		}
+		any_owned = { 
+			limit = { 
+				is_core = PUR 
+			}
+			secede_province = PUR
+		}
+		any_owned = { 
+			limit = { 
+				is_core = ZAP 
+			}
+			secede_province = ZAP
+		}
+		war = {
+			target = YUC
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}	
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}	
+	    }
+		war = {
+			target = PUR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}	
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+	    }
+		war = {
+			target = ZAP
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}	
+			defender_goal = {
+				casus_belli = cut_down_to_size
+			}
+	    }
+	}
+}
+
+country_event = { 
+	id = 46486
+	title = "NCLM86.T" #Marquez revolts against the Confiscations and gets the supports of the Natives
+	desc = "NCLM86.D" 
+	
+	major = yes 
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = reforma
+		has_country_flag = VICENTE_CLM 
+		NOT = { has_country_flag = reforma_war } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 36 
+		modifier = { 
+			factor = 0.1 
+			war = yes
+		}
+	}
+	
+	option = { 
+		name = "NCLM86.A"
+		set_country_flag = reforma_war 
+		any_owned = { 
+			limit = { 
+				OR = { 
+					is_core = YUC		
+					is_core = PUR 
+					is_core = ZAP 
+					is_core = UCA 
+				}
+			}
+			secede_province = UCA
+		}
+		war = {
+			target = UCA
+			attacker_goal = { 
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = cut_down_to_size
+			}
+	    }
+	}
+}
+
+
+country_event = { 
+	id = 46487
+	title = "NCLM87.T" #End of the Revolt Wars (do'nt care about adding an actual defeat path since it should not happen and it's minor anyway)
+	desc = "NCLM87.D" 
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = reforma_war 
+		has_country_flag = CASTO_CLM 
+		war = no 
+		NOT = { exists = YUC }
+		NOT = { exists = PUR }
+		NOT = { exists = ZAP }
+		NOT = { exists = UCA }
+		NOT = { has_country_flag = assimilation_CLM } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+	}
+	
+	option = { 
+		name = "NCLM87.A"
+		set_country_flag = assimilation_CLM
+		any_pop = { 
+			militancy = -1 
+		}
+	}
+}
+
+country_event = { 
+	id = 46488
+	title = "NCLM88.T" #End of the Revolt Wars (do'nt care about adding an actual defeat path since it should not happen and it's minor anyway)
+	desc = "NCLM88.D" 
+	
+	trigger = { 
+		tag = CLM 
+		has_country_flag = reforma_war 
+		has_country_flag = VICENTE_CLM 
+		war = no 
+		NOT = { exists = YUC }
+		NOT = { exists = PUR }
+		NOT = { exists = ZAP }
+		NOT = { exists = UCA }
+		NOT = { has_country_flag = assimilation_CLM } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+	}
+	
+	option = { 
+		name = "NCLM88.A"
+		set_country_flag = assimilation_CLM
+		any_pop = { 
+			militancy = -1 
+		}
+	}
+}
+
+country_event = { 
+	id = 46489
+	title = "NCLM89.T" #Death of Ernesto II (dies in a bombing because anarchists love bombing monarchs) 
+	desc = "NCLM89.D" 
+	
+	trigger = { 
+		tag = CLM 
+		OR = { 
+			government = absolute_monarchy 
+			government = hms_government
+			government = prussian_constitutionalism 
+			government = fascist_monarchy
+		}
+		year = 1886
+		NOT = { has_country_flag = death_of_Ernesto_II } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 3 
+	}
+	
+	option = { 
+		name = "NCLM89.A"
+		set_country_flag = death_of_Ernesto_II
+		prestige = -1 
+		any_pop = { 
+			militancy = -1 
+			consciousness = 1 
+		}
+	}
+}
+
+
+country_event = { 
+	id = 46490
+	title = "NCLM90.T" #Death of Cristobal I (dies from lung cancer : succeeded by his daughter Caterina) 
+	desc = "NCLM90.D" 
+	
+	trigger = { 
+		tag = CLM 
+		OR = { 
+			government = absolute_monarchy 
+			government = hms_government
+			government = prussian_constitutionalism 
+			government = fascist_monarchy
+		}
+		year = 1915
+		NOT = { has_country_flag = death_Cristobal } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 3 
+	}
+	
+	option = { 
+		name = "NCLM90.A" 
+		any_pop = { 
+			militancy = -1 
+			consciousness = 1 
+		}
+	}
 }

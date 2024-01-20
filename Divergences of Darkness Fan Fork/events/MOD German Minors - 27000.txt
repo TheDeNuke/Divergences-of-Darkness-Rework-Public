@@ -2004,6 +2004,8 @@ country_event = {
 	mean_time_to_happen = {
 		days = 3
 	}
+	
+	# Jeanist or Protectorate Burgundy will never agree to the partition solution
 
 	option = { 
 	    name = "MGER35.A"
@@ -2014,8 +2016,15 @@ country_event = {
 		relation = { who = BAD value = -50 }
 		SGF = { country_event = { id = 270036 days = 7 } }
 		ai_chance = {
-			factor = 100				   
-		}
+			factor = 50
+			    modifier = {
+			      factor = 0
+				   OR = {
+				      tag = BRG
+					  government = presidential_dictatorship
+			       }	
+                }				  
+		}  
 	}
 	
 	option = { 
@@ -2024,9 +2033,9 @@ country_event = {
 		clr_global_flag = SWA_checker
 		relation = { who = SGF value = -400 }
 	    diplomatic_influence = { who = SGF value = -400 }
-		country_event = { id = 270055 days = 0 }
+		SGF = { country_event = { id = 270055 days = 0 } }
 		ai_chance = {
-			factor = 0				   
+			factor = 50		
 		}
 	}
 }
@@ -2070,8 +2079,15 @@ country_event = {
 		relation = { who = BAD value = 50 }
 		SGF = { country_event = { id = 270036 days = 7 } }
 		ai_chance = {
-			factor = 100				   
-		}
+			factor = 50
+			    modifier = {
+			       factor = 0.5
+				   OR = {
+				      tag = BRG
+					  government = presidential_dictatorship
+			       }	
+                }				  
+		}  
 	}
 	
 	option = { 
@@ -2080,9 +2096,14 @@ country_event = {
 		clr_global_flag = SWA_checker
 		relation = { who = SGF value = -400 }
 	    diplomatic_influence = { who = SGF value = -400 }
-		country_event = { id = 270055 days = 0 }
+		SGF = { country_event = { id = 270055 days = 0 } }
 		ai_chance = {
-			factor = 0				   
+			factor = 50	
+			    modifier = {
+			       factor = 0.5
+				   tag = PBG
+				   NOT = { government = presidential_dictatorship }	   
+                }			
 		}
 	}
 }
@@ -3053,6 +3074,15 @@ country_event = {
 	option = { 
 	    name = "MGER397.A"
 		prestige = 10
+		add_country_modifier = {
+			name = guard_the_mountains
+			duration = -1
+		}	
+	    define_general = { 
+		    name = "Oskar Hundertwasser" 
+		    personality = resolute
+		    background = natural_born_leader 
+	    } 
 		any_country = {
 		   limit = {
 		     owns = 390
@@ -3502,7 +3532,7 @@ country_event = {
 		clr_global_flag = WUR_danubian
 		clr_global_flag = SWI_danubian
 		clr_global_flag = SWA_alliance_checker
-		set_global_flag = SWABIAN_WAR_ACTIVE
+		set_global_flag = SWABIAN_WAR_ACTIVE		
 		war = {
 			target = SGF
 			attacker_goal = {
@@ -3541,6 +3571,7 @@ country_event = {
 
 	option = { 
 	    name = "MGER405.A"	
+		remove_country_modifier = guard_the_mountains
 		clr_global_flag = SWABIAN_WAR_ACTIVE
 		clr_country_flag = custom_treaty_loser		
 		prestige_factor = -0.3
@@ -3595,6 +3626,7 @@ country_event = {
 
 	option = { 
 	    name = "MGER406.A"	
+		SGF = { remove_country_modifier = guard_the_mountains }
 		clr_global_flag = SWABIAN_WAR_ACTIVE
 		clr_country_flag = custom_treaty_loser
         set_country_flag = swabia_two_possible		
@@ -3654,6 +3686,7 @@ country_event = {
 	
 	option = { 
 	    name = "MGER407.A"	
+		SGF = { remove_country_modifier = guard_the_mountains }
 		clr_global_flag = SWABIAN_WAR_ACTIVE
 		clr_country_flag = custom_treaty_loser		
 		prestige_factor = -0.1
@@ -4805,7 +4838,6 @@ country_event = {
 	option = { 
 	    name = "MGER70.A"
 		create_vassal = CFR
-		set_country_flag = CFR_is_vassal
 	}
 }
 
