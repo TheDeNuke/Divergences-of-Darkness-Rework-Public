@@ -3758,6 +3758,13 @@ country_event = {
 	    exists = yes
 		tag = BRG
 		exists = BEG
+		BEG = {
+		  OR = {
+		     government = hms_government
+			 government = prussian_constitutionalism
+			 government = absolute_monarchy
+		  }
+		}
 		has_global_flag = THE_BRG_CRISIS
 		NOT = { has_country_flag = CFR_unification_chain }
 		NOT = { has_global_flag = GLORY_TO_BOHEMIA }
@@ -3777,7 +3784,8 @@ country_event = {
 		relation = { who = DUA value = -25 }
 		relation = { who = SCA value = -25 }
 		set_country_flag = CFR_unification_chain
-		BEG = { country_event = { id = 270067 days = 7 } }
+		PBG = { set_country_flag = CFR_unification_chain }
+		BEG = { set_country_flag = CFR_unification_chain country_event = { id = 270067 days = 7 } }
 	}
 }
 
@@ -3827,6 +3835,7 @@ country_event = {
 	
 	option = { 
 	    name = "MGER51.A"	
+		clr_country_flag = dusseldorf_conference
 		any_country = {
 		   limit = {
 		      primary_culture = rheinish
@@ -3888,6 +3897,9 @@ country_event = {
 	
 	option = { 
 	    name = "MGER500.A"	
+		BRG = { set_country_flag = CFR_unification_chain }
+		PBG = { set_country_flag = CFR_unification_chain }
+		set_country_flag = CFR_unification_chain
 		relation = { who = PBG value = -50 }
 		country_event = { id = 2700680 days = 14 }
 	}
@@ -3901,12 +3913,7 @@ country_event = {
 	desc = "MGER510.D"
 	picture = "german_rhine"
 	
-	is_triggered_only = yes
-	
-	mean_time_to_happen = {
-		days = 14
-	}
-	
+	is_triggered_only = yes	
 	fire_only_once = yes 
 
     # Lets hope that this works.
@@ -3955,6 +3962,44 @@ country_event = {
 	
 	option = { 
 	    name = "MGER53.A"
+		# Republican
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  NOT = {
+			     OR = {
+			        government = hms_government
+				    government = prussian_constitutionalism
+				    government = absolute_monarchy
+		         }
+			  }
+		   }
+		   set_country_flag = CFR_outcome_verified
+		   clr_country_flag = MNR_BOH
+		   clr_country_flag = MNR_SCA
+		   country_event = { id = 270074 days = 3 }
+		}
+		# Universal Failure
+		any_country = {
+		   limit = {
+		      tag = MNR
+			  NOT = { in_sphere = BRG }
+			  NOT = { in_sphere = PBG }
+			  NOT = { in_sphere = SCA }
+			  NOT = { in_sphere = BOH }
+			  NOT = { has_country_flag = MNR_BOH }
+			  NOT = { has_country_flag = MNR_SCA }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
+			  NOT = { has_country_flag = CFR_outcome_verified }
+		   }
+		   set_country_flag = CFR_outcome_verified
+		   country_event = { id = 2700730 days = 3 }
+		}
+		# Burgundian with no other Intervention
 		any_country = {
 		   limit = {
 		      tag = MNR
@@ -3969,24 +4014,14 @@ country_event = {
 				 government = prussian_constitutionalism
 				 government = absolute_monarchy
 		      }
+			  NOT = { has_country_flag = CFR_outcome_verified }
 		   }
+		   set_country_flag = CFR_outcome_verified
+		   clr_country_flag = MNR_BOH	
+		   clr_country_flag = MNR_SCA
 		   country_event = { id = 270071 days = 3 }
 		}
-		any_country = {
-		   limit = {
-		      tag = MNR
-			  NOT = { in_sphere = BRG }
-			  NOT = { in_sphere = PBG }
-			  NOT = { has_country_flag = MNR_BOH }
-			  NOT = { has_country_flag = MNR_SCA }
-			  OR = {
-			     government = hms_government
-				 government = prussian_constitutionalism
-				 government = absolute_monarchy
-		      }
-		   }
-		   country_event = { id = 2700730 days = 3 }
-		}
+		# Bohemian Intervention
 		any_country = {
 		   limit = {
 		      tag = MNR
@@ -3994,11 +4029,20 @@ country_event = {
 			     has_country_flag = MNR_BOH	
 			     in_sphere = BOH
 		      }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
 			  NOT = { has_country_flag = MNR_SCA }
-		   }
-		   clr_country_flag = MNR_BOH		
+			  NOT = { has_country_flag = CFR_outcome_verified }
+		   }	
+		   set_country_flag = CFR_outcome_verified
+		   clr_country_flag = MNR_BOH	
+		   clr_country_flag = MNR_SCA
 		   country_event = { id = 270072 days = 3 }
 		}
+		# Scandinavian Intervention
 		any_country = {
 		   limit = {
 		      tag = MNR
@@ -4012,24 +4056,32 @@ country_event = {
 				 government = prussian_constitutionalism
 				 government = absolute_monarchy
 		      }
+			  NOT = { has_country_flag = CFR_outcome_verified }
 		   }	
-           clr_country_flag = MNR_SCA 		   
+           set_country_flag = CFR_outcome_verified		   
+		   clr_country_flag = MNR_BOH	
+		   clr_country_flag = MNR_SCA		   
 		   country_event = { id = 270073 days = 3 }
 		}
+		# Partial Failure
 		any_country = {
 		   limit = {
 		      tag = MNR
-			  NOT = {
-			     OR = {
-			        government = hms_government
-				    government = prussian_constitutionalism
-				    government = absolute_monarchy
-		         }
-			  }
+			  OR = {
+			     has_country_flag = MNR_BOH
+			     has_country_flag = MNR_SCA
+		      }
+			  OR = {
+			     government = hms_government
+				 government = prussian_constitutionalism
+				 government = absolute_monarchy
+		      }
+			  NOT = { has_country_flag = CFR_outcome_verified }
 		   }
+		   set_country_flag = CFR_outcome_verified
+		   clr_country_flag = MNR_BOH	
 		   clr_country_flag = MNR_SCA
-		   clr_country_flag = MNR_BOH
-		   country_event = { id = 270074 days = 3 }
+		   country_event = { id = 2700730 days = 3 }
 		}
 	}
 }
@@ -4298,7 +4350,10 @@ country_event = {
 			factor = 99
 			   modifier = {
 			      factor = 0
-				  in_sphere = BOH
+				  OR = {
+				     in_sphere = BOH
+					 has_country_flag = NAS_BOH
+				  }
 			   }			   
 		}
 	}
@@ -4307,6 +4362,7 @@ country_event = {
 	
 	option = { 
 	    name = "MGER61.B"
+		clr_country_flag = NAS_BOH
 		set_global_flag = NAS_BOH_CFR
 		set_global_flag = COMPLETE_CFR_CHAIN
 		ai_chance = {
@@ -4538,7 +4594,7 @@ country_event = {
     }		   	  
 	
 	mean_time_to_happen = {
-		days = 14
+		days = 3
 	}
 	
 	fire_only_once = yes 
@@ -4609,7 +4665,7 @@ country_event = {
     }		   	  
 	
 	mean_time_to_happen = {
-		days = 14
+		days = 3
 	}
 	
 	fire_only_once = yes 

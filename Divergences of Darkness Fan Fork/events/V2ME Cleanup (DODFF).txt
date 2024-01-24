@@ -386,6 +386,21 @@ country_event = {
 				add_province_modifier = { name = silver_mine duration = -1 }
 			}
 		}
+
+		any_country = {
+			limit = {
+				any_owned_province = {
+					has_province_modifier = silver_mine
+			    }
+			}
+			any_owned = {
+				limit = {
+				    has_province_modifier = silver_mine
+					NOT = { trade_goods = precious_metal }
+				}
+				remove_province_modifier = silver_mine
+			}
+		}
 		
 		#stop vassal payments
 		any_country = {
@@ -1318,6 +1333,8 @@ country_event = {
 		   any_country = {
 			   limit = {
 				   ai = yes
+				   exists = yes
+				   NOT = { has_country_modifier = ai_nation_boost_income }
 			   }
 			   add_country_modifier = {
 				   name = ai_nation_boost_income
@@ -1326,7 +1343,8 @@ country_event = {
 		   }
 		   any_country = {
 			   limit = {
-				   not = { ai = yes }
+				   ai = no
+				   has_country_modifier = ai_nation_boost_income
 			   }
 			   remove_country_modifier = ai_nation_boost_income
 		   }
