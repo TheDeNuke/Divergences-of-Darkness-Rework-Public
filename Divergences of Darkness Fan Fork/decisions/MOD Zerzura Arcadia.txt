@@ -449,7 +449,6 @@ political_decisions = {
 			tag = SKR
 			is_vassal = no 
 			NOT = { has_country_flag = SKR_moar_cultures }
-			
 		}
 		
 		allow = {
@@ -471,67 +470,73 @@ political_decisions = {
 
 	NBG_Masgirland_negociations = { 
 		potential = { 
-		OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
-		OR = { tag = NBG AND = { tag = ARC primary_culture = septiman } }
-		NOT = { has_country_flag = MSG_negociations } 
-		MSG = { exists = yes } 
-		NOT = { MSG = { is_vassal = yes } } 
+		   OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
+		   OR = { tag = NBG AND = { tag = ARC primary_culture = septiman } }
+		   NOT = { has_country_flag = MSG_negociations } 
+		   NOT = { has_global_flag = scandinavian_arcadia }
+		   MSG = { exists = yes is_vassal = no } 
 		}
 		
 		allow = { 
-		MSG = { exists = yes in_sphere = THIS } 
+	       MSG = { exists = yes in_sphere = THIS } 
 		}
 		
 		effect = { 
-		MSG = { country_event = 79188 } 
-		set_country_flag = MSG_negociations
+		   MSG = { country_event = 79188 } 
+		   set_country_flag = MSG_negociations
 		}
 	
 	}
 	
 	NBG_puppet_MSG = { 
 		potential = { 
-		OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
-		OR = { tag = NBG tag = ARC } 
-		NOT = { MSG = { is_vassal = yes } } 
-		has_country_flag = okay_negociations
+		   OR = { has_global_flag = NBG_NEW_ARCADIAN has_global_flag = NBG_OLD_ARCADIAN } 
+		   OR = { tag = NBG tag = ARC } 
+		   NOT = { has_global_flag = scandinavian_arcadia }
+		   MSG = { is_vassal = no }
+		   has_country_flag = okay_negociations
 		}
 		
 		allow = { 
-		investment_banks = 1 
-		iron_railroad = 1 
-		iron_steamers = 1 
-		money = 50000
+		   investment_banks = 1 
+		   iron_railroad = 1 
+		   iron_steamers = 1 
+		   money = 50000 
 		}
 		
 		effect = { 
-		money = -50000
-		clr_country_flag = okay_negociations
-		create_vassal = MSG 
+		   money = -50000
+		   clr_country_flag = okay_negociations
+		   create_vassal = MSG 
 		}
 	}
 	
 	NBG_annex_MSG = { 
 		potential = { 
-		has_global_flag = NBG_NEW_ARCADIAN
-		OR = { 
-		   tag = NBG 
-		   tag = ARC  
-		   is_our_vassal = MSG
-		}
-		NOT = { has_country_flag = masgirland_NBG }
+		   has_global_flag = NBG_NEW_ARCADIAN
+		   OR = { 
+		      tag = NBG 
+		      tag = ARC  
+		   }
+		   NOT = { has_global_flag = scandinavian_arcadia }
+		   NOT = { has_country_flag = masgirland_NBG }
 		}
 		
 		allow = { 
-		mass_politics = 1 
+		   mass_politics = 1 
+		   MSG = { 
+		      exists = yes 
+			  in_sphere = THIS 
+			  NOT = { vassal_of = SCA } 
+		   } 
 		}
 		
 		effect = { 
-		set_country_flag = masgirland_NBG
-		inherit = MSG
-		MSG = { all_core = { add_core = THIS } } 
-		add_accepted_culture = marklander 
-		clr_country_flag = okay_negociations
+		   set_country_flag = masgirland_NBG
+		   inherit = MSG
+		   MSG = { all_core = { add_core = THIS } } 
+		   add_accepted_culture = marklander 
+		   clr_country_flag = okay_negociations
 		}
 	}
 	
