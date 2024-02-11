@@ -7067,7 +7067,7 @@ country_event = {
 	    tag = SGF
 		has_global_flag = ITA_revolutionary_war
 		NOT = { war_with = ITA }
-		has_country_flag = custom_treaty_loser
+        has_country_flag = custom_treaty_loser
 	}
 	
 	mean_time_to_happen = { 
@@ -7078,7 +7078,14 @@ country_event = {
 		name = "IREV2.A"
 		clr_global_flag = ITA_revolutionary_war
 		clr_country_flag = custom_treaty_loser
-		TRE = { all_core = { add_core = ITA remove_core = THIS } } 
+		any_country = {
+		   limit = {
+		      tag = TRE
+			  exists = yes
+		   }
+		   annex_to = ITA
+		}
+		TRE = { all_core = { remove_core = TIR remove_core = GER remove_core = SGF } } 
 		any_owned = {
 		   limit = {
 		      is_core = ITA
@@ -7086,6 +7093,15 @@ country_event = {
 		   remove_core = THIS
 		   secede_province = ITA
 		}
+		any_owned = {
+		   limit = {
+		      is_core = TRE
+		   }
+		   remove_core = THIS
+		   secede_province = ITA
+		}
+		set_country_flag = trent_agreement
+		set_global_flag = trent_accord_success
 		ITA = { set_country_flag = claimed_trentino country_event = 124373 }
         prestige_factor = -0.5
 	    government = democracy 
@@ -7150,10 +7166,12 @@ country_event = {
 	
 	option = {
 		name = "IREV3.A"
+		TRE = { all_core = { add_core = THIS } } 
 		prestige = 40
 	    relation = { who = FROM value = 400 }
 	    create_alliance = FROM 
 	    diplomatic_influence = { who = FROM value = 400 }	
+		set_country_flag = ended_trentino 
         set_country_flag = successful_revolutionary_war		
 	}
 }
@@ -7173,15 +7191,15 @@ country_event = {
 	}
 	
 	mean_time_to_happen = { 
-	   days = 1
+	   days = 3
 	}	
 	
 	option = {
 		name = "IREV4.A"
+		prestige = 40	
 		clr_global_flag = ITA_revolutionary_war
 		clr_country_flag = custom_treaty_loser
-		ITA = { country_event = 124375 }
-        prestige = 40			
+		ITA = { country_event = 124375 }    		
 	}
 }
 
