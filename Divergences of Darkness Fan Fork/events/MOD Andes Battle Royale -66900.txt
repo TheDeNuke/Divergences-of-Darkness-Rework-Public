@@ -1501,34 +1501,25 @@ country_event = {
 		days = 1
 	}
 	
-	immediate = {
-	# Release the Mapuche
-	release_vassal = ARU 
-	any_pop = { 
-	militancy = 4 
-		}	
-	}
-	
 	option = {
 	name = "AND38.A" 
 	clr_country_flag = washkar_INC
-	release_vassal = ARU 
 	prestige = -40
 	any_pop = { 
 		militancy = 4 
     }	
 	any_owned = {
-			limit = {
-				OR = { 
-				region = CHL_2322
-				region = ARG_2387
-				region = INC_2389
-				}
+		limit = {
+			OR = { 
+			region = CHL_2322
+			region = ARG_2387
+			region = INC_2389
 			}
-			secede_province = RAP 
-			add_core = NAN 
-			remove_core = INC
 		}
+		secede_province = RAP 
+		add_core = NAN 
+		remove_core = INC
+	}
 	RAP = { country_event = 669370 } 
 	clr_country_flag = custom_treaty_loser
 	set_global_flag = NAN_OVER
@@ -1551,7 +1542,14 @@ country_event = {
 				}
 			secede_province = NAN 
 		}
-	NAN = { clr_country_flag = WAR_INC all_core = { remove_core = INC } country_event = 66938 }
+		any_country = {
+		    limit = { 
+			   tag = INC
+			   NOT = { is_our_vassal = ARU }
+			}
+		    release_vassal = ARU
+	    }
+	    NAN = { clr_country_flag = WAR_INC all_core = { remove_core = INC } country_event = 66938 }
 	}
 }
 
@@ -1565,6 +1563,13 @@ country_event = {
 	
 	option = {
 	name = "AND39.A" 
+		any_country = {
+		    limit = { 
+			   tag = INC
+			   is_our_vassal = ARU
+			}
+		    release_vassal = ARU
+	    }
 		2388 = {
 		poor_strata = { 
 			random_list = {
