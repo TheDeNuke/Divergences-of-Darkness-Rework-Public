@@ -1739,14 +1739,9 @@ country_event = {
 	   secede_province = CHA
 	}
 	any_country = {
-	   limit = { 
-	     war_with = THIS
-		 NOT = { primary_culture = boer }
-	   }
-	   country_event = 6530370
+	   limit = { war_with = BRG NOT = { primary_culture = boer } }
 	   end_war = BRG
-	}   
-	war_exhaustion = -50
+	}
 	PBG = { capital = 377 all_core = { remove_core = BRG }  }
 	government = absolute_monarchy
 	ruling_party_ideology = reactionary
@@ -1787,28 +1782,6 @@ country_event = {
 	}	
 	clr_country_flag = JEAN_ABD_CLEAR
 	set_country_flag = JEAN_TIME_BOMB
-	}
-}
-
-
-country_event = { 
-
-	id = 6530370
-	title = "The Burgundian Crisis"
-	desc = "Due to the currently ongoing crisis in Burgundy this war cannot continue. You've been refunded a sum of resources that may have been committed to this conflict and any conflicting cores have been given to you. You'll have to wait to start another war with Burgundy."
-	picture = "military_insurrection"
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	option = { 
-	name = "That's a shame."
-	   war_exhaustion = -100
-	   money = 100000
-	   BRG = {
-	      money = -100000
-	      any_owned = { limit = { is_core = THIS NOT = { is_core = PBG } } secede_province = THIS }
-	   }
 	}
 }
 
@@ -2617,54 +2590,6 @@ country_event = {
 	}
 }
 
-#550 - Prevent DUA or FRA from being at war with BRG while the BCW is active
-
-country_event = {
-	id = 6530541
-	title = "JEAN350.T"
-	desc = "JEAN350.D"
-	picture = "jeanaddress" 
-	
-	trigger = {	
-	    exists = yes
-	    OR = {
-		  tag = DUA
-		  tag = FRA
-		}
-		OR = { 
-		  war_with = PBG
-		  war_with = BRG 
-		}  
-		has_global_flag = JEAN_CIVIL_WAR	   
-	}
-	
-	mean_time_to_happen = {
-		days = 3
-	}
-	
-	option = {
-		name = "JEAN350.A"
-		end_war = BRG
-		end_war = PBG
-		add_country_modifier = {
-			name = border_instablity_BRG
-			duration = 365
-		}
-		any_owned = {
-		   limit = {
-		      is_core = DUA
-		      owner = { ai = yes }
-		   }
-		   owner = {
-		   add_country_modifier = {
-			   name = no_more_war
-			   duration = 7
-		       } 
-		   }
-	    }	
-	}
-}
-
 ############ THE BURGUNDIAN CIVIL WAR ######################
 
 #56 - WAR WERE DECLARED
@@ -2690,14 +2615,6 @@ country_event = {
 	set_global_flag = JEAN_CIVIL_WAR
 	remove_country_modifier = preparing_for_war
 	remove_country_modifier = calm_before_storm 
-	any_country = {
-	   limit = { war_with = BRG NOT = { primary_culture = boer } }
-	   end_war = BRG
-	}
-	any_country = {
-	   limit = { war_with = PBG NOT = { primary_culture = boer } }
-	   end_war = PBG
-	}
 	any_pop = {
 			ideology = { factor = -0.30 value = reactionary } 
 			ideology = { factor = 0.30 value = conservative }	
