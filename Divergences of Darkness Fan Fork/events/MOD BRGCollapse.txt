@@ -2590,6 +2590,54 @@ country_event = {
 	}
 }
 
+#550 - Prevent DUA or FRA from being at war with BRG while the BCW is active
+
+country_event = {
+	id = 6530544
+	title = "JEAN350.T"
+	desc = "JEAN350.D"
+	picture = "jeanaddress" 
+	
+	trigger = {	
+	    exists = yes
+	    OR = {
+		  tag = DUA
+		  tag = FRA
+		}
+		OR = { 
+		  war_with = PBG
+		  war_with = BRG 
+		}  
+		has_global_flag = JEAN_CIVIL_WAR	   
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+	
+	option = {
+		name = "JEAN350.A"
+		end_war = BRG
+		end_war = PBG
+		add_country_modifier = {
+			name = border_instablity_BRG
+			duration = 365
+		}
+		any_owned = {
+		   limit = {
+		      is_core = DUA
+		      owner = { ai = yes }
+		   }
+		   owner = {
+		   add_country_modifier = {
+			   name = no_more_war
+			   duration = 7
+		       } 
+		   }
+	    }	
+	}
+}
+
 ############ THE BURGUNDIAN CIVIL WAR ######################
 
 #56 - WAR WERE DECLARED
@@ -2615,6 +2663,14 @@ country_event = {
 	set_global_flag = JEAN_CIVIL_WAR
 	remove_country_modifier = preparing_for_war
 	remove_country_modifier = calm_before_storm 
+	any_country = {
+	   limit = { war_with = BRG NOT = { primary_culture = boer } }
+	   end_war = BRG
+	}
+	any_country = {
+	   limit = { war_with = PBG NOT = { primary_culture = boer } }
+	   end_war = PBG
+	}
 	any_pop = {
 			ideology = { factor = -0.30 value = reactionary } 
 			ideology = { factor = 0.30 value = conservative }	
