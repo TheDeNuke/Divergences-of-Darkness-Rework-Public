@@ -2038,6 +2038,22 @@ country_event = {
 	remove_country_modifier = a_new_italian_war
 	clr_global_flag = TUS_carbonari
 	clr_global_flag = war_PAP
+	any_country = {
+	   limit = {
+	      tag = PIE
+		  vassal_of = ARA
+	   }
+	   set_country_flag = will_be_vassal_SAR
+	   annex_to = THIS
+	}
+	any_country = {
+	   limit = {
+	      tag = SAR
+		  vassal_of = ARA
+	   }
+	   set_country_flag = will_be_vassal_SAR
+	   annex_to = THIS
+	}
 	any_owned = { 
 	limit = { is_core = FRR }
 	   remove_core = TUS
@@ -2057,18 +2073,6 @@ country_event = {
 	limit = { region = PAP_752 }
 	   remove_core = TUS
 	   secede_province = PAP
-	}
-	any_country = {
-	   limit = {
-	      OR = {
-		     tag = FRR
-			 tag = MOD
-			 tag = PAR
-			 tag = PAP
-		  }
-		  exists = yes
-	   }
-	   country_event = { id = 12420590 days = 1 }
 	}
 	any_owned = { 
 	   limit = { is_core = GEN }
@@ -2095,6 +2099,27 @@ country_event = {
 	   remove_core = TUS
 	   add_core = SAR
 	   secede_province = SAR
+	}
+	any_country = {
+	   limit = {
+	      OR = {
+		     tag = FRR
+			 tag = MOD
+			 tag = PAR
+			 tag = PAP
+			 AND = {
+			    tag = SAR
+				has_country_flag = will_be_vassal_SAR
+		     }
+			 AND = {
+			    tag = PIE
+				has_country_flag = will_be_vassal_SAR
+		     }			 
+		  }
+		  exists = yes
+	   }
+	   clr_country_flag = will_be_vassal_SAR
+	   country_event = { id = 12420590 days = 1 }
 	}
 	government = absolute_monarchy 
 	political_reform = none_voting

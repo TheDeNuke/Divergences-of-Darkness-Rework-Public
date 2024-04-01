@@ -6910,6 +6910,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP80.A"
+		set_global_flag = GER_GGW
 		clr_global_flag = and_here_we_go
 	    add_accepted_culture = north_german
 	    add_accepted_culture = south_german
@@ -6996,6 +6997,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP81.A"
+		set_global_flag = GCF_GGW
 		clr_global_flag = and_here_we_go
 	    add_accepted_culture = north_german
 	    add_accepted_culture = south_german
@@ -7076,6 +7078,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP82.A"
+		set_global_flag = GCF_GGW
 		clr_global_flag = and_here_we_go
 	    add_accepted_culture = north_german
 	    add_accepted_culture = south_german
@@ -7241,6 +7244,9 @@ country_event = {
 	
 	option = { 
 	    name = "GEP821.A"
+        clr_global_flag = GER_GGW	
+        clr_global_flag = GCF_GGW	
+		clr_country_flag = DO_NOT_ANARCHY
 		relation = { who = PBG value = 400 }
 		prestige = 100
 		remove_country_modifier = war_justification_blocked
@@ -7294,16 +7300,46 @@ country_event = {
 			remove_country_modifier = war_justification_blocked
 		}
 		relation = { who = FROM value = -400 }
-	    war = {
-		    target = FROM
-			attacker_goal = {
-				casus_belli = dismantle_cb
-			}
-			defender_goal = {
-				casus_belli = dismantle_cb
-			}
-			call_ally = yes
-		}		
+		random_owned = {
+		   limit = {
+		      owner = {
+			     has_global_flag = GER_GGW
+		      }
+		   }
+		   owner = {
+	           war = {
+		           target = GER
+			        attacker_goal = {
+				        casus_belli = dismantle_cb
+			        }
+			        defender_goal = {
+				        casus_belli = dismantle_cb
+		  	        }
+			        call_ally = yes
+		       }
+		   }
+        }	
+		random_owned = {
+		   limit = {
+		      owner = {
+			     has_global_flag = GCF_GGW
+		      }
+		   }
+		   owner = {
+	           war = {
+		           target = GCF
+			        attacker_goal = {
+				        casus_belli = dismantle_cb
+			        }
+			        defender_goal = {
+				        casus_belli = dismantle_cb
+		  	        }
+			        call_ally = yes
+		       }
+		   }
+        }
+        clr_global_flag = GER_GGW	
+        clr_global_flag = GCF_GGW		
 	}
 } 
 
@@ -7333,17 +7369,47 @@ country_event = {
 			}
 			remove_country_modifier = war_justification_blocked
 		}
-		relation = { who = FROM value = -400 }
-	    war = {
-		    target = FROM
-			attacker_goal = {
-				casus_belli = dismantle_cb_add_new
-			}
-			defender_goal = {
-				casus_belli = dismantle_cb_add_new
-			}
-			call_ally = yes
-		}			
+		relation = { who = FROM value = -400 }	
+		random_owned = {
+		   limit = {
+		      owner = {
+			     has_global_flag = GER_GGW
+		      }
+		   }
+		   owner = {
+	           war = {
+		           target = GER
+			        attacker_goal = {
+				        casus_belli = dismantle_cb_add_new
+			        }
+			        defender_goal = {
+				        casus_belli = dismantle_cb_add_new
+		  	        }
+			        call_ally = yes
+		       }
+		   }
+        }	
+		random_owned = {
+		   limit = {
+		      owner = {
+			     has_global_flag = GCF_GGW
+		      }
+		   }
+		   owner = {
+	           war = {
+		           target = GCF
+			        attacker_goal = {
+				        casus_belli = dismantle_cb_add_new
+			        }
+			        defender_goal = {
+				        casus_belli = dismantle_cb_add_new
+		  	        }
+			        call_ally = yes
+		       }
+		   }
+        }
+        clr_global_flag = GER_GGW	
+        clr_global_flag = GCF_GGW			
 	}
 } 
 
@@ -7387,6 +7453,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP830.A"
+		clr_country_flag = DO_NOT_ANARCHY
 		clr_country_flag = FALL_ROT_POSSIBLE
 		set_global_flag = FALL_ROT_OCCURED
 		remove_country_modifier = war_justification_blocked
@@ -7471,6 +7538,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP8400.A"
+		clr_country_flag = DO_NOT_ANARCHY
 		clr_country_flag = FALL_ROT_POSSIBLE
 		set_global_flag = FALL_ROT_OCCURED
 		remove_country_modifier = war_justification_blocked
@@ -9194,6 +9262,7 @@ country_event = {
 		}
 		NOT = { 	          		
 		   has_global_flag = GERMAN_ANARCHY
+		   has_country_flag = DO_NOT_ANARCHY	
 		   has_country_flag = SGF_COLLAPSE_INEVITABLE
 		   BRG = { OR = { has_country_flag = dismantling_treaty has_country_modifier = punitive_effects } }
 		   PBG = { OR = { has_country_flag = dismantling_treaty has_country_modifier = punitive_effects } }
@@ -10711,5 +10780,116 @@ country_event = {
             secede_province = SWA
         }
 		clr_country_flag = recently_released_NGF
+    }
+}
+
+### Secret Polish Revolution if CAE if the Phoenix Revolution is active ###
+
+### No localization on this event because nobody is going to see this ###
+
+country_event = {
+	id = 280126
+	title = "The Polish Revolution"
+	desc = "el revolution"
+	picture = "conscription_marching"
+	
+	fire_only_once = yes
+	
+    trigger = {
+	    tag = POL		
+		OR = {
+		  vassal_of = CAE
+		  vassal_of = BOH
+		  vassal_of = SCA
+		}
+		OR = {
+		  has_global_flag = GGR_CAE
+		  has_global_flag = GGR_SCA
+	    }
+    }
+
+    mean_time_to_happen = {
+        days = 1
+    }
+
+    option = {
+        name = "For Polska"
+	    government = presidential_dictatorship
+	    ruling_party_ideology = paternal
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		set_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power		
+	    iron = 10
+	    wool = 10
+	    timber = 25
+	    small_arms = 100
+	    leadership = 20
+	    add_country_modifier = {
+		    name = taiping_draft
+		    duration = 1440
+	    }
+        overlord = {
+		   country_event = { id = 280127 days = 1 }
+		   release_vassal = THIS
+		}		
+    }
+}
+
+country_event = {
+	id = 280127
+	title = "GEP842.T"
+	desc = "GEP842.D"
+	picture = "storming_palace_communists"
+	
+    is_triggered_only = yes
+
+    option = {
+        name = "GEP842.A"
+	    war = {
+	         target = POL
+		     attacker_goal = {
+			      casus_belli = make_puppet
+		     }
+		     defender_goal = {
+				  casus_belli = cut_down_to_size
+		     }
+	    }	
+        badboy = -8    	
     }
 }

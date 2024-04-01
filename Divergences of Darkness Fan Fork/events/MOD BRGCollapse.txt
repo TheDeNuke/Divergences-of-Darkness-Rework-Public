@@ -2590,18 +2590,21 @@ country_event = {
 	}
 }
 
-#550 - Prevent DUA or FRA from being at war with BRG while the BCW is active
+#550 - If anyone has declared war on either PBG or BRG then automatically end the war with a Jeanist Victory
 
 country_event = {
 	id = 6530544
-	title = "JEAN350.T"
-	desc = "JEAN350.D"
+	title = "JEAN351.T"
+	desc = "JEAN351.D"
 	picture = "jeanaddress" 
 	
 	trigger = {	
 	    exists = yes
 	    OR = {
 		  tag = DUA
+		  tag = BOH
+		  tag = CAE
+		  tag = HLR
 		  tag = FRA
 		}
 		OR = { 
@@ -2612,29 +2615,22 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		days = 3
+		days = 1
 	}
 	
 	option = {
 		name = "JEAN350.A"
-		end_war = BRG
-		end_war = PBG
-		add_country_modifier = {
-			name = border_instablity_BRG
-			duration = 365
-		}
-		any_owned = {
+		any_country = {
 		   limit = {
-		      is_core = DUA
-		      owner = { ai = yes }
+		      tag = PBG
+			  ai = no
 		   }
-		   owner = {
-		   add_country_modifier = {
-			   name = no_more_war
-			   duration = 7
-		       } 
-		   }
-	    }	
+		   change_tag_no_core_switch = BRG
+		}
+		BRG = { 		
+		   country_event = 6530600
+           country_event = { id = 1231230 days = 1 }		   
+		}			
 	}
 }
 
