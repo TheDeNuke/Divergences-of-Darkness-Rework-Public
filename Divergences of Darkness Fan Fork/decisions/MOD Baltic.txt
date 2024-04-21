@@ -414,6 +414,7 @@ political_decisions = {
 			has_country_flag = stanislaw_constitution
 			has_country_flag = PLC_ported
 			NOT = { debt_law = serfdom }
+			NOT = { exists = RUT }
 		}
 			
 		effect = {
@@ -437,19 +438,24 @@ political_decisions = {
 		   relation = { who = CAE value = -200 }
 		   relation = { who = GCF value = -200 }
 		   relation = { who = HLR value = -200 }
+		   ## Stanislaw gets whatever he wants since he defeated Ruthenia in a war
+		   random_owned = {
+		      limit = { owner = { has_country_flag = gigachad_stanislaw } }
+			  owner = { clr_country_flag = gigachad_stanislaw country_event = 2224448 }
+		   }
 		   ## Jewish Burghers have written your constitution and its liberal as fuck. Good Job
 		   random_owned = {
-		      limit = { owner = { has_country_flag = PLC_orthodox NOT = { has_country_flag = PLC_angry_jews } } }
+		      limit = { owner = { has_country_flag = PLC_orthodox NOT = { has_country_flag = PLC_angry_jews } NOT = { has_country_flag = gigachad_stanislaw } } }
 			  owner = { country_event = 2224448 }
 		   }
 		   ## The Nobility has written your constitution since you pissed off the jews and thus your most important supporters
 		   random_owned = {
-		      limit = { owner = { has_country_flag = PLC_angry_jews NOT = { has_country_flag = PLC_orthodox } } }
+		      limit = { owner = { has_country_flag = PLC_angry_jews NOT = { has_country_flag = PLC_orthodox } NOT = { has_country_flag = gigachad_stanislaw } } }
 			  owner = { country_event = 22244480 }
 		   }
 		   ## You pissed off both major intrest groups and all you have left is the army. Eternal Royal Dictatorship it is.
 		   random_owned = {
-		      limit = { owner = { has_country_flag = PLC_angry_jews has_country_flag = PLC_orthodox } }
+		      limit = { owner = { has_country_flag = PLC_angry_jews has_country_flag = PLC_orthodox NOT = { has_country_flag = gigachad_stanislaw } } }
 			  owner = { country_event = 2224449 }
 		   }
  		}
@@ -3401,6 +3407,7 @@ political_decisions = {
         effect = {
             set_country_flag = piast_wedding
             prestige = 5
+			TES = { all_core = { add_core = THIS } }
             inherit = TES 
         }
 
@@ -4014,6 +4021,75 @@ political_decisions = {
 			factor = 1
 		}
 	}	
+	
+	
+	balter_unification = {
+	    picture = annex_united_baltic_duchy
+		potential = {
+			OR = {
+			   tag = PRU
+			   tag = LIV
+			}
+			# You can't do this if Balters have been kicked from Livonia 
+			354 = { is_core = LIV }
+			# You can't do this if Prussia has been abolished
+			695 = { is_core = PRU }
+			primary_culture = prussian
+			exists = yes
+		}
+		
+		allow = {
+		     OR = {
+			   is_secondary_power = yes
+			   is_greater_power = yes
+			}
+			owns = 695
+			owns = 349
+			owns = 354			
+		}
+		
+		effect = {
+			prestige = 5
+			PRU = { all_core = { add_core = THIS } }
+			LIV = { all_core = { add_core = THIS } }
+			change_tag = UDU
+			capital = 354
+			
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	UDU_claim_SAM = {
+	
+	    picture = lithuania
+	
+		potential = {
+		   tag = UDU
+		   NOT = { has_country_flag = claimed_sam_UDU }
+		   NOT = { 365 = { is_core = THIS } }
+		}
+			
+		allow = {
+		    OR = {
+               is_greater_power = yes
+               is_secondary_power = yes			   
+			}
+			war = no			
+		}
+			
+		effect = {
+		   prestige = 10
+		   SAM = { all_core = { add_core = THIS } }	
+           set_country_flag = claimed_sam_UDU		   
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}	
+
 	
 	### LARP LARP LARP
 	
