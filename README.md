@@ -13,6 +13,7 @@ The current and former mod team:
 -  DeNuke - Project Manager
 -  Attalus - The Co-Project Manager/Consul of Divergences
 -  Zerzura - Localization Lead and Coder
+-  Ddima - Primary Map Developer, Localization and Coder
 
 -  Theodorex - Victoria 3 Project Lead and Assistance
 -  Periares - FLAGS, Concept Designer, Coder and Localization
@@ -33,8 +34,10 @@ The current and former mod team:
 -  Atlas - Concept Designer
 -  Mr. Parrot - Concept Designer (here and Vic3)
 -  Majulah Melaka - Concept Designer
+-  Tawani - GFX and Concept Designer
+-  Imam-ı Azam Hazretleri - Concept Designer
+-  radiantrot - Concept Designer
 -  Conquest - Coder/Scripter and the developer of the Popularizer tool.
--  Ddima - Localization
 -  Tecumseh - Localization
 -  Ataru - Localization
 -  Ania - Localization
@@ -42,13 +45,14 @@ The current and former mod team:
 -  Norman_Scopes - Localization
 -  definitely NOT ash - Localization
 -  ttb618 - Localization
--  lipad - Localization
+-  lipad - GFX and Localization
 -  pax - Localization
 -  multidavid - Localization
 -  YPestis25 - Localization
 -  Noaxh - Localization
 -  dorcl - Chinese Localization
 -  Two_Watt - Art
+-  RetiredLt - Concept Designer
 -  ape - Localization and Local Ape
 
 Special Thanks to:
