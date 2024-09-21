@@ -85,8 +85,9 @@ country_event = {
 	   }
 	   country_event = { id = 79106 days = 3 }
 	}
+	29 = { remove_core = KKN remove_core = HHR add_core = OUM }
 	OUM = { all_core = { remove_core = VIN } }
-	NA_117 = { remove_core = VIN }
+	NA_117 = { remove_core = VIN secede_province = PLA }
 	NA_153 = { remove_core = VIN secede_province = PLA }
 	ai_chance = { 
 	    factor = 25
@@ -110,6 +111,8 @@ country_event = {
 	option = { 
 	name = "ARCGEN3.A"
 	prestige = -2	
+	3408 = { remove_core = OUM }
+	NA_115 = { remove_core = KKN remove_core = OUM add_core = HHR }
 	NA_153 = { remove_core = PLA remove_core = OUM add_core = SKR secede_province = THIS }
 	NA_117 = { remove_core = PLA remove_core = OUM add_core = SKR secede_province = THIS }
 	PLA_165 = { remove_core = SKR remove_core = VIN add_core = PLA }
@@ -154,8 +157,9 @@ country_event = {
 	   country_event = { id = 79106 days = 3 }
 	}
 	PLA = { set_country_flag = SCAPLA_chain }
-	NA_117 = { remove_core = VIN }
-	NA_153 = { remove_core = VIN }
+	29 = { remove_core = KKN remove_core = HHR add_core = OUM }
+	NA_117 = { remove_core = VIN secede_province = PLA }
+	NA_153 = { remove_core = VIN secede_province = PLA }
 	ai_chance = { 
 	    factor = 20
 	}
@@ -211,6 +215,8 @@ country_event = {
 	prestige = 3
 	set_country_flag = SCAPLA_chain
     SCA = { country_event = { id = 79105 days = 3 } }
+	3408 = { remove_core = OUM }
+	NA_115 = { remove_core = KKN remove_core = OUM add_core = HHR }
 	NA_153 = { remove_core = PLA remove_core = OUM add_core = SKR }
 	NA_117 = { remove_core = PLA remove_core = OUM add_core = SKR }
 	PLA_165 = { remove_core = SKR remove_core = VIN add_core = PLA secede_province = THIS }
@@ -242,8 +248,9 @@ country_event = {
 	   country_event = { id = 79106 days = 3 }
 	}
 	OUM = { all_core = { remove_core = VIN } }
-	NA_117 = { remove_core = VIN }
-	NA_153 = { remove_core = VIN }
+	29 = { remove_core = KKN remove_core = HHR add_core = OUM }
+	NA_117 = { remove_core = VIN secede_province = THIS }
+	NA_153 = { remove_core = VIN secede_province = THIS }
 	ai_chance = { 
 	    factor = 20
 	}
@@ -437,7 +444,22 @@ country_event = {
 	
 	option = { 
 	name = "ARCGEN11.A"
+	   105 = { add_core = PLA add_core = OUM } 
+	   130 = { secede_province = THIS } 
        TEX_134 = { remove_core = CLM remove_core = LST remove_core = MEX remove_core = VNS secede_province = THIS }
+	   set_global_flag = PLA_rename_cymrie 
+	   random_owned = {
+			limit = { province_id = 133 }
+			133 = { 
+				change_province_name = "Villeverte"
+				state_scope = { change_region_name = "Cymrie"  }
+			}
+			134 = { change_province_name = "Tudorie" }
+			135 = { change_province_name = "Fort Louis" }
+			129 = { change_province_name = "Saint Georges" }
+			130 = { change_province_name = "Sainte-Croix" }
+			clr_global_flag = LST_rename_apacheria
+	   }
 	   any_country = {
 	      limit = { owns = 137 }
 	         country_event = { id = 79113 days = 7 }
@@ -497,9 +519,22 @@ country_event = {
 	
 	option = { 
 	name = "ARCGEN15.A"
-       prestige = 5
-	   TEX_134 = { add_core = THIS secede_province = THIS }
-	   country_event = { id = 79115 days = 100 }
+        prestige = 5
+	    TEX_134 = { add_core = THIS secede_province = THIS }
+		random_owned = {
+			limit = { province_id = 133 }
+			133 = { 
+				change_province_name = "Vila Verde"
+				state_scope = { change_region_name = "Apacheria"  }
+			}
+			134 = { change_province_name = "Vitoria" }
+			135 = { change_province_name = "Campo Largo" }
+			129 = { change_province_name = "São Jorge" }
+			130 = { change_province_name = "Cruzes" }
+		}
+		set_global_flag = LST_rename_apacheria 
+		clr_global_flag = PLA_rename_cymrie
+	    country_event = { id = 79115 days = 100 }
 	}
 }
 
@@ -1230,7 +1265,25 @@ country_event = {
                 is_core = MSG
             }
             secede_province = MSG
-        }	
+        }
+        any_owned = {
+            limit = {
+			    OR = {
+                   province_id = 68
+                   province_id = 69
+                   province_id = 70
+                   province_id = 71	
+                   province_id = 72
+                   province_id = 73
+                   province_id = 74
+                   province_id = 75
+                   province_id = 248
+                   province_id = 249			   
+				}
+				NOT = { is_core = MSG }
+            }
+            add_core = VIN
+        }		
         VIN_58 = { add_core = VIN }
 		VIN_66 = { add_core = VIN }
 		238 = { remove_core = VIN }
@@ -3915,6 +3968,8 @@ country_event = {
 	desc = "ARCGEN68.D"
 	#picture = "war_ended"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	   tag = VIN
 	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
@@ -3959,6 +4014,8 @@ country_event = {
 	desc = "ARCGEN680.D"
 	#picture = "war_ended"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	   tag = VIN
 	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
@@ -3978,7 +4035,6 @@ country_event = {
 	    }
 		set_country_flag = ARC_VIN_CONFIRMED
 		set_global_flag = VIN_THIRD_ARCADIAN_WAR
-		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR	
     }	
 }
 
@@ -4181,9 +4237,16 @@ country_event = {
 		clr_country_flag = VIN_IRO_stolen
 		set_country_flag = VINTAW_INTERVENTION
 		set_global_flag = VIN_THIRD_ARCADIAN_WAR
-		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
 	    ai_chance = { 
 	        factor = 90
+		    modifier = { 
+			    factor = 0
+                OR = {
+                   war_with = DNG 
+                   war_with = JAP 
+                   war_with = KKN 
+                }				  
+		    }  
 	    }
     }	
 	
@@ -4212,8 +4275,14 @@ country_event = {
 	desc = "ARCGEN71.D"
 	#picture = "war_ended"
 	
+	fire_only_once = yes
+	
 	trigger = { 
-	   tag = DNG
+	   exists = yes
+	   OR = {
+	      has_country_flag = DNG_unifier
+		  tag = DNG
+	   }
 	   has_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
 	   NOT = { exists = OUM }
        NOT = { has_country_flag = ARC_DNG_CONFIRMED }	   
@@ -4232,7 +4301,35 @@ country_event = {
 		   }
 		   country_event = { id = 79171 days = 0 }
 		}
+	    ai_chance = { 
+	        factor = 10
+	    }
     }	
+	
+	option = {
+		name = "ARCGEN71.B"
+		set_country_flag = ARC_DNG_CONFIRMED
+		set_global_flag = DNG_THIRD_ARCADIAN_WAR
+		set_country_flag = DNG_is_pissed_off
+	    ai_chance = { 
+	        factor = 90
+		    modifier = { 
+			    factor = 0
+                OR = {
+                   government = hms_government
+                   government = democracy
+                   government = parliamentary_republic
+                }				  
+		    }
+		    modifier = { 
+			    factor = 0
+                OR = {
+                   war_with = SCA
+                   war_with = VIN
+                }			  
+		    }			
+	    }
+    }
 }
 
 ### The SAW Winner is told by DNG to sign a border demarkation treaty or will be invaded by DNG
@@ -4253,11 +4350,19 @@ country_event = {
 		prestige = 5
 		war_exhaustion = 10
 		badboy = -10
- 		relation = { who = DNG value = -400 }
-        diplomatic_influence = { who = DNG value = -400 }
-		DNG = { country_event = { id = 79172 days = 1 } }
+ 		relation = { who = FROM value = -400 }
+        diplomatic_influence = { who = FROM value = -400 }
+		FROM = { country_event = { id = 79172 days = 1 } }
 	    ai_chance = { 
 	        factor = 50
+			## The Directorate has other plans
+			modifier = { 
+				factor = 0 
+				OR = {
+				   government = fascist_dictatorship
+				   government = presidential_dictatorship
+				}
+			}
 		}
     }	
 	
@@ -4268,22 +4373,38 @@ country_event = {
 		prestige = -5
 		war_exhaustion = -5	   
 		set_country_flag = Western_border_fixed
-		NA_115 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
-		NA_106 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
-		NA_109 = { add_core = DNG remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_106 = { add_core = FROM remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_109 = { add_core = FROM remove_core = PLA remove_core = OUM remove_core = NBG } 
         any_owned = {
             limit = {
-                is_core = DNG
+                region = NA_115
             }
-            secede_province = DNG
+			remove_core = PLA
+			remove_core = OUM
+			remove_core = NBG
+			add_core = FROM
+        }
+        any_owned = {
+            limit = {
+                is_core = FROM
+            }
+            secede_province = FROM
         }
 		PLA = {		
         any_owned = {
             limit = {
-                is_core = DNG
+                is_core = FROM
             }
-            secede_province = DNG
+            secede_province = FROM
         }
+		}
+	    ai_chance = { 
+	        factor = 50
+			## I'm not calling your bluff
+			modifier = { 
+				factor = 0.2
+				DNG = { OR = { war_with = SCA war_with = VIN } }
+			}
 		}
     }	
 }
@@ -4306,9 +4427,16 @@ country_event = {
 		name = "ARCGEN73.A"
 		prestige = 10
 		set_global_flag = DNG_THIRD_ARCADIAN_WAR
-		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
+		set_country_flag = DNG_is_pissed_off
 	    ai_chance = { 
-	        factor = 90
+	        factor = 95
+		    modifier = { 
+			    factor = 0
+                OR = {
+                   war_with = SCA
+                   war_with = VIN
+                }			  
+		    }
 	    }
     }	
 	
@@ -4320,7 +4448,7 @@ country_event = {
         FROM = { diplomatic_influence = { who = THIS value = 200 } }
 		prestige = -10
 	    ai_chance = { 
-	        factor = 10
+	        factor = 5
 	    }
     }	
 }
@@ -4349,25 +4477,29 @@ country_event = {
 	
 	option = {
 		name = "ARCGEN74.A"
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
 		clr_global_flag = DNG_THIRD_ARCADIAN_WAR 
 		set_global_flag = THIRD_ARCADIAN_WAR 
 		clr_country_flag = custom_treaty_loser
-		DNG = {
-		add_country_modifier = { name = ALL_OR_NOTHING_ARC duration = -1 }
-		relation = { who = THIS value = -200 }
-		diplomatic_influence = { who = THIS value = -200 }
-		leave_alliance = THIS
-	    war = {
-	     target = THIS
-		     attacker_goal =  { 
-			    casus_belli = custom_treaty_cb
-		     }
-		     defender_goal = {
-			    casus_belli = cut_down_to_size
-		     }	
-			 call_ally = yes
-	    }
-		}
+		any_country = {
+		   limit = {
+		      has_country_flag = DNG_is_pissed_off
+		   }
+		   add_country_modifier = { name = ALL_OR_NOTHING_ARC duration = -1 }
+		   relation = { who = THIS value = -200 }
+		   diplomatic_influence = { who = THIS value = -200 }
+		   leave_alliance = THIS
+	       war = {
+	         target = THIS
+		        attacker_goal =  { 
+			       casus_belli = custom_treaty_cb
+		        }
+		        defender_goal = {
+			       casus_belli = cut_down_to_size
+		        }	
+			    call_ally = yes
+	       }
+	   }
     }	
 }
 
@@ -4395,6 +4527,7 @@ country_event = {
 	
 	option = {
 		name = "ARCGEN75.A"
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
 		clr_global_flag = VIN_THIRD_ARCADIAN_WAR 
 		set_global_flag = THIRD_ARCADIAN_WAR 
 		clr_country_flag = custom_treaty_loser
@@ -4441,6 +4574,7 @@ country_event = {
 	
 	option = {
 		name = "ARCGEN76.A"
+		clr_global_flag = CHECK_FOR_THIRD_ARCADIAN_WAR
 		clr_global_flag = DNG_THIRD_ARCADIAN_WAR
 		clr_global_flag = VIN_THIRD_ARCADIAN_WAR 
 		set_global_flag = THIRD_ARCADIAN_WAR 
@@ -4461,7 +4595,10 @@ country_event = {
 			 call_ally = yes
 	    }
 		}
-		DNG = {
+		any_country = {
+		limit = {
+		   has_country_flag = DNG_is_pissed_off
+		}
 		add_country_modifier = { name = ALL_OR_NOTHING_ARC duration = -1 }
 		relation = { who = THIS value = -200 }
 		diplomatic_influence = { who = THIS value = -200 }
@@ -4519,6 +4656,8 @@ country_event = {
 		}
 		end_war = VIN
 		end_war = DNG
+		end_war = DAA
+		end_war = YGZ
 		any_country = {
 		   limit = { 
 		      primary_culture = septiman
@@ -4530,9 +4669,6 @@ country_event = {
 		clr_country_flag = SAW_WINNER
 	    clr_global_flag = THIRD_ARCADIAN_WAR 
 		set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
-		NA_115 = { add_core = DNG }
-		NA_106 = { add_core = DNG }
-		NA_109 = { add_core = DNG }
         any_owned = {
             limit = {
                 is_core = LOU
@@ -4596,14 +4732,6 @@ country_event = {
 			remove_core = NBG
 			remove_core = PLA
             secede_province = VIN
-        }
-        any_owned = {
-            limit = {
-                is_core = DNG
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = DNG
         }
         any_owned = {
             limit = {
@@ -4656,88 +4784,21 @@ country_event = {
     	    clr_country_flag = fascist_gov
 	        clr_country_flag = anarcho_liberal_gov
 	        clr_country_flag = socialist_republic_gov
-            any_owned = {
-            limit = {
-                is_core = LOU
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = LOU
-            }
-            any_owned = {
-            limit = {
-                is_core = NUN
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = SKR
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = VIN
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = SKR
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = IRO
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = HHR
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = ANI
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = VIN
-            }
-            any_owned = {
-            limit = {
-                is_core = DNG
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = DNG
-            }
-            any_owned = {
-            limit = {
-                is_core = OUM
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = OUM
-            }
 	    }
-		DNG = { all_core = { remove_core = PLA remove_core = NBG } create_vassal = OUM country_event = 791760 }
+		any_country = {
+		    limit = {	
+                OR = {
+				   AND = {
+                      tag = DNG	
+                      exists = yes 
+                   }					  
+		           has_country_flag = DNG_unifier
+				}
+		    }
+		    all_core = { remove_core = PLA remove_core = NBG } 
+			create_vassal = OUM 
+			country_event = 791760 
+	    }
 		VIN = { all_core = { remove_core = PLA remove_core = NBG } }		
     }	
 }
@@ -4778,6 +4839,8 @@ country_event = {
 		}
 		end_war = VIN
 		end_war = DNG
+		end_war = DAA
+		end_war = YGZ
 		any_country = {
 		   limit = { 
 		      primary_culture = septiman
@@ -4789,9 +4852,6 @@ country_event = {
 		clr_country_flag = SAW_WINNER
 	    clr_global_flag = THIRD_ARCADIAN_WAR 
 		set_global_flag = ARCADIAN_UNIFICATION_BLOCKED
-		NA_115 = { add_core = DNG }
-		NA_106 = { add_core = DNG }
-		NA_109 = { add_core = DNG }
         any_owned = {
             limit = {
                 is_core = LOU
@@ -4855,14 +4915,6 @@ country_event = {
 			remove_core = NBG
 			remove_core = PLA
             secede_province = VIN
-        }
-        any_owned = {
-            limit = {
-                is_core = DNG
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = DNG
         }
         any_owned = {
             limit = {
@@ -4985,14 +5037,6 @@ country_event = {
             }
             any_owned = {
             limit = {
-                is_core = DNG
-            }
-			remove_core = NBG
-			remove_core = PLA
-            secede_province = DNG
-            }
-            any_owned = {
-            limit = {
                 is_core = OUM
             }
 			remove_core = NBG
@@ -5000,7 +5044,20 @@ country_event = {
             secede_province = OUM
             }
 	    }
-		DNG = { all_core = { remove_core = PLA remove_core = NBG } create_vassal = OUM country_event = 791760 }
+		any_country = {
+		    limit = {	
+                OR = {
+				   AND = {
+                      tag = DNG	
+                      exists = yes 
+                   }					  
+		           has_country_flag = DNG_unifier
+				}
+		    }
+		    all_core = { remove_core = PLA remove_core = NBG } 
+			create_vassal = OUM 
+			country_event = 791760 
+	    }
 		VIN = { all_core = { remove_core = PLA remove_core = NBG } }		
     }	
 }
@@ -5013,8 +5070,38 @@ country_event = {
 	
 	is_triggered_only = yes
 	
+	immediate = {
+	    any_country = {
+	       limit = {
+		      tag = OUM
+			  vassal_of = THIS
+	       }
+		   any_owned = {
+		       limit = {
+			      OR = {
+				     region = NA_106
+					 region = NA_109
+				     region = NA_115
+			      }
+			   }
+			   secede_province = THIS 
+		   }
+        }
+	}
+	
 	option = {
-		name = "ARCGEN770.A"		
+		name = "ARCGEN770.A"	
+		NA_106 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_109 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG } 
+        any_owned = {
+            limit = {
+                region = NA_115
+            }
+			remove_core = PLA
+			remove_core = OUM
+			remove_core = NBG
+			add_core = THIS
+        }		
 		badboy = 15
 		inherit = OUM	
 	    ai_chance = { 
@@ -5024,6 +5111,17 @@ country_event = {
 	 
 	option = {
 		name = "ARCGEN770.B"
+		NA_106 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG } 
+		NA_109 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG } 
+        any_owned = {
+            limit = {
+                region = NA_115
+            }
+			remove_core = PLA
+			remove_core = OUM
+			remove_core = NBG
+			add_core = THIS
+        }
 		prestige = 5
 	    ai_chance = { 
 	        factor = 10
@@ -5070,6 +5168,8 @@ country_event = {
 
 ################### DNG intervenes in OUM and siezes the west #####################	
 	
+### This may look a bit strange but this is a fix for the new DNG content	
+	
 country_event = {
 	id = 79178
 	title = "ARCGEN79.T"
@@ -5077,7 +5177,11 @@ country_event = {
 	#picture = "war_ended"
 	
 	trigger = { 
-	   tag = DNG
+	   OR = {
+	       tag = DNG
+	       has_country_flag = DNG_unifier
+	   }
+	   exists = yes
 	   has_global_flag = DGL_is_here 
 	}
 	
@@ -5088,24 +5192,26 @@ country_event = {
 	option = {
 		name = "ARCGEN79.A"
 		clr_global_flag = DGL_is_here 
-		NA_115 = { remove_core = OUM remove_core = ARC remove_core = PLA add_core = THIS }
-		NA_106 = { remove_core = OUM remove_core = ARC remove_core = PLA add_core = THIS }
-		NA_109 = { remove_core = OUM remove_core = ARC remove_core = PLA }
-		OUM = {
-            any_owned = {
+		inherit = OUM
+		NA_106 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG remove_core = ARC } 
+		NA_109 = { add_core = THIS remove_core = PLA remove_core = OUM remove_core = NBG remove_core = ARC } 
+        any_owned = {
             limit = {
-                is_core = DNG
+                region = NA_115
             }
-            secede_province = DNG
-            }
-            any_owned = {
+			remove_core = PLA
+			remove_core = OUM
+			remove_core = NBG
+			remove_core = ARC
+			add_core = FROM
+        }		
+        any_owned = {
             limit = {
-                region = NA_109
+                is_core = OUM
+				NOT = { is_core = THIS }
             }
-			add_core = DNG
-			secede_province = DNG
-            }
-		}
+			secede_province = ARC
+        }			
     }	
 }
 
@@ -6532,6 +6638,12 @@ country_event = {
 		any_pop = { militancy = -9 }
         any_country = {
             limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }            			   
+        any_country = {
+            limit = {
                 tag = NBG
                 OR = {
                   has_global_flag = NBG_BURGUNDIAN
@@ -6610,6 +6722,12 @@ country_event = {
 		name = "ARCGENEXT2.A"
 		prestige = 5
 		any_pop = { militancy = -9 }
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }    
 		random_owned = {
 		    limit = {
 			   owner = { 
@@ -6711,6 +6829,12 @@ country_event = {
 	option = {
 		name = "ARCGENEXT3.A"
 		any_pop = { militancy = -9 }
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }    
 		random_owned = {
 		    limit = {
 			   owner = { 
@@ -6810,6 +6934,12 @@ country_event = {
 		any_pop = { militancy = -9 }
         any_country = {
             limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }    
+        any_country = {
+            limit = {
                 tag = NBG
                 OR = {
                   has_global_flag = NBG_BURGUNDIAN
@@ -6892,6 +7022,12 @@ country_event = {
 	
 	option = {
 		name = "ARCGENEXT5.B"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }    
 		relation = { who = NBG value = 100 }
 		any_pop = { militancy = 1 }
 		any_country = {
@@ -7035,6 +7171,12 @@ country_event = {
 	
 	option = {
 		name = "ARCGENEXT9.B"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
 		relation = { who = NBG value = 200 }
 		prestige = -10
 		any_pop = { militancy = 3 }
@@ -7064,6 +7206,12 @@ country_event = {
  
 	option = {
 		name = "ARCGENEXT10.A"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
 		relation = { who = NBG value = -400 }
 		any_pop = { militancy = -5 consciousness = 3 }
         any_country = {
@@ -7105,6 +7253,12 @@ country_event = {
 	
 	option = {
 		name = "ARCGENEXT11.A"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
         country_event = { id = 792033 days = 14 } 
 	    ai_chance = { 
 	        factor = 1
@@ -7113,6 +7267,12 @@ country_event = {
 	
 	option = {
 		name = "ARCGENEXT11.B"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
 		PLA = { country_event = { id = 792034 days = 14 } }
 	    ai_chance = { 
 	        factor = 99
@@ -7139,6 +7299,12 @@ country_event = {
 
 	option = {
 		name = "ARCGENEXT12.A"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
 		prestige = 20
         inherit = PLA
 		any_pop = { militancy = -5 }
@@ -7161,6 +7327,12 @@ country_event = {
 
 	option = {
 		name = "ARCGENEXT13.A"
+        any_country = {
+            limit = {
+               war_with = THIS 
+			}
+			end_war = THIS 
+	    }
 		prestige = 20
         inherit = NBG
 		any_pop = { militancy = -5 }
@@ -7349,5 +7521,297 @@ country_event = {
 		prestige = 20
 		clr_country_flag = the_special_relationship
 		set_country_flag = the_super_special_relationship
+    }
+}
+
+#### The Final Death of Arcadia ####
+
+#### In this sense, empires do not fall; they rather fall apart, usually very slowly, through sometimes remarkably quickly ####
+
+#### Plantagenian Edition
+#### The Empire dies again.
+
+country_event = {
+	id = 792666
+	title = "ARCGENEXT666.T"
+	desc = "ARCGENEXT666.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "ARCGENEXT666.A"
+		all_core = { remove_core = THIS }
+		any_owned = {
+		   limit = {
+		      is_core = DNG
+           }
+           secede_province = DNG
+        }
+		any_owned = {
+		   limit = {
+		      is_core = DAA
+           }
+           secede_province = DAA
+        }
+		any_owned = {
+		   limit = {
+		      is_core = YGZ
+           }
+           secede_province = YGZ
+        }
+		any_owned = {
+		   limit = {
+		      is_core = OUM
+           }
+           secede_province = OUM
+        }
+		any_owned = {
+		   limit = {
+		      is_core = LOU
+           }
+           secede_province = LOU
+        }
+		any_owned = {
+		   limit = {
+		      is_core = NBG
+           }
+           secede_province = NBG
+        }
+		any_owned = {
+		   limit = {
+		      is_core = MSG
+           }
+           secede_province = MSG
+        }		
+		any_owned = {
+		   limit = {
+		      is_core = VIN
+           }
+           secede_province = VIN
+        }
+		any_owned = {
+		   limit = {
+		      is_core = SKR
+           }
+           secede_province = SKR
+        }		
+	    remove_accepted_culture = septiman
+		clr_country_flag = PLA_ARCADIA
+		clr_global_flag = NBG_NEW_ARCADIAN
+		clr_global_flag = NBG_OLD_ARCADIAN
+		clr_global_flag = NBG_BURGUNDIAN
+		set_global_flag = NBG_LIONS
+		any_country = {
+		    limit = {	
+                OR = {
+				   AND = {
+                      tag = DNG	
+                      exists = yes 
+                   }					  
+		           has_country_flag = DNG_unifier
+				}
+		    }
+		    all_core = { remove_core = PLA remove_core = NBG } 
+			create_vassal = OUM 
+			country_event = 791760 
+	    }
+		political_reform = unitary
+		change_tag = PLA
+    }
+}
+
+#### Belgian Edition
+#### The Rebels won. The Rebels kept winning. Now they have lost.
+
+country_event = {
+	id = 7926661
+	title = "ARCGENEXT6661.T"
+	desc = "ARCGENEXT6661.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "ARCGENEXT666.A"
+		all_core = { remove_core = THIS }
+		any_owned = {
+		   limit = {
+		      is_core = DNG
+           }
+           secede_province = DNG
+        }
+		any_owned = {
+		   limit = {
+		      is_core = DAA
+           }
+           secede_province = DAA
+        }
+		any_owned = {
+		   limit = {
+		      is_core = YGZ
+           }
+           secede_province = YGZ
+        }
+		any_owned = {
+		   limit = {
+		      is_core = OUM
+           }
+           secede_province = OUM
+        }
+		any_owned = {
+		   limit = {
+		      is_core = LOU
+           }
+           secede_province = LOU
+        }
+		any_owned = {
+		   limit = {
+		      is_core = PLA
+           }
+           secede_province = PLA
+        }
+		any_owned = {
+		   limit = {
+		      is_core = MSG
+           }
+           secede_province = MSG
+        }		
+		any_owned = {
+		   limit = {
+		      is_core = VIN
+           }
+           secede_province = VIN
+        }
+		any_owned = {
+		   limit = {
+		      is_core = SKR
+           }
+           secede_province = SKR
+        }		
+		remove_accepted_culture = plantagenian
+	    clr_country_flag = NBG_ARCADIA
+		clr_global_flag = NBG_NEW_ARCADIAN
+		clr_global_flag = NBG_OLD_ARCADIAN
+		clr_global_flag = NBG_BURGUNDIAN
+		set_global_flag = NBG_LIONS			
+		any_country = {
+		    limit = {	
+                OR = {
+				   AND = {
+                      tag = DNG	
+                      exists = yes 
+                   }					  
+		           has_country_flag = DNG_unifier
+				}
+		    }
+		    all_core = { remove_core = PLA remove_core = NBG } 
+			create_vassal = OUM 
+			country_event = 791760 
+	    }
+		political_reform = unitary
+		change_tag = NBG
+    }
+}
+
+#### Vinland Edition
+#### The greatest tragedy has befallen mankind.
+
+country_event = {
+	id = 7926662
+	title = "ARCGENEXT6662.T"
+	desc = "ARCGENEXT6662.D"
+	#picture = "war_ended"
+
+    is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "ARCGENEXT6662.A"
+		all_core = { remove_core = THIS }
+		any_owned = {
+		   limit = {
+		      is_core = DNG
+           }
+           secede_province = DNG
+        }
+		any_owned = {
+		   limit = {
+		      is_core = DAA
+           }
+           secede_province = DAA
+        }
+		any_owned = {
+		   limit = {
+		      is_core = YGZ
+           }
+           secede_province = YGZ
+        }
+		any_owned = {
+		   limit = {
+		      is_core = OUM
+           }
+           secede_province = OUM
+        }
+		any_owned = {
+		   limit = {
+		      is_core = NBG
+           }
+           secede_province = NBG
+        }
+		any_owned = {
+		   limit = {
+		      is_core = MSG
+           }
+           secede_province = MSG
+        }		
+		any_owned = {
+		   limit = {
+		      is_core = HHR
+           }
+           secede_province = HHR
+        }
+		any_owned = {
+		   limit = {
+		      is_core = LOU
+           }
+           secede_province = LOU
+        }
+		any_owned = {
+		   limit = {
+		      is_core = PLA
+           }
+           secede_province = PLA
+        }
+		any_owned = {
+		   limit = {
+		      is_core = SKR
+           }
+           secede_province = SKR
+        }		
+	    remove_accepted_culture = septiman
+		remove_accepted_culture = plantagenian
+		clr_global_flag = NBG_NEW_ARCADIAN
+		clr_global_flag = NBG_OLD_ARCADIAN
+		clr_global_flag = NBG_BURGUNDIAN
+		set_global_flag = NBG_LIONS		
+		any_country = {
+		    limit = {	
+                OR = {
+				   AND = {
+                      tag = DNG	
+                      exists = yes 
+                   }					  
+		           has_country_flag = DNG_unifier
+				}
+		    }
+		    all_core = { remove_core = PLA remove_core = NBG } 
+			create_vassal = OUM 
+			country_event = 791760 
+	    }
+		political_reform = unitary
+		change_tag = VIN
     }
 }

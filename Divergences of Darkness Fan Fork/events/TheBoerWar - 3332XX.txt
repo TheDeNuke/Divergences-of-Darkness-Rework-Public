@@ -3622,8 +3622,20 @@ country_event = {
 	desc = "SAFN55.D"
 	picture = "boer_war_camps"
 	
+	fire_only_once = yes
+	
 	trigger = {
-	has_global_flag = Geus_Civil_War
+	OR = {
+	    has_global_flag = Geus_Civil_War
+	    AND = {
+	        tag = BTV 
+		    has_country_flag = line_is_drawn_here
+	        NOT = { exists = NFL }
+	        NOT = { exists = ORA }
+	        NOT = { exists = TRN }
+		    NOT = { exists = LWE }
+       }
+	}
 	NOT = { has_global_flag = GCWConcluded }
 	NOT = { has_global_flag = SAFNHConcluded }
 	OR = {
@@ -3666,15 +3678,15 @@ country_event = {
 	}
 	
 	mean_time_to_happen = { 
-	   days = 7
+	   days = 1
 	}
 	
 	option = { 
 	name = "SAFN55.A"
 	prestige = 20
+	clr_country_flag = line_is_drawn_here
 	clr_global_flag = Geus_Civil_War
 	set_global_flag = GCWConcluded
-	change_tag = BTV
 	remove_country_modifier = small_country_draft
 	remove_country_modifier = CLM_fight
 	remove_country_modifier = geus_status_quo
@@ -3690,6 +3702,10 @@ country_event = {
 	   remove_country_modifier = CLM_fight
 	   remove_country_modifier = geus_status_quo
 	   remove_country_modifier = war_justification_blocked	
+	}
+	random_owned = {
+	   limit = { owner = { NOT = { tag = BTV } } }
+	   owner = { change_tag = BTV }
 	}
 	}
 }

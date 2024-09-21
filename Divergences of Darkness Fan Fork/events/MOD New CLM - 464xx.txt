@@ -21,6 +21,10 @@ country_event = {
 	option = {
 		name = "NCLM1.A"
         prestige = 1
+	    add_country_modifier = { 
+		    name = war_justification_blocked
+		    duration = 3460
+	    }
 		add_country_modifier = {
 			name = caudillo_state_modifier
 			duration = -1
@@ -438,6 +442,7 @@ country_event = {
 		}
 		CLM = { 
 		   end_war = QUI 
+		   set_country_flag = intervened_in_revolution
 		   create_alliance = SAN
 		   relation = { who = SAN value = 400 }
 		   diplomatic_influence = { who = SAN value = 400 }		
@@ -761,7 +766,7 @@ country_event = {
 
 #### HERRERA REVOLUTION TRIGGERED BY TIME ####
 
-# So, De Blanco will kick of Herrera if SPA is either at war with AMA or in 1842
+# So, De Blanco will kick of Herrera if SPA is either at war with AMA or in 1841
 
 # The 5th of March Demonstration - Occurs as a result of ATL breaking off SPA
 
@@ -777,7 +782,7 @@ country_event = {
 	    exists = yes
 	    tag = QUI
 		OR = {
-		   year = 1842 
+		   year = 1841 
 		   SPA = { war_with = AMA }
 		}
 		ATL = { NOT = { vassal_of = SPA } } 
@@ -1070,6 +1075,10 @@ country_event = {
 		    name = small_country_draft
 			duration = 1825
 		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = 720
+		}
 	    define_general = { 
 			name = "Guillermo de Blanco" 
 			personality = brilliant
@@ -1170,6 +1179,10 @@ country_event = {
 		add_country_modifier = {
 		    name = small_country_draft
 			duration = 1825
+		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = 720
 		}
 	    define_general = { 
 			name = "Guillermo de Blanco" 
@@ -1416,6 +1429,7 @@ country_event = {
 
 	option = {
 		name = "NCLM20.A"
+		set_country_flag = intervened_in_revolution 
 		prestige = -10
 		create_alliance = SAN
 		relation = { who = SAN value = 400 }
@@ -1472,6 +1486,273 @@ country_event = {
 	}
 }
 
+# Rocafuerte gives up on Spain - Aurelian Revolt
+### This triggers if SAN is not under any Spanish Control
+
+country_event = {
+	id = 464210
+	title = "NCLM180.T"
+	desc = "NCLM180.D"
+	picture = "llaneros"
+	
+	trigger = {	
+	    exists = yes
+	    tag = SPA
+		war_with = SAN
+		OR = {
+		   year = 1842
+		   2264 = { NOT = { controlled_by = THIS } }
+		}
+		NOT = { 
+		   SAN = { national_provinces_occupied = 0.10 } 
+		   2254 = { controlled_by = THIS }
+		}
+		NOT = { has_country_flag = custom_treaty_loser }
+		NOT = { has_global_flag = SAN_WAR_OVER }
+	}
+	
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	option = {
+		name = "NCLM180.A"
+		war_exhaustion = 25
+	    any_owned = {
+			limit = {
+				is_core = CAS
+				NOT = { is_core = GUY }
+			}
+			secede_province = CAS
+		}
+		CAS = {
+		relation = { who = SAN value = 400 }
+		create_alliance = SAN 
+		military_access = SAN
+		add_country_modifier = {
+		    name = small_country_draft
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = 720
+		}
+	    define_general = { 
+			name = "Antonio Rocafuerte" 
+			personality = glory_hound
+			background = mercenary
+		} 
+		set_country_flag = cas_appeared_early
+		capital = 2264
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000			
+		}	
+		any_country = {
+		   limit = {
+		      tag = CLM
+			  has_country_flag = intervened_in_revolution
+		   }
+		   relation = { who = CAS value = 400 }
+		   create_alliance = CAS 
+		   military_access = CAS
+		}
+	    war = {
+			target = CAS
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }			
+	    ai_chance = { 
+	       factor = 100	
+        }
+	}
+	
+	option = {
+		name = "NCLM180.B"	    
+		war_exhaustion = 25
+	    any_owned = {
+			limit = {
+				is_core = CAS
+				NOT = { is_core = GUY }
+			}
+			secede_province = CAS
+		}
+		CAS = {
+		relation = { who = SAN value = 400 }
+		create_alliance = SAN 
+		military_access = SAN
+		add_country_modifier = {
+		    name = small_country_draft
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = GREAT_CLM_WAR
+			duration = 720
+		}
+	    define_general = { 
+			name = "Antonio Rocafuerte" 
+			personality = glory_hound
+			background = mercenary
+		} 
+		set_country_flag = cas_appeared_early
+		capital = 2264
+	    government = presidential_dictatorship
+	    ruling_party_ideology = conservative
+	    political_reform = none_voting
+	    political_reform = party_appointed
+    	political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    random_owned = {
+			limit = {
+				owner = {
+					has_country_modifier = regency_government
+					NOT = {
+						government = absolute_monarchy
+						government = prussian_constitutionalism
+						government = hms_government
+					}
+				}
+			}
+			owner = { remove_country_modifier = regency_government }
+	    }
+	    set_country_flag = caudillo_state
+		add_country_modifier = {
+			name = caudillo_state_modifier
+			duration = -1
+		}
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = election_started
+	    set_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+	    clr_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    set_country_flag = tory_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = market_liberal_party_in_power
+	    money = 50000
+	    artillery = 1000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000	       	
+		}
+		any_country = {
+		   limit = {
+		      tag = CLM
+			  has_country_flag = intervened_in_revolution
+		   }
+		   relation = { who = CAS value = 400 }
+		   create_alliance = CAS 
+		   military_access = CAS
+		}
+	    war = {
+			target = CAS
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }
+        change_tag_no_core_switch = CAS			
+	    ai_chance = { 
+	       factor = 0	
+        }
+	}
+}
+
 # Ending One - Lost of Control in Granada
 
 # We have lost control of all relevent provinces in Granada. The war is over.
@@ -1490,6 +1771,7 @@ country_event = {
 		OR = {
 		   war_with = CLM
 		   war_with = SAN
+		   war_with = CAS
 	    }
 		OR = {
 		   has_global_flag = SAN_REVOLUTION
@@ -1497,7 +1779,7 @@ country_event = {
 		}
 		NOT = {
 		   any_owned_province = {
-		      is_core = CAS
+		      is_core = GUY
 			  controlled_by = SPA
 		   }
 	    }
@@ -1519,6 +1801,7 @@ country_event = {
 
 	option = {
 		name = "NCLM22.A"
+		money = -750000
 		any_country = {
 		   limit = {
 		      tag = DUA
@@ -1537,7 +1820,7 @@ country_event = {
         set_global_flag = SAN_WAR_OVER		
 		set_country_flag = SPA_CATASTROPIC_FAILURE
 		QUI = { remove_country_modifier = neutrality }
-		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+		CLM = { money = 750000 war_exhaustion = -50 remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
 		ideology = {
@@ -1574,6 +1857,7 @@ country_event = {
 		end_war = CLM
 		end_war = QUI
 		end_war = SAN
+		end_war = CAS
 		release = GUY 
 		release = CAS 
 		release = SAN 
@@ -1589,8 +1873,17 @@ country_event = {
 				}
 			    secede_province = CAS
 		}
-		CAS = {
+		any_country = {
+		   limit = {
+		      tag = CAS 
+			  NOT = { has_country_flag = cas_appeared_early }
+		   }
 		capital = 2264
+	    define_general = { 
+			name = "Antonio Rocafuerte" 
+			personality = glory_hound
+			background = mercenary
+		} 
 	    government = presidential_dictatorship
 	    ruling_party_ideology = conservative
 	    political_reform = none_voting
@@ -1683,6 +1976,7 @@ country_event = {
 
 	option = {
 		name = "NCLM23.A"
+		money = -750000
 		any_country = {
 		   limit = {
 		      tag = DUA
@@ -1702,10 +1996,11 @@ country_event = {
 		set_country_flag = SPA_CATASTROPIC_FAILURE
 		clr_country_flag = custom_treaty_loser
 		QUI = { remove_country_modifier = neutrality }
-		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+		CLM = { money = 750000 war_exhaustion = -50 remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
 		end_war = CLM
 		end_war = QUI
 		end_war = SAN
+		end_war = CAS
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
 		ideology = {
@@ -1825,8 +2120,17 @@ country_event = {
 	    clr_country_flag = market_liberal_party_in_power
 	    money = 50000
 		}
-		CAS = {
+		any_country = {
+		   limit = {
+		      tag = CAS 
+			  NOT = { has_country_flag = cas_appeared_early }
+		   }
 		capital = 2264
+	    define_general = { 
+			name = "Antonio Rocafuerte" 
+			personality = glory_hound
+			background = mercenary
+		} 
 	    government = presidential_dictatorship
 	    ruling_party_ideology = conservative
 	    political_reform = none_voting
@@ -1904,8 +2208,16 @@ country_event = {
 	trigger = {	
 	    exists = yes
 	    tag = SPA
-		NOT = { war_with = SAN }	
-		exists = SAN
+		OR = {
+		   AND = {
+		      NOT = { war_with = SAN }
+		      exists = SAN
+		   }
+		   AND = {
+		      NOT = { war_with = CAS }
+		      exists = CAS
+		   }
+        }		   
 		OR = {
 		   has_global_flag = SAN_REVOLUTION
 		   has_global_flag = CLM_SCIW
@@ -1922,6 +2234,7 @@ country_event = {
 
 	option = {
 		name = "NCLM24.A"
+		money = -750000
 		any_country = {
 		   limit = {
 		      tag = DUA
@@ -1938,7 +2251,7 @@ country_event = {
 		set_global_flag = CLM_VICTORY
         set_global_flag = SAN_WAR_OVER		
 		set_country_flag = SPA_CATASTROPIC_FAILURE
-		CLM = { remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
+		CLM = { money = 750000 war_exhaustion = -50 remove_country_modifier = GREAT_CLM_WAR country_event = { id = 46430 days = 14 } }
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
 		ideology = {
@@ -1975,6 +2288,7 @@ country_event = {
 		end_war = CLM
 		end_war = QUI
 		end_war = SAN
+		end_war = CAS
 	    any_owned = {
 			limit = {
 				is_core = CAS
@@ -1982,8 +2296,17 @@ country_event = {
 				}
 			    secede_province = CAS
 		}
-		CAS = {
+		any_country = {
+		   limit = {
+		      tag = CAS 
+			  NOT = { has_country_flag = cas_appeared_early }
+		   }
 		capital = 2264
+	    define_general = { 
+			name = "Antonio Rocafuerte" 
+			personality = glory_hound
+			background = mercenary
+		} 
 	    government = presidential_dictatorship
 	    ruling_party_ideology = conservative
 	    political_reform = none_voting
@@ -2061,6 +2384,7 @@ country_event = {
 	    exists = yes
 	    tag = SPA
         NOT = { exists = SAN }
+		NOT = { exists = CAS }
 		has_global_flag = SAN_REVOLUTION
 		NOT = { has_global_flag = CLM_SCIW }
 		NOT = { has_global_flag = SAN_WAR_OVER }
@@ -2154,6 +2478,7 @@ country_event = {
 	    tag = SPA
 		NOT = { exists = CLM }
 		NOT = { exists = SAN }
+		NOT = { exists = CAS }
 		has_global_flag = CLM_SCIW
 		NOT = { has_global_flag = SAN_WAR_OVER }
 		NOT = { has_country_flag = custom_treaty_loser }
@@ -2199,7 +2524,7 @@ country_event = {
 		   remove_country_modifier = caudillo_state_modifier
 		}
 		QUI = { remove_country_modifier = neutrality }
-		CLM = { clr_country_flag = caudillo_state remove_country_modifier = caudillo_state_modifier remove_country_modifier = the_glorious_alliance remove_country_modifier = GREAT_CLM_WAR }
+		CLM = { government = autonomous_dependency clr_country_flag = caudillo_state remove_country_modifier = caudillo_state_modifier remove_country_modifier = the_glorious_alliance remove_country_modifier = GREAT_CLM_WAR }
 	    any_pop = {
 	    limit = { NOT = { pop_type = aristocrats } }
 		ideology = {
@@ -2826,6 +3151,7 @@ country_event = {
 	    tag = CLM
 		has_country_flag = CASTO_CLM
 		has_country_flag = CASTO_CLM_CUBA
+		has_country_flag = californian_situation_resolved	
 	}
 	
 	mean_time_to_happen = {
@@ -2836,6 +3162,7 @@ country_event = {
 
 	option = {
 		name = "NCLM36.A"
+		set_country_flag = CASTRO_CAN_REVOLT
 		clr_country_flag = CASTO_CLM_CUBA
 		relation = { who = SPA value = -400 }
 		CUB = { all_core = { add_core = CLM } }
@@ -3217,7 +3544,7 @@ country_event = {
 	}
 }
 
-# 5 - Caudillos refuse to sign the Constitution. They respect Vicinte but this is far too much
+# 5 - Caudillos refuse to sign the Constitution. They respect Vicinte but this is far too much. He would need some alternative form of legitimacy to justify the Veracruz Conference.
 
 country_event = {
 	id = 46442
@@ -3258,11 +3585,11 @@ country_event = {
 	    } 		
         any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = 1 }	
         any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -3 }			
-		country_event = { id = 46443 days = 7 }
+		DNG = { set_country_flag = VICINTE_PASS	}
 	}
 }
 
-# 5 - Vicinte is arranging the Veracruz Conference to sort out his differences with the Caudillos
+# 5 - Vicinte is finally capable of arranging the Veracruz Conference with his victory or successful discussion with DNG to sort out his differences with the Caudillos
 
 country_event = {
 	id = 46443
@@ -3270,10 +3597,20 @@ country_event = {
 	desc = "NCLM43.D"
 	#picture = "sunset"
 	
-	is_triggered_only = yes
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = VICINTE_CLM
+		has_global_flag = proceed_veracruz
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
 
 	option = {
 		name = "NCLM43.A"
+		clr_global_flag = proceed_veracruz
         any_pop = { limit = { OR = { culture = lusitanian culture = central_american } } militancy = -3 }	
         any_pop = { limit = { OR = { type = officers type = soldiers } } militancy = -5 }		
   		country_event = { id = 46444 days = 7 }
@@ -4291,7 +4628,7 @@ country_event = {
 				duration = 365
 			}
 		}
-		country_event = { id = 46457 days = 14 }	
+		set_country_flag = dead_santa	
 	}
 }
 
@@ -4305,10 +4642,18 @@ country_event = {
 	
 	major = yes
 	
-    is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+	    tag = CLM
+		has_country_flag = dead_santa
+		NOT = { exists = JLS }
+	}
 	
 	option = {
 		name = "NCLM57.A"
+		clr_country_flag = dead_santa
 		prestige = 30
 		set_country_flag = CLM_GRANADA_ENABLED
 	    government = parliamentary_republic
@@ -4795,9 +5140,57 @@ country_event = {
 		}
 	    any_owned = {
 			limit = {
-				is_core = OUM	
+				is_core = UTE
 				}
-			    secede_province = OUM
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = DNG
+				}
+			    secede_province = LST
+		}	
+	    any_owned = {
+			limit = {
+				is_core = SHS
+				}
+			    secede_province = LST
+		}	
+	    any_owned = {
+			limit = {
+				is_core = SHS
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = SHS
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = DAA
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = YGZ
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = YGZ
+				}
+			    secede_province = LST
+		}
+	    any_owned = {
+			limit = {
+				is_core = PLA
+				}
+			    secede_province = PLA
 		}
         LST = { 
 		   capital = 137
@@ -4929,6 +5322,7 @@ country_event = {
 	    } 
 		ZAP = { all_core = { remove_core = MEX } }
 		PUR = { all_core = { remove_core = MEX } }
+		MIX = { all_core = { remove_core = MEX } }
 		AZT = { all_core = { remove_core = MEX } }
 		country_event = { id = 46464 days = 7 }
 	}    	
@@ -4958,6 +5352,12 @@ country_event = {
 				is_core = ZAP
 			}
 			secede_province = ZAP
+		}
+	    any_owned = {
+			limit = {
+				is_core = MIX
+			}
+			secede_province = MIX
 		}
 	    any_owned = {
 			limit = {
@@ -5176,6 +5576,7 @@ country_event = {
 		ZAP = { all_core = { add_core = MEX } }
 		PUR = { all_core = { add_core = MEX } }
 		AZT = { all_core = { add_core = MEX } }
+		MIX = { all_core = { add_core = MEX } }
 	}    	
 }
 
@@ -5204,11 +5605,12 @@ country_event = {
 		name = "NCLM68.A"		
 		prestige = 30
         clr_global_flag = MEX_SALVATION_WAR 
-		MEX = { remove_country_modifier = taiping_draft set_country_flag = NEW_MEXICO_FORMED clr_country_flag = SANTANDER_MEX }
 		ZAP = { all_core = { add_core = MEX } }
 		PUR = { all_core = { add_core = MEX } }
 		AZT = { all_core = { add_core = MEX } }
+		MIX = { all_core = { add_core = MEX } }
 		change_tag = MEX
+		remove_country_modifier = taiping_draft
 		capital = 2172
 		set_country_flag = NEW_MEXICO_FORMED 
 		clr_country_flag = SANTANDER_MEX
@@ -5278,6 +5680,7 @@ country_event = {
 		ZAP = { all_core = { add_core = MEX } }
 		PUR = { all_core = { add_core = MEX } }
 		AZT = { all_core = { add_core = MEX } }
+		MIX = { all_core = { add_core = MEX } }
 		change_tag = MEX	
         capital = 2172		
 	}    	
@@ -6031,7 +6434,7 @@ country_event = {
 	trigger = { 
 		tag = CLM 
 		has_country_flag = reforma
-		has_country_flag = VICENTE_CLM 
+		has_country_flag = VICINTE_CLM 
 		NOT = { has_country_flag = reforma_war } 
 	}
 	
@@ -6108,7 +6511,7 @@ country_event = {
 	trigger = { 
 		tag = CLM 
 		has_country_flag = reforma_war 
-		has_country_flag = VICENTE_CLM 
+		has_country_flag = VICINTE_CLM 
 		war = no 
 		NOT = { exists = YUC }
 		NOT = { exists = PUR }
@@ -6133,7 +6536,7 @@ country_event = {
 country_event = { 
 	id = 46489
 	title = "NCLM89.T" #Death of Ernesto II (dies in a bombing because anarchists love bombing monarchs) 
-	desc = "NCLM89.D" 
+	desc = "NCLM89.D"
 	
 	trigger = { 
 		tag = CLM 
@@ -6186,6 +6589,7 @@ country_event = {
 	
 	option = { 
 		name = "NCLM90.A" 
+		set_country_flag = death_Cristobal
 		any_pop = { 
 			militancy = -1 
 			consciousness = 1 

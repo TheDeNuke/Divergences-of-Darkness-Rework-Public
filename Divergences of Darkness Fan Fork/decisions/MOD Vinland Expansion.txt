@@ -116,21 +116,28 @@ political_decisions = {
 			tag = VIN 		
 			ideological_thought = 1
 			NOT = { is_vassal = yes }
+			NOT = { has_country_flag = VIN_failed }
 			NOT = { has_country_flag = greater_VIN_west }
 		}
 		
 		allow = {
 		    is_greater_power = yes 
-			nationalism_n_imperialism = 1
+			revolution_n_counterrevolution = 1
 			all_core = { owned_by = THIS }
 			war = no 
 		}
 		
 		effect = {
 		    set_country_flag = greater_VIN_west
-			HHR = { all_core = { add_core = THIS } }
-			NA_11 = { add_core = THIS }
-			NA_2598 = { add_core = THIS }
+			any_country = {
+			   limit = {
+			      tag = HHR
+				  has_country_modifier = neutrality 
+				  NOT = { vassal_of = THIS }
+			   }
+			   country_event = 66073
+			}
+			VIN_45 = { add_core = VIN }
 		}
 		ai_will_do = { factor = 1 }
 	}
@@ -141,12 +148,12 @@ political_decisions = {
 			tag = VIN 		
 			has_country_flag = greater_VIN_west
 			NOT = { is_vassal = yes }
+			NOT = { has_country_flag = VIN_failed }
 			NOT = { has_country_flag = greater_VIN_japan }
 		}
 		
 		allow = {
 		    is_greater_power = yes 
-			revolution_n_counterrevolution = 1
             owns = 8
 			owns = 18
 			owns = 25
@@ -157,6 +164,29 @@ political_decisions = {
 		    set_country_flag = greater_VIN_japan
 			NA_1 = { add_core = THIS }
 			NA_4 = { add_core = THIS }
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	### This will only appear after defeating the west
+	
+	the_fate_of_HHR = {
+	    picture = Manifest_Destiny_ARC
+		potential = {
+			tag = VIN	
+			has_country_flag = HHR_killer_two
+		}
+		
+		allow = {
+		    is_greater_power = yes 
+			war = no    
+            is_disarmed = no			
+		}
+		
+		effect = {
+		    clr_country_flag = HHR_killer_two
+			relation = { who = HHR value = -10 }
+			country_event = 660940
 		}
 		ai_will_do = { factor = 1 }
 	}
@@ -197,12 +227,14 @@ political_decisions = {
 		
 		allow = {
 		    is_greater_power = yes 
-			nationalism_n_imperialism = 1
-			war = no 
+			revolution_n_counterrevolution = 1		
+            has_country_flag = HHR_killer_two			
+			war = no
 		}
 		
 		effect = {
 		    set_country_flag = greater_VIN_west
+			VIN_45 = { add_core = VIN }
 			NA_11 = { add_core = VIN }
 			NA_2598 = { add_core = VIN }
 			country_event = 333569
@@ -267,7 +299,7 @@ political_decisions = {
 			NOT = { has_country_modifier = SCA_preparing_annexation }
 			is_disarmed = no
 			war = no 
-			recently_lost_war = no
+			has_recently_lost_war = no
 		}
 		
 		effect = {

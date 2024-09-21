@@ -3797,8 +3797,8 @@ country_event = {
 		prestige = 20
 		73 = { secede_province = MSG }
 		end_war = MSG
-		VIN = { nationalvalue = nv_order clr_country_flag = custom_treaty_loser set_country_flag = moderate_vin_conservative prestige = -20 remove_country_modifier = taiping_draft remove_country_modifier = small_country_draft }
-		MSG = { prestige = -20 remove_country_modifier = taiping_draft remove_country_modifier = small_country_draft annex_to = VIN }
+		VIN = { primary_culture = vinlander	add_accepted_culture = marklander nationalvalue = nv_order clr_country_flag = custom_treaty_loser set_country_flag = moderate_vin_conservative prestige = -20 remove_country_modifier = taiping_draft remove_country_modifier = small_country_draft }
+		MSG = { primary_culture = marklander prestige = -20 remove_country_modifier = taiping_draft remove_country_modifier = small_country_draft annex_to = VIN }
 		clr_global_flag = vinlandic_indipendence_war
 		create_vassal = VIN
 	    ai_chance = { 
@@ -3994,9 +3994,33 @@ country_event = {
 	
 	option = {
 		name = "VIN58.A"
-		prestige = -5
-		VIN = { remove_accepted_culture = marklander }
+		prestige = -10
+		VIN = { 
+		   remove_accepted_culture = marklander 
+		   any_pop = {
+		      limit = {
+			     culture = marklander 
+		      }
+			  militancy = 8
+			  consciousness = 8
+		   }
+		}
         MSG = { all_core = { add_core = VIN remove_core = MSG } }	
+		country_event = { id = 333560 days = 62 }
+	    ai_chance = { 
+	        factor = 50
+			modifier = {
+			   factor = 0
+			   has_country_flag = SCA_hans_mode
+		    }
+		}		
+    }
+	
+	### Keep some relative autonomy but abolish the seperate division.
+	
+	option = {
+		name = "VIN58.C"
+		prestige = -5
 		country_event = { id = 333560 days = 62 }
 	    ai_chance = { 
 	        factor = 50
@@ -4119,6 +4143,7 @@ country_event = {
 	option = {
 		name = "VIN62.A"
 		prestige = -5
+		remove_country_modifier = neutrality
 		SCA = { 
 		   diplomatic_influence = { who = THIS value = 400 }
 		   relation = { who = THIS value = 400 }
@@ -4432,6 +4457,24 @@ country_event = {
             }
             secede_province = MSG
         }	
+        any_owned = {
+            limit = {
+			    OR = {
+                   province_id = 68
+                   province_id = 69
+                   province_id = 70
+                   province_id = 71	
+                   province_id = 72
+                   province_id = 73
+                   province_id = 74
+                   province_id = 75
+                   province_id = 248
+                   province_id = 249			   
+				}
+				NOT = { is_core = MSG }
+            }
+            add_core = VIN
+        }
         VIN_58 = { add_core = VIN }
 		VIN_66 = { add_core = VIN }
 		238 = { remove_core = VIN }
@@ -5226,10 +5269,11 @@ country_event = {
 		any_country = {
 		    limit = {
 			   OR = {
-				  tag = HHR
 				  tag = SKR 
 				  tag = MSG
+				  tag = HHR
 			   }
+			   vassal_of = THIS
 			}
 			country_event = 333584
 	    }
@@ -5332,7 +5376,7 @@ country_event = {
 				  tag = SKR 
 				  tag = MSG
 			   }
-			   vassal_of = VIN
+			   vassal_of = THIS
 			}
 			country_event = 333584
 	    }
@@ -5435,7 +5479,7 @@ country_event = {
 				  tag = SKR 
 				  tag = MSG
 			   }
-			   vassal_of = VIN
+			   vassal_of = THIS
 			}
 			country_event = 333584
 	    }
@@ -5516,11 +5560,9 @@ country_event = {
 		   add_accepted_culture = rohnnst
 		   set_country_flag = skr_accepted
 		   set_country_flag = rohnnst_accepted
-           inherit = HHR
 		   inherit = SKR
 		   inherit = MSG
-		   MSG = { all_core = { add_core = THIS } } 
-		   HHR = { all_core = { add_core = THIS } }          		   
+		   MSG = { all_core = { add_core = THIS } }         		   
 		   election = yes	
 		   random_owned = { 
 		      limit = { owner = { plurality = 50 NOT = { plurality = 80 } } }

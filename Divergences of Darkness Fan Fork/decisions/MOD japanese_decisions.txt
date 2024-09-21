@@ -156,6 +156,7 @@ political_decisions = {
 	   potential = {
           tag = JAP
 		  NOT = { has_country_flag = goodbye_han }
+		  NOT = { has_country_flag = japan_is_dead }
 	   }
 	
 	   allow = { 
@@ -561,6 +562,7 @@ political_decisions = {
 			   GOY = { all_core = { owned_by = THIS } }
 		   }
 		   NOT = { has_country_flag = supremacy_korea }
+		   NOT = { has_country_flag = japan_is_dead }
 	     }
 	
 		allow = {
@@ -654,7 +656,6 @@ political_decisions = {
 		   OR = { 
 		      government = prussian_constitutionalism
 		      government = hms_government
-			  government = fascist_monarchy
            }			   
 		   NOT = { has_country_flag = capital_decision }
 		   NOT = { has_country_flag = JAP_the_republican_trap }		   
@@ -1239,8 +1240,10 @@ political_decisions = {
 		
 		effect = {
 			treasury = -80000
-			prestige = 15
-			activate_technology = naval_professionalism
+			prestige = 15	
+			random_owned = { limit = { owner = { NOT = { naval_professionalism = 1 } } } owner = { activate_technology = naval_professionalism } }
+			random_owned = { limit = { owner = { NOT = { alphabetic_flag_signaling = 1 } } } owner = { activate_technology = alphabetic_flag_signaling } }
+			random_owned = { limit = { owner = { NOT = { naval_plans = 1 } } } owner = { activate_technology = naval_plans } }
 			relation = {
 				who = BRG
 				value = 50
@@ -1290,12 +1293,15 @@ political_decisions = {
    
    ##### Second Stage of Expansion #####
    
+   ### I guess with the tech they get from this they get a literal line of advantage if they take it before 1870
+   
 	the_imperial_expansion = {
 	picture = begin_line_of_advantage
 		potential = {
 			tag = JAP 
 			has_global_flag = THE_SUNRISE_OF_JAPAN 
 			NOT = { has_country_flag = the_sun_has_risen }
+			NOT = { has_country_flag = japan_is_dead }
 		}
 		
 		allow = {
@@ -1312,77 +1318,13 @@ political_decisions = {
 		
 		effect = {
 		    prestige = 5
+			random_owned = { limit = { owner = { NOT = { naval_statistics = 1 } } } owner = { activate_technology = naval_statistics } }
 			set_country_flag = the_sun_has_risen
 		}
 		
 		ai_will_do = { factor = 1 }
 	}  
-	
-	# TNG's retreat to Taiwan - This is a critical decision for how Japan deals with Taiwan
 
-	TNG_retreat_from_mainland = {
-	picture = begin_line_of_advantage
-		potential = {
-			tag = TNG
-			OR = {
-		       any_neighbor_country = {
-			      war_with = THIS
-			      is_culture_group = chinese
-		       }
-			   AND = {
-			       OR = {
-		              war_with = TAI 
-				      war_with = MIG
-				      war_with = SHU
-				      war_with = DAX
-				   }
-			       NOT = { any_owned_province = { is_core = CHI } }
-			   }
-			}
-			NOT = { has_global_flag = TNG_retreated_to_taiwan }
-		}
-		
-		allow = {
-		    1485 = {
-			   owned_by = THIS
-			   controlled_by = THIS
-		    }
-		    2562 = {
-			   owned_by = THIS
-			   controlled_by = THIS
-		    }
-		    NOT = {
-			    any_owned_province = {
-				    NOT = { province_id = 1485 }
-				    NOT = { province_id = 2562 }
-					NOT = { is_core = TON }
-				    OR = {
-					    controlled_by = THIS
-					    controlled_by = REB
-				    }
-			    }
-		    }
-		}
-		
-		effect = {
-		    set_global_flag = TNG_retreated_to_taiwan
-		    prestige = -5
-		    capital = 1485
-		    money = 100000
-		    leadership = 40			
-		    random_country = {
-			    limit = { 
-				    war_with = THIS
-				    neighbour = THIS
-				    is_culture_group = chinese
-			    }
-			    country_event = 16050216
-		    }
-		}
-		
-		ai_will_do = { factor = 1 }
-	}	
-	
 	# How Japan deals with Taiwan if TNG has retreated
 	
 	conquest_of_formosa_TNG = {
@@ -1392,7 +1334,6 @@ political_decisions = {
 			exists = TNG
 			TNG = { owns = 1485 }
 			has_country_flag = the_sun_has_risen
-			has_global_flag = TNG_retreated_to_taiwan
 			NOT = { has_country_flag = the_first_objective_JAP }
 		}
 		
@@ -1408,26 +1349,9 @@ political_decisions = {
 		
 		effect = {
 		    set_country_flag = the_first_objective_JAP
-		    war = {
-			   target = TNG
-			   attacker_goal = {
-				  casus_belli = conquest_any
-			   }		
-			   defender_goal = {
-				  casus_belli = war_reparations
-			   }
-		    }
 		    any_country = {
 			   limit = {
 			      tag = TNG
-			      owns = 1460
-			   }
-			   country_event = { id = 334765 days = 1 }
-			}
-		    any_country = {
-			   limit = {
-			      tag = TNG
-			      NOT = { owns = 1460 }
 			   }
 			   country_event = { id = 334766 days = 1 }
 			}			
@@ -1438,40 +1362,40 @@ political_decisions = {
 	
 	# How Japan deals with Taiwan if TNG formed China or "the hard way"
 	
-	conquest_of_formosa_CHI = {
-	    picture = taipei_china
-		potential = {
-			tag = JAP
-			CHI = { civilized = no owns = 1485 }
-			has_country_flag = the_sun_has_risen
-			NOT = { has_country_flag = the_first_objective_JAP }
-		}
-		
-		allow = {
-			war = no
-			OR = {
-			   is_secondary_power = yes
-			   is_greater_power = yes
-			}	
-			total_amount_of_ships = 25
-            NOT = { war_policy = pacifism }			
-		}
-		
-		effect = {
-		    set_country_flag = the_first_objective_JAP
-		    war = {
-			   target = CHI
-			   attacker_goal = {
-				  casus_belli = treaty_port_casus_belli
-			   }		
-			   defender_goal = {
-				  casus_belli = war_reparations
-			   }
-		    }		
-		}
-		
-		ai_will_do = { factor = 1 }
-	}
+	#conquest_of_formosa_CHI = {
+	#   picture = taipei_china
+	#	potential = {
+	#		tag = JAP
+	#		HOG = { civilized = no owns = 1485 }
+	#		has_country_flag = the_sun_has_risen
+	#		NOT = { has_country_flag = the_first_objective_JAP }
+	#	}
+	#	
+	#	allow = {
+	#		war = no
+	#		OR = {
+	#		   is_secondary_power = yes
+	#		   is_greater_power = yes
+	#		}	
+    #	    total_amount_of_ships = 25
+    #       NOT = { war_policy = pacifism }			
+	#	}
+	#	
+	#	effect = {
+	#	    set_country_flag = the_first_objective_JAP
+	#	    war = {
+	#		   target = CHI
+	#		   attacker_goal = {
+	#			  casus_belli = treaty_port_casus_belli
+	#		   }		
+	#		   defender_goal = {
+	#			  casus_belli = war_reparations
+	#		   }
+	#	    }		
+	#	}
+	#	
+	#	ai_will_do = { factor = 1 }
+	#}
 	
     #### Everything above this line was coded by DeNuke or ported from HFM. The below lines are coded by a very motivated individual also known as Zerzura
 
@@ -1526,6 +1450,7 @@ political_decisions = {
 			tag = JAP 
 			owns = 1485
 			NOT = { has_country_flag = JAP_takasago }
+			NOT = { has_country_flag = japan_is_dead }
 		}
 		
 		allow = {
@@ -2030,6 +1955,7 @@ political_decisions = {
 			is_disarmed = no 
 			any_owned_province = { is_colonial = yes }
 			NOT = { has_country_flag = sangoku }
+			NOT = { has_country_flag = japan_is_dead }
 		}
 		allow = {	
 			war = no 
@@ -2120,100 +2046,99 @@ political_decisions = {
     ##ARCADIAN CONTENT##
 
 	#You might not be really crazy but at least you can claim Xiazhou
-	claim_xiazhou = {
-		picture = administration
-		potential = {
-			tag = JAP 
-			OR = {
-				government = absolute_monarchy
-				government = prussian_constitutionalism
-				government = hms_government
-				government = presidential_dictatorship
-				government = fascist_dictatorship
-				government = fascist_monarchy
-			}
-			NOT = { has_country_flag = not_HAW_claim }
-			OR = {
-				KKN = { vassal_of = THIS }
-				KKN = { all_core = { owned_by = THIS } }
-			}
-			13 = { owned_by = DNG }
-			state_n_government = 1 
-			NOT = { has_country_flag = back_to_xiazhou }
-		}
-		
-		allow = {
-			NOT = { war = yes }
-			nationalism_n_imperialism = 1
-			DNG = { AND = { is_greater_power = no is_secondary_power = no } }
-			13 = { NOT = { is_core = KKN } }
-		}
-		
-		effect = {
-			badboy = 4
-			13 = { add_core = KKN add_core = JAP }
-			set_country_flag = back_to_xiazhou
-		}
-	}
+	#claim_xiazhou = {
+	#	picture = administration
+	#	potential = {
+	#		tag = JAP 
+	#		OR = {
+	#			government = absolute_monarchy
+	#			government = prussian_constitutionalism
+	#			government = hms_government
+	#			government = presidential_dictatorship
+	#			government = fascist_dictatorship
+	#			government = fascist_monarchy
+	#		}
+	#		NOT = { has_country_flag = not_HAW_claim }
+	#		OR = {
+	#			KKN = { vassal_of = THIS }
+	#			KKN = { all_core = { owned_by = THIS } }
+	#		}
+	#		13 = { owned_by = DNG }
+	#		state_n_government = 1 
+	#		NOT = { has_country_flag = back_to_xiazhou }
+	#	}
+	#	
+	#	allow = {
+	#		NOT = { war = yes }
+	#		nationalism_n_imperialism = 1
+	#		DNG = { AND = { is_greater_power = no is_secondary_power = no } }
+	#		13 = { NOT = { is_core = KKN } }
+	#	}
+	#	
+	#	effect = {
+	#		badboy = 4
+	#		13 = { add_core = KKN add_core = JAP }
+	#		set_country_flag = back_to_xiazhou
+	#	}
+	#}
 	
 	#You know it, you love it, it's the Eat Qingqiu decision
-	man_in_the_castle = {
-		picture = high_castle
-		potential = {
-			tag = JAP
-			OR = {
-				government = absolute_monarchy 
-				government = fascist_dictatorship
-				government = fascist_monarchy
-			}
-			NOT = { has_country_flag = high_castle }
-			NOT = { has_country_flag = not_HAW_claim }
-			owns = 1
-			DNG = { 
-				owns = 15  
-			}
-			nationalism_n_imperialism = 1
-		}
-
-		allow = {
-			NOT = { war = yes }
-			revolution_n_counterrevolution = 1
-            rank = 4
-            DNG = { is_greater_power = no }
-		}
-	
-		effect = {
-			prestige = 10
-			set_country_flag = high_castle
-			badboy = 20
-			DNG = { country_event = 334302 }
-			war = {
-				target = DNG
-				attacker_goal = {
-					casus_belli = conquest_any
-				}
-				defender_goal = {
-					casus_belli = cut_down_to_size
-				}
-			}
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				average_militancy = 4
-			}   
-			modifier = {
-				factor = 0
-				badboy = 0.2 
-			} 
-			modifier = {
-				factor = 0
-				DNG = { rank = 12 }
-			}
-		}
-	}
+	#man_in_the_castle = {
+	#	picture = high_castle
+	#	potential = {
+	#		tag = JAP
+	#		OR = {
+	#			government = absolute_monarchy 
+	#			government = fascist_dictatorship
+	#			government = fascist_monarchy
+	#		}
+	#		NOT = { has_country_flag = high_castle }
+	#		NOT = { has_country_flag = not_HAW_claim }
+	#		owns = 1
+	#		DNG = { 
+	#			owns = 15  
+	#		}
+	#		nationalism_n_imperialism = 1
+	#	}
+    #
+	#	allow = {
+	#		NOT = { war = yes }
+	#		revolution_n_counterrevolution = 1
+    #      rank = 4
+    #       DNG = { is_greater_power = no }
+	#	}
+	#
+	#	effect = {
+	#		prestige = 10
+	#		set_country_flag = high_castle
+	#		badboy = 20
+	#		DNG = { country_event = 334302 }
+	#		war = {
+	#			target = DNG
+	#			attacker_goal = {
+	#				casus_belli = conquest_any
+	#			}
+	#			defender_goal = {
+	#				casus_belli = cut_down_to_size
+	#			}
+	#		}
+	#	}
+	#	
+	#	ai_will_do = {
+	#		factor = 1
+	#		modifier = {
+	#			factor = 0
+	#			average_militancy = 4
+	#		modifier = {
+	#			factor = 0
+	#			badboy = 0.2 
+	#		} 
+	#		modifier = {
+	#			factor = 0
+	#			DNG = { rank = 12 }
+	#		}
+	#	}
+	#}
 	
 	#Absolute madman claiming the Galapagos
 	the_kamejima_expedition = {
@@ -2227,6 +2152,7 @@ political_decisions = {
 			}
 			owns = 658
 			NOT = { has_country_flag = tortoise_island }
+			NOT = { has_country_flag = japan_is_dead }
 		}
 
 		allow = {
@@ -2264,8 +2190,9 @@ political_decisions = {
 				government = fascist_monarchy
 			}
 			owns = 658
+			has_country_flag = the_sun_has_risen
 			NOT = { is_canal_enabled = 3 }
-			1723 = { NOT = { owned_by = PNM } }
+			1723 = { NOT = { owned_by = PNM } }			
 			NOT = { has_global_flag = no_andagoya_canal }
 			NOT = { has_country_flag = JAP_wants_panama }
 		}
@@ -2309,6 +2236,7 @@ political_decisions = {
 				government = fascist_monarchy
 			}
 			owns = 658
+			has_country_flag = the_sun_has_risen
 			NOT = { is_canal_enabled = 3 }
 			PNM = { 
 				exists = yes 
@@ -2367,6 +2295,7 @@ political_decisions = {
 				government = fascist_monarchy
 			}
 			owns = 658
+			has_country_flag = the_sun_has_risen
 			NOT = { is_canal_enabled = 3 }
 			PNM = { 
 				exists = yes 

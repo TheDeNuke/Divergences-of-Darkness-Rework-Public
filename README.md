@@ -50,9 +50,11 @@ The current and former mod team:
 -  multidavid - Localization
 -  YPestis25 - Localization
 -  Noaxh - Localization
--  dorcl - Chinese Localization
+-  dorcl - Chinese Localization and Concept Design
 -  Two_Watt - Art
 -  RetiredLt - Concept Designer
+-  Torekayim - Concept Designer
+-  Pszek - Concept Designer and Loc
 -  ape - Localization and Local Ape
 
 Special Thanks to:

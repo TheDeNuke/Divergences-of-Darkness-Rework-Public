@@ -1,0 +1,649 @@
+political_decisions = { 
+ 
+	fund_ever_victorious_army = { 
+	
+		picture = ever_victorious
+		
+		potential = { 
+			tag = DNG 
+			has_country_flag = YENG_DNG 
+			NOT = { has_country_flag = ever_victorious_army } 
+			NOT = { year = 1860 }
+		}
+		
+		allow = { 
+			army_professionalism = 1 
+			money = 100000
+			NOT = { year = 1860 } 
+		}
+		
+		effect = { 
+			money = -100000
+			set_country_flag = ever_victorious_army
+			add_country_modifier = { 
+				name = ever_victorious_army_modifier
+				duration = 10950
+			}
+			change_variable = {
+				which = YENG_DNG_var
+				value = 1
+			}
+		}
+	}
+	
+	republicanise_the_army = {
+		
+		picture = ever_victorious 
+		
+		potential = { 
+			tag = DNG 
+			has_country_flag = KOO_DNG 
+			NOT = { has_country_flag = ever_victorious_army } 
+			NOT = { year = 1860 } 
+		}
+		
+		allow = { 
+			army_professionalism = 1 
+			money = 100000
+			NOT = { year = 1860 } 
+		}
+		
+		effect = { 
+			money = -100000
+			set_country_flag = ever_victorious_army
+			any_pop = { 
+				limit = { 
+					OR = { 
+						type = soldiers 
+						type = officers 
+					}
+					NOT = { pop_majority_ideology = anarcho_liberal } 
+				}
+				ideology = { 
+					value = anarcho_liberal
+					factor = 0.1
+				}
+				ideology = { 
+					value = liberal
+					factor = 0.1
+				}
+			}
+			any_pop = { 
+				limit = { 
+					OR = { 
+						type = soldiers 
+						type = officers 
+					}
+					pop_majority_ideology = reactionary
+				}
+				reduce_pop = 0.8
+			}
+			change_variable = {
+				which = Koo_DNG_var
+				value = 1
+			}
+		}
+	
+	}
+	
+	mediate_the_lands_dispute = { 
+		
+		potential = { 
+			tag = DNG 
+			NOT = { has_country_flag = mediated_the_lands_dispute } 
+			year = 1850 
+			NOT = { VAL = { exists = yes } } 
+			NOT = { year = 1860 } 
+		}
+		
+		allow = { 
+			ideological_thought = 1 
+			market_structure = 1 
+			money = 500000
+			NOT = { year = 1860 } 
+		}
+		
+		effect = { 
+			money = -500000
+			set_country_flag = mediated_the_lands_dispute
+			random_owned = { limit = { owner = { tag = DNG has_country_flag = YENG_DNG } } owner = { country_event = 65151 } } 
+			random_owned = { limit = { owner = { tag = DNG has_country_flag = KOO_DNG } } owner = { country_event = 65152 } } 
+		}
+	
+	}
+	
+	annex_the_protectorates = { 
+		
+		potential = { 
+			tag = DNG 
+			OR = { has_country_flag = DNG_tributary has_country_flag = DNG_acceptance has_country_flag = DNG_assimilation } 
+			OR = { is_our_vassal = SHS is_our_vassal = UTE is_our_vassal = DIN }
+		}
+		
+		allow = { 
+			OR = { 
+				AND = { 
+					ai = yes 
+					year = 1855 
+				}
+				year = 1859 
+				state_n_government = 1 
+			}
+		}
+		
+		effect = { 
+			inherit = UTE 
+			inherit = SHS 
+			inherit = DIN
+			any_owned = { 
+				limit = { OR = { is_core = UTE is_core = SHS is_core = DIN } } 
+				add_core = THIS 
+				add_core = DAA
+			}
+		}
+	
+	}
+	
+	combat_banditry = { 
+		
+		potential = { 
+			tag = DNG 	 
+			any_owned_province = { 
+				OR = { 
+					has_province_modifier = banditry_DNG
+					has_province_modifier = piracy_DNG
+					has_province_modifier = taixi_gangs
+				}
+			}
+		}
+		
+		allow = { 
+			military_score = 25 
+			money = 100000
+			has_country_flag = ever_victorious_army 
+		}
+		
+		effect = { 
+			any_owned = { 
+				remove_province_modifier = banditry_DNG
+				remove_province_modifier = piracy_DNG
+				remove_province_modifier = taixi_gangs
+			}
+		}
+	
+	}
+	
+	combat_banditry_worse = { 
+		
+		potential = { 
+			tag = DNG 	 
+			any_owned_province = { 
+				OR = { 
+					has_province_modifier = banditry_DNG_worse
+					has_province_modifier = piracy_DNG_worse
+					has_province_modifier = taixi_gangs_worse
+				}
+			}
+		}
+		
+		allow = { 
+			military_score = 50
+			money = 200000
+			has_country_flag = ever_victorious_army 
+		}
+		
+		effect = { 
+			any_owned = { 
+				remove_province_modifier = banditry_DNG_worse
+				remove_province_modifier = piracy_DNG_worse
+				remove_province_modifier = taixi_gangs_worse
+			}
+		}
+	
+	}
+	
+	delineate_eastern_border = { 
+		
+		potential = { 
+			tag = DNG  
+			OR = { 
+				owns = 107
+				owns = 106
+			}
+			NOT = { year = 1870 } 
+			NOT = { has_country_flag = eastern_border } 
+		}
+		
+		allow = { 
+			OR = { 
+				owns = 106
+				106 = { owned_by = PLA } 
+				106 = { owned_by = OUM } 
+			}
+		}
+		
+		effect = { 
+			set_country_flag = eastern_border
+			random_owned = { limit = { owner = { tag = DNG owns = 106 } } owner = { country_event = 65154 } } 
+			random_owned = { limit = { owner = { tag = DNG NOT = { owns = 106 } } } owner = { country_event = 65155 } } 
+		}
+	
+	}
+	
+	the_new_great_harmony_DAY = { 
+	
+		potential = { 
+			tag = DAA 
+			has_global_flag = DNG_is_anarchy
+		}
+		
+		allow = { 
+			owns = 84 
+			NOT = { exists = SBA }
+			NOT = { exists = BUE }
+			NOT = { exists = YGZ }
+		}
+		
+		effect = { 
+		    add_country_modifier = { name = DNG_civil_war_debuff duration = 2190 }
+			remove_country_modifier = small_country_draft
+			set_country_flag = DNG_unifier
+		    clr_global_flag = DNG_is_anarchy
+		    clr_global_flag = HALT_KKN_CONTENT
+		    random_owned = {
+		        limit = {
+			       owner = { NOT = { has_country_modifier = global_baby_boom } }
+			    }
+			    owner = {
+	                add_country_modifier = { 
+		                name = global_baby_boom  
+		                duration = 1825
+	                }
+			    }
+	        }
+			SBA = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			VAL = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			YGZ = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS				
+				}
+			}
+		}
+	}
+	
+	the_rightful_government_YGZ = { 
+	
+		potential = { 
+			tag = YGZ 
+			has_global_flag = DNG_is_anarchy
+		}
+		
+		allow = { 
+			owns = 84 
+			OR = {
+			  NOT = { exists = DAA }
+			  NOT = { DAA = { government = theocracy } }
+			}
+			NOT = { exists = SBA }
+		}
+		
+		effect = { 
+		    add_country_modifier = { name = DNG_civil_war_debuff duration = 2190 }
+			remove_country_modifier = small_country_draft
+			set_country_flag = DNG_unifier
+		    clr_global_flag = DNG_is_anarchy
+		    clr_global_flag = HALT_KKN_CONTENT
+		    random_owned = {
+		        limit = {
+			       owner = { NOT = { has_country_modifier = global_baby_boom } }
+			    }
+			    owner = {
+	                add_country_modifier = { 
+		                name = global_baby_boom  
+		                duration = 1825
+	                }
+			    }
+	        }
+			any_country = {
+			   limit = {
+			      tag = DAA 
+				  exists = yes
+			   }
+			   annex_to = THIS
+			}
+			SBA = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			VAL = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			DAA = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS	
+					
+				}
+			}
+		}
+	}
+	
+	the_rightful_government_SBA = { 
+	
+		potential = { 
+			tag = SBA
+			has_global_flag = DNG_is_anarchy
+		}
+		
+		allow = { 
+			owns = 222 
+			OR = {
+			  NOT = { exists = DAA }
+			  NOT = { DAA = { government = theocracy } }
+			}
+			NOT = { exists = YGZ }
+		}
+		
+		effect = { 
+		    add_country_modifier = { name = DNG_civil_war_debuff duration = 2190 }
+			remove_country_modifier = small_country_draft
+			set_country_flag = DNG_unifier
+		    clr_global_flag = DNG_is_anarchy
+		    clr_global_flag = HALT_KKN_CONTENT
+			change_tag = DNG
+		    random_owned = {
+		        limit = {
+			       owner = { NOT = { has_country_modifier = global_baby_boom } }
+			    }
+			    owner = {
+	                add_country_modifier = { 
+		                name = global_baby_boom  
+		                duration = 1825
+	                }
+			    }
+	        }
+			any_country = {
+			   limit = {
+			      tag = DAA 
+				  exists = yes
+			   }
+			   annex_to = THIS
+			}
+			VAL = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			DAA = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			YGZ = { 
+			    remove_country_modifier = small_country_draft
+				all_core = { 
+					add_core = THIS				
+				}
+			}
+		}
+	}
+	
+	restoration_of_BUE_order = { 
+	
+		potential = { 
+			OR = {
+			   tag = YGZ
+			   tag = DNG
+			   tag = DAA
+			}
+			NOT = { 37 = { is_core = THIS } }
+			NOT = { has_global_flag = DNG_is_anarchy }
+			NOT = { has_country_flag = restored_BUE }
+			
+		}
+		
+		allow = { 
+			owns = 37
+		}
+		
+		effect = { 
+		    set_country_flag = restored_BUE
+			BUE = { 
+				all_core = { 
+					add_core = THIS 
+				}
+			}
+			3388 = { remove_core = THIS }
+			79 = { remove_core = THIS }
+		}
+	}
+	
+	core_southern_KKN = { 
+	
+		potential = { 
+			primary_culture = qingqiuan
+		    owns = 84
+            owns = 37
+            owns = 3395			
+            NOT = { has_country_flag = core_kaigan }			
+		}
+		
+		allow = { 
+		    nationalism_n_imperialism = 1
+			empiricism = 1
+			compound_steam_engines = 1
+			mechanized_mining = 1
+		}
+		
+		effect = { 
+		    prestige = 10
+		    set_country_flag = core_kaigan
+			KKN = {
+			   all_core = {
+			      limit = {
+				     NOT = { region = NA_1 }
+					 NOT = { region = NA_4 }
+				  }
+				  add_core = THIS 
+			   }
+			}
+		}
+	}
+	
+	#### Time to take the rest ###
+	
+	claim_kaigan = { 
+	
+		potential = { 
+			primary_culture = qingqiuan
+		    owns = 84
+            owns = 3395			
+			NOT = { owns = 3 }
+            NOT = { has_country_flag = march_to_kaigan }			
+		}
+		
+		allow = { 
+		    revolution_n_counterrevolution = 1
+			analytic_philosophy = 1
+			steam_turbine = 1
+			owns = 37
+			NOT = { truce_with = JAP }
+			
+		}
+		
+		effect = { 
+		    prestige = 10
+		    set_country_flag = march_to_kaigan
+			set_country_flag = DNG_final_chapter
+            NA_1 = { add_core = THIS }
+			NA_4 = { add_core = THIS }
+		}
+	}
+	
+	#### If you already own it here is a alternative way to get the cores
+	
+	core_kaigan = { 
+	
+		potential = { 
+			primary_culture = qingqiuan
+		    owns = 84	
+			owns = 3
+			owns = 3395
+            NOT = { has_country_flag = march_to_kaigan }			
+		}
+		
+		allow = { 
+		    revolution_n_counterrevolution = 1
+			analytic_philosophy = 1
+			steam_turbine = 1
+			owns = 37		
+		}
+		
+		effect = { 
+		    prestige = 10
+		    set_country_flag = march_to_kaigan
+			set_country_flag = DNG_final_chapter
+            NA_1 = { add_core = THIS }
+			NA_4 = { add_core = THIS }
+		}
+	}
+	
+	### Investments into Education obviously allows for this	
+	### To prevent serious conflicts with any regional content you need to first kick out Japan and also ensure Colombia is a non-factor
+	
+    qinggiu_sinicization_policy = { 
+	
+		potential = { 
+			primary_culture = qingqiuan
+			has_country_flag = DNG_kill_everyone_else
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			invention = nostalgic_romanticism
+			invention = biased_multiculturalism
+			invention = social_darwinism
+			all_core = { owned_by = THIS }
+			NOT = { exists = CLM }
+		}
+		
+		effect = { 
+		    clr_country_flag = DNG_kill_everyone_else
+		    random_owned = {
+				limit = {
+					owner = { school_reforms = no_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		    random_owned = {
+				limit = {
+					owner = { school_reforms = low_schools }
+				}
+				owner = { social_reform = good_schools }
+			}
+		    random_owned = {
+				limit = {
+					owner = { school_reforms = acceptable_schools }
+				}
+				owner = { social_reform = good_schools }
+			}	
+            remove_accepted_culture = buyean
+            remove_accepted_culture = valleyan 
+            any_owned = {
+                 limit = {
+                   is_core = BUE
+                 }
+                 remove_core = BUE
+            }	
+            any_owned = {
+                 limit = {
+                   is_core = DAA
+                   NOT = { is_core = THIS }
+                 }
+                 remove_core = DAA
+            }	
+            any_owned = {
+                 limit = {
+                   is_core = YGZ
+                   NOT = { is_core = THIS }
+                 }
+                 remove_core = YGZ
+            }
+            any_owned = {
+                 limit = {
+                   is_core = DNG
+                   NOT = { is_core = THIS }
+                 }
+                 remove_core = DNG
+            }			
+		}
+	}
+	
+	### The Final War	
+	### DO YOU WANT TOTAL WAR!
+	
+	### AI will never do this due to too many problems. Its a endgame player thing which is also why it does not have too many conditions.
+	
+	DNG_total_war = { 
+	
+		potential = { 
+			primary_culture = qingqiuan
+			NOT = { tag = DAA }
+			NOT = { has_country_flag = the_ultimate_war_DNG }
+		}
+		
+		allow = { 
+			is_greater_power = yes 
+			invention = great_war_paradigm
+			has_country_flag = GWP_invented
+			total_amount_of_ships = 100
+			JAP = {
+			    is_disarmed = no
+				NOT = { relation = { who = THIS value = -100 } }
+		        OR = {
+			       is_greater_power = yes
+			       is_secondary_power = yes
+			       colonial_nation = yes
+		       }
+            }			   
+			NOT = { 
+			   war_policy = pacifism 
+			   truce_with = JAP
+			   alliance_with = JAP
+			   has_country_modifier = no_more_war
+			}
+		}
+		
+		effect = { 
+		    set_country_flag = the_ultimate_war_DNG
+			set_country_flag = VALID_JAPANESE_DETONATION 
+		    leave_alliance = JAP
+            relation = { who = JAP value = -400 }
+		    prestige = 5
+			casus_belli = {
+				target = JAP
+				type = dismantle_cb
+				months = 120
+			}		    
+		}
+	}
+}	
+

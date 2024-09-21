@@ -1,0 +1,4719 @@
+country_event = { 
+ 
+	id = 66001 
+	title = "KKN1.T" #Intro event
+	desc = "KKN1.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		NOT = { year = 1837 } 
+	}
+	
+	mean_time_to_happen = { 
+	days = 1 
+	}
+	
+	option = { 
+	name = "KKN1.A" 
+	3395 = { 
+		add_province_modifier = { 
+			name = overgrown_chokogawa  
+			duration = -1
+			}
+		}
+	}
+} 
+
+
+##################################################################################
+################### Japanese Centralization Chain ################################
+##################################################################################
+
+#1 - NO CW Japan
+
+country_event = { 
+ 
+	id = 66002
+	title = "KKN2.T" #Meiji or Tensho era + BUE exists -KKN rise of Kaiganese nationalism as many fear Kyoto will try to centralize everything while also being angry with their ruling daimyo
+	desc = "KKN2.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		BUE = { exists = yes war = no } 
+		vassal_of = JAP
+		NOT = { has_global_flag = anti_monarchy_war }
+		NOT = { has_country_flag = Kaiganese_nationalism } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	option = { 
+		name = "KKN2.A" 
+		set_country_flag = Kaiganese_nationalism 
+		any_country = { limit = { tag = JAP government = prussian_constitutionalism } country_event = { id = 66003 days = 30 } }
+		any_country = { limit = { tag = JAP government = hms_government } country_event  = { id = 66006 days = 30 } }
+	}
+} 
+
+country_event = { 
+ 
+	id = 66003
+	title = "KKN3.T" #Tensho court hears about the situation in Chokogawa and demands the garrison on Ootorishama moves to quell dissent against the local daimyo
+	desc = "KKN3.D" 
+	picture = "kaiganese"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN3.A"
+		badboy = 1 
+		prestige = 2 
+		relation = { who = KKN value = -50 } 
+		KKN = { country_event = { id = 66004 days = 30 } } 
+	}
+}
+
+
+country_event = { 
+ 
+	id = 66004
+	title = "KKN4.T" #Kaiganese Republicans take control of Chokogawa as the Japanese garrison has to face a lot of barricades and the daimyo flees to Ootorishama
+	desc = "KKN4.D" 
+	picture = ""
+	
+	major = yes
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN4.A"	
+		JAP = { release_vassal = THIS leave_alliance = THIS country_event = 66005 } 
+		government = parliamentary_republic 
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+		set_global_flag = chokogawa_revolt
+		country_event = 66022
+		war = { 
+			target = JAP 
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = { 
+				casus_belli = make_puppet
+			}
+		}
+	}
+}
+
+
+country_event = { 
+ 
+	id = 66005
+	title = "KKN5.T" #The day of barricades and declaration of Kaiganese independence
+	desc = "KKN5.D" 
+	picture = "kegare"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN5.A"
+		badboy = -5 
+	}
+}
+
+
+country_event = { 
+ 
+	id = 66006
+	title = "KKN6.T" #The Meiji court sends a Liberal governor in Chokogawa to negotiate with the Nationalists
+	desc = "KKN6.D" 
+	picture = "rangoku"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN5.A"
+		relation = { who = KKN value = 50 } 
+		KKN = { country_event = { id = 66007 days = 30 } }
+	}
+}
+
+country_event = { 
+ 
+	id = 66007
+	title = "KKN7.T" #The new Liberal governor sits down with the Kaiganese nationalists : he promises an actual home-rule and a more equal status for the "Fuso Japanese"
+	desc = "KKN7.D" 
+	picture = "rangoku"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN7.A" #Broker the "Chokogawa agreement"
+		government = hms_government 
+		political_reform = appointed
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+		JAP = { set_country_flag = Chokogawa_agreement }
+		ai_chance = { 
+			factor = 100 
+		}
+	}
+	
+	option = { 
+		name = "KKN7.B" #Just for a player who wants independence
+		JAP = { release_vassal = THIS leave_alliance = THIS country_event = 66005 } 
+		set_global_flag = chokogawa_revolt
+		government = parliamentary_republic 
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+		country_event = 66022
+		war = { 
+			target = JAP 
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = { 
+				casus_belli = make_puppet
+			}
+		}
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+#country_event = { 
+#
+#	id = 66008
+#	title = "KKN8.T" #The Chokogawa Agreement : Japan can now fight BUY/DNG or consorts
+#	desc = "KKN8.D" 
+#	picture = ""
+#	
+#	is_triggered_only = yes 
+#	
+#	option = { 
+#		name = "KKN8.A" 
+#		set_country_flag = Chokogawa_agreement
+#		prestige = 2 
+#	}
+#}
+
+country_event = { 
+ 
+	id = 66009
+	title = "KKN9.T" #End of the Chokogawa Revolt : KKN is again a vassal
+	desc = "KKN9.D" 
+	picture = ""
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = chokogawa_revolt 
+		war = no 
+		is_our_vassal = KKN
+	}
+	
+	option = { 
+		name = "KKN8.A" 
+		clr_global_flag = chokogawa_revolt
+		set_country_flag = Chokogawa_agreement
+		prestige = 2 
+		KKN = { 
+		    set_country_flag = autoden_KKN
+			government = prussian_constitutionalism 
+			political_reform = wealth_voting
+		}
+	}
+}
+
+country_event = { 
+ 
+	id = 66010
+	title = "KKN10.T" #End of the Chokogawa Revolt : KKN is not a vassal ...
+	desc = "KKN10.D" 
+	picture = "saigo_coup"
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = chokogawa_revolt 
+		war = no 
+		NOT = { is_our_vassal = KKN } 
+	}
+	
+	option = { 
+		name = "KKN8.A" 
+		clr_global_flag = chokogawa_revolt
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		prestige_factor = -0.2
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+		KKN = { country_event = 66011 } 
+	}
+}
+
+
+#country_event = { 
+# 
+#	id = 66011
+#	title = "KKN11.T" #Independent KKN yeah! You won Vancouver island just by virtue of being independent
+#	desc = "KKN11.D" 
+#	picture = ""
+#	
+#	option = { 
+#		name = "KKN11.A"
+#	}
+#}
+
+country_event = { 
+ 
+	id = 66012
+	title = "KKN12.T" #Meiji or Tensho era + BUE does not exist -Kaiganese nationalists send a list of demands to the Home Islands to get home rule while getting support for the coming war against their neighbours
+	desc = "KKN12.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		vassal_of = JAP
+		BUE = { exists = no } 
+		NOT = { has_global_flag = anti_monarchy_war }
+		NOT = { has_country_flag = Kaiganese_nationalism } 
+	}
+	
+	mean_time_to_happen = { 
+		months = 12 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	option = { 
+		name = "KKN12.A" 
+		set_country_flag = Kaiganese_nationalism 
+		any_country = { limit = { tag = JAP } country_event = { id = 66013 days = 30 } }
+	}
+}
+
+country_event = { 
+ 
+	id = 66013
+	title = "KKN13.T" #The Kaiganese petition : a great development for the Empire - This leads to the Chokogawa Agreement
+	desc = "KKN13.D" 
+	picture = "kaiganese"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN13.A"
+		prestige = 3 
+		set_country_flag = Chokogawa_agreement
+	}
+}
+
+#2 - Civil War in Japan 
+
+country_event = { 
+ 
+	id = 66014
+	title = "KKN14.T" #Hokkaigan takes over Vancouver island (triggered by 334727 aka Kyowa and 334740)
+	desc = "KKN14.D" 
+	picture = "kaiganese"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN14.A"
+		set_country_flag = Kaiganese_nationalism
+		set_country_flag = fate_of_KKN_undecided 
+	}
+}
+
+country_event = { 
+ 
+	id = 66015
+	title = "KKN15.T" #Hokkaigan takes over Vancouver island (triggered by 334740 aka Showa killed his nephew)
+	desc = "KKN15.D" 
+	picture = "kaiganese"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN15.A"
+		set_country_flag = Kaiganese_nationalism
+		set_country_flag = fate_of_KKN_undecided 
+	}
+}
+
+#2.1 - Civil War in Japan ended with Republican Victory
+
+country_event = { 
+ 
+	id = 660120
+	title = "KKN120.T" #Republicans won the war and survived the odds and the Imperial Prince Konoe has arrived in Chokogawa 
+	desc = "KKN120.D" 
+	picture = "mizuno_heihachiro"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+		JAP = { OR = { government = democracy government = presidential_dictatorship } NOT = { has_country_flag = JAP_the_republican_trap } } 
+		has_country_flag = fate_of_KKN_undecided
+	}
+
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	option = { 
+		name = "KKN120.A" #Special Relationship with JAP ? 
+		any_country = { limit = { tag = JAP } country_event = { id = 660130 days = 30 } }
+		ai_chance = { 
+			factor = 70
+		    modifier = { 
+			    factor = 0.1
+			    JAP = { government = presidential_dictatorship }
+		    }
+		}
+	}
+	
+	option = { 
+		name = "KKN120.B" #Host the Imperial Family
+		country_event = { id = 660150 days = 10 }
+		ai_chance = { 
+			factor = 30
+		    modifier = { 
+			    factor = 3
+			    JAP = { government = presidential_dictatorship }
+		    }
+		}
+	}
+}
+
+country_event = { 
+ 
+	id = 660130
+	title = "KKN130.T" #Republic JAP - KKN wants to build a special relationship 
+	desc = "KKN130.D" 
+	picture = "kaiganese"
+	
+	is_triggered_only = yes 
+	
+	option = { #Accept
+		name = "KKN13.A"
+		KKN = { country_event = 660140 } 
+		relation = { who = KKN value = 200 } 
+		create_alliance = KKN 
+		diplomatic_influence = { who = KKN value = 200 } 
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+		name = "KKN13.B" #Refuse - the AI will never do it because honestly it's too much of a pain to account for everything
+		KKN = { clr_country_flag = fate_of_KKN_undecided } 
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+
+country_event = { 
+ 
+	id = 660140
+	title = "KKN140.T" #Republic JAP has accepted yeah !
+	desc = "KKN140.D" 
+	picture = "saigo_coup"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+		name = "KKN140.A"
+		create_alliance = FROM 
+		clr_country_flag = fate_of_KKN_undecided
+	}
+}
+
+### Everything after here was coded by DeNuke. Everything before here is Attalus.
+
+country_event = { 
+ 
+	id = 660150
+	title = "KKN150.T" #Coronation of Konoe
+	desc = "KKN150.D" 
+	picture = "Kaiganisms"
+	
+	is_triggered_only = yes 
+	
+	# A Symbol of Unity
+	
+	option = { 
+		name = "KKN150.A"
+		relation = { who = JAP value = 50 } 
+	    government = hms_government
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = non_secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	}
+	
+	# A Symbol of Unity for all Japanese People
+	
+	option = { 
+		name = "KKN150.B"
+		relation = { who = JAP value = -200	}
+        set_country_flag = japan_in_exile		
+	    government = hms_government
+		political_reform = open_borders
+        political_reform = state_equal_weight
+        political_reform = universal_weighted_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = non_secret_ballots
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    set_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = democracy_gov
+	}
+}
+
+#2.2 - Civil War in Japan ended with Monarchist Victory and Crazy Monarchists
+
+# A lot of these iterations will loop back around into the Monarchist Chokogawa Revolt coded at the end of this
+
+# Weak Qinggiu and Crazy Japan
+
+country_event = { 
+ 
+	id = 66016
+	title = "KKN16.T"
+	desc = "KKN16.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+		has_country_flag = fate_of_KKN_undecided
+		JAP = {
+   		   government = absolute_monarchy 
+		   owns = 1670 
+		   owns = 1662
+		   NOT = { has_country_flag = JAP_the_republican_trap } 
+		} 		
+		OR = {
+		   NOT = { exists = DNG }
+		   DNG = { OR = { has_country_modifier = DNG_civil_war_debuff war = yes } }
+		   exists = BUE
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	### Chokogawa Revolt trigger
+	### See far below this under the Normal Japan section for the Revolt
+	
+	option = { 
+		name = "KKN16.A"
+		clr_country_flag = fate_of_KKN_undecided
+		country_event = { id = 66033 days = 7 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+}
+
+# Crazy Qinggiu and Crazy Japan
+
+country_event = { 
+ 
+	id = 66017
+	title = "KKN17.T"
+	desc = "KKN17.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+
+		has_country_flag = fate_of_KKN_undecided	
+		JAP = { 
+		   government = absolute_monarchy 
+		   owns = 1670 
+		   owns = 1662 
+		   NOT = { has_country_flag = JAP_the_republican_trap } 
+		} 
+		DNG = { 
+		   exists = yes 
+		   has_country_flag = YENG_DNG 
+		   war = no 
+		   NOT = { has_country_modifier = DNG_civil_war_debuff } 
+	    }
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	### Hokkaigan Indipendence War Trigger
+	
+	option = { 
+		name = "KKN17.A"
+		clr_country_flag = fate_of_KKN_undecided
+		country_event = { id = 66020 days = 7 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+}
+
+# Reasonable Qinggiu (and Crazy Japan)
+
+country_event = { 
+ 
+	id = 66018
+	title = "KKN18.T"
+	desc = "KKN18.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+		has_country_flag = fate_of_KKN_undecided		
+		JAP = { 
+		    government = absolute_monarchy 
+			war = no
+			owns = 1670 
+			owns = 1662 
+			NOT = { has_country_flag = JAP_the_republican_trap } 
+	    } 
+		DNG = { 
+		   exists = yes 
+		   war = no 
+		   NOT = { has_country_flag = YENG_DNG } 
+		   NOT = { has_country_modifier = DNG_civil_war_debuff } 
+		}
+	}
+
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	### Hokkaigan Indipendence War Trigger
+	
+	option = { 
+		name = "KKN18.A"
+		clr_country_flag = fate_of_KKN_undecided
+		country_event = { id = 66020 days = 7 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	### Lets talk to Qinggiu about defending ourselves against Japan
+	
+	option = { 
+		name = "KKN18.B"
+		country_event = { id = 66019 days = 7 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+}
+
+### Qinggiu Event - Hokkigan asks for protection against the Japanese Empire
+
+country_event = { 
+ 
+	id = 66019
+	title = "KKN19.T"
+	desc = "KKN19.D" 
+	picture = "kaiganese"
+	
+    is_triggered_only = yes
+	
+	### Hokkaigan Indipendence War Trigger - Qinggiu will side with Hokkigan
+	
+	option = { 
+		name = "KKN19.A"
+		KKN = { country_event = { id = 66020 days = 7 } clr_country_flag = fate_of_KKN_undecided }
+		set_country_flag = DNG_will_not_intervene
+		create_alliance = KKN
+		relation = { who = KKN value = 400 }
+		ai_chance = { 
+			factor = 50
+		}
+	}
+	
+	### Hokkaigan Indipendence War Trigger - Qinggiu will attempt to sieze Hokkaigan themselves
+	
+	option = { 
+		name = "KKN19.B"
+		KKN = { country_event = { id = 66020 days = 7 } clr_country_flag = fate_of_KKN_undecided }	
+		ai_chance = { 
+			factor = 50
+		}
+	}
+}
+
+#### Hokkigan Indipendence War is inevitable
+
+country_event = { 
+ 
+	id = 66020
+	title = "KKN20.T"
+	desc = "KKN20.D" 
+	picture = "kaiganese"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN20.A"
+		add_country_modifier = { name = taiping_draft duration = 1440 }
+		JAP = { country_event = 66021 }	
+		any_country = {
+		   limit = {
+		      tag = DNG
+			  NOT = { has_country_flag = DNG_will_not_intervene }
+		   }
+		   country_event = { id = 66023 days = 3 }
+		}
+	}
+}
+
+#### Hokkigan Indipendence War - MAJOR
+
+country_event = { 
+ 
+	id = 66021
+	title = "KKN21.T"
+	desc = "KKN21.D" 
+	picture = "reactionary_victory"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN20.A"
+		set_global_flag = KKN_war
+		KKN = { country_event = 66022 }
+	    war = {
+			target = KKN
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+
+#### Japanese Navy siezes Kaigan
+
+#### This is also used for the other versions of the Hokkigan Revolts as its obviously impossible for Hokkigan to retain control of Alaska without Naval Superiority ###
+#### A event will trigger which will automatically give this back to Hokkigan if its indipendent at any point such as them defeating Japan or just organically leaving via rebels ####
+
+country_event = { 
+ 
+	id = 66022
+	title = "KKN22.T"
+	desc = "KKN22.D" 
+	picture = "Kaiganisms"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN22.A"
+		any_owned = { 
+			limit = { 
+				region = NA_4
+			}
+			secede_province = JAP
+		}
+		any_owned = { 
+			limit = { 
+				region = NA_1
+			}
+			secede_province = JAP
+		}				
+	}
+}
+
+#### Qinggiu Intervention
+
+country_event = { 
+ 
+	id = 66023
+	title = "KKN23.T"
+	desc = "KKN23.D" 
+	picture = "Kaiganisms"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN23.A"
+	    war = {
+			target = KKN
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+		JAP = { country_event = 660230 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+		name = "KKN23.B"
+		set_country_flag = DNG_will_not_intervene
+	    prestige = -1
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+### Japan is not happy - Declares War on DNG as a punishment for attempting to take over KKN ####
+
+country_event = { 
+ 
+	id = 660230
+	title = "KKN230.T"
+	desc = "KKN230.D" 
+	picture = "qinggiu"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN230.A"
+	    war = {
+			target = FROM
+			attacker_goal =  { 
+				casus_belli = cut_down_to_size
+			}
+			defender_goal = {
+				casus_belli = war_reparations
+			}			
+			call_ally = yes
+	    }
+		badboy = -8
+		ai_chance = { 
+			factor = 80
+		}
+	}
+	
+	option = { 
+		name = "KKN230.B"
+	    prestige = -1
+		ai_chance = { 
+			factor = 20
+		}
+	}
+}
+
+#### War Ended after Qinggiu had occupied the Capital of KKN
+#### To get this a decision called DNG_KKN_occupation must be used.
+#### To use this decision they must occupy KKN's capital for more then 60 days. Once done so it will block the JAP version of the decision. If KKN even has a army in its capital then it will auto-clear occupation.
+
+country_event = { 
+ 
+	id = 66024
+	title = "KKN24.T"
+	desc = "KKN24.D" 
+	picture = "fire_city"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = JAP
+		has_global_flag = KKN_war
+		has_global_flag = KKN_war_DNG
+	    NOT = { exists = KKN }		
+	}
+	
+	mean_time_to_happen = { 
+		days = 3
+	}
+	
+	### We will return...
+	
+	option = { 
+		name = "KKN24.A"
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = JAP
+		   }
+		   annex_to = DNG
+		}
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_DNG
+		end_war = DNG
+		any_owned = { 
+			limit = {
+                is_core = KKN			
+				NOT = { region = NA_1 }
+				NOT = { region = NA_4 }
+			}
+			secede_province = DNG
+		}
+        DNG = { country_event = 66025 }
+	}
+}
+
+country_event = { 
+ 
+	id = 66025
+	title = "KKN25.T"
+	desc = "KKN25.D" 
+	picture = "reactionary_victory"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN25.A"
+		prestige = 10
+	}	
+}
+
+#### War Ended after Japan had occupied the Capital of KKN
+#### To get this a decision called JAP_KKN_occupation must be used.
+#### To use this decision they must occupy KKN's capital for more then 60 days. Once done so it will block the DNG version of the decision. If KKN even has a army in its capital then it will auto-clear occupation.
+
+country_event = { 
+ 
+	id = 66026
+	title = "KKN26.T"
+	desc = "KKN26.D" 
+	picture = "fire_city"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = DNG
+		has_global_flag = KKN_war
+		has_global_flag = KKN_war_JAP
+		NOT = { exists = KKN }
+		
+	}
+
+	mean_time_to_happen = { 
+		days = 3
+	}
+	
+	### We will return...
+	
+	option = { 
+		name = "KKN26.A"			
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_JAP
+		end_war = JAP
+		any_owned = { 
+			limit = {
+                is_core = KKN
+ 				NOT = { province_id = 78 }
+				NOT = { province_id = 80 }
+			}
+			secede_province = JAP
+		}		
+		JAP = { set_country_flag = Chokogawa_agreement set_country_flag = Chokogawa_agreement_puppet country_event = 66027 }
+	}
+}
+
+country_event = { 
+ 
+	id = 66027
+	title = "KKN27.T"
+	desc = "KKN27.D" 
+	picture = "qinggiu"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN27.A"
+		prestige = 10
+	}	
+}
+
+country_event = { 
+ 
+	id = 66028
+	title = "KKN28.T" #End of the KKN War - KKN has defeated Japan
+	desc = "KKN28.D" 
+	picture = "kaiganese"
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = KKN_war
+		DNG = { has_country_flag = DNG_will_not_intervene }
+		war = no 
+		exists = KKN
+		NOT = { is_our_vassal = KKN }
+	}
+	
+	mean_time_to_happen = { 
+		days = 3 
+	}
+	
+	option = { 
+		name = "KKN28.A" 
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_JAP
+		clr_global_flag = KKN_war_DNG
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		DNG = { prestige = 10 }
+		KKN = { prestige = 10 }
+		prestige_factor = -0.2
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+	}
+}
+
+country_event = { 
+ 
+	id = 66029
+	title = "KKN29.T" #End of the KKN War - KKN has defeated Japan and Qinggiu
+	desc = "KKN29.D" 
+	picture = "kaiganese"
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = KKN_war
+		DNG = { NOT = { has_country_flag = DNG_will_not_intervene } }
+		war = no 
+		exists = KKN
+        NOT = { is_our_vassal = KKN }		
+	}
+	
+	mean_time_to_happen = { 
+		days = 3 
+	}
+	
+	option = { 
+		name = "KKN29.A" 
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_JAP
+		clr_global_flag = KKN_war_DNG
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		DNG = { country_event = 66030 }
+		KKN = { prestige = 10 }
+		prestige_factor = -0.2
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+	}
+}
+
+country_event = { 
+ 
+	id = 66030
+	title = "KKN30.T" #Suffer for catastropic failure
+	desc = "KKN30.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN30.A" 
+		prestige_factor = -0.3
+		KKN = { all_core = { remove_core = DNG } }
+		any_owned = { 
+			limit = { 
+				region = NA_78
+			}
+			remove_core = THIS
+			add_core = KKN
+			secede_province = KKN 
+		}
+		any_owned = { 
+			limit = { 
+				is_core = BUE
+			}
+			remove_core = THIS
+			add_core = KKN
+			secede_province = KKN 
+		}
+	}
+}
+
+#2.3 - Civil War in Japan ended with Monarchist Victory and Normal Monarchists
+
+# Weak Qinggiu and Normal Monarchists
+
+country_event = { 
+ 
+	id = 66031
+	title = "KKN31.T"
+	desc = "KKN31.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+		has_country_flag = fate_of_KKN_undecided
+		JAP = {
+   		   NOT = { government = absolute_monarchy }
+		   NOT = { government = democracy }
+		   NOT = { government = presidential_dictatorship }
+		   NOT = { has_country_flag = JAP_the_republican_trap } 
+		   owns = 1670 
+		   owns = 1662		   
+		} 		
+		OR = {
+		   NOT = { exists = DNG }
+		   DNG = { OR = { has_country_modifier = DNG_civil_war_debuff war = yes } }
+		   exists = BUE
+		}
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	### We will not give up our indipendence - Chokogawa Revolt trigger
+	
+	option = { 
+		name = "KKN31.A"
+		clr_country_flag = fate_of_KKN_undecided
+		country_event = { id = 66033 days = 7 }
+		ai_chance = { 
+			factor = 50
+		}
+	}
+	
+	### We will attempt to work with Japan
+	
+	### Red Text that doing this will make you a vassal
+	
+	option = { 
+		name = "KKN31.B"
+		clr_country_flag = fate_of_KKN_undecided
+		JAP = {
+		   create_vassal = THIS 
+		   set_country_flag = Chokogawa_agreement
+		}
+		ai_chance = { 
+			factor = 50
+		}
+	}
+}
+
+# Strong Qinggiu and Normal Monarchists
+
+country_event = { 
+ 
+	id = 66032
+	title = "KKN32.T"
+	desc = "KKN32.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes 
+	
+	trigger = { 
+		tag = KKN 
+		has_global_flag = THE_SUNRISE_OF_JAPAN
+		NOT = { vassal_of = JAP }
+		has_country_flag = Kaiganese_nationalism
+		has_country_flag = fate_of_KKN_undecided
+		JAP = {
+   		   NOT = { government = absolute_monarchy }
+		   NOT = { government = democracy }
+		   NOT = { government = presidential_dictatorship }
+		   NOT = { has_country_flag = JAP_the_republican_trap } 
+		   owns = 1670 
+		   owns = 1662		   
+		} 		
+		DNG = { 
+		   exists = yes 
+		   war = no 
+		   NOT = { has_country_modifier = DNG_civil_war_debuff } 
+	    }
+	}
+	
+	mean_time_to_happen = { 
+		months = 1 
+		modifier = { 
+			factor = 0.01 
+			year = 1863
+		}
+	}
+	
+	### We will attempt to work with Japan - AI WILL ALWAYS DO THIS
+	
+	### Red Text that doing this will make you a vassal
+	
+	option = { 
+		name = "KKN32.A"
+		clr_country_flag = fate_of_KKN_undecided
+		JAP = {
+		   create_vassal = THIS 
+		   set_country_flag = Chokogawa_agreement
+		}
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	### We will not give up our indipendence - Chokogawa Revolt trigger
+	
+	option = { 
+		name = "KKN32.B"
+		clr_country_flag = fate_of_KKN_undecided
+		country_event = { id = 66033 days = 7 }
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+#### Chokogawa Revolt is inevitable
+
+country_event = { 
+ 
+	id = 66033
+	title = "KKN33.T"
+	desc = "KKN33.D" 
+	picture = "kegare"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN33.A"
+		add_country_modifier = { name = taiping_draft duration = 1440 }
+		JAP = { country_event = 66034 }	
+	}
+}
+
+#### Chokogawa Revolt - MAJOR ####
+
+country_event = { 
+ 
+	id = 66034
+	title = "KKN34.T"
+	desc = "KKN34.D" 
+	picture = ""
+	
+	major = yes
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN34.A"
+		set_global_flag = alt_chokogawa_revolt
+		# This is the event that gives Kaigan to Japan
+		KKN = { country_event = 66022 }
+	    war = {
+			target = KKN
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+country_event = { 
+ 
+	id = 66035
+	title = "KKN35.T" #End of the Chokogawa Revolt - What a joke
+	desc = "KKN35.D" 
+	picture = "reactionary_victory"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = alt_chokogawa_revolt
+		war = no 
+		NOT = { exists = KKN }
+	}
+	
+	mean_time_to_happen = { 
+		days = 7 
+	}
+	
+	option = { 
+		name = "KKN35.A" 
+		prestige = 10
+		clr_global_flag = alt_chokogawa_revolt
+        set_country_flag = Chokogawa_agreement
+        set_country_flag = Chokogawa_agreement_puppet
+	}
+}
+
+country_event = { 
+ 
+	id = 66036
+	title = "KKN36.T" #End of the Chokogawa Revolt - We have failed to conquer KKN
+	desc = "KKN36.D" 
+	picture = "kaiganese"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP 
+		has_global_flag = alt_chokogawa_revolt
+		war = no 
+		exists = KKN
+		NOT = { is_our_vassal = KKN }
+	}
+	
+	mean_time_to_happen = { 
+		days = 14 
+	}
+	
+	option = { 
+		name = "KKN36.A" 
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		clr_global_flag = alt_chokogawa_revolt
+		prestige_factor = -0.2
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+	}
+}
+
+###################################################################################### 
+##################### Chokogawa Agreement and its Aftermath ##########################
+###################################################################################### 
+
+#### OK KKN got killed by Japan so Japan needs to actually resurrect it for the Chokogawa Agreements to work. ###
+
+country_event = { 
+ 
+	id = 66037
+	title = "KKN37.T"
+	desc = "KKN37.D" 
+	picture = "fukuzawa_mission"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP 
+		has_country_flag = Chokogawa_agreement_puppet
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		days = 31 
+	}
+	
+	option = { 
+		name = "KKN37.A" 
+		clr_global_flag = alt_chokogawa_revolt
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_JAP
+		clr_global_flag = KKN_war_DNG
+		set_country_flag = Chokogawa_agreement
+		clr_country_flag = Chokogawa_agreement_puppet
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+		KKN = { country_event = 66038 }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+		name = "KKN37.B" 
+		clr_global_flag = alt_chokogawa_revolt
+		clr_global_flag = KKN_war
+		clr_global_flag = KKN_war_JAP
+		clr_global_flag = KKN_war_DNG
+		set_country_flag = Chokogawa_agreement
+		clr_country_flag = Chokogawa_agreement_puppet
+		any_owned = { 
+			limit = { 
+				is_core = KKN
+			}
+			secede_province = KKN 
+		}
+		KKN = { country_event = 66038 }
+		change_tag_no_core_switch = KKN
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
+
+country_event = { 
+ 
+	id = 66038
+	title = "KKN38.T"
+	desc = "KKN38.D" 
+	picture = "fukuzawa_mission"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN38.A" 
+		set_country_flag = autoden_KKN
+		FROM = { create_vassal = THIS }
+	}
+}
+
+############### The Chokogawa Agreement #############################
+############### Japan is now allowed to fuck with DNG ###############
+
+### This event will also set KKN to autonomous dependency again if it was created as a vassal in the above event ###
+
+country_event = { 
+ 
+	id = 66039
+	title = "KKN39.T"
+	desc = "KKN39.D" 
+	picture = ""
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP 
+		has_country_flag = Chokogawa_agreement
+		war = no
+		exists = KKN
+	}
+	
+	mean_time_to_happen = { 
+		days = 31 
+	}
+	
+	option = { 
+		name = "KKN39.A"
+	    clr_country_flag = Chokogawa_agreement
+        set_country_flag = DNG_permitted_to_die	
+		### This is so KKN actually builds some divisions - The wars cannot start till this expires.
+        KKN = {
+	        add_country_modifier = {
+               name = preparing_for_war
+	           duration = 365
+			}
+	        money = 100000
+	        ammunition = 1000
+	        small_arms = 1000
+	        artillery = 100
+	        canned_food = 1000
+			war_exhaustion = -50
+	    }	
+	    any_country = {
+		   limit = {
+		      tag = KKN
+			  NOT = { has_country_flag = autoden_KKN }
+		   }
+		   government = hms_government 
+		   political_reform = appointed
+           political_reform = universal_weighted_voting
+           political_reform = yes_meeting
+           political_reform = free_press
+           political_reform = no_trade_unions
+           political_reform = first_past_the_post
+           political_reform = gerrymandering
+	       political_reform = open_borders
+	       political_reform = mandatory_service
+	       political_reform = all_voting_pops
+		   political_reform = settlement
+		   clr_country_flag = VIN_security_committee
+		   clr_country_flag = moderate_vin_conservative
+		   set_country_flag = reactionary_VIN
+		   clr_country_flag = RADICAL_VIN
+		   clr_country_flag = moderate_vin_liberal
+		   clr_country_flag = autoden_gov
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       set_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+	       clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       clr_country_flag = democracy_gov
+		   any_pop = {
+		       militancy = -9
+		       consciousness = -9
+		       ideology = {
+			      value = conservative
+			      factor = 0.1
+		       }
+           }
+        }			
+		any_country = {
+		   limit = {
+		      tag = KKN
+			  has_country_flag = autoden_KKN
+		   }
+		   clr_country_flag = autoden_KKN
+	       government = autonomous_dependency
+		   nationalvalue = nv_order
+	       political_reform = none_voting
+	       political_reform = party_appointed
+	       political_reform = yes_meeting
+	       political_reform = state_press
+	       political_reform = state_controlled
+	       political_reform = underground_parties
+	       political_reform = open_borders
+	       political_reform = mandatory_service
+	       political_reform = all_voting_pops
+		   political_reform = settlement
+		   clr_country_flag = VIN_security_committee
+		   clr_country_flag = moderate_vin_conservative
+		   set_country_flag = reactionary_VIN
+		   clr_country_flag = RADICAL_VIN
+		   clr_country_flag = moderate_vin_liberal
+		   set_country_flag = autoden_gov
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       clr_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+	       clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       clr_country_flag = democracy_gov
+		   any_pop = {
+		       militancy = -9
+		       consciousness = -9
+		       ideology = {
+			      value = conservative
+			      factor = 0.1
+		       }
+           }
+       }   
+	}
+}
+
+### Rules regarding DNG
+
+### If DNG is unified thus the global anarchy flag is cleared then Japan will attack via decision directly just after 1870 or alternatively reaching a specific naval size. The above major event will act as a warning for DNG of this inevitablity.
+### If DNG is in anarchy then Japan can attack immediately via decision so long as they are in a functional state ala having a minimal sized navy.
+
+### Ishawara can only be used if the anarchy flag is removed and that requires a Qinggiu Unifier
+
+#### The Third Japanese-Qingqiuan War - MAJOR ####
+
+#### DNG or other DNG unifiers warning event. This is also used to jump.
+
+country_event = { 
+ 
+	id = 66040
+	title = "KKN40.T"
+	desc = "KKN40.D" 
+	picture = "sunrise"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN40.A"
+		JAP = { country_event = 66041 }
+	}
+}
+
+#### This is a false flag attack on Japan by DNG. They will get a warning event and a seven day delay before the below event will trigger to start the war
+
+country_event = { 
+ 
+	id = 660400
+	title = "KKN401.T"
+	desc = "KKN401.D" 
+	picture = "saigo_coup"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN401.A"
+		JAP = { country_event = 660401 country_event = { id = 66041 days = 7 } }
+	}
+}
+
+### We have been false-flagged lmao. Start the war earlier and you won't get this meme.
+
+country_event = { 
+ 
+	id = 660401
+	title = "KKN402.T"
+	desc = "KKN402.D" 
+	picture = "saigo_coup"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN402.A"
+		prestige = -1
+	}
+}
+
+country_event = { 
+ 
+	id = 66041
+	title = "KKN41.T"
+	desc = "KKN41.D" 
+	picture = ""
+	
+	major = yes
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN41.A"
+		set_country_flag = third_jap_DNG_war
+		set_global_flag = the_sea_war
+	    war = {
+			target = FROM
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+### If either the two KKN cores in DNG are held for 360 days, the capital of BUE is held for 180 days or the capital of DNG or YGZ in general is held for 60 days then all northern BUE cores will be ceded to KKN along with heavy reperations
+
+### This can be either triggered via the trigger below or manually via decision
+
+country_event = { 
+ 
+	id = 66042
+	title = "KKN42.T"
+	desc = "KKN42.D" 
+	picture = "fire_city"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		has_global_flag = the_sea_war
+		has_country_flag = custom_treaty_loser
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "KKN42.A" 
+		clr_global_flag = the_sea_war
+		clr_country_flag = custom_treaty_loser
+		JAP = { country_event = 660420 }
+		any_owned = { 
+			limit = { 
+				is_core = BUE
+			}
+			remove_core = THIS
+			add_core = KKN
+			secede_province = KKN
+		}
+	}
+}
+
+### Japan's Flavor Event for Victory since Sarif wanted it.
+
+country_event = { 
+ 
+	id = 660420
+	title = "KKN420.T"
+	desc = "KKN420.D" 
+	picture = "shimonoseki"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN420.A" 
+		prestige = 5
+	}
+}
+
+### This is the cleanup for the Buyeo Expedition Decision
+
+country_event = { 
+ 
+	id = 66043
+	title = "KKN43.T"
+	desc = "KKN43.D" 
+	picture = "seattle_1870"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		owns = 37
+		has_country_flag = buyeo_expo
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		days = 14
+	}
+	
+	option = { 
+		name = "KKN43.A" 
+		any_owned = { 
+			limit = { 
+				is_core = BUE
+			}
+			remove_core = DNG
+			add_core = KKN
+			secede_province = KKN
+		}
+	}
+}
+
+### The Generic Event for Japan losing is below the events regarding Japan conquering DNG proper
+
+#### The Third or Fourth Japanese-Qingqiuan War/Man in the High Castle - MAJOR ####
+#### It goes without saying that when survival is threatened, struggles erupt between peoples, and unfortunate wars between nations result.... ####
+
+#### Japan is not going to tolerate a indipendent DNG regardless of what Japan it is due to old bitter memories. The event after this disaster ends is determined by what government Japan holds.
+
+#### The inevitable war - If Japan controls KKN as a vassal and DNG does not own BUE then this event will trigger as a strong warning to the DNG player that they must prepare for a inevitable invasion
+
+country_event = { 
+ 
+	id = 660444
+	title = "KKN444.T"
+	desc = "KKN444.D" 
+	picture = "saigo_coup"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	    ai = no
+		primary_culture = qingqiuan
+		owns = 84
+		KKN = { owns = 37 vassal_of = JAP }
+	}
+	
+	mean_time_to_happen = { 
+		days = 7
+	}
+	
+	option = { 
+		name = "KKN444.A"
+		prestige = 1
+	}
+}
+
+#### DNG or other DNG unifiers warning event regarding final war. This is also used to jump.
+
+country_event = { 
+ 
+	id = 66044
+	title = "KKN44.T"
+	desc = "KKN44.D" 
+	picture = "sunrise"
+	
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN44.A"
+		any_pop = { militancy = -9 }
+		any_country = {
+		    limit = {
+			   tag = JAP
+			   NOT = { has_country_flag = third_jap_DNG_war }
+			}
+			country_event = 66045
+	    }
+		any_country = {
+		    limit = {
+			   tag = JAP
+			   has_country_flag = third_jap_DNG_war
+			}
+			country_event = 660450
+	    }
+	}
+}
+
+### Third War - This is likely a result of BUE already being under the control of JAP
+
+country_event = { 
+ 
+	id = 66045
+	title = "KKN45.T"
+	desc = "KKN45.D" 
+	picture = ""
+	
+	major = yes
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN44.A"
+		set_global_flag = the_final_DNG_war
+	    war = {
+			target = FROM
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+### Fourth War - This is just a flavor difference
+
+country_event = { 
+ 
+	id = 660450
+	title = "KKN450.T"
+	desc = "KKN450.D" 
+	picture = ""
+	
+	major = yes
+    is_triggered_only = yes
+	
+	option = { 
+		name = "KKN44.A"
+		set_global_flag = the_final_DNG_war
+	    war = {
+			target = FROM
+			attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+			call_ally = yes
+	    }
+	}
+}
+
+#### The Way Forward for the South ####
+
+#### Bumping Event to check if the DNG unifier has lost ###
+
+country_event = { 
+ 
+	id = 66046
+	title = "KKN46.T"
+	desc = "KKN46.D" 
+	picture = "treaty_of_tientsin"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		has_global_flag = the_final_DNG_war
+		has_country_flag = custom_treaty_loser
+		war = no
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "KKN46.A" 
+		clr_global_flag = the_final_DNG_war
+		clr_country_flag = custom_treaty_loser
+		set_country_flag = DNG_unifier_loser
+		set_global_flag = DNG_unifier_has_lost
+	}
+}
+
+#### Japan has won the war and is Absolute Monarchy - There is no choice but to give the rest of DNG to KKN 
+
+country_event = { 
+ 
+	id = 660460
+	title = "KKN460.T"
+	desc = "KKN460.D" 
+	picture = "shimonoseki"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP	
+		has_global_flag = DNG_unifier_has_lost
+		OR = {
+		   government = absolute_monarchy
+		   government = fascist_monarchy 
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 31 
+	}
+	
+	option = { 
+		name = "KKN460.A" 
+		relation = { who = KKN value = 200 }
+		set_country_flag = BIG_KKN_ACTIVE
+		clr_global_flag = DNG_unifier_has_lost
+		prestige = 20
+		any_country = {
+		    limit = {
+			   has_country_flag = DNG_unifier_loser
+			}   
+			clr_country_flag = DNG_unifier_loser
+			country_event = 66049
+		}
+	}
+}
+
+#### Japan has won the war and is Non-Abmon but still a monarchy - You can choose between the co-prosperity plan or the annexation by KKN
+
+country_event = { 
+ 
+	id = 66047
+	title = "KKN47.T"
+	desc = "KKN47.D" 
+	picture = "shimonoseki"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		has_global_flag = DNG_unifier_has_lost
+		OR = {
+		   government = prussian_constitutionalism
+		   government = hms_government
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 31 
+	}
+	
+	# Annex into KKN
+	
+	option = { 
+		name = "KKN47.A" 
+		relation = { who = KKN value = 200 }
+		set_country_flag = BIG_KKN_ACTIVE
+		clr_global_flag = DNG_unifier_has_lost
+		prestige = 20
+		any_country = {
+		    limit = {
+			   has_country_flag = DNG_unifier_loser
+			}   
+			clr_country_flag = DNG_unifier_loser
+			country_event = 66049
+		}
+        ai_chance = {
+            factor = 40
+			modifier = { 
+				factor = 1.5
+				government = prussian_constitutionalism
+			}
+        }
+	}
+	
+	# Co-Prosperity Plan
+	
+	option = { 
+		name = "KKN47.B" 
+		relation = { who = KKN value = -50 }
+		clr_global_flag = DNG_unifier_has_lost
+		prestige = 20
+		any_country = {
+		    limit = {
+			   has_country_flag = DNG_unifier_loser
+			}   
+			clr_country_flag = DNG_unifier_loser
+			country_event = 66050
+		}
+        ai_chance = {
+            factor = 60
+			modifier = { 
+				factor = 0.5
+				government = prussian_constitutionalism
+			}
+        }
+	}
+}
+
+#### Japan has won the war and is not a Monarchy so the Co-Prosperity is only possible
+
+country_event = { 
+ 
+	id = 66048
+	title = "KKN48.T"
+	desc = "KKN48.D" 
+	picture = "shimonoseki"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		has_global_flag = DNG_unifier_has_lost
+		NOT = {
+		   government = prussian_constitutionalism
+		   government = hms_government	
+		   government = absolute_monarchy
+		   government = fascist_monarchy 
+        }		   
+	}
+	
+	mean_time_to_happen = { 
+		days = 31 
+	}
+	
+	# Co-Prosperity Plan
+	
+	option = { 
+		name = "KKN48.A" 	
+		relation = { who = KKN value = -50 }
+		clr_global_flag = DNG_unifier_has_lost
+		prestige = 20
+		any_country = {
+		    limit = {
+			   has_country_flag = DNG_unifier_loser
+			}   
+			clr_country_flag = DNG_unifier_loser
+			country_event = 66050
+		}
+        ai_chance = {
+            factor = 60
+			modifier = { 
+				factor = 0.5
+				government = prussian_constitutionalism
+			}
+        }
+	}
+}
+
+#### DNG is informed they are to be annexed into Japan - GAME OVER
+
+country_event = { 
+ 
+	id = 66049
+	title = "KKN49.T"
+	desc = "KKN49.D" 
+	picture = "sunrise"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN49.A" 	
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		any_country = {
+		   limit = {
+		      OR = {
+			     tag = SHS
+				 tag = DIN
+				 tag = UTE
+			  }
+			  OR = {
+			     vassal_of = YGZ
+				 vassal_of = DAA
+				 vassal_of = DNG
+		      }
+		   }
+		   all_core = { add_core = KKN }
+		   annex_to = KKN
+		}
+		all_core = { add_core = KKN remove_core = DNG remove_core = THIS }
+		DNG = { all_core = { remove_core = DNG } }
+		DNG_84 = { add_core = SBA }
+		DNG_85 = { add_core = SBA }
+		any_owned = { 
+			limit = { 
+				OR = { 
+				   region = DNG_222 
+				   region = NA_3374 
+				   region = MEX_90 
+				}
+			}
+			add_core = YGZ 
+		}	
+		any_owned = { 
+			limit = {
+			   OR = {
+			      is_core = SHS 
+				  is_core = DIN
+				  is_core = UTE
+			   }
+			}
+			add_core = DAA
+		}	
+ 		any_owned = { 
+			limit = { 
+			    OR = {
+				   is_core = OCE
+				   is_core = OUM 
+				}
+			}
+			secede_province = OCE
+		}		
+ 		any_owned = { 
+			limit = { 
+				NOT = { is_core = KKN }
+			}
+			remove_core = DNG
+			secede_province = JAP
+		}
+        annex_to = KKN
+	}
+}
+
+#### DNG is informed that they are being partitioned but left with relative autonomy since Japan thinks that a super KKN is a bad idea.
+
+country_event = { 
+ 
+	id = 66050
+	title = "KKN50.T"
+	desc = "KKN50.D" 
+	picture = "sunrise"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN50.A" 
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = THIS
+		   }
+		   annex_to = KKN
+		}
+		# Release the Native Vassals if they still exist
+		any_country = {
+		   limit = {
+		      tag = DIN
+			  vassal_of = THIS 
+		   }
+		   THIS = { release_vassal = DIN }
+	    }
+		any_country = {
+		   limit = {
+		      tag = SHS
+			  vassal_of = THIS 
+		   }
+		   THIS = { release_vassal = SHS }
+	    }
+		any_country = {
+		   limit = {
+		      tag = UTE
+			  vassal_of = THIS 
+		   }
+		   THIS = { release_vassal = UTE }
+	    }
+		# Move Capital to Sanbao
+	    capital = 84
+		all_core = { remove_core = THIS }
+		DNG_84 = { add_core = SBA }
+		DNG_85 = { add_core = SBA }
+		any_owned = { 
+			limit = { 
+				is_core = BUE
+			}
+			remove_core = DNG
+			add_core = KKN
+			secede_province = KKN
+		}
+		any_owned = { 
+			limit = { 
+				OR = { 
+				   region = DNG_222 
+				   region = NA_3374 
+				   region = MEX_90 
+				}
+			}
+			add_core = YGZ 
+		}	
+		any_owned = { 
+			limit = {
+			   OR = {
+			      is_core = SHS 
+				  is_core = DIN
+				  is_core = UTE
+			   }
+			}
+			add_core = DAA
+		}
+ 		any_owned = { 
+			limit = { 
+				is_core = DAA
+			}
+			remove_core = DNG
+			secede_province = DAA
+		} 
+ 		any_owned = { 
+			limit = { 
+				is_core = VAL
+			}
+			remove_core = DNG
+			secede_province = VAL
+		} 
+ 		any_owned = { 
+			limit = { 
+				is_core = YGZ
+			}
+			remove_core = DNG
+			secede_province = YGZ
+		} 
+ 		any_owned = { 
+			limit = { 
+				is_core = BKF
+			}
+			remove_core = DNG
+			secede_province = BKF
+		}		
+ 		any_owned = { 
+			limit = { 
+			    OR = {
+				   is_core = OCE
+				   is_core = OUM 
+				}
+			}
+			remove_core = DNG
+			secede_province = OCE
+		}		
+ 		any_owned = { 
+			limit = { 
+				NOT = { is_core = SBA }
+			}
+			remove_core = DNG
+			secede_province = JAP
+		}
+		any_country = { 
+		    limit = {
+			   exists = yes
+			   NOT = { tag = THIS }
+			   OR = { 
+			     primary_culture = qingqiuan
+				 primary_culture = valleyan
+		       }
+			   is_vassal = no
+			   is_substate = no
+			}
+			country_event = 66051
+		}	  
+        change_tag = SBA	
+		country_event = 66051
+	}
+}
+
+#### Please bow to Nippon
+
+country_event = { 
+ 
+	id = 66051
+	title = "KKN51.T"
+	desc = "KKN51.D" 
+	picture = "sunrise"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN51.A"		
+        JAP = { create_vassal = THIS }
+		country_event = { id = 660520 days = 1 }
+	}
+}
+
+country_event = { 
+ 
+	id = 660520
+	title = "KKN510.T"
+	desc = "KKN510.D" 
+	picture = "sunrise"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN510.A"		
+	    government = autonomous_dependency
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = no_draft
+	    political_reform = all_voting_pops
+	}
+}
+
+######## The Generic Events for Japan being defeated #####
+##### These are used for both the Third War and the Fourth War #####
+
+### If KKN's capital is occupied for one year and Japan is incapable of removing the occupation then either wars end automatically ends with a KKN Victory
+### The first event only gives up everything outside of Kaigan
+### The second gives up the whole lot and is a major event so everyone can see how shit Japan is. It needs Qinggiu to successfully occupy something in kaigan
+
+### Treaty of Shinminato ###
+
+country_event = { 
+ 
+	id = 66052
+	title = "KKN52.T"
+	desc = "KKN52.D" 
+	picture = "treaty_of_tientsin"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		OR = {
+		   has_global_flag = the_sea_war
+		   has_global_flag = the_final_DNG_war
+		}
+		has_country_flag = custom_treaty_loser
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	immediate = {
+	   inherit = KKN
+	}
+	
+	option = { 
+		name = "KKN52.A" 
+		prestige_factor = -0.2		
+		clr_country_flag = successful_DNG_raid
+		clr_global_flag = the_sea_war
+		clr_global_flag = the_final_DNG_war
+		clr_country_flag = custom_treaty_loser		
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = THIS
+			secede_province = KKN
+		}
+		any_owned = { 
+			limit = {
+                is_core = KKN			
+				NOT = { region = NA_1 }
+				NOT = { region = NA_4 }
+			}
+			remove_core = THIS
+			secede_province = KKN
+		}
+		KKN = { government = democracy }
+        any_country = { 
+            limit = {
+			   primary_culture = qingqiuan
+               owns = 84
+			}
+			country_event = 660530
+	    }			
+	}
+}
+
+### Treaty of Yingzhou ###
+
+country_event = { 
+ 
+	id = 66053
+	title = "KKN53.T"
+	desc = "KKN53.D" 
+	picture = "treaty_of_tientsin"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		OR = {
+		   has_global_flag = the_sea_war
+		   has_global_flag = the_final_DNG_war
+		}
+		has_global_flag = successful_DNG_raid
+		has_country_flag = custom_treaty_loser
+		war = no 
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	immediate = {
+	   inherit = KKN
+	}
+	
+	option = { 
+		name = "KKN53.A" 
+		prestige_factor = -0.4
+		clr_country_flag = successful_DNG_raid
+		clr_global_flag = the_sea_war
+		clr_global_flag = the_final_DNG_war
+		clr_country_flag = custom_treaty_loser	
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = THIS
+			secede_province = KKN
+		}		
+		any_owned = { 
+			limit = {
+                is_core = KKN			
+			}
+			remove_core = THIS
+			secede_province = KKN
+		}
+        KKN = { government = democracy }
+        any_country = { 
+            limit = {
+			   primary_culture = qingqiuan
+               owns = 84
+			}
+			country_event = 660530
+	    }			   
+	}
+}
+
+### Defeat of Japan ###
+
+### This is why I don't like using more then one tag to represent a single area. Bump events everywhere is pain.
+
+country_event = { 
+ 
+	id = 660530
+	title = "KKN530.T"
+	desc = "KKN530.D" 
+	picture = "treaty_of_tientsin"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN530.A" 
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = JAP
+		   }
+		   annex_to = THIS
+		}
+		inherit = KKN			   
+	}	
+}
+
+### WHITE PEACE IN EITHER SEA WAR OR THE FINAL WAR ###
+
+### The Hokkigan Collapse 
+
+country_event = { 
+ 
+	id = 66054
+	title = "KKN54.T"
+	desc = "KKN54.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = JAP
+		OR = {
+		   has_global_flag = the_sea_war
+		   has_global_flag = the_final_DNG_war
+		}
+		war = no 
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	## This has a high MTTH to ensure that the other treaties above trigger first
+	
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	option = { 
+		name = "KKN52.A" 
+		clr_country_flag = successful_DNG_raid
+		clr_global_flag = the_sea_war
+		clr_global_flag = the_final_DNG_war
+		prestige_factor = -0.2		
+		any_owned = { 
+			limit = {
+                is_core = KKN			
+				NOT = { region = NA_1 }
+				NOT = { region = NA_4 }
+			}
+			secede_province = KKN
+		}
+        release_vassal = KKN	
+        KKN = { country_event = 66055 }
+	}
+}
+
+### Japan retreats to Kaigan
+### This is considered indipendent Hokkigan
+
+country_event = { 
+ 
+	id = 66055
+	title = "KKN55.T"
+	desc = "KKN55.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN55.A" 
+		any_country = {
+		   limit = {
+		      tag = BKF
+			  vassal_of = JAP
+		   }
+		   annex_to = THIS
+		}
+		government = parliamentary_republic 
+        political_reform = universal_voting
+        political_reform = yes_meeting
+        political_reform = free_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = gerrymandering
+	}
+}
+
+############################
+### Victory in Hokkagian ###
+############################
+
+### UberYeng - Only One Choice
+
+country_event = { 
+ 
+	id = 66056
+	title = "KKN56.T"
+	desc = "KKN56.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		owns = 37
+		owns = 3395
+		OR = { 
+		   government = absolute_monarchy
+		   government = fascist_monarchy
+		   government = prussian_constitutionalism
+		}
+		war = no 
+		NOT = { has_global_flag = KKN_fate_determined }
+	}
+	
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	### Complete Destruction - Note that the final decision to remove the KKN cores will not appear until Alaska is owned.
+	
+	option = { 
+		name = "KKN56.A" 
+		prestige = 30
+        set_global_flag = KKN_fate_determined
+		set_country_flag = DNG_kill_KKN
+	}
+}
+
+
+
+### Non-Yeng Dictatorships
+
+country_event = { 
+ 
+	id = 66057
+	title = "KKN57.T"
+	desc = "KKN57.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		owns = 37
+		owns = 3395
+		NOT = {
+		   OR = {
+		      government = hms_government
+			  government = democracy
+			  government = parliamentary_republic
+		      government = absolute_monarchy
+		      government = fascist_monarchy
+			  has_country_flag = democratic_YENG_DNG
+		   }
+		}
+		war = no 
+		NOT = { has_global_flag = KKN_fate_determined }
+	}
+	
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	### Complete Destruction - Note that the final decision to remove the KKN cores will not appear until Alaska is owned.
+	
+	option = { 
+		name = "KKN57.A" 
+		prestige = 25
+		set_global_flag = KKN_fate_determined
+		set_country_flag = DNG_kill_KKN
+		ai_chance = { 
+			factor = 70
+		}
+	}
+	
+	### Integration and Status Quo
+	### Note that this also enables the cultural addition, but the player won't be able to see this unless they become a democracy
+	
+	option = { 
+		name = "KKN57.B" 
+		prestige = 25
+		set_global_flag = KKN_fate_determined
+		set_country_flag = DNG_culture_addition
+		ai_chance = { 
+			factor = 30
+		}
+	}
+}
+
+### Yeng Democracy
+
+country_event = { 
+ 
+	id = 660570
+	title = "KKN570.T"
+	desc = "KKN570.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		owns = 37
+		owns = 3395
+		has_country_flag = democratic_YENG_DNG
+		war = no 
+		NOT = { has_global_flag = KKN_fate_determined }
+	}
+	
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	### Complete Destruction - Note that the final decision to remove the KKN cores will not appear until Alaska is owned.
+	
+	option = { 
+		name = "KKN570.A" 
+		prestige = 25
+		set_global_flag = KKN_fate_determined
+		set_country_flag = DNG_kill_KKN
+		ai_chance = { 
+			factor = 70
+		}
+	}
+	
+	### Integration and Status Quo
+	### Note that this also enables the cultural addition, but the player won't be able to see this unless they become a democracy
+	
+	option = { 
+		name = "KKN570.B" 
+		prestige = 25
+		set_global_flag = KKN_fate_determined
+		set_country_flag = DNG_culture_addition
+		ai_chance = { 
+			factor = 30
+		}
+	}
+}
+
+### Normal or Koo Democracies - They only get the Democratic Outcome
+
+country_event = { 
+ 
+	id = 66058
+	title = "KKN58.T"
+	desc = "KKN58.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		primary_culture = qingqiuan
+		owns = 84
+		owns = 37
+		owns = 3395
+		OR = {
+		    government = hms_government
+			government = democracy
+			government = parliamentary_republic
+		}
+		war = no 
+		NOT = { has_country_flag = democratic_YENG_DNG }
+		NOT = { has_global_flag = KKN_fate_determined }
+	}
+	
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	### Integration and Acceptance
+	
+	option = { 
+		name = "KKN58.A" 
+		set_global_flag = KKN_fate_determined
+        set_country_flag = DNG_culture_addition
+	}
+}
+
+#### End of Hokkigan - Hokkigan got LMAOed out of existance ####
+
+country_event = { 
+ 
+	id = 660580
+	title = "KKN580.T"
+	desc = "KKN580.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	    primary_culture = qingqiuan
+		has_country_flag = DNG_kill_KKN
+		has_country_flag = DNG_final_chapter
+		owns = 84	
+	    owns = 3
+	    owns = 3395 		
+	}
+	
+	## High MTTH
+	
+	mean_time_to_happen = { 
+		days = 365
+	}
+	
+	option = { 
+		name = "KKN580.A" 
+		prestige = 5
+		KKN = { all_core = { add_core = THIS remove_core = KKN } }
+		clr_country_flag = DNG_kill_KKN
+		set_country_flag = DNG_kill_everyone_else
+	    clr_country_flag = DNG_final_chapter
+	}
+}
+
+#### The Integration of Kaiganese into the Federation ####
+
+country_event = { 
+ 
+	id = 660581
+	title = "KKN581.T"
+	desc = "KKN581.D" 
+	picture = "Kaiganisms"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	    primary_culture = qingqiuan
+		has_country_flag = DNG_culture_addition
+		has_country_flag = DNG_final_chapter
+		owns = 84	
+	    owns = 3
+	    owns = 3395 		
+	}
+	
+	## High MTTH
+	
+	mean_time_to_happen = { 
+		days = 365
+	}
+	
+	option = { 
+		name = "KKN581.A" 
+		prestige = 5
+		add_accepted_culture = kaiganese
+		clr_country_flag = DNG_kill_KKN
+	    clr_country_flag = DNG_final_chapter
+	}
+}
+
+#######################################################
+################ The High Castle ######################
+#######################################################
+
+### The Collapse of the Japanese Empire ###
+### Not a Monarchy or Fascist Dictatorship and you hold big KKN as a Vassal
+
+country_event = { 
+ 
+	id = 66059
+	title = "KKN59.T"
+	desc = "KKN59.D" 
+	picture = ""
+	
+	major = yes
+
+	trigger = { 
+		tag = JAP
+		has_country_flag = BIG_KKN_ACTIVE
+		OR = {
+		   NOT = { is_our_vassal = KKN }
+		   NOT = {
+		      government = absolute_monarchy
+		      government = prussian_constitutionalism
+		      government = hms_government
+		  	  government = fascist_monarchy
+			  government = fascist_dictatorship
+	       }
+		}
+	}
+	
+	option = { 
+		name = "KKN59.A" 
+		clr_country_flag = BIG_KKN_ACTIVE
+		prestige_factor = -0.25
+        release_vassal = KKN
+		KKN = {
+	       government = hms_government
+		   political_reform = open_borders
+           political_reform = state_equal_weight
+           political_reform = universal_weighted_voting
+           political_reform = yes_meeting
+           political_reform = free_press
+           political_reform = no_trade_unions
+           political_reform = first_past_the_post
+           political_reform = non_secret_ballots
+	       clr_country_flag = theocratic_government
+	       clr_country_flag = merchantrepublic_gov
+	       clr_country_flag = parliamentary_republic_gov
+	       clr_country_flag = communist_gov
+	       clr_country_flag = absolute_monarchy_gov
+	       clr_country_flag = semi_constitutional_monarchy_gov
+	       set_country_flag = constitutional_monarchy_gov
+	       clr_country_flag = presidential_dictatorship_gov
+	       clr_country_flag = fascist_gov
+	       clr_country_flag = anarcho_liberal_gov
+	       clr_country_flag = socialist_republic_gov
+	       clr_country_flag = fascist_monarchy_gov
+	       clr_country_flag = democracy_gov
+		}
+	}	
+}
+
+### The Final Fate of Kita-Kaigan
+
+### Triggered by Dai Nippon Teikoku Decision ###
+
+country_event = { 
+ 
+	id = 66060
+	title = "KKN60.T"
+	desc = "KKN60.D" 
+	picture = "Kaiganisms"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN60.A" 
+		prestige = 20
+		set_country_flag = KKN_communists
+		clr_country_flag = BIG_KKN_ACTIVE
+		clr_country_flag = DNT_wait
+		add_accepted_culture = kaiganese
+		KKN = { all_core = { add_core = THIS } }
+        inherit = KKN
+		ai_chance = { 
+			factor = 99 
+			modifier = { 
+				factor = 0
+				KKN = { ai = no }
+			}
+		}
+	}
+	
+	option = { 
+		name = "KKN60.B" 
+		prestige = 40
+		badboy = -20
+		any_pop = { militancy = -3 }		
+		clr_country_flag = BIG_KKN_ACTIVE  
+        clr_country_flag = DNT_wait		
+		ai_chance = { 
+			factor = 1 
+		}		
+	}
+}
+
+### The Communist Party of Qinggiu
+
+### A annoying event that adds back the DNG cores and sets them to Communist
+
+country_event = { 
+ 
+	id = 66061
+	title = "KKN61.T"
+	desc = "KKN61.D" 
+	picture = "communist_rally"
+
+	trigger = { 
+		tag = JAP
+		has_country_flag = KKN_communists	
+        NOT = { ruling_party_ideology = communist }		
+	}
+
+	mean_time_to_happen = { 
+		days = 31
+	}
+	
+	option = { 
+		name = "KKN61.A" 
+		clr_country_flag = KKN_communists
+ 		any_owned = { 
+			limit = { 
+				is_core = DAA
+			}
+			add_core = DNG
+		} 
+ 		any_owned = { 
+			limit = { 
+				is_core = VAL
+			}
+			add_core = DNG
+		} 
+ 		any_owned = { 
+			limit = { 
+				is_core = YGZ
+			}
+			add_core = DNG
+		}
+ 		any_owned = { 
+			limit = { 
+				is_core = SBA
+			}
+			add_core = DNG
+		} 		
+		DNG = { 
+		   ruling_party_ideology = communist
+		   government = proletarian_dictatorship
+		   political_reform = none_voting
+		   political_reform = party_appointed
+		   political_reform = no_meeting
+		   political_reform = state_press
+		   political_reform = state_controlled
+		   political_reform = underground_parties
+		   political_reform = closed_borders
+		   political_reform = mandatory_service
+		   political_reform = all_voting_pops
+		   political_reform = no_slavery
+		   political_reform = federalism
+		}   		
+	    any_pop = { 
+		   limit = { 
+			   culture = qingqiuan
+		   }
+		   ideology = {
+		       value = communist
+			   factor = 0.15
+		   }
+		   scaled_consciousness = {
+				ideology = liberal
+				factor = 2
+		   }
+		   scaled_militancy = {
+				ideology = liberal
+				factor = 2
+		   }
+		   scaled_consciousness = {
+				ideology = anarcho_liberal
+				factor = 4
+		   }
+		   scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = 4
+		   }
+		   scaled_consciousness = {
+				ideology = socialist
+				factor = 4
+		   }
+		   scaled_militancy = {
+				ideology = socialist
+				factor = 4
+		   }
+		   scaled_consciousness = {
+				ideology = communist
+				factor = 8
+		   }
+		   scaled_militancy = {
+				ideology = communist
+				factor = 8
+		   }
+	  }
+	  any_owned = {
+	     limit = { is_core = DNG }
+		 remove_province_modifier = reactionary_stronghold
+		 remove_province_modifier = conservative_stronghold
+		 remove_province_modifier = anarcho_liberal_stronghold
+		 remove_province_modifier = socialist_stronghold
+		 remove_province_modifier = communist_stronghold
+		 remove_province_modifier = fascist_stronghold
+		 remove_province_modifier = liberal_stronghold
+	     remove_province_modifier = market_liberal_stronghold
+		 remove_province_modifier = social_liberal_stronghold
+		 remove_province_modifier = paternal_stronghold
+		 add_province_modifier = {
+			 name = communist_stronghold
+			 duration = -1
+		 }
+	  }
+   }	
+}
+
+################################################################################################################################
+################### BKF AND HHR CONTENT - THIS IS CONTENT IN REGARDS TO THE FATE OF BKF AND HHR ################################
+################################################################################################################################
+
+########################## Blackfoot Protectorate - Triggered by Decision of either HHR or PLA ####################################
+
+######## BKF does not get any of these events - BKF is not a playable tag and I will never consider it one. If you want to larp as natives then play SKR - DeNuke #######
+
+### Event for PLA - Triggered by Decision if PLA holds North Dakota and the Civil War is Avoided ####
+
+### The End of the Blackfoot Confederacy ###
+
+country_event = { 
+ 
+	id = 66062
+	title = "KKN62.T"
+	desc = "KKN62.D" 
+	picture = "sittingbull"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN62.A" 
+		prestige = 20
+		BKF = { government = absolute_monarchy remove_country_modifier = neutrality }
+		NA_115 = { add_core = PLA }
+		inherit = BKF
+		set_country_flag = custer_again
+	}
+}
+
+### Or... was it... oh no. PLA did a alternative general custer moment and lost control of the Northern Tribes aka inside OTL Canada
+
+country_event = { 
+ 
+	id = 66063
+	title = "KKN63.T"
+	desc = "KKN63.D" 
+	picture = "bighorn"
+	
+	trigger = { 
+		tag = PLA
+		has_country_flag = custer_again
+	}
+
+	mean_time_to_happen = { 
+		days = 7
+	}
+	
+	option = { 
+		name = "KKN62.A" 
+		prestige = -30
+		clr_country_flag = custer_again
+		any_owned = { 
+			limit = {
+                is_core = BKF		
+				NOT = { region = NA_115 }
+			}
+			secede_province = BKF
+		}
+	    any_country = { 
+		   limit = {
+		      tag = JAP
+		      is_our_vassal = KKN
+		   }
+		   country_event = { id = 66066 days = 14 }
+		}
+	}
+}
+
+### Event for OUM - Triggered by Decision if OUM exists and holds North Dakota ####
+
+### The New Blackfoot Treaty ###
+
+country_event = { 
+ 
+	id = 66064
+	title = "KKN64.T"
+	desc = "KKN64.D" 
+	picture = "sittingbull"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN64.A" 
+		prestige = 30
+		BKF = { government = absolute_monarchy remove_country_modifier = neutrality }
+		NA_115 = { add_core = PLA }
+		inherit = BKF
+		set_country_flag = not_entirely_blessed
+	}
+}
+
+### The Northern Tribes still think Louis is a genocidal European and tell him to fuck off.
+
+country_event = { 
+ 
+	id = 66065
+	title = "KKN65.T"
+	desc = "KKN65.D" 
+	picture = "bighorn"
+	
+	trigger = { 
+	    OR = {
+		   tag = PLA 
+		   tag = OUM
+		}
+		has_country_flag = not_entirely_blessed
+	}
+
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "KKN65.A" 
+		clr_country_flag = not_entirely_blessed
+		prestige = -30
+		any_owned = { 
+			limit = {
+                is_core = BKF		
+				NOT = { region = NA_115 }
+			}
+			secede_province = BKF
+		}
+	    any_country = { 
+		   limit = {
+		      tag = JAP
+		      is_our_vassal = KKN
+		   }
+		   country_event = { id = 66066 days = 14 }
+		}
+	}
+}
+
+#### Japanese Occupation of the Northern Blackfoot Confederacy ####
+
+country_event = { 
+ 
+	id = 66066
+	title = "KKN66.T"
+	desc = "KKN66.D" 
+	picture = "bighorn"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN66.A" 
+		create_vassal = BKF
+		BKF = { country_event = { id = 66067 days = 3 } }
+	}
+}
+
+#### Reorganization of the Blackfoot Territories ####
+
+### Will be annexed by KKN or DNG later depending on circumstances or remain a vassal of Japan all the way to the endgame
+
+country_event = { 
+ 
+	id = 66067
+	title = "KKN67.T"
+	desc = "KKN67.D" 
+	picture = "sittingbull"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN67.A" 
+	    government = autonomous_dependency
+	    political_reform = none_voting
+	    political_reform = party_appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = state_controlled
+	    political_reform = underground_parties
+	    political_reform = closed_borders
+	    political_reform = mandatory_service
+	    political_reform = primary_culture_only
+	}
+}
+
+### Event for HHR - Unlike the others this one is triggered almost immediately by BKF being spooked by SKR and thus Scandinavia expanding into OTL North Dakota ####
+
+country_event = { 
+ 
+	id = 66068
+	title = "KKN68.T"
+	desc = "KKN68.D" 
+	picture = "bighorn"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = HHR
+		SKR = { owns = 119 }
+		NOT = { year = 1840 }
+	}
+
+	mean_time_to_happen = { 
+		days = 7
+	}
+	
+	option = { 
+		name = "KKN68.A" 
+		set_country_flag = a_fake_war_BKF
+		remove_country_modifier = neutrality
+		BKF = { leave_alliance = SCA leave_alliance = JAP leave_alliance = PLA leave_alliance = DNG leave_alliance = THIS government = absolute_monarchy remove_country_modifier = neutrality }
+	    war = {
+			target = BKF
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+	    }		
+	}
+}
+
+country_event = { 
+ 
+	id = 66069
+	title = "KKN69.T"
+	desc = "KKN69.D" 
+	picture = "sittingbull"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+		tag = HHR
+		OR = {
+		   war_with = BKF
+		   NOT = { exists = BKF }
+	    }
+		has_country_flag = a_fake_war_BKF
+	}
+
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = { 
+		name = "KKN69.A" 		
+		set_global_flag = BIG_ROHHNST
+		clr_country_flag = a_fake_war_BKF
+		prestige = 10
+        any_country = {
+             limit = { war_with = THIS }
+             end_war = THIS 
+        }		
+	    inherit = BKF	
+		## KKN can get these back later
+		all_core = { remove_core = KKN } 
+		add_country_modifier = { name = neutrality duration = -1 }
+	}
+}
+
+##################
+
+#### Alberta Development ####
+
+### KKN/JAP Version
+
+country_event = { 
+ 
+	id = 66070
+	title = "KKN70.T"
+	desc = "KKN70.D" 
+	picture = "albertadev"
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = "KKN70.A" 
+		22 = {
+		      change_province_name = "Shirotakuko"
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+              state_scope = {
+                 change_region_name = "Ongen"
+              }
+        }
+		26 = {
+		      #change_province_name = "Manidouvie"	
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		25 = {		       
+		      #change_province_name = "Atou"	
+              life_rating = 15			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		3408 = {		      
+		      #change_province_name = "Sainte Marie"	
+              life_rating = 5			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }			
+	}
+}
+
+### DNG/Not-DNG Version
+
+country_event = { 
+ 
+	id = 66071
+	title = "KKN71.T"
+	desc = "KKN71.D" 
+	picture = "albertadev"
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = "KKN71.A" 
+		22 = {
+		      change_province_name = "Hongmaozhan"
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+              state_scope = {
+                 change_region_name = "Wenyuan"
+              }
+        }
+		26 = {
+		      change_province_name = "Wanqiu"	
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		25 = {		       
+		      change_province_name = "Lieshi"	
+              life_rating = 15			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		3408 = {		      
+		      #change_province_name = "Sainte Marie"	
+              life_rating = 5			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }		
+	}
+}
+
+### Vinland or Vinlandic Arcadian Union or Scandinavia Version
+
+country_event = { 
+ 
+	id = 66072
+	title = "KKN72.T"
+	desc = "KKN72.D" 
+	picture = "albertadev"
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = "KKN72.A" 
+		22 = {
+		      #change_province_name = "Saint André"
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+              #state_scope = {
+              #   change_region_name = "Terres Rouges"
+              #}
+        }
+		26 = {
+		      #change_province_name = "Manidouvie"	
+              life_rating = 20			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		25 = {		       
+		      #change_province_name = "Atou"	
+              life_rating = 15			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }
+		3408 = {		      
+		      #change_province_name = "Sainte Marie"	
+              life_rating = 5			  
+              add_province_modifier = { name = alberta_explosion duration = 1460 }	
+			  add_province_modifier = { name = baby_boom duration = 365 }
+			  add_core = THIS
+        }		
+	}
+}
+
+########################## Fate of HHR #######################################
+
+######## Almost all of the initial events are triggered by decisions #########
+####### Note that SCA's protection of HHR is organized by a alternative event in the Vinland Event file #########
+
+######## Vinland asks to Protect HHR ########
+#### There is a option to refuse but VIN will instantly declare on you with the puppet CB so don't try it ###
+
+country_event = { 
+ 
+	id = 66073
+	title = "KKN73.T"
+	desc = "KKN73.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN73.A"
+		prestige = -5
+		remove_country_modifier = neutrality		
+        VIN = { 
+		   create_vassal = THIS 
+		   relation = { who = THIS value = 400 }
+		   diplomatic_influence = { who = THIS value = 400 }		   
+		}
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	option = { 
+		name = "KKN73.B"
+		prestige = 10
+		remove_country_modifier = neutrality
+		any_country = {
+		   limit = {
+		      alliance_with = THIS 
+			  NOT = { tag = VIN }
+		   }
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}   
+		war = { 
+			target = VIN 
+			attacker_goal = { 
+				casus_belli = status_quo
+			}
+			defender_goal = { 
+				casus_belli = make_puppet
+			}
+		}
+        ai_chance = {
+            factor = 0
+        }		
+	}
+}
+
+##### Our inevitable doom ########
+
+##### DNG, DNG Variants, KKN or JAP have decided to take you down. You can either ask Vinland for protection or they will instantly wardec you with the Conquest CB #####
+
+##### That is if course if Vinland is capable of actually doing so #####
+
+country_event = { 
+ 
+	id = 66074
+	title = "KKN74.T"
+	desc = "KKN74.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN74.A"
+		prestige = -5
+		remove_country_modifier = neutrality
+        VIN = { country_event = { id = 66076 days = 3 } }
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	option = { 
+		name = "KKN74.B"
+		prestige = 10
+		remove_country_modifier = neutrality
+		any_country = {
+		   limit = {
+		      alliance_with = THIS 
+		   }
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}   
+		FROM = {
+		    war = { 
+			    target = THIS
+			    attacker_goal = { 
+				    casus_belli = conquest_any
+			    }
+			    defender_goal = { 
+				    casus_belli = status_quo
+			    }
+		    }
+		}
+        ai_chance = {
+            factor = 0
+        }		
+	}
+}
+
+##### We are doomed ########
+
+##### DNG, DNG Variants, KKN or JAP have decided to take you down. Vinland is incapable of protecting you so goodbye #####
+
+country_event = { 
+ 
+	id = 66075
+	title = "KKN75.T"
+	desc = "KKN75.D" 
+	picture = "qinggiu"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN75.A"
+		prestige = 10
+		remove_country_modifier = neutrality
+		any_country = {
+		   limit = {
+		      alliance_with = THIS 
+		   }
+		   relation = { who = THIS value = -400 }
+		   diplomatic_influence = { who = THIS value = -400 }
+		   leave_alliance = THIS
+		}   
+		FROM = {
+		    war = { 
+			    target = THIS
+			    attacker_goal = { 
+				    casus_belli = conquest_any
+			    }
+			    defender_goal = { 
+				    casus_belli = status_quo
+			    }
+		    }
+		}
+        ai_chance = {
+            factor = 100
+        }		
+	}
+}
+
+##### HHR has come asking for Protectorate Status ########
+
+country_event = { 
+ 
+	id = 66076
+	title = "KKN76.T"
+	desc = "KKN76.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	### We agree
+	
+	option = { 
+		name = "KKN76.A"
+		prestige = 10
+		relation = { who = HHR value = 400 }
+		diplomatic_influence = { who = HHR value = 400 }
+		create_vassal = HHR
+		any_country = {
+		   limit = { 
+		      has_country_flag = HHR_killer
+		   }
+		   country_event = 66078
+		}
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	### We are in no position to fight the West
+	
+	option = { 
+		name = "KKN76.B"
+		any_country = {
+		   limit = { 
+		      has_country_flag = HHR_killer
+		   }
+		   country_event = 66077
+		}
+        ai_chance = {
+            factor = 0
+        }		
+	}
+}
+
+### hehe Vinland refused to protect HHR 
+
+country_event = { 
+ 
+	id = 66077
+	title = "KKN77.T"
+	desc = "KKN77.D" 
+	picture = ""
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN77.A"
+		clr_country_flag = HHR_killer
+		war = { 
+			target = HHR
+			attacker_goal = { 
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}		
+	}
+}
+
+#### This is where Scandinavia gets involved as the above events are only really valid for Vinland Proper due to HHR already being a vassal of Scandinavia in the Early Game ####
+
+##### Vinland has Protected HHR ########
+
+country_event = { 
+ 
+	id = 66078
+	title = "KKN78.T"
+	desc = "KKN78.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	### Demand that Vinland withdraws from HHR
+	
+	option = { 
+		name = "KKN78.A"
+        VIN = { country_event = { id = 66080 days = 3 } }
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	### There is no point starting a war over empty land
+	
+	option = { 
+		name = "KKN78.B"
+        prestige = -20
+		clr_country_flag = HHR_killer		
+		set_country_flag = HHR_coward
+        ai_chance = {
+            factor = 0
+        }		
+	}
+}
+
+##### SCANDINAVIA has Protected HHR ########
+
+country_event = { 
+ 
+	id = 66079
+	title = "KKN79.T"
+	desc = "KKN79.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	### LOL Scandinavia is not a Real Great Power. Ask them to withdraw from HHR.
+	
+	option = { 
+		name = "KKN79.A"
+        SCA = { country_event = { id = 66080 days = 3 } }
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	### There is no point starting a war over empty land
+	
+	option = { 
+		name = "KKN79.B"
+        prestige = -20
+		clr_country_flag = HHR_killer
+		set_country_flag = HHR_coward
+        ai_chance = {
+            factor = 0
+        }				
+	}
+}
+
+##### FROM has demanded our withdrawal from HHR ########
+
+country_event = { 
+ 
+	id = 66080
+	title = "KKN80.T"
+	desc = "KKN80.D" 
+	picture = "Qingqiu_VIN"
+	
+	is_triggered_only = yes
+	
+	### We dare you to attack
+	
+	option = { 
+		name = "KKN80.A"
+		prestige = 10
+		any_pop = { militancy = -1 }
+        FROM = { country_event = { id = 66082 days = 3 } }
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	### There is no point starting a war over empty land
+	
+	option = { 
+		name = "KKN80.B"
+		prestige = -20
+		release_vassal = HHR		
+		relation = { who = HHR value = -400 }
+		diplomatic_influence = { who = HHR value = -400 }
+		any_country = {
+		   limit = { 
+		      has_country_flag = HHR_killer
+		   }
+		   country_event = 66081
+		}
+        ai_chance = {
+            factor = 0
+        }					
+	}
+}
+
+### hehe VIN/SCA withdraw from HHR
+
+country_event = { 
+ 
+	id = 66081
+	title = "KKN81.T"
+	desc = "KKN81.D" 
+	picture = ""
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN81.B"
+		clr_country_flag = HHR_killer
+		war = { 
+			target = HHR
+			attacker_goal = { 
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}		
+	}
+}
+
+##### SCA/VIN refuses ########
+
+country_event = { 
+ 
+	id = 66082
+	title = "KKN82.T"
+	desc = "KKN82.D" 
+	picture = "Qingqiu_VIN"
+	
+	is_triggered_only = yes
+	
+	### ATTACK!
+	
+	option = { 
+		name = "KKN82.A"
+		set_global_flag = PRAIRIE_WAR
+		FROM = { 
+		   country_event = 66083
+		}
+ 		war = { 
+			target = FROM
+			attacker_goal = { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = { 
+				casus_belli = custom_treaty_cb
+			}
+			call_ally = yes
+		}       
+        ai_chance = {
+            factor = 100
+        }
+	}
+	
+	### There is no point starting a war over empty land
+	
+	option = { 
+		name = "KKN82.B"
+        prestige = -20
+		clr_country_flag = HHR_killer
+		set_country_flag = HHR_coward
+        ai_chance = {
+            factor = 0
+        }					
+	}
+}
+
+### MAJOR - THE PRAIRIE WAR ###
+
+#### To win either occupy all cores of KKN or VIN. Alternatively enforce the CB. You must do either of these since a white peace means the protector automatically wins.
+
+country_event = { 
+ 
+	id = 66083
+	title = "KKN83.T"
+	desc = "KKN83.D" 
+	picture = ""
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN83.A"
+		set_country_flag = HHR_protector     
+	}
+}
+
+#### 1. DNG Victory over SCA/VIN - Either through treaty enforcement or VIN being occupied - Annex HHR and take all western lands of VIN ###
+
+country_event = { 
+	id = 66084
+	title = "KKN84.T"
+	desc = "KKN84.D" 
+	picture = "Qingqiu"
+	
+	trigger = { 
+	    tag = VIN
+        has_global_flag = PRAIRIE_WAR	
+        OR = {
+            has_country_flag = HHR_protector
+            SCA = { has_country_flag = HHR_protector }
+        }	
+        ## Since this war can only really start if KKN either exists or does not exist its rather obvious that this is the factor to if you are dealing with DNG or not		
+        NOT = { exists = KKN }		
+		OR = {
+		   NOT = {
+		      any_owned_province = {
+		         is_core = VIN
+			     controlled_by = VIN
+		      }
+	       }
+           AND = {
+		      has_country_flag = custom_treaty_loser
+			  NOT = { vassal_of = SCA }			   
+			  NOT = { war_with = DNG }
+			  NOT = { war_with = DAA }
+			  NOT = { war_with = YGZ }           
+           }		
+           AND = {
+		      SCA = { has_country_flag = custom_treaty_loser }
+			  vassal_of = SCA
+			  NOT = { war_with = DNG }
+			  NOT = { war_with = DAA }
+			  NOT = { war_with = YGZ }             
+           }
+       }		  
+	}
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	option = { 
+		name = "KKN84.A"
+		random_owned = {
+		    limit = { owner = { is_our_vassal = HHR } }
+			owner = { release_vassal = HHR }
+	    }
+		clr_country_flag = custom_treaty_loser
+		SCA = { clr_country_flag = custom_treaty_loser }
+		clr_global_flag = PRAIRIE_WAR
+		prestige_factor = -0.3
+		set_country_flag = VIN_failed
+		NA_1 = { remove_core = VIN }
+		NA_4 = { remove_core = VIN }
+		VIN_45 = { remove_core = VIN }
+		NA_11 = { remove_core = VIN }
+		NA_2598 = { remove_core = VIN }
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_country = {
+		   limit = {
+		      tag = SCA
+			  is_our_vassal = THIS
+		   }
+		   release_vassal = HHR
+		   country_event = { id = 66085 days = 0 }
+	    }
+		any_country = {
+		   limit = {
+		      has_country_flag = HHR_killer
+		   }
+		   end_war = THIS
+		   country_event = { id = 66086 days = 1 }
+		   clr_country_flag = HHR_killer
+		}
+   }
+}
+
+### Scandinavia is forced to withdraw from Vinland if they control it
+
+country_event = { 
+	id = 66085
+	title = "KKN85.T"
+	desc = "KKN85.D" 
+	picture = "vinlandcapital"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+    }
+	
+	option = { 
+		name = "KKN85.A"
+		prestige_factor = -0.3	
+		any_pop = { militancy = 2 }
+		release_vassal = VIN	
+   }
+}
+
+
+### DNG annexes HHR - They get cores by decision later
+
+country_event = { 
+	id = 66086
+	title = "KKN86.T"
+	desc = "KKN86.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN86.A"
+		end_war = HHR
+		inherit = HHR	
+   }
+}
+
+#### KKN/JAP Victory over SCA/VIN - Either through treaty enforcement or VIN being occupied - Annex HHR and take all western lands of VIN ###
+
+country_event = { 
+	id = 66087
+	title = "KKN87.T"
+	desc = "KKN87.D" 
+	picture = "sunrise"	
+	
+	trigger = { 
+	    tag = VIN
+        has_global_flag = PRAIRIE_WAR	
+        OR = {
+            has_country_flag = HHR_protector
+            SCA = { has_country_flag = HHR_protector }
+        }	
+		## Since this war can only really start if KKN either exists or does not exist its rather obvious that this is the factor to if you are dealing with DNG or not	
+        exists = KKN 	
+		OR = {
+		   NOT = {
+		      any_owned_province = {
+		         is_core = VIN
+			     controlled_by = VIN
+		      }
+	       }
+           AND = {
+			 NOT = { vassal_of = SCA }
+			 NOT = { war_with = KKN }
+			 NOT = { war_with = JAP }
+             has_country_flag = custom_treaty_loser
+           }		
+           AND = {
+			 vassal_of = SCA
+			 NOT = { war_with = KKN }
+			 NOT = { war_with = JAP }
+             SCA = { has_country_flag = custom_treaty_loser }
+           }
+       }		  
+	}
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	option = { 
+		name = "KKN87.A"
+		random_owned = {
+		    limit = { owner = { is_our_vassal = HHR } }
+			owner = { release_vassal = HHR }
+	    }
+		clr_country_flag = custom_treaty_loser
+		SCA = { clr_country_flag = custom_treaty_loser }
+		clr_global_flag = PRAIRIE_WAR
+		prestige_factor = -0.3
+		set_country_flag = VIN_failed
+		NA_1 = { remove_core = VIN }
+		NA_4 = { remove_core = VIN }
+		VIN_45 = { remove_core = VIN }
+		NA_11 = { remove_core = VIN }
+		NA_2598 = { remove_core = VIN }
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = VIN
+			remove_core = SCA
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_country = {
+		   limit = {
+		      tag = JAP
+		      has_country_flag = HHR_killer
+		   }
+		   end_war = THIS
+		   country_event = { id = 66090 days = 1 } 
+		   clr_country_flag = HHR_killer
+		}
+		any_country = {
+		   limit = {
+		      tag = KKN
+		      has_country_flag = HHR_killer
+		   }
+		   end_war = THIS
+		   country_event = { id = 66091 days = 1 } 
+		   clr_country_flag = HHR_killer
+		}
+		any_country = {
+		   limit = {
+		      tag = SCA
+			  is_our_vassal = THIS
+		   }
+		   release_vassal = HHR
+		   country_event = { id = 66089 days = 0 }
+	    }
+   }
+}
+
+### Scandinavia is forced to withdraw from Vinland if they control it
+
+country_event = { 
+	id = 66089
+	title = "KKN89.T"
+	desc = "KKN89.D" 
+	picture = "vinlandcapital"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = THIS
+			remove_core = VIN
+			add_core = HHR
+			secede_province = HHR
+		}
+    }
+	
+	option = { 
+		name = "KKN89.A"
+		prestige_factor = -0.3	
+		release_vassal = VIN	
+		any_country = {
+		    limit = {
+			   OR = {
+				  tag = SKR 
+				  tag = MSG
+			   }
+			   vassal_of = THIS
+			}
+			country_event = 333584
+	    }
+   }
+}
+
+### JAP gets KKN to annex HHR - They get cores by decision later
+
+country_event = { 
+	id = 66090
+	title = "KKN90.T"
+	desc = "KKN90.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "DNG185.A"
+		end_war = HHR
+		KKN = {
+		   end_war = HHR
+		   inherit = HHR
+        }		
+   }
+}
+
+### KKN annexes HHR - They get cores by decision later
+
+country_event = { 
+	id = 66091
+	title = "KKN91.T"
+	desc = "KKN91.D" 
+	picture = "hunras"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN91.A"
+		end_war = HHR
+		inherit = HHR	
+   }
+}
+
+#### 3. SCA/VIN Victory over KKN - Either through treaty enforcement, a white peace or KKN being occupied - Give HHR all territory of HHR/JAP apart from the coastline. Kick JAP off the continent. ####
+
+country_event = { 
+	id = 66092
+	title = "KKN92.T"
+	desc = "KKN92.D" 
+	picture = "sunset"
+	
+	trigger = { 
+	    tag = KKN	
+        has_global_flag = PRAIRIE_WAR	
+        OR = {
+            has_country_flag = HHR_killer
+            JAP = { has_country_flag = HHR_killer }
+        }			
+		OR = {
+		   NOT = {
+		      any_owned_province = {
+		         is_core = KKN
+			     controlled_by = KKN
+		      }
+	       }
+		   ## SCA/VIN Automatically win if they do not enforce themselves over KKN since KKN starts as a vassal in this war
+		   NOT = {  
+			  SCA = { war_with = THIS has_country_flag = custom_treaty_loser }
+		      VIN = { war_with = THIS has_country_flag = custom_treaty_loser }
+		   }
+       }		  
+	}
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	option = { 
+		name = "KKN92.A"
+		clr_country_flag = custom_treaty_loser
+		JAP = { clr_country_flag = custom_treaty_loser }
+		clr_global_flag = PRAIRIE_WAR
+		prestige_factor = -0.5
+		any_country = {
+		   limit = {
+		      OR = {
+			    tag = SCA
+				tag = VIN
+		      }
+		   }
+		   end_war = THIS
+		}
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_country = {
+		   limit = {
+		      tag = JAP
+			  is_our_vassal = THIS
+		   }
+		   country_event = 66093
+	    }
+		any_country = {
+		    limit = { 
+			   has_country_flag = HHR_protector
+			}
+			prestige = 50
+			clr_country_flag = HHR_protector
+			set_country_flag = HHR_killer_two
+	    }
+   }
+}
+
+### Japan is forced to withdraw from Hokkigan if they control it
+
+country_event = { 
+	id = 66093
+	title = "KKN93.T"
+	desc = "KKN93.D" 
+	picture = "sunset"
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = "KKN93.A"
+		prestige_factor = -0.3	
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = THIS
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = THIS
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = THIS
+			remove_core = KKN
+			add_core = HHR
+			secede_province = HHR
+		}
+		release_vassal = KKN	
+   }
+}
+
+#### 3. SCA/VIN Victory over DNG - Either through treaty enforcement or KKN being occupied - Give HHR all territory 
+
+country_event = { 
+	id = 66094
+	title = "KKN94.T"
+	desc = "KKN94.D" 
+	picture = "shimonoseki"
+	
+	trigger = { 
+	     OR = {
+		    AND = {
+			   tag = DNG
+			   exists = yes 
+			}
+	        has_country_flag = DNG_unifier 
+	     }
+		 has_country_flag = HHR_killer
+		 has_global_flag = PRAIRIE_WAR
+		 NOT = {  
+			SCA = { war_with = THIS has_country_flag = custom_treaty_loser }
+		    VIN = { war_with = THIS has_country_flag = custom_treaty_loser }
+		 }   	      
+    }		  
+	
+	mean_time_to_happen = { 
+		days = 1 
+	}
+	
+	option = { 
+		name = "KKN94.A"
+		clr_country_flag = HHR_killer
+		clr_country_flag = custom_treaty_loser	
+		clr_global_flag = PRAIRIE_WAR
+		prestige_factor = -0.5
+		any_owned = { 
+			limit = {
+			   OR = {
+			      region = VIN_45
+			      region = NA_11
+			      region = NA_2598
+				  region = NA_38
+			   }
+			}
+			remove_core = KKN
+			remove_core = THIS
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = BKF
+			}
+			remove_core = KKN
+			remove_core = THIS
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_owned = { 
+			limit = {
+			   is_core = HHR
+			}
+			remove_core = KKN
+			remove_core = THIS
+			add_core = HHR
+			secede_province = HHR
+		}
+		any_country = {
+		    limit = { 
+			   has_country_flag = HHR_protector
+			}
+			prestige = 50
+			clr_country_flag = HHR_protector
+			set_country_flag = HHR_killer_two
+	    }
+    }
+}
+
+### The Fate of Rohnnst - Triggered by decision after winning the above war as VIN ###
+
+#### This is a copy of a event under MOD Vinland - 333569
+#### Triggered by the fate of Rohnnst under MOD Vinland Expansion which may need localization so feel free to add it to the doc
+
+country_event = {
+	id = 660940
+	title = "KKN940.T"
+	desc = "KKN940.D"
+	picture = "hunras"
+
+    fire_only_once = yes
+	is_triggered_only = yes
+	
+	## March in and dissolve the faux state ###
+	
+	option = {
+		name = "KKN940.A"
+		VIN_45 = { add_core = VIN }
+		NA_11 = { add_core = VIN }
+		NA_2598 = { add_core = VIN }
+		HHR = { all_core = { add_core = VIN } }		   
+		diplomatic_influence = { who = HHR value = -400 }
+		relation = { who = HHR value = -400 }
+		leave_alliance = HHR
+		release_vassal = HHR 
+		war = {
+			target = HHR
+			attacker_goal =  { 
+				casus_belli = conquest_any
+			}
+			defender_goal = {
+				casus_belli = status_quo
+			}	
+	    }
+	    ai_chance = { 
+	        factor = 99	
+			modifier = {
+			   factor = 0
+			   HHR = { ai = no }
+		    }
+		}		
+    }
+	
+	## Would it not be more apt to give Rohnnst the Empty Eastern Territories rather then Vinland?
+	
+	option = {
+		name = "KKN940.B"
+		relation = { who = VIN value = -25 }
+		prestige = 20
+		NA_11 = { remove_core = VIN add_core = HHR }
+		NA_2598 = { remove_core = VIN add_core = HHR }
+	    ai_chance = { 
+	        factor = 1
+		}		
+    }
+}
+
+##############################################
+########## THE GREAT PUSH EAST ###############
+##############################################
+
+### You wonder with all of these events how on earth Japan manages to take control of the states next to HHR to even invade it
+#### DNG has its own colonial decisions for this. Usually stuff like this would be done by decisions but events have less of a performance effect so I might as well do it through events. Both Iterations need control over Buyeo as that's a more pressing threat then moving East
+
+#### They both have large-ish MTTHs and both need Buyeo under control. 
+
+country_event = { 
+	id = 66095
+	title = "KKN95.T"
+	desc = "KKN95.D" 
+	picture = "albertadev"
+	
+	trigger = { 
+	     tag = KKN
+		 owns = 16
+         2629 = { empty = yes }		 
+    }		  
+	
+	mean_time_to_happen = { 
+		days = 300
+	}
+	
+	option = { 
+		name = "KKN95.A"
+		24 = { life_rating = 20 }
+		2629 = { life_rating = 10 }
+		18 = { life_rating = 10 }
+		11 = { life_rating = 5 }
+		NA_11 = { secede_province = THIS }	
+   }
+}
+
+country_event = { 
+	id = 66096
+	title = "KKN96.T"
+	desc = "KKN96.D" 
+	picture = "albertadev"
+	
+	trigger = { 
+	     tag = KKN
+		 owns = 1
+         8 = { empty = yes }		 
+    }		  
+	
+	mean_time_to_happen = { 
+		days = 300
+	}
+	
+	option = { 
+		name = "KKN96.A"
+		NA_2598 = { secede_province = THIS }	
+   }
+}

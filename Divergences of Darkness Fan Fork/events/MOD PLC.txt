@@ -2376,10 +2376,6 @@ country_event = {
 	   }
 	   ai_chance = { 
 	      factor = 1
-		     modifier = {
-		         factor = 0
-		         KIE = { ai = no }				  
-		     }
  	   }
 	}
 }
@@ -7563,9 +7559,9 @@ country_event = {
 	trigger = { 
        tag = PLC
 	   exists = RUT
-	   has_global_flag = the_ruthenian_uprising
+	   has_global_flag = the_ruthenian_uprising   
+	   has_country_flag = custom_treaty_loser
 	   NOT = { has_country_flag = Habsburg_refused }
-	   NOT = { has_country_flag = custom_treaty_loser }
 	   NOT = { war_with = RUT }
 	}
 	
@@ -10244,8 +10240,13 @@ country_event = {
 	name = "LITPRU8.A"
 	prestige = 5
 	inherit = DZG
-	SCA = { country_event = { id = 222310 days = 2 } }	
-	country_event = { id = 222415 days = 2 }
+	SCA = { country_event = { id = 222310 days = 2 } }
+	random_owned = {
+	   limit = {
+	      owner = { NOT = { owns = 695 } }
+	   }
+	   owner = { country_event = { id = 222415 days = 2 } }
+	}
 	}
 }
 
@@ -10949,6 +10950,12 @@ country_event = {
 
 	option = { 
 	name = "PLCN65.A"
+	relation = { who = RUT value = -400 }
+	diplomatic_influence = { who = RUT value = -400 }	
+	leave_alliance = RUT
+	relation = { who = SCA value = -400 }
+	diplomatic_influence = { who = SCA value = -400 }	
+	leave_alliance = SCA
 	clr_global_flag = WAIT_LIT
 	clr_country_flag = army_reform_banned
 	prestige_factor = -0.90
@@ -11024,14 +11031,15 @@ country_event = {
 	   }
 	   secede_province = RUT
 	}
-	relation = { who = RUT value = -400 }
-	diplomatic_influence = { who = RUT value = -400 }	
-	leave_alliance = RUT
-	relation = { who = SCA value = -400 }
-	diplomatic_influence = { who = SCA value = -400 }	
-	leave_alliance = SCA
-	RUT = { country_event = { id = 2223260 days = 1 } }
-	SCA = { country_event = { id = 2223260 days = 1 } }	
+	any_country = {
+	    limit = {
+		   OR = {
+		      tag = SCA
+			  tag = RUT 
+		   }
+		}
+		country_event = { id = 2223260 days = 1 }
+	}
 	}
 }
 
@@ -11062,7 +11070,7 @@ country_event = {
 
 	option = {	
 	   name = "PLCN67.A"
-	   clr_country_flag = RUT_lithuania
+	    clr_country_flag = RUT_lithuania
 	    war = {
 		target = BLR
 			attacker_goal = {
@@ -12242,6 +12250,7 @@ country_event = {
 
 	trigger = { 
 	    tag = PLC 
+		war = no
 		has_country_flag = enable_borderlands_conquest
 		is_our_vassal = AKH
 		owns = 972
@@ -12287,6 +12296,7 @@ country_event = {
 	trigger = { 
 	    tag = AKH 
 		vassal_of = PLC	
+		war = no
 		is_ideology_enabled = communist
 		has_global_flag = CSK_it_begins	
         PLC = { NOT = { ruling_party_ideology = communist } }		
@@ -12308,6 +12318,10 @@ country_event = {
 		  name = small_country_draft
 		  duration = -1
 	   }
+	   add_country_modifier = { 
+		  name = slavia_rus
+		  duration = -1
+	   }
 	   any_country = {
 	      limit = {
 		     is_greater_power = yes
@@ -12327,6 +12341,8 @@ country_event = {
 
 ####### Establishment of the Zavolzhie Republic - The Red Cossacks are here ########
 
+### I guess this is the only way to get Ruthenian as a accepted culture in Cossakia
+
 country_event = { 
 	id = 223009
 	title = "PLCN760.T" 
@@ -12337,9 +12353,10 @@ country_event = {
 	
 	option = { 
 	name = "PLCN760.A" 
-	   nationalvalue = nv_fraternity
+	    nationalvalue = nv_fraternity
 		government = socialist_republic
 		ruling_party_ideology = communist
+		add_accepted_culture = ruthenian
 		political_reform = universal_voting
 		political_reform = population_equal_weight
 		political_reform = yes_meeting
@@ -12373,7 +12390,13 @@ country_event = {
 		clr_country_flag = anarcho_liberal_election_win
 		clr_country_flag = social_liberal_election_win
 		clr_country_flag = market_liberal_election_win		
-		clr_country_flag = paternal_election_win
+		clr_country_flag = paternal_election_win	   
+		money = 1000000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000
+	    artillery = 1000
+		liquor = 1000
 	   PLC = { country_event = { id = 2230090 days = 0 } }	   
 	}
 }
@@ -12393,7 +12416,7 @@ country_event = {
 	option = { 
 	name = "PLCN77.A" 
 	    release_vassal = AKH
-		country_event = { id = 223010 days = 32 }
+		country_event = { id = 223010 days = 60 }
 	    any_owned = { 
 	       limit = { is_core = CSK }
 	          add_province_modifier = { name = nationalist_agitation duration = 31 } 
@@ -12408,7 +12431,7 @@ country_event = {
 	option = { 
 	name = "PLCN77.B" 
 	    release_vassal = AKH
-		country_event = { id = 223010 days = 32 }
+		country_event = { id = 223010 days = 60 }
 	    any_owned = { 
 	       limit = { is_core = CSK }
 	          add_province_modifier = { name = nationalist_agitation duration = 31 } 
@@ -12448,7 +12471,7 @@ country_event = {
 	   ## Foundation of the Free Territory of Ukraine
        AKH = { country_event = { id = 223011 days = 1 } }   
 	   ## The Last Cossack Uprising
-	   country_event = { id = 223012 days = 14 }
+	   country_event = { id = 223012 days = 60 }
 	}
 }
 
@@ -12583,9 +12606,19 @@ country_event = {
 		clr_country_flag = social_liberal_election_win
 		clr_country_flag = market_liberal_election_win		
 		clr_country_flag = paternal_election_win
+		money = 1000000
+	    canned_food = 1000
+	    regular_clothes = 1000
+	    small_arms = 1000
+	    artillery = 1000
+		liquor = 1000
 	    add_country_modifier = { 
 		   name = small_country_draft
 		   duration = -1
+	    }
+	    add_country_modifier = { 
+		  name = slavia_rus
+		  duration = -1
 	    }
 		PLC = { release_vassal = THIS country_event = 223014 }
 	}
@@ -12634,7 +12667,7 @@ country_event = {
 	    leave_alliance = MOS
 	    relation = { who = MOS value = -400 }
 	    diplomatic_influence = { who = MOS value = -400 }	
-	    MOS = { clr_country_flag = shitty_muscovy remove_country_modifier = small_country_draft }
+	    MOS = { clr_country_flag = shitty_muscovy remove_country_modifier = slavia_rus remove_country_modifier = small_country_draft }
 	    ai_chance = { 
 	       factor = 0
 	    }
@@ -12701,11 +12734,13 @@ country_event = {
 	   CSK = {
 	       prestige = 100
 	       remove_country_modifier = small_country_draft
+		   remove_country_modifier = slavia_rus
 		   all_core = { remove_core = PLC }
 	   }
 	   MOS = {
 	       clr_country_flag = shitty_muscovy
 	       remove_country_modifier = small_country_draft
+		   remove_country_modifier = slavia_rus
 	   }
 	}
 }

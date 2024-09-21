@@ -732,8 +732,8 @@ country_event = {
 
 country_event = {
 	id = 2800142
-	title = "GEPDEAD4.T"
-	desc = "GEPDEAD4.D"
+	title = "GEPDEAD3.T"
+	desc = "GEPDEAD3.D"
 	picture = "reichsbanner"
 	
 	fire_only_once = yes 	
@@ -757,7 +757,7 @@ country_event = {
     }
 	
 	option = { 
-	    name = "GEPDEAD4.A"
+	    name = "GEPDEAD3.A"
 		prestige = 10
 		set_global_flag = GERMAN_ANARCHY
 		set_country_flag = PHOENIX_BLOCKED
@@ -3994,6 +3994,10 @@ country_event = {
 		  duration = 3650
 	   }
 	   add_country_modifier = {
+		  name = no_more_war
+		  duration = 3650
+	   }
+	   add_country_modifier = {
 		 name = neutrality
 		 duration = 1825
 	   } 
@@ -4159,6 +4163,10 @@ country_event = {
 	   }
 	   add_accepted_culture = south_german	
 	   add_accepted_culture = north_german
+	   add_country_modifier = {
+		   name = no_more_war
+		   duration = 3650
+	   }
 	   add_country_modifier = {
 		  name = integrating_south_GER
 		  duration = 3650
@@ -4583,6 +4591,10 @@ country_event = {
 		  duration = 3650
 	   }
 	   add_country_modifier = {
+		  name = no_more_war
+		  duration = 3650
+	   }
+	   add_country_modifier = {
 		 name = neutrality
 		 duration = 1825
 	   } 		
@@ -4657,6 +4669,10 @@ country_event = {
 	    regular_clothes = 1500
 	    small_arms = 1500
 		luxury_clothes = 750
+	    add_country_modifier = {
+		   name = no_more_war
+		   duration = 3650
+	    }	
 	    add_country_modifier = {
 		   name = integrating_south_GER
 		   duration = 3650
@@ -4784,6 +4800,10 @@ country_event = {
 	    luxury_clothes = 750
 	    add_country_modifier = {
 		   name = integrating_north_GER
+		   duration = 3650
+	    }
+	    add_country_modifier = {
+		   name = no_more_war
 		   duration = 3650
 	    }
 	    add_country_modifier = {
@@ -7144,30 +7164,32 @@ country_event = {
 	option = { 
 	    name = "GEP820.A"
 		prestige = 25
-		any_country = {
+		random_owned = {
 		   limit = {
-		      exists = yes
-			  has_global_flag = GGW_OCCURED
-			  OR = {
-			    tag = BRG
-				tag = PBG
-				tag = FRK
-		      }
-	       }
-		   country_event = 280083
-		} 
-		any_country = {
+		      owner = {
+			     OR = {
+			        tag = BRG
+				    tag = PBG
+				    tag = FRK
+		         }
+			     has_global_flag = GGW_OCCURED
+			  }
+		   }
+		   owner = { country_event = 280083 }
+		}
+		random_owned = {
 		   limit = {
-		      exists = yes
-			  NOT = { has_global_flag = GGW_OCCURED }
-			  OR = {
-			    tag = BRG
-				tag = PBG
-				tag = FRK
-		      }
-	       }
-		   country_event = 280082
-		} 
+		      owner = {
+			     OR = {
+			        tag = BRG
+				    tag = PBG
+				    tag = FRK
+		         }
+			     NOT = { has_global_flag = GGW_OCCURED }
+			  }
+		   }
+		   owner = { country_event = 280082 }
+		}
 	    ai_chance = { 
 	       factor = 50
 			modifier = {
@@ -7286,6 +7308,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP83.A"
+		remove_country_modifier = no_more_war
 		remove_country_modifier = war_justification_blocked
 		any_country = {
 		   limit = {
@@ -7356,6 +7379,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP84.A"
+		remove_country_modifier = no_more_war
 		remove_country_modifier = war_justification_blocked
 		any_country = {
 		   limit = {
@@ -7444,6 +7468,7 @@ country_event = {
 		   war_with = PBG
 		   war_with = BRG
 		}
+		invention = great_war_paradigm
 		has_country_flag = FALL_ROT_POSSIBLE
 		has_country_flag = in_great_war
 		NOT = { has_global_flag = GGW_OCCURED }
@@ -7453,6 +7478,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP830.A"
+		remove_country_modifier = no_more_war
 		clr_country_flag = DO_NOT_ANARCHY
 		clr_country_flag = FALL_ROT_POSSIBLE
 		set_global_flag = FALL_ROT_OCCURED
@@ -7529,6 +7555,7 @@ country_event = {
 		   war_with = PBG
 		   war_with = BRG
 		}
+		invention = great_war_paradigm
 		has_country_flag = FALL_ROT_POSSIBLE
 		has_country_flag = in_great_war
 		has_global_flag = GGW_OCCURED
@@ -7538,6 +7565,7 @@ country_event = {
 	
 	option = { 
 	    name = "GEP8400.A"
+		remove_country_modifier = no_more_war
 		clr_country_flag = DO_NOT_ANARCHY
 		clr_country_flag = FALL_ROT_POSSIBLE
 		set_global_flag = FALL_ROT_OCCURED
@@ -7616,6 +7644,7 @@ country_event = {
 		  tag = GER
 		  tag = GCF
 		} 
+		ai = yes
 		war_with = FRK
 		425 = { is_core = FRK }
         NOT = { has_country_flag = rotting_goliath }
@@ -9926,6 +9955,8 @@ country_event = {
 		  add_core = BAD
           secede_province = BAD
         }
+		primary_culture = south_german
+		remove_accepted_culture = north_german
 		change_tag = SGF
 		all_core = {
 		   limit = {

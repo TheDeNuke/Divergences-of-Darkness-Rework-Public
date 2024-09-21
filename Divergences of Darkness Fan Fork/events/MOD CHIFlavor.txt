@@ -1,47 +1,7126 @@
-######################## The Women Shortage will last from 1838 to 1864. This should dramatically slow down westernization. Modified to only apply to the primary chinese nations. ###############################
+###################################### CHINA REWORK ######################################################
+
+### Solidify our golden empire, 
+### Follow the will of Heaven,
+### All of creation will celebrate, 
+### All of mankind will be filled with happiness,  
+### As long as the Hong rules.
+### May the enlightened empire,
+### And its vast boundaries be protected.
+### The sky is high,
+### The sea is turbulent. 
+
+#### Shun Opening Event - This is triggered in setup.txt
 
 country_event = {
-	id = 44180
-	title = "EVTNAME44100"
-	desc = "EVTDESC44100"
-	picture = "shortage_of_women"
+    id = 164000
+    title = "CHIN0.T"
+    desc = "CHIN0.D"
+    picture = "shun"
+    fire_only_once = yes
 
-	trigger = {	
-	NOT = { has_country_flag = the_child_shortage }
-	year = 1838
-	OR = {
-	   tag = TAI
-	   tag = MCH		
-	   tag = TNG
-	   tag = MIG
-	   tag = DAX
-	   tag = SHU
-	   tag = GNG
-		 }
+	is_triggered_only = yes
+
+    option = {
+        name = "CHIN0.A"
+		set_country_flag = regency_blocker
+		add_country_modifier = { name = global_baby_boom duration = 1065 }
+		add_country_modifier = { name = uncivilized_isolationism duration = -1 }
+		add_country_modifier = { name = neutrality duration = -1 }
+		add_country_modifier = { name = all_under_heaven duration = -1 }
+		add_country_modifier = { name = five_batallion_army duration = -1 }
+		add_country_modifier = { name = mandate_of_heaven duration = -1 }
+		set_country_flag = five_batallion_active
+		remove_country_modifier = western_influences
+        set_country_flag = mandate
+		set_country_flag = qinggiu_event
+		### Stop acting like you are the king of the world
+		any_country = {
+		   limit = {
+		      NOT = { vassal_of = THIS }
+			  capital_scope = { continent = asia }
+		   }
+		   relation = { who = THIS value = -100 }
+		}
+		any_country = {
+		   limit = {
+		      vassal_of = THIS
+			}
+			remove_country_modifier = western_influences
+			add_country_modifier = { name = uncivilized_isolationism duration = -1 }
+			add_country_modifier = { name = all_under_heaven duration = -1 }
+	    }
+		country_event = { id = 164003 days = 1 }
+    }
+}
+
+country_event = {
+    id = 164001
+    title = "CHIN1.T"
+    desc = "CHIN1.D"
+    picture = "qinggiu"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		has_country_flag = qinggiu_event
 	}
 
-	mean_time_to_happen = { 
-	months = 3
-	}			
-			
+	mean_time_to_happen = {
+		days = 60
+	}
+		
 	option = {
-	name = "EVTOPTA44100"
-	set_country_flag = the_child_shortage 
-	add_country_modifier = {
-			name = the_female_shortage
-			duration = 9490
+		name = "CHIN1.A"
+		clr_country_flag = qinggiu_event
+        any_pop = {
+            consciousness = 1
+        }
+        add_country_modifier = { name = qinggiu_drain duration = -1 }
+		DNG = { add_country_modifier = { name = chinese_trickle duration = -1 } }
+	}
+}
+
+country_event = {
+    id = 164002
+    title = "CHIN2.T"
+    desc = "CHIN2.D"
+    picture = "CHIclassicadmin"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		month = 10
+		NOT = { year = 1838 }
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+		
+	option = {
+		name = "CHIN2.A"
+        prestige = -5
+        any_pop = {
+            militancy = 1
+            consciousness = 1
+        }
+        add_country_modifier = { name = shenfeng_regency duration = -1 }
+	}
+}
+
+#Opium Smuggling in China - This is a edited copy of 1316080 from GFM if you want to be inspired localization wise.
+country_event = {
+    id = 164003
+    title = "CHIN3.T"
+    desc = "CHIN3.D"
+    picture = "Opium"
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN3.A"
+        prestige = -10
+        any_owned = {
+            limit = {
+                OR = {
+                    is_core = GNG
+					is_core = FJU
+					region = CHI_1611 
+					region = CHI_1604
+					region = CHI_1537
+					region = CHI_1539
+					region = CHI_1567
+                }
+            }
+            add_province_modifier = { name = local_opium_habit duration = -1 }
+        }
+        1538 = { add_province_modifier = { name = "foreign_smugglers" duration = -1 } }
+    }
+}
+
+# Some Kid called Li Guang has appeared
+# Why is a Twenty-Six Year Old trying to dictate the policy of Great Shun. Exile him to Nanjing.
+
+country_event = {
+    id = 164004
+    title = "CHIN4.T"
+    desc = "CHIN4.D"
+    picture = "thisisnotli"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		year = 1838
+		month = 4
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+		
+	option = {
+		name = "CHIN4.A"
+        any_pop = {
+            militancy = 1
+            consciousness = 1
+        }
+	}
+}
+
+# That Kid managed to convince the Nanjing Governor that they should improve their fort design according to some books he got from the west. Huh. Sort of making us look bad.
+
+country_event = {
+    id = 164005
+    title = "CHIN5.T"
+    desc = "CHIN5.D"
+    picture = "nanjingwall"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		year = 1839
+		month = 7
+	}
+
+	mean_time_to_happen = {
+		days = 2
+	}
+		
+	option = {
+		name = "CHIN5.A"
+		prestige = -1
+        2221 = { fort = 1 }
+	}
+}
+
+#### Edict on the Reorganization of Foreign Trade and Illegalization of Opium ###
+
+#### We even hired a guy to do it. See. We are so smart. His name is Zong Zuoyan.
+
+country_event = {
+    id = 164006
+    title = "CHIN6.T"
+    desc = "CHIN6.D"
+    picture = "Opium"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		year = 1840
+		month = 6
+	}
+
+	mean_time_to_happen = {
+		days = 5
+	}
+
+    option = {
+        name = "CHIN6.A"
+		set_country_flag = the_fun_begins_SHU
+		any_greater_power = {
+			relation = { who = THIS value = -50 }
+	        diplomatic_influence = { who = THIS value = -50 }	
+	    }
+		1493 = {
+			add_province_modifier = {
+				name = canton_system
+				duration = -1
+			}
+			add_province_modifier = {
+				name = "foreign_smugglers"
+				duration = -1
+			}
+		}
+    }
+}
+
+#### The Canton Incident 
+
+country_event = {
+    id = 164007
+    title = "CHIN7.T"
+    desc = "CHIN7.D"
+    picture = "Opiumwar"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		year = 1841
+		has_country_flag = the_fun_begins_SHU
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+
+    option = {
+        name = "CHIN6.A"
+		clr_country_flag = the_fun_begins_SHU
+		remove_country_modifier = neutrality
+		add_country_modifier = { name = war_justification_blocked duration = -1 }
+		any_owned = { remove_province_modifier = foreign_smugglers }
+		SCA = { country_event = { id = 164008 days = 3 } }
+    }
+}
+
+#### The Canton Incident - SCA
+
+country_event = {
+    id = 164008
+    title = "CHIN8.T"
+    desc = "CHIN8.D"
+    picture = "Opiumwar"
+    fire_only_once = yes
+	
+	is_triggered_only = yes
+
+    option = {
+        name = "CHIN8.A"
+	    relation = { who = THIS value = -400 }
+	    diplomatic_influence = { who = THIS value = -400 }	
+		country_event = { id = 164011 days = 10 }
+		DUA = { country_event = { id = 164009 days = 1 } }
+		BRG = { country_event = { id = 164010 days = 1 } }
+    }
+}
+
+#### The Triple Intervention - DUA
+
+country_event = {
+    id = 164009
+    title = "CHIN9.T"
+    desc = "CHIN9.D"
+    picture = "Opium"
+    fire_only_once = yes
+	
+	is_triggered_only = yes
+
+    option = {
+        name = "CHIN8.A"
+	    relation = { who = THIS value = -400 }
+	    diplomatic_influence = { who = THIS value = -400 }	
+    }
+}
+
+#### The Triple Intervention - BRG
+
+country_event = {
+    id = 164010
+    title = "CHIN10.T"
+    desc = "CHIN10.D"
+    picture = "Opium"
+    fire_only_once = yes
+	
+	is_triggered_only = yes
+
+    option = {
+        name = "CHIN10.A"
+	    relation = { who = THIS value = -400 }
+	    diplomatic_influence = { who = THIS value = -400 }	
+    }
+}
+
+#### The Triple Intervention - MAJOR - SCA
+
+country_event = {
+    id = 164011
+    title = "CHIN11.T"
+    desc = "CHIN11.D"
+    picture = "Opiumwar"
+    major = yes
+
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN11.A"
+		set_global_flag = triple_intervention
+        leave_alliance = SHU
+        end_military_access = SHU
+        any_country = {
+            limit = {
+                alliance_with = SHU
+                NOT = { vassal_of = SHU }
+            }
+			leave_alliance = SHU
+        }
+		DUA = { country_event = 164012 }
+		BRG = { country_event = 164013 }
+        war = {
+            target = SHU
+            attacker_goal = { casus_belli = minor_custom_treaty_cb }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+    }
+}
+
+country_event = {
+    id = 164012
+    title = "CHIN12.T"
+    desc = "CHIN12.D"
+	picture = "Opiumwar"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN12.D"
+        end_military_access = SHU
+        war = {
+            target = SHU
+            attacker_goal = { casus_belli = minor_custom_treaty_cb }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+    }
+}
+
+country_event = {
+    id = 164013
+    title = "CHIN13.T"
+    desc = "CHIN13.D"
+	picture = "Opiumwar"
+
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN13.D"
+        end_military_access = SHU
+        war = {
+            target = SHU
+            attacker_goal = { casus_belli = minor_custom_treaty_cb }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+    }
+}
+
+# The Treaty of Shanghai
+# No MTTH so this happens immediately when the conditions are set.
+
+country_event = {
+    id = 164014
+    title = "CHIN14.T"
+    desc = "CHIN14.D"
+    picture = "signing_unequal_treaty"
+
+    major = yes
+	
+	trigger = {	
+	    exists = yes
+		tag = SHU
+		has_global_flag = triple_intervention
+		has_country_flag = custom_treaty_loser
+	}
+	
+	immediate = {
+	   remove_country_modifier = negotiating_unequal_treaty
+    }
+	
+    option = {
+        name = "CHIN14.A"
+		set_country_flag = end_of_intervention
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = no_treaty_ports
+		clr_global_flag = triple_intervention
+		economic_reform = interactive
+		political_reform = open_borders
+		activate_technology = classicism_n_early_romanticism
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   economic_reform = interactive
+		   activate_technology = classicism_n_early_romanticism
+        }	
+        prestige = -15		
+        1496 = { trade_goods = precious_goods remove_core = SHU remove_core = GNG secede_province = SCA }
+        1496 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        2674 = { trade_goods = precious_goods remove_core = SHU remove_core = GNG secede_province = BRG }
+        2674 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        1538 = { trade_goods = precious_goods remove_core = SHU secede_province = DUA }
+        1538 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        capital_scope = { add_province_modifier = { name = legation_quarter duration = -1 } }
+        1493 = {
+            remove_province_modifier = canton_system
+            add_province_modifier = { name = foreign_smugglers duration = 3650 }
+			add_province_modifier = { name = local_opium_habit duration = -1 }
+        }
+		any_greater_power = {
+		    limit = { truce_with = THIS }
+			relation = { who = THIS value = 100 }
+	        diplomatic_influence = { who = THIS value = 100 }	
+	    }
+        any_pop = {
+            limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+		any_country = {
+		   limit = {
+		      tag = DUA 
+		   }	
+           prestige = 5		
+           end_war = SHU		   
+		   country_event = 1640140
+		}
+		any_country = {
+		   limit = {
+		      tag = BRG
+		   }	
+           prestige = 5	
+           end_war = SHU		   
+		   country_event = 1640140
+		}
+		any_country = {
+		   limit = {
+		      tag = SCA 
+		   }
+           prestige = 5
+           end_war = SHU		   
+		   country_event = 1640140
+		}
+    }
+}
+
+#### Triple Intervention Aftermath - Great Powers
+
+country_event = {
+    id = 1640140
+    title = "CHIN140.T"
+    desc = "CHIN10.D"
+    picture = "Opium"
+    fire_only_once = yes
+	
+	is_triggered_only = yes
+
+    option = {
+        name = "CHIN140.A"
+		   add_country_modifier = { name = chinese_treaty_port duration = 1095 }
+		   any_owned = {
+		      limit = { 
+			    is_core = SHU
+			  }
+			  secede_province = SHU 
+		   }
+		   any_owned = {
+		      limit = { 
+			    is_core = MCC
+			  }
+			  secede_province = MCC
+		   }
+		   any_owned = {
+		      limit = { 
+			    is_core = MCH
+			  }
+			  secede_province = MCH
+		   }
+		   any_owned = {
+		      limit = { 
+			    is_core = DAI
+			  }
+			  secede_province = DAI
+		   }		
+    }
+}
+
+# The Treaty of Canton
+# You managed to somehow push them into a stalemate but they still forced concessions onto you due to the sheer damange trying to do this likely did to you.
+
+country_event = {
+    id = 164015
+    title = "CHIN15.T"
+    desc = "CHIN15.D"
+    picture = "signing_unequal_treaty"
+
+    major = yes
+	
+	trigger = {	
+	    exists = yes
+		tag = SHU
+		has_global_flag = triple_intervention
+		NOT = { has_country_flag = custom_treaty_loser }
+		war = no
+	}
+	
+	immediate = {
+	   remove_country_modifier = negotiating_unequal_treaty
+    }
+	
+    option = {
+        name = "CHIN15.A"
+		set_country_flag = end_of_intervention
+		clr_country_flag = custom_treaty_loser
+		clr_global_flag = no_treaty_ports
+		clr_global_flag = triple_intervention
+		economic_reform = interactive
+		political_reform = open_borders
+		activate_technology = classicism_n_early_romanticism
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   economic_reform = interactive
+		   activate_technology = classicism_n_early_romanticism
+        }	
+        prestige = 15
+		money = 999999
+        1496 = { trade_goods = precious_goods remove_core = SHU remove_core = GNG secede_province = SCA }
+        1496 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        2674 = { trade_goods = precious_goods remove_core = SHU remove_core = GNG secede_province = BRG }
+        2674 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        1538 = { trade_goods = precious_goods remove_core = SHU secede_province = DUA }
+        1538 = { add_province_modifier = { name = colonial_recruitment duration = 365 } }
+        capital_scope = { add_province_modifier = { name = legation_quarter duration = -1 } }
+        1493 = {
+            remove_province_modifier = canton_system
+            add_province_modifier = { name = foreign_smugglers duration = 3650 }
+			add_province_modifier = { name = local_opium_habit duration = -1 }
+        }
+		any_greater_power = {
+		    limit = { truce_with = THIS }
+			relation = { who = THIS value = 100 }
+	        diplomatic_influence = { who = THIS value = 100 }	
+	    }
+        any_pop = {
+            limit = { is_culture_group = chinese }
+            militancy = -1
+            consciousness = -1
+        }
+		any_country = {
+		   limit = {
+		      tag = DUA 
+		   }	
+           money = -333333		   
+		   country_event = 1640140
+		}
+		any_country = {
+		   limit = {
+		      tag = BRG
+		   }	
+           money = -333333		   
+		   country_event = 1640140
+		}
+		any_country = {
+		   limit = {
+		      tag = SCA 
+		   }	
+           money = -333333		   
+		   country_event = 1640140
+		}
+    }
+}
+
+### The Incredible Exploits of Li Guang
+
+### This sounds a bit fanciful but he is clearly a war hero!
+
+country_event = {
+    id = 164016
+    title = "CHIN16.T"
+    desc = "CHIN16.D"
+    picture = "thisisnotli"
+    fire_only_once = yes
+	
+	trigger = {
+	    tag = SHU
+		has_country_flag = end_of_intervention
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+		
+	option = {
+		name = "CHIN4.A"
+		clr_country_flag = end_of_intervention
+		set_country_flag = glorious_li_guang
+		prestige = 1
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -1
+            consciousness = 1
+        }
+	}
+}
+
+### Li Guang coups the Regency Council and takes it for himself
+
+### From Hero to... Regent
+
+country_event = {
+    id = 164017
+    title = "CHIN17.T"
+    desc = "CHIN17.D"
+    picture = "CHIclassicadmin"
+    fire_only_once = yes
+
+	trigger = {
+	    tag = SHU
+		has_country_flag = glorious_li_guang
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN17.A"
+		prestige = 5
+		add_country_modifier = { name = guang_regency duration = -1 }
+	    remove_country_modifier = shenfeng_regency
+		clr_country_flag = glorious_li_guang
+		clr_country_flag = end_of_intervention		
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -3
+            consciousness = -3
+        }
+	}
+}
+
+### Li Guang's Taxation Reforms
+### So this was the great scheme he was hatching after becoming Regent. I wonder why he needs all the money...
+
+
+country_event = {
+    id = 164018
+    title = "CHIN18.T"
+    desc = "CHIN18.D"
+    picture = "chinesetaxes"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = SHU
+		year = 1847
+		has_country_modifier = guang_regency
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN18.A"
+		economic_reform = tax_farmers
+		activate_technology = freedom_of_trade
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   economic_reform = tax_farmers
+		   activate_technology = freedom_of_trade
+        }		   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+	}
+}
+
+### You've lost the Mandate of Heaven
+### Shun was in decline for quite some time but its rather obvious now that this mandate is over.
+
+country_event = {
+    id = 164019
+    title = "CHIN19.T"
+    desc = "CHIN19.D"
+    picture = "shun"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = SHU
+		has_country_flag = mandate
+		NOT = { has_country_modifier = neutrality }
+	}
+
+	mean_time_to_happen = {
+		days = 1825
+		modifier = {
+		   war_with = CHG
+		   factor = 0.01
+		}  
+	}
+		
+	option = {
+		name = "CHIN19.A"
+		clr_country_flag = mandate
+		remove_country_modifier = mandate_of_heaven
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 1
+            consciousness = 1
+        }
+	}
+}
+
+########################################
+######### War with the Khanate #########
+########################################
+
+### The inevitable final war with Shun 
+
+country_event = {
+    id = 164020
+    title = "CHIN20.T"
+    desc = "CHIN20.D"
+    picture = "oirat_khanate"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = CHG
+		year = 1850
+		NOT = { has_country_flag = started_final_war }
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+		
+	option = {
+		name = "CHIN20.A"
+		remove_country_modifier = neutrality
+		set_country_flag = started_final_war
+		set_global_flag = final_CHG_war
+		remove_country_modifier = preparing_for_war
+		add_country_modifier = { name = final_CHG_war_modifier duration = -1 }
+		SHU = { country_event = 164021 }
+	    war = { 
+		    target = SHU
+		    attacker_goal =  { 
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}	
+		} 
+	}
+}
+
+#### The Final War against the Hordes ####
+
+country_event = {
+    id = 164021
+    title = "CHIN21.T"
+    desc = "CHIN21.D"
+    picture = "oirat_khanate"
+	
+	major = yes
+    is_triggered_only = yes
+		
+	option = {
+		name = "CHIN21.A"
+		remove_country_modifier = qinggiu_drain
+		remove_country_modifier = guang_regency
+		any_country = { limit = { has_country_modifier = chinese_trickle } remove_country_modifier = chinese_trickle }
+		set_country_flag = CHG_war_has_occured
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -1
+        }		
+	}
+}
+
+#### Burning of the Forbidden City ####
+
+country_event = {
+    id = 1640210
+    title = "CHIN210.T"
+    desc = "CHIN210.D"
+    picture = "oirat_khanate"
+	
+	is_triggered_only = yes 
+	major = yes
+	
+	option = {
+		name = "CHIN210.A"
+		prestige_factor = -0.5
+		war_exhaustion = 50	
+        any_pop = { militancy = 2 } 		
+	}
+}
+
+### Li Guang takes direct control over the Five Batallion Army after its pathetic efforts against the Khanate
+
+country_event = {
+    id = 164022
+    title = "CHIN22.T"
+    desc = "CHIN22.D"
+    picture = "thisisnotli"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    tag = SHU
+		has_global_flag = final_CHG_war
+	}
+	
+	mean_time_to_happen = {
+		days = 720
+		modifier = {
+			factor = 0.5
+			national_provinces_occupied = 0.05
+		}		
+		modifier = {
+			factor = 0.25
+			national_provinces_occupied = 0.10
+		}			
+	}
+		
+	option = {
+		name = "CHIN22.A"
+	    define_general = { 
+			name = "Li Guang" 
+			personality = genius
+			background = armchair_general
+		} 		
+		add_country_modifier = { name = saving_five_batallion duration = -1 }
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -1
+        }		
+	}
+}
+
+#### The Khanate has won the war ####
+
+country_event = {
+    id = 164023
+    title = "CHIN23.T"
+    desc = "CHIN23.D"
+    picture = "chinese_war"
+	
+	trigger = {	
+	    tag = SHU
+		war = no
+		has_global_flag = final_CHG_war
+		has_country_flag = custom_treaty_loser
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+		
+	option = {
+		name = "CHIN23.A"
+		clr_global_flag = final_CHG_war
+		clr_country_flag = custom_treaty_loser
+		set_country_flag = level_one_shun
+	    prestige_factor = -0.5
+		remove_country_modifier = saving_five_batallion
+        money = -100000	
+ 		CHG = {
+		    clr_country_flag = custom_treaty_loser
+		    inherit = MCC
+			relation = { who = THIS value = 100 }
+			money = 100000	
+			country_event = 164024
+	    }		
+	}
+}
+
+### Good News. You won the war but the Khan likely only has months to live.
+
+country_event = {
+    id = 164024
+    title = "CHIN24.T"
+    desc = "CHIN24.D"
+    picture = "oirat_khanate"
+	
+	is_triggered_only = yes
+		
+	option = {
+		name = "CHIN23.A"
+		prestige = 20
+		any_country = {
+		   limit = {
+		     tag = MCC 
+			 exists = yes
+		   }
+		   annex_to = THIS 
+		}
+		MCC = { all_core = { add_core = THIS } }
+		remove_country_modifier = final_CHG_war_modifier
+		set_country_flag = CHG_collapse_good_scenario
+	}
+}
+
+#### Shun has won the war ####
+
+country_event = {
+    id = 164025
+    title = "CHIN25.T"
+    desc = "CHIN25.D"
+    picture = "shun"
+	
+	trigger = {	
+	    tag = SHU
+		war = no
+		has_global_flag = final_CHG_war
+		NOT = { has_country_flag = custom_treaty_loser }
+	}
+	
+	mean_time_to_happen = {
+		days = 3
+	}
+
+	option = {
+		name = "CHIN23.A"
+		set_country_flag = big_MCC
+		prestige = 20
+		clr_global_flag = final_CHG_war
+		clr_country_flag = custom_treaty_loser	    
+		remove_country_modifier = saving_five_batallion
+        money = 100000	
+ 		CHG = {
+		    clr_country_flag = custom_treaty_loser
+			money = -100000	
+			prestige_factor = -0.5
+			country_event = 164026
+	    }		
+	}
+}
+
+### The Khan likely only has months to live and you suffered a catastropic defeat. This will go down well.
+
+country_event = {
+    id = 164026
+    title = "CHIN26.T"
+    desc = "CHIN26.D"
+    picture = "oirat_khanate"
+	
+	is_triggered_only = yes
+		
+	option = {
+		name = "CHIN26.A"
+		CHI_1532 = { remove_core = CHG add_core = MCC }
+		any_owned = {
+		   limit = {
+		      is_core = MCC 
+		   }
+		   remove_core = CHG 
+		   secede_province = MCC
+		}
+		remove_country_modifier = final_CHG_war_modifier
+        any_pop = {
+            militancy = 5
+        }
+		set_country_flag = CHG_collapse_bad_scenario
+	}
+}
+
+#### The Aftermath of the War ####
+
+### Li Guang demands the emperor to give him the title of Prince of Jin and grant him the nine bestowments
+
+country_event = {
+    id = 164027
+    title = "CHIN27.T"
+    desc = "CHIN27.D"
+    picture = "thisisnotli"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = SHU
+		has_country_flag = CHG_war_has_occured
+		NOT = { war_with = CHG }
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+		
+	option = {
+		name = "CHIN27.A"
+        set_country_flag = HOG_TRANSITION
+        any_pop = {
+            militancy = 1
+        }      
+	}
+}
+
+#### The Shun Emperor abdicates in favor of Li Guang
+
+#### Also the Shenfeng Emperor did not make it very far before having a accident after this. At least he is dead. Never to return. Yep.
+
+country_event = {
+    id = 164028
+    title = "CHIN28.T"
+    desc = "CHIN28.D"
+    picture = "shun"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = SHU
+		has_country_flag = HOG_TRANSITION
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+		
+	option = {
+		name = "CHIN27.A"
+        any_pop = {
+            militancy = 1
+        }     
+        prestige = -1
+        country_event = 164029		
+	}
+} 
+
+##### RISE OF THE PHOENIX EMPEROR - MAJOR
+
+country_event = {
+    id = 164029
+    title = "CHIN29.T"
+    desc = "CHIN29.D"
+    picture = " "
+	
+	major = yes
+	is_triggered_only = yes
+		
+	option = {
+		name = "CHIN27.A"
+        prestige = 5     
+        remove_country_modifier = shenfeng_regency	
+        set_country_flag = decade_of_reform		
+        any_pop = {
+            consciousness = 2
+        } 
+        all_core = { add_core = HOG remove_core = THIS }
+        change_tag = HOG		
+	}
+}
+ 
+##################################################################################
+############# Decade of Reforms and the Ultimate Rebellion #######################
+##################################################################################
+
+### Reorganization of the Adminstration
+
+country_event = {
+    id = 164030
+    title = "CHIN30.T"
+    desc = "CHIN30.D"
+    picture = "CHIclassicadmin"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		has_country_flag = decade_of_reform	
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN30.A"
+		clr_country_flag = decade_of_reform	
+        any_pop = {
+            consciousness = 1
+        }
+        country_event = 164031
+	}
+} 
+
+### More fundemental Changes are required
+
+country_event = {
+    id = 164031
+    title = "CHIN31.T"
+    desc = "CHIN31.D"
+    picture = "forbiddenreform"
+	
+    fire_only_once = yes
+
+	is_triggered_only = yes
+		
+	option = {
+		name = "CHIN31.A"
+		set_country_flag = shenfeng_rumors
+		prestige = 5
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_one_shun } }
+	       owner = { clr_country_flag = level_one_shun set_country_flag = level_two_shun } 
+		}
+		random_owned = {
+		   limit = { owner = { NOT = { has_country_flag = level_one_shun has_country_flag = level_two_shun has_country_flag = level_three_shun has_country_flag = level_four_shun } } }
+		   owner = { set_country_flag = level_one_shun }
+        }		   
+		economic_reform = yes_admin_reform
+	    activate_technology = enlightenment_thought
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+			  NOT = { tag = SHU }
+		   }
+		   economic_reform = yes_admin_reform
+		   activate_technology = enlightenment_thought
+        }		   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+	}
+	
+	option = {
+		name = "CHIN31.B"
+		set_country_flag = shenfeng_rumors
+		prestige = -5	   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -2
+            consciousness = -2
+        }
+	}
+}
+
+### The Rumors of the Shenfeng Emperor's Survival 
+
+country_event = {
+    id = 164032
+    title = "CHIN32.T"
+    desc = "CHIN32.D"
+    picture = "nanjingwall"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		has_country_flag = shenfeng_rumors
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN32.A"
+		clr_country_flag = shenfeng_rumors
+		prestige = -5
+	    1540 = { add_core = SHU }
+		any_owned = {
+			limit = {
+				is_core = SHU
+			}
+			remove_province_modifier = peasant_revolt
+			add_province_modifier = {
+				name = peasant_revolt
+				duration = 720
+			}
 		}
 	}
 }
+
+### The Education Reform ### 
+
+country_event = {
+    id = 164033
+    title = "CHIN33.T"
+    desc = "CHIN33.D"
+    picture = "xijiao_church"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		year = 1853
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN33.A"
+		set_country_flag = shenfeng_rumors_spread
+		prestige = 5
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_two_shun } }
+	       owner = { clr_country_flag = level_two_shun set_country_flag = level_three_shun }
+		}
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_one_shun } }
+	       owner = { clr_country_flag = level_one_shun set_country_flag = level_two_shun }
+		}
+		random_owned = {
+		   limit = { owner = { NOT = { has_country_flag = level_one_shun has_country_flag = level_two_shun has_country_flag = level_three_shun has_country_flag = level_four_shun } } }
+		   owner = { set_country_flag = level_one_shun }
+        }		   
+		economic_reform = yes_education_reform
+	    activate_technology = malthusian_thought
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+			  NOT = { tag = SHU }
+		   }
+		   economic_reform = yes_education_reform
+		   activate_technology = malthusian_thought
+        }		   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+	}
+	
+	option = {
+		name = "CHIN33.B"
+		set_country_flag = shenfeng_rumors_spread
+		prestige = -5	   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -2
+            consciousness = -2
+        }
+	}
+}
+
+### There is someone causing a ruckus near the Mouth of the Yellow River
+
+country_event = {
+    id = 164034
+    title = "CHIN34.T"
+    desc = "CHIN34.D"
+    picture = "taiping_attack"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		has_country_flag = shenfeng_rumors_spread
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN34.A"
+		clr_country_flag = shenfeng_rumors_spread
+		prestige = -5
+        CHI_1537 = { add_core = SHU }
+		1538 = { remove_core = SHU }
+		any_owned = {
+			limit = {
+				is_core = SHU
+			}
+			remove_province_modifier = peasant_revolt
+			add_province_modifier = {
+				name = peasant_revolt
+				duration = 720
+			}
+		}
+	}
+}
+
+############################################
+######### CORE SPREAD TRIGGER EVENTS #######
+############################################
+
+### The Peasant Leader has entrenched himself in Nanjing
+
+country_event = {
+    id = 164035
+    title = "CHIN35.T"
+    desc = "CHIN35.D"
+    picture = "hong_xiuquan"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		year = 1855
+	}
+
+	mean_time_to_happen = {
+		days = 100
+	}
+		
+	option = {
+		name = "CHIN35.A"
+		set_country_flag = SHU_core_spread
+		prestige = -5
+        CHI_2221 = { add_core = SHU }
+		CHI_1473 = { add_core = SHU }
+		CHI_1604 = { add_core = SHU }
+		CHI_1611 = { add_core = SHU }
+		any_owned = {
+			limit = {
+				is_core = SHU
+			}
+			any_pop = {
+               militancy = 2
+               consciousness = 2
+			}
+			remove_province_modifier = peasant_revolt
+			add_province_modifier = {
+				name = peasant_revolt
+				duration = 720
+			}
+		}
+	}
+}
+
+#### The next events are the phase events from 1 to 4
+
+#### Phase One - If you have the phase one flag
+
+province_event = {
+    id = 164036
+    title = "CHIN351.T"
+    desc = "CHIN351.D"
+	
+	trigger = {
+		owner = {
+		    has_country_flag = SHU_core_spread 
+            OR = {             
+			   has_country_flag = level_one_shun
+			   has_country_flag = level_two_shun
+			   has_country_flag = level_three_shun
+			   has_country_flag = level_four_shun
+			}
+            tag = HOG		
+		}
+		OR = {
+	       region = CHI_1516
+		   region = CHI_1545
+		   region = CHI_1487
+		}
+		NOT = {
+			state_scope = { any_owned_province = { is_capital = yes } }
+			is_core = SHU
+		}
+		any_neighbor_province = {
+			is_core = SHU
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN351.A"
+		state_scope = { 
+			any_owned = { add_core = SHU }
+			add_province_modifier = {
+					name = peasant_revolt
+					duration = 730
+			}
+		}
+	}
+}
+
+#### Phase Two - If you have the phase two flag
+
+province_event = {
+    id = 164037
+    title = "CHIN352.T"
+    desc = "CHIN352.D"
+	
+	trigger = {
+		owner = {
+		    has_country_flag = SHU_core_spread 
+            OR = {             
+			   has_country_flag = level_two_shun
+			   has_country_flag = level_three_shun
+			   has_country_flag = level_four_shun
+			}
+            tag = HOG		
+		}
+		OR = {
+	       region = CHI_1523
+		   region = CHI_1524
+		   region = CHI_1550
+		}
+		NOT = {
+			state_scope = { any_owned_province = { is_capital = yes } }
+			is_core = SHU
+		}
+		any_neighbor_province = {
+			is_core = SHU
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN352.A"
+		state_scope = { 
+			any_owned = { add_core = SHU }
+			add_province_modifier = {
+					name = peasant_revolt
+					duration = 730
+			}
+		}
+	}
+}
+
+#### Phase Three - If you have the phase three flag
+
+province_event = {
+    id = 164038
+    title = "CHIN353.T"
+    desc = "CHIN353.D"
+	
+	trigger = {
+		owner = {
+		    has_country_flag = SHU_core_spread 
+            OR = {             
+			   has_country_flag = level_three_shun
+			   has_country_flag = level_four_shun
+			}
+            tag = HOG		
+		}
+		OR = {
+	       region = CHI_1494
+		   region = CHI_1526
+		   region = CHI_1504
+		   region = CHI_1505
+		}
+		NOT = {
+			state_scope = { any_owned_province = { is_capital = yes } }
+			is_core = SHU
+		}
+		any_neighbor_province = {
+			is_core = SHU
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN353.A"
+		state_scope = { 
+			any_owned = { add_core = SHU }
+			add_province_modifier = {
+					name = peasant_revolt
+					duration = 730
+			}
+		}
+	}
+}
+
+### The Currency Reform ### 
+
+### We are half way to actually having a standardized currency. Foreign nations love us!
+
+country_event = {
+    id = 164039
+    title = "CHIN36.T"
+    desc = "CHIN36.D"
+    picture = "chinesetaxes"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		year = 1855
+	}
+
+	mean_time_to_happen = {
+		days = 150
+	}
+		
+	option = {
+		name = "CHIN36.A"
+		prestige = 5
+		any_greater_power = {
+			relation = { who = THIS value = 25 }
+	        diplomatic_influence = { who = THIS value = 25 }	
+	    }
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_three_shun } }
+	       owner = { clr_country_flag = level_three_shun set_country_flag = level_four_shun }
+		}
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_two_shun } }
+	       owner = { clr_country_flag = level_two_shun set_country_flag = level_three_shun }
+		}
+		random_owned = {
+		   limit = { owner = { has_country_flag = level_one_shun } }
+	       owner = { clr_country_flag = level_one_shun set_country_flag = level_two_shun }
+		}
+		random_owned = {
+		   limit = { owner = { NOT = { has_country_flag = level_one_shun has_country_flag = level_two_shun has_country_flag = level_three_shun has_country_flag = level_four_shun } } }
+		   owner = { set_country_flag = level_one_shun }
+        }		   
+		economic_reform = yes_finance_reform
+	    activate_technology = no_standard
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+			  NOT = { tag = SHU }
+		   }
+		   economic_reform = yes_finance_reform
+	       activate_technology = no_standard
+        }		   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+	}
+	
+	option = {
+		name = "CHIN36.B"
+		prestige = -5	   
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = -2
+            consciousness = -2
+        }
+	}
+}
+
+### The Failed Conscription Edict ###
+
+country_event = {
+    id = 164040
+    title = "CHIN37.T"
+    desc = "CHIN37.D"
+    picture = "chinese_war"
+	
+    fire_only_once = yes
+
+	trigger = {
+	    tag = HOG
+		year = 1857
+	}
+
+	mean_time_to_happen = {
+		days = 200
+	}
+		
+	option = {
+		name = "CHIN37.A"
+		set_country_flag = shun_rebellion_inevitable
+		any_owned = {
+			limit = {
+				is_core = SHU
+			}
+			any_pop = {
+               militancy = 2
+               consciousness = 2
+			}
+			remove_province_modifier = peasant_revolt
+		}
+	}
+}
+
+######################################################################## THE DECLERATION OF LATER SHUN - THE LIU MA REBELLION BEGINS ###########################################################
+
+### This uses heavily modified code from GFM
+
+country_event = {
+    id = 1640401
+    title = "CHIN371.T"
+    desc = "CHIN371.D"
+    picture = "begin_tpg"
+	
+	fire_only_once = yes
+
+    trigger = {
+	    tag = HOG
+		has_country_flag = shun_rebellion_inevitable
+    }
+	
+	mean_time_to_happen = {
+		days = 200
+	}
+
+    option = {
+         name = "CHIN371.A"
+		 
+		 clr_country_flag = shun_rebellion_inevitable
+		 
+		 clr_country_flag = SHU_core_spread
+		 
+		any_country = {
+		   limit = {
+		      tag = DAI
+			  vassal_of = THIS
+		   }
+		   country_event = { id = 164050 days = 118 }
+		}
+		
+		any_country = {
+		   limit = {
+		      tag = MCH
+			  vassal_of = THIS
+		   }
+		   country_event = { id = 164050 days = 117 }
+		}
+		
+		 country_event = { id = 164041 days = 120 }
+		
+         add_country_modifier = {
+                name = no_more_war
+                duration = 120
+         }
+         add_country_modifier = {
+                name = liu_ma_rebellion
+                duration = -1
+         }
+         add_country_modifier = {
+                name = hong_shun_modifier
+                duration = -1
+         }
+         any_owned = {
+            limit = {
+                is_core = SHU
+            }
+			remove_province_modifier = peasant_revolt
+			remove_core = THIS
+            secede_province = SHU
+        }
+		
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+		
+		any_country = {
+		    limit = { vassal_of = THIS }		 
+            remove_country_modifier = all_under_heaven
+	    }
+		
+        set_global_flag = liu_ma_rebellion_occured
+		
+        SHU = {
+		    ruling_party_ideology = reactionary
+            grain = 250
+            treasury = 100000
+            capital = 2221
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			remove_country_modifier = western_influences
+			set_country_flag = five_batallion_active
+		    add_country_modifier = { name = uncivilized_isolationism duration = -1 }
+		    add_country_modifier = { name = all_under_heaven duration = -1 }		    
+            add_country_modifier = { name = no_more_war duration = 90 }
+            add_country_modifier = { name = fanatic_army duration = -1 }
+            add_country_modifier = {
+                name = liu_ma_rebellion
+                duration = -1
+            }
+        }
+		
+		### Antitechcheat
+		
+        random_owned = {
+            limit = { owner = { military_constructions = yes_military_constructions } }
+            SHU = { military_reform = yes_military_constructions activate_technology = post_napoleonic_thought }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_weapons = yes_foreign_weapons } }
+            SHU = { military_reform = yes_foreign_weapons activate_technology = flintlock_rifles }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_officers = yes_foreign_officers } }
+            SHU = { military_reform = yes_foreign_officers activate_technology = army_command_principle }
+        }
+		
+        random_owned = {
+            limit = { owner = { foreign_training = yes_foreign_training } }
+            SHU = { military_reform = yes_foreign_training activate_technology = military_staff_system }
+        }
+
+        random_owned = {
+            limit = { owner = { army_schools = yes_army_schools } }
+            SHU = { military_reform = yes_army_schools activate_technology = bronze_muzzle_loaded_artillery }
+        }
+		
+        ai_chance = { factor = 100 }
+    }
+
+    option = {
+        name = "CHIN37.B"
+		
+		any_country = {
+		   limit = {
+		      tag = DAI
+			  vassal_of = THIS
+		   }
+		   country_event = { id = 164050 days = 118 }
+		}
+
+		any_country = {
+		   limit = {
+		      tag = MCH
+			  vassal_of = THIS
+		   }
+		   country_event = { id = 164050 days = 117 }
+		}				
+		
+		country_event = { id = 164041 days = 120 }
+		
+         add_country_modifier = {
+                name = no_more_war
+                duration = 120
+         }
+         add_country_modifier = {
+                name = liu_ma_rebellion
+                duration = -1
+         }
+         add_country_modifier = {
+                name = hong_shun_modifier
+                duration = -1
+         }
+         any_owned = {
+            limit = {
+                is_core = SHU
+            }
+			remove_province_modifier = peasant_revolt
+			remove_core = THIS
+            secede_province = SHU
+        }
+		
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+		
+        set_global_flag = liu_ma_rebellion_occured
+		
+        SHU = {
+		    ruling_party_ideology = reactionary
+            grain = 250
+            treasury = 100000
+            capital = 2221
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			remove_country_modifier = western_influences
+			set_country_flag = five_batallion_active
+		    add_country_modifier = { name = uncivilized_isolationism duration = -1 }
+		    add_country_modifier = { name = all_under_heaven duration = -1 }		    
+            add_country_modifier = { name = no_more_war duration = 90 }
+            add_country_modifier = { name = fanatic_army duration = 1825 }
+            add_country_modifier = {
+                name = liu_ma_rebellion
+                duration = 1825
+            }
+        }
+		
+		### Antitechcheat
+		
+        random_owned = {
+            limit = { owner = { military_constructions = yes_military_constructions } }
+            SHU = { military_reform = yes_military_constructions activate_technology = post_napoleonic_thought }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_weapons = yes_foreign_weapons } }
+            SHU = { military_reform = yes_foreign_weapons activate_technology = flintlock_rifles }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_officers = yes_foreign_officers } }
+            SHU = { military_reform = yes_foreign_officers activate_technology = army_command_principle }
+        }
+		
+        random_owned = {
+            limit = { owner = { foreign_training = yes_foreign_training } }
+            SHU = { military_reform = yes_foreign_training activate_technology = military_staff_system }
+        }
+
+        random_owned = {
+            limit = { owner = { army_schools = yes_army_schools } }
+            SHU = { military_reform = yes_army_schools activate_technology = bronze_muzzle_loaded_artillery }
+        }
+		
+        change_tag_no_core_switch = SHU
+		
+        ai_chance = { factor = 0 }
+    }
+}
+
+############# THE WAR BEGINS ##############
+
+country_event = {
+    id = 164041
+    title = "CHIN38.T"
+    desc = "CHIN38.D"
+    picture = "taiping_attack"
+	major = yes
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN38.A"
+        war = {
+            target = SHU
+            attacker_goal = { casus_belli = civil_war }
+            defender_goal = { casus_belli = civil_war }
+        }
+        set_global_flag = all_under_hell_SHU
+        random_owned = {
+            limit = { owner = { ai = yes } }
+            owner = {
+                small_arms = 150
+                canned_food = 150
+                regular_clothes = 150
+                grain = 750
+            }
+        }
+    }
+}
+
+### The End of the Liu Ma Rebellion - Hong crushed Shun
+
+country_event = {
+    id = 164042
+    title = "CHIN39.T"
+    desc = "CHIN39.D"
+    picture = "taiping_defeated"
+	
+	fire_only_once = yes
+
+    trigger = {
+        has_global_flag = liu_ma_rebellion_occured
+		has_global_flag = all_under_hell_SHU
+        tag = HOG
+        NOT = { exists = SHU }
+    }
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+    immediate = {
+        war_exhaustion = 45
+        plurality = -5
+    }
+
+    option = {
+        name = "CHIN39.A"
+        clr_global_flag = all_under_hell_SHU
+		set_country_flag = HOG_aftermath
+        remove_country_modifier = ever_victorious_army
+        remove_country_modifier = the_xiang_army
+		remove_country_modifier = liu_ma_rebellion
+		remove_country_modifier = hong_shun_modifier
+        prestige = 10
+        any_owned = {
+            limit = { is_core = SHU }
+            any_pop = {
+                militancy = -6
+                reduce_pop = 0.9
+            }
+        }
+        any_pop = {
+            ideology = { factor = 0.6 value = conservative }
+            ideology = { factor = 0.2 value = reactionary }
+            ideology = { factor = -0.1 value = liberal }
+            militancy = -7
+            reduce_pop = 0.95
+        }     
+        SHU = {
+		    clr_country_flag = five_batallion_active
+			remove_country_modifier = uncivilized_isolationism
+			remove_country_modifier = fanatic_army
+			remove_country_modifier = all_under_heaven
+            all_core = { add_core = HOG remove_core = SHU }
+        }
+    }
+}
+
+### The End of the Liu Ma Rebellion - Shun either WPed Hong or defeated Hong
+
+country_event = {
+    id = 164043
+    title = "CHIN40.T"
+    desc = "CHIN40.D"
+    picture = "hong_xiuquan"
+    fire_only_once = yes
+
+    trigger = {
+        has_global_flag = liu_ma_rebellion_occured
+		has_global_flag = all_under_hell_SHU
+        tag = SHU
+		exists = yes
+		war = no
+    }
+
+    mean_time_to_happen = {
+        days = 5
+    }
+
+    immediate = {
+        war_exhaustion = 25
+    }
+
+    option = {
+        name = "CHIN40.A"
+		clr_global_flag = all_under_hell_SHU
+		set_country_flag = SHU_aftermath
+        any_country = {
+            limit = {
+                tag = GNG
+                exists = yes
+                ai = yes
+            }
+            annex_to = SHU
+        }
+        any_country = {
+            limit = {
+                tag = YNN
+                exists = yes
+                ai = yes
+            }
+            annex_to = SHU
+        }
+		any_country = {
+		    limit = {
+			   tag = HOG
+			   exists = yes
+			}
+			annex_to = SHU
+	    }
+        prestige = 10
+        any_owned = {
+            limit = { is_core = HOG }
+            any_pop = {
+                militancy = -6
+                reduce_pop = 0.9
+            }
+        }
+        any_pop = {
+            militancy = -7
+            reduce_pop = 0.95
+        }
+        any_pop = {
+            limit = {
+                is_primary_culture = no
+                is_accepted_culture = no
+            }
+            militancy = 1
+            consciousness = 3
+        }
+		remove_country_modifier = liu_ma_rebellion
+		remove_country_modifier = fanatic_army
+		add_country_modifier = { name = war_justification_blocked duration = -1 }
+		add_country_modifier = { name = five_batallion_army duration = -1 }
+		add_country_modifier = { name = mandate_of_heaven duration = 2555 }
+        HOG = {
+		    clr_country_flag = five_batallion_active
+		    remove_country_modifier = hong_shun_modifier
+			remove_country_modifier = uncivilized_isolationism
+			remove_country_modifier = all_under_heaven
+            all_core = { add_core = SHU remove_core = HOG }
+        }
+        any_owned = {
+            limit = {
+                any_core = {
+                    NOT = {
+                        primary_culture = beifaren
+                    }
+                    exists = no
+                }
+            }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 730
+            }
+        }
+        any_owned = {
+            limit = { NOT = { is_core = CHI } }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 3650
+            }
+        }
+    }
+}
+
+
+
+#####################################################
+#Chahar Rebellion#
+#####################################################
+
+### This is unavoidable if you hold Chahar as a vassal
+
+country_event = {
+    id = 164044
+    title = "CHIN41.T"
+    desc = "CHIN41.D"
+    picture = "oirat_khanate"
+    fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		is_our_vassal = MCC
+		has_country_flag = big_MCC
+		has_global_flag = all_under_hell_SHU
+        NOT = { has_global_flag = MCC_rebellion }
+    }
+
+    mean_time_to_happen = { days = 3 }
+	
+	immediate = { release_vassal = MCC }
+
+    option = {
+        name = "CHIN41.A"
+        set_global_flag = MCC_rebellion
+		MCC = {
+			all_core = { add_core = SHU }
+		    all_core = { add_core = HOG }
+            add_country_modifier = {
+                name = liu_ma_revolter
+                duration = 7300
+            }
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			government = khanate
+            iron = 10
+            wool = 10
+            timber = 25
+            small_arms = 10
+            leadership = 20
+		}
+        plurality = -1
+        war = {
+            target = MCC
+            attacker_goal = { casus_belli = conquest_any }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+        ai_chance = { factor = 100 }
+    }
+}
+
+country_event = {
+    id = 164045
+    title = "CHIN42.T"
+    desc = "CHIN42.D"
+    picture = "oirat_khanate"
+
+    trigger = {
+        OR = {
+            tag = HOG
+            tag = SHU
+        }
+        OR = {
+            SHU = { exists = no }
+            HOG = { exists = no }
+        }
+		NOT = { exists = MCC }
+        has_global_flag = MCC_rebellion
+    }
+
+    mean_time_to_happen = { days = 5 }
+
+    option = {
+        name = "CHIN42.A"
+        clr_global_flag = MCC_rebellion
+        prestige = 10
+        plurality = -1
+    }
+}
+
+#####################################################
+# Nanping Rebellion #
+#####################################################
+
+### Tier Four Only
+
+country_event = {
+    id = 164046
+    title = "CHIN43.T"
+    desc = "CHIN43.D"
+    picture = "miao_rebellion"
+    fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		has_country_flag = level_four_shun
+		has_global_flag = all_under_hell_SHU
+        NOT = { has_global_flag = GNG_rebellion }
+    }
+
+    mean_time_to_happen = { days = 7 }
+
+    option = {
+        name = "CHIN41.A"
+        set_global_flag = GNG_rebellion
+		any_owned = { limit = { is_core = GNG } secede_province = GNG }
+		GNG = {
+            add_country_modifier = {
+                name = liu_ma_revolter
+                duration = 7300
+            }
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			government = absolute_monarchy
+            iron = 10
+            wool = 10
+            timber = 25
+            small_arms = 10
+            leadership = 20
+		}
+        plurality = -1
+        war = {
+            target = GNG
+            attacker_goal = { casus_belli = conquest_any }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+        ai_chance = { factor = 100 }
+    }
+}
+
+country_event = {
+    id = 164047
+    title = "CHIN44.T"
+    desc = "CHIN44.D"
+    picture = "miao_rebellion"
+
+    trigger = {
+        tag = HOG
+        SHU = { exists = no }
+		NOT = { exists = GNG }
+        has_global_flag = GNG_rebellion
+    }
+
+    mean_time_to_happen = { days = 5 }
+
+    option = {
+        name = "CHIN44.A"
+        clr_global_flag = GNG_rebellion
+        prestige = 10
+        plurality = -1
+    }
+}
+
+#####################################################
+# Xijiao Rebellion #
+#####################################################
+
+### Will always revolt
+
+country_event = {
+    id = 164048
+    title = "CHIN45.T"
+    desc = "CHIN45.D"
+    picture = "xijiao_church"
+    fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		has_global_flag = all_under_hell_SHU
+        NOT = { has_global_flag = YNN_rebellion }
+    }
+
+    mean_time_to_happen = { days = 14 }
+
+    option = {
+        name = "CHIN41.A"
+        set_global_flag = YNN_rebellion
+		CHI_1601 = { add_core = YNN }
+		any_owned = { limit = { is_core = YNN } secede_province = YNN }
+		YNN = {
+            add_country_modifier = {
+                name = liu_ma_revolter
+                duration = 7300
+            }
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			government = absolute_monarchy
+            iron = 10
+            wool = 10
+            timber = 25
+            small_arms = 10
+            leadership = 20
+		}
+        plurality = -1
+        war = {
+            target = YNN
+            attacker_goal = { casus_belli = conquest_any }
+            defender_goal = { casus_belli = status_quo }
+            call_ally = no
+        }
+        ai_chance = { factor = 100 }
+    }
+}
+
+country_event = {
+    id = 164049
+    title = "CHIN46.T"
+    desc = "CHIN46.D"
+    picture = "xijiao_church"
+
+    trigger = {
+        tag = HOG
+        SHU = { exists = no }
+		NOT = { exists = YNN }
+        has_global_flag = YNN_rebellion
+    }
+
+    mean_time_to_happen = { days = 5 }
+
+    option = {
+        name = "CHIN46.A"
+		CHI_1601 = { any_pop = { reduce_pop = 0.95 } }
+        clr_global_flag = YNN_rebellion
+        prestige = 10
+        plurality = -1
+    }
+}
+
+#### Dai Viet leaving vassalge from Hong ####
+
+country_event = {
+    id = 164050
+    title = "CHIN47.T"
+    desc = "CHIN47.D"
+    #picture = "miao_rebellion"
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN47.A"
+		leave_alliance = SHU
+        FROM = {
+		   release_vassal = THIS
+		   relation = { who = THIS value = -400 }
+		}
+    }
+}
+
+#################################### HONG VICTORY AND AFTERMATH #################################################
+
+#### Hong ended the war at 3 to 4 - Li's Ultimate Victory ####
+
+#### Overrides the requirement for the Field Force Decision
+
+country_event = {
+    id = 164051
+    title = "CHIN48.T"
+    desc = "CHIN48.D"
+    picture = "thisisnotli"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		has_country_flag = HOG_aftermath
+		OR = {
+		   has_country_flag = level_four_shun
+		   has_country_flag = level_three_shun
+		}  		
+    }
+		
+	mean_time_to_happen = { days = 7 }
+
+    option = {
+        name = "CHIN48.A"
+		clr_country_flag = HOG_aftermath
+		clr_country_flag = level_three_shun
+        clr_country_flag = level_four_shun		
+        prestige = 10
+		set_country_flag = field_force_override
+		remove_country_modifier = five_batallion_army
+        add_country_modifier = {
+            name = HOG_reform_lull
+            duration = 3650
+        }
+        add_country_modifier = {
+            name = experienced_five_batallion_army
+            duration = -1
+        }
+    }
+}
+
+#### Hong ended the war at 0 to 2 - Self-Inflicted Stagnation ####
+
+#### You know you would be able to take the Field Force decision here if you had just taken the effort to do all the reforms earlier.
+
+country_event = {
+    id = 164052
+    title = "CHIN49.T"
+    desc = "CHIN49.D"
+    picture = "forbiddenreform"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		has_country_flag = HOG_aftermath
+		OR = {
+		   has_country_flag = level_two_shun
+		   has_country_flag = level_one_shun
+		   AND = {
+		       NOT = { has_country_flag = level_two_shun }
+		       NOT = { has_country_flag = level_one_shun }	    
+		       NOT = { has_country_flag = level_three_shun }
+		       NOT = { has_country_flag = level_four_shun }	  
+		  }
+	   }       
+    }
+	
+	mean_time_to_happen = { days = 7 }
+
+    option = {
+        name = "CHIN49.A"
+		clr_country_flag = HOG_aftermath
+		clr_country_flag = level_three_shun
+        clr_country_flag = level_four_shun		
+        prestige = -10
+		remove_country_modifier = five_batallion_army
+        add_country_modifier = {
+            name = HOG_reform_lull
+            duration = 3650
+        }
+        add_country_modifier = {
+            name = experienced_five_batallion_army
+            duration = -1
+        }
+    }
+}
+
+#### You can attempt to restore order over the Jurchens or Dai Viet now #####
+
+#### Beginning of the Self-Strengthing Movement - Usually this would be done via its decision but the decision is basically just cosmetic and the events override it.
+
+country_event = {
+    id = 164053
+    title = "CHIN50.T"
+    desc = "CHIN50.D"
+    picture = "stronkerCHI"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		war = no
+		has_country_modifier = experienced_five_batallion_army
+		NOT = { has_country_modifier = HOG_reform_lull }		
+    }
+	
+	mean_time_to_happen = { days = 31 }
+
+    option = {
+        name = "CHIN49.A"
+		prestige = 10
+		remove_country_modifier = all_under_heaven
+		set_country_flag = self_strengthening_movement
+		add_country_modifier = {
+			name = self_strengthening_movement
+			duration = 1825
+		}	
+		set_country_flag = self_strengthening_possible
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   set_country_flag = self_strengthening_movement
+        }	
+    }
+}
+
+##################################### Shun Victoriy ##########################################
+
+#### Restoration of the Mandate  ####
+
+country_event = {
+    id = 164054
+    title = "CHIN51.T"
+    desc = "CHIN51.D"
+    picture = "shun"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = SHU_aftermath
+    }
+		
+	mean_time_to_happen = { days = 31 }
+
+    option = {
+        name = "CHIN51.A"	
+		clr_country_flag = SHU_aftermath
+		set_country_flag = new_mandate
+        prestige = -10
+	    any_pop = { 
+		    limit = { 
+			    type = officers
+		    }
+	        ideology = {
+		       value = liberal
+		       factor = 0.05
+			} 
+			militancy = 1
+		    consciousness = 1
+		}	
+    }
+}
+
+#### Failure of the New Mandate  ####
+
+#### It turns out that you can't just recreate a old order in a new age you peasant idiot.
+
+country_event = {
+    id = 164055
+    title = "CHIN52.T"
+    desc = "CHIN52.D"
+    picture = "chinese_christian_massacre"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = new_mandate
+		NOT = { has_country_modifier = mandate_of_heaven }
+    }
+		
+	mean_time_to_happen = { days = 31 }
+
+    option = {
+        name = "CHIN52.A"	
+		clr_country_flag = new_mandate
+		set_country_flag = republicans_SHU
+		set_country_flag = anarchy_SHU
+        prestige = -10
+	    any_pop = { 
+		    limit = { 
+			    type = officers
+		    }
+	        ideology = {
+		       value = liberal
+		       factor = 0.1
+			} 
+			militancy = 1
+		    consciousness = 1
+		}		
+    }
+}
+
+#### Officers have republican sentiment in Northern Regions  ####
+
+country_event = {
+    id = 164056
+    title = "CHIN53.T"
+    desc = "CHIN53.D"
+    picture = "CHIrevolutionaries"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = republicans_SHU
+    }
+		
+	mean_time_to_happen = { days = 31 }
+
+    option = {
+        name = "CHIN53.A"	
+		clr_country_flag = republicans_SHU
+		set_country_flag = republican_core_removal
+	    any_pop = { 
+		    limit = { 
+			    type = officers
+		    }
+	        ideology = {
+		       value = liberal
+		       factor = 0.1
+			} 
+			militancy = 1
+		    consciousness = 1
+		}
+        prestige = -10			
+    }
+}
+
+#### Peasant Anarchy in Southern Regions  ####
+
+country_event = {
+    id = 164057
+    title = "CHIN54.T"
+    desc = "CHIN54.D"
+    picture = "taiping_defeated"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = anarchy_SHU
+    }
+		
+	mean_time_to_happen = { days = 60 }
+
+    option = {
+        name = "CHIN54.A"	
+		clr_country_flag = anarchy_SHU
+		set_country_flag = anarchy_SHU_cores
+		set_country_flag = UPC_foundation
+        prestige = -10	         		
+    }
+}
+
+province_event = {
+    id = 164058
+    title = "CHIN55.T"
+    desc = "CHIN55.D"
+	
+	trigger = {
+		owner = {
+		    has_country_flag = republican_core_removal
+            tag = SHU	
+		}
+		OR = {
+	       NOT = { region = SOUTHERN_MING }
+		   region = CHI_1577
+		   region = CHI_1505
+		   region = CHI_1578
+		   region = CHI_1523	   
+		}
+		NOT = { region = CHI_1537 }
+		NOT = { region = CHI_1472 }
+		NOT = { region = CHI_1539 }
+		is_core = SHU
+		NOT = { state_scope = { any_owned_province = { is_capital = yes } } }			
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN55.A"
+		remove_province_modifier = peasant_revolt
+		state_scope = {
+		    any_owned = { remove_core = SHU }
+			poor_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.05
+				}
+			}
+			middle_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.1
+				}
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 8
+			}
+		}
+	}
+}
+
+province_event = {
+    id = 164059
+    title = "CHIN56.T"
+    desc = "CHIN56.D"
+	
+	trigger = {
+		owner = {
+		    has_country_flag = anarchy_SHU_cores
+            tag = SHU	
+		}
+		is_core = SHU
+		region = SOUTHERN_MING
+		NOT = {
+		   OR = {
+              region = CHI_1611
+			  region = CHI_1604
+              region = CHI_1473
+		   }
+	   }
+		NOT = { has_province_modifier = peasant_revolt }		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN56.A"
+		state_scope = {
+		    add_province_modifier = {
+				name = peasant_revolt
+				duration = -1
+		    }
+		}
+	}
+}
+
+
+### The Japanese Offer 
+### Basically beg to the Japanese to contain the Peasants in the south for consessions
+
+### Refusing to offer the Japanese this will result in your death
+
+country_event = {
+    id = 1640595
+    title = "CHIN560.T"
+    desc = "CHIN560.D"
+    picture = "koshi"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = anarchy_SHU_cores
+		JAP = {
+		   OR = {
+		      government = hms_government
+			  government = absolute_monarchy
+			  government = prussian_constitutionalism
+		   }
+		}
+		NOT = { has_country_flag = japanese_offer }
+    }
+		
+	mean_time_to_happen = { days = 14 }
+
+    option = {
+        name = "CHIN560.A"
+		prestige_factor = -0.5
+		set_country_flag = japanese_offer
+	    JAP = { country_event = 1640591 }
+	    ai_chance = { 
+	       factor = 100
+	    }
+    }
+	
+    option = {
+        name = "CHIN560.B"	
+		prestige = 5
+		set_country_flag = japanese_offer
+	    ai_chance = { factor = 0 }
+    }
+}
+
+### Shun is asking for our help to contain the Peasants.
+
+#### EVILSMILE
+
+country_event = {
+    id = 1640591
+    title = "CHIN561.T"
+    desc = "CHIN561.D"
+    picture = "japanese_chi"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+		
+	mean_time_to_happen = { days = 3 }
+	
+	### Sure. We will do that. Snickers.
+
+    option = {
+        name = "CHIN561.A"
+		prestige = 5
+		set_country_flag = JAPAN_WILL_INVOLVE
+		FROM = { country_event = 1640592 }
+		ai_chance = { factor = 100 }
+    }
+	
+    option = {
+        name = "CHIN561.B"	
+		prestige = -5
+	    ai_chance = { factor = 0 }
+    }
+}
+
+### We have signed the treaty 
+
+country_event = {
+    id = 1640592
+    title = "CHIN562.T"
+    desc = "CHIN562.D"
+    picture = "shimonoseki"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN562.A"
+		any_pop = { militancy = -1 }
+		clr_country_flag = anarchy_SHU_cores
+		any_owned = {
+		   limit = { has_province_modifier = peasant_revolt }
+		   remove_province_modifier = peasant_revolt
+		}
+    }
+}
+
+############ The Match - The Failed Arrest of General Xuhn Bo #################
+
+country_event = {
+    id = 1640590
+    title = "CHIN563.T"
+    desc = "CHIN563.D"
+    picture = "yeng"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+	    has_country_flag = UPC_foundation
+    }
+		
+	mean_time_to_happen = {
+		days = 216
+	}
+
+    option = {
+        name = "CHIN563.A"	
+		clr_country_flag = UPC_foundation
+		set_country_flag = UPC_foundation_two
+	    any_pop = { 
+		    limit = { 
+			    type = officers
+		    }
+	        ideology = {
+		       value = liberal
+		       factor = 0.2
+			} 
+			militancy = 3
+		    consciousness = 3
+		}     		
+    }
+}
+
+######################################################################## THE DECLERATION OF THE UNITED PROVINCES OF CHINA ###########################################################
+
+### Due to the peasant anarchy in the south and the experienced five batallion army modifier they get you are basically screwed unless...
+
+country_event = {
+    id = 164060
+    title = "CHIN57.T"
+    desc = "CHIN57.D"
+    picture = "zongting"
+
+    trigger = {
+	    tag = SHU
+		has_country_flag = UPC_foundation_two
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    option = {
+         name = "CHI57.A"
+		 
+		 clr_country_flag = republican_core_removal
+		 clr_country_flag = anarchy_SHU_cores
+		 clr_country_flag = UPC_foundation_two
+		 
+		 set_country_flag = a_small_chance
+		
+         add_country_modifier = {
+                name = no_more_war
+                duration = 120
+         }
+         add_country_modifier = {
+                name = small_country_draft
+                duration = 1825
+         }
+         any_owned = {
+            limit = {
+                NOT = { is_core = SHU }
+            }
+            secede_province = CHI
+        }		
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+		
+        set_global_flag = UPC_war
+		
+        CHI = {
+		    country_event = { id = 164064 days = 120 }
+		    ruling_party_ideology = liberal
+	        government = merchant_republic
+			political_reform = confederalism
+	        political_reform = landed_voting
+	        political_reform = appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = no_trade_unions
+            political_reform = gerrymandering
+            grain = 250
+            treasury = 100000
+            capital = 2221
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			remove_country_modifier = uncivilized_isolationism
+			add_country_modifier = {
+				name = "western_influences"
+				duration = -1
+			}
+		    add_country_modifier = { name = all_under_heaven duration = -1 }		    
+            add_country_modifier = { name = no_more_war duration = 90 }
+            add_country_modifier = { name = experienced_five_batallion_army duration = 1825 }
+			set_country_flag = five_batallion_active
+            add_country_modifier = {
+                name = small_country_draft
+                duration = 1825
+            }
+        }
+		
+		### Antitechcheat
+		
+        random_owned = {
+            limit = { owner = { military_constructions = yes_military_constructions } }
+            CHI = { military_reform = yes_military_constructions activate_technology = post_napoleonic_thought }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_weapons = yes_foreign_weapons } }
+            CHI = { military_reform = yes_foreign_weapons activate_technology = flintlock_rifles }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_officers = yes_foreign_officers } }
+            CHI = { military_reform = yes_foreign_officers activate_technology = army_command_principle }
+        }
+		
+        random_owned = {
+            limit = { owner = { foreign_training = yes_foreign_training } }
+            CHI = { military_reform = yes_foreign_training activate_technology = military_staff_system }
+        }
+
+        random_owned = {
+            limit = { owner = { army_schools = yes_army_schools } }
+            CHI = { military_reform = yes_army_schools activate_technology = bronze_muzzle_loaded_artillery }
+        }
+		
+        ai_chance = { factor = 100 }
+    }
+	
+    option = {
+         name = "CHI57.B"
+		 
+		 clr_country_flag = republican_core_removal
+		 clr_country_flag = anarchy_SHU_cores
+		 clr_country_flag = UPC_foundation_two
+		 
+		 ## The Japanese Intervention will not occur if a player is playing CHI here.
+		 ## set_country_flag = a_small_chance
+		
+         add_country_modifier = {
+                name = no_more_war
+                duration = 120
+         }
+         add_country_modifier = {
+                name = small_country_draft
+                duration = 1825
+         }
+         add_country_modifier = {
+                name = TERMINAL_SHUN
+                duration = -1
+         }
+         any_owned = {
+            limit = {
+                NOT = { is_core = SHU }
+            }
+            secede_province = CHI
+        }	
+         any_owned = {
+            limit = {
+                is_core = SHU
+            }
+            remove_core = CHI
+        }
+        any_pop = {
+		    limit = { is_culture_group = chinese }
+            militancy = 2
+            consciousness = 2
+        }
+		
+        set_global_flag = UPC_war
+		
+        CHI = {
+		    country_event = { id = 164064 days = 120 }
+		    ruling_party_ideology = liberal
+	        government = merchant_republic
+			political_reform = confederalism
+	        political_reform = landed_voting
+	        political_reform = appointed
+	        political_reform = no_meeting
+	        political_reform = state_press
+	        political_reform = no_trade_unions
+            political_reform = gerrymandering
+            grain = 250
+            treasury = 100000
+            capital = 2221
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			remove_country_modifier = all_under_heaven
+			remove_country_modifier = five_batallion_army
+			remove_country_modifier = uncivilized_isolationism
+			add_country_modifier = {
+				name = "western_influences"
+				duration = -1
+			}
+		    add_country_modifier = { name = all_under_heaven duration = -1 }		
+            add_country_modifier = { name = no_more_war duration = 90 }
+            add_country_modifier = { name = experienced_five_batallion_army duration = 1825 }
+			set_country_flag = five_batallion_active
+            add_country_modifier = {
+                name = small_country_draft
+                duration = 1825
+            }
+        }
+		
+		### Antitechcheat
+		
+        random_owned = {
+            limit = { owner = { military_constructions = yes_military_constructions } }
+            CHI = { military_reform = yes_military_constructions activate_technology = post_napoleonic_thought }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_weapons = yes_foreign_weapons } }
+            CHI = { military_reform = yes_foreign_weapons activate_technology = flintlock_rifles }
+        }
+
+        random_owned = {
+            limit = { owner = { foreign_officers = yes_foreign_officers } }
+            CHI = { military_reform = yes_foreign_officers activate_technology = army_command_principle }
+        }
+		
+        random_owned = {
+            limit = { owner = { foreign_training = yes_foreign_training } }
+            CHI = { military_reform = yes_foreign_training activate_technology = military_staff_system }
+        }
+
+        random_owned = {
+            limit = { owner = { army_schools = yes_army_schools } }
+            CHI = { military_reform = yes_army_schools activate_technology = bronze_muzzle_loaded_artillery }
+        }
+		
+		change_tag_no_core_switch = CHI
+		
+        ai_chance = { factor = 100 }
+    }
+}
+
+
+### Japan's event for the realization that China is collapsing
+
+country_event = {
+    id = 164061
+    title = "CHIN58.T"
+    desc = "CHIN58.D"
+    picture = "japanese_chi"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = JAP
+		has_country_flag = JAPAN_WILL_INVOLVE
+    }
+		
+	mean_time_to_happen = { days = 3 }
+	
+	### We will protect our investments
+
+    option = {
+        name = "CHIN53.A"
+		create_vassal = SHU
+		SHU = { country_event = 164063 }
+		ai_chance = { 
+		   factor = 99
+		   modifier = { 
+		       factor = 0
+		       war_with = SCA
+		   }
+		}
+    }
+	
+	### Let this rotten state burn to the ground
+	
+    option = {
+        name = "CHIN53.B"	
+		prestige = 5
+		SHU = { country_event = 164062 }
+	    ai_chance = { factor = 1 }
+    }
+}
+
+### Japan has withdrawn its troops and thus the entire south has collapsed into anarchy again.
+
+country_event = {
+    id = 164062
+    title = "CHIN59.T"
+    desc = "CHIN59.D"
+    picture = "taiping_defeated"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+		
+	mean_time_to_happen = { days = 3 }
+
+    option = {
+        name = "CHIN59.A"
+		any_owned = {
+		   limit = {
+		      region = SOUTHERN_MING
+		       NOT = {
+                  region = CHI_1611
+			      region = CHI_1604
+                  region = CHI_1473
+	           }
+		    }
+		    add_province_modifier = {
+				name = peasant_revolt
+				duration = -1
+		    }
+	    }
+    }
+}
+
+### Japan has effectively taken over our government
+
+#### Obviously I need to fix the government here since using the create vassal command has a habit of breaking governments.
+
+country_event = {
+    id = 164063
+    title = "CHIN60.T"
+    desc = "CHIN60.D"
+    picture = "meiji_parliament"
+	
+	fire_only_once = yes
+    is_triggered_only = yes
+		
+	mean_time_to_happen = { days = 3 }
+
+    option = {
+        name = "CHIN60.A"
+		remove_country_modifier = TERMINAL_SHUN
+		any_greater_power = {
+		    limit = { NOT = { tag = JAP } }
+			relation = { who = THIS value = -200 }
+	        diplomatic_influence = { who = THIS value = -400 }	
+	    }
+		any_country = {
+		    limit = { tag = JAP }		
+			relation = { who = THIS value = 400 }
+	        diplomatic_influence = { who = THIS value = 400 }
+            create_alliance = THIS			
+	    }
+	    government = absolute_monarchy
+	    ruling_party_ideology = conservative
+        political_reform = no_slavery
+        political_reform = appointed
+        political_reform = none_voting
+        political_reform = no_meeting
+        political_reform = state_press
+        political_reform = no_trade_unions
+        political_reform = first_past_the_post
+        political_reform = underground_parties
+        political_reform = primary_culture_only
+        political_reform = mandatory_service       
+        political_reform = closed_borders
+        political_reform = regionalism
+        political_reform = no_colonies
+        social_reform = child_labor_legal
+        social_reform = no_schools
+		political_reform = peasant_levys
+		social_reform = capital_punishment
+        social_reform = no_minimum_wage
+        social_reform = no_work_hour_limit
+        social_reform = no_safety
+        social_reform = no_health_care
+        social_reform = no_subsidies
+        social_reform = no_pensions        
+        social_reform = no_police
+    }
+}
+
+############# THE REVOLUTION BEGINS ##############
+
+### This uses the conquest CB so the AI can actually call in its ally. If Japan is not getting called in here then add call ally to the war. Will need to test.
+
+country_event = {
+    id = 164064
+    title = "CHIN61.T"
+    desc = "CHIN61.D"
+    picture = "taiping_attack"
+	major = yes
+    is_triggered_only = yes
+
+    option = {
+        name = "CHIN61.A"
+        war = {
+            target = SHU
+            attacker_goal = { casus_belli = conquest_any }
+            defender_goal = { casus_belli = conquest_any }
+        }
+        set_global_flag = the_final_war_SHU
+        random_owned = {
+            limit = { owner = { ai = yes } }
+            owner = {
+                small_arms = 150
+                canned_food = 150
+                regular_clothes = 150
+                grain = 750
+            }
+        }
+    }
+}
+
+
+### The End of the Revolution - Shun crushed CHI or CHI was incapable of taking Shun
+
+#### Obviously this is only possible with Japanese Assistance due to the sheer overwhelming power of CHI so there is a followup event for this.
+
+country_event = {
+    id = 164065
+    title = "CHIN62.T"
+    desc = "CHIN62.D"
+    picture = "shun"
+	
+	fire_only_once = yes
+
+    trigger = {
+		has_global_flag = the_final_war_SHU
+        tag = SHU
+		NOT = { has_country_modifier = no_more_war }
+        OR = {
+		   NOT = { exists = CHI }
+		   AND = {
+		      exists = CHI
+			  NOT = { war_with = CHI }
+		   }
+		}
+    }
+	
+	mean_time_to_happen = {
+		days = 6
+	}
+
+    immediate = {
+        war_exhaustion = 45
+        plurality = -5
+    }
+
+    option = {
+        name = "CHIN62.A"
+        clr_global_flag = the_final_war_SHU
+		set_country_flag = JAPSHU_aftermath
+        remove_country_modifier = small_country_draft
+        prestige = 10
+        any_owned = {
+            limit = { is_core = CHI NOT = { is_core = SHU } }
+            any_pop = {
+                militancy = -6
+                reduce_pop = 0.9
+            }
+        }
+		any_country = {
+		    limit = {
+			   tag = JAP
+			   has_global_flag = JAP_INVOLVED_REVOLUTION
+			}
+			prestige = 20
+			clr_global_flag = JAP_INVOLVED_REVOLUTION
+	    }		
+		any_country = {
+		    limit = {
+			   tag = GNG
+			   exists = yes
+			}
+			remove_country_modifier = faux_peasant_state
+			annex_to = SHU
+	    }			   
+        any_pop = {
+            ideology = { factor = 0.6 value = conservative }
+            ideology = { factor = 0.2 value = reactionary }
+            ideology = { factor = -0.1 value = liberal }
+            militancy = -7
+            reduce_pop = 0.95
+        }
+		all_core = { add_core = CHI }
+        CHI = {
+		    remove_country_modifier = small_country_draft
+			remove_country_modifier = western_influences
+			remove_country_modifier = all_under_heaven
+			remove_country_modifier = experienced_five_batallion_army
+            all_core = { add_core = SHU }
+        }
+    }
+}
+
+### The End of the Revolution - CHI has successfully pancaked Shun
+### Congrats on successfully ending the Dynastic System fourty years earlier then OTL
+
+country_event = {
+    id = 164066
+    title = "CHIN63.T"
+    desc = "CHIN63.D"
+    picture = "xinhai"
+	
+    fire_only_once = yes
+
+    trigger = {
+		has_global_flag = the_final_war_SHU
+        tag = CHI
+		NOT = { exists = SHU }
+    }
+
+    mean_time_to_happen = {
+        days = 5
+    }
+
+    immediate = {
+        war_exhaustion = 25
+    }
+
+    option = {
+        name = "CHIN63.A"
+		clr_global_flag = the_final_war_SHU
+		set_country_flag = CHI_SHU_aftermath
+		any_country = {
+		    limit = {
+			   tag = JAP
+			   has_global_flag = JAP_INVOLVED_REVOLUTION
+			}
+			prestige = -20
+			clr_global_flag = JAP_INVOLVED_REVOLUTION
+	    }
+        any_country = {
+            limit = {
+                tag = GNG
+                exists = yes
+            }
+			remove_country_modifier = faux_peasant_state
+            annex_to = CHI
+        }
+        prestige = 10
+        any_owned = {
+            limit = { is_core = SHU }
+            any_pop = {
+                militancy = -6
+                reduce_pop = 0.9
+            }
+        }
+        any_pop = {
+            limit = {
+                is_primary_culture = no
+                is_accepted_culture = no
+            }
+            militancy = 1
+            consciousness = 3
+        }
+		remove_country_modifier = small_country_draft
+		add_country_modifier = { name = war_justification_blocked duration = -1 }
+		SHU = {
+		    remove_country_modifier = TERMINAL_SHUN
+			remove_country_modifier = uncivilized_isolationism
+			remove_country_modifier = all_under_heaven
+            all_core = { add_core = CHI remove_core = SHU }
+        }
+    }
+}
+
+### The Loss of Control of the South
+
+### The Prince of Nanping is literally running around trying to play wack-a-mole with the anarchy in the south. Victoria 2 may say that he controls this land but in reality he controls nothing apart from his capital.
+
+country_event = {
+    id = 164067
+    title = "CHIN64.T"
+    desc = "CHIN64.D"
+    picture = "miao_rebellion"
+    fire_only_once = yes
+
+    trigger = {
+        tag = HOG
+		has_global_flag = the_final_war_SHU
+        NOT = { has_global_flag = GNG_anarchy }
+    }
+
+    mean_time_to_happen = { days = 2 }
+
+    option = {
+        name = "CHIN64.A"
+        set_global_flag = GNG_anarchy
+		any_owned = { limit = { has_province_modifier = peasant_revolt } remove_province_modifier = peasant_revolt secede_province = GNG }
+		GNG = {
+            add_country_modifier = {
+                name = faux_peasant_state
+                duration = 7300
+            }
+            any_pop = {
+                consciousness = -5
+                militancy = -5
+            }
+			government = absolute_monarchy
+            iron = 10
+            wool = 10
+            timber = 25
+            small_arms = 10
+            leadership = 20
+		}
+        plurality = -1
+    }
+}
+
+#################################### HONG VICTORY AND AFTERMATH #################################################
+
+#### The Deal with the Devil - Post-War Aftermath for Shun ####
+
+country_event = {
+    id = 164068
+    title = "CHIN65.T"
+    desc = "CHIN65.D"
+    picture = "japanese_chi"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = SHU
+		has_country_flag = JAPSHU_aftermath
+    }
+		
+	mean_time_to_happen = { days = 7 }
+
+    option = {
+        name = "CHIN65.A"
+		clr_country_flag = JAPSHU_aftermath
+        prestige = -10
+		any_pop = {
+		   militancy = 1 
+		}
+		remove_country_modifier = all_under_heaven
+		
+		set_country_flag = self_strengthening_movement
+		set_country_flag = self_strengthening_possible
+		add_country_modifier = {
+			name = self_strengthening_movement
+			duration = 1825
+		}			
+		## This will keep them stable till they become civilized
+        add_country_modifier = {
+            name = SHU_puppet_regime
+            duration = -1
+        }
+		remove_country_modifier = five_batallion_army
+        add_country_modifier = {
+            name = experienced_five_batallion_army
+            duration = -1
+        }
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   set_country_flag = self_strengthening_movement
+        }
+    }
+}
+
+#### The United Provinces - Post-War Aftermath for China ####
+
+#### You know you would be able to take the Field Force decision here if you had just taken the effort to do all the reforms earlier.
+
+country_event = {
+    id = 1640691
+    title = "CHIN66.T"
+    desc = "CHIN66.D"
+    picture = "stronkerCHI"
+	
+	fire_only_once = yes
+
+    trigger = {
+        tag = CHI
+		has_country_flag = CHI_SHU_aftermath
+    }
+		
+	mean_time_to_happen = { days = 7 }
+
+    option = {
+        name = "CHIN65.A"
+		clr_country_flag = CHI_SHU_aftermath
+        prestige = 10
+		any_pop = {
+		   militancy = -3 
+		}
+		remove_country_modifier = all_under_heaven
+		set_country_flag = self_strengthening_movement
+		set_country_flag = self_strengthening_possible
+		add_country_modifier = {
+			name = self_strengthening_movement
+			duration = 1825
+		}
+		any_country = {
+		   limit = {
+		      OR = {
+		         primary_culture = beifaren
+				 primary_culture = yue
+				 primary_culture = zhuang
+				 primary_culture = hui
+				 primary_culture = min
+			  }
+			  exists = no
+		   }
+		   set_country_flag = self_strengthening_movement
+        }		
+    }
+}
+
+#################################### China Endgame Content #####################################
+
+### Xingzhonghui Trigger Event - This is triggered by any of the various sequenced events below ####
+
+### This will not trigger unless a specific flag is set such as in the Hong Qinggiu Clique Version
+
+### Regardless of the scenario this is basically the same group with the same agenda which is basically Pro-Republican Anti-Foreign Anti-Japanese
+
+country_event = {
+    id = 164069
+    title = "CHIN67.T" #Xingzhonghui - Revive China Society
+    desc = "CHIN67.D"
+	picture = "CHIrevolutionaries"
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		OR = {
+			tag = HOG
+			tag = CHI
+			tag = SHU
+	    }
+		OR = { 
+			civilized = yes
+			year = 1900
+		}
+		has_country_flag = xingzhonghui_trigger
+		NOT = { has_country_flag = xingzhonghui }
+	}
+	
+	mean_time_to_happen = {
+		days = 930
+		modifier = {
+			factor = 1.2
+			is_greater_power = yes
+		}
+		modifier = {
+			factor = 0.5
+			is_ideology_enabled = fascist
+			vassal_of = JAP
+		}
+		modifier = {
+			factor = 0.9
+			has_recently_lost_war = yes
+		}
+		modifier = {
+			factor = 0.5
+			vote_franschise = none_voting
+		}
+		modifier = {
+			factor = 0.5
+			vote_franschise = landed_voting
+		}
+		modifier = {
+			factor = 1.5
+			vote_franschise = universal_weighted_voting
+		}
+		modifier = {
+			factor = 2
+			vote_franschise = universal_voting
+		}
+		modifier = {
+			factor = 1.5
+			ruling_party_ideology = liberal
+		}
+		modifier = {
+			factor = 0.8
+			ruling_party_ideology = reactionary
+		}
+		modifier = {
+			factor = 0.8
+			ruling_party_ideology = paternal
+		}
+		modifier = {
+			factor = 0.8
+			political_parties = underground_parties
+		}
+		modifier = {
+			factor = 1.5
+			OR = {
+				political_parties = non_secret_ballots
+				political_parties = secret_ballots
+			}
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { OR = { liberal = 10 anarcho_liberal = 10 } }
+		}
+		modifier = {
+			factor = 0.5
+			year = 1890
+		}
+		modifier = {
+			factor = 0.1
+			is_ideology_enabled = fascist
+		}
+		modifier = {
+			factor = 0.01
+			year = 1910
+		}
+	}
+
+	option = {
+		name = "CHIN67.A"
+		set_country_flag = xingzhonghui
+		remove_country_modifier = SHU_puppet_regime 	
+		set_country_flag = appease_societies
+		prestige = -10
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 2
+			ideology = {
+				value = liberal
+				factor = 0.08
+			}
+		}
+		middle_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 4
+			ideology = {
+				value = liberal
+				factor = 0.12
+			}
+		}
+	}
+	
+	option = {
+		name = "CHIN67.B"
+		set_country_flag = xingzhonghui
+		remove_country_modifier = SHU_puppet_regime 	
+		poor_strata = {
+			limit = {
+				is_culture_group = chinese
+				is_primary_culture = no
+			}
+			militancy = 3
+		}
+		random_state = {
+			limit = {
+				OR = {
+				    anarcho_liberal = 10
+					liberal = 10
+					socialist = 10
+					communist = 10
+					fascist = 10
+					paternal = 10
+				}
+				any_owned_province = { is_core = CHI }
+			}
+			any_pop = {
+				limit = { is_culture_group = chinese }
+				militancy = 3
+			}
+			any_owned = {
+				add_province_modifier = {
+					name = peasant_revolt
+					duration = 365
+				}
+			}
+		}
+	}
+}
+
+### This can repeat more then once but is rarer after the first
+
+province_event = {
+	id = 164070
+	title = "CHIN68.T" #Revolutionary Uprising in $STATENAME$
+	desc = "CHIN68.D"
+	
+	trigger = {
+		is_core = CHI
+		NOT = { has_province_modifier = peasant_revolt }
+		OR = {
+			anarcho_liberal = 10
+			liberal = 10
+			socialist = 10
+			communist = 10
+			fascist = 10
+			average_militancy = 4
+		}
+		owner = {
+			has_country_flag = xingzhonghui
+			war = no
+			NOT = { has_global_flag = end_revolution_now_CHI }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 100
+		modifier = {
+			factor = 2
+			owner = { has_country_flag = revolutionary_uprising_qing }
+		}
+		modifier = {
+			factor = 3
+			NOT = { controlled_by = THIS }
+		}
+		modifier = {
+			factor = 1.2
+			owner = {
+				NOT = { part_of_sphere = yes }
+			}
+		}
+		modifier = {
+			factor = 0.8
+			OR = {
+			    anarcho_liberal = 20
+				liberal = 20
+				socialist = 20
+				communist = 20
+				fascist = 20
+			}
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 5
+		}
+		modifier = {
+			factor = 0.9
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 2
+			is_primary_culture = yes
+		}
+		modifier = {
+			factor = 0.8
+			owner = { vote_franschise = none_voting }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { vote_franschise = landed_voting }
+		}
+		modifier = {
+			factor = 1.5
+			owner = { vote_franschise = universal_weighted_voting }
+		}
+		modifier = {
+			factor = 2
+			owner = { vote_franschise = universal_voting }
+		}
+		modifier = {
+			factor = 0.8
+			owner = { political_parties = underground_parties }
+		}
+		modifier = {
+			factor = 1.5
+			owner = { has_country_flag = appease_societies }
+		}
+		modifier = {
+			factor = 0.8
+			any_neighbor_province = { has_province_modifier = peasant_revolt }
+		}
+		modifier = {
+			factor = 0.9
+			year = 1900
+		}
+		modifier = {
+			factor = 0.8
+			year = 1905
+		}
+		modifier = {
+			factor = 0.7
+			year = 1910
+		}
+		modifier = {
+			factor = 0.6
+			year = 1915
+		}
+	}
+	
+	option = {
+		name = "CHIN68.A"
+		owner = { set_country_flag = revolutionary_uprising_qing }
+		random_pop = {
+			limit = {
+				is_culture_group = chinese
+				OR = {
+				    anarcho_liberal = 10
+					liberal = 10
+					socialist = 10
+					communist = 10
+					fascist = 10
+					militancy = 4
+				}
+			}
+			reduce_pop = 0.95
+			militancy = 5
+			consciousness = 6
+		}
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 5
+		}
+		state_scope = {
+			any_pop = {
+				limit = {
+					is_culture_group = chinese
+					OR = {
+					    anarcho_liberal = 10
+						liberal = 10
+						socialist = 10
+						communist = 10
+						fascist = 10
+						militancy = 4
+					}
+				}
+				militancy = 5
+				consciousness = 5
+			}
+			any_owned = {
+				add_province_modifier = {
+					name = peasant_revolt
+					duration = 365
+				}
+			}
+		}
+		ai_chance = { factor = 80 }
+	}
+	
+	option = {
+		name = "CHIN68.B"
+		owner = { set_country_flag = revolutionary_uprising_qing prestige = -4 }
+		state_scope = {
+			poor_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.05
+				}
+			}
+			middle_strata = {
+				limit = { is_culture_group = chinese }
+				consciousness = 5
+				ideology = {
+					value = liberal
+					factor = 0.1
+				}
+			}
+			scaled_militancy = {
+				ideology = liberal
+				factor = 8
+			}
+		}
+		ai_chance = { factor = 20 }
+	}
+}
+
+######### The New Army Event and Warlord Cores are in MOD Warlord Era ###########
+
+######### JAPSHU Lead Up - Prior to New Army ################
+
+#### Japanese Demands - Generic Event that repeats every six months or so and dumps some cash in Japan's Direction
+
+#### Japan will always get a specific amount regardless of how wealthy Shun is. It can be assumed if Shun does not have enough to pay then Japan uses other means to get their money.
+
+country_event = {
+    id = 164071
+    title = "CHIN69.T"
+    desc = "CHIN69.D"
+    picture = "sunrise"
+	
+    trigger = {
+        tag = SHU
+		has_country_modifier = SHU_puppet_regime
+    }
+		
+	mean_time_to_happen = { days = 100 }
+
+    option = {
+        name = "CHIN69.A"
+		random_owned = {
+		    limit = { 
+			   owner = { NOT = { money = 100000 } }
+			}
+			owner = { money = -1000 }
+		}
+		random_owned = {
+		    limit = { 
+			   owner = { NOT = { money = 500000 } money = 100000 }
+			}
+			owner = { money = -10000 }
+		}
+		random_owned = {
+		    limit = { 
+			   owner = { NOT = { money = 1000000 } money = 500000 }
+			}
+			owner = { money = -50000 }
+		}
+		random_owned = {
+		    limit = { 
+			   owner = { money = 1000000 }
+			}
+			owner = { money = -100000 }
+		}
+		JAP = { money = 100000 }		
+    }
+}
+
+### Militias calling out over concessionst behavior 
+
+country_event = {
+    id = 164072
+    title = "CHIN70.T"
+    desc = "CHIN70.D"
+    picture = "bandit_dng"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SHU
+		OR = {
+		   year = 1896
+		   has_global_flag = new_army_activated
+		}
+    }
+		
+	mean_time_to_happen = { days = 182 }
+
+    option = {
+        name = "CHIN70.A"
+	    any_pop = { limit = { pop_type = clergymen } militancy = 3 consciousness = 3 }	   
+	    any_pop = { limit = { pop_type = soldiers } militancy = 3 consciousness = 3 }
+	    any_pop = { limit = { pop_type = officers } militancy = 3 consciousness = 3 }
+		set_country_flag = student_protests_JAPSHU	
+    }
+}
+
+### Incidents with Japanese Instructors are increasing
+
+country_event = {
+    id = 164073
+    title = "CHIN71.T"
+    desc = "CHIN71.D"
+    picture = "japanese_battle"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SHU
+		has_country_flag = student_protests_JAPSHU	
+		has_global_flag = the_new_army
+    }
+		
+	mean_time_to_happen = { days = 182 }
+
+    option = {
+        name = "CHIN71.A"
+		set_country_flag = xingzhonghui_trigger
+		relation = { who = JAP value = -50 }
+	    any_pop = { 
+		   limit = { pop_type = clergymen } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.2
+		   }		   
+		}
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.2
+		   }		   
+		}
+	    any_pop = { 
+		   limit = { pop_type = soldiers } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.1
+		   }		   
+		}
+    }
+}
+
+######### CHIREP Lead Up - Prior to New Army ################
+
+### Qinggiu Influence in China ###
+
+### Even if Qinggiu does not actually exist its exports are still going strong in the Chinese Republic ###
+
+country_event = {
+    id = 164074
+    title = "CHIN72.T"
+    desc = "CHIN72.D"
+    picture = "qinggiu"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = CHI
+		exists = yes
+		OR = {
+		   year = 1896
+		   has_global_flag = new_army_activated
+		}
+		NOT = { has_country_flag = CHI_reunion }
+    }
+		
+	mean_time_to_happen = { days = 180 }
+
+    option = {
+        name = "CHIN72.A"
+		set_country_flag = NRS_founded
+	    any_pop = { 
+		   limit = { pop_type = clergymen } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.2
+		   }		   
+		}
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.2
+		   }		   
+		}
+	    any_pop = { 
+		   limit = { pop_type = soldiers } 
+		   militancy = 1 
+		   consciousness = 1 
+		   ideology = {
+				value = liberal
+				factor = 0.1
+		   }		   
+		}	
+    }
+}
+
+### Generals disagree with federalist trends and has founded the National Reform Society.
+
+country_event = {
+    id = 164075
+    title = "CHIN73.T"
+    desc = "CHIN73.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = CHI
+		exists = yes
+		has_country_flag = NRS_founded
+		has_global_flag = the_new_army
+		NOT = { has_country_flag = CHI_reunion }
+    }
+		
+	mean_time_to_happen = { days = 200 }
+
+    option = {
+        name = "CHIN73.A"
+		clr_country_flag = NRS_founded
+		set_country_flag = xingzhonghui_trigger
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   militancy = 6
+		   consciousness = -6 
+		   ideology = {
+				value = paternal
+				factor = 0.3
+		   }		   
+		}
+    }
+}
+
+######### HOG Lead Up - Prior to New Army ################
+
+######## It is important to note here that there are two paths with HOG - One is if they go with the Qinggiu Clique and thus skip the Xingzhonghui ####
+
+#### The Sino-Japanese War will not exist until after release so the second event here is impossible ####
+
+#### The Qinggiu Clique - Should we appease them or instead focus on centralism.
+
+country_event = {
+    id = 164076
+    title = "CHIN74.T"
+    desc = "CHIN74.D"
+    picture = "CHIrevolutionaries"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		NOT = { has_country_flag = JAP_defeated_HOG }
+		OR = {
+		   year = 1896
+		   has_global_flag = new_army_activated
+		}
+    }
+		
+	mean_time_to_happen = { days = 182 }
+
+    option = {
+        name = "CHIN74.A"
+		set_country_flag = qinggiu_clique_dominance
+		ruling_party_ideology = liberal
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 2
+			ideology = {
+				value = liberal
+				factor = 0.08
+			}
+		}
+		middle_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 4
+			ideology = {
+				value = liberal
+				factor = 0.12
+			}
+		}
+		ai_chance = { factor = 50 }
+    }
+	
+    option = {
+        name = "CHIN74.B"
+		set_country_flag = paternalist_dominance
+		ruling_party_ideology = paternal
+		rich_strata = {
+			limit = { is_culture_group = chinese }
+			ideology = {
+				value = paternal
+				factor = 0.12
+			}
+		}
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   ideology = {
+				value = paternal
+				factor = 0.3
+		   }		   
+		}
+		ai_chance = { factor = 50 }
+    }
+}
+
+#### The Qinggiu Clique dominates the Government
+
+#### This is impossible for now
+
+country_event = {
+    id = 164077
+    title = "CHIN75.T"
+    desc = "CHIN75.D"
+    picture = "CHIrevolutionaries"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		has_country_flag = JAP_defeated_HOG
+		OR = {
+		   year = 1896
+		   has_global_flag = new_army_activated
+		}
+    }
+		
+	mean_time_to_happen = { days = 182 }
+
+    option = {
+        name = "CHIN75.A"
+		set_country_flag = qinggiu_clique_dominance
+		ruling_party_ideology = liberal
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 2
+			ideology = {
+				value = liberal
+				factor = 0.08
+			}
+		}
+		middle_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 4
+			ideology = {
+				value = liberal
+				factor = 0.12
+			}
+		}
+    }
+}
+
+##################################### Paternalist Path for Hong #################################
+
+#### The Late Hong Reforms 
+
+#### Wait... these are not reforms.
+#### Why are you purging the government of the Qinggiu Clique Li and calling these reforms.
+
+country_event = {
+    id = 164078
+    title = "CHIN76.T"
+    desc = "CHIN76.D"
+    picture = "chinrs"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		has_country_flag = paternalist_dominance		
+    }
+		
+	mean_time_to_happen = { days = 100 }
+
+    option = {
+        name = "CHIN76.A"
+		clr_country_flag = paternalist_dominance
+		set_country_flag = late_hong_reforms
+	    government = absolute_monarchy
+	    ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+	    any_pop = { 
+		   limit = { pop_type = clergymen } 
+		   militancy = 3 
+		   consciousness = 3
+		   ideology = {
+				value = liberal
+				factor = 0.3
+		   }		   
+		}
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+				NOT = { pop_majority_ideology = paternal }
+				NOT = { pop_majority_ideology = reactionary }
+				NOT = { pop_majority_ideology = fascist }
+			}
+			militancy = -9 ideology = { factor = 0.35 value = paternal }	
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}	
+		any_pop = {
+			limit = {
+				type = bureaucrats
+				NOT = { pop_majority_ideology = paternal }
+				NOT = { pop_majority_ideology = reactionary }
+				NOT = { pop_majority_ideology = fascist }
+			}
+			militancy = -9 ideology = { factor = 0.35 value = paternal }	
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}		
+    }
+}
+
+### The Public Morality Law - This is a very bad idea ###
+
+### At least he is not arresting anyone right. I'm sure this will all blow over...
+
+country_event = {
+    id = 164079
+    title = "CHIN77.T"
+    desc = "CHIN77.D"
+    picture = "shun"
+		
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		has_country_flag = late_hong_reforms
+		has_global_flag = the_new_army
+    }
+		
+	mean_time_to_happen = { days = 100 }
+
+    option = {
+        name = "CHIN77.A"
+		set_country_flag = xingzhonghui_trigger
+		clr_country_flag = late_hong_reforms
+		random_owned = { 
+		   limit = {
+		      owner = { NOT = { press_rights = state_press } }
+		   }
+		   owner = { political_reform = state_press }
+		}
+		poor_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 2
+			ideology = {
+				value = liberal
+				factor = 0.04
+			}
+		}
+		middle_strata = {
+			limit = { is_culture_group = chinese }
+			consciousness = 4
+			ideology = {
+				value = liberal
+				factor = 0.06
+			}
+		}		
+    }
+}
+
+##################################### Hong Qinggiu Clique Path #####################################
+
+### Generals disagree with pro-democratic trends and has founded the National Reform Society
+
+country_event = {
+    id = 164080
+    title = "CHIN78.T"
+    desc = "CHIN78.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		has_country_flag = qinggiu_clique_dominance
+		has_global_flag = the_new_army
+    }
+		
+	mean_time_to_happen = { days = 182 }
+
+    option = {
+        name = "CHIN78.A"
+		clr_country_flag = qinggiu_clique_dominance
+		set_country_flag = skip_xingzhonghui
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   militancy = 6
+		   consciousness = -6 
+		   ideology = {
+				value = paternal
+				factor = 0.3
+		   }		   
+		}
+    }
+}
+
+#################################### China Endgame Content - Part Two #####################################
+
+######### JAPSHU Lead Up - After New Army ################
+
+### The Massacre ###
+
+country_event = {
+    id = 164081
+    title = "CHIN79.T"
+    desc = "CHIN79.D"
+    picture = "kegare"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SHU
+		exists = yes
+		civilized = yes
+		has_country_flag = xingzhonghui
+		has_global_flag = the_new_army
+		is_ideology_enabled = fascist
+		NOT = { has_global_flag = warlord_era_has_begun }
+    }
+	
+	mean_time_to_happen = {
+		months = 150
+		modifier = {
+			factor = 1.5
+			is_greater_power = yes
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 9
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.10
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.15
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.20
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.25
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.30
+		}
+		modifier = {
+			factor = 0.01
+			capital_scope = { controlled_by_rebels = yes }
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.20
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.30
+		}
+		modifier = {
+			factor = 0.7
+			year = 1900
+		}
+		modifier = {
+			factor = 0.7
+			year = 1905
+		}
+		modifier = {
+			factor = 0.7
+			year = 1910
+		}
+		modifier = {
+			factor = 0.7
+			year = 1915
+		}
+		modifier = {
+			factor = 0.7
+			year = 1920
+		}
+	}
+
+    option = {
+        name = "CHIN79.A"
+		set_global_flag = end_revolution_now_CHI
+		set_country_flag = inevitable_breakdown_CHI
+		set_country_flag = the_provisional_government_SHU
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		1510 = { 
+			any_pop = {
+			   reduce_pop = 0.99
+			}
+		}
+		any_pop = {
+		   militancy = 3
+		   ideology = {
+			  value = anarcho_liberal
+			  factor = 0.1
+		   }
+		   ideology = {
+			  value = communist
+			  factor = 0.05
+		   }
+		}
+    }
+}
+
+#### The Provisional Government
+
+country_event = {
+    id = 164082
+    title = "CHIN80.T"
+    desc = "CHIN80.D"
+    picture = "fengdidit"
+
+	trigger = {
+	   tag = SHU
+	   has_country_flag = the_provisional_government_SHU	
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = "CHIN80.A"
+		any_pop = {
+		   militancy = -3
+		}
+		clr_country_flag = the_provisional_government_SHU
+		any_owned = {
+			remove_province_modifier = peasant_revolt
+		}		
+        JAP = { 
+		   country_event = 164083
+		   release_vassal = THIS
+		   relation = { who = THIS value = -50 }
+	       diplomatic_influence = { who = THIS value = -400 }	
+		}
+	}
+}
+
+### Japan is informed and responds with a immediate military operation
+
+country_event = {
+    id = 164083
+    title = "CHIN81.T"
+    desc = "CHIN81.D"
+    picture = "kegare"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN81.A"
+		SHU = { country_event = { id = 164084 days = 31 } }
+	}
+}
+
+### The Peking Counter-Revolution
+
+country_event = {
+    id = 164084
+    title = "CHIN82.T"
+    desc = "CHIN82.D"
+    picture = "failed_revolution"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN82.A"
+		any_pop = {
+		   militancy = 2
+		}
+		country_event = { id = 164085 days = 31 }
+	}
+}
+
+### The National Salvation Government
+#### TOTAL BREAKDOWN IS INEVITABLE
+
+country_event = {
+    id = 164085
+    title = "CHIN820.T"
+    desc = "CHIN820.D"
+    picture = "xinhai"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN820.A"
+		set_global_flag = WAIT_FOR_SETUP_CHI
+		# Breakdown Event in MOD Warlord Era
+		country_event = 44156
+		country_event = { id = 164086 days = 1 }
+	}
+}
+
+##################################
+### The Warlord Era - Major ######
+##################################
+
+country_event = {
+    id = 164086
+    title = "CHIN83.T"
+    desc = "CHIN83.D"
+    picture = " "
+
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "CHIN83.A"
+		## This version of China will always hold MCK
+		inherit = MCK
+		## Raise the Banner!
+        HNN = { country_event = { id = 164087 days = 7 } }	
+        ## Execute Order 66		
+		JAP = { country_event = 164088 }
+	}
+}
+
+### Establishment of the Huguang Government
+
+country_event = {
+    id = 164087
+    title = "CHIN84.T"
+    desc = "CHIN84.D"
+    picture = "chinrs"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN84.A"
+		set_global_flag = enable_chinese_reconquest
+		prestige = 10
+		all_core = { add_core = KMT }
+		any_pop = {
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+		}
+	    government = fascist_dictatorship
+	    ruling_party_ideology = fascist
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = primary_culture_only
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		clr_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	set_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+		change_tag = KMT
+		set_country_flag = center_of_the_kuomintang
+		add_accepted_culture = beifaren
+		add_country_modifier = {
+			name = taiping_draft
+			duration = 1095
+		}
+		any_country = {
+			limit = {
+				is_culture_group = chinese
+				NOT = { has_country_flag = kuomintang_faction }
+			}
+			leave_alliance = THIS
+		}
+		clr_global_flag = WAIT_FOR_SETUP_CHI
+	}
+}
+
+### Order 66 - Japan realizes that China is collapsing and reorganizes the Chinese Government.
+
+### A lot of people are purged in the process.
+
+country_event = {
+    id = 164088
+    title = "CHIN85.T"
+    desc = "CHIN85.D"
+    picture = "japanese_chi"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN85.A"
+		create_vassal = SHU
+		SHU = { country_event = { id = 164089 days = 1 } }
+	}
+}
+
+### Establishment of the Government of Co-Prosperity
+
+country_event = {
+    id = 164089
+    title = "CHIN86.T"
+    desc = "CHIN86.D"
+    picture = "japanese_chi"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN86.A"
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+			}
+			militancy = -9
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}	
+		any_pop = {
+			limit = {
+				type = bureaucrats
+			}
+			militancy = -9
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}	
+        JAP = { 
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		}
+		any_owned = {
+		   limit = {
+				OR = {
+				   province_id = 1498 #Macao
+				   province_id = 1538 #Shanghai
+				   province_id = 1496 #Hong Kong
+				   province_id = 1566 #Qingdao
+				   province_id = 1481 #Lushun - Port Arthur
+				   province_id = 1569 #Weihaiwei
+				   province_id = 1606 #Jiaxing
+				   province_id = 1485 #Taibei
+				   province_id = 2562 #Tainan
+				   province_id = 1499 #Hainan
+				   province_id = 2674 #Kwangchowan
+				   province_id = 1608 #Ningbo
+				}
+		  }
+		  secede_province = JAP
+		}
+		any_pop = { militancy = 3 }
+		set_global_flag = RCH_exists 
+	    all_core = { remove_core = SHU add_core = RCH }
+		change_tag = RCH
+	}
+}
+
+######### REPCHI Lead Up - After New Army ################
+
+### The Emergency Election of YEAR ###
+
+### The Government has been forced to call a election based on political instability. What could go wrong.
+
+country_event = {
+    id = 164090
+    title = "CHIN87.T"
+    desc = "CHIN87.D"
+    picture = "zongting"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = CHI
+		exists = yes
+		civilized = yes
+		has_country_flag = xingzhonghui
+		has_global_flag = the_new_army
+	    OR = {
+		    government = democracy
+			government = merchant_republic
+	    }
+		NOT = { has_global_flag = warlord_era_has_begun }
+		NOT = { election = yes }
+		NOT = { has_country_flag = CHI_reunion }
+    }
+	
+	mean_time_to_happen = {
+		months = 150
+		modifier = {
+			factor = 1.5
+			is_greater_power = yes
+		}
+		modifier = {
+			factor = 0.5
+			has_recently_lost_war = yes
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 9
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.10
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.15
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.20
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.25
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.30
+		}
+		modifier = {
+			factor = 0.01
+			capital_scope = { controlled_by_rebels = yes }
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.20
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.30
+		}
+		modifier = {
+			factor = 0.7
+			year = 1900
+		}
+		modifier = {
+			factor = 0.7
+			year = 1905
+		}
+		modifier = {
+			factor = 0.7
+			year = 1910
+		}
+		modifier = {
+			factor = 0.7
+			year = 1915
+		}
+		modifier = {
+			factor = 0.7
+			year = 1920
+		}
+	}
+
+    option = {
+        name = "CHIN88.A"
+		set_global_flag = end_revolution_now_CHI
+		set_country_flag = strange_election_CHI
+		set_country_flag = inevitable_breakdown_CHI
+		election = yes
+		any_pop = {
+			militancy = -9
+			consciousness = -9
+		}
+		any_pop = {
+		   ideology = {
+			  value = socialist
+			  factor = 0.2
+		   }
+		   ideology = {
+			  value = communist
+			  factor = 0.1
+		   }
+		}
+    }
+}
+
+### The Election Ends with the Tongmenghui Winning. Somehow. ##
+### How the hell did this happen... 
+
+### Obviously since there is a good chance that since the party was switched by command then one could easily say that there was massive voter fraud and the real results were tampered with.
+
+country_event = {
+    id = 164091
+    title = "CHIN89.T"
+    desc = "CHIN89.D"
+    picture = "CHIrevolutionaries"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = CHI
+		civilized = yes
+		has_country_flag = strange_election_CHI
+	    OR = {
+		    government = democracy
+			government = merchant_republic
+	    }
+		NOT = { election = yes }
+		NOT = { has_country_flag = CHI_reunion }
+    }
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+
+    option = {
+        name = "CHIN89.A"
+		clr_country_flag = strange_election_CHI
+		set_country_flag = the_doomed_government_CHI
+		government = democracy
+		ruling_party_ideology = socialist
+		clr_country_flag = election_started
+		clr_country_flag = election_initialized
+		clr_country_flag = trade_policy_debate
+		clr_country_flag = economic_policy_debate
+		clr_country_flag = religious_policy_debate
+		clr_country_flag = citizenship_policy_debate
+		clr_country_flag = war_policy_debate
+		clr_country_flag = parties_campaign
+		clr_country_flag = election_riots
+		clr_country_flag = socialist_surge
+		clr_country_flag = communist_surge
+		clr_country_flag = fascist_surge
+		clr_country_flag = liberal_surge
+		clr_country_flag = anarcho_liberal_surge
+		clr_country_flag = social_liberal_surge
+		clr_country_flag = market_liberal_surge
+		clr_country_flag = reactionary_surge
+		clr_country_flag = conservative_surge
+		clr_country_flag = election_political_parties
+		clr_country_flag = election_unemployment
+		clr_country_flag = election_child_labor
+		clr_country_flag = election_minorities
+		clr_country_flag = election_immigration
+		clr_country_flag = election_war
+		clr_country_flag = election_slavery
+		clr_country_flag = election_voting_rights
+		clr_country_flag = communist_purge
+		remove_country_modifier = the_red_scare
+		remove_country_modifier = wartime_elections
+		remove_country_modifier = violent_elections
+		remove_country_modifier = ruling_party_scandal
+		remove_country_modifier = party_scandal_evidence
+		random_owned = {
+			limit = {
+				owner = { NOT = { has_country_flag = socialist_election_win } }
+			}
+			owner = {
+				clr_country_flag = tory_election_win
+				set_country_flag = socialist_election_win
+				clr_country_flag = liberal_election_win
+				clr_country_flag = communist_election_win
+				clr_country_flag = fascist_election_win
+				clr_country_flag = reactionary_election_win
+				clr_country_flag = anarcho_liberal_election_win
+				clr_country_flag = social_liberal_election_win
+				clr_country_flag = market_liberal_election_win		
+		        clr_country_flag = paternal_election_win		
+
+			}
+		}
+		random_owned = {
+			limit = {
+				owner = { NOT = { has_country_flag = socialist_party_in_power } }
+			}
+			owner = {
+		        clr_country_flag = conservative_party_in_power
+		        clr_country_flag = liberal_party_in_power
+		        clr_country_flag = reactionary_party_in_power
+		        set_country_flag = socialist_party_in_power
+		        clr_country_flag = communist_party_in_power
+		        clr_country_flag = fascist_party_in_power
+	            clr_country_flag = paternal_party_in_power
+		        clr_country_flag = anarcho_liberal_party_in_power
+                clr_country_flag = social_liberal_party_in_power
+				clr_country_flag = market_liberal_party_in_power		
+
+			}
+		}
+		rich_strata = {
+			limit = { is_culture_group = chinese }
+			ideology = {
+				value = paternal
+				factor = 0.12
+			}
+		}
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   ideology = {
+				value = paternal
+				factor = 0.3
+		   }		   
+		}
+    }
+}
+
+##################################### The Xiao Ru Coup  ##########################################
+
+#### Clearly the Qinggiu Clique's most legitimate government...
+
+country_event = {
+    id = 164092
+    title = "CHIN90.T"
+    desc = "CHIN90.D"
+    picture = "fengdidit"
+
+    fire_only_once = yes
+    
+	trigger = {
+	   tag = CHI
+	   has_country_flag = xingzhonghui
+	   has_global_flag = the_new_army
+	   NOT = { has_country_flag = CHI_reunion }
+	   OR = {
+	      has_country_flag = the_doomed_government_CHI
+	      NOT = {
+		     government = democracy
+			 government = merchant_republic
+	      }
+	   }
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = "CHIN90.A"
+		any_pop = { militancy = -4 }
+		ruling_party_ideology = conservative
+		government = presidential_dictatorship
+	    political_reform = none_voting
+		political_reform = party_appointed
+		political_reform = no_meeting
+		political_reform = state_press
+		political_reform = no_trade_unions
+		political_reform = first_past_the_post
+		political_reform = underground_parties
+		clr_country_flag = theocratic_government
+		clr_country_flag = merchantrepublic_gov
+		clr_country_flag = parliamentary_republic_gov
+		clr_country_flag = communist_gov
+		clr_country_flag = absolute_monarchy_gov
+		clr_country_flag = semi_constitutional_monarchy_gov
+		clr_country_flag = constitutional_monarchy_gov
+		set_country_flag = presidential_dictatorship_gov
+		clr_country_flag = fascist_gov
+		clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+		clr_country_flag = democracy_gov
+		country_event = { id = 164093 days = 31 }
+	}
+}
+
+### National Protection Alliance formed in the South
+
+country_event = {
+    id = 164093
+    title = "CHIN91.T"
+    desc = "CHIN91.D"
+    picture = "chinrs"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN90.A"
+		country_event = { id = 164094 days = 31 }
+		any_pop = {
+		    limit = {
+		      location = { region = SOUTHERN_MING }
+		    }
+		    militancy = 3
+		    ideology = {
+				value = paternal
+				factor = 0.05
+		    }
+		}	
+	}
+}
+
+### The Countercoup - Democracy is restored. Sorta. Not really.
+#### TOTAL BREAKDOWN IS INEVITABLE
+
+country_event = {
+    id = 164094
+    title = "CHIN92.T"
+    desc = "CHIN92.D"
+    picture = "xinhai"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN92.A"
+        government = democracy
+        ruling_party_ideology = conservative
+        political_reform = mandatory_service
+        political_reform = free_press
+        political_reform = yes_meeting
+        political_reform = gerrymandering
+        political_reform = culture_voting_only
+        political_reform = state_equal_weight
+        political_reform = first_past_the_post
+        political_reform = wealth_voting
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        set_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+		# Breakdown Event in MOD Warlord Era
+		set_global_flag = WAIT_FOR_SETUP_CHI
+		country_event = 44156
+		country_event = { id = 164095 days = 1 }
+	}
+}
+
+##################################
+### The Warlord Era - Major ######
+##################################
+
+country_event = {
+    id = 164095
+    title = "CHIN93.T"
+    desc = "CHIN93.D"
+    picture = " "
+
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "CHIN93.A"
+		## Raise the Banner!
+        GNG = { country_event = { id = 164096 days = 7 } }
+	}
+}
+
+### Establishment of the Guangzhou Government
+
+country_event = {
+    id = 164096
+    title = "CHIN94.T"
+    desc = "CHIN94.D"
+    picture = "chinrs"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN94.A"
+		set_global_flag = enable_chinese_reconquest
+		prestige = 10
+		all_core = { add_core = KMT }
+		any_pop = {
+			scaled_militancy = {
+				ideology = liberal
+				factor = -4
+			}
+			scaled_militancy = {
+				ideology = anarcho_liberal
+				factor = -4
+			}
+		}
+	    government = presidential_dictatorship
+	    ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = party_appointed
+        political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = mandatory_service
+        political_reform = first_past_the_post
+	    political_reform = underground_parties 
+		political_reform = primary_culture_only
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+		set_country_flag = paternal_election_win
+	    clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+	    clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+	    clr_country_flag = parliamentary_republic_gov
+	    clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+    	clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+		change_tag = KMT
+		set_country_flag = center_of_the_kuomintang
+		add_accepted_culture = beifaren
+		add_country_modifier = {
+			name = taiping_draft
+			duration = 1095
+		}
+		any_country = {
+			limit = {
+				is_culture_group = chinese
+				NOT = { has_country_flag = kuomintang_faction }
+			}
+			leave_alliance = THIS
+		}
+		clr_global_flag = WAIT_FOR_SETUP_CHI
+	}
+}
+
+######### HONG - Qinggiu Clique Lead Up - After New Army ################
+
+### The Death of the Emperor 
+### The Phoenix Emperor is finally dead
+
+### Unlike the other two such as CHI and SHU there is no instablity modifier to trigger this. It will always trigger on Li's death.
+
+country_event = {
+    id = 164097
+    title = "CHIN95.T"
+    desc = "CHIN95.D"
+    picture = "endofphoenix"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		civilized = yes
+		has_country_flag = skip_xingzhonghui
+		NOT = { has_country_flag = xingzhonghui }
+		has_global_flag = the_new_army
+		year = 1900
+    }
+	
+	mean_time_to_happen = {
+		days = 365
+		modifier = {
+			factor = 0.5
+			year = 1902
+		}
+		modifier = {
+			factor = 0.5
+			year = 1904
+		}
+		modifier = {
+			factor = 0.5
+			year = 1906
+		}
+		modifier = {
+			factor = 0.5
+			year = 1908
+		}
+	}
+	
+	option = {
+		name = "CHIN95.A"
+		KMT = { 
+		  civilized = yes 
+		}
+		set_global_flag = end_revolution_now_CHI
+		set_country_flag = inevitable_breakdown_CHI
+		any_pop = {
+		   militancy = 1
+		}
+		set_country_flag = federalist_reforms
+		clr_country_flag = regency_blocker
+        add_country_modifier = { name = regency_government duration = 3650 }		
+	}
+}	
+
+## The Federalist Reforms
+
+## Qinggiu Clique makes the Federalist Reforms to Hong that they so desired
+## Regardless if they are still in a regency or not it does not matter anymore since this Clique has the new emperor by the balls.
+
+country_event = {
+    id = 164098
+    title = "CHIN96.T"
+    desc = "CHIN96.D"
+    picture = "xinhai"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		civilized = yes
+		has_country_flag = federalist_reforms      
+    }
+	
+	mean_time_to_happen = {
+		months = 100
+		modifier = {
+			factor = 0.5
+			year = 1908
+		}
+		modifier = {
+			factor = 0.5
+			year = 1912
+		}
+		modifier = {
+			factor = 0.5
+			year = 1917
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 9
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.10
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.15
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.20
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.25
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.30
+		}
+	}
+	
+	option = {
+		name = "CHIN96.A"
+		set_country_flag = KMT_HOG_appear_mon
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+	    political_reform = federalism
+		rich_strata = {
+			limit = { is_culture_group = chinese }
+			ideology = {
+				value = paternal
+				factor = 0.1
+			}
+		}
+	    any_pop = { 
+		   limit = { pop_type = officers } 
+		   militancy = 3
+		   ideology = {
+				value = paternal
+				factor = 0.1
+		   }		   
+		}
+	}
+}
+
+## Anti-Federalists Entrench themselves in the South
+## They support another heir. Collapse is inevitable
+
+country_event = {
+    id = 164099
+    title = "CHIN97.T"
+    desc = "CHIN97.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		civilized = yes
+		has_country_flag = KMT_HOG_appear_mon    
+    }
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = "CHIN97.A"
+		clr_country_flag = KMT_HOG_appear_mon  
+		set_country_flag = START_CHI_CIVIL_WAR
+		set_country_flag = qinggiu_HOG
+	    all_core = {
+		   limit = {
+		      region = SOUTHERN_MING
+		   }
+		   remove_core = HOG
+		   add_core = KMT
+		}
+	    any_pop = { 
+		   limit = { location = { is_core = KMT } } 
+		   ideology = {
+				value = paternal
+				factor = 0.1
+		   }		   
+		}
+		KMT = { 
+		   civilized = yes 
+		   ruling_party_ideology = paternal
+		   government = absolute_monarchy 
+		   set_country_flag = CCW_KMT 
+		   add_country_modifier = {
+			  name = taiping_draft
+			  duration = 1550
+		   }		   
+           small_arms = 1000
+           canned_food = 1000
+           regular_clothes = 100
+           grain = 1500	  	   
+	    }
+		any_owned = {
+		   limit = { 
+		      is_core = KMT
+		   }
+		   remove_core = HOG
+		   secede_province = KMT 
+		}
+		country_event = { id = 164103 days = 90 }
+	}
+}	
+
+######### HONG - Centrist Lead Up - After New Army ################
+
+### The Death of the Emperor 
+### The Phoenix Emperor is finally dead
+
+### Unlike the other two such as CHI and SHU there is no instablity modifier to trigger this. It will always trigger on Li's death.
+
+country_event = {
+    id = 164100
+    title = "CHIN98.T"
+    desc = "CHIN98.D"
+    picture = "endofphoenix"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		civilized = yes
+		has_country_flag = xingzhonghui
+		NOT = { has_country_flag = skip_xingzhonghui }
+		has_global_flag = the_new_army
+		year = 1900
+    }
+	
+	mean_time_to_happen = {
+		days = 365
+		modifier = {
+			factor = 0.5
+			year = 1902
+		}
+		modifier = {
+			factor = 0.5
+			year = 1904
+		}
+		modifier = {
+			factor = 0.5
+			year = 1906
+		}
+		modifier = {
+			factor = 0.5
+			year = 1908
+		}
+		modifier = {
+			factor = 0.01
+			capital_scope = { controlled_by_rebels = yes }
+		}
+	}
+	
+	option = {
+		name = "CHIN98.A"
+		KMT = { 
+		  civilized = yes 
+		}
+	    set_global_flag = end_revolution_now_CHI
+		set_country_flag = inevitable_breakdown_CHI
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		country_event = { id = 164101 days = 31 }
+		clr_country_flag = regency_blocker
+        add_country_modifier = { name = regency_government duration = 3650 }		
+	}
+}
+
+### Protests flair back up.	
+
+country_event = {
+    id = 164101
+    title = "CHIN99.T"
+    desc = "CHIN99.D"
+    picture = "kegare"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN99.A"
+		set_country_flag = flair_back_up
+		any_pop = {
+		   militancy = 1
+		   consciousness = 1
+		}	
+	    any_pop = { 
+		   limit = { location = { is_core = KMT } } 
+		   ideology = {
+				value = paternal
+				factor = 0.1
+		   }		   
+		}		
+	}
+}
+
+### The Republican Insurrection
+### Collapse is inevitable
+
+country_event = {
+    id = 164102
+    title = "CHIN100.T"
+    desc = "CHIN100.D"
+    picture = "CHIrevolutionaries"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		civilized = yes
+		has_country_flag = flair_back_up
+    }
+	
+	mean_time_to_happen = {
+		months = 100
+		modifier = {
+			factor = 0.5
+			year = 1908
+		}
+		modifier = {
+			factor = 0.5
+			year = 1912
+		}
+		modifier = {
+			factor = 0.5
+			year = 1917
+		}
+		modifier = {
+			factor = 1.5
+			is_greater_power = yes
+		}
+		modifier = {
+			factor = 0.5
+			has_recently_lost_war = yes
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 6
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 7
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 8
+		}
+		modifier = {
+			factor = 0.8
+			average_militancy = 9
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.10
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.15
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.20
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.25
+		}
+		modifier = {
+			factor = 0.5
+			revolt_percentage = 0.30
+		}
+		modifier = {
+			factor = 0.01
+			capital_scope = { controlled_by_rebels = yes }
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.20
+		}
+		modifier = {
+			factor = 0.75
+			lost_national = 0.30
+		}
+	}
+	
+	option = {
+		name = "CHIN100.A"
+		clr_country_flag = flair_back_up
+		set_country_flag = START_CHI_CIVIL_WAR
+		set_country_flag = paternal_HOG
+		add_country_modifier = { name = war_justification_blocked duration = -1 }
+		add_country_modifier = { name = preparing_for_war duration = -1 }
+		KMT = { 
+		   ruling_party_ideology = paternal
+		   government = presidential_dictatorship
+		   set_country_flag = CCW_KMT 
+		   add_country_modifier = { name = war_justification_blocked duration = -1 }
+		   add_country_modifier = { name = preparing_for_war duration = -1 }
+		   add_country_modifier = {
+			  name = taiping_draft
+			  duration = 1550
+		   }		   
+           small_arms = 1000
+           canned_food = 1000
+           regular_clothes = 100
+           grain = 1500	  	   
+	    }		
+	    all_core = {
+		   limit = {
+		      region = SOUTHERN_MING
+		   }
+		   remove_core = HOG
+		   add_core = KMT
+		}
+	    any_pop = { 
+		   limit = { location = { is_core = KMT } } 
+		   ideology = {
+				value = paternal
+				factor = 0.1
+		   }
+		}		   	
+		any_owned = {
+		   limit = { 
+		      is_core = KMT
+		   }
+		   remove_core = HOG
+		   secede_province = KMT 
+		}
+		country_event = { id = 164103 days = 90 }
+	}
+}
+
+##################################### THE CHINESE CIVIL WAR ###################################################
+#### The National Reform Society want to end your government. It does not matter if they are supporting a new monarch or trying to overthrow the monarchy they just want your regime to end.
+
+country_event = {
+    id = 164103
+    title = "CHIN101.T"
+    desc = "CHIN101.D"
+    picture = " "
+	
+	fire_only_once = yes
+	is_triggered_only = yes	
+	major = yes
+	
+	option = {
+		name = "CHIN101.A"
+		set_global_flag = CHINESE_CIVIL_WAR
+		set_country_flag = CCW_involvement
+		remove_country_modifier = war_justification_blocked
+		remove_country_modifier = preparing_for_war
+		KMT = { 	
+		   remove_country_modifier = war_justification_blocked
+		   remove_country_modifier = preparing_for_war
+           set_country_flag = CCW_involvement		
+		   all_core = { add_core = THIS } 		
+		}
+		add_country_modifier = {
+		    name = taiping_draft
+		    duration = 1460
+		}	
+		# The time limit event - Adjust this with testing
+		country_event = { id = 164107 days = 1440 }		
+        war = {
+            target = KMT
+            attacker_goal = { casus_belli = civil_war }
+            defender_goal = { casus_belli = civil_war }
+            call_ally = no
+        }			
+	}
+}
+
+
+#### State Control Event
+
+#### Whenever any province is occupied in a state then cede the state to you.
+
+#### I'll replace the is_core with the state capitals
+### KMT has occupied a state
+
+province_event = {
+    id = 1641031
+    title = "CHIN102.T"
+    desc = "CHIN102.D"
+	
+	trigger = {
+	    owner = { 
+		    has_country_flag = CCW_involvement 
+			tag = HOG
+	    }
+		controlled_by = KMT
+		is_core = CHI
+        NOT = { province_id = 1524 }		
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN102.A"
+		owner = { war_exhaustion = 5 }
+		controller = { war_exhaustion = -5 }
+		secede_province = KMT
+	}
+}
+
+### HOG has occupied a state
+
+province_event = {
+    id = 1641032
+    title = "CHIN103.T"
+    desc = "CHIN103.D"
+	
+	trigger = {
+	    owner = { 
+		    has_country_flag = CCW_involvement 
+			tag = KMT
+	    }	
+		controlled_by = HOG
+		is_core = CHI	
+        NOT = { province_id = 3423 }			
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN103.A"
+		owner = { war_exhaustion = 5 }
+		controller = { war_exhaustion = -5 }
+		secede_province = HOG
+	}
+}
+
+###### HOG has won the Civil War - Once the timer above expires then it will lead to the conclusion event #####
+
+country_event = {
+    id = 164105
+    title = "CHIN104.T"
+    desc = "CHIN104.D"
+    picture = "forbiddenreform"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		exists = yes
+		has_global_flag = CHINESE_CIVIL_WAR
+		has_country_flag = CCW_involvement 
+		NOT = { exists = KMT }
+    }
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "CHIN104.A"
+		prestige = 10
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		clr_global_flag = CHINESE_CIVIL_WAR
+		clr_country_flag = CCW_involvement 
+		remove_country_modifier = taiping_draft
+		KMT = { clr_country_flag = CCW_involvement  clr_country_flag = CCW_KMT all_core = { remove_core = KMT } }	
+	}
+}
+
+###### KMT has won the Civil War - This was not meant to happen #####
+
+country_event = {
+    id = 164106
+    title = "CHIN105.T"
+    desc = "CHIN105.D"
+    picture = "fengdidit"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = KMT
+		exists = yes
+		has_global_flag = CHINESE_CIVIL_WAR
+		has_country_flag = CCW_involvement 
+		NOT = { exists = HOG }
+    }
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	option = {
+		name = "CHIN105.A"
+		prestige = 10
+		clr_global_flag = CHINESE_CIVIL_WAR
+		clr_country_flag = CCW_involvement 
+		remove_country_modifier = taiping_draft
+		HOG = { clr_country_flag = CCW_involvement  all_core = { add_core = KMT remove_core = HOG } }	
+	}
+}
+
+###########################################################
+######## THE CHINESE CIVIL WAR TIMER EVENT ################
+###########################################################
+
+#### At the start of the Civil War a event was triggered. If the Civil War has not ended before this event pops up in HOG then bad stuff will happen.
+#### This will do a random owned check to see if the war is still active
+
+#### Ongoing Instablity - Can it be resolved or not?
+#### This will do nothing if the tag does not exist
+
+country_event = {
+    id = 164107
+    title = "CHIN106.T"
+    desc = "CHIN106.D"
+    picture = "endofphoenix"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN105.A"
+		### FAILURE
+		random_owned = {
+		   limit = {
+		      owner = { exists = yes OR = { war_with = KMT NOT = { owns = 1524 } } }
+		   }
+           owner = { country_event = 164110 }
+	    }
+		### VICTORY - Paternalist
+		random_owned = {
+		   limit = {
+		      owner = { exists = yes NOT = { war_with = KMT } has_country_flag = paternal_HOG owns = 1524 }
+		   }
+           owner = { country_event = 164108 }
+	    }	
+		### VICTORY - Qinggiu Clique
+		random_owned = {
+		   limit = {
+		      owner = { exists = yes NOT = { war_with = KMT } has_country_flag = qinggiu_HOG owns = 1524 }
+		   }
+           owner = { country_event = 164109 }
+	    }		
+	}
+}
+
+#### The Dragon Roars - Paternalist Chinese Empire
+#### Setting the Industrial Tech School because lets try to save the world economy here
+
+### Without the National Reform Society, There Would Be No New China
+
+country_event = {
+    id = 164108
+    title = "CHIN107.T"
+    desc = "CHIN107.D"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "CHIN105.A"	
+        set_country_flag = chinese_endgame		
+		prestige_factor = 0.25
+		tech_school = industrial_tech_school
+		### This flag is just being set to block warlord era
+		set_global_flag = warlord_era_has_begun
+		set_country_flag = CHI_reunion
+		change_tag = CHI
+	    add_country_modifier = {
+		    name = the_terror
+		    duration = 1095
+	    }
+	    any_pop = { 
+	          militancy = -3
+		      ideology = { factor = -0.2 value = conservative } 
+	          ideology = { factor = -0.2 value = reactionary } 
+	          ideology = { factor = 0.4 value = paternal } 
+	    }
+	    government = absolute_monarchy
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = underground_parties
+        political_reform = no_draft
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    set_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    clr_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+    	set_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+#### The Dragon Roars - Qinggiu Clique Federal Democratic Empire 
+#### Setting the Industrial Tech School because lets try to save the world economy here
+
+### You've managed to pull off the best possible timeline
+
+country_event = {
+    id = 164109
+    title = "CHIN108.T"
+    desc = "CHIN108.D"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "CHIN108.A"		
+        set_country_flag = chinese_endgame			
+		prestige_factor = 0.25
+		tech_school = industrial_tech_school
+		### This flag is just being set to block warlord era
+		set_global_flag = warlord_era_has_begun
+		set_country_flag = CHI_reunion
+		change_tag = CHI
+	    any_pop = { 
+	          militancy = -8
+		      ideology = { factor = -0.2 value = conservative } 
+	          ideology = { factor = 0.2 value = liberal } 
+	    }
+       government = hms_government   
+       nationalvalue = nv_liberty
+	   political_reform = federalism
+	   ruling_party_ideology = liberal
+	   plurality = 50
+	   political_reform = population_equal_weight
+	   political_reform = proportional_representation
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+	   political_reform = all_voting_pops
+       political_reform = gerrymandering
+	   clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   set_country_flag = parliamentary_republic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+	   clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = democracy_gov	
+	}
+}
+
+###### TIME IS UP - YOU HAVE FAILED - GAME OVER #####
+
+country_event = {
+    id = 164110
+    title = "CHIN109.T"
+    desc = "CHIN109.D"
+    picture = "crimean_war_defeat"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	# Game Over
+	option = {
+		name = "CHIN109.A"
+		annex_to = KMT
+	}
+}
+
+##################################### KMT Failstates ######################################################################################
+#### These are a fun set of events - To get these basically either win the Civil War as KMT or do anything that gets the monarchy abolished
+#### I've added a couple of spicy variations for Fascists or Communists
+
+### Hong collapsed into a republic
+### LMAO FAILURE
+
+country_event = {
+    id = 164111
+    title = "CHIN110.T"
+    desc = "CHIN110.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = HOG
+		has_global_flag = the_new_army
+	    NOT = {
+		   OR = {
+		      government = hms_government
+			  government = prussian_constitutionalism
+			  government = absolute_monarchy
+	       } 
+	    }
+    }
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN110.A"
+		prestige_factor = -0.5
+		set_country_flag = inevitable_breakdown_CHI
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		all_core = { add_core = KMT remove_core = HOG } 
+		change_tag = KMT
+	}
+}
+
+### Shun collapsed into a republic
+### LMAO FAILURE
+
+country_event = {
+    id = 164112
+    title = "CHIN111.T"
+    desc = "CHIN111.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = SHU
+		has_global_flag = the_new_army
+	    NOT = {
+		   OR = {
+		      government = hms_government
+			  government = prussian_constitutionalism
+			  government = absolute_monarchy
+	       } 
+	    }
+    }
+	
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = "CHIN111.A"
+		prestige_factor = -0.5
+		JAP = { release_vassal = THIS }
+		remove_country_modifier = SHU_puppet_regime
+		set_country_flag = inevitable_breakdown_CHI
+		any_pop = {
+		   militancy = -9
+		   consciousness = -9
+		}
+		all_core = { add_core = KMT remove_core = HOG } 
+		change_tag = KMT
+	}
+}
+
+#### KMT ended the Civil War as a Monarchy. The National Reform Society backstabs the monarchy and creates a dictatorship ###
+
+country_event = {
+    id = 164113
+    title = "CHIN112.T"
+    desc = "CHIN112.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = KMT
+		has_global_flag = the_new_army
+		OR = {
+		   government = hms_government
+		   government = prussian_constitutionalism
+		   government = absolute_monarchy
+	    } 
+		NOT = { exists = HOG }
+		NOT = { exists = CHI }
+		NOT = { has_global_flag = warlord_era_has_begun }
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN112.A"
+	    government = presidential_dictatorship
+		ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = underground_parties
+        political_reform = no_draft
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+    	set_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+### The National Reform Society takes control over your shitty democrap
+
+country_event = {
+    id = 164114
+    title = "CHIN113.T"
+    desc = "CHIN113.D"
+    picture = "chinrs"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = KMT
+		has_global_flag = the_new_army
+		NOT = {
+		   OR = {
+		      government = socialist_republic
+			  government = fascist_dictatorship
+			  government = presidential_dictatorship
+			  government = proletarian_dictatorship
+		      government = hms_government
+		      government = prussian_constitutionalism
+		      government = absolute_monarchy
+		   }
+		}
+		NOT = { exists = CHI }
+		NOT = { has_global_flag = warlord_era_has_begun }
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN113.A"
+	    government = presidential_dictatorship
+		ruling_party_ideology = paternal
+	    political_reform = unitary
+	    political_reform = none_voting
+	    political_reform = appointed
+	    political_reform = no_meeting
+	    political_reform = state_press
+	    political_reform = underground_parties
+        political_reform = no_draft
+        clr_country_flag = theocratic_government
+	    clr_country_flag = merchantrepublic_gov
+	    clr_country_flag = communist_gov
+	    clr_country_flag = absolute_monarchy_gov
+        clr_country_flag = semi_constitutional_monarchy_gov
+	    clr_country_flag = constitutional_monarchy_gov
+        clr_country_flag = parliamentary_republic_gov
+        clr_country_flag = democracy_gov
+	    set_country_flag = presidential_dictatorship_gov
+	    clr_country_flag = fascist_gov
+	    clr_country_flag = anarcho_liberal_gov
+	    clr_country_flag = socialist_republic_gov
+	    clr_country_flag = fascist_monarchy_gov
+	    clr_country_flag = election_started
+	    clr_country_flag = tory_election_win
+	    clr_country_flag = socialist_election_win
+	    clr_country_flag = liberal_election_win
+	    clr_country_flag = communist_election_win
+	    clr_country_flag = fascist_election_win
+	    clr_country_flag = reactionary_election_win
+	    clr_country_flag = anarcho_liberal_election_win
+	    clr_country_flag = social_liberal_election_win
+	    clr_country_flag = market_liberal_election_win		
+	    clr_country_flag = paternal_election_win
+	    clr_country_flag = conservative_party_in_power
+	    clr_country_flag = liberal_party_in_power
+	    clr_country_flag = reactionary_party_in_power
+	    clr_country_flag = socialist_party_in_power
+	    clr_country_flag = communist_party_in_power
+	    clr_country_flag = fascist_party_in_power
+    	set_country_flag = paternal_party_in_power
+	    clr_country_flag = anarcho_liberal_party_in_power
+	    clr_country_flag = market_liberal_party_in_power
+	}
+}
+
+### The National Reform Society is basically made up of a bunch of Warlords that only look out for themselves.
+
+### WARLORD ERA IS INEVITABLE
+
+country_event = {
+    id = 164115
+    title = "CHIN114.T"
+    desc = "CHIN114.D"
+    picture = "warlords"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = KMT
+		has_global_flag = the_new_army
+		OR = {
+		   government = fascist_dictatorship
+		   government = presidential_dictatorship
+	    }
+		exists = yes
+		NOT = { exists = CHI }
+		NOT = { has_global_flag = warlord_era_has_begun }
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN114.A"
+		# Breakdown Event in MOD Warlord Era
+		set_global_flag = WAIT_FOR_SETUP_CHI
+		country_event = 44156
+		country_event = { id = 164095 days = 1 }    
+	}
+}
+
+### Did you just try to establish a communist government while the country is still a gigantic pile of warlords?
+### WARLORD ERA IS INEVITABLE
+
+country_event = {
+    id = 164116
+    title = "CHIN115.T"
+    desc = "CHIN115.D"
+    picture = "warlords"
+	
+	fire_only_once = yes
+	
+    trigger = {
+        tag = KMT
+		has_global_flag = the_new_army
+		OR = {
+		   government = proletarian_dictatorship
+		   government = socialist_republic
+		}
+		exists = yes
+		NOT = { exists = CHI }
+		NOT = { has_global_flag = warlord_era_has_begun }
+    }
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN115.A"
+		# Breakdown Event in MOD Warlord Era
+		set_global_flag = WAIT_FOR_SETUP_CHI
+		all_core = { limit = { NOT = { is_core = GNG } } remove_core = THIS }
+		country_event = 44156
+		country_event = { id = 164117 days = 1 }    
+	}
+}
+
+##################################
+### The Warlord Era - Major ######
+##################################
+
+country_event = {
+    id = 164117
+    title = "CHIN116.T"
+    desc = "CHIN116.D"
+    picture = " "
+
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = "CHIN116.A"
+		### Evacuate to the South
+		inherit = GNG
+		capital = 1493
+		set_country_flag = center_of_the_kuomintang
+		add_accepted_culture = beifaren
+		add_country_modifier = {
+			name = taiping_draft
+			duration = 1095
+		}
+		any_owned = {
+		   limit = {
+		      NOT = { is_core = THIS }
+		   }
+		   secede_province = CHI 
+		}
+		CHI = { country_event = 164118 }
+	}
+}
+
+### Establishment of the Zhili Clique
+
+country_event = {
+    id = 164118
+    title = "CHIN117.T"
+    desc = "CHIN117.D"
+    picture = "CHIrevolutionaries"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "CHIN117.A"
+		set_global_flag = enable_chinese_reconquest
+		prestige = 10
+		ruling_party_ideology = conservative
+		set_country_flag = center_of_the_beiyang
+		any_country = {
+			limit = {
+				is_culture_group = chinese
+			}
+			relation = { who = THIS value = -100 }
+			leave_alliance = THIS
+		}
+		clr_global_flag = WAIT_FOR_SETUP_CHI
+	}
+}
+
+#################### Chinese Endgame Expansion ################################
+
+######## China is doing the conquest of Korea and Korea comes into existance during it. ################
+
+#### I should weigh these depending on government forms...
+
+country_event = {
+    id = 164119
+    title = "CHIN118.T"
+    desc = "CHIN118.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+    trigger = {
+        OR = {
+		   tag = CHI
+		   tag = KMT 
+		}
+		OR = {
+		  exists = GOY
+		  exists = KOR 
+	    }
+		has_country_flag = liberate_korea_if_possible
+    }
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	### The liberation has been completed
+	
+	option = {
+		name = "CHIN118.A"
+		clr_country_flag = liberate_korea_if_possible	
+		random_country = {
+		   limit = {
+		      tag = GOY 
+			  exists = yes 
+		   }
+		   THIS = { 
+			   relation = { who = GOY value = 400 }
+			   diplomatic_influence = { who = GOY value = 400 } 
+			   create_alliance = GOY
+           }
+        }	
+		random_country = {
+		   limit = {
+		      tag = KOR
+			  exists = yes 
+		   }
+		   THIS = { 
+			   relation = { who = KOR value = 400 }
+			   diplomatic_influence = { who = KOR value = 400 } 
+			   create_alliance = KOR
+           }
+        }		
+		any_owned = {
+		   limit = {
+		     is_core = GOY
+		   }
+		   remove_core = THIS
+		   secede_province = GOY
+		}
+		any_owned = {
+		   limit = {
+		     is_core = KOR
+		   }
+		   remove_core = THIS
+		   secede_province = KOR
+		}
+		ai_chance = { factor = 90 }
+	}
+	
+	### We do not recognize this government - Keep Cores
+	
+	option = {
+		name = "CHIN118.B"
+		badboy = 5
+		ai_chance = { factor = 10 }
+	}
+}
+
+######## China has finished the conquest of Korea ################
+
+country_event = {
+    id = 164120
+    title = "CHIN119.T"
+    desc = "CHIN119.D"
+    picture = " "
+	
+	fire_only_once = yes
+	
+    trigger = {
+        OR = {
+		   tag = CHI
+		   tag = KMT 
+		}
+		owns = 1632
+		owns = 1624
+		owns = 1619
+		OR = {
+		   KOR = { all_core = { owned_by = THIS } }
+		   GOY = { all_core = { owned_by = THIS } }
+		}
+		NOT = { exists = KOR }
+		NOT = { exists = GOY }
+		has_country_flag = liberate_korea_if_possible
+    }
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	### The liberation has been completed
+	
+	option = {
+		name = "CHIN119.A"	
+        clr_country_flag = liberate_korea_if_possible		
+		any_owned = {
+		   limit = {
+		     is_core = GOY
+		   }
+		   add_core = KOR
+		   remove_core = GOY
+		   remove_core = THIS
+		   secede_province = KOR
+		}
+		any_owned = {
+		   limit = {
+		     is_core = KOR
+		   }
+		   remove_core = THIS
+		   secede_province = KOR
+		}
+		KOR = { country_event = { id = 164121 days = 1 } }
+		ai_chance = { factor = 95 }
+	}
+	
+	### Korea is China
+	
+	option = {
+		name = "CHIN119.B"
+		clr_country_flag = liberate_korea_if_possible	
+		badboy = 5
+		any_pop = {
+		   limit = {
+		      culture = korean 
+		   }
+		   militancy = 5
+		}
+		GOY = { all_core = { remove_core = THIS } }
+		KOR = { all_core = { remove_core = THIS } }
+		ai_chance = { factor = 5 }
+	}
+}
+
+#### Korean Puppet Event - AI will only ever see this
+
+country_event = {
+    id = 164121
+    title = "Glorious Liberation"
+    desc = "yay"
+    picture = " "
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "yay"	
+        capital = 1624	
+		FROM = { 
+		    relation = { who = THIS value = 400 }
+			diplomatic_influence = { who = THIS value = 400 } 
+			create_alliance = THIS		
+		    create_vassal = THIS 
+	    }
+    }
+}
+
+##################################### Reorganized China and Japan ############################################
+
+### Setup Event for JAPShun is 164089
+
+### Establishment of the Government of Co-Prosperity Generic
+
+country_event = {
+    id = 1641210
+    title = "CHIN120.T"
+    desc = "CHIN120.D"
+    picture = "shimonoseki"
+	
+	fire_only_once = yes
+	
+	trigger = {
+	    tag = MCK
+		vassal_of = JAP
+		has_global_flag = RCH_permitted		
+	}
+	
+	option = {
+		name = "CHIN120.A"
+		clr_global_flag = RCH_permitted
+		any_pop = {
+			limit = {
+				OR = { type = soldiers type = officers }
+			}
+			militancy = -9
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}	
+		any_pop = {
+			limit = {
+				type = bureaucrats
+			}
+			militancy = -9
+            random_list = { 50 = { reduce_pop = 0.85 } 50 = { reduce_pop = 0.65 } }						
+		}	
+        JAP = { 
+		   relation = { who = THIS value = 400 }
+	       diplomatic_influence = { who = THIS value = 400 }	
+		   create_alliance = THIS
+		}
+		any_owned = {
+		   limit = {
+				OR = {
+				   province_id = 1498 #Macao
+				   province_id = 1538 #Shanghai
+				   province_id = 1496 #Hong Kong
+				   province_id = 1566 #Qingdao
+				   province_id = 1481 #Lushun - Port Arthur
+				   province_id = 1569 #Weihaiwei
+				   province_id = 1606 #Jiaxing
+				   province_id = 1485 #Taibei
+				   province_id = 2562 #Tainan
+				   province_id = 1499 #Hainan
+				   province_id = 2674 #Kwangchowan
+				   province_id = 1608 #Ningbo
+				}
+		  }
+		  secede_province = JAP
+		}
+		any_pop = { militancy = 3 }
+		set_global_flag = RCH_exists 
+	    all_core = { add_core = RCH }
+		change_tag = RCH
+	}
+}
+
+### This event is for Japan to give cores to RCH. Obviously treaty port provinces are excluded from this trade and you cannot legally do this for specific warlords.
+
+province_event = {
+    id = 164122
+    title = "CHIN121.T"
+    desc = "CHIN121.D"
+    picture = " "
+	
+	trigger = {
+		owner = {
+            tag = JAP
+            is_our_vassal = RCH			
+		}
+		is_core = CHI 
+		NOT = { 
+		   is_core = JAP
+		   is_core = GNG 
+		   is_core = SXI 
+		   is_core = SZC
+		   is_core = XBI
+		   is_core = YNN
+		   province_id = 1498 #Macao
+		   province_id = 1538 #Shanghai
+		   province_id = 1496 #Hong Kong
+		   province_id = 1566 #Qingdao
+		   province_id = 1481 #Lushun - Port Arthur
+		   province_id = 1569 #Weihaiwei
+		   province_id = 1606 #Jiaxing
+		   province_id = 1485 #Taibei
+		   province_id = 2562 #Tainan
+		   province_id = 1499 #Hainan
+		   province_id = 2674 #Kwangchowan
+		   province_id = 1608 #Ningbo
+		}
+		any_neighbor_province = {
+			is_core = RCH
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "CHIN121.A"
+		add_core = RCH
+		secede_province = RCH
+	}
+}
+
+### Consolidation of RCH - Good Job on setting up your political system. You may now annex the whole of the Jurchen Territories as a reward
+
+country_event = {
+	id = 1641220
+	title = "CHIN122.T" 
+	desc = "CHIN122.D"
+	picture = "sunrise"
+	
+	fire_only_once = yes
+	
+	trigger = {	
+	    exists = yes
+		tag = JAP 
+		has_global_flag = RCH_exists
+		exists = RCH
+		NOT = { has_country_flag = RCH_consolidated }
+		NOT = { 
+		   exists = GMJ
+		   exists = HUI
+		   exists = HNN
+		   exists = FJU
+		   exists = GXI 
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	### Annex Liaodong into the Empire
+
+	option = {
+		name = "CHIN122.A"
+		set_country_flag = RCH_consolidated 
+		RCH = { country_event = 164123 }
+		ai_chance = { factor = 100 }
+	}
+	
+	### We will be a nice overlord.
+	
+	option = {
+		name = "CHIN122.B"
+		set_country_flag = RCH_consolidated
+		prestige = -5
+		ai_chance = { factor = 0 }
+	}
+}
+
+### Jurchens suck. We don't really need them right?
+
+country_event = {
+	id = 164123
+	title = "CHIN123.T" 
+	desc = "CHIN123.D"
+	picture = "japanese_chi"
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "CHIN123.A"
+		relation = { who = JAP value = -50 }
+		any_owned = { limit = { is_core = MCH NOT = { is_core = MCC } } remove_core = RCH add_core = JAP secede_province = JAP }
+		any_owned = { limit = { is_core = MCK } remove_core = RCH secede_province = JAP }
+	}
+}
+
+#### Collapse of RCH - This is a bit of a troll since almost all of these warlords are communist. Don't let RCH collapse ####
+
+# Collapse of Reorganized China - This is not a fire only once as it can technically happen twice.
+
+### This does not trigger if RCH is at war to allow Japan to restore control over it. JAP AI is rigged to always restore order on puppets.
+
+country_event = {
+	id = 164124
+	title = "CHIN124.T" 
+	desc = "CHIN124.D"
+	picture = "xinhai"
+	
+	trigger = {	
+	    exists = yes
+		tag = RCH 
+		war = no
+        NOT = { vassal_of = JAP }
+	}
+	
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = "CHIN124.A"
+		prestige = -25
+		clr_global_flag = RCH_exists 
+		all_core = { remove_core = RCH }
+		### Your reward for collapse
+		any_country = {
+			limit = {
+				OR = {
+					tag = HNN					
+					tag = GXI
+					tag = FJU	
+                    tag = HUI
+                    tag = GMJ
+                    tag = MCK						
+				}
+				exists = no 
+			}
+		    government = proletarian_dictatorship
+		    ruling_party_ideology = communist
+		    political_reform = none_voting
+		    political_reform = party_appointed
+		    political_reform = no_meeting
+		    political_reform = state_press
+		    political_reform = state_controlled
+		    political_reform = underground_parties
+		    political_reform = closed_borders
+		    political_reform = mandatory_service
+		    political_reform = all_voting_pops
+		    political_reform = no_slavery
+		}
+		any_owned = {
+			limit = { is_core = HUI }
+			secede_province = HUI
+		}
+		any_owned = {
+			limit = { is_core = GNG }
+			secede_province = GNG
+		}
+		any_owned = {
+			limit = { is_core = GXI }
+			secede_province = GXI
+		}
+		any_owned = {
+			limit = { is_core = GMJ }
+			secede_province = GMJ
+		}
+		any_owned = {
+			limit = { is_core = HNN }
+			secede_province = HNN
+		}
+		any_owned = {
+			limit = { is_core = MCK }
+			secede_province = MCK
+		}
+		any_owned = {
+			limit = { is_core = SZC }
+			secede_province = SZC
+		}
+		any_owned = {
+			limit = { is_core = XBI }
+			secede_province = XBI
+		}
+		any_owned = {
+			limit = { is_core = YNN }
+			secede_province = YNN
+		}
+		any_owned = {
+			limit = { is_core = FJU }
+			secede_province = FJU
+		}
+        CHI_1508 = { add_core = SXI }
+		CHI_1513 = { add_core = SXI }
+		any_owned = {
+			limit = { is_core = SXI }
+			secede_province = SXI
+		}
+		any_country = {
+			limit = { is_greater_power = yes }
+			diplomatic_influence = { who = THIS value = -200 }
+		} 		
+		annex_to = GMJ
+	}
+}
+
+##################################### The Collapse of Japan - Or the CHI666 event ########################################
+
+country_event = {
+	id = 164125
+	title = "CHIN664.T" 
+	desc = "CHIN664.D"
+	picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = "CHIN664.A"
+        prestige_factor = -0.99
+		set_country_flag = japan_is_dead
+		clr_country_flag = goodbye_han
+		clr_country_flag = supremacy_korea
+		clr_country_flag = the_sun_has_risen
+		clr_country_flag = JAP_takasago
+		clr_country_flag = sangoku
+		clr_country_flag = JAP_wants_panama
+		clr_global_flag = no_andagoya_canal
+		### Yeah, this is a modifier used for BOG but I'm going to use it here as well to cripple japan. Its not like anyone is ever going to see this
+		add_country_modifier = {
+			name = intergrating_france
+			duration = 365
+		}
+		add_country_modifier = {
+			name = war_justification_blocked
+			duration = 365
+		}
+		### Opening of the Japanese Committee
+		any_country = {
+		   limit = {
+		     OR = {
+		        has_country_flag = the_ultimate_war_DNG 
+				has_country_flag = the_ultimate_war_CHI
+		     }
+		   }
+		   country_event = 164126
+		}
+		### The End of Japan
+		country_event = { id = 164127 days = 365 }
+	}
+}
+
+### This event just exists to tell CHI/DNG that Japan will be dismantled in 365 days. Please wait.
+
+country_event = {
+	id = 164126
+	title = "CHIN665.T" 
+	desc = "CHIN665.D"
+	picture = "sunset"
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = "CHIN665.A"
+		any_pop = { militancy = -1 }
+	}
+}
+
+### THE END OF JAPAN - MAJOR ###
+### YOU HAVE OFFICALLY MURDERED THE WEEABOOS. ALL IS WELL IN THE WORLD.
+
+country_event = {
+	id = 164127
+	title = "CHIN666.T" 
+	desc = "CHIN666.D"
+	#picture = "warlords"
+	
+	major = yes
+	is_triggered_only = yes 
+	
+	option = {
+		name = "CHIN666.A"
+		capital = 1655
+		all_core = { remove_core = JAP }
+        JAP_1660 = { add_core = SAT }
+		1678 = { add_core = RYU remove_core = SAT }
+		1679 = { add_core = RYU remove_core = SAT }
+		JAP_1665 = { add_core = HAC }
+		JAP_1640 = { add_core = MOI }
+		1659 = { add_core = MOI }
+		1657 = { add_core = MOI }
+		1655 = { add_core = MOI }		
+		1656 = { add_core = TKG }
+		1658 = { add_core = TKG }
+		JAP_1675 = { add_core = KAG }
+		1675 = { add_core = TKG remove_core = KAG }
+		1676 = { add_core = TKG remove_core = KAG }
+		JAP_1649 = { add_core = MSH }
+		JAP_1672 = { add_core = SEN }
+		JAP_1642 = { add_core = AIN }
+		any_owned = {
+			limit = { is_core = SAT }
+			secede_province = SAT
+		}
+		any_owned = {
+			limit = { is_core = RYU }
+			secede_province = RYU
+		}
+		any_owned = {
+			limit = { is_core = HAC }
+			secede_province = HAC
+		}
+		any_owned = {
+			limit = { is_core = TKG }
+			secede_province = TKG
+		}
+		any_owned = {
+			limit = { is_core = KAG }
+			secede_province = KAG
+		}
+		any_owned = {
+			limit = { is_core = MSH }
+			secede_province = MSH
+		}
+		any_owned = {
+			limit = { is_core = SEN }
+			secede_province = SEN
+		}
+		any_owned = {
+			limit = { is_core = AIN }
+			secede_province = AIN
+		}
+		any_country = {
+		   limit = {
+		      exists = yes
+		      primary_culture = japanese
+			  NOT = { tag = JAP }
+		   }  
+	       government = democracy
+	       political_reform = state_equal_weight
+	       political_reform = universal_weighted_voting
+ 	       political_reform = yes_meeting
+	       political_reform = censored_press
+	       political_reform = no_trade_unions
+	       political_reform = first_past_the_post
+	       political_reform = non_secret_ballots
+		   set_country_flag = transitional_government
+		}
+		any_country = {
+		   limit = {
+		      has_country_flag = the_ultimate_war_CHI
+		   }  
+		   diplomatic_influence = { who = SAT value = 400 }
+		   relation = { who = SAT value = 400 }
+		   diplomatic_influence = { who = HAC value = 400 }
+		   relation = { who = HAC value = 400 }
+		}	
+		any_country = {
+		   limit = {
+		      has_country_flag = the_ultimate_war_DNC
+		   }  
+		   diplomatic_influence = { who = SEN value = 400 }
+		   relation = { who = SEN value = 400 }
+		   diplomatic_influence = { who = AIN value = 400 }
+		   relation = { who = AIN value = 400 }
+		}			
+		change_tag = MOI 		
+	}
+}
+
 
 ##################################### China Flood Events. Quick C/P with same ID codes. ##########################################
 
 country_event = {
 	id = 164506
-	title = "The Huang He Floods!"
-	desc = "The enormous Huang He river has flooded!"
+	title = "CHIFLOOD1.T"
+	desc = "CHIFLOOD1.D"
 	fire_only_once = yes
-	major = yes
 	picture = "destroyed_forest"
 
 	trigger = {	exists = yes
@@ -55,9 +7134,8 @@ country_event = {
 	}
 	
 	option = {
-		name = "Oh no!"
-			set_global_flag = huang1
-			
+		name = "CHIFLOOD1.A"
+			set_global_flag = huang1			
 			1510 = { 
 				any_pop = {
 				reduce_pop = 0.80
@@ -70,13 +7148,11 @@ country_event = {
 	}
 }
 
-
 country_event = {
 	id = 164507
-	title = "The Huang He bursts it's banks again!"
-	desc = "The enormous Huang He river has flooded again!"
+	title = "CHIFLOOD2.T"
+	desc = "CHIFLOOD2.D"
 	fire_only_once = yes
-	major = yes
 	picture = "destroyed_forest"
 
 	trigger = {	exists = yes
@@ -90,7 +7166,7 @@ country_event = {
 	}
 	
 	option = {
-		name = "But we haven't cleared up after last time yet"
+		name = "CHIFLOOD2.A"
 		set_global_flag = huang2	
 		1563 = { 
 			any_pop = {
@@ -104,13 +7180,11 @@ country_event = {
 	}
 }
 
-
 country_event = {
 	id = 164508
-	title = "The Huang He bursts it's banks once more!"
-	desc = "The enormous Huang He river has flooded yet again!"
+	title = "CHIFLOOD3.T"
+	desc = "CHIFLOOD3.D"
 	fire_only_once = yes
-	major = yes
 	picture = "destroyed_forest"
 
 	trigger = {	exists = yes
@@ -124,7 +7198,7 @@ country_event = {
 	}
 	
 	option = {
-		name = "Not again!"
+		name = "CHIFLOOD2.A"
 		set_global_flag = huang3	
 		1510 = { 
 			any_pop = {
@@ -154,637 +7228,5 @@ country_event = {
 			}
 		}
 			
-	}
-}
-
-####################### The Taiping Cultural Assimilation will make it possible for specific events to actually occur and not have a MASSIVE FUCKING HAN BLOB. ############################# 
-
-country_event = {
-	id = 44181
-	title = "EVTNAME44101"
-	desc = "EVTDESC44101"
-	picture = "yang_xiuqing"
-
-	trigger = {	
-	tag = TAI
-	NOT = { has_country_flag = hkogp } 
-    }
-
-	mean_time_to_happen = { 
-	days = 1
-	}	
-
-	option = {
-	name = "EVT44101OPTA"
-	set_country_flag = hkogp
-	prestige = 10
-		}
-}
-
-country_event = {
-	id = 44189
-	title = "EVTNAME44189"
-	desc = "EVTNAME44189"
-	picture = "yang_xiuqing"
-
-	trigger = {	
-	year = 1846
-	NOT = { year = 1847 }
-	NOT = { TAI = { has_country_flag = final_TAI_revolution } }
-	NOT = { has_country_flag = inevitable_war }
-	OR = {
-	is_culture_group = chinese
-	is_culture_group = central_asian
-	     }
-    }
-
-	mean_time_to_happen = { 
-	days = 1
-	}	
-
-	option = {
-	name = "EVTOPTA44187"
-	set_country_flag = inevitable_war
-	money = 250000
-	add_country_modifier = {
-			name = the_inevitable_war_CHI
-			duration = 3700
-	    }
-    }
-}
-
-country_event = {
-	id = 44187
-	title = "EVTNAME44187"
-	desc = "EVTDESC44187"
-	picture = "tonghak_rebellion"
-	major = yes
-
-	trigger = {	
-	tag = TAI
-	year = 1856
-	war = no
-	NOT = { has_country_flag = final_TAI_revolution }
-	has_country_flag = hkogp 
-    }
-
-	mean_time_to_happen = { 
-	months = 1
-	}	
- 
-	option = {
-	name = "EVTOPTA44187"
-	set_global_flag = white_lotus_trigger
-	set_country_flag = final_TAI_revolution 
-	add_country_modifier = {
-	name = taiping_draft
-	duration = -1
-	}
-	add_country_modifier = {
-	name = small_country_draft
-	duration = 730
-	}
-	add_country_modifier = {
-	name = CLM_fight
-	duration = 730
-	}
-	any_country = {
-	limit = {
-	tag = MIG
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = TIB
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = MGL
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = CHG
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = TNG
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	## Extra Tags are included ##
-	any_country = {
-	limit = {
-	tag = SHU
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = DAX
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = XBI
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = GNG
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	## The player cannot get away from this if they tried doing a reconquest with Overseas Chinese ###
-	any_country = {
-	limit = {
-	tag = DNG
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	any_country = {
-	limit = {
-	tag = GAN
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44188
-	}
-	prestige = 10
-    }
-}
-
-country_event = {
-	id = 44192
-	title = "The Conquest Continues"
-	desc = "We control the majority of China, but there are still states that are disconnected from the final unification of China. They should be annexed as well."
-	picture = "taiping_attack"
-
-	trigger = {
-	NOT = { tag = CHI }
-	NOT = { tag = BTR }
-	NOT = { year = 1880 }
-	OR = {
-    NOT = { exists = TAI }
-	tag = TAI
-	}
-    TAI = { has_country_flag = final_TAI_revolution }
-	OR = {
-	owns = 1550
-	tag = TAI
-	}
-	OR = {
-	tag = TIB
-	is_culture_group = chinese
-	is_culture_group = central_asian
-	    }
-	war = no
-    }
-	
-	mean_time_to_happen = { 
-	days = 1
-	}	
-
-	option = {
-	name = "The end is near!"
-	war_exhaustion = -90
-	CHI_1578 = { add_core = THIS }
-	any_country = {
-	limit = {
-	OR = {
-	is_culture_group = chinese
-	is_culture_group = central_asian
-	}
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 44193
-	   }
-    }
-}
-
-country_event = {
-	id = 44193
-	title = "Unification is inevitable!"
-	desc = "We should defend ourselves against this extreme threat!"
-	picture = "taiping_attack"
-
-    is_triggered_only = yes
-	
-	option = {
-	name = "The War Continues!"
-	war_exhaustion = -80
-	FROM = {
-	   war = {
-		target = THIS
-		attacker_goal = {
-		casus_belli = china_conquest
-		}
-			
-		defender_goal = {
-		casus_belli = china_conquest
-		     }
-	    call_ally = yes
-	      }
-       }
-	}
-}
-
-country_event = {
-	id = 44188
-	title = "EVTNAME44188"
-	desc = "EVTDESC44188"
-	picture = "taiping_attack"
-
-	is_triggered_only = yes
-
-	option = {
-	name = "EVTOPTA44188"
-	add_country_modifier = {
-	name = taiping_draft
-	duration = -1
-	}
-	add_country_modifier = {
-	name = CLM_fight
-	duration = 730
-	}
-	add_country_modifier = {
-	name = small_country_draft
-	duration = 730
-	}
-	FROM = {
-	   war = {
-		target = THIS
-		attacker_goal = {
-		casus_belli = china_conquest
-		}
-			
-		defender_goal = {
-		casus_belli = china_conquest
-		     }
-	    call_ally = yes
-	      }
-       }
-	}
-}
-
-# In the circumstances where TAI does not exist. Whomever owns the capital of MIG will trigger the attack.
-
-country_event = {
-	id = 441870
-	title = "EVTNAME441870"
-	desc = "EVTDESC441870"
-	picture = "tonghak_rebellion"
-	major = yes
-
-	trigger = {	
-	year = 1856
-	owns = 2221
-	OR = {
-	is_culture_group = chinese
-	is_culture_group = central_asian
-	is_culture_group = oversea_chinese
-	}
-	NOT = { tag = CHI }
-	NOT = { exists = TAI }
-	war = no
-	has_country_flag = inevitable_war
-	NOT = { has_country_flag = final_CHI_revolution }
-    }
-
-	mean_time_to_happen = { 
-	months = 1
-	}	
- 
-	option = {
-	name = "EVTOPTA441870"
-	set_global_flag = white_lotus_trigger
-	set_country_flag = final_CHI_revolution
-	TAI = { set_country_flag = final_TAI_revolution }
-	add_country_modifier = {
-	name = taiping_draft
-	duration = -1
-	}
-	add_country_modifier = {
-	name = small_country_draft
-	duration = 730
-	}
-	add_country_modifier = {
-	name = CLM_fight
-	duration = 730
-	}
-	any_country = {
-	limit = {
-	tag = MIG
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = TIB
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = MGL
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = CHG
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = TNG
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	## Extra Tags are included ##
-	any_country = {
-	limit = {
-	tag = SHU
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = DAX
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = XBI
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = GNG
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	## The player cannot get away from this if they tried doing a reconquest with Overseas Chinese ###
-	any_country = {
-	limit = {
-	tag = DNG
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	any_country = {
-	limit = {
-	tag = GAN
-	NOT = { tag = THIS }
-	any_owned_province = { is_core = CHI }
-	exists = yes
-	}
-	country_event = 441880
-	}
-	prestige = 10
-    }
-}
-
-country_event = {
-	id = 441880
-	title = "EVTNAME441880"
-	desc = "EVTDESC441880"
-	picture = "taiping_attack"
-
-	is_triggered_only = yes
-
-	option = {
-	name = "EVTOPTA44188"
-	add_country_modifier = {
-	name = taiping_draft
-	duration = -1
-	}
-	add_country_modifier = {
-	name = CLM_fight
-	duration = 730
-	}
-	add_country_modifier = {
-	name = small_country_draft
-	duration = 730
-	}
-	FROM = {
-	   war = {
-		target = THIS
-		attacker_goal = {
-		casus_belli = china_conquest
-		}
-			
-		defender_goal = {
-		casus_belli = china_conquest
-		     }
-	    call_ally = yes
-	      }
-       }
-	}
-}
-
-# Standard COTW Trigger
-
-country_event = {
-	id = 44183
-	title = "EVTNAME44183"
-	desc = "EVTDESC44183"
-	picture = "taiping_attack"
-
-	major = yes
-
-	trigger = {	
-	tag = CHI
-	has_country_flag = unlock_conquests
-	has_country_flag = taiping_china
-    year = 1870
-	NOT = { has_global_flag = the_conquest_of_the_west }
-    }
-
-	mean_time_to_happen = { 
-	months = 6
-	}	
-
-	option = {
-	name = "EVTOPTA44183"
-    CHI_1557 = { add_core = CHI }	
-    set_global_flag = the_conquest_of_the_west
-	add_country_modifier = {
-			name = soldiers_dont_book
-			duration = -1
-	}
-	add_country_modifier = {
-			name = preparing_for_war
-			duration = -1
-	}
-	prestige = 10
-	}
-}
-
-# China formation (non-threat MCK is assumed)
-
-country_event = {
-	id = 44185
-	title = "EVTNAME44185"
-	desc = "EVTDESC44185"
-	picture = "taiping_attack"
-
-	major = yes
-
-	trigger = {	
-	tag = CHI
-	has_country_flag = unlock_conquests
-	NOT = { has_country_flag = manchu_china }
-	NOT = { has_country_flag = taiping_china }
-    year = 1870
-	NOT = { has_global_flag = the_conquest_of_the_west }
-    }
-
-	mean_time_to_happen = { 
-	months = 6
-	}	
-
-	option = {
-	name = "EVTOPTA44183"
-    CHI_1557 = { add_core = CHI }
-    set_global_flag = the_conquest_of_the_west
-	add_country_modifier = {
-			name = soldiers_dont_book
-			duration = -1
-	}
-	add_country_modifier = {
-			name = preparing_for_war
-			duration = -1
-	}	
-	prestige = 10
-	}
-}
-
-# Finishing the Conquest
-
-country_event = {
-	id = 44190
-	title = "EVTNAME44186"
-	desc = "EVTDESC44186"
-	picture = "taiping_defeated"
-
-	trigger = {	
-	OR = {
-	tag = CHI
-	tag = TAI
-	}
-	NOT = { has_country_flag = westernchinesearehere }
-    has_country_flag = the_conquest_of_the_west_partthree
-	CHI_1557 = { owned_by = THIS }
-	CHI_1532 = { owned_by = THIS }
-	CHI_1597 = { owned_by = THIS }
-	CHI_1600 = { owned_by = THIS }	
-    }
-
-	mean_time_to_happen = { 
-	days = 7
-	}	
-
-	option = {
-	name = "EVTOPTA44186"
-	clr_country_flag = the_conquest_of_the_west_partthree
-    set_country_flag = westernchinesearehere
-	remove_country_modifier = soldiers_dont_book
-	remove_country_modifier = preparing_for_war
-	prestige = 10
-	}
-}
-
-# AI event to remove modifier if they did a dumb and not finish the conquest by 1890. Seriously?
-
-country_event = {
-	id = 44191
-	title = "EVTNAME44186"
-	desc = "EVTDESC44186"
-	picture = "taiping_defeated"
-
-	trigger = {	
-	OR = {
-	tag = CHI
-	tag = TAI
-	}
-	ai = yes
-	year = 1890
-    has_global_flag = the_conquest_of_the_west
-	NOT = { has_country_flag = its_concluded_yo }
-	NOT = { has_country_flag = westernchinesearehere }
-    }
-
-	mean_time_to_happen = { 
-	days = 7
-	}	
-
-	option = {
-	name = "EVTOPTA44186"
-	set_country_flag = its_concluded_yo
-	remove_country_modifier = soldiers_dont_book
-	remove_country_modifier = preparing_for_war
-	prestige = -10
 	}
 }

@@ -1,0 +1,1094 @@
+
+#######################################################
+# Collapse of the Dzungar Khanate and Rise of Turania #
+#######################################################
+
+country_event = {
+	id = 48901 
+	title = "DZGN1.T"
+	desc = "DZGN1.D"
+	picture = "oirat_khanate"
+    fire_only_once = yes
+
+	trigger = { 
+	   tag = CHG 
+	   NOT = { has_country_flag = turania_presentation }
+	}
+
+    option = {
+        name = "DZGN1.A"
+		prestige = 1
+		set_country_flag = turania_presentation 
+		add_country_modifier = { name = global_baby_boom duration = 1065 }
+		add_country_modifier = { name = preparing_for_war duration = -1 }
+		add_country_modifier = { name = overextended_khanate duration = -1 }
+		add_country_modifier = { name = uncivilized_isolationism duration = -1 }
+		add_country_modifier = { name = war_justification_blocked duration = -1 }
+		remove_country_modifier = western_influences
+		### Honest to god savages
+		any_country = {
+		   limit = {
+		      NOT = { vassal_of = THIS }
+			  capital_scope = { continent = asia }
+		   }
+		   relation = { who = THIS value = -200 }
+		}
+    }
+}
+
+country_event = {
+	id = 489020
+	title = "DZGN2.T"
+	desc = "DZGN2.D"
+	picture = "Oirat_script"
+    fire_only_once = yes
+
+	trigger = { 
+	   tag = CHG 
+	   year = 1845
+	   NOT = { has_country_flag = last_era_of_reform }
+	}
+		
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    option = {
+        name = "DZGN2.A"
+		set_country_flag = last_era_of_reform
+		prestige = 1
+		set_country_flag = turania_presentation 
+		remove_country_modifier = overextended_khanate
+		economic_reform = interactive
+		activate_technology = classicism_n_early_romanticism
+		remove_country_modifier = uncivilized_isolationism
+		add_country_modifier = {
+			name = "western_influences"
+			duration = -1
+		}
+        any_pop = {
+            militancy = 2
+            consciousness = 2
+        }
+    }
+}
+
+### The introduction of western artillery and calvary tactics
+
+country_event = {
+	id = 489030
+	title = "DZGN3.T"
+	desc = "DZGN3.D"
+	#picture = "oirat_khanate"
+    fire_only_once = yes
+
+	trigger = { 
+	   tag = CHG 
+	   year = 1846
+	   NOT = { has_country_flag = last_era_of_reform_wep }
+	}
+		
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    option = {
+        name = "DZGN3.A"
+		set_country_flag = last_era_of_reform_wep
+		military_reform = yes_foreign_training
+        military_reform = yes_army_schools
+		military_reform = yes_foreign_officers
+		military_reform = professional_officers
+		activate_technology = military_staff_system
+		activate_technology = bronze_muzzle_loaded_artillery
+		activate_technology = army_command_principle
+		build_factory_in_capital_state = bronze_artillery_factory
+		build_factory_in_capital_state = gunpowder_factory
+		any_country = {
+		   limit = {
+		      exists = no
+		      OR = {
+			     primary_culture = kazak
+				 primary_culture = kirgiz
+				 primary_culture = uighur
+				 primary_culture = altaic
+				 primary_culture = tajik
+				 primary_culture = oirat
+				 primary_culture = mongol
+			  }
+		   }
+		   military_reform = yes_foreign_training
+           military_reform = yes_army_schools
+		   military_reform = yes_foreign_officers
+		   military_reform = professional_officers
+		   activate_technology = military_staff_system
+		   activate_technology = bronze_muzzle_loaded_artillery
+		   activate_technology = army_command_principle
+		}		
+        any_pop = {
+            militancy = 2
+            consciousness = 2
+        }
+    }
+}
+
+### The introduction of Western Industry
+
+### Obviously the break-offs don't get this one.
+
+country_event = {
+	id = 489040
+	title = "DZGN4.T"
+	desc = "DZGN4.D"
+	#picture = "oirat_khanate"
+    fire_only_once = yes
+
+	trigger = { 
+	   tag = CHG 
+	   year = 1848
+	   NOT = { has_country_flag = last_era_of_reform_ind }
+	}
+		
+	mean_time_to_happen = {
+		days = 31
+	}
+
+    option = {
+        name = "DZGN4.A"
+		set_country_flag = last_era_of_reform_ind
+        economic_reform = yes_pre_indust
+		activate_technology = mechanical_production
+		activate_technology = guild_based_production				
+	    build_factory_in_capital_state = cement_factory
+		build_factory_in_capital_state = lumber_mill
+		build_factory_in_capital_state = wool_mill
+		build_factory_in_capital_state = canned_food_factory
+		build_factory_in_capital_state = regular_clothes_factory
+		build_factory_in_capital_state = furniture_factory
+        any_pop = {
+            militancy = 2
+            consciousness = 2
+        }
+    }
+}
+
+########### Leads into Shun vs Dzungar War in MOD CHIFlavor ###########
+
+#### Dislocation Events are triggered by the end of that war #####
+
+#### The Khan Dies and has lost to China - Total Collapse into Oriat
+
+country_event = { 
+	id = 48902 
+	title = "DZGN5.T"
+	desc = "DZGN5.D"
+	picture = "oirat_khanate"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = CHG 
+	   has_country_flag = CHG_collapse_bad_scenario
+	   NOT = { has_country_flag = empire_dislocated }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	option = { 
+	name = "DZGN5.A"
+	set_country_flag = empire_dislocated
+	remove_country_modifier = war_justification_blocked
+	any_owned = { limit = { is_core = MCH } secede_province = MCH }	
+	political_reform = confederalism
+	remove_country_modifier = neutrality
+	
+	1469 = { remove_core = ALT }
+	CHI_2608 = { add_core = TNT }	
+	CHI_1600  = { add_core = TNT }
+	
+	any_owned = { 
+	limit = { OR = { is_core = TNT is_core = UGH is_core = ZHE is_core = MGL is_core = BUK is_core = KHI is_core = BDK is_core = KOK } }
+	remove_core = CHG
+	}
+	
+	## Lets speedrun the end of the Khanate with these
+	random_owned = { limit = { owner = { medicine_reform = herbalism } } owner = { economic_reform = alchemy activate_technology = basic_chemistry  } }
+	random_owned = { limit = { owner = { medicine_reform = alchemy } } owner = { economic_reform = foreign_surgeons activate_technology = medicine } }
+	
+	1192 = { add_core = KHI }
+	release = KHI	
+
+    	
+	release = ZHE
+	
+	release = ALT
+	release = BRY
+	release = MGL
+	
+	1200 = { add_core = BDK }	
+	release = BDK 	
+
+	release = UGH 
+	any_owned = { limit = { is_core = CHI } secede_province = MGL }
+	any_owned = { limit = { is_core = TIB } secede_province = UGH }
+	release = BUK 
+	release = KOK
+
+	CHI_1600  = { add_core = UGH }
+	CHI_2608  = { add_core = MGL }
+	MGL = { capital = 1465 }
+	
+    1197 = { add_core = ZHE }
+    1195 = { add_core = ZHE }
+    1189 = { add_core = ZHE }	
+
+    RUS_1185 = { add_core = KOK }	
+	1208 = { add_core = KOK }
+	1195 = { add_core = KOK }
+	1197 = { add_core = KOK }
+	1207 = { add_core = KOK }
+	
+	1200 = { add_core = BDK }
+	1200 = { add_core = ARY }
+	
+	1201 = { add_core = BUK }
+	1202 = { add_core = BUK }
+	1207 = { add_core = BUK }		
+	1210 = { add_core = BUK }	
+	
+	1191 = { remove_core = BUK }	
+	
+	remove_accepted_culture = uzbek 
+	remove_accepted_culture = uighur 
+	remove_accepted_culture = kazak  
+	
+	release_vassal = TIB
+	TIB = { government = absolute_monarchy }
+	
+	change_tag = TNT
+	
+	ALT = { all_core = { remove_core = TNT } }
+	CHI_1600  = { add_core = CHG }
+	1469 = { add_core = ALT }	
+	ai_chance = { factor = 60 }
+	}
+}
+
+#### The Khan Dies and has defeated China - You get half of Kazakhstan and CHG Survives
+
+country_event = { 
+	id = 489021
+	title = "DZGN6.T"
+	desc = "DZGN6.D"
+	picture = "oirat_khanate"
+	
+	major = yes
+	
+	trigger = { 
+	   tag = CHG 
+	   has_country_flag = CHG_collapse_good_scenario
+	   NOT = { has_country_flag = empire_dislocated }
+	}
+	
+	mean_time_to_happen = { 
+	months = 2 
+	}
+	
+	option = { 
+	name = "DZGN6.A"
+	set_country_flag = empire_dislocated
+	remove_country_modifier = war_justification_blocked
+	any_owned = { limit = { is_core = MCH } remove_core = THIS secede_province = MCH }
+	1469 = { remove_core = ALT }
+	CHI_2608 = { add_core = TNT }	
+	TNT = { capital = 2608 }
+	
+	any_owned = { 
+	limit = { OR = { is_core = MCH is_core = ZHE is_core = MGL is_core = BUK is_core = KHI is_core = BDK is_core = KOK } }
+	remove_core = CHG
+	}
+	
+	## Lets speedrun the end of the Khanate with these
+	random_owned = { limit = { owner = { medicine_reform = herbalism } } owner = { economic_reform = alchemy activate_technology = basic_chemistry  } }
+	random_owned = { limit = { owner = { medicine_reform = alchemy } } owner = { economic_reform = foreign_surgeons activate_technology = medicine } }
+	
+	1192 = { add_core = KHI }
+	release = KHI
+	
+	release_vassal = TIB
+	TIB = { government = absolute_monarchy }
+    		
+	release = ZHE
+	
+	release = ALT
+	release = BRY
+	release = MGL 
+	
+	1200 = { add_core = BDK }	
+	release = BDK 
+ 
+	release = UGH 
+	any_owned = { limit = { is_core = CHI } secede_province = MGL }
+	any_owned = { limit = { is_core = TIB } secede_province = UGH }
+	release = BUK 
+	release = KOK
+	
+	CHI_1600  = { add_core = UGH }
+	CHI_2608  = { add_core = MGL }
+	MGL = { capital = 1465 }
+	
+    1197 = { add_core = ZHE }
+    1195 = { add_core = ZHE }
+    1189 = { add_core = ZHE }	
+
+    RUS_1185 = { add_core = KOK }	
+	1208 = { add_core = KOK }
+	1195 = { add_core = KOK }
+	1197 = { add_core = KOK }
+	1207 = { add_core = KOK }
+	
+	1200 = { add_core = BDK }
+	1200 = { add_core = ARY }
+	
+	1201 = { add_core = BUK }
+	1202 = { add_core = BUK }
+	1207 = { add_core = BUK }		
+	1210 = { add_core = BUK }	
+	
+	1191 = { remove_core = BUK }	
+	
+	1469 = { add_core = ALT }
+	
+	ZHE = { any_owned = { limit = { is_core = KOK } add_core = THIS secede_province = THIS } capital = 2614 }
+	
+	}
+}
+
+### These expansion events are cut for now till I can give the Khanate Proper Content
+
+#country_event = { 
+#	id = 48903
+#	title = "DZG3.T"
+#	desc = "DZG3.D"
+#	picture = "oirat_khanate"
+#	
+#	trigger = { 
+#	tag = CHG 
+#	has_country_flag = empire_dislocated 
+#	NOT = { owns = 1594 }
+#	UGH = { exists = yes NOT = { vassal_of = CHG } }
+#	war = no 
+#	NOT = { has_country_flag = kashgar }
+#	}
+#	
+#	mean_time_to_happen = { months = 35 }
+#	
+#	option = { 
+#	name = "48903.A"
+#	set_country_flag = kashgar
+#	badboy = 12
+#	casus_belli = {
+#			target = UGH
+#			type = conquest
+#			months = 24
+#		}
+#		war = {
+#			target = UGH
+#			attacker_goal = {
+#				casus_belli = conquest
+#			}
+#		}
+#	ai_chance = { factor = 100 }
+#	}
+#}
+
+#country_event = { 
+#	id = 48904
+#	title = "DZG4.T"
+#	desc = "DZG4.D"
+#	picture = "oirat_khanate"
+#	
+#	trigger = { 
+#	tag = CHG 
+#	has_country_flag = empire_dislocated 
+#	owns = 1594 
+#	NOT = { owns = 1465 }
+#	MGL = { exists = yes NOT = { vassal_of = CHG } }
+#	war = no 
+#	NOT = { has_country_flag = urga }
+#	}
+#	
+#	mean_time_to_happen = { months = 48 }
+#	
+#	option = { 
+#	name = "48904.A"
+#	badboy = 12
+#	set_country_flag = urga
+#	casus_belli = {
+#			target = MGL
+#			type = conquest
+#			months = 24
+#		}
+#		war = {
+#			target = MGL
+#			attacker_goal = {
+#				casus_belli = conquest
+#			}
+#		}
+#	ai_chance = { factor = 95 }
+#	}
+#}
+
+#country_event = { 
+#	id = 48905
+#	title = "DZG5.T"
+#	desc = "DZG5.D"
+#	picture = "oirat_khanate"
+#	
+#	trigger = { 
+#	tag = CHG 
+#	has_country_flag = empire_dislocated 
+#	owns = 1594 
+#	NOT = { owns = 1186 }
+#	owns = 1465
+#	ZHE = { exists = yes NOT = { vassal_of = CHG } }
+#	war = no 
+#	}
+#	
+#	mean_time_to_happen = { months = 47 }
+#	
+#	option = { 
+#	name = "48905.A"
+#	badboy = 15
+#	casus_belli = {
+#			target = ZHE
+#			type = conquest
+#			months = 24
+#		}
+#		war = {
+#			target = ZHE
+#			attacker_goal = {
+#				casus_belli = conquest
+#			}
+#		}
+#	ai_chance = { factor = 95 }
+#	}
+#}
+
+#country_event = { 
+#	id = 48906
+#	title = "DZG6.T"
+#	desc = "DZG6.D"
+#	picture = "oirat_khanate"
+#	
+#	trigger = { 
+#	tag = CHG 
+#	has_country_flag = empire_dislocated 
+#	owns = 1594 
+#	NOT = { owns = 1469 }
+#	TNT = { exists = yes NOT = { vassal_of = CHG } }
+#	war = no 
+#	}
+#	
+#	mean_time_to_happen = { months = 50 }
+#	
+#	option = { 
+#	name = "48906.A"
+#	badboy = 5
+#	casus_belli = {
+#			target = TNT
+#			type = conquest
+#			months = 24
+#		}
+#		war = {
+#			target = TNT
+#			attacker_goal = {
+#				casus_belli = conquest
+#			}
+#		}
+#	ai_chance = { factor = 95 }
+#	}
+#	
+#	option = { 
+#	name = "48906.B"
+#	ai_chance = { factor = 5 }
+#	}
+#}
+
+country_event = { 
+	id = 48907
+	title = "DZG7.T"
+	desc = "DZG7.D"
+	picture = "central_asia"
+	
+	trigger = { 
+	  tag = CHG
+	  civilized = no 
+	  year = 1860 
+	  NOT = { has_country_flag = modernization_CHG }
+	}
+	
+	mean_time_to_happen = { months = 8 }
+	
+	option = { 
+	name = "48907.A"
+	set_country_flag = modernization_CHG
+	country_event = { id = 48908 days = 487 }
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "48907.B"
+	set_country_flag = modernization_CHG
+	JAP = { country_event = { id = 48930 days = 50 } }
+	ai_chance = { 
+	factor = 40 
+		}
+	}
+	
+	option = { 
+	name = "48907.C"
+	set_country_flag = modernization_CHG
+	random_country = { limit = { continent = europe any_owned_province = { OR = { is_core = HND is_core = DRA } } } country_event = { id = 48940 days = 275 } }
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+}
+
+country_event = { 
+	id = 48909
+	title = "DZG9.T"
+	desc = "DZG9.D"
+	picture = "minister_romanov"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_flag = mad_baron
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = { 
+	months = 32
+	}
+	
+	option = { 
+	name = "48909.A"
+	prestige = -3 
+	any_pop = { 
+	limit = { type = aristocrats } militancy = 4 
+		}
+	add_country_modifier = { 
+	name = stroganov_romanov
+	duration = 9125
+		}
+	ai_chance = { 
+		factor = 1
+		}
+	}
+	
+	option = { 
+	name = "48909.B"
+	prestige = -2
+	define_general = {
+		name = "Roman Stroganov-Romanov"
+		personality = inspiring
+		background = natural_born_leader
+		}
+	}
+	
+	option = { 
+	name = "48909.C"
+	set_country_flag = steppe_madness
+	prestige = 3 
+	}
+}
+
+country_event = { 
+	id = 48910
+	title = "DZG10.T"
+	desc = "DZG10.D"
+	picture = "tibet"
+	
+	trigger = { 
+	tag = CHG 
+	has_country_modifier = stroganov_romanov
+	TIB = { exists = yes NOT = { vassal_of = CHG } }
+	NOT = { owns = 1587 }
+	}
+	
+	mean_time_to_happen = { months = 15 }
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "48910.A"
+	war = {
+			target = TIB
+			attacker_goal = {
+				casus_belli = make_puppet
+			}
+		}
+	}
+	
+	option = { 
+	name = "48910.B"
+	relation = { who = TIB value = 100 }
+	}
+}
+
+country_event = { 
+	id = 48913
+	title = "DZG13.T"
+	desc = "DZG13.D"
+	picture = "minister_romanov"
+	
+	trigger = { 
+	tag = CHG 
+	civilization_progress = 0.5
+	has_country_modifier = stroganov_romanov
+	}
+	
+	mean_time_to_happen = { 
+	months = 25 
+	}
+	
+	option = { 
+	name = "48913.A"
+	random_owned = { limit = { owner = { army_schools = no_army_schools } } owner = { military_reform = yes_army_schools   activate_technology = bronze_muzzle_loaded_artillery  }  }
+	random_owned = { limit = { owner = { army_schools = yes_army_schools } } owner = { military_reform = army_academies   activate_technology = iron_muzzle_loaded_artillery }  }
+	random_owned = { limit = { owner = { foreign_training = no_foreign_training  } } owner = { military_reform = yes_foreign_training  activate_technology = military_staff_system  }  }
+	random_owned = { limit = { owner = { foreign_training = yes_foreign_training } } owner = { military_reform = advanced_foreign_training  activate_technology = military_plans }  }
+	any_pop = { 
+	scaled_militancy = {
+		ideology = reactionary
+		factor = 6
+			}
+		}
+	any_pop = { 
+	limit = { type = officers }
+	ideology = {
+		value = reactionary
+		factor = 0.20
+			}
+		}
+	any_pop = { 
+	limit = { type = soldiers }
+	ideology = {
+		value = liberal
+		factor = 0.20
+			}
+		}
+	}
+	
+	option = { 
+	name = "48913.B"
+	prestige = -5
+	}
+}
+
+country_event = { 
+	id = 48914
+	title = "DZG14.T"
+	desc = "DZG14.D"
+	picture = "cossack_baron"
+	
+	trigger = { 
+	tag = MGL 
+	war =  no 
+	CHG = { has_country_flag = steppe_madness }
+	}
+	
+	fire_only_once = yes 
+	
+	option = { 
+	name = "48914.A"
+	war = {
+			target = CHG
+			attacker_goal = {
+				casus_belli = conquest
+			}
+		}
+	CHG = { country_event = 48915 }
+	ai_chance = { 
+	factor = 100	
+		}
+	}
+	
+	option = { 
+	name = "48914.B"
+	ai_chance = { 
+	factor = 0	
+		}
+	}
+}
+
+country_event = { 
+	id = 48915
+	title = "DZG15.T"
+	desc = "DZG15.D"
+	picture = "cossack_baron"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "97430.A"
+	}
+}
+
+country_event = { 
+	id = 48920 #Urumqi university
+	title = "DZG20.T"
+	desc = "DZG20.D"
+	picture = "Western_education"
+	
+	trigger = { 
+	tag = CHG
+	civilized = no 
+	has_country_flag = modernization_CHG
+	}
+	
+	mean_time_to_happen = { 
+	months = 150 
+	}
+	
+	option = { 
+	name = "48920.A"
+	political_reform = federalism
+	ai_chance = { 
+	factor = 20 
+		}
+	}
+	
+	option = { 
+	name = "48920.B"
+	set_country_flag = script_question
+	money = -100000
+	any_pop = { literacy = 0.05 }
+	random_owned = { limit = { owner = { education_reform = yes_education_reform } } owner = { economic_reform = advanced_education_reform activate_technology = positivism  }  }
+	random_owned = { limit = { owner = { education_reform = no_education_reform } } owner = { economic_reform = yes_education_reform activate_technology = malthusian_thought }  }
+	political_reform = federalism
+	ai_chance = { 
+	factor = 40 
+	modifier = { 
+	factor = 0 
+	NOT = { money = 100000 }
+			}
+		}
+	}
+	
+	option = { 
+	name = "48920.C"
+	set_country_flag = university_urumqi
+	set_country_flag = script_question
+	money = -1000000
+	any_pop = { literacy = 0.1  }
+	random_owned = { limit = { owner = { education_reform = yes_education_reform } } owner = { economic_reform = advanced_education_reform activate_technology = positivism  }  }
+	random_owned = { limit = { owner = { education_reform = no_education_reform } } owner = { economic_reform = yes_education_reform activate_technology = malthusian_thought }  }
+	random_owned = { limit = { owner = { academic_institutions = universities  } } owner = { research_points = 8000 }  }
+	random_owned = { limit = { owner = { academic_institutions = madrasahs } } owner = { economic_reform = universities  activate_technology = idealism }  }
+	political_reform = federalism
+	ai_chance = { 
+	factor = 40 
+	modifier = { 
+	factor = 0 
+	NOT = { money = 1000000 }
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 48921 #Archaelogical findings
+	title = "DZG21.T"
+	desc = "DZG21.D"
+	picture = "tocharians"	
+	
+	trigger = { 
+	civilized = yes 
+	has_country_flag = university_urumqi 
+	empiricism = 1
+	owns = 1594
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = { 
+	months = 5 
+	}
+	
+	option = { 
+	name = "48921.A"
+	ai_chance = { 
+	factor = 25 
+		}
+	}
+	
+	option = { 
+	name = "48921.B"
+	money = -10000
+	set_country_flag = tocharians
+	ai_chance = { 
+	factor = 75 
+		}
+	}
+	
+}
+
+
+country_event = { 
+	id = 48922 #Archaelogical findings revealed
+	title = "DZG22.T"
+	desc = "DZG22.D"
+	picture = "tocharians"	
+
+	major = yes
+		
+	fire_only_once = yes 	
+		
+	trigger = { 
+	has_country_flag = tocharians
+	owns = 1594
+	}
+	
+	mean_time_to_happen = { 
+	months = 43 
+	}
+	
+	option = { 
+	name = "48922.A"
+	prestige = 40 
+	}
+	
+}	
+country_event = { 
+	id = 48923 #Choice of Script
+	title = "DZG23.T"
+	desc = "DZG23.D"
+	picture = "oirat_script"
+	
+	trigger = { 
+	tag = CHG
+	civilized = no 
+	has_country_flag = script_question
+	}
+	
+	mean_time_to_happen = { 
+	months = 22 
+	}
+	
+	option = { 
+	name = "48923.A"
+	clr_country_flag = script_question
+	any_pop = { literacy = 0.01 }
+	ai_chance = { 
+	factor = 60 
+		}
+	}
+	
+	option = { 
+	name = "48923.B"
+	clr_country_flag = script_question
+	any_pop = { literacy = 0.01  }
+	ai_chance = { 
+	factor = 25 	
+		}
+	}
+	
+	option = { 
+	name = "48923.C"
+	any_pop = { literacy = 0.01  }
+	clr_country_flag = script_question 
+	ai_chance = { 
+	factor = 15 	
+		}
+	}
+}
+
+country_event = {
+	id = 48930
+	title = "DZG30.T"
+	desc = "DZG30.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48930.A"
+	diplomatic_influence = { who = CHG value = 150 }
+	relation = { who = CHG value = 150 }
+	CHG = { country_event = 48931 }
+	}
+}
+
+country_event = { 
+	id = 48931
+	title = "DZG31.T"
+	desc = "DZG31.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	name = "97391.A"
+	research_points = 11000
+	set_country_flag = kawaguchi
+	}
+}
+
+country_event = { 
+	id = 48932
+	title = "DZG32.T"
+	desc = "DZG32.D"
+	picture = "japanese_lama"
+	
+	trigger = { 
+	tag = CHG
+	has_country_flag = kawaguchi
+	war = no 
+	neighbour = TIB 
+	NOT = { TIB = { vassal_of = CHG } }
+	}
+	
+	mean_time_to_happen = { 
+	months = 25
+	}
+	
+	option = { 
+	name = "48932.A" 
+	TIB = { country_event = 48933 }
+	relation = { who = TIB value = 200 }
+	relation = { who = JAP value = 50 }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+	
+	option = { 
+	name = "48932.B"
+	clr_country_flag = kawaguchi
+	relation = { who = JAP value = -50 }
+	relation = { who = TIB value = -50 }
+	ai_chance = { 
+	factor = 50 
+		}
+	}
+}
+
+country_event = { 
+	id = 48933
+	title = "DZG33.T"
+	desc = "DZG33.D"
+	picture = "japanese_lama"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48933.A"
+	JAP = { country_event = 48934 }
+	relation = { who = JAP value = 50 }
+	}
+}
+
+country_event = { 
+	id = 48934
+	title = "DZG34.T"
+	desc = "DZG34.D"
+	picture = "japanese_lama"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48934.A"
+	prestige = 4 
+	}
+}
+
+# 48935 to 48939 have been cut
+
+country_event = { 
+	id = 48940
+	title = "DZG40.T"
+	desc = "DZG40.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48940.A"
+	CHG = { country_event = { id = 48941 days = 150 } }
+	ai_chance = { 
+	factor = 70 
+		}
+	}
+	
+	option = { 
+	name = "48940.B"
+	ai_chance = { 
+	factor = 30 
+		}
+	}
+}
+
+country_event = { 
+	id = 48941
+	title = "DZG41.T"
+	desc = "DZG41.D"
+	picture = "central_asia"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48941.A"
+	research_points = 15000
+	set_country_flag = europe_travel
+	}
+}
+
+country_event = { 
+	id = 48942
+	title = "DZG42.T"
+	desc = "DZG42.D"
+	picture = "central_asia"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = CHG 
+	civilization_progress = 0.5
+	has_country_flag = europe_travel
+	}
+	
+	option = { 
+	name = "48942.A"
+	any_pop = { 
+	literacy = 0.01 
+	ideology = {
+		value = liberal
+		factor = 0.10
+			}
+		}
+	}
+}
+	
+country_event = { 
+	id = 48908
+	title = "DZG8.T"
+	desc = "DZG8.D"
+	picture = "cossack_baron"
+	
+	is_triggered_only = yes 
+	
+	option = { 
+	name = "48908.A"
+	research_points = 8000 
+	set_country_flag = foreign_adviser
+	set_country_flag = mad_baron
+	}
+}
+	

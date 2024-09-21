@@ -14,8 +14,11 @@ abandon_neutral_faction = {
 		
 		allow = {
 			war = no
+			NOT = { ruling_party_ideology = social_liberal }
+			NOT = { ruling_party_ideology = liberal }
 			NOT = { ruling_party_ideology = conservative }
 			NOT = { ruling_party_ideology = market_liberal }
+			NOT = { ruling_party_ideology = reactionary }
 		}
 		
 		effect = {
@@ -24,14 +27,13 @@ abandon_neutral_faction = {
 				limit = {
 					owner = {
 						OR = {
-							ruling_party_ideology = reactionary
 							ruling_party_ideology = fascist
 							ruling_party_ideology = paternal
 						}
 					}
 				}
 				owner = {
-					set_country_flag = beiyang_faction
+					set_country_flag = kuomintang_faction
 				}
 			}
 			random_owned = {
@@ -48,15 +50,13 @@ abandon_neutral_faction = {
 				limit = {
 					owner = {
 						OR = {
-							ruling_party_ideology = liberal
-							ruling_party_ideology = social_liberal
 							ruling_party_ideology = anarcho_liberal
 							ruling_party_ideology = socialist
 						}
 					}
 				}
 				owner = {
-					set_country_flag = kuomintang_faction
+					set_country_flag = beiyang_faction
 				}
 			}
 			any_country = {
@@ -88,18 +88,42 @@ abandon_kuomintang_faction = {
 		
 		allow = {
 			war = no
-			OR = {
-			    ruling_party_ideology = conservative
-				ruling_party_ideology = market_liberal
-				ruling_party_ideology = reactionary
-				ruling_party_ideology = fascist
-				ruling_party_ideology = paternal
-				ruling_party_ideology = communist
-			}
+			NOT = {
+			   OR = {
+				   ruling_party_ideology = reactionary
+				   ruling_party_ideology = fascist
+				   ruling_party_ideology = paternal
+			    }
+            }
 		}
 		
 		effect = {
 			clr_country_flag = kuomintang_faction
+			random_owned = {
+				limit = {
+					owner = {
+						ruling_party_ideology = communist
+					}
+				}
+				owner = {
+					set_country_flag = communist_faction
+				}
+			}
+			random_owned = {
+				limit = {
+					owner = {
+						OR = {
+							ruling_party_ideology = anarcho_liberal
+							ruling_party_ideology = liberal
+							ruling_party_ideology = social_liberal
+							ruling_party_ideology = socialist
+						}
+					}
+				}
+				owner = {
+					set_country_flag = beiyang_faction
+				}
+			}
 			random_owned = {
 				limit = {
 					owner = {
@@ -111,30 +135,6 @@ abandon_kuomintang_faction = {
 				}
 				owner = {
 					set_country_flag = neutral_faction
-				}
-			}
-			random_owned = {
-				limit = {
-					owner = {
-						OR = {
-							ruling_party_ideology = reactionary
-							ruling_party_ideology = fascist
-							ruling_party_ideology = paternal
-						}
-					}
-				}
-				owner = {
-					set_country_flag = beiyang_faction
-				}
-			}
-			random_owned = {
-				limit = {
-					owner = {
-						ruling_party_ideology = communist
-					}
-				}
-				owner = {
-					set_country_flag = communist_faction
 				}
 			}
 			any_country = {
@@ -197,15 +197,13 @@ abandon_communist_faction = {
 					}
 				}
 				owner = {
-					set_country_flag = beiyang_faction
+					set_country_flag = kuomintang_faction
 				}
 			}
 			random_owned = {
 				limit = {
 					owner = {
 						OR = {
-							ruling_party_ideology = conservative
-							ruling_party_ideology = market_liberal
 							ruling_party_ideology = liberal
 							ruling_party_ideology = social_liberal
 							ruling_party_ideology = anarcho_liberal
@@ -214,7 +212,7 @@ abandon_communist_faction = {
 					}
 				}
 				owner = {
-					set_country_flag = kuomintang_faction
+					set_country_flag = beiyang_faction
 				}
 			}
 			any_country = {
@@ -246,9 +244,13 @@ abandon_beiyang_faction = {
 		
 		allow = {
 			war = no
-			NOT = { ruling_party_ideology = reactionary }
-			NOT = { ruling_party_ideology = fascist }
-			NOT = { ruling_party_ideology = paternal }
+			OR = {
+			   ruling_party_ideology = reactionary
+			   ruling_party_ideology = fascist
+			   ruling_party_ideology = paternal
+			   ruling_party_ideology = market_liberal
+			   ruling_party_ideology = conservative
+			}
 		}
 		
 		effect = {
@@ -280,12 +282,9 @@ abandon_beiyang_faction = {
 				limit = {
 					owner = {
 						OR = {
-							ruling_party_ideology = conservative
-							ruling_party_ideology = market_liberal
-							ruling_party_ideology = liberal
-							ruling_party_ideology = social_liberal
-							ruling_party_ideology = anarcho_liberal
-							ruling_party_ideology = socialist
+							ruling_party_ideology = reactionary
+							ruling_party_ideology = fascist
+							ruling_party_ideology = paternal
 						}
 					}
 				}
@@ -319,6 +318,7 @@ become_leader_of_kuomintang = {
 		
 		allow = {
 			war = no
+			NOT = { has_global_flag = WAIT_FOR_SETUP_CHI }
 			NOT = { has_country_modifier = drive_to_reunify }
 			OR = {
 				any_owned_province = {
@@ -345,7 +345,6 @@ become_leader_of_kuomintang = {
 			}
 			change_tag = KMT
 			set_country_flag = center_of_the_kuomintang
-			add_accepted_culture = nanfaren
 			add_accepted_culture = beifaren
 			add_country_modifier = {
 				name = taiping_draft
@@ -484,6 +483,7 @@ reunification_of_china_KMT = {
 		effect = {
 			clr_global_flag = warlord_era_has_begun
 			set_global_flag = reconquest_of_china	
+			set_country_flag = chinese_endgame	
             set_country_flag = your_winner_china	
 			set_country_flag = CHI_reunion
 			capital = 1612
@@ -517,14 +517,6 @@ reunification_of_china_KMT = {
 				}
 				SZC = { all_core = { remove_core = SZC } }
 				SZC = { all_core = { add_core = KMT } }
-			}
-			random_owned = {
-				limit = {
-					is_core = XIN
-					XIN = { exists = no }
-				}
-				XIN = { all_core = { remove_core = XIN } }
-				XIN = { all_core = { add_core = KMT } }
 			}
 			random_owned = {
 				limit = {
@@ -608,6 +600,7 @@ reunification_of_china_communist = {
 			clr_global_flag = warlord_era_has_begun
 			set_global_flag = reconquest_of_china
             set_country_flag = your_winner_china	
+			set_country_flag = chinese_endgame	
 			set_country_flag = CHI_reunion
 			prestige = 20
 			capital = 1612
@@ -648,14 +641,6 @@ reunification_of_china_communist = {
 			}
 			random_owned = {
 				limit = {
-					is_core = XIN
-					XIN = { exists = no }
-				}
-				XIN = { all_core = { remove_core = XIN } }
-				XIN = { all_core = { add_core = CHI } }
-			}
-			random_owned = {
-				limit = {
 					is_core = HNN
 					HNN = { exists = no }
 				}
@@ -681,7 +666,6 @@ reunification_of_china_communist = {
 					all_core = { remove_core = THIS }
 					change_tag = CHI
 					primary_culture = beifaren
-					add_accepted_culture = nanfaren
 				}
 			}
 			any_country = {
@@ -758,6 +742,7 @@ reunification_of_china = {
 			clr_global_flag = warlord_era_has_begun
 			set_global_flag = reconquest_of_china
             set_country_flag = your_winner_china
+			set_country_flag = chinese_endgame	
 			set_country_flag = CHI_reunion
 			prestige = 20
 			capital = 1612
@@ -798,14 +783,6 @@ reunification_of_china = {
 			}
 			random_owned = {
 				limit = {
-					is_core = XIN
-					XIN = { exists = no }
-				}
-				XIN = { all_core = { remove_core = XIN } }
-				XIN = { all_core = { add_core = CHI } }
-			}
-			random_owned = {
-				limit = {
 					is_core = HNN
 					HNN = { exists = no }
 				}
@@ -832,7 +809,6 @@ reunification_of_china = {
 					all_core = { remove_core = THIS }
 					change_tag = CHI
 					primary_culture = beifaren
-					add_accepted_culture = nanfaren
 				}
 			}
 			random_owned = {
@@ -848,8 +824,7 @@ reunification_of_china = {
 				owner = {
 					all_core = { remove_core = THIS }
 					change_tag = KMT
-					primary_culture = nanfaren
-					add_accepted_culture = beifaren
+					primary_culture = beifaren
 				}
 			}
 			any_country = {
@@ -875,29 +850,29 @@ reunification_of_china = {
 		}
 	}
 	
-join_the_KMT = {
-		potential = {
-			is_culture_group = chinese
-			has_global_flag = warlord_era_has_begun
-			has_country_flag = kuomintang_faction
-			NOT = { tag = KMT }
-			ai = yes
-		}
-		
-		allow = {
-			owns = 1612
-			KMT = { exists = yes }
-		}
-		
-		effect = {
-			KMT = { 
-				prestige = 5
-				country_event = 44162
-			}
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
+#join_the_KMT = {
+#		potential = {
+#			is_culture_group = chinese
+#			has_global_flag = warlord_era_has_begun
+#			has_country_flag = kuomintang_faction
+#			NOT = { tag = KMT }
+#			ai = yes
+#		}
+#		
+#		allow = {
+#			owns = 1612
+#			KMT = { exists = yes }
+#		}
+#		
+#		effect = {
+#			KMT = { 
+#				prestige = 5
+#				country_event = 44162
+#			}
+#		}
+#		
+#		ai_will_do = {
+#			factor = 1
+#		}
+#	}
 }

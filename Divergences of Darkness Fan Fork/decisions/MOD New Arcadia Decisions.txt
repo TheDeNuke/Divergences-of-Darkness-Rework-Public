@@ -649,6 +649,7 @@ political_decisions = {
             exists = LOU
 			has_global_flag = NBG_NEW_ARCADIAN
 			NOT = { has_country_flag = DESTROY_LOU }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 		}
 		
 		allow = {
@@ -684,6 +685,7 @@ political_decisions = {
 	        tag = NBG
             exists = LOU
 			has_global_flag = NBG_OLD_ARCADIAN
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = DESTROY_LOU }
 		}
 		
@@ -1297,6 +1299,7 @@ political_decisions = {
 			   has_global_flag = NBG_OLD_ARCADIAN
 			}
 			NOT = { exists = PLA }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
 		}
 		
@@ -1343,6 +1346,7 @@ political_decisions = {
 				  in_sphere = THIS
 			   }
 			}
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
 		}
 		
@@ -1376,9 +1380,7 @@ political_decisions = {
 	PLA_SECOND_ARCADIAN_WAR_EXPEDITE = {
 		picture = SevenRep
 		potential = {
-	        tag = PLA
-			NOT = { has_country_flag = PLA_ARCADIAN_BLOCKED }
-			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
+	        tag = PLA		
 			NBG = { 
                exists = yes			
 			   OR = {
@@ -1386,6 +1388,9 @@ political_decisions = {
 				  in_sphere = THIS
 			   }
 			}
+			NOT = { has_country_flag = PLA_ARCADIAN_BLOCKED }
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
+			NOT = { has_country_flag = SECOND_ARCADIAN_TRIGGER }
 		}
 		
 		allow = {
@@ -1474,6 +1479,7 @@ political_decisions = {
 			   has_global_flag = NBG_NEW_ARCADIAN  
 			   has_global_flag = NBG_OLD_ARCADIAN
 			}
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = PLA_ARCADIAN_BLOCKED }
 			NOT = { has_country_flag = PLAN_B_ENACTED }
 		}
@@ -1504,6 +1510,7 @@ political_decisions = {
 			   has_global_flag = NBG_NEW_ARCADIAN  
 			   has_global_flag = NBG_OLD_ARCADIAN
 			}
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = PLA_ARCADIAN_BLOCKED }
 			NOT = { has_country_flag = PLAN_B_ENACTED }
 		}
@@ -3341,6 +3348,7 @@ political_decisions = {
 	        has_country_flag = NBG_ARCADIA
 			exists = LIB
 			has_global_flag = NBG_OLD_ARCADIAN
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = DESTROY_LIB }
 		}
 		
@@ -3373,6 +3381,7 @@ political_decisions = {
 	        has_country_flag = NBG_ARCADIA
 			exists = LIB
 			has_global_flag = NBG_NEW_ARCADIAN
+			NOT = { has_global_flag = ARCADIAN_UNIFICATION_BLOCKED }
 			NOT = { has_country_flag = DESTROY_LIB }
 		}
 		
@@ -3435,7 +3444,16 @@ political_decisions = {
 		     }	
 			 call_ally = yes
 	       }
-           set_global_flag = DGL_is_here  		   
+		   any_country = {
+		      limit = {
+                 OR = {			  
+			        has_country_flag = DNG_unifier
+					tag = DNG 
+			     }			 
+				 exists = yes
+		      }
+              set_global_flag = DGL_is_here  	
+           }			  
 		}
 		
 		ai_will_do = {
@@ -3644,6 +3662,7 @@ political_decisions = {
 		potential = { 
 			tag = CLM
 			has_country_flag = CASTO_CLM
+			has_country_flag = CASTRO_CAN_REVOLT
 			NOT = { has_global_flag = CUBAN_REVOLUTION_TRIGGERED }
 		}
 		
@@ -3663,6 +3682,7 @@ political_decisions = {
 		
 		effect = { 
 			prestige = 5
+			clr_country_flag = CASTRO_CAN_REVOLT
 			set_global_flag = CUBAN_REVOLUTION_TRIGGERED
 			SPA = { country_event = { id = 470165 days = 14 } }
 		}	

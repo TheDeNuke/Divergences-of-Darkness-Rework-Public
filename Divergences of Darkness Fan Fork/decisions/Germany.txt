@@ -1116,10 +1116,11 @@ political_decisions = {
 		      is_secondary_power = yes
 		      is_greater_power = yes
 		   }
-		   has_global_flag = great_wars_enabled
+		   invention = great_war_paradigm
 		   is_disarmed = no
 		   war = no
 		   NOT = {
+		      war_policy = pacifism
 		      has_country_modifier = integrating_north_GER
 			  has_country_modifier = integrating_south_GER
 			  truce_with = BRG
@@ -1180,10 +1181,16 @@ political_decisions = {
 		
 		allow = {
 		   is_greater_power = yes
-		   owns = 586
 		   owns = 528
 		   owns = 549
-		   owns = 605
+		   OR = {
+		      owns = 605
+			  605 = { owner = { in_sphere = THIS } }
+		   }
+		   OR = {
+		      owns = 586
+			  586 = { owner = { in_sphere = THIS } }
+		   }
 		}
 		
 		effect = {
@@ -1249,11 +1256,17 @@ political_decisions = {
 		}
 		
 		allow = {
-		   is_greater_power = yes
-		   owns = 581
-		   owns = 599
-		   owns = 564
+		   is_greater_power = yes	   
+		   owns = 599		   
 		   owns = 619
+		   OR = {
+		      owns = 581
+			  581 = { owner = { in_sphere = THIS } }
+		   }
+		   OR = {
+		      owns = 564
+			  564 = { owner = { in_sphere = THIS } }
+		   }
 		}
 		
 		effect = {
@@ -1315,10 +1328,16 @@ political_decisions = {
 		
 		allow = {
 		   is_greater_power = yes
-		   owns = 581
 		   owns = 599
-		   owns = 564
 		   owns = 619
+		   OR = {
+		      owns = 581
+			  581 = { owner = { in_sphere = THIS } }
+		   }
+		   OR = {
+		      owns = 564
+			  564 = { owner = { in_sphere = THIS } }
+		   }
 		}
 		
 		effect = {
@@ -1465,7 +1484,16 @@ political_decisions = {
 		picture = Triglav
 		potential = {		   
 		    primary_culture = swabian
-			NOT = { tag = SWA }
+			NOT = {
+			   OR = {
+			      tag = SWA
+				  tag = SGF
+				  tag = NGF
+				  tag = GER
+				  tag = GCF
+				  tag = HLR
+			   }
+			}
 			NOT = { has_country_modifier = HOLY_ROMAN_EMPIRE }
 		}
 		
@@ -2592,7 +2620,8 @@ political_decisions = {
 	}
 	
 	allow = { 
-	   nationalism_n_imperialism = 1 	
+	   revolution_n_counterrevolution = 1
+	   NOT = { exists = PLC }
 	}
 	
 	effect = { 
@@ -3140,8 +3169,8 @@ political_decisions = {
 		
 		effect = {
 		    prestige = 10
-		    HOL = { all_core = { remove_core = SCA } }
-			POM = { all_core = { remove_core = SCA } }
+		    HOL = { all_core = { add_core = THIS remove_core = SCA } }
+			POM = { all_core = { add_core = THIS remove_core = SCA } }
 		}
 		
 		ai_will_do = {

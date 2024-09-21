@@ -1425,6 +1425,7 @@ country_event = {
 	
 	option = { 
 	name = "PLA35.A"
+	set_country_flag = louis_is_useless
 	set_country_flag = slaves_armed
 	any_pop = { 
 	scaled_consciousness = { 
@@ -2009,7 +2010,13 @@ country_event = {
 	political_reform = no_slavery
 	remove_country_modifier = institutionalized_slavery
 	clr_country_flag = PLA_institutionalized_slavery
-	OUM = { set_country_flag = the_king_can_return }
+	any_country = {
+	    limit = { 
+		   tag = OUM
+		   exists = yes 
+		}
+		set_country_flag = the_king_can_return
+	}
 	}
 }
 
@@ -2176,7 +2183,13 @@ country_event = {
     PLA = { set_country_flag = doomed_tag_PLA }
 	clr_global_flag = Liberian_war 
 	set_country_flag = now_building_nation 
-	OUM = { set_country_flag = the_king_can_return }
+	any_country = {
+	    limit = { 
+		   tag = OUM
+		   exists = yes 
+		}
+		set_country_flag = the_king_can_return
+	}
 	}
 }
 
@@ -2206,6 +2219,56 @@ country_event = {
 	   remove_country_modifier = PLA_SUPER_KKK
 	   clr_country_flag = doomed_tag_PLA
 	   annex_to = OUM
+	}
+}
+
+### So this is not just a repeat of Cowboy King if OUM does not exist and PLA loses to LIB then you get the Louisanie Republicans. 
+### This is because in this scenario the king is VERY unpopular after basically refusing to do anything in the earlier crisis.
+
+country_event = { 
+	id = 7844901 #National Collapse - Coup by Louisanie Survivors
+	title = "PLA500.T"
+	desc = "PLA500.D" 
+	
+	major = yes
+	
+	trigger = { 
+	   tag = PLA
+	   has_country_flag = doomed_tag_PLA
+	   OUM = { 
+	      NOT = { 
+		     exists = yes
+		     has_country_flag = the_king_can_return 
+			 has_country_flag = the_crown_can_return 
+	      } 
+	   }
+	}
+	
+	mean_time_to_happen = { 
+	days = 3 
+	}
+	
+	option = { 
+	name = "PLA500.A"
+	   government = democracy 
+	   political_reform = yes_slavery
+	   political_reform = universal_voting
+	   political_reform = population_equal_weight
+	   political_reform = yes_meeting
+	   political_reform = free_press
+	   political_reform = non_socialist
+	   political_reform = gerrymandering
+	   political_reform = mandatory_service
+	   remove_country_modifier = PLA_economic_meltdown
+	   remove_country_modifier = PLA_SUPER_KKK
+	   nationalvalue = nv_equality
+	   tech_school = industrial_tech_school
+	   set_country_flag = LOUIS_RECONSTRUCTION	    
+	   clr_country_flag = PLA_institutionalized_slavery
+	   remove_country_modifier = institutionalized_slavery
+	   set_country_flag = stain_remover
+	   remove_country_modifier = PLA_the_arcadian_dream
+       set_country_flag = PLA_ARCADIAN_BLOCKED	   
 	}
 }
 
@@ -4304,6 +4367,8 @@ country_event = {
 
 ### After losing the first arcadian war, collapsing and then having Dixieland win the Civil War that resulted from that. This is the worst possible ending to all of this.
 
+#### PLA WILL AUTOMATICALLY WIN IF THE WAR HITS A STALEMATE SINCE OWNING NEW ORLEANS IS ACTUALLY REQUIRED TO CLAIM VICTORY
+
 country_event = { 
 	id = 78509	#END CIVIL WAR - PLA won
 	title = "PLANEW7.T"
@@ -4313,8 +4378,7 @@ country_event = {
 	trigger = { 
 	tag = PLA
 	has_global_flag = the_bigger_shitshow_PLA
-	NOT = { exists = LOU }
-    NOT = { exists = OUM }	
+	exists = yes
 	war = no 
 	}
 	
@@ -4324,6 +4388,20 @@ country_event = {
 	
 	option = { 
 	name = "PLANEW7.A"
+	any_country = {
+	   limit = {
+	      tag = OUM
+		  exists = yes
+	   }
+	   annex_to = PLA
+	}
+	any_country = {
+	   limit = {
+	      tag = LOU
+		  exists = yes
+	   }
+	   annex_to = PLA
+	}
 	PLA_187 = { remove_core = LOU remove_core = OUM }
 	PLA_198 = { remove_core = LOU }
 	OUM = { clr_country_flag = OUM_LOU_ALIGNED }
@@ -4610,6 +4688,7 @@ country_event = {
 	
 	option = { 
 	name = "PLANEW11.A"
+	capital = 139
 	random_owned = {
 	    limit = {
 		   owner = { NOT = { has_global_flag = DEFEATED_PLA } }
@@ -4638,7 +4717,7 @@ country_event = {
 	scaled_militancy = { 
 		   factor = -1
 		   ideology = liberal
-	}	
+	}		
 	country_event = { id = 78515 days = 30 }
 	set_country_flag = COWBOY_KING_CONSTRUCTION
 	}

@@ -140,6 +140,7 @@ take_capital
 demand_concession_capital
 geuzen_cb
 custom_treaty_cb
+minor_custom_treaty_cb
 }
 
 # Great War CB's
@@ -2721,6 +2722,7 @@ cut_down_to_size = {
 			limit = {
 				owner = {
 					civilized = no
+					NOT = { has_global_flag = no_treaty_ports }
 					OR = {
 						owns = 1498 #Macao < - Correct
 						owns = 1538 #Shanghai < - Correct
@@ -2741,6 +2743,7 @@ cut_down_to_size = {
 				THIS = {
 					civilized = yes
 					NOT = { is_culture_group = chinese }
+					NOT = { has_global_flag = no_treaty_ports }
 					any_owned_province = { port = yes }
 				}
 			}
@@ -2888,6 +2891,7 @@ place_in_the_sun = {
 	can_use = {
 		NOT = { is_our_vassal = THIS }
 		any_owned_province = { is_colonial = yes }
+		NOT = { has_country_modifier = neutrality }
 		THIS = {
 			NOT = { has_country_modifier = neutrality }
 			OR = {
@@ -3834,7 +3838,7 @@ china_acquire_state = {
 	always = yes
 
 	can_use = {
-		has_country_flag = inevitable_war
+		has_global_flag = enable_chinese_reconquest
 		NOT = { is_our_vassal = THIS }
 		neighbour = THIS
 		OR = {
@@ -3847,7 +3851,6 @@ china_acquire_state = {
 		THIS = {
             number_of_states = 2
 			OR = {
-				primary_culture = manchu
 				is_culture_group = chinese
 				is_culture_group = oversea_chinese
 			}
@@ -3915,7 +3918,7 @@ china_conquest = {
 	always = yes
 	
 	can_use = {
-		has_country_flag = inevitable_war
+		has_global_flag = enable_chinese_reconquest
 		NOT = { is_our_vassal = THIS }
 		neighbour = THIS
 		NOT = { number_of_states = 2 }
@@ -3928,7 +3931,6 @@ china_conquest = {
 		}
 		THIS = {
 			OR = {
-				primary_culture = manchu
 				is_culture_group = chinese
 				is_culture_group = oversea_chinese
 			}
@@ -3983,7 +3985,7 @@ china_acquire_state_2 = {
 	always = yes
 
 	can_use = {
-		has_country_flag = inevitable_war
+		has_global_flag = enable_chinese_reconquest
 		NOT = { is_our_vassal = THIS }
 		neighbour = THIS        
 		any_owned_province = {
@@ -7215,6 +7217,7 @@ treaty_port_casus_belli = {
         civilized = no
         is_vassal = no
         num_of_cities = 2
+		NOT = { has_global_flag = no_treaty_ports }
         OR = {
             war_with = THIS
             THIS = { NOT = { has_country_modifier = punitive_effects } }
@@ -7484,6 +7487,49 @@ custom_treaty_cb = {
 	badboy_factor = 0
 	prestige_factor = 0
 	peace_cost_factor = 35
+	penalty_factor = 0
+	
+	break_truce_prestige_factor = 0
+	break_truce_infamy_factor = 0
+	break_truce_militancy_factor = 0
+	truce_months = 48
+	
+	good_relation_prestige_factor = 0
+	good_relation_infamy_factor = 0
+	good_relation_militancy_factor = 0
+	
+	can_use = {
+		NOT = { is_our_vassal = THIS }
+		is_vassal = no
+		always = no
+	} 
+	
+	po_remove_prestige = yes
+	po_reparations = yes
+	
+	on_po_accepted = {
+		set_country_flag = custom_treaty_loser
+	}
+	
+	tws_battle_factor = 3.0
+
+	war_name = WAR_CUSTOM_TREATY_NAME
+	
+	on_add = {
+
+	}
+}
+
+minor_custom_treaty_cb = {
+	sprite_index = 20
+	is_triggered_only = yes
+	months = 12
+	constructing_cb = no
+	crisis = no
+
+	badboy_factor = 0
+	prestige_factor = 0
+	peace_cost_factor = 10
 	penalty_factor = 0
 	
 	break_truce_prestige_factor = 0
