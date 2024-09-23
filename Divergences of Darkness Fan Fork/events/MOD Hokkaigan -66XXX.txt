@@ -4187,16 +4187,16 @@ country_event = {
 		      }
 	       }
            AND = {
-			 NOT = { vassal_of = SCA }
-			 NOT = { war_with = KKN }
-			 NOT = { war_with = JAP }
-             has_country_flag = custom_treaty_loser
+			  NOT = { vassal_of = SCA }
+			  NOT = { war_with = KKN }
+			  NOT = { war_with = JAP }
+              has_country_flag = custom_treaty_loser
            }		
            AND = {
-			 vassal_of = SCA
-			 NOT = { war_with = KKN }
-			 NOT = { war_with = JAP }
-             SCA = { has_country_flag = custom_treaty_loser }
+			  vassal_of = SCA
+			  NOT = { war_with = KKN }
+			  NOT = { war_with = JAP }
+              SCA = { has_country_flag = custom_treaty_loser }
            }
        }		  
 	}
@@ -4395,7 +4395,9 @@ country_event = {
         OR = {
             has_country_flag = HHR_killer
             JAP = { has_country_flag = HHR_killer }
-        }			
+        }		
+		## Since this war can only really start if KKN either exists or does not exist its rather obvious that this is the factor to if you are dealing with DNG or not	
+        exists = yes	
 		OR = {
 		   NOT = {
 		      any_owned_province = {
@@ -4404,10 +4406,18 @@ country_event = {
 		      }
 	       }
 		   ## SCA/VIN Automatically win if they do not enforce themselves over KKN since KKN starts as a vassal in this war
-		   NOT = {  
-			  SCA = { war_with = THIS has_country_flag = custom_treaty_loser }
-		      VIN = { war_with = THIS has_country_flag = custom_treaty_loser }
-		   }
+           AND = {
+			  NOT = { vassal_of = JAP }
+			  NOT = { war_with = SCA }
+			  NOT = { war_with = VIN }
+              has_country_flag = custom_treaty_loser
+           }		
+           AND = {
+			  vassal_of = JAP
+			  NOT = { war_with = SCA }
+			  NOT = { war_with = VIN }
+              JAP = { has_country_flag = custom_treaty_loser }
+           }
        }		  
 	}
 	
@@ -4526,7 +4536,7 @@ country_event = {
    }
 }
 
-#### 3. SCA/VIN Victory over DNG - Either through treaty enforcement or KKN being occupied - Give HHR all territory 
+#### 3. SCA/VIN Victory over DNG - Only through treaty enforcement - Give HHR all territory 
 
 country_event = { 
 	id = 66094
@@ -4542,12 +4552,13 @@ country_event = {
 			}
 	        has_country_flag = DNG_unifier 
 	     }
+		 ## Since this war can only really start if KKN either exists or does not exist its rather obvious that this is the factor to if you are dealing with DNG or not		
+		 NOT = { exists = KKN }
 		 has_country_flag = HHR_killer
 		 has_global_flag = PRAIRIE_WAR
-		 NOT = {  
-			SCA = { war_with = THIS has_country_flag = custom_treaty_loser }
-		    VIN = { war_with = THIS has_country_flag = custom_treaty_loser }
-		 }   	      
+		 has_country_flag = custom_treaty_loser	
+		 NOT = { war_with = SCA }
+		 NOT = { war_with = VIN } 	      
     }		  
 	
 	mean_time_to_happen = { 
