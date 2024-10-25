@@ -7,18 +7,17 @@ country_event = {
 	desc = "HAW1.D" 
 	picture = "hawaii"
 	
+	fire_only_once = yes
+	
 	trigger = { 
 	tag = HAW 
 	government = merchant_republic
 	year = 1839 
 	NOT = { has_country_flag = ship_DNG }
-	NOT = { has_global_flag = resolve_HAW }	
 	}
 	
-	fire_only_once = yes
-	
 	mean_time_to_happen = { 
-	months = 6 
+	days = 31
 	}
 	
 	option = { 
@@ -50,22 +49,23 @@ country_event = {
 	desc = "HAW3.D" 
 	picture = "hawaii"
 	
-	trigger = { 
-	tag = HAW 
-	government = merchant_republic
-	year = 1860
-	NOT = { has_country_flag = maui_royals }
-	NOT = { has_global_flag = resolve_HAW }	
-	}
-	
 	fire_only_once = yes
 	
+	trigger = { 
+	tag = HAW 
+	NOT = { has_country_flag = YENG_FAIL_DNG_HAW }
+	OR = {
+	   AND = {
+	      year = 1855
+	      vassal_of = DNG 
+	   }
+	   year = 1860
+	}
+	NOT = { has_country_flag = maui_royals }
+	}
+	
 	mean_time_to_happen = { 
-	months = 10 
-	modifier = { 
-	factor = 0.1 
-	year = 1861 
-		}
+	months = 3
 	}
 	
 	option = { 
@@ -93,7 +93,13 @@ country_event = {
 	}
 }
 
-### The problem obviously begins here
+##############################################################
+############### New Hawaii Chain #############################
+##############################################################
+
+### Only Localize Events with Localization Keys. Do not bother with anything else as nobody is going to play HAW.
+
+#### Generic Yeng Death #####
 
 country_event = { 
 	id = 335004
@@ -104,10 +110,13 @@ country_event = {
 	
 	trigger = { 
 	tag = HAW 
-	government = merchant_republic 
 	year = 1870
+	OR = { 
+	  has_country_flag = KOO_DNG_HAW
+	  has_country_flag = KOO_FAIL_DNG_HAW
+	}
+	NOT = { has_country_flag = YENG_SUCCESSOR }
 	NOT = { has_global_flag = death_marshall_HAW }
-    NOT = { has_global_flag = resolve_HAW }	
 	} 
 	
 	fire_only_once = yes
@@ -119,642 +128,1074 @@ country_event = {
 	option = { 
 	name = "HAW5.A" 
 	set_global_flag = death_marshall_HAW 
+	set_country_flag = YENG_SUCCESSOR
 	} 
 }
 
+##### KOO WINS #######
+
+country_event = { 
+	id = 335003
+	title = "Koo Wins"
+	desc = "Lame" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	DNG = {
+	   has_country_flag = DNG_stage_two
+	   has_country_flag = KOO_DNG
+	}
+	NOT = { has_global_flag = resolve_HAW }
+	}
+	
+	
+	mean_time_to_happen = { 
+	    days = 3
+	}
+	
+	option = { 
+	   name = "Yeng Forever" 
+	   set_global_flag = resolve_HAW
+	   set_country_flag = KOO_DNG_HAW
+	}
+}
+
+# Yeng's Successor Dies - Koo Wins Variation
 
 country_event = { 
 	id = 335005
-	title = "HAW6.T" #Scandinavia decides to intervene or not
+	title = "RIP boss"
+	desc = "did nothing wrong" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	year = 1880
+	has_country_flag = KOO_DNG_HAW
+	}
+	
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	   name = "Nooo" 
+       any_country = {
+	       limit = {
+		      tag = JAP 
+			  OR = {
+			     owns = 3
+				 is_our_vassal = KKN
+			  }
+		   }
+		   set_country_flag = HAW_winner_set
+		   THIS = { set_country_flag = HAW_winner_set }
+	   }
+	   ### Qinggiu or Scandinavia
+       any_country = {
+	       limit = {
+		      primary_culture = qingqiuan
+			  owns = 3
+		   }
+		   set_country_flag = HAW_winner_set
+		   THIS = { set_country_flag = HAW_winner_set }
+	   }
+	   clr_country_flag = KOO_DNG_HAW
+	   country_event = 335006
+	}
+}
+
+### Collapse of the Government in Exile - MAJOR ###
+ 
+country_event = { 
+	id = 335006
+	title = "HAW6.T"
 	desc = "HAW6.D" 
 	picture = "hawaii"
 	
-	trigger = { 
-	tag = SCA 
-	has_country_flag = maui_royals
-	has_global_flag = death_marshall_HAW 
-	NOT = { has_global_flag = resolve_HAW }	
-	} 
+	major = yes	
+	is_triggered_only = yes
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	months = 3 
-	} 
 	
 	option = { 
-	name = "HAW6.A" #nah, it's too far
-	set_global_flag = SCA_not_intervention_HAW
+	   name = "HAW6.A" 
+	   ### Japan or Scandinavia
+       any_country = {
+	       limit = {
+		      tag = JAP 
+			  has_country_flag = HAW_winner_set
+		   }
+		   THIS = { 
+		      country_event = 335007
+		   }
+	   }
+	   ### Qinggiu or Scandinavia
+       any_country = {
+	       limit = {
+		      primary_culture = qingqiuan
+			  has_country_flag = HAW_winner_set
+		   }
+		   THIS = { 
+		      country_event = 335008 
+		   }
+	   }
+	   ### Scandinavia
+	   random_owned = {
+	       limit = {
+		      owner = { NOT = { has_country_flag = HAW_winner_set } }
+		   }
+		   owner = { country_event = 335009 }
+	   }
 	}
-	
-	#For testing purposes this option is cut
-	
-	#option = { 
-	#name = "HAW6.B" #LET US GO
-	#set_global_flag = SCA_intervention_HAW
-	#}
 }
 
-country_event = { 
-	id = 335006
-	title = "HAW7.T" #Successor decides to rejoin Qingqiu
-	desc = "HAW7.D" 
-	picture = "hawaii"
-	
-	trigger = { 
-	tag = HAW 
-	government = merchant_republic 
-	has_global_flag = SCA_not_intervention_HAW 
-	NOT = { has_global_flag = resolve_HAW }
-	} 
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
-	option = { 
-	name = "HAW7.A" 
-	DNG = { country_event = 335007 }
-	} 
-}
+#### Hawaii gets the event to determine who wins  - Japan or Scandinavia
+#### See near the bottom of this file for conclusion events.
 
 country_event = { 
 	id = 335007
-	title = "HAW8.T" #Successor decides to rejoin Qingqiu -DNG event
-	desc = "HAW8.D" 
+	title = "who win"
+	desc = "JAP or SCA" 
 	picture = "hawaii"
-
-	is_triggered_only = yes 
-
-    #For testing purposes this option is cut
-
-	#surfin D-N-G 
-	#option = { 
-	#name = "HAW8.A" 
-	#inherit = FROM
-	#JAP = { country_event = 335009 }
-	#} 
 	
-	#nah
-	option = {
-	name = "HAW8.B"
-	relation = { who = FROM value = -50 }
-	JAP = { country_event = 335008 }
-	}
-}
-
-country_event = {
-	id = 335008
-	title = "HAW9.T" #Qingqiu and Scandinavia both left us Hawaii
-	desc = "HAW9.D" 
-	picture = "hawaii"
-
-	is_triggered_only = yes 
-
-	#lmao
+	is_triggered_only = yes
+	
+	
 	option = { 
-	name = "HAW9.A" 
-	inherit = HAW
-	ai_chance = {
-		factor = 95
+	   name = "JAP" 
+	    JAP = { country_event = 335021 }
+		ai_chance = { 
+			factor = 70 
+		}	   
 	}
-	} 
 	
-	#I prefer to leave the unicorn in the wild
-	option = {
-	name = "HAW9.B"
-	relation = { who = HAW value = -50 }
-	ai_chance = {
-		factor = 5 
-	}
-	}
+	option = { 
+	   name = "SCA" 
+        SCA = { country_event = 335023 }
+		ai_chance = { 
+			factor = 30 
+		}		   
+	}		
 }
+
+#### Hawaii gets the event to determine who wins  - DNG or Scandinavia
+#### See near the bottom of this file for conclusion events.
+
+country_event = { 
+	id = 335008
+	title = "who win"
+	desc = "DNG or SCA" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "DNG" 
+	    any_country = {
+		   limit = {
+		      has_country_flag = HAW_winner_set 
+		   }
+		   country_event = 335022
+		}	   
+		ai_chance = { 
+			factor = 70 
+		}	   
+	}
+	
+	option = { 
+	   name = "SCA" 
+        JAP = { country_event = 335021 }
+		ai_chance = { 
+			factor = 30 
+		}		   
+	}		
+}
+
+
+#### Hawaii gets the event to determine who wins  - Scandinavia lol the most pointless event ever
+#### See near the bottom of this file for conclusion events.
 
 country_event = { 
 	id = 335009
-	title = "HAW10.T" #Successor decides to rejoin Qingqiu -Jap event (they have some traders there I'd say)
-	desc = "HAW10.D" 
+	title = "who win"
+	desc = "DNG or SCA" 
 	picture = "hawaii"
-
-	is_triggered_only = yes 
-
-
-	option = { 
-	name = "HAW10.A" #Our interests prevail
-	war = {
-			target = FROM
-			attacker_goal = {
-				casus_belli = acquire_any_state
-				state_province_id = 658
-			}
-		}
-	DNG = { country_event = 335010 } 
-	} 
+		
+	is_triggered_only = yes
 	
 	option = { 
-	name = "HAW10.B" # We want to reconcile with Qingqiu
-	relation = { 
-	who = FROM value = 200
-		}
-	set_country_flag = not_HAW_claim 
-	DNG = { country_event = 335011 } 
-	}
+	   name = "SCA" 
+        SCA = { country_event = 335023 }
+		ai_chance = { 
+			factor = 100
+		}		   
+	}		
 }
+
+##### YENG WINS #######
 
 country_event = { 
 	id = 335010
-	title = "HAW11.T" #Japan attacked us AGAIN
-	desc = "HAW11.D" 
+	title = "Yeng Wins"
+	desc = "Big man is back" 
 	picture = "hawaii"
-
-	is_triggered_only = yes 
 	
-
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	DNG = {
+	   has_country_flag = DNG_stage_two
+	   has_country_flag = YENG_DNG
+	}
+	NOT = { has_global_flag = resolve_HAW }
+	}
+	
+	
+	mean_time_to_happen = { 
+	    days = 3
+	}
+	
 	option = { 
-	name = "HAW11.A" 
-	} 
+	   name = "Yeng Forever" 
+	   government = merchant_republic 
+	   political_reform = unitary
+	   political_reform = landed_voting
+	   political_reform = appointed
+	   political_reform = no_meeting
+	   political_reform = state_press
+	   political_reform = state_controlled
+	   political_reform = underground_parties
+	   DNG = { country_event = 335011 }
+	   set_global_flag = resolve_HAW
+	}
 }
+
+
+### Yeng Qinggiu Infomation about Hawaii - Clearly warn that if Qinggiu goes out of control then they will likely lose Hawaii. Subtle Threat with some coloured text.
 
 country_event = { 
 	id = 335011
-	title = "HAW12.T" #Japan left us Fāng hú !
-	desc = "HAW12.D" 
+	title = "HAW7.T"
+	desc = "HAW7.D" 
 	picture = "hawaii"
-
-	is_triggered_only = yes 
+		
+	is_triggered_only = yes
 	
-
 	option = { 
-	name = "HAW12.A" 
-	} 
+	   name = "HAW7.A" 
+	   relation = { who = HAW value = 200 }
+	}		
 }
+
+### Yeng Fucked Up - Spin the Wheel to Win.
 
 country_event = { 
 	id = 335012
-	title = "HAW13.T" #Successor ousted by 'Iolani (not sure what regnal name he could have, like Kamehameha was specific I think)
-	desc = "HAW13.D" 
+	title = "End of Hawaii"
+	desc = "MY MAN" 
 	picture = "hawaii"
+		
+	is_triggered_only = yes
 	
-	trigger = { 
-	tag = HAW 
-	government = merchant_republic 
-	has_global_flag = SCA_intervention_HAW 
-	NOT = { has_global_flag = resolve_HAW }
-	} 
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
 	option = { 
-	name = "HAW13.A" 
-	government = prussian_constitutionalism
-	relation = { who = SCA value = 200 }
-	SCA = { diplomatic_influence = { who = THIS value = 300 } }
-	DNG = { country_event = 335013 }
-	JAP = { country_event = 335014 } 
-	} 
+	   name = "JAP" 
+	    JAP = { country_event = 335021 }
+		ai_chance = { 
+			factor = 50 
+		}	   
+	}
+	
+	option = { 
+	   name = "SCA" 
+        SCA = { country_event = 335023 }
+		ai_chance = { 
+			factor = 50 
+		}		   
+	}	
 }
+
+### Yeng annexes Hawaii as a New State after getting a successful Democratic Outcome to his Political Chain
 
 country_event = { 
 	id = 335013
-	title = "HAW14.T" #Qingqiu isn't happy with the whole thing of course
-	desc = "HAW14.D" 
+	title = "HAW8.T"
+	desc = "HAW8.D" 
 	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW14.A" #Claim the islands!
-	set_global_flag = DNG_claim_HAW
-	ai_chance = { 
-	factor = 50 
-		}
-	}
+		
+	is_triggered_only = yes
 	
 	option = { 
-	name = "HAW14.B" #Let them go
-	set_global_flag = DNG_let_go_claim_HAW 
-	ai_chance = { 
-	factor = 50 
-		}
-	}
+	   name = "HAW8.A" 
+	   HAW = { government = democracy all_core = { add_core = DNG } }
+	   inherit = HAW
+	}		
 }
+
+##### KOO FAILS #######
 
 country_event = { 
 	id = 335014
-	title = "HAW15.T" #Neither is Japan
-	desc = "HAW15.D" 
+	title = "Koo Failed"
+	desc = "Lame" 
 	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW15.A" #Claim the islands!
-	set_global_flag = JAP_claim_HAW
-	ai_chance = { 
-	factor = 60 
-		}
-	}
-	
-	option = { 
-	name = "HAW15.B" #Let them go
-	set_global_flag = JAP_let_go_claim_HAW 
-	ai_chance = { 
-	factor = 40 
-		}
-	}
-}
-
-country_event = { 
-	id = 335015
-	title = "HAW16.T" #Hawai annexed by SCA after both refused to go to war
-	desc = "HAW16.D" 
-	picture = "hawaii"
-	
-	trigger = { 
-	tag = SCA 
-	has_global_flag = SCA_intervention_HAW 
-	has_global_flag = DNG_let_go_claim_HAW
-	has_global_flag = JAP_let_go_claim_HAW
-	NOT = { has_global_flag = resolve_HAW }
-	} 
 	
 	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
-	option = { 
-	name = "HAW16.A" 
-	prestige = 5
-	clr_global_flag = DNG_let_go_claim_HAW
-	clr_global_flag = JAP_let_go_claim_HAW
-	set_global_flag = resolve_HAW
-	inherit = HAW
-	relation = { who = JAP value = 50 }
-	relation = { who = DNG value = 50 }
-	} 
-}
-
-country_event = { 
-	id = 335016
-	title = "HAW17.T" #SCA annexes HAW because DNG will declare war
-	desc = "HAW17.D" 
-	picture = "hawaii"
-	
-	trigger = { 
-	tag = SCA 
-	has_global_flag = SCA_intervention_HAW 
-	has_global_flag = DNG_claim_HAW
-	has_global_flag = JAP_let_go_claim_HAW
-	NOT = { has_global_flag = resolve_HAW }
-	} 
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
-	option = { 
-	name = "HAW17.A" 
-	inherit = HAW
-	clr_global_flag = SCA_intervention_HAW 
-	clr_global_flag = DNG_claim_HAW
-	set_global_flag = resolve_HAW
-	relation = { who = JAP value = 50 }
-	DNG = { country_event = 335017 }
-	} 
-}
-
-country_event = { 
-	id = 335017
-	title = "HAW18.T" #Qingqiu will declare war!
-	desc = "HAW18.D" 
-	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW18.A" 
-	war = {
-			target = FROM
-			attacker_goal = {
-				casus_belli = acquire_any_state
-				state_province_id = 658
-			}
-		}	
-	} 
-}
-
-country_event = { 
-	id = 335018
-	title = "HAW19.T" #SCA annexes HAW because Japan will declare war
-	desc = "HAW19.D" 
-	picture = "hawaii"
-	
-	trigger = { 
-	tag = SCA 
-	has_global_flag = SCA_intervention_HAW 
-	has_global_flag = DNG_let_go_claim_HAW
-	has_global_flag = JAP_claim_HAW
-	NOT = { has_global_flag = resolve_HAW }
-	} 
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
-	option = { 
-	name = "HAW19.A" 
-	inherit = HAW
-	clr_global_flag = DNG_let_go_claim_HAW
-	clr_global_flag = JAP_claim_HAW
-	set_global_flag = resolve_HAW
-	relation = { who = DNG value = 50 }
-	JAP = { country_event = 335019 }
-	} 
-}
-
-country_event = { 
-	id = 335019
-	title = "HAW20.T" #Japan will declare war!
-	desc = "HAW20.D" 
-	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW20.A" 
-	war = {
-			target = FROM
-			attacker_goal = {
-				casus_belli = acquire_any_state
-				state_province_id = 658
-			}
-		}	
-	} 
-}
-
-country_event = { 
-	id = 335020
-	title = "HAW21.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality
-	desc = "HAW21.D" 
-	picture = "hawaii"
-	
-	trigger = { 
-	tag = SCA 
-	has_global_flag = SCA_intervention_HAW 
-	has_global_flag = DNG_claim_HAW
-	has_global_flag = JAP_claim_HAW
-	NOT = { has_global_flag = resolve_HAW }
-	} 
-	
-	fire_only_once = yes
-	
-	mean_time_to_happen = { 
-	days = 15 
-	}
-
-	option = { 
-	name = "HAW20.A" #It seems like a good idea
-	clr_global_flag = DNG_claim_HAW
-	clr_global_flag = JAP_claim_HAW
-	set_global_flag = resolve_HAW
-	JAP = { country_event = 335021 }
-	DNG = { country_event = 335022 }
-	} 
-	
-	option = { 
-	name = "HAW20.B" #Where did he get this idea ? We are here to establish a protectorate
-	clr_global_flag = DNG_claim_HAW
-	clr_global_flag = JAP_claim_HAW
-	set_global_flag = resolve_HAW
-	JAP = { country_event = 335025 }
-	DNG = { country_event = 335026 }
-	} 
-}
-
-country_event = { 
-	id = 335021
-	title = "HAW21.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality -Japanese side
-	desc = "HAW21.D" 
-	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW21.A" #if no one gets it, we can agree
-	set_global_flag = honolulu_agreed_JAP
-	ai_chance = { 
-	factor = 80 
-		}
-	}
-	
-	option = { 
-	name = "HAW21.B" #independent Hawai, silly idea
-	set_global_flag = honolulu_refused_JAP
-	ai_chance = { 
-	factor = 20 
-		}
-	}
-}
-
-country_event = { 
-	id = 335022
-	title = "HAW22.T" #the new king of Hawaii decides to invite representatives from all three in the palace to negotiate neutrality -Qingqiu side
-	desc = "HAW22.D" 
-	picture = "hawaii"
-	
-	is_triggered_only = yes 
-	
-	option = { 
-	name = "HAW22.A" #if no one gets it, we can agree
-	set_global_flag = honolulu_agreed_DNG
-	ai_chance = { 
-	factor = 80 
-		}
-	}
-	
-	option = { 
-	name = "HAW22.B" #independent Hawai, silly idea
-	set_global_flag = honolulu_refused_DNG
-	ai_chance = { 
-	factor = 20 
-		}
-	}
-}
-
-country_event = { 
-	id = 335023
-	title = "HAW23.T" #Protocol of Honolulu : Hawai neutrality guaranteed by all three members
-	desc = "HAW23.D" 
-	
-	major = yes 
 	
 	trigger = { 
 	tag = HAW 
-	has_global_flag = honolulu_agreed_DNG
-	has_global_flag = honolulu_agreed_JAP
-	has_global_flag = resolve_HAW
-	NOT = { has_global_flag = neutral_HAW }
-	} 
+	has_country_flag = HAW_KOO_FAILURE
+	NOT = { has_global_flag = resolve_HAW }
+	}
+	
 	
 	mean_time_to_happen = { 
-	months = 25 
+	    days = 3
 	}
 	
 	option = { 
-	name = "HAW23.A"
-	set_global_flag = neutral_HAW
-	clr_global_flag = honolulu_agreed_DNG
-	clr_global_flag = honolulu_agreed_JAP
-	research_points = 5000
-	prestige = 20 
-	add_country_modifier = {
-		name = neutrality
-		duration = -1
+	   name = "Yeng Forever" 
+	   clr_country_flag = HAW_KOO_FAILURE
+	   set_global_flag = resolve_HAW
+	   set_country_flag = KOO_FAIL_DNG_HAW
 	}
-	relation = { who = SCA value = 200 } 
-	relation = { who = JAP value = 75 }
-	relation = { who = DNG value = 50 }
-	}
-	
 }
 
+##### KOO FAILS ALTERNATIVE - Yeng is in Qinggiu due to Koo Failling in Colombia War #######
+
 country_event = { 
-	id = 335024
-	title = "HAW24.T" #he tried : it failed, SCA annexes HAW and is declared upon by both DNG and JAP
-	desc = "HAW24.D" 
+	id = 335015
+	title = "Koo Failed"
+	desc = "Lame" 
 	picture = "hawaii"
-	
-	trigger = { 
-	tag = SCA 
-	OR = { 
-	   has_global_flag = honolulu_refused_DNG
-	   has_global_flag = honolulu_refused_JAP
-	}
-	NOT = { has_global_flag = war_HAW }
-	} 
-	
-	major = yes
 	
 	fire_only_once = yes
 	
+	trigger = { 
+	tag = HAW 
+	has_country_flag = HAW_KOO_FAILURE_ALT
+	NOT = { has_global_flag = resolve_HAW }
+	}
+	
+	
 	mean_time_to_happen = { 
-	days = 15 
+	    days = 3
 	}
 	
 	option = { 
-	name = "HAW24.A" 
-	set_global_flag = war_HAW
-	clr_global_flag = honolulu_refused_JAP
-	clr_global_flag = honolulu_refused_DNG
-	inherit = HAW 
-	JAP = { country_event = { id = 335025 days = 2 } } 
-	DNG = { country_event = { id = 335026 days = 2 } }
+	   name = "Yeng Successor Forever" 
+	   clr_country_flag = HAW_KOO_FAILURE_ALT
+	   set_global_flag = resolve_HAW
+	   set_country_flag = KOO_FAIL_DNG_HAW
+	   ### This is to prevent the death of Yeng event triggering
+	   set_global_flag = death_marshall_HAW 
+	   set_country_flag = YENG_SUCCESSOR
+	   DNG = { country_event = 335016 }	   
 	}
 }
+
+### Inform Yeng in Qinggiu that due to Koo's Failure against the Colombians he has to leave Hawaii in charge of his successor since he will be putting out fires for decades.
+
+country_event = { 
+	id = 335016
+	title = "HAW9.T"
+	desc = "HAW9.D" 
+	picture = "hawaii"
+		
+	is_triggered_only = yes
+	
+	option = { 
+	   name = "HAW9.A" 
+	   prestige = -5
+	}		
+}
+
+# Yeng's Successor Dies - Koo Loses Variation
+
+country_event = { 
+	id = 335017
+	title = "RIP boss"
+	desc = "did nothing wrong" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	year = 1880
+	has_country_flag = KOO_FAIL_DNG_HAW
+	}
+	
+	
+	mean_time_to_happen = { 
+	months = 3
+	}
+	
+	option = { 
+	   name = "Nooo" 
+	   ### Colombia or any of the Alternatives
+       any_country = {
+	       limit = {
+		      OR = {
+		         tag = CLM
+				 tag = SPA 
+				 tag = SPC 
+				 tag = VNS 
+			  }
+			  ### Demolished Qinggiu
+			  owns = 222
+		   }
+		   set_country_flag = HAW_winner_set
+		   THIS = { set_country_flag = HAW_winner_set }
+	   }
+	   ### Qinggiu
+       any_country = {
+	       limit = {
+		      primary_culture = qingqiuan
+			  exists = yes
+			  owns = 37
+		   }
+		   set_country_flag = HAW_winner_set
+		   THIS = { set_country_flag = HAW_winner_set }
+	   }
+	   clr_country_flag = KOO_FAIL_DNG_HAW
+	   country_event = 335018
+	}
+}
+
+### Collapse of fang Hu - MAJOR ###
+ 
+country_event = { 
+	id = 335018
+	title = "HAW10.T"
+	desc = "HAW10.D" 
+	picture = "hawaii"
+	
+	major = yes	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "HAW10.A" 
+	   ### Colombia or any of the Alternatives or Japan
+       any_country = {
+	       limit = {
+		      OR = {
+		         tag = CLM
+				 tag = SPA 
+				 tag = SPC 
+				 tag = VNS 
+			  }
+			  has_country_flag = HAW_winner_set
+		   }
+		   THIS = { 
+		      country_event = 335019
+		   }
+	   }
+	   ### Qinggiu or Japan
+       any_country = {
+	       limit = {
+		      primary_culture = qingqiuan
+			  has_country_flag = HAW_winner_set
+		   }
+		   THIS = { 
+		      country_event = 335020
+		   }
+	   }
+	   ### Japan (automatically wins if Qinggiu does not hold Buyeo)
+	   random_owned = {
+	       limit = {
+		      owner = { NOT = { has_country_flag = HAW_winner_set } }
+		   }
+		   owner = { country_event = 3350200 }
+	   }
+	}
+}
+
+#### Hawaii gets the event to determine who wins  - Colombia or JAP
+#### See near the bottom of this file for conclusion events.
+
+country_event = { 
+	id = 335019
+	title = "who win"
+	desc = "CLM or JAP" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "CLM" 
+	    any_country = {
+		   limit = {
+		      has_country_flag = HAW_winner_set 
+			  tag = CLM
+		   }
+		   country_event = 335024
+		}
+	    any_country = {
+		   limit = {
+		      has_country_flag = HAW_winner_set 
+			  OR = {
+			    tag = SPA 
+				tag = SPC 
+				tag = VNS 
+		      }
+		   }
+		   country_event = 335025
+		}		
+		ai_chance = { 
+			factor = 70 
+		}	   
+	}
+	
+	option = { 
+	   name = "JAP" 
+        JAP = { country_event = 335021 }
+		ai_chance = { 
+			factor = 30 
+		}		   
+	}		
+}
+
+#### Hawaii gets the event to determine who wins  - DNG or JAP
+#### See near the bottom of this file for conclusion events.
+
+country_event = { 
+	id = 335020
+	title = "who win"
+	desc = "DNG or SCA" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "DNG" 
+	    any_country = {
+		   limit = {
+		      has_country_flag = HAW_winner_set 
+		   }
+		   country_event = 335022
+		}
+		ai_chance = { 
+			factor = 70 
+		}	   
+	}
+	
+	option = { 
+	   name = "JAP" 
+        JAP = { country_event = 335021 }
+		ai_chance = { 
+			factor = 30 
+		}		   
+	}		
+}
+
+### Jpain automatically wins 
+
+country_event = { 
+	id = 3350200
+	title = "who win"
+	desc = "JAP" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	option = { 
+	   name = "JAP" 
+	   JAP = { country_event = 335021 }
+	}		
+}
+
+####################################################
+############ Hawaii Outcomes #######################
+####################################################
+
+### JAPAN - Effectively turned into a Colony ####
+
+country_event = { 
+	id = 335021
+	title = "HAW11.T"
+	desc = "HAW11.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "HAW11.A" 
+	   prestige = 5
+	   HAW = { government = democracy civilized = no }
+	   inherit = HAW
+	}
+}
+
+### DNG or Other DNG - Annexed as a State - No cores unless its the yeng variation ####
+### May be able to core it later via Decision 
+
+country_event = { 
+	id = 335022
+	title = "HAW12.T"
+	desc = "HAW12.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "HAW12.A" 
+	   prestige = 5
+	   HAW = { government = merchant_republic }
+	   inherit = HAW
+	}
+}
+
+### SCA - Effectively turned into a Protectorate after 'restoring' the monarchy ####
+
+country_event = { 
+	id = 335023
+	title = "HAW13.T"
+	desc = "HAW13.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "HAW12.A" 
+	   prestige = 5
+	   HAW = { government = hms_government civilized = no }
+	   inherit = HAW
+	}
+}
+
+### Colombia - Annexed as a State regardless if Colombia is a Democracy or the Castro Empire ####
+
+country_event = { 
+	id = 335024
+	title = "HAW14.T"
+	desc = "HAW14.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+	
+	
+	option = { 
+	   name = "HAW12.A" 
+	   prestige = 5
+	   HAW = { government = democracy }
+	   inherit = HAW
+	}
+}
+
+### SPAIN - Restores the Monarchy under some Spanish Leader and turns it into a Protectorate ####
 
 country_event = { 
 	id = 335025
-	title = "HAW25.T" #he tried : JAP declares war
-	desc = "HAW25.D" 
+	title = "HAW15.T"
+	desc = "HAW15.D" 
 	picture = "hawaii"
 	
-	is_triggered_only = yes 
+	is_triggered_only = yes
+		
+	option = { 
+	   name = "HAW15.A" 
+	   HAW = { government = absolute_monarchy civilized = no }
+	   random_owned = {
+	      limit = {
+		     owner = { OR = { tag = SPA tag = SPC } }
+		  }
+		  owner = { prestige = 5 inherit = HAW }
+	   }
+	   ### Wait a second. This is VNS and not SPA - BUMP
+	   any_country = {
+            limit = {
+               OR = {
+                 tag = SPA 
+                 tag = SPC 
+               }
+               exists = yes 
+               NOT = { tag = THIS }
+            }
+			country_event = 335025 
+	   }
+	}
+}
+
+################################################################
+############ YENG FAILURE AND SPECIAL OUTCOME ##################
+################################################################
+
+##### YENG FAILS #######
+
+country_event = { 
+	id = 335026
+	title = "Hawaii Revolution Soon"
+	desc = "oops" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	has_country_flag = HAW_YENG_FAILURE
+	NOT = { has_global_flag = resolve_HAW }
+	}
+	
+	
+	mean_time_to_happen = { 
+	    days = 3
+	}
 	
 	option = { 
-	name = "HAW25.A"
-	war = {
-			target = FROM
-			attacker_goal = {
-				casus_belli = acquire_any_state
-				state_province_id = 658
-			}
-		}
-	war = {
-			target = DNG
-			attacker_goal = {
-				casus_belli = humiliate
-			}
-			defender_goal = { 
-				casus_belli = humiliate
-			}
-		}
-	badboy = -4
+	   name = "Oh No" 
+	   clr_country_flag = HAW_YENG_FAILURE
+	   set_global_flag = resolve_HAW
+	   set_country_flag = YENG_FAIL_DNG_HAW
+	   set_country_flag = inevitable_hawaii_revolution
+	}
+}
+
+##### Hawaii Revolution #######
+
+country_event = { 
+	id = 335027
+	title = "Hawaii Revolution"
+	desc = "oops" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	is_ideology_enabled = anarcho_liberal
+	has_country_flag = inevitable_hawaii_revolution
+	NOT = { year = 1863 }
+	}
+	
+	
+	mean_time_to_happen = { 
+	    days = 31
+	}
+	
+	option = { 
+	   name = "Oh No" 
+	   civilized = yes
+	   clr_country_flag = inevitable_hawaii_revolution
+	   government = parliamentary_republic
+	   ruling_party_ideology = anarcho_liberal
+       political_reform = population_equal_weight
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+       political_reform = proportional_representation
+       political_reform = secret_ballots
+       political_reform = unitary
+       political_reform = mandatory_service
+       clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+       clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+       set_country_flag = parliamentary_republic_gov
+       clr_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win		
+	   clr_country_flag = paternal_election_win	   
 	}
 }
 
 country_event = { 
-	id = 335026
-	title = "HAW26.T" #he tried : DNG declares war
-	desc = "HAW26.D" 
+	id = 335028
+	title = "Hawaii Revolution - Due to failure to keep government type"
+	desc = "oops" 
 	picture = "hawaii"
 	
-	is_triggered_only = yes 
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	is_ideology_enabled = anarcho_liberal
+	NOT = { government = merchant_republic }
+	NOT = { vassal_of = DNG }
+	NOT = { year = 1863 }
+	}
+	
+	
+	mean_time_to_happen = { 
+	    months = 3
+	}
 	
 	option = { 
-	name = "HAW26.A"
-	war = {
-			target = FROM
-			attacker_goal = {
-				casus_belli = acquire_any_state
-				state_province_id = 658
-			}
-		}
-	badboy = -6
+	   name = "Oh No" 
+	   civilized = yes
+	   clr_country_flag = KOO_DNG_HAW
+	   clr_country_flag = KOO_FAIL_DNG_HAW
+	   set_country_flag = YENG_FAIL_DNG_HAW
+	   government = parliamentary_republic
+	   ruling_party_ideology = anarcho_liberal
+       political_reform = population_equal_weight
+       political_reform = universal_voting
+       political_reform = yes_meeting
+       political_reform = free_press
+       political_reform = proportional_representation
+       political_reform = secret_ballots
+       political_reform = unitary
+       political_reform = mandatory_service
+       clr_country_flag = theocratic_government
+	   clr_country_flag = merchantrepublic_gov
+	   clr_country_flag = communist_gov
+	   clr_country_flag = absolute_monarchy_gov
+       clr_country_flag = semi_constitutional_monarchy_gov
+	   clr_country_flag = constitutional_monarchy_gov
+       set_country_flag = parliamentary_republic_gov
+       clr_country_flag = democracy_gov
+	   clr_country_flag = presidential_dictatorship_gov
+	   clr_country_flag = fascist_gov
+	   clr_country_flag = anarcho_liberal_gov
+	   clr_country_flag = socialist_republic_gov
+	   clr_country_flag = fascist_monarchy_gov
+	   clr_country_flag = election_started
+	   clr_country_flag = tory_election_win
+	   clr_country_flag = socialist_election_win
+	   clr_country_flag = liberal_election_win
+	   clr_country_flag = communist_election_win
+	   clr_country_flag = fascist_election_win
+	   clr_country_flag = reactionary_election_win
+	   clr_country_flag = anarcho_liberal_election_win
+	   clr_country_flag = social_liberal_election_win
+	   clr_country_flag = market_liberal_election_win		
+	   clr_country_flag = paternal_election_win	   
 	}
 }
 
-#country_event = { 
-#	id = 335027
-#	title = "HAW27.T" #Trial of Yeng Futing
-#	desc = "HAW27.D" 
-#	
-#	trigger = { 
-#	tag = DNG 
-#	HAW = { exists = no }
-#	owns = 658 
-#	NOT = { has_global_flag = death_marshall_HAW } 
-#	}
-#	
-#	option = { 
-#	name = "HAW27.A" 
-#	any_owned = { 
-#	limit = { 
-#	   is_core = HAW 
-#	}
-#	secede_province = HAW
-#	}
-#	create_vassal = HAW
-#	HAW = { 
-#	add_country_modifier = { 
-#		name = global_baby_boom
-#		duration = 3650
-#			}
-#		}
-#	set_global_flag = resolve_HAW
-#	set_global_flag = death_marshall_HAW
-#	}
-#	
-#	option = { 
-#	name = "HAW27.B" 
-#	HAW = { all_core = { add_core = THIS } }
-#	any_pop = {
-#	limit = { culture = polynesian } 
-#	militancy = 8 
-#		}
-#	set_global_flag = resolve_HAW
-#	set_global_flag = death_marshall_HAW
-#	}
-#	
-#}
+country_event = { 
+	id = 335039
+	title = "Radical Republic in the Pacific causing a set of incidents"
+	desc = "oops" 
+	picture = "hawaii"
+	
+	fire_only_once = yes
+	
+	trigger = { 
+	tag = HAW 
+	has_country_flag = YENG_FAIL_DNG_HAW
+	year = 1863
+	}
+	
+	
+	mean_time_to_happen = { 
+	    months = 1
+	}
+	
+	option = { 
+	   name = "lol" 
+	   any_country = {
+	      limit = {
+		     exists = yes 
+		  }
+	      leave_alliance = THIS 
+		  relation = { who = THIS value = -200 } 
+	   }
+	   any_greater_power = {
+	      diplomatic_influence = { who = THIS value = -200 } 
+	   }
+	   prestige = 10
+       clr_country_flag = YENG_FAIL_DNG_HAW
+	   ## Dogpile event 1 
+	   SCA = { country_event = 335040 }
+	} 
+}
+
+
+### Scandinavia has had enough of this radical republic and wants to restore the monarchy now to stablize the political situation in Hawaii
+### Even if it itself is a Republic
+
+country_event = { 
+	id = 335040
+	title = "HAW16.T"
+	desc = "HAW16.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	   name = "HAW16.A" 
+		war = { 
+			target = HAW
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}
+		JAP = { country_event = { id = 335041 days = 3 } }
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+	   name = "HAW16.B" 
+	    JAP = { country_event = { id = 335041 days = 3 } }
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+### Japan joins in on the dogpile
+
+country_event = { 
+	id = 335041
+	title = "HAW17.T"
+	desc = "HAW17.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	   name = "HAW17.A" 
+		war = { 
+			target = HAW
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}
+	    any_country = {
+		   limit = {
+			  tag = CLM
+			  exists = yes
+		   }
+		   country_event = 335042
+		}
+	    any_country = {
+		   limit = {
+			  tag = SPA
+			  is_our_vassal = VNS 
+			  exists = yes
+		   }
+		   country_event = 335043
+		}
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+	   name = "HAW17.B" 
+	    any_country = {
+		   limit = {
+			  tag = CLM
+			  exists = yes
+		   }
+		   country_event = 335042
+		}
+	    any_country = {
+		   limit = {
+			  tag = SPA
+			  is_our_vassal = VNS 
+			  exists = yes
+		   }
+		   country_event = 335043
+		}
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+### Colombia joins in on the Dogpile
+
+country_event = { 
+	id = 335042
+	title = "HAW18.T"
+	desc = "HAW18.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	   name = "HAW18.A" 
+		war = { 
+			target = HAW
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+	   name = "HAW18.B" 
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
+### VNS Spain joins in on the Dogpile
+
+country_event = { 
+	id = 335043
+	title = "HAW19.T"
+	desc = "HAW19.D" 
+	picture = "hawaii"
+	
+	is_triggered_only = yes
+		
+	option = { 
+	   name = "HAW19.A" 
+		war = { 
+			target = HAW
+			attacker_goal = {
+				casus_belli = conquest_any
+			}
+			defender_goal = { 
+				casus_belli = status_quo
+			}
+		}
+		ai_chance = { 
+			factor = 100
+		}
+	}
+	
+	option = { 
+	   name = "HAW19.B" 
+		ai_chance = { 
+			factor = 0 
+		}
+	}
+}
+
