@@ -3271,14 +3271,9 @@ country_event = {
     trigger = {
 		has_global_flag = the_final_war_SHU
         tag = SHU
+		exists = yes
 		NOT = { has_country_modifier = no_more_war }
-        OR = {
-		   NOT = { exists = CHI }
-		   AND = {
-		      exists = CHI
-			  NOT = { war_with = CHI }
-		   }
-		}
+		NOT = { exists = CHI }
     }
 	
 	mean_time_to_happen = {
@@ -3351,7 +3346,14 @@ country_event = {
     trigger = {
 		has_global_flag = the_final_war_SHU
         tag = CHI
-		NOT = { exists = SHU }
+		exists = yes
+        OR = {
+		   NOT = { exists = SHU }
+		   AND = {
+		      exists = SHU
+			  war = no
+		   }
+		}
     }
 
     mean_time_to_happen = {
@@ -3364,6 +3366,13 @@ country_event = {
 
     option = {
         name = "CHIN63.A"
+		any_country = {
+		    limit = {
+			   tag = SHU 
+			   exists = yes
+		    }
+			annex_to = THIS
+	    }		     
 		clr_global_flag = the_final_war_SHU
 		set_country_flag = CHI_SHU_aftermath
 		any_country = {

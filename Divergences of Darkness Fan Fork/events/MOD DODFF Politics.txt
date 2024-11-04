@@ -5454,6 +5454,208 @@ country_event = {
 	}		
 }
 
+########## NAVAL HEGEMON OF THE PACIFIC OR ATLANTIC ######################
+######### This is a modifier that the Naval Hegemons get - They cannot lose this unless someone supplants them or specific events occur that auto clear this modifier (ex. Scotland leaving Scandinavia/Dismantlement) #################
+
+### Naval Hegemon of the Pacific ####
+
+### To hold this you need control over Hawaii and Alaska - Japan is automatically given this at the start ###
+
+country_event = {
+	id = 443096
+	title = "DODFFP55.T"
+	desc = "DODFFP55.D"
+	picture = "navalhegemon"
+
+	trigger = {	
+	    exists = yes
+	    is_greater_power = yes
+		NOT = { has_country_modifier = pacific_hegemon }
+		OR = {
+		  owns = 3
+		  is_our_vassal = KKN 
+		}
+		OR = {
+		  owns = 658
+		  is_our_vassal = HAW 
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+    }
+
+	option = {
+		name = "DODFFP55.A"
+		any_pop = { militancy = -1 }
+		any_country = {
+		    limit = {
+			   has_country_modifier = pacific_hegemon
+			}
+			prestige = -5
+			remove_country_modifier = pacific_hegemon
+		}		
+		prestige = 5
+		add_country_modifier = { name = pacific_hegemon duration = -1 }
+	}		
+}
+
+### Naval Hegemon of the Atlantic - To hold this you need control over Scotland or have complete domination of the European Mainland, or be SPC and none of the above - Scandinavia is given this at the start ####
+
+country_event = {
+	id = 443097
+	title = "DODFFP56.T"
+	desc = "DODFFP56.D"
+	picture = "navalhegemon"
+
+	trigger = {	
+	    exists = yes
+	    is_greater_power = yes
+		NOT = { has_country_modifier = atlantic_hegemon }
+		OR = {
+		  owns = 269 
+		  is_our_vassal = SCO
+		  AND = {
+		     tag = FRK 
+		     exists = SCO 
+			 SCO = { is_vassal = no }			 
+	      }
+		  AND = {
+		     tag = SPC
+		     exists = SCO 
+			 SCO = { is_vassal = no }
+			 NOT = { exists = FRK }
+	      }
+		}	
+	}
+	
+	mean_time_to_happen = {
+		days = 7
+    }
+
+	option = {
+		name = "DODFFP56.A"
+		any_pop = { militancy = -1 }
+		any_country = {
+		    limit = {
+			   has_country_modifier = atlantic_hegemon
+			}
+			prestige = -5
+			remove_country_modifier = atlantic_hegemon
+		}		
+		prestige = 5
+		add_country_modifier = { name = atlantic_hegemon duration = -1 }
+	}		
+}
+
+### Naval Hegemon of the Pacific - Failure ###
+
+### Has a high MTTH and only represents a catastropic failure ###
+
+### If you don't own either HAW or KKN then you lose Hegemony ###
+
+country_event = {
+	id = 443098
+	title = "DODFFP57.T"
+	desc = "DODFFP57.D"
+	picture = "navalhegemon"
+
+	trigger = {	
+	    exists = yes
+		has_country_modifier = pacific_hegemon
+		war = no
+		NOT = {
+		   OR = {
+		     owns = 3
+		     is_our_vassal = KKN 
+		   }
+		}
+		NOT = {
+		   OR = {
+		     owns = 658
+		     is_our_vassal = HAW 
+		   }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+    }
+
+	option = {
+		name = "DODFFP57.A"
+		any_pop = { militancy = 1 }
+		remove_country_modifier = pacific_hegemon
+	}		
+}
+
+### Naval Hegemon of the Pacific - Failure ###
+
+### Has a high MTTH and only represents a catastropic failure ###
+
+### If you are not either FRK, SPC or Hold Scotland then you lose Hegemony ###
+
+country_event = {
+	id = 443099
+	title = "DODFFP58.T"
+	desc = "DODFFP58.D"
+	picture = "navalhegemon"
+
+	trigger = {	
+	    exists = yes
+		has_country_modifier = atlantic_hegemon
+		NOT = {
+		   OR = {
+		     owns = 269 
+		     is_our_vassal = SCO
+		   }
+		}
+		NOT = { tag = FRK }
+		NOT = { tag = SPC }
+	}	
+	
+	mean_time_to_happen = {
+		months = 2
+    }
+
+	option = {
+		name = "DODFFP58.A"
+		any_pop = { militancy = 1 }
+		prestige = -5
+		remove_country_modifier = atlantic_hegemon
+	}		
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # The Maelstrom - Used to simulate political chaos after a democratic revolution post-invention of fascism/mass politics.
 
 country_event = {
