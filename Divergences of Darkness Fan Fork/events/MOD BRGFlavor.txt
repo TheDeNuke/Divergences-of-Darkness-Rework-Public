@@ -689,12 +689,13 @@ country_event = {
 		   tag = PBG
 		}
 		has_country_flag = time_to_choose_BRG	
+		owns = 575
 		OR = {
 		   has_country_modifier = apocalyptic_hollowing
 		   has_country_modifier = catastropic_hollowing
 		   has_country_modifier = severe_hollowing
 		   has_country_modifier = average_hollowing
-		}
+		}		
 	}
 	
 	mean_time_to_happen = {
@@ -828,8 +829,9 @@ country_event = {
            has_country_flag = RHI_DEAD_GOODBYE
 		   tag = PBG
 		}
+		owns = 575
 		has_country_flag = time_to_choose_BRG	
-		has_country_modifier = light_hollowing
+		has_country_modifier = light_hollowing		
 		NOT = { has_country_flag = dutch_potato_check }
 	}
 	
@@ -838,10 +840,8 @@ country_event = {
 	}
 	
 	option = {
-		name = "BRG995.A"
-		
-		prestige = -3
-		
+		name = "BRG995.A"	
+		prestige = -3	
 		clr_country_flag = time_to_choose_BRG
         set_global_flag = dutch_relief
 		remove_country_modifier = dutch_potato_heavy
@@ -851,8 +851,52 @@ country_event = {
 		      consciousness = -3
 		      militancy = -3
 		  }
-	   }
-	   
+	   } 
+	}
+}
+
+### No Rhineland Failsafe - Player will never see this since only the AI would be so stupid to fail to keep the Rhineland
+
+country_event = {
+	id = 65300950
+	title = "ai lost rhi"
+	desc = "its stupid"
+	picture = "famine"
+	
+	fire_only_once = yes
+
+	trigger = {	
+	    exists = yes
+		OR = {
+	       tag = BRG
+		   tag = PBG
+		}
+		OR = {
+           has_country_flag = RHI_DEAD_GOODBYE
+		   tag = PBG
+		}
+		NOT = { owns = 575 }
+		has_country_flag = time_to_choose_BRG	
+		NOT = { has_country_flag = dutch_potato_check }
+	}
+	
+	mean_time_to_happen = {
+		days = 31
+	}
+	
+	option = {
+		name = "lol dumb"		
+		prestige = -3	
+		clr_country_flag = time_to_choose_BRG
+        set_global_flag = dutch_relief
+		remove_country_modifier = dutch_potato_heavy
+		add_country_modifier = { name = dutch_potato_light duration = 1825 } 
+	    NET = {
+	       any_pop = { 
+		      consciousness = -3
+		      militancy = -3
+		  }
+	   }	   
 	}
 }
 
@@ -2191,7 +2235,7 @@ country_event = {
 	option = { 
 	name = "BRG23.B"
 	    prestige = -5
-		#remove_country_modifier = regency_government
+		remove_country_modifier = regency_government
 		clr_country_flag = going_to_be_king_BRG
 		set_country_flag = lothaaringia_league_enabled
 		random_owned = {
