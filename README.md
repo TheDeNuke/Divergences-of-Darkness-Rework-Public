@@ -13,8 +13,8 @@ The current and former mod team:
 -  DeNuke - Project Manager
 -  Attalus - The Co-Project Manager/Consul of Divergences
 -  Zerzura - Localization Lead and Coder
--  Ddima - Primary Map Developer, Localization and Coder
 
+-  Ddima - Map Developer, Localization and Coder
 -  Theodorex - Victoria 3 Project Lead and Assistance
 -  Periares - FLAGS, Concept Designer, Coder and Localization
 -  NPMister - Concept Designer and Localization
