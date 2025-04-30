@@ -7844,18 +7844,18 @@ country_event = {
 
 ### NEW NOVOGROD CONTENT ###
 
-### Scandinavia has come asking for a Alliance
+### Scandinavia has come asking for a Alliance - go down to event 232619 for responses
 
 country_event = {
 	id = 232613
-	title = "NRUS112.T"
-	desc = "NRUS112.D"
+	title = "NRUS117.T"
+	desc = "NRUS117.D"
     #picture = "ambush_army"
 
 	is_triggered_only = yes
 
     option = {
-	name = "NRUS112.A"
+	name = "NRUS117.A"
 	   any_greater_power = {
 	      limit = { NOT = { tag = SCA } }
 		  leave_alliance = THIS
@@ -7867,6 +7867,7 @@ country_event = {
 		  create_alliance = THIS
           relation = { who = THIS value = 400 }
 	      diplomatic_influence = { who = THIS value = 400 }
+		  country_event = { id = 232620 days = 14 }
 	   }
 	   ai_chance = {
 			factor = 100
@@ -7874,10 +7875,11 @@ country_event = {
     }
 
     option = {
-	name = "NRUS112.B"
+	name = "NRUS117.B"
 	   SCA = {
           relation = { who = THIS value = -50 }
 	      diplomatic_influence = { who = THIS value = -50 }
+		  country_event = { id = 232619 days = 14 }
 	   }
 	   ai_chance = {
 			factor = 0
@@ -7956,6 +7958,7 @@ country_event = {
 	   prestige_factor = -0.25
 	   set_global_flag = isolat_NOV
 	   clr_global_flag = panrussian_NOV
+	   set_global_flag = SCA_domination_of_NOV
 	   any_greater_power = {
 	      limit = { NOT = { tag = SCA } }
 		  leave_alliance = THIS
@@ -8016,7 +8019,6 @@ country_event = {
 
 ### The Treaty of Pskov ###
 
-
 country_event = { 
 	id = 232617
 	title = "NRUS115.T"
@@ -8035,6 +8037,7 @@ country_event = {
 	   clr_global_flag = late_NOV_SCA_war
 	   clr_country_flag = custom_treaty_loser
 	   set_global_flag = isolat_NOV
+	   set_global_flag = SCA_domination_of_NOV
 	   clr_global_flag = panrussian_NOV
 	   remove_country_modifier = the_inevitable_war_NOV
 	   government = prussian_constitutionalism
@@ -8120,3 +8123,116 @@ country_event = {
 	   }
     }
 }	
+
+## NOV rejected the alliance, we will now eat them
+
+country_event = {
+	id = 232619
+	title = "NRUS118.T"
+	desc = "NRUS118.D"
+    picture = "pskov"
+
+	is_triggered_only = yes
+
+    option = {
+		name = "NRUS118.A"
+	    prestige = 20
+	    set_global_flag = late_NOV_SCA_war
+	    war = {
+		    target = NOV
+			attacker_goal = {
+				casus_belli = custom_treaty_cb
+			}
+			defender_goal = {
+				casus_belli = custom_treaty_cb
+			}
+	   }
+    }
+}
+
+## NOV accepted the alliance, fools...
+
+country_event = {
+	id = 232620
+	title = "NRUS119.T"
+	desc = "NRUS119.D"
+    picture = "pskov"
+
+	is_triggered_only = yes
+
+    option = {
+		name = "NRUS119.A"
+	    set_global_flag = SCA_domination_of_NOV
+	    prestige = 20
+
+		create_alliance = FROM
+        relation = { who = FROM value = 400 }
+	    diplomatic_influence = { who = FROM value = 400 }
+    }
+}
+
+## SCA is now demanding Pomoria
+
+country_event = {
+	id = 232621
+	title = "NRUS120.T"
+	desc = "NRUS120.D"
+	picture = Picture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "NRUS120.A"
+		prestige = -10
+
+		any_owned = { 
+	        limit = { 
+	           is_core = PMY
+		    }
+			remove_core = NOV
+	        secede_province = PMY
+        }
+		SCA = { create_vassal = PMY }
+	}
+}
+
+### Generic Scandinavia has come to Poopiya Fartiya asking for annexation ####
+### Screw localization here because nobody is going to be playing failstate NOV splinter tags ###
+
+country_event = {
+	id = 232622
+	title = "Scandinavia wants to eat us"
+	desc = "oh no. not the people of *insert NOV splinter tag here*."
+    #picture = "ambush_army"
+
+	is_triggered_only = yes
+
+    option = {
+	name = "we die now"
+	   annex_to = SCA
+	   ai_chance = {
+			factor = 60
+	   }
+    }
+
+    option = {
+	name = "defend our snowhuts"
+	    SCA = {
+		    leave_alliance = THIS
+            relation = { who = THIS value = -400 }
+	        diplomatic_influence = { who = THIS value = -400 }
+	        war = {
+		       target = PMY
+			      attacker_goal = {
+				     casus_belli = conquest_any
+			     }
+			     defender_goal = {
+				    casus_belli = status_quo
+			    }
+           }
+	   }
+	   ai_chance = {
+			factor = 40
+	   }
+    }	
+}
